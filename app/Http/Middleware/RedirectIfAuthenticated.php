@@ -17,7 +17,6 @@ class RedirectIfAuthenticated {
 	 * Create a new filter instance.
 	 *
 	 * @param  Guard  $auth
-	 * @return void
 	 */
 	public function __construct(Guard $auth)
 	{
@@ -35,7 +34,7 @@ class RedirectIfAuthenticated {
 	{
 		if ($this->auth->check())
 		{
-			return new RedirectResponse(url('/home'));
+			return new RedirectResponse(url('/launchpad'));
 		}
 
 		return $next($request);

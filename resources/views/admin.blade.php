@@ -1,4 +1,4 @@
-@extends('rave.app')
+@extends('app')
 
 @section('content')
     <div class="container">

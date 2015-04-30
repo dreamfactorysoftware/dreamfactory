@@ -140,6 +140,7 @@ return [
          * DreamFactory Rave
          */
         'DreamFactory\Rave\RaveServiceProvider',
+        'DreamFactory\Rave\RaveCorsServiceProvider',
 
 
         /**

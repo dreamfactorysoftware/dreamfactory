@@ -16,7 +16,6 @@ class Authenticate {
 	 * Create a new filter instance.
 	 *
 	 * @param  Guard  $auth
-	 * @return void
 	 */
 	public function __construct(Guard $auth)
 	{
@@ -40,7 +39,7 @@ class Authenticate {
 			}
 			else
 			{
-				return redirect()->guest('auth/login');
+				return redirect()->guest('/auth/login');
 			}
 		}
 

@@ -1,1 +1,1 @@
-Click here to reset your password: {{ url('password/reset/'.$token) }}
+Click here to reset your password for DreamFactory Rave: {{ url('password/reset/'.$token) }}

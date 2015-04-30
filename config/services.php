@@ -35,8 +35,8 @@ return [
 	],
 
     'facebook' => [
-        'client_id' => '1590078494556972',
-        'client_secret' => 'b6ed647597811ac6749043a3d9dd1857',
-        'redirect' => 'http://rave.local/rave/fbcallback'
+        'client_id' => env('FACEBOOK_CLIENT_ID'),
+        'client_secret' => env('FACEBOOK_SECRET'),
+        'redirect' => 'http://rave.local/fbcallback'
     ]
 ];

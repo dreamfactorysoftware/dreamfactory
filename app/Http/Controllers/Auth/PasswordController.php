@@ -4,6 +4,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\PasswordBroker;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Response;
 
 class PasswordController extends Controller {
 
@@ -20,19 +22,46 @@ class PasswordController extends Controller {
 
 	use ResetsPasswords;
 
-	/**
-	 * Create a new password controller instance.
-	 *
-	 * @param  \Illuminate\Contracts\Auth\Guard  $auth
-	 * @param  \Illuminate\Contracts\Auth\PasswordBroker  $passwords
-	 * @return void
-	 */
-	public function __construct(Guard $auth, PasswordBroker $passwords)
-	{
-		$this->auth = $auth;
-		$this->passwords = $passwords;
+    protected $redirectTo = '/launchpad';
 
-		$this->middleware('guest');
-	}
+    /**
+     * Create a new password controller instance.
+     *
+     * @param  \Illuminate\Contracts\Auth\Guard  $auth
+     * @param  \Illuminate\Contracts\Auth\PasswordBroker  $passwords
+     */
+    public function __construct(Guard $auth, PasswordBroker $passwords)
+    {
+        $this->auth = $auth;
+        $this->passwords = $passwords;
+
+        $this->middleware('guest');
+    }
+
+    /**
+     * Display the form to request a password reset link.
+     *
+     * @return Response
+     */
+    public function getEmail()
+    {
+        return view('auth.password');
+    }
+
+    /**
+     * Display the password reset view for the given token.
+     *
+     * @param  string  $token
+     * @return Response
+     */
+    public function getReset($token = null)
+    {
+        if (is_null($token))
+        {
+            throw new NotFoundHttpException;
+        }
+
+        return view('auth.reset')->with('token', $token);
+    }
 
 }

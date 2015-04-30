@@ -11,11 +11,26 @@
 |
 */
 
-Route::get('/', 'WelcomeController@index');
+//Route::get('/', 'WelcomeController@index');
+//
+//Route::get('home', 'HomeController@index');
+//
+//Route::controllers([
+//	'auth' => 'Auth\AuthController',
+//	'password' => 'Auth\PasswordController',
+//]);
 
-Route::get('home', 'HomeController@index');
+Route::get('/', 'SplashController@index');
+
+Route::get('launchpad', 'LaunchpadController@index');
+
+Route::get('admin', 'AdminController@index');
+
+Route::get('facebook', 'SplashController@redirectToProvider');
+
+Route::get('fbcallback', 'SplashController@handleProviderCallback');
 
 Route::controllers([
-	'auth' => 'Auth\AuthController',
-	'password' => 'Auth\PasswordController',
-]);
+                       'auth' => 'Auth\AuthController',
+                       'password' => 'Auth\PasswordController',
+                   ]);
