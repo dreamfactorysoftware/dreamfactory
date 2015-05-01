@@ -14,6 +14,7 @@
 				display: table;
 				font-weight: 100;
 				font-family: 'Lato';
+                background-color: #353535;
 			}
 
 			.container {
@@ -40,7 +41,7 @@
 	<body>
 		<div class="container">
 			<div class="content">
-				<div class="title">DreamFactory Rave</div>
+				<div class="title">DreamFactory DSP 2.0</div>
 				<div class="quote">{{ Inspiring::quote() }}</div>
                 <div>
                     <br>
