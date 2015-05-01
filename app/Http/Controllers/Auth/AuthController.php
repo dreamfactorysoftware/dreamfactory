@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use DreamFactory\Rave\Components\Registrar;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller {
 
@@ -38,7 +39,7 @@ class AuthController extends Controller {
         $this->auth = $auth;
         $this->registrar = new Registrar();
 
-        $this->middleware('guest', ['except' => 'getLogout']);
+        $this->middleware('guest', ['except' => ['getLogout', 'getRegister', 'postRegister']]);
     }
 
     /**
@@ -48,7 +49,16 @@ class AuthController extends Controller {
      */
     public function getRegister()
     {
-        return view('auth.register');
+        $auth = \Auth::check();
+        $user = \Auth::getUser();
+
+        if($auth && !empty($user) && $user->is_sys_admin)
+        {
+            return view( 'auth.register' );
+        }
+        else{
+            return view( 'auth.login' );
+        }
     }
 
     /**
@@ -95,4 +105,31 @@ class AuthController extends Controller {
                          ]);
     }
 
+
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function postRegister(Request $request)
+    {
+        $validator = $this->registrar->validator($request->all());
+
+        if ($validator->fails())
+        {
+            $this->throwValidationException(
+                $request, $validator
+            );
+        }
+
+        $user = $this->registrar->create($request->all());
+
+        if(!\Auth::check())
+        {
+            $this->auth->login( $user );
+        }
+
+        return redirect($this->redirectPath());
+    }
 }

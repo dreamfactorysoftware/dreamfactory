@@ -22,11 +22,43 @@
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 
 						<div class="form-group">
-							<label class="col-md-4 control-label">Name</label>
+							<label class="col-md-4 control-label">Display Name</label>
 							<div class="col-md-6">
 								<input type="text" class="form-control" name="name" value="{{ old('name') }}">
 							</div>
 						</div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">First Name</label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="first_name" value="{{ old('first_name') }}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Last Name</label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="last_name" value="{{ old('last_name') }}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">System Admin</label>
+                            <div class="col-md-6">
+                                <div class="radio">
+                                    <label>
+                                        <input id="admin_yes" type="radio" name="is_sys_admin" value="1" checked='<?php if(old('is_sys_admin')) echo 'checked' ?>'>
+                                        Yes
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input id="admin_no" type="radio" name="is_sys_admin" value="0" checked='<?php if(!old('is_sys_admin')) echo 'checked' ?>'>
+                                        No
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
 
 						<div class="form-group">
 							<label class="col-md-4 control-label">E-Mail Address</label>
