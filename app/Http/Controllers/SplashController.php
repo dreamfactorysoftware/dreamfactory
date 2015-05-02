@@ -20,8 +20,10 @@
 
 namespace App\Http\Controllers;
 
+use adLDAP\adLDAP;
 use Socialize;
 use Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class SplashController extends Controller
 {
@@ -45,10 +47,17 @@ class SplashController extends Controller
 
     public function redirectToProvider()
     {
-        return Socialize::with('facebook')->redirect();
+        /** @var RedirectResponse $response */
+        $response = Socialize::with('facebook')->redirect();
+
+        $url = $response->getTargetUrl();
+
+        echo $url;
+
+        //return $response;
     }
 
-    public function handleProviderCallback()
+    public function handleFacebookCallback()
     {
         $user = Socialize::with('facebook')->user();
 
@@ -56,4 +65,23 @@ class SplashController extends Controller
         print_r($user->user);
         echo "</pre>";
     }
+
+//    public function getLdapAuth()
+//    {
+////        $r = ldap_connect('192.168.1.81');
+////        ldap_set_option($r, LDAP_OPT_PROTOCOL_VERSION, 3);
+////        $s = ldap_bind($r, 'cn=admin,dc=example,dc=com', 'amiarifans');
+////
+////        $ldap = new adLDAP(
+////            [
+////                'domain_controllers' => ['192.168.1.81'],
+////                'base_dn' => 'cn=admin,dc=example,dc=com',
+////                'account_suffix' => '@example.com',
+////                'ad_port' => '389',
+////                'admin_username' => 'admin',
+////                'admin_password' => 'amiarifan'
+////            ]);
+////        $a = $ldap->authenticate('admin', 'amiarifan');
+//
+//    }
 }
