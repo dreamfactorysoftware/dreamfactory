@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>DreamFactory Rave</title>
+		<title>DreamFactory DSP 2.0</title>
 		
 		<link href='//fonts.googleapis.com/css?family=Lato:100' rel='stylesheet' type='text/css'>
 

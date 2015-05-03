@@ -32,11 +32,5 @@ return [
 	'stripe' => [
 		'model'  => 'User',
 		'secret' => '',
-	],
-
-    'facebook' => [
-        'client_id' => env('FACEBOOK_CLIENT_ID'),
-        'client_secret' => env('FACEBOOK_SECRET'),
-        'redirect' => 'http://rave.local/fbcallback'
-    ]
+	]
 ];

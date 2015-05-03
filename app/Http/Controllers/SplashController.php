@@ -20,10 +20,12 @@
 
 namespace App\Http\Controllers;
 
-use adLDAP\adLDAP;
-use Socialize;
+use DreamFactory\Rave\Utility\ServiceHandler;
 use Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use DreamFactory\DSP\OAuth\Services\BaseOAuthService;
+use Laravel\Socialite\Contracts\Provider;
+use Laravel\Socialite\Contracts\User;
+use DreamFactory\Rave\Models\User as DspUser;
 
 class SplashController extends Controller
 {
@@ -45,25 +47,45 @@ class SplashController extends Controller
         return view('splash');
     }
 
-    public function redirectToProvider()
+    public function handleOAuthLogin($provider)
     {
-        /** @var RedirectResponse $response */
-        $response = Socialize::with('facebook')->redirect();
+        /** @var BaseOAuthService $service */
+        $service = ServiceHandler::getService($provider);
 
-        $url = $response->getTargetUrl();
+        /** @var Provider $driver */
+        $driver = $service->getDriver();
 
-        echo $url;
-
-        //return $response;
+        return $driver->redirect();
     }
 
-    public function handleFacebookCallback()
+    public function handleOAuthCallback()
     {
-        $user = Socialize::with('facebook')->user();
+        $serviceName = \Request::input('service');
 
-        echo "<pre>";
-        print_r($user->user);
-        echo "</pre>";
+        /** @var BaseOAuthService $service */
+        $service = ServiceHandler::getService($serviceName);
+
+        /** @var Provider $driver */
+        $driver = $service->getDriver();
+
+        /** @var User $user */
+        $user = $driver->user();
+
+        $dspUser = DspUser::createShadowOAuthUser($user, $service);
+
+        //$fb = new FacebookProvider();
+        //$user = Socialize::with('facebook')->user();
+
+        \Auth::login($dspUser);
+
+        if(\Request::ajax())
+        {
+            return ['success'=>true, 'session_id' => \Session::getId()];
+        }
+        else
+        {
+            return redirect()->intended('/launchpad');
+        }
     }
 
 //    public function getLdapAuth()

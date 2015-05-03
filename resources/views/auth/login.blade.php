@@ -35,6 +35,27 @@
 							</div>
 						</div>
 
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Login with: </label>
+                            <div class="col-md-6">
+                                @foreach($facebook as $fb)
+                                    <li><a href="{{ $base_url.$fb['name'] }}">{{ $fb['name'] }}</a></li>
+                                @endforeach
+
+                                @foreach($twitter as $tw)
+                                    <li><a href="{{ $base_url.$tw['name'] }}">{{ $tw['name'] }}</a></li>
+                                @endforeach
+
+                                @foreach($github as $gh)
+                                    <li><a href="{{ $base_url.$gg['name'] }}">{{ $gg['name'] }}</a></li>
+                                @endforeach
+
+                                @foreach($google as $gg)
+                                    <li><a href="{{ $base_url.$gg['name'] }}">{{ $gg['name'] }}</a></li>
+                                @endforeach
+                            </div>
+                        </div>
+
 						<div class="form-group">
 							<div class="col-md-6 col-md-offset-4">
 								<div class="checkbox">
@@ -44,6 +65,8 @@
 								</div>
 							</div>
 						</div>
+
+
 
 						<div class="form-group">
 							<div class="col-md-6 col-md-offset-4">

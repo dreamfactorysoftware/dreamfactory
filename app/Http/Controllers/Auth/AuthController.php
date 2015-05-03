@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use DreamFactory\Rave\Models\Service;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use DreamFactory\Rave\Components\Registrar;
@@ -57,7 +58,7 @@ class AuthController extends Controller {
             return view( 'auth.register' );
         }
         else{
-            return view( 'auth.login' );
+            return view('nonadmin');
         }
     }
 
@@ -68,7 +69,25 @@ class AuthController extends Controller {
      */
     public function getLogin()
     {
-        return view('auth.login');
+        return $this->loadLoginView();
+    }
+
+    protected function loadLoginView()
+    {
+        $facebookOauths = Service::whereType('oauth_facebook')->get()->toArray();
+        $twitterOauths = Service::whereType('oauth_twitter')->get()->toArray();
+        $githubOauths = Service::whereType('oauth_github')->get()->toArray();
+        $googleOauths = Service::whereType('oauth_google')->get()->toArray();
+
+        $data = [
+            'facebook' => count($facebookOauths)>0? $facebookOauths : [],
+            'twitter' => count($twitterOauths)>0? $twitterOauths : [],
+            'github' => count($githubOauths)>0? $githubOauths : [],
+            'google' => count($googleOauths)>0? $googleOauths : [],
+            'base_url' => '//'.\Request::getHost().'/dsp/oauth/login/'
+        ];
+
+        return view('auth.login', $data);
     }
 
     /**

@@ -17,11 +17,9 @@ Route::get('launchpad', 'LaunchpadController@index');
 
 Route::get('admin', 'AdminController@index');
 
-//Route::get('facebook', 'SplashController@redirectToProvider');
+Route::get('dsp/oauth/login/{provider}', 'SplashController@handleOAuthLogin');
 
-Route::get('fbcallback', 'SplashController@handleFacebookCallback');
-
-//Route::get('ldap', 'SplashController@getLdapAuth');
+Route::get('dsp/oauth/callback', 'SplashController@handleOAuthCallback');
 
 Route::controllers([
                        'auth' => 'Auth\AuthController',

@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6bafcf6d3b82e81e6a4e7931b3f098fa",
+    "hash": "9828fd5bda5999cf81789babfd869d58",
     "packages": [
         {
             "name": "adldap/adldap",
@@ -484,17 +484,70 @@
             "time": "2014-08-08 21:07:14"
         },
         {
+            "name": "dreamfactory/dsp-oauth",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:dreamfactorysoftware/dsp-oauth.git",
+                "reference": "748e8548310a704527a274a64f3c7ef570733d45"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/dsp-oauth/zipball/748e8548310a704527a274a64f3c7ef570733d45",
+                "reference": "748e8548310a704527a274a64f3c7ef570733d45",
+                "shasum": ""
+            },
+            "require": {
+                "dreamfactory/rave": "dev-develop as dev-master",
+                "laravel/socialite": "~2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "DreamFactory\\DSP\\OAuth\\": "src/"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Arif Islam",
+                    "email": "arifislam@dreamfactory.com"
+                },
+                {
+                    "name": "Lee Hicks",
+                    "email": "leehicks@dreamfactory.com"
+                }
+            ],
+            "description": "OAuth support for DreamFactory DSP 2.0",
+            "homepage": "https://www.dreamfactory.com/",
+            "keywords": [
+                "dreamfactory",
+                "dsp",
+                "oauth",
+                "rave"
+            ],
+            "support": {
+                "email": "support@dreamfactory.com",
+                "issues": "https://github.com/dreamfactorysoftware/rave/issues",
+                "wiki": "https://github.com/dreamfactorysoftware/rave/wiki",
+                "source": "https://github.com/dreamfactorysoftware/rave"
+            },
+            "time": "2015-05-02 21:48:06"
+        },
+        {
             "name": "dreamfactory/php-utils",
             "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/php-utils.git",
-                "reference": "dcf22944aa1161f726e9c51886861b279119d0f5"
+                "reference": "89821231dbb1407716cb9deed485f55a21e9b2d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/php-utils/zipball/dcf22944aa1161f726e9c51886861b279119d0f5",
-                "reference": "dcf22944aa1161f726e9c51886861b279119d0f5",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/php-utils/zipball/89821231dbb1407716cb9deed485f55a21e9b2d1",
+                "reference": "89821231dbb1407716cb9deed485f55a21e9b2d1",
                 "shasum": ""
             },
             "require": {
@@ -532,7 +585,7 @@
                 "dreamfactory",
                 "utility"
             ],
-            "time": "2015-04-28 13:51:16"
+            "time": "2015-04-30 23:11:56"
         },
         {
             "name": "dreamfactory/rave",
@@ -540,12 +593,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/rave.git",
-                "reference": "4be3a4e82930982d7e7c505220e3764fdad2a114"
+                "reference": "dddeaefbc267d6ed8d181ae65f83a900b932d4c5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/rave/zipball/4be3a4e82930982d7e7c505220e3764fdad2a114",
-                "reference": "4be3a4e82930982d7e7c505220e3764fdad2a114",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/rave/zipball/dddeaefbc267d6ed8d181ae65f83a900b932d4c5",
+                "reference": "dddeaefbc267d6ed8d181ae65f83a900b932d4c5",
                 "shasum": ""
             },
             "require": {
@@ -602,7 +655,7 @@
                 "source": "https://github.com/dreamfactorysoftware/rave/tree/develop",
                 "issues": "https://github.com/dreamfactorysoftware/rave/issues"
             },
-            "time": "2015-04-30 19:17:54"
+            "time": "2015-05-02 20:17:34"
         },
         {
             "name": "dreamfactory/rave-aws",
@@ -856,12 +909,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/rave-rws.git",
-                "reference": "904e195d4f26169c32369f1c18fc9f390d2f4725"
+                "reference": "40fcb4ac2da547b308aeb16477b8b42441e8121c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/rave-rws/zipball/904e195d4f26169c32369f1c18fc9f390d2f4725",
-                "reference": "904e195d4f26169c32369f1c18fc9f390d2f4725",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/rave-rws/zipball/40fcb4ac2da547b308aeb16477b8b42441e8121c",
+                "reference": "40fcb4ac2da547b308aeb16477b8b42441e8121c",
                 "shasum": ""
             },
             "require": {
@@ -904,7 +957,7 @@
                 "wiki": "https://github.com/dreamfactorysoftware/rave/wiki",
                 "source": "https://github.com/dreamfactorysoftware/rave"
             },
-            "time": "2015-04-07 20:44:12"
+            "time": "2015-04-30 19:28:49"
         },
         {
             "name": "dreamfactory/rave-sqldb",
@@ -912,12 +965,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/rave-sqldb.git",
-                "reference": "6f7fe9e9f7cd778bea2d5b67bb851611f9d21a95"
+                "reference": "089eb223711438f46829063943477eeb88fb445f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/rave-sqldb/zipball/6f7fe9e9f7cd778bea2d5b67bb851611f9d21a95",
-                "reference": "6f7fe9e9f7cd778bea2d5b67bb851611f9d21a95",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/rave-sqldb/zipball/089eb223711438f46829063943477eeb88fb445f",
+                "reference": "089eb223711438f46829063943477eeb88fb445f",
                 "shasum": ""
             },
             "require": {
@@ -977,7 +1030,7 @@
                 "wiki": "https://github.com/dreamfactorysoftware/rave/wiki",
                 "source": "https://github.com/dreamfactorysoftware/rave"
             },
-            "time": "2015-04-29 22:26:43"
+            "time": "2015-05-02 20:23:07"
         },
         {
             "name": "dreamfactory/rave-sqldb-core",
@@ -985,12 +1038,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/rave-sqldb-core.git",
-                "reference": "009a4cf4d8012709ed5be832d4cb4daa11cf978e"
+                "reference": "b3967646fd95fd066e6cb8726d518df13d2d50ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/rave-sqldb-core/zipball/009a4cf4d8012709ed5be832d4cb4daa11cf978e",
-                "reference": "009a4cf4d8012709ed5be832d4cb4daa11cf978e",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/rave-sqldb-core/zipball/b3967646fd95fd066e6cb8726d518df13d2d50ea",
+                "reference": "b3967646fd95fd066e6cb8726d518df13d2d50ea",
                 "shasum": ""
             },
             "require": {
@@ -1050,7 +1103,7 @@
                 "wiki": "https://github.com/dreamfactorysoftware/rave/wiki",
                 "source": "https://github.com/dreamfactorysoftware/rave"
             },
-            "time": "2015-04-09 18:19:07"
+            "time": "2015-05-02 20:19:04"
         },
         {
             "name": "dreamfactory/rave-user-mgmt",
@@ -1058,12 +1111,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/rave-user-mgmt.git",
-                "reference": "6a594607c1932252f8919d286161d69cc84cfa97"
+                "reference": "8399d164008eae0cf18268d887d9c39c6daaa85c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/rave-user-mgmt/zipball/6a594607c1932252f8919d286161d69cc84cfa97",
-                "reference": "6a594607c1932252f8919d286161d69cc84cfa97",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/rave-user-mgmt/zipball/8399d164008eae0cf18268d887d9c39c6daaa85c",
+                "reference": "8399d164008eae0cf18268d887d9c39c6daaa85c",
                 "shasum": ""
             },
             "require": {
@@ -1106,7 +1159,7 @@
                 "wiki": "https://github.com/dreamfactorysoftware/rave/wiki",
                 "source": "https://github.com/dreamfactorysoftware/rave"
             },
-            "time": "2015-04-28 18:50:09"
+            "time": "2015-04-30 20:15:03"
         },
         {
             "name": "guzzle/guzzle",
@@ -2040,16 +2093,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v1.2.2",
+            "version": "v1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "08f97eb4efa029e2fafb6d8c98b71731bf0cf621"
+                "reference": "dff239267fd1befa1cd40430c9ed12591aa720ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/08f97eb4efa029e2fafb6d8c98b71731bf0cf621",
-                "reference": "08f97eb4efa029e2fafb6d8c98b71731bf0cf621",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/dff239267fd1befa1cd40430c9ed12591aa720ca",
+                "reference": "dff239267fd1befa1cd40430c9ed12591aa720ca",
                 "shasum": ""
             },
             "require": {
@@ -2059,7 +2112,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.2-dev"
+                    "dev-master": "1.3-dev"
                 }
             },
             "autoload": {
@@ -2081,7 +2134,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2015-04-03 14:33:59"
+            "time": "2015-05-02 15:40:40"
         },
         {
             "name": "pear-pear.php.net/Archive_Tar",
@@ -4856,6 +4909,12 @@
             "alias_normalized": "9999999-dev",
             "version": "dev-develop",
             "package": "dreamfactory/rave-user-mgmt"
+        },
+        {
+            "alias": "dev-master",
+            "alias_normalized": "9999999-dev",
+            "version": "dev-develop",
+            "package": "dreamfactory/dsp-oauth"
         }
     ],
     "minimum-stability": "dev",
@@ -4867,7 +4926,8 @@
         "dreamfactory/rave-sqldb": 20,
         "dreamfactory/rave-mongodb": 20,
         "dreamfactory/rave-rws": 20,
-        "dreamfactory/rave-user-mgmt": 20
+        "dreamfactory/rave-user-mgmt": 20,
+        "dreamfactory/dsp-oauth": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
