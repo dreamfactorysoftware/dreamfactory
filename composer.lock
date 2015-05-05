@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d8605a41a6d7932c13eabd4f322c7dda",
+    "hash": "7e8ce92d8a2170bd77908db5e0921b18",
     "packages": [
         {
             "name": "adldap/adldap",
@@ -484,21 +484,78 @@
             "time": "2014-08-08 21:07:14"
         },
         {
+            "name": "dreamfactory/dsp-adldap",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:dreamfactorysoftware/dsp-adldap.git",
+                "reference": "3afda2ef57b03762d667680d3ebe519f1deefaee"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/dsp-adldap/zipball/3afda2ef57b03762d667680d3ebe519f1deefaee",
+                "reference": "3afda2ef57b03762d667680d3ebe519f1deefaee",
+                "shasum": ""
+            },
+            "require": {
+                "adldap/adldap": "4.0.*",
+                "dreamfactory/rave": "dev-develop as dev-master",
+                "dreamfactory/rave-user-mgmt": "dev-develop as dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "DreamFactory\\DSP\\ADLdap\\": "src/"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Arif Islam",
+                    "email": "arifislam@dreamfactory.com"
+                },
+                {
+                    "name": "Lee Hicks",
+                    "email": "leehicks@dreamfactory.com"
+                }
+            ],
+            "description": "ad/Ldap support for DreamFactory DSP 2.0",
+            "homepage": "https://www.dreamfactory.com/",
+            "keywords": [
+                "ad",
+                "ad/Ldap",
+                "dreamfactory",
+                "dsp",
+                "ldap",
+                "rave"
+            ],
+            "support": {
+                "email": "support@dreamfactory.com",
+                "issues": "https://github.com/dreamfactorysoftware/rave/issues",
+                "wiki": "https://github.com/dreamfactorysoftware/rave/wiki",
+                "source": "https://github.com/dreamfactorysoftware/rave"
+            },
+            "time": "2015-05-05 04:34:10"
+        },
+        {
             "name": "dreamfactory/dsp-oauth",
             "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/dsp-oauth.git",
-                "reference": "431aded63651d75a2d8d8fac0bc229451ade4758"
+                "reference": "1a83723006d761e3408c052097f543f94572b650"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/dsp-oauth/zipball/431aded63651d75a2d8d8fac0bc229451ade4758",
-                "reference": "431aded63651d75a2d8d8fac0bc229451ade4758",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/dsp-oauth/zipball/1a83723006d761e3408c052097f543f94572b650",
+                "reference": "1a83723006d761e3408c052097f543f94572b650",
                 "shasum": ""
             },
             "require": {
                 "dreamfactory/rave": "dev-develop as dev-master",
+                "dreamfactory/rave-user-mgmt": "dev-develop as dev-master",
                 "laravel/socialite": "~2.0"
             },
             "type": "library",
@@ -534,7 +591,7 @@
                 "wiki": "https://github.com/dreamfactorysoftware/rave/wiki",
                 "source": "https://github.com/dreamfactorysoftware/rave"
             },
-            "time": "2015-05-03 19:41:27"
+            "time": "2015-05-05 04:33:49"
         },
         {
             "name": "dreamfactory/php-utils",
@@ -593,12 +650,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/rave.git",
-                "reference": "4d7ac5e6a100726c4859ca53a52b7484a8a6766c"
+                "reference": "bfb38dea964d8b8ed882c86e6e1eda8dae04161c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/rave/zipball/4d7ac5e6a100726c4859ca53a52b7484a8a6766c",
-                "reference": "4d7ac5e6a100726c4859ca53a52b7484a8a6766c",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/rave/zipball/bfb38dea964d8b8ed882c86e6e1eda8dae04161c",
+                "reference": "bfb38dea964d8b8ed882c86e6e1eda8dae04161c",
                 "shasum": ""
             },
             "require": {
@@ -655,7 +712,7 @@
                 "source": "https://github.com/dreamfactorysoftware/rave/tree/develop",
                 "issues": "https://github.com/dreamfactorysoftware/rave/issues"
             },
-            "time": "2015-05-03 19:42:18"
+            "time": "2015-05-05 04:20:50"
         },
         {
             "name": "dreamfactory/rave-aws",
@@ -4915,6 +4972,12 @@
             "alias_normalized": "9999999-dev",
             "version": "dev-develop",
             "package": "dreamfactory/dsp-oauth"
+        },
+        {
+            "alias": "dev-master",
+            "alias_normalized": "9999999-dev",
+            "version": "dev-develop",
+            "package": "dreamfactory/dsp-adldap"
         }
     ],
     "minimum-stability": "dev",
@@ -4927,7 +4990,8 @@
         "dreamfactory/rave-mongodb": 20,
         "dreamfactory/rave-rws": 20,
         "dreamfactory/rave-user-mgmt": 20,
-        "dreamfactory/dsp-oauth": 20
+        "dreamfactory/dsp-oauth": 20,
+        "dreamfactory/dsp-adldap": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

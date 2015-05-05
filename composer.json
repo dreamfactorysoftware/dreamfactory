@@ -72,6 +72,10 @@
       "url":  "git@github.com:dreamfactorysoftware/dsp-oauth.git"
     },
     {
+      "type":"vcs",
+      "url":  "git@github.com:dreamfactorysoftware/dsp-adldap.git"
+    },
+    {
       "type": "pear",
       "url": "http://pear.php.net"
     }
@@ -87,7 +91,7 @@
         "dreamfactory/rave-rws": "dev-develop as dev-master",
         "dreamfactory/rave-user-mgmt": "dev-develop as dev-master",
         "dreamfactory/dsp-oauth": "dev-develop as dev-master",
-        "adldap/adldap": "4.0.*"
+        "dreamfactory/dsp-adldap": "dev-develop as dev-master"
 	},
 	"require-dev": {
 	  	"barryvdh/laravel-ide-helper": "~2.0",

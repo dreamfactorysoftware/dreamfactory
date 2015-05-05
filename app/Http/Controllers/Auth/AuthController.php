@@ -1,13 +1,13 @@
 <?php namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\SplashController;
 use DreamFactory\Rave\Models\Service;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use DreamFactory\Rave\Components\Registrar;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller {
 
@@ -72,19 +72,26 @@ class AuthController extends Controller {
         return $this->loadLoginView();
     }
 
+    /**
+     * Configures and loads the login view
+     *
+     * @return \Illuminate\View\View
+     */
     protected function loadLoginView()
     {
         $facebookOauths = Service::whereType('oauth_facebook')->get()->toArray();
         $twitterOauths = Service::whereType('oauth_twitter')->get()->toArray();
         $githubOauths = Service::whereType('oauth_github')->get()->toArray();
         $googleOauths = Service::whereType('oauth_google')->get()->toArray();
+        $ldaps = Service::whereType('ldap')->get()->toArray();
 
         $data = [
             'facebook' => count($facebookOauths)>0? $facebookOauths : [],
             'twitter' => count($twitterOauths)>0? $twitterOauths : [],
             'github' => count($githubOauths)>0? $githubOauths : [],
             'google' => count($googleOauths)>0? $googleOauths : [],
-            'base_url' => '//'.\Request::getHost().'/dsp/oauth/login/'
+            'ldap' => count($ldaps)>0? $ldaps : [],
+            'oauth_url' => '//'.\Request::getHost().'/dsp/oauth/login/'
         ];
 
         return view('auth.login', $data);
@@ -98,6 +105,13 @@ class AuthController extends Controller {
      */
     public function postLogin(Request $request)
     {
+        $submit = $request->input('submit');
+
+        if('dsp' !== $submit)
+        {
+            return SplashController::handleLdapLogin($submit);
+        }
+
         $this->validate($request, [
             'email' => 'required|email', 'password' => 'required',
         ]);

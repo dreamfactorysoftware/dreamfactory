@@ -20,12 +20,16 @@
 
 namespace App\Http\Controllers;
 
+use DreamFactory\DSP\ADLdap\Components\LdapUser;
+use DreamFactory\DSP\ADLdap\Components\OpenLdapDriver;
 use DreamFactory\Rave\Utility\ServiceHandler;
 use Response;
 use DreamFactory\DSP\OAuth\Services\BaseOAuthService;
 use Laravel\Socialite\Contracts\Provider;
 use Laravel\Socialite\Contracts\User;
 use DreamFactory\Rave\Models\User as DspUser;
+use DreamFactory\DSP\ADLdap\Services\LDAP as LdapService;
+use Carbon\Carbon;
 
 class SplashController extends Controller
 {
@@ -47,6 +51,15 @@ class SplashController extends Controller
         return view('splash');
     }
 
+    /**
+     * Handles OAuth login redirects.
+     *
+     * @param $provider
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \DreamFactory\Rave\Exceptions\ForbiddenException
+     * @throws \DreamFactory\Rave\Exceptions\NotFoundException
+     */
     public function handleOAuthLogin($provider)
     {
         /** @var BaseOAuthService $service */
@@ -58,6 +71,63 @@ class SplashController extends Controller
         return $driver->redirect();
     }
 
+    /**
+     * Performs ldap login
+     *
+     * @param $provider
+     *
+     * @return $this|\Illuminate\Http\RedirectResponse
+     * @throws \DreamFactory\Rave\Exceptions\BadRequestException
+     * @throws \DreamFactory\Rave\Exceptions\ForbiddenException
+     * @throws \DreamFactory\Rave\Exceptions\NotFoundException
+     * @throws \Exception
+     */
+    public static function handleLdapLogin($provider)
+    {
+        $username = \Request::input('email');
+        $password = \Request::input('password');
+
+        if(!empty($username) && !empty($password))
+        {
+            /** @var LdapService $service */
+            $service = ServiceHandler::getService( $provider );
+
+            $host = $service->getHost();
+            $baseDn = $service->getBaseDn();
+
+            $ldap = new OpenLdapDriver( $host, $baseDn );
+            $auth = $ldap->authenticate( $username, $password );
+
+            if ( $auth )
+            {
+                $ldapUser = new LdapUser( $ldap );
+
+                $user = DspUser::createShadowLdapUser( $ldapUser, $service );
+                $user->update( [ 'last_login_date' => Carbon::now()->toDateTimeString() ] );
+
+                \Auth::login( $user, \Request::has( 'remember' ) );
+
+                return redirect()->intended( '/launchpad' );
+            }
+        }
+
+        return redirect('/auth/login')
+            ->withInput(\Request::only('email', 'remember'))
+            ->withErrors([
+                             'email' => 'Invalid username and password.',
+                         ]);
+
+    }
+
+    /**
+     * Handles OAuth callback from the provider after
+     * successful authentication.
+     *
+     * @return array|\Illuminate\Http\RedirectResponse
+     * @throws \DreamFactory\Rave\Exceptions\ForbiddenException
+     * @throws \DreamFactory\Rave\Exceptions\NotFoundException
+     * @throws \Exception
+     */
     public function handleOAuthCallback()
     {
         $serviceName = \Request::input('service');
@@ -72,9 +142,7 @@ class SplashController extends Controller
         $user = $driver->user();
 
         $dspUser = DspUser::createShadowOAuthUser($user, $service);
-
-        //$fb = new FacebookProvider();
-        //$user = Socialize::with('facebook')->user();
+        $dspUser->update(['last_login_date' => Carbon::now()->toDateTimeString()]);
 
         \Auth::login($dspUser);
 
@@ -87,23 +155,4 @@ class SplashController extends Controller
             return redirect()->intended('/launchpad');
         }
     }
-
-//    public function getLdapAuth()
-//    {
-////        $r = ldap_connect('192.168.1.81');
-////        ldap_set_option($r, LDAP_OPT_PROTOCOL_VERSION, 3);
-////        $s = ldap_bind($r, 'cn=admin,dc=example,dc=com', 'amiarifans');
-////
-////        $ldap = new adLDAP(
-////            [
-////                'domain_controllers' => ['192.168.1.81'],
-////                'base_dn' => 'cn=admin,dc=example,dc=com',
-////                'account_suffix' => '@example.com',
-////                'ad_port' => '389',
-////                'admin_username' => 'admin',
-////                'admin_password' => 'amiarifan'
-////            ]);
-////        $a = $ldap->authenticate('admin', 'amiarifan');
-//
-//    }
 }

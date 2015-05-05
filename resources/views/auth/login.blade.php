@@ -22,9 +22,9 @@
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 
 						<div class="form-group">
-							<label class="col-md-4 control-label">E-Mail Address</label>
+							<label class="col-md-4 control-label">E-Mail Address/Username</label>
 							<div class="col-md-6">
-								<input type="email" class="form-control" name="email" value="{{ old('email') }}">
+								<input type="text" class="form-control" name="email" value="{{ old('email') }}">
 							</div>
 						</div>
 
@@ -34,27 +34,6 @@
 								<input type="password" class="form-control" name="password">
 							</div>
 						</div>
-
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Login with: </label>
-                            <div class="col-md-6">
-                                @foreach($facebook as $fb)
-                                    <li><a href="{{ $base_url.$fb['name'] }}">{{ $fb['name'] }}</a></li>
-                                @endforeach
-
-                                @foreach($twitter as $tw)
-                                    <li><a href="{{ $base_url.$tw['name'] }}">{{ $tw['name'] }}</a></li>
-                                @endforeach
-
-                                @foreach($github as $gh)
-                                    <li><a href="{{ $base_url.$gg['name'] }}">{{ $gg['name'] }}</a></li>
-                                @endforeach
-
-                                @foreach($google as $gg)
-                                    <li><a href="{{ $base_url.$gg['name'] }}">{{ $gg['name'] }}</a></li>
-                                @endforeach
-                            </div>
-                        </div>
 
 						<div class="form-group">
 							<div class="col-md-6 col-md-offset-4">
@@ -66,15 +45,42 @@
 							</div>
 						</div>
 
-
-
 						<div class="form-group">
 							<div class="col-md-6 col-md-offset-4">
-								<button type="submit" class="btn btn-primary">Login</button>
-
-								<a class="btn btn-link" href="{{ url('password/email') }}">Forgot Your Password?</a>
+								<button type="submit" class="btn btn-primary" value="dsp" name="submit">Login</button>
+                                @foreach($ldap as $ld)
+                                    <button type="submit" class="btn btn-danger" value="{{ $ld['name'] }}" name="submit">Login with {{ $ld['name'] }}</button>
+                                @endforeach
 							</div>
 						</div>
+
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-4">
+                                <a class="btn btn-link" href="{{ url('password/email') }}">Forgot Your Password?</a>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Login with: </label>
+                            <div class="col-md-6" style="margin-top: 7px">
+                                @foreach($facebook as $fb)
+                                    [<a href="{{ $oauth_url.$fb['name'] }}">{{ $fb['name'] }}</a>]
+                                @endforeach
+
+                                @foreach($twitter as $tw)
+                                    [<a href="{{ $oauth_url.$tw['name'] }}">{{ $tw['name'] }}</a>]
+                                @endforeach
+
+                                @foreach($github as $gh)
+                                    [<a href="{{ $oauth_url.$gg['name'] }}">{{ $gg['name'] }}</a>]
+                                @endforeach
+
+                                @foreach($google as $gg)
+                                    [<a href="{{ $oauth_url.$gg['name'] }}">{{ $gg['name'] }}</a>]
+                                @endforeach
+                            </div>
+                        </div>
+
 					</form>
 				</div>
 			</div>
