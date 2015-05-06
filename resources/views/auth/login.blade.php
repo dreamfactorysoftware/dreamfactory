@@ -72,7 +72,7 @@
                                 @endforeach
 
                                 @foreach($github as $gh)
-                                    [<a href="{{ $oauth_url.$gg['name'] }}">{{ $gg['name'] }}</a>]
+                                    [<a href="{{ $oauth_url.$gh['name'] }}">{{ $gh['name'] }}</a>]
                                 @endforeach
 
                                 @foreach($google as $gg)

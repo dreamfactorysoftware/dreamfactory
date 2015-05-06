@@ -123,15 +123,15 @@ class SplashController extends Controller
      * Handles OAuth callback from the provider after
      * successful authentication.
      *
+     * @param string $serviceName
+     *
      * @return array|\Illuminate\Http\RedirectResponse
      * @throws \DreamFactory\Rave\Exceptions\ForbiddenException
      * @throws \DreamFactory\Rave\Exceptions\NotFoundException
      * @throws \Exception
      */
-    public function handleOAuthCallback()
+    public function handleOAuthCallback($serviceName)
     {
-        $serviceName = \Request::input('service');
-
         /** @var BaseOAuthService $service */
         $service = ServiceHandler::getService($serviceName);
 

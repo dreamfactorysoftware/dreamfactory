@@ -79,11 +79,11 @@ class AuthController extends Controller {
      */
     protected function loadLoginView()
     {
-        $facebookOauths = Service::whereType('oauth_facebook')->get()->toArray();
-        $twitterOauths = Service::whereType('oauth_twitter')->get()->toArray();
-        $githubOauths = Service::whereType('oauth_github')->get()->toArray();
-        $googleOauths = Service::whereType('oauth_google')->get()->toArray();
-        $ldaps = Service::whereType('ldap')->get()->toArray();
+        $facebookOauths = Service::whereType('oauth_facebook')->whereIsActive(1)->get()->toArray();
+        $twitterOauths = Service::whereType('oauth_twitter')->whereIsActive(1)->get()->toArray();
+        $githubOauths = Service::whereType('oauth_github')->whereIsActive(1)->get()->toArray();
+        $googleOauths = Service::whereType('oauth_google')->whereIsActive(1)->get()->toArray();
+        $ldaps = Service::whereType('ldap')->whereIsActive(1)->get()->toArray();
 
         $data = [
             'facebook' => count($facebookOauths)>0? $facebookOauths : [],
