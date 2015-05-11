@@ -2,7 +2,10 @@
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\SplashController;
+use DreamFactory\Library\Utility\ArrayUtils;
 use DreamFactory\Rave\Models\Service;
+use DreamFactory\Rave\Utility\LookupKey;
+use DreamFactory\Rave\Utility\Session as SessionUtil;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use DreamFactory\Rave\Components\Registrar;
@@ -124,10 +127,14 @@ class AuthController extends Controller {
             $credentials['is_sys_admin'] = 1;
         }
 
+        //Only active users are allowed to login.
+        $credentials['is_active'] = 1;
+
         if ($this->auth->attempt($credentials, $request->has('remember')))
         {
             $user = \Auth::getUser();
             $user->update(['last_login_date' => Carbon::now()->toDateTimeString()]);
+            SessionUtil::setUserInfo($user);
             return redirect()->intended($this->redirectPath());
         }
 
