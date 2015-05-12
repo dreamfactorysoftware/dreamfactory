@@ -63,20 +63,8 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label">Login with: </label>
                             <div class="col-md-6" style="margin-top: 7px">
-                                @foreach($facebook as $fb)
-                                    [<a href="{{ $oauth_url.$fb['name'] }}">{{ $fb['name'] }}</a>]
-                                @endforeach
-
-                                @foreach($twitter as $tw)
-                                    [<a href="{{ $oauth_url.$tw['name'] }}">{{ $tw['name'] }}</a>]
-                                @endforeach
-
-                                @foreach($github as $gh)
-                                    [<a href="{{ $oauth_url.$gh['name'] }}">{{ $gh['name'] }}</a>]
-                                @endforeach
-
-                                @foreach($google as $gg)
-                                    [<a href="{{ $oauth_url.$gg['name'] }}">{{ $gg['name'] }}</a>]
+                                @foreach($oauth as $o)
+                                    [<a href="{{ $oauth_url.$o['name'] }}">{{ $o['name'] }}</a>]
                                 @endforeach
                             </div>
                         </div>

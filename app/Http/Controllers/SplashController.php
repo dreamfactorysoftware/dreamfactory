@@ -20,16 +20,15 @@
 
 namespace App\Http\Controllers;
 
-use DreamFactory\DSP\ADLdap\Components\LdapUser;
-use DreamFactory\DSP\ADLdap\Components\OpenLdapDriver;
-use DreamFactory\Rave\Utility\ServiceHandler;
 use Response;
+use Carbon\Carbon;
 use DreamFactory\DSP\OAuth\Services\BaseOAuthService;
-use Laravel\Socialite\Contracts\Provider;
-use Laravel\Socialite\Contracts\User;
+use DreamFactory\Rave\Utility\ServiceHandler;
 use DreamFactory\Rave\Models\User as DspUser;
 use DreamFactory\DSP\ADLdap\Services\LDAP as LdapService;
-use Carbon\Carbon;
+use DreamFactory\DSP\ADLdap\Contracts\Provider as ADLdapProvider;
+use Laravel\Socialite\Contracts\Provider;
+use Laravel\Socialite\Contracts\User;
 
 class SplashController extends Controller
 {
@@ -38,7 +37,7 @@ class SplashController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware( 'guest' );
     }
 
     /**
@@ -48,7 +47,7 @@ class SplashController extends Controller
      */
     public function index()
     {
-        return view('splash');
+        return view( 'splash' );
     }
 
     /**
@@ -60,10 +59,10 @@ class SplashController extends Controller
      * @throws \DreamFactory\Rave\Exceptions\ForbiddenException
      * @throws \DreamFactory\Rave\Exceptions\NotFoundException
      */
-    public function handleOAuthLogin($provider)
+    public function handleOAuthLogin( $provider )
     {
         /** @var BaseOAuthService $service */
-        $service = ServiceHandler::getService($provider);
+        $service = ServiceHandler::getService( $provider );
 
         /** @var Provider $driver */
         $driver = $service->getDriver();
@@ -82,27 +81,26 @@ class SplashController extends Controller
      * @throws \DreamFactory\Rave\Exceptions\NotFoundException
      * @throws \Exception
      */
-    public static function handleLdapLogin($provider)
+    public static function handleADLdapLogin( $provider )
     {
-        $username = \Request::input('email');
-        $password = \Request::input('password');
+        $username = \Request::input( 'email' );
+        $password = \Request::input( 'password' );
 
-        if(!empty($username) && !empty($password))
+        if ( !empty( $username ) && !empty( $password ) )
         {
             /** @var LdapService $service */
             $service = ServiceHandler::getService( $provider );
 
-            $host = $service->getHost();
-            $baseDn = $service->getBaseDn();
+            /** @var ADLdapProvider $driver */
+            $driver = $service->getDriver();
 
-            $ldap = new OpenLdapDriver( $host, $baseDn );
-            $auth = $ldap->authenticate( $username, $password );
+            $auth = $driver->authenticate( $username, $password );
 
             if ( $auth )
             {
-                $ldapUser = new LdapUser( $ldap );
+                $ldapUser = $driver->getUser();
 
-                $user = DspUser::createShadowLdapUser( $ldapUser, $service );
+                $user = DspUser::createShadowADLdapUser( $ldapUser, $service );
                 $user->update( [ 'last_login_date' => Carbon::now()->toDateTimeString() ] );
 
                 \Auth::login( $user, \Request::has( 'remember' ) );
@@ -111,11 +109,11 @@ class SplashController extends Controller
             }
         }
 
-        return redirect('/auth/login')
-            ->withInput(\Request::only('email', 'remember'))
-            ->withErrors([
-                             'email' => 'Invalid username and password.',
-                         ]);
+        return redirect( '/auth/login' )->withInput( \Request::only( 'email', 'remember' ) )->withErrors(
+                [
+                    'email' => 'Invalid username and password.',
+                ]
+            );
 
     }
 
@@ -130,10 +128,10 @@ class SplashController extends Controller
      * @throws \DreamFactory\Rave\Exceptions\NotFoundException
      * @throws \Exception
      */
-    public function handleOAuthCallback($serviceName)
+    public function handleOAuthCallback( $serviceName )
     {
         /** @var BaseOAuthService $service */
-        $service = ServiceHandler::getService($serviceName);
+        $service = ServiceHandler::getService( $serviceName );
 
         /** @var Provider $driver */
         $driver = $service->getDriver();
@@ -141,18 +139,18 @@ class SplashController extends Controller
         /** @var User $user */
         $user = $driver->user();
 
-        $dspUser = DspUser::createShadowOAuthUser($user, $service);
-        $dspUser->update(['last_login_date' => Carbon::now()->toDateTimeString()]);
+        $dspUser = DspUser::createShadowOAuthUser( $user, $service );
+        $dspUser->update( [ 'last_login_date' => Carbon::now()->toDateTimeString() ] );
 
-        \Auth::login($dspUser);
+        \Auth::login( $dspUser );
 
-        if(\Request::ajax())
+        if ( \Request::ajax() )
         {
-            return ['success'=>true, 'session_id' => \Session::getId()];
+            return [ 'success' => true, 'session_id' => \Session::getId() ];
         }
         else
         {
-            return redirect()->intended('/launchpad');
+            return redirect()->intended( '/launchpad' );
         }
     }
 }

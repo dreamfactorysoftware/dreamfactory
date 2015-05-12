@@ -2,30 +2,29 @@
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\SplashController;
-use DreamFactory\Library\Utility\ArrayUtils;
 use DreamFactory\Rave\Models\Service;
-use DreamFactory\Rave\Utility\LookupKey;
 use DreamFactory\Rave\Utility\Session as SessionUtil;
+use DreamFactory\Rave\Components\Registrar;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
-use DreamFactory\Rave\Components\Registrar;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
-class AuthController extends Controller {
+class AuthController extends Controller
+{
 
-	/*
-	|--------------------------------------------------------------------------
-	| Registration & Login Controller
-	|--------------------------------------------------------------------------
-	|
-	| This controller handles the registration of new users, as well as the
-	| authentication of existing users. By default, this controller uses
-	| a simple trait to add these behaviors. Why don't you explore it?
-	|
-	*/
+    /*
+    |--------------------------------------------------------------------------
+    | Registration & Login Controller
+    |--------------------------------------------------------------------------
+    |
+    | This controller handles the registration of new users, as well as the
+    | authentication of existing users. By default, this controller uses
+    | a simple trait to add these behaviors. Why don't you explore it?
+    |
+    */
 
-	use AuthenticatesAndRegistersUsers;
+    use AuthenticatesAndRegistersUsers;
 
     protected $redirectTo = '/launchpad';
 
@@ -36,14 +35,14 @@ class AuthController extends Controller {
     /**
      * Create a new authentication controller instance.
      *
-     * @param  \Illuminate\Contracts\Auth\Guard  $auth
+     * @param  \Illuminate\Contracts\Auth\Guard $auth
      */
-    public function __construct(Guard $auth)
+    public function __construct( Guard $auth )
     {
         $this->auth = $auth;
         $this->registrar = new Registrar();
 
-        $this->middleware('guest', ['except' => ['getLogout', 'getRegister', 'postRegister']]);
+        $this->middleware( 'guest', [ 'except' => [ 'getLogout', 'getRegister', 'postRegister' ] ] );
     }
 
     /**
@@ -56,12 +55,13 @@ class AuthController extends Controller {
         $auth = \Auth::check();
         $user = \Auth::getUser();
 
-        if($auth && !empty($user) && $user->is_sys_admin)
+        if ( $auth && !empty( $user ) && $user->is_sys_admin )
         {
             return view( 'auth.register' );
         }
-        else{
-            return view('nonadmin');
+        else
+        {
+            return view( 'nonadmin' );
         }
     }
 
@@ -82,47 +82,53 @@ class AuthController extends Controller {
      */
     protected function loadLoginView()
     {
-        $facebookOauths = Service::whereType('oauth_facebook')->whereIsActive(1)->get()->toArray();
-        $twitterOauths = Service::whereType('oauth_twitter')->whereIsActive(1)->get()->toArray();
-        $githubOauths = Service::whereType('oauth_github')->whereIsActive(1)->get()->toArray();
-        $googleOauths = Service::whereType('oauth_google')->whereIsActive(1)->get()->toArray();
-        $ldaps = Service::whereType('ldap')->whereIsActive(1)->get()->toArray();
+        $oauth = Service::whereIn(
+            'type',
+            [ 'oauth_facebook', 'oauth_twitter', 'oauth_github', 'oauth_google' ]
+        )->whereIsActive( 1 )->get()->toArray();
+
+        $ldap = Service::whereIn(
+            'type',
+            [ 'ldap', 'adldap' ]
+        )->whereIsActive( 1 )->get()->toArray();
 
         $data = [
-            'facebook' => count($facebookOauths)>0? $facebookOauths : [],
-            'twitter' => count($twitterOauths)>0? $twitterOauths : [],
-            'github' => count($githubOauths)>0? $githubOauths : [],
-            'google' => count($googleOauths)>0? $googleOauths : [],
-            'ldap' => count($ldaps)>0? $ldaps : [],
-            'oauth_url' => '//'.\Request::getHost().'/dsp/oauth/login/'
+            'oauth'     => count( $oauth ) > 0 ? $oauth : [ ],
+            'ldap'      => count( $ldap ) > 0 ? $ldap : [ ],
+            'oauth_url' => '//' . \Request::getHost() . '/dsp/oauth/login/'
         ];
 
-        return view('auth.login', $data);
+        return view( 'auth.login', $data );
     }
 
     /**
      * Handle a login request to the application.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function postLogin(Request $request)
+    public function postLogin( Request $request )
     {
-        $submit = $request->input('submit');
+        $submit = $request->input( 'submit' );
 
-        if('dsp' !== $submit)
+        if ( 'dsp' !== $submit )
         {
-            return SplashController::handleLdapLogin($submit);
+            return SplashController::handleADLdapLogin( $submit );
         }
 
-        $this->validate($request, [
-            'email' => 'required|email', 'password' => 'required',
-        ]);
+        $this->validate(
+            $request,
+            [
+                'email'    => 'required|email',
+                'password' => 'required',
+            ]
+        );
 
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->only( 'email', 'password' );
 
         //if user management not available then only system admins can login.
-        if(!class_exists('\DreamFactory\Rave\User\Resources\System\User'))
+        if ( !class_exists( '\DreamFactory\Rave\User\Resources\System\User' ) )
         {
             $credentials['is_sys_admin'] = 1;
         }
@@ -130,46 +136,48 @@ class AuthController extends Controller {
         //Only active users are allowed to login.
         $credentials['is_active'] = 1;
 
-        if ($this->auth->attempt($credentials, $request->has('remember')))
+        if ( $this->auth->attempt( $credentials, $request->has( 'remember' ) ) )
         {
             $user = \Auth::getUser();
-            $user->update(['last_login_date' => Carbon::now()->toDateTimeString()]);
-            SessionUtil::setUserInfo($user);
-            return redirect()->intended($this->redirectPath());
+            $user->update( [ 'last_login_date' => Carbon::now()->toDateTimeString() ] );
+            SessionUtil::setUserInfo( $user );
+
+            return redirect()->intended( $this->redirectPath() );
         }
 
-        return redirect($this->loginPath())
-            ->withInput($request->only('email', 'remember'))
-            ->withErrors([
-                             'email' => $this->getFailedLoginMessage(),
-                         ]);
+        return redirect( $this->loginPath() )->withInput( $request->only( 'email', 'remember' ) )->withErrors(
+                [
+                    'email' => $this->getFailedLoginMessage(),
+                ]
+            );
     }
-
 
     /**
      * Handle a registration request for the application.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function postRegister(Request $request)
+    public function postRegister( Request $request )
     {
-        $validator = $this->registrar->validator($request->all());
+        $validator = $this->registrar->validator( $request->all() );
 
-        if ($validator->fails())
+        if ( $validator->fails() )
         {
             $this->throwValidationException(
-                $request, $validator
+                $request,
+                $validator
             );
         }
 
-        $user = $this->registrar->create($request->all());
+        $user = $this->registrar->create( $request->all() );
 
-        if(!\Auth::check())
+        if ( !\Auth::check() )
         {
             $this->auth->login( $user );
         }
 
-        return redirect($this->redirectPath());
+        return redirect( $this->redirectPath() );
     }
 }
