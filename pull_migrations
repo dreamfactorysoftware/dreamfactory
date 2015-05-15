@@ -1,0 +1,65 @@
+#!/usr/bin/env php
+<?php
+/**
+ * Recursively copy files from one directory to another
+ *
+ * @param string $src - Source of files being moved
+ * @param string $dst - Destination of files being moved
+ *
+ * @return bool
+ */
+function rcopy( $src, $dst )
+{
+
+    // If source is not a directory stop processing
+    if ( !is_dir( $src ) )
+    {
+        return false;
+    }
+
+    // If the destination directory does not exist create it
+    if ( !is_dir( $dst ) )
+    {
+        if ( !mkdir( $dst ) )
+        {
+            // If the destination directory could not be created stop processing
+            return false;
+        }
+    }
+
+    // Open the source directory to read in files
+    $i = new DirectoryIterator( $src );
+    foreach ( $i as $f )
+    {
+        if ( $f->isFile() )
+        {
+            copy( $f->getRealPath(), "$dst/" . $f->getFilename() );
+        }
+        else if ( !$f->isDot() && $f->isDir() )
+        {
+            rcopy( $f->getRealPath(), "$dst/$f" );
+        }
+    }
+
+    return true;
+}
+
+$sources = [
+    'vendor/dreamfactory/rave/database/migrations/',
+    'vendor/dreamfactory/rave-aws/database/migrations/',
+    'vendor/dreamfactory/rave-azure/database/migrations/',
+    'vendor/dreamfactory/rave-mongodb/database/migrations/',
+    'vendor/dreamfactory/rave-rackspace/database/migrations/',
+    'vendor/dreamfactory/rave-rws/database/migrations/',
+    'vendor/dreamfactory/rave-sqldb/database/migrations/',
+    'vendor/dreamfactory/rave-user-mgmt/database/migrations/',
+    'vendor/dreamfactory/dsp-adldap/database/migrations/',
+    'vendor/dreamfactory/dsp-oauth/database/migrations/',
+];
+
+$destination = 'database/migrations/';
+
+foreach ($sources as $source)
+{
+    rcopy($source, $destination);
+}
