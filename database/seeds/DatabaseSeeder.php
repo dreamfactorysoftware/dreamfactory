@@ -51,6 +51,10 @@ class DatabaseSeeder extends Seeder
         {
             $this->call( 'DreamFactory\\Rave\\Salesforce\\Database\\Seeds\\DatabaseSeeder' );
         }
+        if ( class_exists( 'DreamFactory\\Rave\\User\\Database\\Seeds\\DatabaseSeeder' ) )
+        {
+            $this->call( 'DreamFactory\\Rave\\User\\Database\\Seeds\\DatabaseSeeder' );
+        }
         if ( class_exists( 'DreamFactory\\DSP\\OAuth\\Database\\Seeds\\DatabaseSeeder' ) )
         {
             $this->call( 'DreamFactory\\DSP\\OAuth\\Database\\Seeds\\DatabaseSeeder' );
