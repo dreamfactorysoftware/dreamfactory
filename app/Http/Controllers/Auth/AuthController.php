@@ -53,7 +53,7 @@ class AuthController extends Controller
     public function getRegister()
     {
         $auth = \Auth::check();
-        $user = \Auth::getUser();
+        $user = \Auth::user();
 
         if ( $auth && !empty( $user ) && $user->is_sys_admin )
         {
@@ -138,7 +138,7 @@ class AuthController extends Controller
 
         if ( $this->auth->attempt( $credentials, $request->has( 'remember' ) ) )
         {
-            $user = \Auth::getUser();
+            $user = \Auth::user();
             $user->update( [ 'last_login_date' => Carbon::now()->toDateTimeString() ] );
             SessionUtil::setUserInfo( $user );
 
@@ -146,10 +146,10 @@ class AuthController extends Controller
         }
 
         return redirect( $this->loginPath() )->withInput( $request->only( 'email', 'remember' ) )->withErrors(
-                [
-                    'email' => $this->getFailedLoginMessage(),
-                ]
-            );
+            [
+                'email' => $this->getFailedLoginMessage(),
+            ]
+        );
     }
 
     /**
