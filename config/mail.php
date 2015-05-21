@@ -54,7 +54,7 @@ return [
 	|
 	*/
 
-	'from' => ['address' => 'areef.islam@gmail.com', 'name' => 'Rave System'],
+	'from' => ['address' => 'no-reply@dreamfactory.com', 'name' => 'DreamFactory Software'],
 
 	/*
 	|--------------------------------------------------------------------------
