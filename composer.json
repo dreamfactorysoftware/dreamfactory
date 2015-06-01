@@ -105,7 +105,20 @@
       "database"
     ],
     "psr-4": {
-      "App\\": "app/"
+      "App\\": "app/",
+      "DreamFactory\\Rave\\": "workbench/repos/rave/src/",
+      "DreamFactory\\Rave\\Aws\\": "workbench/repos/rave-aws/src/",
+      "DreamFactory\\Rave\\Azure\\": "workbench/repos/rave-azure/src/",
+      "DreamFactory\\Rave\\CouchDb\\": "workbench/repos/rave-couchdb/src/",
+      "DreamFactory\\Rave\\MongoDb\\": "workbench/repos/rave-mongodb/src/",
+      "DreamFactory\\Rave\\Rackspace\\": "workbench/repos/rave-rackspace/src/",
+      "DreamFactory\\Rave\\Rws\\": "workbench/repos/rave-rws/src/",
+      "DreamFactory\\Rave\\Salesforce\\": "workbench/repos/rave-salesforce/src/",
+      "DreamFactory\\Rave\\SqlDbCore\\": "workbench/repos/rave-sqldb-core/src/",
+      "DreamFactory\\Rave\\SqlDb\\": "workbench/repos/rave-sqldb/src/",
+      "DreamFactory\\Rave\\User\\": "workbench/repos/rave-user-mgmt/src/",
+      "DreamFactory\\DSP\\ADLdap\\": "workbench/repos/dsp-adldap/src/",
+      "DreamFactory\\DSP\\OAuth\\": "workbench/repos/dsp-oauth/src/"
     }
   },
   "autoload-dev": {
