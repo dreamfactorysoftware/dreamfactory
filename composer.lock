@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2354c2729a09f28d9d18bd33afec9c9f",
+    "hash": "a24ada2392ecd110aa9d20a115710564",
     "packages": [
         {
             "name": "adldap/adldap",
@@ -268,6 +268,101 @@
                 "preload"
             ],
             "time": "2015-05-26 10:57:51"
+        },
+        {
+            "name": "composer/installers",
+            "version": "v1.0.21",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/composer/installers.git",
+                "reference": "d64e23fce42a4063d63262b19b8e7c0f3b5e4c45"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/composer/installers/zipball/d64e23fce42a4063d63262b19b8e7c0f3b5e4c45",
+                "reference": "d64e23fce42a4063d63262b19b8e7c0f3b5e4c45",
+                "shasum": ""
+            },
+            "replace": {
+                "roundcube/plugin-installer": "*",
+                "shama/baton": "*"
+            },
+            "require-dev": {
+                "composer/composer": "1.0.*@dev",
+                "phpunit/phpunit": "4.1.*"
+            },
+            "type": "composer-installer",
+            "extra": {
+                "class": "Composer\\Installers\\Installer",
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Composer\\Installers\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kyle Robinson Young",
+                    "email": "kyle@dontkry.com",
+                    "homepage": "https://github.com/shama"
+                }
+            ],
+            "description": "A multi-framework Composer library installer",
+            "homepage": "http://composer.github.com/installers/",
+            "keywords": [
+                "Craft",
+                "Dolibarr",
+                "Hurad",
+                "MODX Evo",
+                "OXID",
+                "SMF",
+                "Thelia",
+                "WolfCMS",
+                "agl",
+                "aimeos",
+                "annotatecms",
+                "bitrix",
+                "cakephp",
+                "chef",
+                "codeigniter",
+                "concrete5",
+                "croogo",
+                "dokuwiki",
+                "drupal",
+                "elgg",
+                "fuelphp",
+                "grav",
+                "installer",
+                "joomla",
+                "kohana",
+                "laravel",
+                "lithium",
+                "magento",
+                "mako",
+                "mediawiki",
+                "modulework",
+                "moodle",
+                "phpbb",
+                "piwik",
+                "ppi",
+                "puppet",
+                "roundcube",
+                "shopware",
+                "silverstripe",
+                "symfony",
+                "typo3",
+                "wordpress",
+                "zend",
+                "zikula"
+            ],
+            "time": "2015-02-18 17:17:01"
         },
         {
             "name": "danielstjules/stringy",
@@ -540,6 +635,61 @@
             "time": "2015-05-18 19:46:49"
         },
         {
+            "name": "dreamfactory/dsp-admin-app",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:dreamfactorysoftware/dsp-admin-app.git",
+                "reference": "9e3590ec6d03c6461321c08293590827dec33f7c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/dsp-admin-app/zipball/9e3590ec6d03c6461321c08293590827dec33f7c",
+                "reference": "9e3590ec6d03c6461321c08293590827dec33f7c",
+                "shasum": ""
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "type": "dreamfactory-app",
+            "extra": {
+                "branch-alias": {
+                    "dev-develop": "0.9-dev"
+                },
+                "installer-name": "dreamfactory"
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Todd Appleton",
+                    "email": "toddappleton@dreamfactory.com",
+                    "role": "Lead Developer and QA, client-side"
+                }
+            ],
+            "description": "DreamFactory Services Platform(tm) Admin Console",
+            "homepage": "https://github.com/dreamfactorysoftware/dsp-admin-app/",
+            "keywords": [
+                "admin",
+                "cloud-computing",
+                "dsp",
+                "dsp-core",
+                "esb",
+                "framework",
+                "remote web services",
+                "rest",
+                "service bus"
+            ],
+            "support": {
+                "email": "support@dreamfactory.com",
+                "issues": "https://github.com/dreamfactorysoftware/dsp-admin-app/issues",
+                "wiki": "https://github.com/dreamfactorysoftware/dsp-admin-app/wiki",
+                "source": "https://github.com/dreamfactorysoftware/dsp-admin-app"
+            },
+            "time": "2015-06-02 18:40:09"
+        },
+        {
             "name": "dreamfactory/dsp-oauth",
             "version": "dev-develop",
             "source": {
@@ -650,12 +800,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/rave.git",
-                "reference": "bba47a2b85bfc4858406ec0ac8b45b2977c646ed"
+                "reference": "8a4115e17b1ad431f2f2c235b065d1d5a8e58ceb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/rave/zipball/bba47a2b85bfc4858406ec0ac8b45b2977c646ed",
-                "reference": "bba47a2b85bfc4858406ec0ac8b45b2977c646ed",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/rave/zipball/8a4115e17b1ad431f2f2c235b065d1d5a8e58ceb",
+                "reference": "8a4115e17b1ad431f2f2c235b065d1d5a8e58ceb",
                 "shasum": ""
             },
             "require": {
@@ -712,7 +862,7 @@
                 "source": "https://github.com/dreamfactorysoftware/rave/tree/develop",
                 "issues": "https://github.com/dreamfactorysoftware/rave/issues"
             },
-            "time": "2015-05-29 20:16:17"
+            "time": "2015-06-02 14:58:01"
         },
         {
             "name": "dreamfactory/rave-aws",
@@ -966,12 +1116,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/rave-rws.git",
-                "reference": "8ac8021be4131bc09d8226bb930c1b7b98c299b3"
+                "reference": "3c3bc428f56a60b2316771c4c5b06642b0de6cc0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/rave-rws/zipball/8ac8021be4131bc09d8226bb930c1b7b98c299b3",
-                "reference": "8ac8021be4131bc09d8226bb930c1b7b98c299b3",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/rave-rws/zipball/3c3bc428f56a60b2316771c4c5b06642b0de6cc0",
+                "reference": "3c3bc428f56a60b2316771c4c5b06642b0de6cc0",
                 "shasum": ""
             },
             "require": {
@@ -1014,7 +1164,7 @@
                 "wiki": "https://github.com/dreamfactorysoftware/rave/wiki",
                 "source": "https://github.com/dreamfactorysoftware/rave"
             },
-            "time": "2015-05-29 20:28:08"
+            "time": "2015-06-02 15:51:11"
         },
         {
             "name": "dreamfactory/rave-sqldb",
@@ -1022,12 +1172,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/rave-sqldb.git",
-                "reference": "380dbc35a3854d6b0f353abc07e65f9ffb6e9334"
+                "reference": "8000195efff0b93c1fc64a7074da221a51cda04e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/rave-sqldb/zipball/380dbc35a3854d6b0f353abc07e65f9ffb6e9334",
-                "reference": "380dbc35a3854d6b0f353abc07e65f9ffb6e9334",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/rave-sqldb/zipball/8000195efff0b93c1fc64a7074da221a51cda04e",
+                "reference": "8000195efff0b93c1fc64a7074da221a51cda04e",
                 "shasum": ""
             },
             "require": {
@@ -1087,7 +1237,7 @@
                 "wiki": "https://github.com/dreamfactorysoftware/rave/wiki",
                 "source": "https://github.com/dreamfactorysoftware/rave"
             },
-            "time": "2015-05-29 20:21:48"
+            "time": "2015-06-02 15:43:46"
         },
         {
             "name": "dreamfactory/rave-sqldb-core",
@@ -1168,12 +1318,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/rave-user-mgmt.git",
-                "reference": "25a9b2230d2b658cbf5eeb5c1b6f95042ac497e9"
+                "reference": "527a9c15ce4428c41055abe638bfda91f3c5e16b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/rave-user-mgmt/zipball/25a9b2230d2b658cbf5eeb5c1b6f95042ac497e9",
-                "reference": "25a9b2230d2b658cbf5eeb5c1b6f95042ac497e9",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/rave-user-mgmt/zipball/527a9c15ce4428c41055abe638bfda91f3c5e16b",
+                "reference": "527a9c15ce4428c41055abe638bfda91f3c5e16b",
                 "shasum": ""
             },
             "require": {
@@ -1216,7 +1366,7 @@
                 "wiki": "https://github.com/dreamfactorysoftware/rave/wiki",
                 "source": "https://github.com/dreamfactorysoftware/rave"
             },
-            "time": "2015-05-29 20:21:07"
+            "time": "2015-06-01 21:11:58"
         },
         {
             "name": "guzzle/guzzle",
@@ -4917,6 +5067,12 @@
             "alias": "dev-master",
             "alias_normalized": "9999999-dev",
             "version": "dev-develop",
+            "package": "dreamfactory/dsp-admin-app"
+        },
+        {
+            "alias": "dev-master",
+            "alias_normalized": "9999999-dev",
+            "version": "dev-develop",
             "package": "dreamfactory/rave"
         },
         {
@@ -4976,6 +5132,7 @@
     ],
     "minimum-stability": "dev",
     "stability-flags": {
+        "dreamfactory/dsp-admin-app": 20,
         "dreamfactory/rave": 20,
         "dreamfactory/rave-aws": 20,
         "dreamfactory/rave-azure": 20,
