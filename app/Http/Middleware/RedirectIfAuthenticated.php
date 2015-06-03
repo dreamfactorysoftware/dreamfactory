@@ -34,7 +34,7 @@ class RedirectIfAuthenticated {
 	{
 		if ($this->auth->check())
 		{
-			return new RedirectResponse(url('/launchpad'));
+			return new RedirectResponse(url(env('LANDING_PAGE', '/launchpad')));
 		}
 
 		return $next($request);

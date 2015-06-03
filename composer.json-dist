@@ -1,119 +1,151 @@
 {
-  "name": "dreamfactory/app",
+  "name": "dreamfactory/dsp-laravel",
   "description": "The DreamFactory RAVE(tm) Core.",
   "keywords": [
-	"dreamfactory",
-	"dsp",
-	"rave"
+    "dreamfactory",
+    "dsp",
+    "rave"
   ],
   "homepage": "https://www.dreamfactory.com/",
   "license": "Apache-2.0",
   "authors": [
-	{
-	  "name": "Arif Islam",
-	  "email": "arifislam@dreamfactory.com"
-	},
-	{
-	  "name": "Jerry Ablan",
-	  "email": "jerryablan@dreamfactory.com"
-	},
-	{
-	  "name": "Lee Hicks",
-	  "email": "leehicks@dreamfactory.com"
-	}
+    {
+      "name": "Arif Islam",
+      "email": "arifislam@dreamfactory.com"
+    },
+    {
+      "name": "Jerry Ablan",
+      "email": "jerryablan@dreamfactory.com"
+    },
+    {
+      "name": "Lee Hicks",
+      "email": "leehicks@dreamfactory.com"
+    }
   ],
   "support": {
-	"email": "support@dreamfactory.com",
-	"issues": "https://github.com/dreamfactorysoftware/rave/issues",
-	"wiki": "https://github.com/dreamfactorysoftware/rave/wiki",
-	"source": "https://github.com/dreamfactorysoftware/rave"
+    "email": "support@dreamfactory.com",
+    "issues": "https://github.com/dreamfactorysoftware/rave/issues",
+    "wiki": "https://github.com/dreamfactorysoftware/rave/wiki",
+    "source": "https://github.com/dreamfactorysoftware/rave"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "repositories":      [
-	{
-	  "type": "vcs",
-	  "url":  "git@github.com:dreamfactorysoftware/rave.git"
-	},
+  "repositories": [
     {
-      "type":"vcs",
-      "url":  "git@github.com:dreamfactorysoftware/rave-aws.git"
+      "type": "vcs",
+      "url": "git@github.com:dreamfactorysoftware/dsp-admin-app.git"
     },
     {
-      "type":"vcs",
-      "url":  "git@github.com:dreamfactorysoftware/rave-azure.git"
+      "type": "vcs",
+      "url": "git@github.com:dreamfactorysoftware/rave.git"
     },
     {
-      "type":"vcs",
-      "url":  "git@github.com:dreamfactorysoftware/rave-rackspace.git"
+      "type": "vcs",
+      "url": "git@github.com:dreamfactorysoftware/rave-aws.git"
     },
     {
-      "type":"vcs",
-      "url":  "git@github.com:dreamfactorysoftware/rave-sqldb.git"
+      "type": "vcs",
+      "url": "git@github.com:dreamfactorysoftware/rave-azure.git"
     },
     {
-      "type":"vcs",
-      "url":  "git@github.com:dreamfactorysoftware/rave-mongodb.git"
+      "type": "vcs",
+      "url": "git@github.com:dreamfactorysoftware/rave-rackspace.git"
+    },
+    {
+      "type": "vcs",
+      "url": "git@github.com:dreamfactorysoftware/rave-sqldb.git"
+    },
+    {
+      "type": "vcs",
+      "url": "git@github.com:dreamfactorysoftware/rave-mongodb.git"
+    },
+    {
+      "type": "vcs",
+      "url": "git@github.com:dreamfactorysoftware/rave-rws.git"
+    },
+    {
+      "type": "vcs",
+      "url": "git@github.com:dreamfactorysoftware/rave-sqldb-core.git"
+    },
+    {
+      "type": "vcs",
+      "url": "git@github.com:dreamfactorysoftware/rave-user-mgmt.git"
+    },
+    {
+      "type": "vcs",
+      "url": "git@github.com:dreamfactorysoftware/dsp-oauth.git"
+    },
+    {
+      "type": "vcs",
+      "url": "git@github.com:dreamfactorysoftware/dsp-adldap.git"
     },
     {
       "type": "pear",
       "url": "http://pear.php.net"
     }
   ],
-	"require": {
-		"laravel/framework": "5.0.*",
-	    "dreamfactory/php-utils": "dev-develop as dev-master",
-	    "dreamfactory/rave": "dev-develop as dev-master",
-        "dreamfactory/rave-aws": "dev-develop as dev-master",
-        "dreamfactory/rave-azure": "dev-develop as dev-master",
-        "dreamfactory/rave-rackspace": "dev-develop as dev-master",
-        "dreamfactory/rave-sqldb": "dev-develop as dev-master",
-        "dreamfactory/rave-mongodb": "dev-develop as dev-master",
-        "rhumsaa/array_column": "~1.1"
-	},
-	"require-dev": {
-	  	"barryvdh/laravel-ide-helper": "~2.0",
-        "laracasts/generators": "~1.0",
-        "laracasts/testdummy": "~2.0",
-		"phpunit/phpunit": "~4.0",
-		"phpspec/phpspec": "~2.1"
-	},
-	"autoload": {
-		"classmap": [
-			"database"
-		],
-		"psr-4": {
-			"App\\": "app/",
-		}
-	},
-	"autoload-dev": {
-		"classmap": [
-			"tests/TestCase.php"
-		]
-	},
-	"scripts": {
-		"post-install-cmd": [
-			"php artisan clear-compiled",
-		  	"php artisan ide-helper:generate",
-			"php artisan optimize"
-		],
-		"post-update-cmd": [
-			"php artisan clear-compiled",
-		  	"php artisan ide-helper:generate",
-			"php artisan optimize"
-		],
-		"post-create-project-cmd": [
-            "php -r \"copy('.env-dist', '.env');\"",
-            "php -r \"copy('phpunit.xml-dist', 'phpunit.xml');\"",
-			"php artisan key:generate"
-		]
-	},
-	"config": {
-		"preferred-install": "dist"
-	},
-	"extra": {
-	  "branch-alias": {
-		"dev-develop": "0.0.x-dev"
-	  }
-	}
+  "require": {
+    "laravel/framework": "5.0.*",
+    "dreamfactory/dsp-admin-app": "dev-develop as dev-master",
+    "dreamfactory/rave": "dev-develop as dev-master",
+    "dreamfactory/rave-aws": "dev-develop as dev-master",
+    "dreamfactory/rave-azure": "dev-develop as dev-master",
+    "dreamfactory/rave-rackspace": "dev-develop as dev-master",
+    "dreamfactory/rave-sqldb": "dev-develop as dev-master",
+    "dreamfactory/rave-mongodb": "dev-develop as dev-master",
+    "dreamfactory/rave-rws": "dev-develop as dev-master",
+    "dreamfactory/rave-user-mgmt": "dev-develop as dev-master",
+    "dreamfactory/dsp-oauth": "dev-develop as dev-master",
+    "dreamfactory/dsp-adldap": "dev-develop as dev-master"
+  },
+  "require-dev": {
+    "barryvdh/laravel-ide-helper": "~2.0",
+    "laracasts/generators": "~1.0",
+    "laracasts/testdummy": "~2.0",
+    "phpunit/phpunit": "~4.0",
+    "phpspec/phpspec": "~2.1"
+  },
+  "autoload": {
+    "classmap": [
+      "database"
+    ],
+    "psr-4": {
+      "App\\": "app/"
+    }
+  },
+  "autoload-dev": {
+    "classmap": [
+      "tests/TestCase.php"
+    ]
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "php artisan clear-compiled",
+      "php artisan ide-helper:generate",
+      "php artisan optimize",
+      "php pull_migrations"
+    ],
+    "post-update-cmd": [
+      "php artisan clear-compiled",
+      "php artisan ide-helper:generate",
+      "php artisan optimize",
+      "php pull_migrations"
+    ],
+    "post-create-project-cmd": [
+      "php -r \"copy('.env-dist', '.env');\"",
+      "php -r \"copy('phpunit.xml-dist', 'phpunit.xml');\"",
+      "php artisan key:generate"
+    ]
+  },
+  "config": {
+    "preferred-install": "dist"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-develop": "0.0.x-dev"
+    },
+    "installer-paths": {
+      "public/{$name}/": ["type:dreamfactory-app"]
+    }
+  }
 }

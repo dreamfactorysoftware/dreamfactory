@@ -47,7 +47,8 @@ class SplashController extends Controller
      */
     public function index()
     {
-        return view( 'splash' );
+        return redirect(env('LANDING_PAGE', '/launchpad'));
+//        return view( 'splash' );
     }
 
     /**
@@ -105,7 +106,7 @@ class SplashController extends Controller
 
                 \Auth::login( $user, \Request::has( 'remember' ) );
 
-                return redirect()->intended( '/launchpad' );
+                return redirect()->intended( env('LANDING_PAGE', '/launchpad') );
             }
         }
 
@@ -150,7 +151,7 @@ class SplashController extends Controller
         }
         else
         {
-            return redirect()->intended( '/launchpad' );
+            return redirect()->intended( env('LANDING_PAGE', '/launchpad') );
         }
     }
 }
