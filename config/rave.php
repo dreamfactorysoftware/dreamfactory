@@ -38,7 +38,7 @@ return array(
     'dsp.db_timestamp_format'       => null,
     /** Enable/disable detailed CORS logging */
     'dsp.log_cors_info'             => false,
-    'default_cache_ttl'             => 300,
+    'default_cache_ttl'             => env('CACHE_TTL', 300),
     'cors' => array(
         'defaults' => array(
             'supportsCredentials' => false,
