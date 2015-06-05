@@ -3,7 +3,7 @@
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\SplashController;
 use DreamFactory\Rave\Models\Service;
-use DreamFactory\Rave\Utility\Session as SessionUtil;
+use DreamFactory\Rave\Utility\Session;
 use DreamFactory\Rave\Components\Registrar;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
@@ -140,7 +140,7 @@ class AuthController extends Controller
         {
             $user = \Auth::user();
             $user->update( [ 'last_login_date' => Carbon::now()->toDateTimeString() ] );
-            SessionUtil::setUserInfo( $user );
+            Session::setUserInfo( $user );
 
             return redirect()->intended( $this->redirectPath() );
         }
