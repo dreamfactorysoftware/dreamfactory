@@ -27,6 +27,7 @@ use DreamFactory\Rave\Utility\ServiceHandler;
 use DreamFactory\Rave\Models\User as DspUser;
 use DreamFactory\DSP\ADLdap\Services\LDAP as LdapService;
 use DreamFactory\DSP\ADLdap\Contracts\Provider as ADLdapProvider;
+use DreamFactory\Rave\Utility\Session;
 use Laravel\Socialite\Contracts\Provider;
 use Laravel\Socialite\Contracts\User;
 
@@ -147,7 +148,7 @@ class SplashController extends Controller
 
         if ( \Request::ajax() )
         {
-            return [ 'success' => true, 'session_id' => \Session::getId() ];
+            return [ 'success' => true, 'session_id' => Session::getId() ];
         }
         else
         {
