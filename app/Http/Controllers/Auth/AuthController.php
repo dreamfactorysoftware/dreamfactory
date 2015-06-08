@@ -85,12 +85,12 @@ class AuthController extends Controller
         $oauth = Service::whereIn(
             'type',
             [ 'oauth_facebook', 'oauth_twitter', 'oauth_github', 'oauth_google' ]
-        )->whereIsActive( 1 )->get()->toArray();
+        )->whereIsActive( 1 )->get(['name'])->toArray();
 
         $ldap = Service::whereIn(
             'type',
             [ 'ldap', 'adldap' ]
-        )->whereIsActive( 1 )->get()->toArray();
+        )->whereIsActive( 1 )->get(['name'])->toArray();
 
         $data = [
             'oauth'     => count( $oauth ) > 0 ? $oauth : [ ],
