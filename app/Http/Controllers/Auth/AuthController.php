@@ -141,6 +141,7 @@ class AuthController extends Controller
             $user = \Auth::user();
             $user->update( [ 'last_login_date' => Carbon::now()->toDateTimeString() ] );
             Session::setUserInfo( $user );
+            Session::forgetApiKeys();
 
             return redirect()->intended( $this->redirectPath() );
         }
