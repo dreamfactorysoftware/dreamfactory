@@ -1,10 +1,10 @@
 {
-  "name": "dreamfactory/dsp-laravel",
-  "description": "The DreamFactory RAVE(tm) Core.",
+  "name": "dreamfactory/dreamfactory",
+  "description": "The DreamFactory(tm) Platform.",
   "keywords": [
     "dreamfactory",
     "dsp",
-    "rave"
+    "rest"
   ],
   "homepage": "https://www.dreamfactory.com/",
   "license": "Apache-2.0",
@@ -24,9 +24,9 @@
   ],
   "support": {
     "email": "support@dreamfactory.com",
-    "issues": "https://github.com/dreamfactorysoftware/rave/issues",
-    "wiki": "https://github.com/dreamfactorysoftware/rave/wiki",
-    "source": "https://github.com/dreamfactorysoftware/rave"
+    "source": "https://github.com/dreamfactorysoftware/dreamfactory",
+    "issues": "https://github.com/dreamfactorysoftware/dreamfactory/issues",
+    "wiki": "https://wiki.dreamfactory.com"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -37,47 +37,47 @@
     },
     {
       "type": "vcs",
-      "url": "git@github.com:dreamfactorysoftware/rave.git"
+      "url": "git@github.com:dreamfactorysoftware/df-core.git"
     },
     {
       "type": "vcs",
-      "url": "git@github.com:dreamfactorysoftware/rave-aws.git"
+      "url": "git@github.com:dreamfactorysoftware/df-aws.git"
     },
     {
       "type": "vcs",
-      "url": "git@github.com:dreamfactorysoftware/rave-azure.git"
+      "url": "git@github.com:dreamfactorysoftware/df-azure.git"
     },
     {
       "type": "vcs",
-      "url": "git@github.com:dreamfactorysoftware/rave-rackspace.git"
+      "url": "git@github.com:dreamfactorysoftware/df-rackspace.git"
     },
     {
       "type": "vcs",
-      "url": "git@github.com:dreamfactorysoftware/rave-sqldb.git"
+      "url": "git@github.com:dreamfactorysoftware/df-sqldb.git"
     },
     {
       "type": "vcs",
-      "url": "git@github.com:dreamfactorysoftware/rave-mongodb.git"
+      "url": "git@github.com:dreamfactorysoftware/df-mongodb.git"
     },
     {
       "type": "vcs",
-      "url": "git@github.com:dreamfactorysoftware/rave-rws.git"
+      "url": "git@github.com:dreamfactorysoftware/df-rws.git"
     },
     {
       "type": "vcs",
-      "url": "git@github.com:dreamfactorysoftware/rave-sqldb-core.git"
+      "url": "git@github.com:dreamfactorysoftware/df-sqldb-core.git"
     },
     {
       "type": "vcs",
-      "url": "git@github.com:dreamfactorysoftware/rave-user-mgmt.git"
+      "url": "git@github.com:dreamfactorysoftware/df-user.git"
     },
     {
       "type": "vcs",
-      "url": "git@github.com:dreamfactorysoftware/dsp-oauth.git"
+      "url": "git@github.com:dreamfactorysoftware/df-oauth.git"
     },
     {
       "type": "vcs",
-      "url": "git@github.com:dreamfactorysoftware/dsp-adldap.git"
+      "url": "git@github.com:dreamfactorysoftware/df-adldap.git"
     },
     {
       "type": "pear",
@@ -87,16 +87,16 @@
   "require": {
     "laravel/framework": "5.0.*",
     "dreamfactory/dsp-admin-app": "dev-develop as dev-master",
-    "dreamfactory/rave": "dev-develop as dev-master",
-    "dreamfactory/rave-aws": "dev-develop as dev-master",
-    "dreamfactory/rave-azure": "dev-develop as dev-master",
-    "dreamfactory/rave-rackspace": "dev-develop as dev-master",
-    "dreamfactory/rave-sqldb": "dev-develop as dev-master",
-    "dreamfactory/rave-mongodb": "dev-develop as dev-master",
-    "dreamfactory/rave-rws": "dev-develop as dev-master",
-    "dreamfactory/rave-user-mgmt": "dev-develop as dev-master",
-    "dreamfactory/dsp-oauth": "dev-develop as dev-master",
-    "dreamfactory/dsp-adldap": "dev-develop as dev-master"
+    "dreamfactory/df-core": "dev-develop as dev-master",
+    "dreamfactory/df-aws": "dev-develop as dev-master",
+    "dreamfactory/df-azure": "dev-develop as dev-master",
+    "dreamfactory/df-rackspace": "dev-develop as dev-master",
+    "dreamfactory/df-sqldb": "dev-develop as dev-master",
+    "dreamfactory/df-mongodb": "dev-develop as dev-master",
+    "dreamfactory/df-rws": "dev-develop as dev-master",
+    "dreamfactory/df-user": "dev-develop as dev-master",
+    "dreamfactory/df-oauth": "dev-develop as dev-master",
+    "dreamfactory/df-adldap": "dev-develop as dev-master"
   },
   "require-dev": {
     "barryvdh/laravel-ide-helper": "~2.0",

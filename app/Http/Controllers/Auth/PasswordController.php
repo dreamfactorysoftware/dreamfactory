@@ -1,8 +1,8 @@
 <?php namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use DreamFactory\Rave\Resources\System\Password;
-use DreamFactory\Rave\Resources\UserPasswordResource;
+use DreamFactory\Core\Resources\System\Password;
+use DreamFactory\Core\Resources\UserPasswordResource;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\PasswordBroker;
 use Illuminate\Foundation\Auth\ResetsPasswords;

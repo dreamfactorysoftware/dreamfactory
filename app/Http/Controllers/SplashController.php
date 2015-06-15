@@ -1,8 +1,8 @@
 <?php
 /**
- * This file is part of the DreamFactory Rave(tm)
+ * This file is part of the DreamFactory(tm)
  *
- * DreamFactory Rave(tm) <http://github.com/dreamfactorysoftware/rave>
+ * DreamFactory(tm) <http://github.com/dreamfactorysoftware/rave>
  * Copyright 2012-2014 DreamFactory Software, Inc. <support@dreamfactory.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,12 +22,12 @@ namespace App\Http\Controllers;
 
 use Response;
 use Carbon\Carbon;
-use DreamFactory\DSP\OAuth\Services\BaseOAuthService;
-use DreamFactory\Rave\Utility\ServiceHandler;
-use DreamFactory\Rave\Models\User as DspUser;
-use DreamFactory\DSP\ADLdap\Services\LDAP as LdapService;
-use DreamFactory\DSP\ADLdap\Contracts\Provider as ADLdapProvider;
-use DreamFactory\Rave\Utility\Session;
+use DreamFactory\Core\OAuth\Services\BaseOAuthService;
+use DreamFactory\Core\Utility\ServiceHandler;
+use DreamFactory\Core\Models\User as DspUser;
+use DreamFactory\Core\ADLdap\Services\LDAP as LdapService;
+use DreamFactory\Core\ADLdap\Contracts\Provider as ADLdapProvider;
+use DreamFactory\Core\Utility\Session;
 use Laravel\Socialite\Contracts\Provider;
 use Laravel\Socialite\Contracts\User;
 
@@ -58,8 +58,8 @@ class SplashController extends Controller
      * @param $provider
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     * @throws \DreamFactory\Rave\Exceptions\ForbiddenException
-     * @throws \DreamFactory\Rave\Exceptions\NotFoundException
+     * @throws \DreamFactory\Core\Exceptions\ForbiddenException
+     * @throws \DreamFactory\Core\Exceptions\NotFoundException
      */
     public function handleOAuthLogin( $provider )
     {
@@ -78,9 +78,9 @@ class SplashController extends Controller
      * @param $provider
      *
      * @return $this|\Illuminate\Http\RedirectResponse
-     * @throws \DreamFactory\Rave\Exceptions\BadRequestException
-     * @throws \DreamFactory\Rave\Exceptions\ForbiddenException
-     * @throws \DreamFactory\Rave\Exceptions\NotFoundException
+     * @throws \DreamFactory\Core\Exceptions\BadRequestException
+     * @throws \DreamFactory\Core\Exceptions\ForbiddenException
+     * @throws \DreamFactory\Core\Exceptions\NotFoundException
      * @throws \Exception
      */
     public static function handleADLdapLogin( $provider )
@@ -126,8 +126,8 @@ class SplashController extends Controller
      * @param string $serviceName
      *
      * @return array|\Illuminate\Http\RedirectResponse
-     * @throws \DreamFactory\Rave\Exceptions\ForbiddenException
-     * @throws \DreamFactory\Rave\Exceptions\NotFoundException
+     * @throws \DreamFactory\Core\Exceptions\ForbiddenException
+     * @throws \DreamFactory\Core\Exceptions\NotFoundException
      * @throws \Exception
      */
     public function handleOAuthCallback( $serviceName )

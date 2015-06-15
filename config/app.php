@@ -139,8 +139,8 @@ return [
         /**
          * DreamFactory Rave
          */
-        'DreamFactory\Rave\RaveServiceProvider',
-        'DreamFactory\Rave\RaveCorsServiceProvider',
+        'DreamFactory\Core\DfServiceProvider',
+        'DreamFactory\Core\DfCorsServiceProvider',
 
 
         /**

@@ -2,9 +2,9 @@
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\SplashController;
-use DreamFactory\Rave\Models\Service;
-use DreamFactory\Rave\Utility\Session;
-use DreamFactory\Rave\Components\Registrar;
+use DreamFactory\Core\Models\Service;
+use DreamFactory\Core\Utility\Session;
+use DreamFactory\Core\Components\Registrar;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Http\Request;
@@ -128,7 +128,7 @@ class AuthController extends Controller
         $credentials = $request->only( 'email', 'password' );
 
         //if user management not available then only system admins can login.
-        if ( !class_exists( '\DreamFactory\Rave\User\Resources\System\User' ) )
+        if ( !class_exists( '\DreamFactory\Core\User\Resources\System\User' ) )
         {
             $credentials['is_sys_admin'] = 1;
         }

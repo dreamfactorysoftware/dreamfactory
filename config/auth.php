@@ -28,7 +28,7 @@ return [
 	|
 	*/
 
-	'model' => 'DreamFactory\Rave\Models\User',
+	'model' => 'DreamFactory\Core\Models\User',
 
 	/*
 	|--------------------------------------------------------------------------

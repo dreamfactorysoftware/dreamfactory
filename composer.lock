@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2270548a4d269651dbde38649d9fa5bf",
+    "hash": "972d6add11c0b4eb749d7a3adb8a5957",
     "packages": [
         {
             "name": "adldap/adldap",
@@ -484,28 +484,28 @@
             "time": "2014-08-08 21:07:14"
         },
         {
-            "name": "dreamfactory/dsp-adldap",
+            "name": "dreamfactory/df-adldap",
             "version": "dev-develop",
             "source": {
                 "type": "git",
-                "url": "git@github.com:dreamfactorysoftware/dsp-adldap.git",
-                "reference": "2ca3c3f0b8169af753fd9a411a942a6dc3cdd792"
+                "url": "git@github.com:dreamfactorysoftware/df-adldap.git",
+                "reference": "fb6e4dd52a17816dc904c543c64005b8d57ba582"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/dsp-adldap/zipball/2ca3c3f0b8169af753fd9a411a942a6dc3cdd792",
-                "reference": "2ca3c3f0b8169af753fd9a411a942a6dc3cdd792",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-adldap/zipball/fb6e4dd52a17816dc904c543c64005b8d57ba582",
+                "reference": "fb6e4dd52a17816dc904c543c64005b8d57ba582",
                 "shasum": ""
             },
             "require": {
                 "adldap/adldap": "4.0.*",
-                "dreamfactory/rave": "dev-develop as dev-master",
-                "dreamfactory/rave-user-mgmt": "dev-develop as dev-master"
+                "dreamfactory/df-core": "dev-develop as dev-master",
+                "dreamfactory/df-user": "dev-develop as dev-master"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "DreamFactory\\DSP\\ADLdap\\": "src/"
+                    "DreamFactory\\Core\\ADLdap\\": "src/"
                 }
             },
             "license": [
@@ -521,7 +521,7 @@
                     "email": "leehicks@dreamfactory.com"
                 }
             ],
-            "description": "ad/Ldap support for DreamFactory DSP 2.0",
+            "description": "Active Directory & LDAP support for DreamFactory Platform 2.0",
             "homepage": "https://www.dreamfactory.com/",
             "keywords": [
                 "ad",
@@ -529,15 +529,629 @@
                 "dreamfactory",
                 "dsp",
                 "ldap",
-                "rave"
+                "rest"
             ],
             "support": {
                 "email": "support@dreamfactory.com",
-                "issues": "https://github.com/dreamfactorysoftware/rave/issues",
-                "wiki": "https://github.com/dreamfactorysoftware/rave/wiki",
-                "source": "https://github.com/dreamfactorysoftware/rave"
+                "source": "https://github.com/dreamfactorysoftware/df-adldap",
+                "issues": "https://github.com/dreamfactorysoftware/df-adldap/issues",
+                "wiki": "https://wiki.dreamfactory.com"
             },
-            "time": "2015-05-18 19:46:49"
+            "time": "2015-06-12 19:39:59"
+        },
+        {
+            "name": "dreamfactory/df-aws",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:dreamfactorysoftware/df-aws.git",
+                "reference": "7b4c9258db10fb88e34aace1d69377af4ddc12a7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-aws/zipball/7b4c9258db10fb88e34aace1d69377af4ddc12a7",
+                "reference": "7b4c9258db10fb88e34aace1d69377af4ddc12a7",
+                "shasum": ""
+            },
+            "require": {
+                "aws/aws-sdk-php": "~2.7.0",
+                "dreamfactory/df-core": "dev-develop as dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "DreamFactory\\Core\\Aws\\": "src/"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Arif Islam",
+                    "email": "arifislam@dreamfactory.com"
+                },
+                {
+                    "name": "Jerry Ablan",
+                    "email": "jerryablan@dreamfactory.com"
+                },
+                {
+                    "name": "Lee Hicks",
+                    "email": "leehicks@dreamfactory.com"
+                }
+            ],
+            "description": "AWS package containing services for the DreamFactory Platform 2.0.",
+            "homepage": "https://www.dreamfactory.com/",
+            "keywords": [
+                "aws",
+                "dreamfactory",
+                "dsp",
+                "dynamodb",
+                "rest",
+                "s3"
+            ],
+            "support": {
+                "email": "support@dreamfactory.com",
+                "source": "https://github.com/dreamfactorysoftware/df-aws",
+                "issues": "https://github.com/dreamfactorysoftware/df-aws/issues",
+                "wiki": "https://wiki.dreamfactory.com"
+            },
+            "time": "2015-06-12 19:26:35"
+        },
+        {
+            "name": "dreamfactory/df-azure",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:dreamfactorysoftware/df-azure.git",
+                "reference": "2ce2c5fefe00ad9c45448ac8d1edf1072706d74e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-azure/zipball/2ce2c5fefe00ad9c45448ac8d1edf1072706d74e",
+                "reference": "2ce2c5fefe00ad9c45448ac8d1edf1072706d74e",
+                "shasum": ""
+            },
+            "require": {
+                "dreamfactory/azure-sdk-for-php": "dev-develop as dev-master",
+                "dreamfactory/df-core": "dev-develop as dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "DreamFactory\\Core\\Azure\\": "src/"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Arif Islam",
+                    "email": "arifislam@dreamfactory.com"
+                },
+                {
+                    "name": "Jerry Ablan",
+                    "email": "jerryablan@dreamfactory.com"
+                },
+                {
+                    "name": "Lee Hicks",
+                    "email": "leehicks@dreamfactory.com"
+                }
+            ],
+            "description": "Microsoft Azure package containing Azure services for the DreamFactory Platform 2.0. ",
+            "homepage": "https://www.dreamfactory.com/",
+            "keywords": [
+                "azure",
+                "azure blob",
+                "azure table",
+                "dreamfactory",
+                "dsp",
+                "rest"
+            ],
+            "support": {
+                "email": "support@dreamfactory.com",
+                "source": "https://github.com/dreamfactorysoftware/df-azure",
+                "issues": "https://github.com/dreamfactorysoftware/df-azure/issues",
+                "wiki": "https://wiki.dreamfactory.com"
+            },
+            "time": "2015-06-12 19:27:05"
+        },
+        {
+            "name": "dreamfactory/df-core",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:dreamfactorysoftware/df-core.git",
+                "reference": "e8132f04ecda89b9151da9ae7d28c8f639955637"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/e8132f04ecda89b9151da9ae7d28c8f639955637",
+                "reference": "e8132f04ecda89b9151da9ae7d28c8f639955637",
+                "shasum": ""
+            },
+            "require": {
+                "barryvdh/laravel-cors": "0.4.x@dev",
+                "dreamfactory/df-sqldb-core": "dev-develop as dev-master",
+                "dreamfactory/php-utils": "dev-develop as dev-master",
+                "guzzlehttp/guzzle": "~5.0",
+                "php": "~5.4",
+                "ramsey/array_column": "~1.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "@stable"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-develop": "0.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "DreamFactory\\Core\\": "src/"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Arif Islam",
+                    "email": "arifislam@dreamfactory.com"
+                },
+                {
+                    "name": "Lee Hicks",
+                    "email": "leehicks@dreamfactory.com"
+                },
+                {
+                    "name": "Jerry Ablan",
+                    "email": "jerryablan@dreamfactory.com"
+                }
+            ],
+            "description": "DreamFactory(tm) Core Components",
+            "homepage": "https://www.dreamfactory.com/",
+            "keywords": [
+                "api",
+                "baas",
+                "dsp",
+                "mbaas",
+                "paas",
+                "rest"
+            ],
+            "support": {
+                "source": "https://github.com/dreamfactorysoftware/df-core/tree/develop",
+                "issues": "https://github.com/dreamfactorysoftware/df-core/issues"
+            },
+            "time": "2015-06-12 19:24:25"
+        },
+        {
+            "name": "dreamfactory/df-mongodb",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:dreamfactorysoftware/df-mongodb.git",
+                "reference": "56a7b53b025fc974cd1d9674c4de832cbaf08f66"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-mongodb/zipball/56a7b53b025fc974cd1d9674c4de832cbaf08f66",
+                "reference": "56a7b53b025fc974cd1d9674c4de832cbaf08f66",
+                "shasum": ""
+            },
+            "require": {
+                "dreamfactory/df-core": "dev-develop as dev-master"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-develop": "0.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "DreamFactory\\Core\\MongoDb\\": "src/"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Arif Islam",
+                    "email": "arifislam@dreamfactory.com"
+                },
+                {
+                    "name": "Jerry Ablan",
+                    "email": "jerryablan@dreamfactory.com"
+                },
+                {
+                    "name": "Lee Hicks",
+                    "email": "leehicks@dreamfactory.com"
+                }
+            ],
+            "description": "The DreamFactory(tm) MongoDB Service.",
+            "homepage": "https://www.dreamfactory.com/",
+            "keywords": [
+                "database",
+                "db",
+                "dreamfactory",
+                "dsp",
+                "mongodb",
+                "nosql",
+                "rest"
+            ],
+            "support": {
+                "email": "support@dreamfactory.com",
+                "source": "https://github.com/dreamfactorysoftware/df-mongodb",
+                "issues": "https://github.com/dreamfactorysoftware/df-mongodb/issues",
+                "wiki": "https://wiki.dreamfactory.com"
+            },
+            "time": "2015-06-12 19:25:51"
+        },
+        {
+            "name": "dreamfactory/df-oauth",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:dreamfactorysoftware/df-oauth.git",
+                "reference": "77e2ed2db25f909194460aed6497bab2bd2fe263"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-oauth/zipball/77e2ed2db25f909194460aed6497bab2bd2fe263",
+                "reference": "77e2ed2db25f909194460aed6497bab2bd2fe263",
+                "shasum": ""
+            },
+            "require": {
+                "dreamfactory/df-core": "dev-develop as dev-master",
+                "dreamfactory/df-user": "dev-develop as dev-master",
+                "laravel/socialite": "~2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "DreamFactory\\Core\\OAuth\\": "src/"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Arif Islam",
+                    "email": "arifislam@dreamfactory.com"
+                },
+                {
+                    "name": "Lee Hicks",
+                    "email": "leehicks@dreamfactory.com"
+                }
+            ],
+            "description": "OAuth support for DreamFactory Platform 2.0",
+            "homepage": "https://www.dreamfactory.com/",
+            "keywords": [
+                "dreamfactory",
+                "dsp",
+                "oauth",
+                "rest"
+            ],
+            "support": {
+                "email": "support@dreamfactory.com",
+                "source": "https://github.com/dreamfactorysoftware/df-oauth",
+                "issues": "https://github.com/dreamfactorysoftware/df-oauth/issues",
+                "wiki": "https://wiki.dreamfactory.com"
+            },
+            "time": "2015-06-12 19:39:40"
+        },
+        {
+            "name": "dreamfactory/df-rackspace",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:dreamfactorysoftware/df-rackspace.git",
+                "reference": "e46754c2bd8339f515549a024258679b70db17fa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-rackspace/zipball/e46754c2bd8339f515549a024258679b70db17fa",
+                "reference": "e46754c2bd8339f515549a024258679b70db17fa",
+                "shasum": ""
+            },
+            "require": {
+                "dreamfactory/df-core": "dev-develop as dev-master",
+                "rackspace/php-opencloud": "~1.5.0@stable"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "DreamFactory\\Core\\Rackspace\\": "src/"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Arif Islam",
+                    "email": "arifislam@dreamfactory.com"
+                },
+                {
+                    "name": "Jerry Ablan",
+                    "email": "jerryablan@dreamfactory.com"
+                },
+                {
+                    "name": "Lee Hicks",
+                    "email": "leehicks@dreamfactory.com"
+                }
+            ],
+            "description": "Rackspace package containing Rackspace/OpenStack components for the DreamFactory(tm) core.",
+            "homepage": "https://www.dreamfactory.com/",
+            "keywords": [
+                "dreamfactory",
+                "dsp",
+                "openstack",
+                "rackspace",
+                "rest",
+                "storage blob"
+            ],
+            "support": {
+                "email": "support@dreamfactory.com",
+                "source": "https://github.com/dreamfactorysoftware/df-rackspace",
+                "issues": "https://github.com/dreamfactorysoftware/df-rackspace/issues",
+                "wiki": "https://wiki.dreamfactory.com"
+            },
+            "time": "2015-06-12 19:31:38"
+        },
+        {
+            "name": "dreamfactory/df-rws",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:dreamfactorysoftware/df-rws.git",
+                "reference": "d51ee650e1e261a88958dd76110b95f91a764f02"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-rws/zipball/d51ee650e1e261a88958dd76110b95f91a764f02",
+                "reference": "d51ee650e1e261a88958dd76110b95f91a764f02",
+                "shasum": ""
+            },
+            "require": {
+                "dreamfactory/df-core": "dev-develop as dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "DreamFactory\\Core\\Rws\\": "src/"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Arif Islam",
+                    "email": "arifislam@dreamfactory.com"
+                },
+                {
+                    "name": "Jerry Ablan",
+                    "email": "jerryablan@dreamfactory.com"
+                },
+                {
+                    "name": "Lee Hicks",
+                    "email": "leehicks@dreamfactory.com"
+                }
+            ],
+            "description": "Remote Web Service for the DreamFactory Platform 2.0.",
+            "homepage": "https://www.dreamfactory.com/",
+            "keywords": [
+                "curl",
+                "dreamfactory",
+                "dsp",
+                "rest",
+                "web"
+            ],
+            "support": {
+                "email": "support@dreamfactory.com",
+                "source": "https://github.com/dreamfactorysoftware/df-rws",
+                "issues": "https://github.com/dreamfactorysoftware/df-rws/issues",
+                "wiki": "https://wiki.dreamfactory.com"
+            },
+            "time": "2015-06-12 19:31:17"
+        },
+        {
+            "name": "dreamfactory/df-sqldb",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:dreamfactorysoftware/df-sqldb.git",
+                "reference": "81e3d5cfa145bb7c2e350d11e5905a261bb9e3c5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-sqldb/zipball/81e3d5cfa145bb7c2e350d11e5905a261bb9e3c5",
+                "reference": "81e3d5cfa145bb7c2e350d11e5905a261bb9e3c5",
+                "shasum": ""
+            },
+            "require": {
+                "dreamfactory/df-core": "dev-develop as dev-master"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-develop": "0.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "DreamFactory\\Core\\SqlDb\\": "src/"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Arif Islam",
+                    "email": "arifislam@dreamfactory.com"
+                },
+                {
+                    "name": "Jerry Ablan",
+                    "email": "jerryablan@dreamfactory.com"
+                },
+                {
+                    "name": "Lee Hicks",
+                    "email": "leehicks@dreamfactory.com"
+                }
+            ],
+            "description": "The DreamFactory(tm) SQL DB Service.",
+            "homepage": "https://www.dreamfactory.com/",
+            "keywords": [
+                "database",
+                "db",
+                "dreamfactory",
+                "dsp",
+                "ibm db2",
+                "mysql",
+                "oracle",
+                "postgresql",
+                "rest",
+                "sql",
+                "sqlserver"
+            ],
+            "support": {
+                "email": "support@dreamfactory.com",
+                "source": "https://github.com/dreamfactorysoftware/df-sqldb",
+                "issues": "https://github.com/dreamfactorysoftware/df-sqldb/issues",
+                "wiki": "https://wiki.dreamfactory.com"
+            },
+            "time": "2015-06-12 19:25:26"
+        },
+        {
+            "name": "dreamfactory/df-sqldb-core",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:dreamfactorysoftware/df-sqldb-core.git",
+                "reference": "2d547e80587edb5f4c65e5db64261bbb30a89f63"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-sqldb-core/zipball/2d547e80587edb5f4c65e5db64261bbb30a89f63",
+                "reference": "2d547e80587edb5f4c65e5db64261bbb30a89f63",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-develop": "0.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "DreamFactory\\Core\\SqlDbCore\\": "src/"
+                }
+            },
+            "scripts": {
+                "post-install-cmd": [],
+                "post-update-cmd": [],
+                "post-create-project-cmd": []
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Arif Islam",
+                    "email": "arifislam@dreamfactory.com"
+                },
+                {
+                    "name": "Jerry Ablan",
+                    "email": "jerryablan@dreamfactory.com"
+                },
+                {
+                    "name": "Lee Hicks",
+                    "email": "leehicks@dreamfactory.com"
+                }
+            ],
+            "description": "The DreamFactory(tm) SQL DB Core.",
+            "homepage": "https://www.dreamfactory.com/",
+            "keywords": [
+                "database",
+                "db",
+                "dreamfactory",
+                "dsp",
+                "ibm db2",
+                "mysql",
+                "oracle",
+                "postgresql",
+                "sql",
+                "sqlserver"
+            ],
+            "support": {
+                "email": "support@dreamfactory.com",
+                "source": "https://github.com/dreamfactorysoftware/df-sqldb-core",
+                "issues": "https://github.com/dreamfactorysoftware/df-sqldb-core/issues",
+                "wiki": "https://github.com/dreamfactorysoftware/dreamfactory/wiki"
+            },
+            "time": "2015-06-12 19:25:10"
+        },
+        {
+            "name": "dreamfactory/df-user",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:dreamfactorysoftware/df-user.git",
+                "reference": "e0ead672c674c8a2252ddf76c7139473f6037dd5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-user/zipball/e0ead672c674c8a2252ddf76c7139473f6037dd5",
+                "reference": "e0ead672c674c8a2252ddf76c7139473f6037dd5",
+                "shasum": ""
+            },
+            "require": {
+                "dreamfactory/df-core": "dev-develop as dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "DreamFactory\\Core\\User\\": "src/"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Arif Islam",
+                    "email": "arifislam@dreamfactory.com"
+                },
+                {
+                    "name": "Jerry Ablan",
+                    "email": "jerryablan@dreamfactory.com"
+                },
+                {
+                    "name": "Lee Hicks",
+                    "email": "leehicks@dreamfactory.com"
+                }
+            ],
+            "description": "User Management package for DreamFactory.",
+            "homepage": "https://www.dreamfactory.com/",
+            "keywords": [
+                "auth",
+                "dreamfactory",
+                "dsp",
+                "user"
+            ],
+            "support": {
+                "email": "support@dreamfactory.com",
+                "source": "https://github.com/dreamfactorysoftware/df-user",
+                "issues": "https://github.com/dreamfactorysoftware/df-user/issues",
+                "wiki": "https://wiki.dreamfactory.com"
+            },
+            "time": "2015-06-12 19:24:50"
         },
         {
             "name": "dreamfactory/dsp-admin-app",
@@ -545,12 +1159,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/dsp-admin-app.git",
-                "reference": "a39286527648b12149c2f1c519b67bfcf12f77f7"
+                "reference": "ed7f447ddc7e727c910b2bb5bd5797f15fb787d7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/dsp-admin-app/zipball/a39286527648b12149c2f1c519b67bfcf12f77f7",
-                "reference": "a39286527648b12149c2f1c519b67bfcf12f77f7",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/dsp-admin-app/zipball/ed7f447ddc7e727c910b2bb5bd5797f15fb787d7",
+                "reference": "ed7f447ddc7e727c910b2bb5bd5797f15fb787d7",
                 "shasum": ""
             },
             "require": {
@@ -592,61 +1206,7 @@
                 "wiki": "https://github.com/dreamfactorysoftware/dsp-admin-app/wiki",
                 "source": "https://github.com/dreamfactorysoftware/dsp-admin-app"
             },
-            "time": "2015-06-02 21:09:00"
-        },
-        {
-            "name": "dreamfactory/dsp-oauth",
-            "version": "dev-develop",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:dreamfactorysoftware/dsp-oauth.git",
-                "reference": "713851a648a6169d344f8678a5e0cb8ecab3a3c4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/dsp-oauth/zipball/713851a648a6169d344f8678a5e0cb8ecab3a3c4",
-                "reference": "713851a648a6169d344f8678a5e0cb8ecab3a3c4",
-                "shasum": ""
-            },
-            "require": {
-                "dreamfactory/rave": "dev-develop as dev-master",
-                "dreamfactory/rave-user-mgmt": "dev-develop as dev-master",
-                "laravel/socialite": "~2.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "DreamFactory\\DSP\\OAuth\\": "src/"
-                }
-            },
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "Arif Islam",
-                    "email": "arifislam@dreamfactory.com"
-                },
-                {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                }
-            ],
-            "description": "OAuth support for DreamFactory DSP 2.0",
-            "homepage": "https://www.dreamfactory.com/",
-            "keywords": [
-                "dreamfactory",
-                "dsp",
-                "oauth",
-                "rave"
-            ],
-            "support": {
-                "email": "support@dreamfactory.com",
-                "issues": "https://github.com/dreamfactorysoftware/rave/issues",
-                "wiki": "https://github.com/dreamfactorysoftware/rave/wiki",
-                "source": "https://github.com/dreamfactorysoftware/rave"
-            },
-            "time": "2015-05-29 20:25:58"
+            "time": "2015-06-10 20:37:31"
         },
         {
             "name": "dreamfactory/installer",
@@ -746,580 +1306,6 @@
                 "utility"
             ],
             "time": "2015-05-28 21:31:46"
-        },
-        {
-            "name": "dreamfactory/rave",
-            "version": "dev-develop",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:dreamfactorysoftware/rave.git",
-                "reference": "8a4115e17b1ad431f2f2c235b065d1d5a8e58ceb"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/rave/zipball/8a4115e17b1ad431f2f2c235b065d1d5a8e58ceb",
-                "reference": "8a4115e17b1ad431f2f2c235b065d1d5a8e58ceb",
-                "shasum": ""
-            },
-            "require": {
-                "barryvdh/laravel-cors": "0.4.x@dev",
-                "dreamfactory/php-utils": "dev-develop as dev-master",
-                "dreamfactory/rave-sqldb-core": "dev-develop as dev-master",
-                "guzzlehttp/guzzle": "~5.0",
-                "php": "~5.4",
-                "ramsey/array_column": "~1.1"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "@stable"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-develop": "0.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "DreamFactory\\Rave\\": "src/"
-                }
-            },
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "Arif Islam",
-                    "email": "arifislam@dreamfactory.com"
-                },
-                {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                },
-                {
-                    "name": "Jerry Ablan",
-                    "email": "jerryablan@dreamfactory.com"
-                }
-            ],
-            "description": "DreamFactory RAVE(tm) Common Components",
-            "homepage": "https://www.dreamfactory.com/",
-            "keywords": [
-                "api",
-                "baas",
-                "dsp",
-                "mbaas",
-                "paas",
-                "rave",
-                "rest"
-            ],
-            "support": {
-                "source": "https://github.com/dreamfactorysoftware/rave/tree/develop",
-                "issues": "https://github.com/dreamfactorysoftware/rave/issues"
-            },
-            "time": "2015-06-02 14:58:01"
-        },
-        {
-            "name": "dreamfactory/rave-aws",
-            "version": "dev-develop",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:dreamfactorysoftware/rave-aws.git",
-                "reference": "fef883fdde72e13cdb3e0386e81fcc19cdfe33ad"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/rave-aws/zipball/fef883fdde72e13cdb3e0386e81fcc19cdfe33ad",
-                "reference": "fef883fdde72e13cdb3e0386e81fcc19cdfe33ad",
-                "shasum": ""
-            },
-            "require": {
-                "aws/aws-sdk-php": "~2.7.0",
-                "dreamfactory/rave": "dev-develop as dev-master"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "DreamFactory\\Rave\\Aws\\": "src/"
-                }
-            },
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "Arif Islam",
-                    "email": "arifislam@dreamfactory.com"
-                },
-                {
-                    "name": "Jerry Ablan",
-                    "email": "jerryablan@dreamfactory.com"
-                },
-                {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                }
-            ],
-            "description": "AWS package containing AWS components for the rave core.",
-            "homepage": "https://www.dreamfactory.com/",
-            "keywords": [
-                "aws",
-                "dreamfactory",
-                "dsp",
-                "dynamodb",
-                "rave",
-                "s3"
-            ],
-            "support": {
-                "email": "support@dreamfactory.com",
-                "issues": "https://github.com/dreamfactorysoftware/rave/issues",
-                "wiki": "https://github.com/dreamfactorysoftware/rave/wiki",
-                "source": "https://github.com/dreamfactorysoftware/rave"
-            },
-            "time": "2015-05-29 20:26:46"
-        },
-        {
-            "name": "dreamfactory/rave-azure",
-            "version": "dev-develop",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:dreamfactorysoftware/rave-azure.git",
-                "reference": "66397f565a421eef2eeb5a721ea1799feba7f7ed"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/rave-azure/zipball/66397f565a421eef2eeb5a721ea1799feba7f7ed",
-                "reference": "66397f565a421eef2eeb5a721ea1799feba7f7ed",
-                "shasum": ""
-            },
-            "require": {
-                "dreamfactory/azure-sdk-for-php": "dev-develop as dev-master",
-                "dreamfactory/rave": "dev-develop as dev-master"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "DreamFactory\\Rave\\Azure\\": "src/"
-                }
-            },
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "Arif Islam",
-                    "email": "arifislam@dreamfactory.com"
-                },
-                {
-                    "name": "Jerry Ablan",
-                    "email": "jerryablan@dreamfactory.com"
-                },
-                {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                }
-            ],
-            "description": "Microsoft Azure package containing Azure components for the DreamFactory Rave(tm) core. ",
-            "homepage": "https://www.dreamfactory.com/",
-            "keywords": [
-                "azure",
-                "azure blob",
-                "azure table",
-                "dreamfactory",
-                "dsp",
-                "rave"
-            ],
-            "support": {
-                "email": "support@dreamfactory.com",
-                "issues": "https://github.com/dreamfactorysoftware/rave/issues",
-                "wiki": "https://github.com/dreamfactorysoftware/rave/wiki",
-                "source": "https://github.com/dreamfactorysoftware/rave"
-            },
-            "time": "2015-05-27 19:49:10"
-        },
-        {
-            "name": "dreamfactory/rave-mongodb",
-            "version": "dev-develop",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:dreamfactorysoftware/rave-mongodb.git",
-                "reference": "29bb6e49034b5dd95a160b28b442e5d3e0b2971f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/rave-mongodb/zipball/29bb6e49034b5dd95a160b28b442e5d3e0b2971f",
-                "reference": "29bb6e49034b5dd95a160b28b442e5d3e0b2971f",
-                "shasum": ""
-            },
-            "require": {
-                "dreamfactory/rave": "dev-develop as dev-master"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-develop": "0.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "DreamFactory\\Rave\\MongoDb\\": "src/"
-                }
-            },
-            "scripts": {
-                "post-install-cmd": [],
-                "post-update-cmd": [],
-                "post-create-project-cmd": []
-            },
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "Arif Islam",
-                    "email": "arifislam@dreamfactory.com"
-                },
-                {
-                    "name": "Jerry Ablan",
-                    "email": "jerryablan@dreamfactory.com"
-                },
-                {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                }
-            ],
-            "description": "The DreamFactory RAVE(tm) MongoDB Service.",
-            "homepage": "https://www.dreamfactory.com/",
-            "keywords": [
-                "database",
-                "db",
-                "dreamfactory",
-                "dsp",
-                "mongodb",
-                "nosql",
-                "rave"
-            ],
-            "support": {
-                "email": "support@dreamfactory.com",
-                "issues": "https://github.com/dreamfactorysoftware/rave/issues",
-                "wiki": "https://github.com/dreamfactorysoftware/rave/wiki",
-                "source": "https://github.com/dreamfactorysoftware/rave"
-            },
-            "time": "2015-05-29 20:24:29"
-        },
-        {
-            "name": "dreamfactory/rave-rackspace",
-            "version": "dev-develop",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:dreamfactorysoftware/rave-rackspace.git",
-                "reference": "5e36ed43831e3f459acc87821dd90fbc580e8ee6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/rave-rackspace/zipball/5e36ed43831e3f459acc87821dd90fbc580e8ee6",
-                "reference": "5e36ed43831e3f459acc87821dd90fbc580e8ee6",
-                "shasum": ""
-            },
-            "require": {
-                "dreamfactory/rave": "dev-develop as dev-master",
-                "rackspace/php-opencloud": "~1.5.0@stable"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "DreamFactory\\Rave\\Rackspace\\": "src/"
-                }
-            },
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "Arif Islam",
-                    "email": "arifislam@dreamfactory.com"
-                },
-                {
-                    "name": "Jerry Ablan",
-                    "email": "jerryablan@dreamfactory.com"
-                },
-                {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                }
-            ],
-            "description": "Rackspace package containing Rackspace/OpenStack components for the DreamFactory Rave(tm) core.",
-            "homepage": "https://www.dreamfactory.com/",
-            "keywords": [
-                "dreamfactory",
-                "dsp",
-                "openstack",
-                "rackspace",
-                "rave",
-                "storage blob"
-            ],
-            "support": {
-                "email": "support@dreamfactory.com",
-                "issues": "https://github.com/dreamfactorysoftware/rave/issues",
-                "wiki": "https://github.com/dreamfactorysoftware/rave/wiki",
-                "source": "https://github.com/dreamfactorysoftware/rave"
-            },
-            "time": "2015-05-27 19:49:22"
-        },
-        {
-            "name": "dreamfactory/rave-rws",
-            "version": "dev-develop",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:dreamfactorysoftware/rave-rws.git",
-                "reference": "3c3bc428f56a60b2316771c4c5b06642b0de6cc0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/rave-rws/zipball/3c3bc428f56a60b2316771c4c5b06642b0de6cc0",
-                "reference": "3c3bc428f56a60b2316771c4c5b06642b0de6cc0",
-                "shasum": ""
-            },
-            "require": {
-                "dreamfactory/rave": "dev-develop as dev-master"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "DreamFactory\\Rave\\Rws\\": "src/"
-                }
-            },
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "Arif Islam",
-                    "email": "arifislam@dreamfactory.com"
-                },
-                {
-                    "name": "Jerry Ablan",
-                    "email": "jerryablan@dreamfactory.com"
-                },
-                {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                }
-            ],
-            "description": "Remote Web Service for the rave core.",
-            "homepage": "https://www.dreamfactory.com/",
-            "keywords": [
-                "dreamfactory",
-                "dsp",
-                "rave",
-                "rws"
-            ],
-            "support": {
-                "email": "support@dreamfactory.com",
-                "issues": "https://github.com/dreamfactorysoftware/rave/issues",
-                "wiki": "https://github.com/dreamfactorysoftware/rave/wiki",
-                "source": "https://github.com/dreamfactorysoftware/rave"
-            },
-            "time": "2015-06-02 15:51:11"
-        },
-        {
-            "name": "dreamfactory/rave-sqldb",
-            "version": "dev-develop",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:dreamfactorysoftware/rave-sqldb.git",
-                "reference": "8000195efff0b93c1fc64a7074da221a51cda04e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/rave-sqldb/zipball/8000195efff0b93c1fc64a7074da221a51cda04e",
-                "reference": "8000195efff0b93c1fc64a7074da221a51cda04e",
-                "shasum": ""
-            },
-            "require": {
-                "dreamfactory/rave": "dev-develop as dev-master"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-develop": "0.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "DreamFactory\\Rave\\SqlDb\\": "src/"
-                }
-            },
-            "scripts": {
-                "post-install-cmd": [],
-                "post-update-cmd": [],
-                "post-create-project-cmd": []
-            },
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "Arif Islam",
-                    "email": "arifislam@dreamfactory.com"
-                },
-                {
-                    "name": "Jerry Ablan",
-                    "email": "jerryablan@dreamfactory.com"
-                },
-                {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                }
-            ],
-            "description": "The DreamFactory RAVE(tm) SQL DB Service.",
-            "homepage": "https://www.dreamfactory.com/",
-            "keywords": [
-                "database",
-                "db",
-                "dreamfactory",
-                "dsp",
-                "ibm db2",
-                "mysql",
-                "oracle",
-                "postgresql",
-                "rave",
-                "sql",
-                "sqlserver"
-            ],
-            "support": {
-                "email": "support@dreamfactory.com",
-                "issues": "https://github.com/dreamfactorysoftware/rave/issues",
-                "wiki": "https://github.com/dreamfactorysoftware/rave/wiki",
-                "source": "https://github.com/dreamfactorysoftware/rave"
-            },
-            "time": "2015-06-02 15:43:46"
-        },
-        {
-            "name": "dreamfactory/rave-sqldb-core",
-            "version": "dev-develop",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:dreamfactorysoftware/rave-sqldb-core.git",
-                "reference": "e6eea2eab1f9a1e7f35d77aa680220f939d4be7e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/rave-sqldb-core/zipball/e6eea2eab1f9a1e7f35d77aa680220f939d4be7e",
-                "reference": "e6eea2eab1f9a1e7f35d77aa680220f939d4be7e",
-                "shasum": ""
-            },
-            "require": {
-                "dreamfactory/rave": "dev-develop as dev-master"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-develop": "0.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "DreamFactory\\Rave\\SqlDbCore\\": "src/"
-                }
-            },
-            "scripts": {
-                "post-install-cmd": [],
-                "post-update-cmd": [],
-                "post-create-project-cmd": []
-            },
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "Arif Islam",
-                    "email": "arifislam@dreamfactory.com"
-                },
-                {
-                    "name": "Jerry Ablan",
-                    "email": "jerryablan@dreamfactory.com"
-                },
-                {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                }
-            ],
-            "description": "The DreamFactory RAVE(tm) SQL DB Core.",
-            "homepage": "https://www.dreamfactory.com/",
-            "keywords": [
-                "database",
-                "db",
-                "dreamfactory",
-                "dsp",
-                "ibm db2",
-                "mysql",
-                "oracle",
-                "postgresql",
-                "rave",
-                "sql",
-                "sqlserver"
-            ],
-            "support": {
-                "email": "support@dreamfactory.com",
-                "issues": "https://github.com/dreamfactorysoftware/rave/issues",
-                "wiki": "https://github.com/dreamfactorysoftware/rave/wiki",
-                "source": "https://github.com/dreamfactorysoftware/rave"
-            },
-            "time": "2015-05-29 20:22:41"
-        },
-        {
-            "name": "dreamfactory/rave-user-mgmt",
-            "version": "dev-develop",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:dreamfactorysoftware/rave-user-mgmt.git",
-                "reference": "527a9c15ce4428c41055abe638bfda91f3c5e16b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/rave-user-mgmt/zipball/527a9c15ce4428c41055abe638bfda91f3c5e16b",
-                "reference": "527a9c15ce4428c41055abe638bfda91f3c5e16b",
-                "shasum": ""
-            },
-            "require": {
-                "dreamfactory/rave": "dev-develop as dev-master"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "DreamFactory\\Rave\\User\\": "src/"
-                }
-            },
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "Arif Islam",
-                    "email": "arifislam@dreamfactory.com"
-                },
-                {
-                    "name": "Jerry Ablan",
-                    "email": "jerryablan@dreamfactory.com"
-                },
-                {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                }
-            ],
-            "description": "User Management package for DreamFactory Rave.",
-            "homepage": "https://www.dreamfactory.com/",
-            "keywords": [
-                "dreamfactory",
-                "dsp",
-                "rave",
-                "user"
-            ],
-            "support": {
-                "email": "support@dreamfactory.com",
-                "issues": "https://github.com/dreamfactorysoftware/rave/issues",
-                "wiki": "https://github.com/dreamfactorysoftware/rave/wiki",
-                "source": "https://github.com/dreamfactorysoftware/rave"
-            },
-            "time": "2015-06-01 21:11:58"
         },
         {
             "name": "guzzle/guzzle",
@@ -1763,16 +1749,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.0.32",
+            "version": "v5.0.33",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "85f12207cf45cc288e9e6b9b5d184aad5f08e2ca"
+                "reference": "b11c8ab88245f920b30e5f30e16b141ac8d461d3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/85f12207cf45cc288e9e6b9b5d184aad5f08e2ca",
-                "reference": "85f12207cf45cc288e9e6b9b5d184aad5f08e2ca",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/b11c8ab88245f920b30e5f30e16b141ac8d461d3",
+                "reference": "b11c8ab88245f920b30e5f30e16b141ac8d461d3",
                 "shasum": ""
             },
             "require": {
@@ -1885,24 +1871,24 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2015-05-29 18:56:49"
+            "time": "2015-06-09 13:12:19"
         },
         {
             "name": "laravel/socialite",
-            "version": "v2.0.4",
+            "version": "v2.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/socialite.git",
-                "reference": "3d5f6560f8642c4973b5e54a67b1368ee81ff24d"
+                "reference": "15f36da073454d630bac20afef815aa9cfa4cf8f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/socialite/zipball/3d5f6560f8642c4973b5e54a67b1368ee81ff24d",
-                "reference": "3d5f6560f8642c4973b5e54a67b1368ee81ff24d",
+                "url": "https://api.github.com/repos/laravel/socialite/zipball/15f36da073454d630bac20afef815aa9cfa4cf8f",
+                "reference": "15f36da073454d630bac20afef815aa9cfa4cf8f",
                 "shasum": ""
             },
             "require": {
-                "guzzlehttp/guzzle": "~4.0|~5.0",
+                "guzzlehttp/guzzle": "~5.0|~6.0",
                 "illuminate/contracts": "~5.0",
                 "illuminate/http": "~5.0",
                 "illuminate/support": "~5.0",
@@ -1939,23 +1925,24 @@
                 "laravel",
                 "oauth"
             ],
-            "time": "2015-03-13 02:40:10"
+            "time": "2015-06-03 18:14:09"
         },
         {
             "name": "league/flysystem",
-            "version": "1.0.3",
+            "version": "1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "3c2400a99ccc3be6884d40361890010449c6b447"
+                "reference": "56862959b45131ad33e5a7727a25db19f2cf090b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/3c2400a99ccc3be6884d40361890010449c6b447",
-                "reference": "3c2400a99ccc3be6884d40361890010449c6b447",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/56862959b45131ad33e5a7727a25db19f2cf090b",
+                "reference": "56862959b45131ad33e5a7727a25db19f2cf090b",
                 "shasum": ""
             },
             "require": {
+                "ext-mbstring": "*",
                 "php": ">=5.4.0"
             },
             "require-dev": {
@@ -2022,7 +2009,7 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2015-03-29 14:01:43"
+            "time": "2015-06-07 21:27:37"
         },
         {
             "name": "league/oauth1-client",
@@ -2817,23 +2804,23 @@
         },
         {
             "name": "swiftmailer/swiftmailer",
-            "version": "v5.4.0",
+            "version": "v5.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "31454f258f10329ae7c48763eb898a75c39e0a9f"
+                "reference": "0697e6aa65c83edf97bb0f23d8763f94e3f11421"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/31454f258f10329ae7c48763eb898a75c39e0a9f",
-                "reference": "31454f258f10329ae7c48763eb898a75c39e0a9f",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/0697e6aa65c83edf97bb0f23d8763f94e3f11421",
+                "reference": "0697e6aa65c83edf97bb0f23d8763f94e3f11421",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
             "require-dev": {
-                "mockery/mockery": "~0.9.1"
+                "mockery/mockery": "~0.9.1,<0.9.4"
             },
             "type": "library",
             "extra": {
@@ -2862,10 +2849,11 @@
             "description": "Swiftmailer, free feature-rich PHP mailer",
             "homepage": "http://swiftmailer.org",
             "keywords": [
+                "email",
                 "mail",
                 "mailer"
             ],
-            "time": "2015-03-14 06:06:39"
+            "time": "2015-06-06 14:19:39"
         },
         {
             "name": "symfony/console",
@@ -2988,16 +2976,16 @@
         },
         {
             "name": "symfony/dependency-injection",
-            "version": "v2.7.0",
+            "version": "v2.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/DependencyInjection.git",
-                "reference": "137bf489c5151c7eb1e4b7dd34a123f9a74b966d"
+                "reference": "1a409e52a38ec891de0a7a61a191d1c62080b69d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/DependencyInjection/zipball/137bf489c5151c7eb1e4b7dd34a123f9a74b966d",
-                "reference": "137bf489c5151c7eb1e4b7dd34a123f9a74b966d",
+                "url": "https://api.github.com/repos/symfony/DependencyInjection/zipball/1a409e52a38ec891de0a7a61a191d1c62080b69d",
+                "reference": "1a409e52a38ec891de0a7a61a191d1c62080b69d",
                 "shasum": ""
             },
             "require": {
@@ -3044,20 +3032,20 @@
             ],
             "description": "Symfony DependencyInjection Component",
             "homepage": "https://symfony.com",
-            "time": "2015-05-29 14:44:44"
+            "time": "2015-06-11 19:13:11"
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v2.7.0",
+            "version": "v2.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/EventDispatcher.git",
-                "reference": "687039686d0e923429ba6e958d0baa920cd5d458"
+                "reference": "be3c5ff8d503c46768aeb78ce6333051aa6f26d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/687039686d0e923429ba6e958d0baa920cd5d458",
-                "reference": "687039686d0e923429ba6e958d0baa920cd5d458",
+                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/be3c5ff8d503c46768aeb78ce6333051aa6f26d9",
+                "reference": "be3c5ff8d503c46768aeb78ce6333051aa6f26d9",
                 "shasum": ""
             },
             "require": {
@@ -3102,20 +3090,20 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2015-05-02 15:21:08"
+            "time": "2015-06-08 09:37:21"
         },
         {
             "name": "symfony/filesystem",
-            "version": "v2.7.0",
+            "version": "v2.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Filesystem.git",
-                "reference": "ae4551fd6d4d4f51f2e7390fbc902fbd67f3b7ba"
+                "reference": "a0d43eb3e17d4f4c6990289805a488a0482a07f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/ae4551fd6d4d4f51f2e7390fbc902fbd67f3b7ba",
-                "reference": "ae4551fd6d4d4f51f2e7390fbc902fbd67f3b7ba",
+                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/a0d43eb3e17d4f4c6990289805a488a0482a07f3",
+                "reference": "a0d43eb3e17d4f4c6990289805a488a0482a07f3",
                 "shasum": ""
             },
             "require": {
@@ -3151,7 +3139,7 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "time": "2015-05-15 13:33:16"
+            "time": "2015-06-08 09:37:21"
         },
         {
             "name": "symfony/finder",
@@ -3687,24 +3675,24 @@
     "packages-dev": [
         {
             "name": "barryvdh/laravel-ide-helper",
-            "version": "v2.0.3",
+            "version": "v2.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/barryvdh/laravel-ide-helper.git",
-                "reference": "d8d5517f2cc55d534a7fc8f50ff62cb55115e1aa"
+                "reference": "541b9508e205cbfcf0d456900d28dec58e24d64b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-ide-helper/zipball/d8d5517f2cc55d534a7fc8f50ff62cb55115e1aa",
-                "reference": "d8d5517f2cc55d534a7fc8f50ff62cb55115e1aa",
+                "url": "https://api.github.com/repos/barryvdh/laravel-ide-helper/zipball/541b9508e205cbfcf0d456900d28dec58e24d64b",
+                "reference": "541b9508e205cbfcf0d456900d28dec58e24d64b",
                 "shasum": ""
             },
             "require": {
-                "illuminate/console": "5.0.x",
-                "illuminate/filesystem": "5.0.x",
-                "illuminate/support": "5.0.x",
+                "illuminate/console": "5.0.x|5.1.x",
+                "illuminate/filesystem": "5.0.x|5.1.x",
+                "illuminate/support": "5.0.x|5.1.x",
                 "php": ">=5.4.0",
-                "phpdocumentor/reflection-docblock": "2.0.x",
+                "phpdocumentor/reflection-docblock": "2.0.4",
                 "symfony/class-loader": "~2.3"
             },
             "require-dev": {
@@ -3746,7 +3734,7 @@
                 "phpstorm",
                 "sublime"
             ],
-            "time": "2015-03-17 08:00:28"
+            "time": "2015-06-11 14:11:52"
         },
         {
             "name": "doctrine/instantiator",
@@ -4173,16 +4161,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "2.1.3",
+            "version": "2.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "28a6b34e91d789b2608072ab3c82eaae7cdb973c"
+                "reference": "be2286cb8c7e1773eded49d9719219e6f74f9e3e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/28a6b34e91d789b2608072ab3c82eaae7cdb973c",
-                "reference": "28a6b34e91d789b2608072ab3c82eaae7cdb973c",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/be2286cb8c7e1773eded49d9719219e6f74f9e3e",
+                "reference": "be2286cb8c7e1773eded49d9719219e6f74f9e3e",
                 "shasum": ""
             },
             "require": {
@@ -4231,7 +4219,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2015-06-03 07:01:01"
+            "time": "2015-06-09 13:05:42"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -4370,16 +4358,16 @@
         },
         {
             "name": "phpunit/php-token-stream",
-            "version": "1.4.1",
+            "version": "1.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-token-stream.git",
-                "reference": "eab81d02569310739373308137284e0158424330"
+                "reference": "db63be1159c81df649cd0260e30249a586d4129e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/eab81d02569310739373308137284e0158424330",
-                "reference": "eab81d02569310739373308137284e0158424330",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/db63be1159c81df649cd0260e30249a586d4129e",
+                "reference": "db63be1159c81df649cd0260e30249a586d4129e",
                 "shasum": ""
             },
             "require": {
@@ -4415,20 +4403,20 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2015-04-08 04:46:07"
+            "time": "2015-06-12 07:34:24"
         },
         {
             "name": "phpunit/phpunit",
-            "version": "4.6.10",
+            "version": "4.7.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "7b5fe98b28302a8b25693b2298bca74463336975"
+                "reference": "41fea1e84ed84d373f5ac099a1276c4358c90708"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/7b5fe98b28302a8b25693b2298bca74463336975",
-                "reference": "7b5fe98b28302a8b25693b2298bca74463336975",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/41fea1e84ed84d373f5ac099a1276c4358c90708",
+                "reference": "41fea1e84ed84d373f5ac099a1276c4358c90708",
                 "shasum": ""
             },
             "require": {
@@ -4439,7 +4427,7 @@
                 "ext-spl": "*",
                 "php": ">=5.3.3",
                 "phpspec/prophecy": "~1.3,>=1.3.1",
-                "phpunit/php-code-coverage": "~2.0,>=2.0.11",
+                "phpunit/php-code-coverage": "~2.1",
                 "phpunit/php-file-iterator": "~1.4",
                 "phpunit/php-text-template": "~1.2",
                 "phpunit/php-timer": "~1.0",
@@ -4461,7 +4449,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.6.x-dev"
+                    "dev-master": "4.7.x-dev"
                 }
             },
             "autoload": {
@@ -4487,20 +4475,20 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2015-06-03 05:03:30"
+            "time": "2015-06-11 16:20:25"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
-            "version": "2.3.3",
+            "version": "2.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit-mock-objects.git",
-                "reference": "253c005852591fd547fc18cd5b7b43a1ec82d8f7"
+                "reference": "92408bb1968a81b3217a6fdf6c1a198da83caa35"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/253c005852591fd547fc18cd5b7b43a1ec82d8f7",
-                "reference": "253c005852591fd547fc18cd5b7b43a1ec82d8f7",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/92408bb1968a81b3217a6fdf6c1a198da83caa35",
+                "reference": "92408bb1968a81b3217a6fdf6c1a198da83caa35",
                 "shasum": ""
             },
             "require": {
@@ -4542,7 +4530,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2015-05-29 05:19:18"
+            "time": "2015-06-11 15:55:48"
         },
         {
             "name": "sebastian/comparator",
@@ -4917,16 +4905,16 @@
         },
         {
             "name": "symfony/class-loader",
-            "version": "v2.7.0",
+            "version": "v2.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/ClassLoader.git",
-                "reference": "fa19598cb708b92d983b34aae313f57c217f9386"
+                "reference": "84843730de48ca0feba91004a03c7c952f8ea1da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/ClassLoader/zipball/fa19598cb708b92d983b34aae313f57c217f9386",
-                "reference": "fa19598cb708b92d983b34aae313f57c217f9386",
+                "url": "https://api.github.com/repos/symfony/ClassLoader/zipball/84843730de48ca0feba91004a03c7c952f8ea1da",
+                "reference": "84843730de48ca0feba91004a03c7c952f8ea1da",
                 "shasum": ""
             },
             "require": {
@@ -4963,20 +4951,20 @@
             ],
             "description": "Symfony ClassLoader Component",
             "homepage": "https://symfony.com",
-            "time": "2015-05-15 13:33:16"
+            "time": "2015-06-08 09:37:21"
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.7.0",
+            "version": "v2.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml.git",
-                "reference": "4a29a5248aed4fb45f626a7bbbd330291492f5c3"
+                "reference": "9808e75c609a14f6db02f70fccf4ca4aab53c160"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/4a29a5248aed4fb45f626a7bbbd330291492f5c3",
-                "reference": "4a29a5248aed4fb45f626a7bbbd330291492f5c3",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/9808e75c609a14f6db02f70fccf4ca4aab53c160",
+                "reference": "9808e75c609a14f6db02f70fccf4ca4aab53c160",
                 "shasum": ""
             },
             "require": {
@@ -5012,7 +5000,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2015-05-02 15:21:08"
+            "time": "2015-06-10 15:30:22"
         }
     ],
     "aliases": [
@@ -5026,76 +5014,76 @@
             "alias": "dev-master",
             "alias_normalized": "9999999-dev",
             "version": "dev-develop",
-            "package": "dreamfactory/rave"
+            "package": "dreamfactory/df-core"
         },
         {
             "alias": "dev-master",
             "alias_normalized": "9999999-dev",
             "version": "dev-develop",
-            "package": "dreamfactory/rave-aws"
+            "package": "dreamfactory/df-aws"
         },
         {
             "alias": "dev-master",
             "alias_normalized": "9999999-dev",
             "version": "dev-develop",
-            "package": "dreamfactory/rave-azure"
+            "package": "dreamfactory/df-azure"
         },
         {
             "alias": "dev-master",
             "alias_normalized": "9999999-dev",
             "version": "dev-develop",
-            "package": "dreamfactory/rave-rackspace"
+            "package": "dreamfactory/df-rackspace"
         },
         {
             "alias": "dev-master",
             "alias_normalized": "9999999-dev",
             "version": "dev-develop",
-            "package": "dreamfactory/rave-sqldb"
+            "package": "dreamfactory/df-sqldb"
         },
         {
             "alias": "dev-master",
             "alias_normalized": "9999999-dev",
             "version": "dev-develop",
-            "package": "dreamfactory/rave-mongodb"
+            "package": "dreamfactory/df-mongodb"
         },
         {
             "alias": "dev-master",
             "alias_normalized": "9999999-dev",
             "version": "dev-develop",
-            "package": "dreamfactory/rave-rws"
+            "package": "dreamfactory/df-rws"
         },
         {
             "alias": "dev-master",
             "alias_normalized": "9999999-dev",
             "version": "dev-develop",
-            "package": "dreamfactory/rave-user-mgmt"
+            "package": "dreamfactory/df-user"
         },
         {
             "alias": "dev-master",
             "alias_normalized": "9999999-dev",
             "version": "dev-develop",
-            "package": "dreamfactory/dsp-oauth"
+            "package": "dreamfactory/df-oauth"
         },
         {
             "alias": "dev-master",
             "alias_normalized": "9999999-dev",
             "version": "dev-develop",
-            "package": "dreamfactory/dsp-adldap"
+            "package": "dreamfactory/df-adldap"
         }
     ],
     "minimum-stability": "dev",
     "stability-flags": {
         "dreamfactory/dsp-admin-app": 20,
-        "dreamfactory/rave": 20,
-        "dreamfactory/rave-aws": 20,
-        "dreamfactory/rave-azure": 20,
-        "dreamfactory/rave-rackspace": 20,
-        "dreamfactory/rave-sqldb": 20,
-        "dreamfactory/rave-mongodb": 20,
-        "dreamfactory/rave-rws": 20,
-        "dreamfactory/rave-user-mgmt": 20,
-        "dreamfactory/dsp-oauth": 20,
-        "dreamfactory/dsp-adldap": 20
+        "dreamfactory/df-core": 20,
+        "dreamfactory/df-aws": 20,
+        "dreamfactory/df-azure": 20,
+        "dreamfactory/df-rackspace": 20,
+        "dreamfactory/df-sqldb": 20,
+        "dreamfactory/df-mongodb": 20,
+        "dreamfactory/df-rws": 20,
+        "dreamfactory/df-user": 20,
+        "dreamfactory/df-oauth": 20,
+        "dreamfactory/df-adldap": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

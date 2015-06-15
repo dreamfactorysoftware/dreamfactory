@@ -15,53 +15,53 @@ class DatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        if ( class_exists( 'DreamFactory\\Rave\\Database\\Seeds\\DatabaseSeeder' ) )
+        if ( class_exists( 'DreamFactory\\Core\\Database\\Seeds\\DatabaseSeeder' ) )
         {
-            $this->call( 'DreamFactory\\Rave\\Database\\Seeds\\DatabaseSeeder' );
+            $this->call( 'DreamFactory\\Core\\Database\\Seeds\\DatabaseSeeder' );
         }
-        if ( class_exists( 'DreamFactory\\Rave\\SqlDb\\Database\\Seeds\\DatabaseSeeder' ) )
+        if ( class_exists( 'DreamFactory\\Core\\SqlDb\\Database\\Seeds\\DatabaseSeeder' ) )
         {
-            $this->call( 'DreamFactory\\Rave\\SqlDb\\Database\\Seeds\\DatabaseSeeder' );
+            $this->call( 'DreamFactory\\Core\\SqlDb\\Database\\Seeds\\DatabaseSeeder' );
         }
-        if ( class_exists( 'DreamFactory\\Rave\\MongoDb\\Database\\Seeds\\DatabaseSeeder' ) )
+        if ( class_exists( 'DreamFactory\\Core\\MongoDb\\Database\\Seeds\\DatabaseSeeder' ) )
         {
-            $this->call( 'DreamFactory\\Rave\\MongoDb\\Database\\Seeds\\DatabaseSeeder' );
+            $this->call( 'DreamFactory\\Core\\MongoDb\\Database\\Seeds\\DatabaseSeeder' );
         }
-        if ( class_exists( 'DreamFactory\\Rave\\CouchDb\\Database\\Seeds\\DatabaseSeeder' ) )
+        if ( class_exists( 'DreamFactory\\Core\\CouchDb\\Database\\Seeds\\DatabaseSeeder' ) )
         {
-            $this->call( 'DreamFactory\\Rave\\CouchDb\\Database\\Seeds\\DatabaseSeeder' );
+            $this->call( 'DreamFactory\\Core\\CouchDb\\Database\\Seeds\\DatabaseSeeder' );
         }
-        if ( class_exists( 'DreamFactory\\Rave\\Rws\\Database\\Seeds\\DatabaseSeeder' ) )
+        if ( class_exists( 'DreamFactory\\Core\\Rws\\Database\\Seeds\\DatabaseSeeder' ) )
         {
-            $this->call( 'DreamFactory\\Rave\\Rws\\Database\\Seeds\\DatabaseSeeder' );
+            $this->call( 'DreamFactory\\Core\\Rws\\Database\\Seeds\\DatabaseSeeder' );
         }
-        if ( class_exists( 'DreamFactory\\Rave\\Aws\\Database\\Seeds\\DatabaseSeeder' ) )
+        if ( class_exists( 'DreamFactory\\Core\\Aws\\Database\\Seeds\\DatabaseSeeder' ) )
         {
-            $this->call( 'DreamFactory\\Rave\\Aws\\Database\\Seeds\\DatabaseSeeder' );
+            $this->call( 'DreamFactory\\Core\\Aws\\Database\\Seeds\\DatabaseSeeder' );
         }
-        if ( class_exists( 'DreamFactory\\Rave\\Azure\\Database\\Seeds\\DatabaseSeeder' ) )
+        if ( class_exists( 'DreamFactory\\Core\\Azure\\Database\\Seeds\\DatabaseSeeder' ) )
         {
-            $this->call( 'DreamFactory\\Rave\\Azure\\Database\\Seeds\\DatabaseSeeder' );
+            $this->call( 'DreamFactory\\Core\\Azure\\Database\\Seeds\\DatabaseSeeder' );
         }
-        if ( class_exists( 'DreamFactory\\Rave\\Rackspace\\Database\\Seeds\\DatabaseSeeder' ) )
+        if ( class_exists( 'DreamFactory\\Core\\Rackspace\\Database\\Seeds\\DatabaseSeeder' ) )
         {
-            $this->call( 'DreamFactory\\Rave\\Rackspace\\Database\\Seeds\\DatabaseSeeder' );
+            $this->call( 'DreamFactory\\Core\\Rackspace\\Database\\Seeds\\DatabaseSeeder' );
         }
-        if ( class_exists( 'DreamFactory\\Rave\\Salesforce\\Database\\Seeds\\DatabaseSeeder' ) )
+        if ( class_exists( 'DreamFactory\\Core\\Salesforce\\Database\\Seeds\\DatabaseSeeder' ) )
         {
-            $this->call( 'DreamFactory\\Rave\\Salesforce\\Database\\Seeds\\DatabaseSeeder' );
+            $this->call( 'DreamFactory\\Core\\Salesforce\\Database\\Seeds\\DatabaseSeeder' );
         }
-        if ( class_exists( 'DreamFactory\\Rave\\User\\Database\\Seeds\\DatabaseSeeder' ) )
+        if ( class_exists( 'DreamFactory\\Core\\User\\Database\\Seeds\\DatabaseSeeder' ) )
         {
-            $this->call( 'DreamFactory\\Rave\\User\\Database\\Seeds\\DatabaseSeeder' );
+            $this->call( 'DreamFactory\\Core\\User\\Database\\Seeds\\DatabaseSeeder' );
         }
-        if ( class_exists( 'DreamFactory\\DSP\\OAuth\\Database\\Seeds\\DatabaseSeeder' ) )
+        if ( class_exists( 'DreamFactory\\Core\\OAuth\\Database\\Seeds\\DatabaseSeeder' ) )
         {
-            $this->call( 'DreamFactory\\DSP\\OAuth\\Database\\Seeds\\DatabaseSeeder' );
+            $this->call( 'DreamFactory\\Core\\OAuth\\Database\\Seeds\\DatabaseSeeder' );
         }
-        if ( class_exists( 'DreamFactory\\DSP\\ADLdap\\Database\\Seeds\\DatabaseSeeder' ) )
+        if ( class_exists( 'DreamFactory\\Core\\ADLdap\\Database\\Seeds\\DatabaseSeeder' ) )
         {
-            $this->call( 'DreamFactory\\DSP\\ADLdap\\Database\\Seeds\\DatabaseSeeder' );
+            $this->call( 'DreamFactory\\Core\\ADLdap\\Database\\Seeds\\DatabaseSeeder' );
         }
     }
 }
