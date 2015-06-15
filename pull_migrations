@@ -45,16 +45,16 @@ function rcopy( $src, $dst )
 }
 
 $sources = [
-    'vendor/dreamfactory/rave/database/migrations/',
-    'vendor/dreamfactory/rave-aws/database/migrations/',
-    'vendor/dreamfactory/rave-azure/database/migrations/',
-    'vendor/dreamfactory/rave-mongodb/database/migrations/',
-    'vendor/dreamfactory/rave-rackspace/database/migrations/',
-    'vendor/dreamfactory/rave-rws/database/migrations/',
-    'vendor/dreamfactory/rave-sqldb/database/migrations/',
-    'vendor/dreamfactory/rave-user-mgmt/database/migrations/',
-    'vendor/dreamfactory/dsp-adldap/database/migrations/',
-    'vendor/dreamfactory/dsp-oauth/database/migrations/',
+    'vendor/dreamfactory/df-core/database/migrations/',
+    'vendor/dreamfactory/df-aws/database/migrations/',
+    'vendor/dreamfactory/df-azure/database/migrations/',
+    'vendor/dreamfactory/df-mongodb/database/migrations/',
+    'vendor/dreamfactory/df-rackspace/database/migrations/',
+    'vendor/dreamfactory/df-rws/database/migrations/',
+    'vendor/dreamfactory/df-sqldb/database/migrations/',
+    'vendor/dreamfactory/df-user/database/migrations/',
+    'vendor/dreamfactory/df-adldap/database/migrations/',
+    'vendor/dreamfactory/df-oauth/database/migrations/',
 ];
 
 $destination = 'database/migrations/';
