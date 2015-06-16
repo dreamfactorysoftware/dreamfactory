@@ -1,6 +1,6 @@
-<?php namespace App\Http\Controllers\Auth;
+<?php namespace DreamFactory\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+use DreamFactory\Http\Controllers\Controller;
 use DreamFactory\Core\Resources\System\Password;
 use DreamFactory\Core\Resources\UserPasswordResource;
 use Illuminate\Contracts\Auth\Guard;
@@ -34,12 +34,12 @@ class PasswordController extends Controller
      * @param  \Illuminate\Contracts\Auth\Guard          $auth
      * @param  \Illuminate\Contracts\Auth\PasswordBroker $passwords
      */
-    public function __construct( Guard $auth, PasswordBroker $passwords )
+    public function __construct(Guard $auth, PasswordBroker $passwords)
     {
         $this->auth = $auth;
         $this->passwords = $passwords;
 
-        $this->middleware( 'guest' );
+        $this->middleware('guest');
     }
 
     /**
@@ -49,7 +49,7 @@ class PasswordController extends Controller
      */
     public function getEmail()
     {
-        return view( 'auth.password' );
+        return view('auth.password');
     }
 
     /**
@@ -59,14 +59,13 @@ class PasswordController extends Controller
      *
      * @return Response
      */
-    public function getReset( $token = null )
+    public function getReset($token = null)
     {
-        if ( is_null( $token ) )
-        {
+        if (is_null($token)) {
             throw new NotFoundHttpException;
         }
 
-        return view( 'auth.reset' )->with( 'token', $token );
+        return view('auth.reset')->with('token', $token);
     }
 
     /**
@@ -76,7 +75,7 @@ class PasswordController extends Controller
      *
      * @return Response
      */
-    public function postReset( Request $request )
+    public function postReset(Request $request)
     {
         $this->validate(
             $request,
@@ -87,15 +86,16 @@ class PasswordController extends Controller
             ]
         );
 
-        try
-        {
-            UserPasswordResource::changePasswordByCode( $request->input( 'email' ), urldecode( $request->input( 'token' ) ), $request->input( 'password' ) );
+        try {
+            UserPasswordResource::changePasswordByCode($request->input('email'), urldecode($request->input('token')),
+                $request->input('password'));
 
-            return redirect( $this->redirectPath() );
-        }
-        catch ( \Exception $e )
-        {
-            return redirect()->back()->withInput( $request->only( 'email' ) )->withErrors( [ 'email' => trans( $e->getMessage() ) ] );
+            return redirect($this->redirectPath());
+        } catch (\Exception $e) {
+            return redirect()
+                ->back()
+                ->withInput($request->only('email'))
+                ->withErrors(['email' => trans($e->getMessage())]);
         }
     }
 }

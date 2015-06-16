@@ -22,6 +22,6 @@ Route::get('dsp/oauth/login/{provider}', 'SplashController@handleOAuthLogin');
 Route::get('dsp/oauth/callback/{service}', 'SplashController@handleOAuthCallback');
 
 Route::controllers([
-                       'auth' => 'Auth\AuthController',
-                       'password' => 'Auth\PasswordController',
-                   ]);
+    'auth'     => 'Auth\AuthController',
+    'password' => 'Auth\PasswordController',
+]);

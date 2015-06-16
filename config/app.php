@@ -152,11 +152,11 @@ return [
 		/*
 		 * Application Service Providers...
 		 */
-		'App\Providers\AppServiceProvider',
-		'App\Providers\BusServiceProvider',
-		'App\Providers\ConfigServiceProvider',
-		'App\Providers\EventServiceProvider',
-		'App\Providers\RouteServiceProvider',
+		'DreamFactory\Providers\AppServiceProvider',
+		'DreamFactory\Providers\BusServiceProvider',
+		'DreamFactory\Providers\ConfigServiceProvider',
+		'DreamFactory\Providers\EventServiceProvider',
+		'DreamFactory\Providers\RouteServiceProvider',
 
 	],
 

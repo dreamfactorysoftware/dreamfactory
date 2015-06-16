@@ -1,7 +1,8 @@
-<?php namespace App\Events;
+<?php namespace DreamFactory\Events;
 
-abstract class Event {
+abstract class Event
+{
 
-	//
+    //
 
 }

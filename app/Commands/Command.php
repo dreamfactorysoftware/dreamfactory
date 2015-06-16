@@ -1,7 +1,8 @@
-<?php namespace App\Commands;
+<?php namespace DreamFactory\Commands;
 
-abstract class Command {
+abstract class Command
+{
 
-	//
+    //
 
 }

@@ -8,36 +8,28 @@
  *
  * @return bool
  */
-function rcopy( $src, $dst )
+function rcopy($src, $dst)
 {
-
     // If source is not a directory stop processing
-    if ( !is_dir( $src ) )
-    {
+    if (!is_dir($src)) {
         return false;
     }
 
     // If the destination directory does not exist create it
-    if ( !is_dir( $dst ) )
-    {
-        if ( !mkdir( $dst ) )
-        {
+    if (!is_dir($dst)) {
+        if (!mkdir($dst)) {
             // If the destination directory could not be created stop processing
             return false;
         }
     }
 
     // Open the source directory to read in files
-    $i = new DirectoryIterator( $src );
-    foreach ( $i as $f )
-    {
-        if ( $f->isFile() )
-        {
-            copy( $f->getRealPath(), "$dst/" . $f->getFilename() );
-        }
-        else if ( !$f->isDot() && $f->isDir() )
-        {
-            rcopy( $f->getRealPath(), "$dst/$f" );
+    $i = new DirectoryIterator($src);
+    foreach ($i as $f) {
+        if ($f->isFile()) {
+            copy($f->getRealPath(), "$dst/" . $f->getFilename());
+        } else if (!$f->isDot() && $f->isDir()) {
+            rcopy($f->getRealPath(), "$dst/$f");
         }
     }
 
@@ -46,12 +38,16 @@ function rcopy( $src, $dst )
 
 $sources = [
     'vendor/dreamfactory/df-core/database/migrations/',
+    // Optional services
     'vendor/dreamfactory/df-aws/database/migrations/',
     'vendor/dreamfactory/df-azure/database/migrations/',
+    'vendor/dreamfactory/df-couchdb/database/migrations/',
     'vendor/dreamfactory/df-mongodb/database/migrations/',
     'vendor/dreamfactory/df-rackspace/database/migrations/',
     'vendor/dreamfactory/df-rws/database/migrations/',
+    'vendor/dreamfactory/df-salesforce/database/migrations/',
     'vendor/dreamfactory/df-sqldb/database/migrations/',
+    // Optional user management services
     'vendor/dreamfactory/df-user/database/migrations/',
     'vendor/dreamfactory/df-adldap/database/migrations/',
     'vendor/dreamfactory/df-oauth/database/migrations/',
@@ -59,7 +55,6 @@ $sources = [
 
 $destination = 'database/migrations/';
 
-foreach ($sources as $source)
-{
+foreach ($sources as $source) {
     rcopy($source, $destination);
 }
