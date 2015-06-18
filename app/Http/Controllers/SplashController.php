@@ -5,7 +5,6 @@ use Response;
 use Carbon\Carbon;
 use DreamFactory\Core\OAuth\Services\BaseOAuthService;
 use DreamFactory\Core\Utility\ServiceHandler;
-use DreamFactory\Core\Models\User as DspUser;
 use DreamFactory\Core\ADLdap\Services\LDAP as LdapService;
 use DreamFactory\Core\ADLdap\Contracts\Provider as ADLdapProvider;
 use DreamFactory\Core\Utility\Session;
@@ -80,11 +79,12 @@ class SplashController extends Controller
 
             if ($auth) {
                 $ldapUser = $driver->getUser();
-
-                $user = DspUser::createShadowADLdapUser($ldapUser, $service);
+                $user = $service->createShadowADLdapUser($ldapUser);
                 $user->update(['last_login_date' => Carbon::now()->toDateTimeString()]);
 
                 \Auth::login($user, \Request::has('remember'));
+                Session::setUserInfo($user);
+                Session::forgetApiKeys();
 
                 return redirect()->intended(env('LANDING_PAGE', '/launchpad'));
             }
@@ -119,10 +119,12 @@ class SplashController extends Controller
         /** @var User $user */
         $user = $driver->user();
 
-        $dspUser = DspUser::createShadowOAuthUser($user, $service);
-        $dspUser->update(['last_login_date' => Carbon::now()->toDateTimeString()]);
+        $dfUser = $service->createShadowOAuthUser($user);
+        $dfUser->update(['last_login_date' => Carbon::now()->toDateTimeString()]);
 
-        \Auth::login($dspUser);
+        \Auth::login($dfUser);
+        Session::setUserInfo($dfUser);
+        Session::forgetApiKeys();
 
         if (\Request::ajax()) {
             return ['success' => true, 'session_id' => Session::getId()];
