@@ -83,8 +83,7 @@ class SplashController extends Controller
                 $user->update(['last_login_date' => Carbon::now()->toDateTimeString()]);
 
                 \Auth::login($user, \Request::has('remember'));
-                Session::setUserInfo($user);
-                Session::forgetApiKeys();
+                Session::setUserInfo($user->toArray());
 
                 return redirect()->intended(env('LANDING_PAGE', '/launchpad'));
             }
@@ -123,8 +122,7 @@ class SplashController extends Controller
         $dfUser->update(['last_login_date' => Carbon::now()->toDateTimeString()]);
 
         \Auth::login($dfUser);
-        Session::setUserInfo($dfUser);
-        Session::forgetApiKeys();
+        Session::setUserInfo($dfUser->toArray());
 
         if (\Request::ajax()) {
             return ['success' => true, 'session_id' => Session::getId()];
