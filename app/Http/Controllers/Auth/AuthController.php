@@ -134,9 +134,9 @@ class AuthController extends Controller
         if ($this->auth->attempt($credentials, $request->has('remember'))) {
             $user = \Auth::user();
             $user->update(['last_login_date' => Carbon::now()->toDateTimeString()]);
-            Session::setUserInfo($user->toArray());
+            Session::setUserInfoWithJWT($user);
 
-            return redirect()->intended($this->redirectPath());
+            return redirect()->intended($this->redirectPath().'?token='.Session::getSessionToken());
         }
 
         return redirect($this->loginPath())->withInput($request->only('email', 'remember'))->withErrors(

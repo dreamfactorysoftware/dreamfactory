@@ -90,7 +90,7 @@ return [
     */
 
     //'required_claims' => ['iss', 'iat', 'exp', 'nbf', 'sub', 'jti'],
-    'required_claims' => ['iat', 'exp', 'user_id', 'role_id', 'app_id', 'app_key'],
+    'required_claims' => ['iat', 'exp', 'user_id'],
 
     /*
     |--------------------------------------------------------------------------
