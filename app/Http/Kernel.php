@@ -16,7 +16,7 @@ class Kernel extends HttpKernel
         'Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse',
         'Illuminate\Session\Middleware\StartSession',
         'Illuminate\View\Middleware\ShareErrorsFromSession',
-        'DreamFactory\Core\Http\Middleware\Cors'
+        'DreamFactory\Http\Middleware\Cors'
         //'DreamFactory\Http\Middleware\VerifyCsrfToken',
     ];
 
@@ -29,6 +29,8 @@ class Kernel extends HttpKernel
         'auth'       => 'DreamFactory\Http\Middleware\Authenticate',
         'auth.basic' => 'Illuminate\Auth\Middleware\AuthenticateWithBasicAuth',
         'guest'      => 'DreamFactory\Http\Middleware\RedirectIfAuthenticated',
+        'api_limits' => 'DreamFactory\Http\Middleware\Limits',
+        'access_check' => 'DreamFactory\Http\Middleware\AccessCheck'
     ];
 
 }

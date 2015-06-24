@@ -1,7 +1,9 @@
 <?php namespace DreamFactory\Http\Middleware;
 
 use Closure;
+use JWTAuth;
 use Illuminate\Contracts\Auth\Guard;
+use DreamFactory\Core\Utility\Session;
 
 class Authenticate
 {
@@ -37,7 +39,17 @@ class Authenticate
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
             } else {
-                return redirect()->guest('/auth/login');
+                $token = $request->input('token');
+                if(!empty($token)){
+                    JWTAuth::setToken($token);
+                    /** @type Payload $payload */
+                    $payload = JWTAuth::getPayload();
+                    $userId = $payload->get('user_id');
+                    Session::setSessionData(null, $userId);
+                }
+                else {
+                    return redirect()->guest('/auth/login');
+                }
             }
         }
 

@@ -29,7 +29,6 @@ class SplashController extends Controller
     public function index()
     {
         return redirect(env('LANDING_PAGE', '/launchpad'));
-//        return view( 'splash' );
     }
 
     /**
@@ -45,11 +44,10 @@ class SplashController extends Controller
     {
         /** @var BaseOAuthService $service */
         $service = ServiceHandler::getService($provider);
-
         /** @var Provider $driver */
         $driver = $service->getDriver();
 
-        return $driver->redirect();
+        return $driver->stateless()->redirect();
     }
 
     /**
@@ -81,11 +79,10 @@ class SplashController extends Controller
                 $ldapUser = $driver->getUser();
                 $user = $service->createShadowADLdapUser($ldapUser);
                 $user->update(['last_login_date' => Carbon::now()->toDateTimeString()]);
+                //\Auth::login($user, \Request::has('remember'));
+                Session::setUserInfoWithJWT($user);
 
-                \Auth::login($user, \Request::has('remember'));
-                Session::setUserInfo($user->toArray());
-
-                return redirect()->intended(env('LANDING_PAGE', '/launchpad'));
+                return redirect()->intended(env('LANDING_PAGE', '/launchpad').'?token='.Session::getSessionToken());
             }
         }
 
@@ -116,18 +113,18 @@ class SplashController extends Controller
         $driver = $service->getDriver();
 
         /** @var User $user */
-        $user = $driver->user();
+        $user = $driver->stateless()->user();
 
         $dfUser = $service->createShadowOAuthUser($user);
         $dfUser->update(['last_login_date' => Carbon::now()->toDateTimeString()]);
 
-        \Auth::login($dfUser);
-        Session::setUserInfo($dfUser->toArray());
+        //\Auth::login($dfUser);
+        Session::setUserInfoWithJWT($dfUser);
 
         if (\Request::ajax()) {
-            return ['success' => true, 'session_id' => Session::getId()];
+            return ['success' => true, 'session_id' => Session::getSessionToken()];
         } else {
-            return redirect()->intended(env('LANDING_PAGE', '/launchpad'));
+            return redirect()->intended(env('LANDING_PAGE', '/launchpad').'?token='.Session::getSessionToken());
         }
     }
 }
