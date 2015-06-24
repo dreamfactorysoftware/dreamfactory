@@ -79,7 +79,6 @@ class SplashController extends Controller
                 $ldapUser = $driver->getUser();
                 $user = $service->createShadowADLdapUser($ldapUser);
                 $user->update(['last_login_date' => Carbon::now()->toDateTimeString()]);
-                //\Auth::login($user, \Request::has('remember'));
                 Session::setUserInfoWithJWT($user);
 
                 return redirect()->intended(env('LANDING_PAGE', '/launchpad').'?token='.Session::getSessionToken());
@@ -117,8 +116,6 @@ class SplashController extends Controller
 
         $dfUser = $service->createShadowOAuthUser($user);
         $dfUser->update(['last_login_date' => Carbon::now()->toDateTimeString()]);
-
-        //\Auth::login($dfUser);
         Session::setUserInfoWithJWT($dfUser);
 
         if (\Request::ajax()) {
