@@ -17,6 +17,7 @@ use DreamFactory\Core\Models\Role;
 use DreamFactory\Core\Models\User;
 use DreamFactory\Core\Utility\Session;
 use DreamFactory\Core\Utility\CacheUtilities;
+use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use Tymon\JWTAuth\Payload;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
@@ -79,6 +80,24 @@ class AccessCheck
             //getallheaders method is not available in unit test mode.
             return [];
         }
+
+        if (!function_exists('getallheaders'))  {
+            function getallheaders()
+            {
+                if (!is_array($_SERVER)) {
+                    return array();
+                }
+
+                $headers = array();
+                foreach ($_SERVER as $name => $value) {
+                    if (substr($name, 0, 5) == 'HTTP_') {
+                        $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
+                    }
+                }
+                return $headers;
+            }
+        }
+
         $headers = getallheaders();
         $token = substr(ArrayUtils::get($headers, 'Authorization'), 7);
         return $token;
@@ -154,6 +173,8 @@ class AccessCheck
                 }
             } catch(TokenBlacklistedException $e){
                 return ResponseFactory::getException(new ForbiddenException($e->getMessage()), $request);
+            } catch (TokenInvalidException $e){
+                return ResponseFactory::getException(new BadRequestException('Invalid token supplied.'), $request);
             }
         } elseif (!empty($apiKey)) {
             //Just Api Key is supplied. No authenticated session
