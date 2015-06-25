@@ -3,6 +3,7 @@ namespace DreamFactory\Http\Middleware;
 
 use \Auth;
 use \Closure;
+use DreamFactory\Core\Utility\JWTUtilities;
 use \JWTAuth;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
@@ -147,9 +148,12 @@ class AccessCheck
                 $userId = $payload->get('user_id');
                 Session::setSessionData($appId, $userId);
             } catch (TokenExpiredException $e) {
-                return ResponseFactory::getException(new UnauthorizedException($e->getMessage()), $request);
+                JWTUtilities::clearAllExpiredTokenMaps();
+                if(!static::isException($request)) {
+                    return ResponseFactory::getException(new UnauthorizedException($e->getMessage()), $request);
+                }
             } catch(TokenBlacklistedException $e){
-                return ResponseFactory::getException(new UnauthorizedException($e->getMessage()), $request);
+                return ResponseFactory::getException(new ForbiddenException($e->getMessage()), $request);
             }
         } elseif (!empty($apiKey)) {
             //Just Api Key is supplied. No authenticated session
