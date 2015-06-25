@@ -131,11 +131,7 @@ class AuthController extends Controller
         //Only active users are allowed to login.
         $credentials['is_active'] = 1;
 
-        if ($this->auth->attempt($credentials, $request->has('remember'))) {
-            $user = \Auth::user();
-            $user->update(['last_login_date' => Carbon::now()->toDateTimeString()]);
-            Session::setUserInfoWithJWT($user);
-
+        if (Session::authenticate($credentials, $request->has('remember'))) {
             return redirect()->intended($this->redirectPath().'?token='.Session::getSessionToken());
         }
 

@@ -3,6 +3,7 @@ namespace DreamFactory\Http\Middleware;
 
 use \Auth;
 use \Closure;
+use DreamFactory\Core\Utility\JWTUtilities;
 use \JWTAuth;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
@@ -18,6 +19,7 @@ use DreamFactory\Core\Utility\Session;
 use DreamFactory\Core\Utility\CacheUtilities;
 use Tymon\JWTAuth\Payload;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
+use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
 
 class AccessCheck
 {
@@ -67,13 +69,40 @@ class AccessCheck
     }
 
     /**
+     * Gets the token from Authorization header.
+     *
+     * @return string
+     */
+    protected static function getJWTFromAuthHeader()
+    {
+        if(env('APP_ENV') === 'testing'){
+            //getallheaders method is not available in unit test mode.
+            return [];
+        }
+        $headers = getallheaders();
+        $token = substr(ArrayUtils::get($headers, 'Authorization'), 7);
+        return $token;
+    }
+
+    /**
      * @param Request $request
      *
      * @return mixed
      */
     public static function getJwt($request)
     {
-        return $request->header('X_DREAMFACTORY_SESSION_TOKEN');
+        $token = static::getJWTFromAuthHeader();
+        if(empty($token)) {
+            $token = $request->header('X_DREAMFACTORY_SESSION_TOKEN');
+        }
+        if(empty($token)){
+            $token = $request->input('session_token');
+        }
+        if(empty($token)){
+            $token = $request->input('token');
+        }
+
+        return $token;
     }
 
     /**
@@ -105,7 +134,7 @@ class AccessCheck
                 $userId = $authenticatedUser->id;
                 Session::setSessionData($appId, $userId);
             } else {
-                return static::getException(
+                return ResponseFactory::getException(
                     new UnauthorizedException('Unauthorized. User credentials did not match.'),
                     $request
                 );
@@ -119,7 +148,12 @@ class AccessCheck
                 $userId = $payload->get('user_id');
                 Session::setSessionData($appId, $userId);
             } catch (TokenExpiredException $e) {
-                return static::getException(new UnauthorizedException($e->getMessage()), $request);
+                JWTUtilities::clearAllExpiredTokenMaps();
+                if(!static::isException($request)) {
+                    return ResponseFactory::getException(new UnauthorizedException($e->getMessage()), $request);
+                }
+            } catch(TokenBlacklistedException $e){
+                return ResponseFactory::getException(new ForbiddenException($e->getMessage()), $request);
             }
         } elseif (!empty($apiKey)) {
             //Just Api Key is supplied. No authenticated session
@@ -129,7 +163,7 @@ class AccessCheck
             return $next($request);
         } else {
             //No token and/or Api Key supplied.
-            return static::getException(
+            return ResponseFactory::getException(
                 new BadRequestException('Bad request. No token or api key provided.'),
                 $request
             );
@@ -142,28 +176,14 @@ class AccessCheck
             return $next($request);
         } else {
             if (!Session::isAuthenticated()) {
-                return static::getException(
+                return ResponseFactory::getException(
                     new UnauthorizedException('Unauthorized.'),
                     $request
                 );
             } else {
-                return static::getException(new ForbiddenException('Access Forbidden.'), $request);
+                return ResponseFactory::getException(new ForbiddenException('Access Forbidden.'), $request);
             }
         }
-    }
-
-    /**
-     * @param \Exception               $e
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return array|mixed|string
-     */
-    protected static function getException($e, $request)
-    {
-        $response = ResponseFactory::create($e);
-        $accepts = explode(',', $request->header('ACCEPT'));
-
-        return ResponseFactory::sendResponse($response, $accepts);
     }
 
     /**

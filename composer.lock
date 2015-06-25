@@ -7,50 +7,6 @@
     "hash": "bf6c2cea42ed9bb53f207094107c35fd",
     "packages": [
         {
-            "name": "adldap/adldap",
-            "version": "v4.0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ztec/adLDAP.git",
-                "reference": "20e8269d8dbb519e674daf7f567d5f0089c23c00"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ztec/adLDAP/zipball/20e8269d8dbb519e674daf7f567d5f0089c23c00",
-                "reference": "20e8269d8dbb519e674daf7f567d5f0089c23c00",
-                "shasum": ""
-            },
-            "require": {
-                "ext-ldap": "*",
-                "php": ">=5.2.4"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "adLDAP": "lib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GNU"
-            ],
-            "authors": [
-                {
-                    "name": "Richard Hyland",
-                    "email": "adldap@richardhyland.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "adLDAP, low-level library to query Active directory",
-            "homepage": "http://adldap.sourceforge.net",
-            "keywords": [
-                "active directory",
-                "ldap",
-                "windows"
-            ],
-            "time": "2012-11-02 02:12:46"
-        },
-        {
             "name": "asm89/stack-cors",
             "version": "0.2.1",
             "source": {
@@ -489,16 +445,15 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/df-adldap.git",
-                "reference": "99f82897f21014021ad7eb42dc632fee9fbd2e37"
+                "reference": "a33dbbc054368076654542d7b64d95eb6e094fee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-adldap/zipball/99f82897f21014021ad7eb42dc632fee9fbd2e37",
-                "reference": "99f82897f21014021ad7eb42dc632fee9fbd2e37",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-adldap/zipball/a33dbbc054368076654542d7b64d95eb6e094fee",
+                "reference": "a33dbbc054368076654542d7b64d95eb6e094fee",
                 "shasum": ""
             },
             "require": {
-                "adldap/adldap": "4.0.*",
                 "dreamfactory/df-core": "dev-develop as dev-master",
                 "dreamfactory/df-user": "dev-develop as dev-master"
             },
@@ -537,7 +492,7 @@
                 "issues": "https://github.com/dreamfactorysoftware/df-adldap/issues",
                 "wiki": "https://wiki.dreamfactory.com"
             },
-            "time": "2015-06-23 21:10:56"
+            "time": "2015-06-25 15:01:35"
         },
         {
             "name": "dreamfactory/df-aws",
@@ -663,12 +618,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/df-core.git",
-                "reference": "c6442126785850e1d59e6797d4c910576d882458"
+                "reference": "ee51c4a167592bbb5afe7f0523c07e276c27a827"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/c6442126785850e1d59e6797d4c910576d882458",
-                "reference": "c6442126785850e1d59e6797d4c910576d882458",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/ee51c4a167592bbb5afe7f0523c07e276c27a827",
+                "reference": "ee51c4a167592bbb5afe7f0523c07e276c27a827",
                 "shasum": ""
             },
             "require": {
@@ -723,7 +678,7 @@
                 "source": "https://github.com/dreamfactorysoftware/df-core/tree/develop",
                 "issues": "https://github.com/dreamfactorysoftware/df-core/issues"
             },
-            "time": "2015-06-23 21:23:54"
+            "time": "2015-06-25 15:01:01"
         },
         {
             "name": "dreamfactory/df-mongodb",
@@ -1158,12 +1113,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/dsp-admin-app.git",
-                "reference": "ddda8d048435c9db63e1bd322db2347ec8801bac"
+                "reference": "9cb261e5f9aca7597f2860a99074ec13f08f3da1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/dsp-admin-app/zipball/ddda8d048435c9db63e1bd322db2347ec8801bac",
-                "reference": "ddda8d048435c9db63e1bd322db2347ec8801bac",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/dsp-admin-app/zipball/9cb261e5f9aca7597f2860a99074ec13f08f3da1",
+                "reference": "9cb261e5f9aca7597f2860a99074ec13f08f3da1",
                 "shasum": ""
             },
             "require": {
@@ -1205,7 +1160,7 @@
                 "wiki": "https://github.com/dreamfactorysoftware/dsp-admin-app/wiki",
                 "source": "https://github.com/dreamfactorysoftware/dsp-admin-app"
             },
-            "time": "2015-06-22 19:27:48"
+            "time": "2015-06-25 14:50:57"
         },
         {
             "name": "dreamfactory/installer",
@@ -1261,12 +1216,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/php-utils.git",
-                "reference": "fdf31aad2d3f94bba4b2364ffb67deb6ced3c89b"
+                "reference": "657ba61af1a700e033685f740d6467bc91a9355c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/php-utils/zipball/fdf31aad2d3f94bba4b2364ffb67deb6ced3c89b",
-                "reference": "fdf31aad2d3f94bba4b2364ffb67deb6ced3c89b",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/php-utils/zipball/657ba61af1a700e033685f740d6467bc91a9355c",
+                "reference": "657ba61af1a700e033685f740d6467bc91a9355c",
                 "shasum": ""
             },
             "require": {
@@ -1304,7 +1259,7 @@
                 "dreamfactory",
                 "utility"
             ],
-            "time": "2015-06-24 01:05:00"
+            "time": "2015-06-25 00:35:53"
         },
         {
             "name": "guzzle/guzzle",
@@ -2246,21 +2201,21 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "1.19.0",
+            "version": "1.20.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "68868e0b02d2d803d0052a59d4e5003cccf87320"
+                "reference": "bfd3eaba109c9a2405c92174c8e17f20c2b9caf3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/68868e0b02d2d803d0052a59d4e5003cccf87320",
-                "reference": "68868e0b02d2d803d0052a59d4e5003cccf87320",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/bfd3eaba109c9a2405c92174c8e17f20c2b9caf3",
+                "reference": "bfd3eaba109c9a2405c92174c8e17f20c2b9caf3",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0",
-                "symfony/translation": "~2.6"
+                "symfony/translation": "~2.6|~3.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "~4.0"
@@ -2289,7 +2244,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2015-05-09 03:23:44"
+            "time": "2015-06-25 04:19:39"
         },
         {
             "name": "nikic/php-parser",
@@ -3844,16 +3799,16 @@
     "packages-dev": [
         {
             "name": "barryvdh/laravel-ide-helper",
-            "version": "v2.0.5",
+            "version": "v2.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/barryvdh/laravel-ide-helper.git",
-                "reference": "541b9508e205cbfcf0d456900d28dec58e24d64b"
+                "reference": "037386153630a7515a1542f29410d8c267651689"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-ide-helper/zipball/541b9508e205cbfcf0d456900d28dec58e24d64b",
-                "reference": "541b9508e205cbfcf0d456900d28dec58e24d64b",
+                "url": "https://api.github.com/repos/barryvdh/laravel-ide-helper/zipball/037386153630a7515a1542f29410d8c267651689",
+                "reference": "037386153630a7515a1542f29410d8c267651689",
                 "shasum": ""
             },
             "require": {
@@ -3903,7 +3858,7 @@
                 "phpstorm",
                 "sublime"
             ],
-            "time": "2015-06-11 14:11:52"
+            "time": "2015-06-25 08:58:59"
         },
         {
             "name": "doctrine/instantiator",
