@@ -17,6 +17,7 @@
 		var url = $('#url').val();
 		var username = $('#username').val();
 		var password = $('#password').val();
+        var auth = $('#auth').val();
 
 		while(url.indexOf('=[')>=0) {
 			url = url.replace(/\[.*?\]/, function(a, b) {
@@ -54,6 +55,9 @@
 						   if(token != '') {
 							   xhr.setRequestHeader("X-DreamFactory-Session-Token", token);
 						   }
+                           if(auth){
+                               xhr.setRequestHeader("Authorization", "Bearer "+auth);
+                           }
 						   if(username && password){
 							   xhr.setRequestHeader("Authorization", "Basic "+btoa(username+':'+password));
 						   }
@@ -122,8 +126,12 @@
 		</div>
 		<div>
 			X-DreamFactory-Session-Token:
-			<input type="text" id="token" value="" size="80"/>
+			<input type="text" id="token" value="" size="120"/>
 		</div>
+        <div>
+            Authorization Header:
+            <input type="text" id="auth" value="" size="120"/>
+        </div>
 		<div>
 			HTTP Auth username:
 			<input type="text" id="username" value="" size="20"/>
