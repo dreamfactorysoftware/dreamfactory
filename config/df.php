@@ -25,7 +25,7 @@ return [
     /** Enable/disable detailed CORS logging */
     'log_cors_info'                => false,
     'default_cache_ttl'            => env('CACHE_TTL', 300),
-    'allow_forever_sessions'       => true,
+    'allow_forever_sessions'       => false,
     'cors'                         => [
         'defaults' => [
             'supportsCredentials' => false,
