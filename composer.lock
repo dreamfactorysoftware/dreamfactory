@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "bf6c2cea42ed9bb53f207094107c35fd",
+    "hash": "03cddf5ccd25a7f1d29741be59392675",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -445,12 +445,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/df-adldap.git",
-                "reference": "a33dbbc054368076654542d7b64d95eb6e094fee"
+                "reference": "e17ab2c89b7e4b576a142f34a7ddfa475839cf1c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-adldap/zipball/a33dbbc054368076654542d7b64d95eb6e094fee",
-                "reference": "a33dbbc054368076654542d7b64d95eb6e094fee",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-adldap/zipball/e17ab2c89b7e4b576a142f34a7ddfa475839cf1c",
+                "reference": "e17ab2c89b7e4b576a142f34a7ddfa475839cf1c",
                 "shasum": ""
             },
             "require": {
@@ -492,7 +492,62 @@
                 "issues": "https://github.com/dreamfactorysoftware/df-adldap/issues",
                 "wiki": "https://wiki.dreamfactory.com"
             },
-            "time": "2015-06-25 15:01:35"
+            "time": "2015-06-26 14:51:23"
+        },
+        {
+            "name": "dreamfactory/df-admin-app",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:dreamfactorysoftware/df-admin-app.git",
+                "reference": "5d95fd0385fe91995cd58b93c6257822eef145e0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-admin-app/zipball/5d95fd0385fe91995cd58b93c6257822eef145e0",
+                "reference": "5d95fd0385fe91995cd58b93c6257822eef145e0",
+                "shasum": ""
+            },
+            "require": {
+                "dreamfactory/installer": "*"
+            },
+            "type": "dreamfactory-app",
+            "extra": {
+                "branch-alias": {
+                    "dev-develop": "0.9-dev"
+                },
+                "installer-name": "dreamfactory"
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Todd Appleton",
+                    "email": "toddappleton@dreamfactory.com",
+                    "role": "Lead Developer and QA, client-side"
+                }
+            ],
+            "description": "DreamFactory(tm) Admin Console",
+            "homepage": "https://github.com/dreamfactorysoftware/df-admin-app/",
+            "keywords": [
+                "admin",
+                "cloud-computing",
+                "dsp",
+                "dsp-core",
+                "esb",
+                "framework",
+                "remote web services",
+                "rest",
+                "service bus"
+            ],
+            "support": {
+                "source": "https://github.com/dreamfactorysoftware/df-admin-app",
+                "issues": "https://github.com/dreamfactorysoftware/df-admin-app/issues",
+                "email": "support@dreamfactory.com",
+                "wiki": "https://wiki.dreamfactory.com"
+            },
+            "time": "2015-06-26 16:57:44"
         },
         {
             "name": "dreamfactory/df-aws",
@@ -500,12 +555,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/df-aws.git",
-                "reference": "dc8739c5201b9679bf41fca4646bd35c2766665f"
+                "reference": "a5834c7751f1d25756082da7f66cb170125426cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-aws/zipball/dc8739c5201b9679bf41fca4646bd35c2766665f",
-                "reference": "dc8739c5201b9679bf41fca4646bd35c2766665f",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-aws/zipball/a5834c7751f1d25756082da7f66cb170125426cf",
+                "reference": "a5834c7751f1d25756082da7f66cb170125426cf",
                 "shasum": ""
             },
             "require": {
@@ -551,7 +606,7 @@
                 "issues": "https://github.com/dreamfactorysoftware/df-aws/issues",
                 "wiki": "https://wiki.dreamfactory.com"
             },
-            "time": "2015-06-17 21:49:32"
+            "time": "2015-06-26 15:15:53"
         },
         {
             "name": "dreamfactory/df-azure",
@@ -559,12 +614,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/df-azure.git",
-                "reference": "9a82717e749550a12c5eb865f4c84a2d639ef87d"
+                "reference": "ca84ef6eb985605ec97c122e68ea5ab54ddaafef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-azure/zipball/9a82717e749550a12c5eb865f4c84a2d639ef87d",
-                "reference": "9a82717e749550a12c5eb865f4c84a2d639ef87d",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-azure/zipball/ca84ef6eb985605ec97c122e68ea5ab54ddaafef",
+                "reference": "ca84ef6eb985605ec97c122e68ea5ab54ddaafef",
                 "shasum": ""
             },
             "require": {
@@ -610,7 +665,7 @@
                 "issues": "https://github.com/dreamfactorysoftware/df-azure/issues",
                 "wiki": "https://wiki.dreamfactory.com"
             },
-            "time": "2015-06-17 21:50:04"
+            "time": "2015-06-26 15:29:30"
         },
         {
             "name": "dreamfactory/df-core",
@@ -618,12 +673,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/df-core.git",
-                "reference": "14c89d8c5090da56e189e998a75831841b21538d"
+                "reference": "ba48d6cfba17eabb29fb6a0f2c700aeeb7ee2711"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/14c89d8c5090da56e189e998a75831841b21538d",
-                "reference": "14c89d8c5090da56e189e998a75831841b21538d",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/ba48d6cfba17eabb29fb6a0f2c700aeeb7ee2711",
+                "reference": "ba48d6cfba17eabb29fb6a0f2c700aeeb7ee2711",
                 "shasum": ""
             },
             "require": {
@@ -678,7 +733,7 @@
                 "source": "https://github.com/dreamfactorysoftware/df-core/tree/develop",
                 "issues": "https://github.com/dreamfactorysoftware/df-core/issues"
             },
-            "time": "2015-06-25 20:39:29"
+            "time": "2015-06-26 16:43:40"
         },
         {
             "name": "dreamfactory/df-mongodb",
@@ -686,12 +741,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/df-mongodb.git",
-                "reference": "fb71070cb591feae9ea9ece9e532e1648f1f7527"
+                "reference": "04fbd8899e56c1243725e492c00b4c2cc84b1818"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-mongodb/zipball/fb71070cb591feae9ea9ece9e532e1648f1f7527",
-                "reference": "fb71070cb591feae9ea9ece9e532e1648f1f7527",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-mongodb/zipball/04fbd8899e56c1243725e492c00b4c2cc84b1818",
+                "reference": "04fbd8899e56c1243725e492c00b4c2cc84b1818",
                 "shasum": ""
             },
             "require": {
@@ -742,7 +797,7 @@
                 "issues": "https://github.com/dreamfactorysoftware/df-mongodb/issues",
                 "wiki": "https://wiki.dreamfactory.com"
             },
-            "time": "2015-06-16 18:12:50"
+            "time": "2015-06-26 15:31:17"
         },
         {
             "name": "dreamfactory/df-oauth",
@@ -750,12 +805,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/df-oauth.git",
-                "reference": "96c487db53d1522e58fda6e2a856f0f42cf8579c"
+                "reference": "d1f2c828c21db814afd02780fff3c7dc1c1a5250"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-oauth/zipball/96c487db53d1522e58fda6e2a856f0f42cf8579c",
-                "reference": "96c487db53d1522e58fda6e2a856f0f42cf8579c",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-oauth/zipball/d1f2c828c21db814afd02780fff3c7dc1c1a5250",
+                "reference": "d1f2c828c21db814afd02780fff3c7dc1c1a5250",
                 "shasum": ""
             },
             "require": {
@@ -796,7 +851,7 @@
                 "issues": "https://github.com/dreamfactorysoftware/df-oauth/issues",
                 "wiki": "https://wiki.dreamfactory.com"
             },
-            "time": "2015-06-23 21:11:20"
+            "time": "2015-06-26 15:31:59"
         },
         {
             "name": "dreamfactory/df-rackspace",
@@ -804,12 +859,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/df-rackspace.git",
-                "reference": "dec9155052c000f7d276bf761fe762203acdb802"
+                "reference": "c546f6689b82807b94b9d161e150959274bb0fbb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-rackspace/zipball/dec9155052c000f7d276bf761fe762203acdb802",
-                "reference": "dec9155052c000f7d276bf761fe762203acdb802",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-rackspace/zipball/c546f6689b82807b94b9d161e150959274bb0fbb",
+                "reference": "c546f6689b82807b94b9d161e150959274bb0fbb",
                 "shasum": ""
             },
             "require": {
@@ -855,7 +910,7 @@
                 "issues": "https://github.com/dreamfactorysoftware/df-rackspace/issues",
                 "wiki": "https://wiki.dreamfactory.com"
             },
-            "time": "2015-06-17 21:50:41"
+            "time": "2015-06-26 15:37:59"
         },
         {
             "name": "dreamfactory/df-rws",
@@ -863,12 +918,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/df-rws.git",
-                "reference": "d9fa6882d84515cca5500ef8cafe5affc9059a67"
+                "reference": "af6a85605e1c8237848ca33973412761c5d61f7f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-rws/zipball/d9fa6882d84515cca5500ef8cafe5affc9059a67",
-                "reference": "d9fa6882d84515cca5500ef8cafe5affc9059a67",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-rws/zipball/af6a85605e1c8237848ca33973412761c5d61f7f",
+                "reference": "af6a85605e1c8237848ca33973412761c5d61f7f",
                 "shasum": ""
             },
             "require": {
@@ -912,7 +967,7 @@
                 "issues": "https://github.com/dreamfactorysoftware/df-rws/issues",
                 "wiki": "https://wiki.dreamfactory.com"
             },
-            "time": "2015-06-18 21:46:04"
+            "time": "2015-06-26 15:41:44"
         },
         {
             "name": "dreamfactory/df-sqldb",
@@ -920,12 +975,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/df-sqldb.git",
-                "reference": "478dfb66d41bdaf93586a3e4fdefc03132ac44fa"
+                "reference": "5de35437c231b93c083d508a618a0fb39f7efea6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-sqldb/zipball/478dfb66d41bdaf93586a3e4fdefc03132ac44fa",
-                "reference": "478dfb66d41bdaf93586a3e4fdefc03132ac44fa",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-sqldb/zipball/5de35437c231b93c083d508a618a0fb39f7efea6",
+                "reference": "5de35437c231b93c083d508a618a0fb39f7efea6",
                 "shasum": ""
             },
             "require": {
@@ -980,7 +1035,7 @@
                 "issues": "https://github.com/dreamfactorysoftware/df-sqldb/issues",
                 "wiki": "https://wiki.dreamfactory.com"
             },
-            "time": "2015-06-16 18:14:41"
+            "time": "2015-06-26 16:49:31"
         },
         {
             "name": "dreamfactory/df-sqldb-core",
@@ -1057,12 +1112,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/df-user.git",
-                "reference": "835e2eadf729bfba74e781ff6334e9bc666c5818"
+                "reference": "ad78b0db6623e1db4957788d804dfa8069494e94"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-user/zipball/835e2eadf729bfba74e781ff6334e9bc666c5818",
-                "reference": "835e2eadf729bfba74e781ff6334e9bc666c5818",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-user/zipball/ad78b0db6623e1db4957788d804dfa8069494e94",
+                "reference": "ad78b0db6623e1db4957788d804dfa8069494e94",
                 "shasum": ""
             },
             "require": {
@@ -1105,62 +1160,7 @@
                 "issues": "https://github.com/dreamfactorysoftware/df-user/issues",
                 "wiki": "https://wiki.dreamfactory.com"
             },
-            "time": "2015-06-22 12:49:17"
-        },
-        {
-            "name": "dreamfactory/dsp-admin-app",
-            "version": "dev-develop",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:dreamfactorysoftware/dsp-admin-app.git",
-                "reference": "9cb261e5f9aca7597f2860a99074ec13f08f3da1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/dsp-admin-app/zipball/9cb261e5f9aca7597f2860a99074ec13f08f3da1",
-                "reference": "9cb261e5f9aca7597f2860a99074ec13f08f3da1",
-                "shasum": ""
-            },
-            "require": {
-                "dreamfactory/installer": "*"
-            },
-            "type": "dreamfactory-app",
-            "extra": {
-                "branch-alias": {
-                    "dev-develop": "0.9-dev"
-                },
-                "installer-name": "dreamfactory"
-            },
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "Todd Appleton",
-                    "email": "toddappleton@dreamfactory.com",
-                    "role": "Lead Developer and QA, client-side"
-                }
-            ],
-            "description": "DreamFactory Services Platform(tm) Admin Console",
-            "homepage": "https://github.com/dreamfactorysoftware/dsp-admin-app/",
-            "keywords": [
-                "admin",
-                "cloud-computing",
-                "dsp",
-                "dsp-core",
-                "esb",
-                "framework",
-                "remote web services",
-                "rest",
-                "service bus"
-            ],
-            "support": {
-                "email": "support@dreamfactory.com",
-                "issues": "https://github.com/dreamfactorysoftware/dsp-admin-app/issues",
-                "wiki": "https://github.com/dreamfactorysoftware/dsp-admin-app/wiki",
-                "source": "https://github.com/dreamfactorysoftware/dsp-admin-app"
-            },
-            "time": "2015-06-25 14:50:57"
+            "time": "2015-06-26 16:48:03"
         },
         {
             "name": "dreamfactory/installer",
@@ -5126,7 +5126,7 @@
             "alias": "dev-master",
             "alias_normalized": "9999999-dev",
             "version": "dev-develop",
-            "package": "dreamfactory/dsp-admin-app"
+            "package": "dreamfactory/df-admin-app"
         },
         {
             "alias": "dev-master",
@@ -5191,7 +5191,7 @@
     ],
     "minimum-stability": "dev",
     "stability-flags": {
-        "dreamfactory/dsp-admin-app": 20,
+        "dreamfactory/df-admin-app": 20,
         "dreamfactory/df-core": 20,
         "dreamfactory/df-aws": 20,
         "dreamfactory/df-azure": 20,
