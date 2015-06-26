@@ -81,7 +81,7 @@ class SplashController extends Controller
                 $user->update(['last_login_date' => Carbon::now()->toDateTimeString()]);
                 Session::setUserInfoWithJWT($user);
 
-                return redirect()->intended(env('LANDING_PAGE', '/launchpad').'?token='.Session::getSessionToken());
+                return redirect()->intended(env('LANDING_PAGE', '/launchpad').'?session_token='.Session::getSessionToken());
             }
         }
 
@@ -119,9 +119,9 @@ class SplashController extends Controller
         Session::setUserInfoWithJWT($dfUser);
 
         if (\Request::ajax()) {
-            return ['success' => true, 'session_id' => Session::getSessionToken()];
+            return ['success' => true, 'session_id' => Session::getSessionToken(), 'session_token' => Session::getSessionToken()];
         } else {
-            return redirect()->intended(env('LANDING_PAGE', '/launchpad').'?token='.Session::getSessionToken());
+            return redirect()->intended(env('LANDING_PAGE', '/launchpad').'?session_token='.Session::getSessionToken());
         }
     }
 }
