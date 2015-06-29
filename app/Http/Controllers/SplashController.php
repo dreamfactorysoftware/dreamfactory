@@ -31,66 +31,47 @@ class SplashController extends Controller
         return redirect(env('LANDING_PAGE', '/launchpad'));
     }
 
-    /**
-     * Handles OAuth login redirects.
-     *
-     * @param $provider
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     * @throws \DreamFactory\Core\Exceptions\ForbiddenException
-     * @throws \DreamFactory\Core\Exceptions\NotFoundException
-     */
-    public function handleOAuthLogin($provider)
-    {
-        /** @var BaseOAuthService $service */
-        $service = ServiceHandler::getService($provider);
-        /** @var Provider $driver */
-        $driver = $service->getDriver();
-
-        return $driver->stateless()->redirect();
-    }
-
-    /**
-     * Performs ldap login
-     *
-     * @param $provider
-     *
-     * @return $this|\Illuminate\Http\RedirectResponse
-     * @throws \DreamFactory\Core\Exceptions\BadRequestException
-     * @throws \DreamFactory\Core\Exceptions\ForbiddenException
-     * @throws \DreamFactory\Core\Exceptions\NotFoundException
-     * @throws \Exception
-     */
-    public static function handleADLdapLogin($provider)
-    {
-        $username = \Request::input('email');
-        $password = \Request::input('password');
-
-        if (!empty($username) && !empty($password)) {
-            /** @var LdapService $service */
-            $service = ServiceHandler::getService($provider);
-
-            /** @var ADLdapProvider $driver */
-            $driver = $service->getDriver();
-
-            $auth = $driver->authenticate($username, $password);
-
-            if ($auth) {
-                $ldapUser = $driver->getUser();
-                $user = $service->createShadowADLdapUser($ldapUser);
-                $user->update(['last_login_date' => Carbon::now()->toDateTimeString()]);
-                Session::setUserInfoWithJWT($user);
-
-                return redirect()->intended(env('LANDING_PAGE', '/launchpad').'?session_token='.Session::getSessionToken());
-            }
-        }
-
-        return redirect('/auth/login')->withInput(\Request::only('email', 'remember'))->withErrors(
-            [
-                'email' => 'Invalid username and password.',
-            ]
-        );
-    }
+//    /**
+//     * Performs ldap login
+//     *
+//     * @param $provider
+//     *
+//     * @return $this|\Illuminate\Http\RedirectResponse
+//     * @throws \DreamFactory\Core\Exceptions\BadRequestException
+//     * @throws \DreamFactory\Core\Exceptions\ForbiddenException
+//     * @throws \DreamFactory\Core\Exceptions\NotFoundException
+//     * @throws \Exception
+//     */
+//    public static function handleADLdapLogin($provider)
+//    {
+//        $username = \Request::input('email');
+//        $password = \Request::input('password');
+//
+//        if (!empty($username) && !empty($password)) {
+//            /** @var LdapService $service */
+//            $service = ServiceHandler::getService($provider);
+//
+//            /** @var ADLdapProvider $driver */
+//            $driver = $service->getDriver();
+//
+//            $auth = $driver->authenticate($username, $password);
+//
+//            if ($auth) {
+//                $ldapUser = $driver->getUser();
+//                $user = $service->createShadowADLdapUser($ldapUser);
+//                $user->update(['last_login_date' => Carbon::now()->toDateTimeString()]);
+//                Session::setUserInfoWithJWT($user);
+//
+//                return redirect()->intended(env('LANDING_PAGE', '/launchpad').'?session_token='.Session::getSessionToken());
+//            }
+//        }
+//
+//        return redirect('/auth/login')->withInput(\Request::only('email', 'remember'))->withErrors(
+//            [
+//                'email' => 'Invalid username and password.',
+//            ]
+//        );
+//    }
 
     /**
      * Handles OAuth callback from the provider after

@@ -13,11 +13,9 @@
 
 Route::get('/', 'SplashController@index');
 
-Route::get('launchpad', 'LaunchpadController@index');
+//Route::get('launchpad', 'LaunchpadController@index');
 
-Route::get('admin', 'AdminController@index');
-
-Route::get('dsp/oauth/login/{provider}', 'SplashController@handleOAuthLogin');
+//Route::get('admin', 'AdminController@index');
 
 Route::get('dsp/oauth/callback/{service}', 'SplashController@handleOAuthCallback');
 

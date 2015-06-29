@@ -7,6 +7,7 @@
 	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 	<script>
 
+        jQuery.support.cors = true;
 
 	function go() {
 		var method = $('#method').val();
@@ -43,6 +44,7 @@
 					   processData: false,
 					   data: json,
 					   beforeSend: function(xhr) {
+                           xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
 						   if(xmethod != '-NONE-') {
 							   xhr.setRequestHeader("X-HTTP-Method", xmethod);
 						   }
@@ -63,8 +65,13 @@
 						   }
 					   },
 					   success: function(json){
-						   $('#out').removeClass('error');
-						   $('#out').html(JSON.stringify(json, null, '\t'));
+                           if(json.response && json.response.redirect){
+                               window.location.href = json.response.url;
+                           }
+                           else {
+                               $('#out').removeClass('error');
+                               $('#out').html(JSON.stringify(json, null, '\t'));
+                           }
 					   },
 					   error: function(err) {
 						   $('#out').addClass('error');
@@ -75,6 +82,20 @@
 			$('#out').html(" >> "+e);
 		}
 	}
+
+    function getUrlParameter(sParam)
+    {
+        var sPageURL = window.location.search.substring(1);
+        var sURLVariables = sPageURL.split('&');
+        for (var i = 0; i < sURLVariables.length; i++)
+        {
+            var sParameterName = sURLVariables[i].split('=');
+            if (sParameterName[0] == sParam)
+            {
+                return sParameterName[1];
+            }
+        }
+    }
 
 	function geturl() { return $('#url').val(); }
 
@@ -165,5 +186,9 @@
 		JSON OUTPUT:
 		<pre id="out"></pre>
 	</div>
+    <script>
+        var token = getUrlParameter('session_token');
+        $('#token').val(token);
+    </script>
 </body>
 </html>
