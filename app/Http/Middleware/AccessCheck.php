@@ -98,8 +98,12 @@ class AccessCheck
             }
         }
 
+        $token = null;
         $headers = getallheaders();
-        $token = substr(ArrayUtils::get($headers, 'Authorization'), 7);
+        $authHeader = ArrayUtils::get($headers, 'Authorization');
+        if(strpos($authHeader, 'Bearer')!==false){
+            $token = substr($authHeader, 7);
+        }
         return $token;
     }
 
