@@ -138,6 +138,7 @@ class AccessCheck
     {
         //Get the api key.
         $apiKey = static::getApiKey($request);
+        Session::setApiKey($apiKey);
         $appId = CacheUtilities::getAppIdByApiKey($apiKey);
 
         //Get the JWT.

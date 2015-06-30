@@ -6,6 +6,7 @@ use Closure;
 use DreamFactory\Core\Exceptions\InternalServerErrorException;
 use DreamFactory\Core\Exceptions\TooManyRequestsException;
 use DreamFactory\Core\Utility\ResponseFactory;
+use DreamFactory\Core\Utility\Session;
 use Illuminate\Contracts\Routing\Middleware;
 
 class Limits
@@ -123,8 +124,10 @@ class Limits
         if ($this->_inUnitTest === true) {
             return ['userName', 'roleName'];
         } else {
-            // put actual method here
-            return ['', ''];
+            return [
+                Session::getCurrentUserId(),
+                Session::getRoleId()
+            ];
         }
     }
 
@@ -137,8 +140,7 @@ class Limits
         if ($this->_inUnitTest === true) {
             return 'apiName';
         } else {
-            // put actual method here
-            return '';
+            return Session::getApiKey();
         }
     }
 
@@ -151,8 +153,10 @@ class Limits
         if ($this->_inUnitTest === true) {
             return 'serviceName';
         } else {
-            // put actual method here
-            return '';
+            /** @var Router $router */
+            $router = app('router');
+            $service = strtolower($router->input('service'));
+            return $service;
         }
     }
 }
