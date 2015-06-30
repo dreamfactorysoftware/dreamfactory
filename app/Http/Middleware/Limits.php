@@ -122,11 +122,11 @@ class Limits
     private function _getUserAndRole()
     {
         if ($this->_inUnitTest === true) {
-            return ['userName', 'roleName'];
+            return ['user_1', 'role_2'];
         } else {
             return [
-                Session::getCurrentUserId(),
-                Session::getRoleId()
+                'user_' . Session::getCurrentUserId(),
+                'role_' . Session::getRoleId()
             ];
         }
     }
@@ -156,6 +156,7 @@ class Limits
             /** @var Router $router */
             $router = app('router');
             $service = strtolower($router->input('service'));
+
             return $service;
         }
     }
