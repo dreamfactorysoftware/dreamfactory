@@ -17,8 +17,6 @@ Route::get('/', 'SplashController@index');
 
 //Route::get('admin', 'AdminController@index');
 
-Route::get('dsp/oauth/callback/{service}', 'SplashController@handleOAuthCallback');
-
 Route::controllers([
     'auth'     => 'Auth\AuthController',
     'password' => 'Auth\PasswordController',

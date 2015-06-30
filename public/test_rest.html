@@ -44,7 +44,6 @@
 					   processData: false,
 					   data: json,
 					   beforeSend: function(xhr) {
-                           xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
 						   if(xmethod != '-NONE-') {
 							   xhr.setRequestHeader("X-HTTP-Method", xmethod);
 						   }
@@ -187,8 +186,38 @@
 		<pre id="out"></pre>
 	</div>
     <script>
-        var token = getUrlParameter('session_token');
-        $('#token').val(token);
+
+        // First, parse the query string
+//        var params = {}, queryString = location.hash.substring(1),
+//                regex = /([^&=]+)=([^&]*)/g, m;
+//        while (m = regex.exec(queryString)) {
+//            params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+//        }
+
+        var queryString = location.search.substring(1);
+
+        if(queryString) {
+            $.ajax({ // our base connection
+                url: '/api/v2/user/session?oauth_callback=true&'+queryString,
+                async: true,
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                cache: false,
+                processData: false,
+                //data: JSON.stringify(data),
+                beforeSend: function (xhr) {
+
+                },
+                success: function (json) {
+                    $('#token').val(json.session_token);
+                },
+                error: function (err) {
+                    $('#out').addClass('error');
+                    $('#out').html(JSON.stringify(err.responseJSON, null, '\t'));
+                }
+            });
+        }
     </script>
 </body>
 </html>
