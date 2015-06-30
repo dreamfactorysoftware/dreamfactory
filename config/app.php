@@ -137,7 +137,7 @@ return [
 		'Illuminate\View\ViewServiceProvider',
 
         /**
-         * DreamFactory Rave
+         * DreamFactory Core
          */
         'DreamFactory\Core\DfServiceProvider',
         'DreamFactory\Core\DfCorsServiceProvider',
