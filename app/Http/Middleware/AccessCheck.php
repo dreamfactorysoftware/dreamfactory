@@ -49,6 +49,11 @@ class AccessCheck
             'verb_mask' => 1,
             'service'   => 'system',
             'resource'  => 'environment'
+        ],
+        [
+            'verb_mask' => 1,
+            'service'   => 'user',
+            'resource'  => 'profile'
         ]
     ];
 
