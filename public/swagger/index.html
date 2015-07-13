@@ -1,95 +1,134 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Swagger UI</title>
-	<link href='//fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css' />
-	<link href="//maxcdn.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.no-icons.min.css"
-		rel="stylesheet">
-	<link href='css/highlight.default.css' media='screen' rel='stylesheet' type='text/css' />
-	<link href='css/screen.css' media='screen' rel='stylesheet' type='text/css' />
-	<link href='css/custom.css' media='screen' rel='stylesheet' type='text/css' />
-	<script src='lib/shred.bundle.js' type='text/javascript'></script>
-	<script src='jquery.min.js' type='text/javascript'></script>
-	<script type="text/javascript">
+    <title>Swagger UI</title>
+    <link href='//fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'/>
+    <link href="//maxcdn.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.no-icons.min.css"
+          rel="stylesheet">
+    <link href='css/highlight.default.css' media='screen' rel='stylesheet' type='text/css'/>
+    <link href='css/screen.css' media='screen' rel='stylesheet' type='text/css'/>
+    <link href='css/custom.css' media='screen' rel='stylesheet' type='text/css'/>
+    <script src='lib/shred.bundle.js' type='text/javascript'></script>
+    <script src='jquery.min.js' type='text/javascript'></script>
+    <script type="text/javascript">
 
-	(function() {
-		var method;
-		var noop = function() {
-		};
-		var methods = [
-			'assert',
-			'clear',
-			'count',
-			'debug',
-			'dir',
-			'dirxml',
-			'error',
-			'exception',
-			'group',
-			'groupCollapsed',
-			'groupEnd',
-			'info',
-			'log',
-			'markTimeline',
-			'profile',
-			'profileEnd',
-			'table',
-			'time',
-			'timeEnd',
-			'timeStamp',
-			'trace',
-			'warn'];
-		var length = methods.length;
-		var console = (window.console = window.console || {});
+        (function () {
+            var method;
+            var noop = function () {
+            };
+            var methods = [
+                'assert',
+                'clear',
+                'count',
+                'debug',
+                'dir',
+                'dirxml',
+                'error',
+                'exception',
+                'group',
+                'groupCollapsed',
+                'groupEnd',
+                'info',
+                'log',
+                'markTimeline',
+                'profile',
+                'profileEnd',
+                'table',
+                'time',
+                'timeEnd',
+                'timeStamp',
+                'trace',
+                'warn'];
+            var length = methods.length;
+            var console = (window.console = window.console || {});
 
-		while (length--) {
-			method = methods[length];
+            while (length--) {
+                method = methods[length];
 
-			// Only stub undefined methods.
-			if (!console[method]) {
-				console[method] = noop;
-			}
-		}
-	}());
+                // Only stub undefined methods.
+                if (!console[method]) {
+                    console[method] = noop;
+                }
+            }
+        }());
 
-	$(function() {
-		  window.swaggerUi = new SwaggerUi(
-			  {
-				  url: location.protocol + "//" + location.host + "/api/v2/api_docs",
-				  debug:                  false,
-				  dom_id:                 "swagger-ui-container",
-				  supportedSubmitMethods: [
-					  'get', 'post', 'put', 'patch', 'delete'],
-				  onComplete:             function(swaggerApi, swaggerUi) {
-					  if (console && this.debug) {
-						  console.log("Loaded SwaggerUI")
-					  }
-					  $('pre code').each(function(i, e) {
-											 hljs.highlightBlock(e)
-										 }
-					  );
-				  },
-				  onFailure:              function(data) {
-					  if (console && this.debug) {
-						  console.log("Unable to Load SwaggerUI");
-						  console.log(data);
-					  }
-				  },
-				  docExpansion:           "none"
-			  }
-		  );
+        $(function () {
+                    window.swaggerUi = new SwaggerUi(
+                            {
+                                url: location.protocol + "//" + location.host + "/api/v2/api_docs",
+                                debug: false,
+                                dom_id: "swagger-ui-container",
+                                supportedSubmitMethods: [
+                                    'get', 'post', 'put', 'patch', 'delete'],
+                                onComplete: function (swaggerApi, swaggerUi) {
+                                    if (console && this.debug) {
+                                        console.log("Loaded SwaggerUI")
+                                    }
+                                    $('pre code').each(function (i, e) {
+                                                hljs.highlightBlock(e)
+                                            }
+                                    );
+                                },
+                                onFailure: function (data) {
+                                    if (console && this.debug) {
+                                        console.log("Unable to Load SwaggerUI");
+                                        console.log(data);
+                                    }
+                                },
+                                docExpansion: "none"
+                            }
+                    );
 
-		  window.authorizations.add("X-DreamFactory-API-Key",
-									new ApiKeyAuthorization("X-DreamFactory-API-Key", "36fda24fe5588fa4285ac6c6c2fdfbdb6b6bc9834699774c9bf777f706d05a88", "header")
-		  );
-		  window.authorizations.add("X-DreamFactory-Session-Token",
-									new ApiKeyAuthorization("X-DreamFactory-Session-Token", "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsInVzZXJfaWQiOjEsImZvcmV2ZXIiOmZhbHNlLCJpc3MiOiJodHRwOlwvXC9kZi5sb2NhbFwvYXBpXC92MlwvdXNlclwvc2Vzc2lvbiIsImlhdCI6IjE0MzY0ODg1MzIiLCJleHAiOiIxNDM2NTI0NTMyIiwibmJmIjoiMTQzNjQ4ODUzMiIsImp0aSI6ImEzYTQ3YzkzNmU3MGNkMmFhYWNmMTg3ZDUzMDU2ZDAzIn0.oTDi-p823RplGC6wTWjqeKFLnKsaWNMYAy6JYwaC0y0", "header")
-		  );
-		  window.swaggerUi.load();
-	  }
-	);
+                    /**
+                     * Simplified access to the Query string on the current page's URL
+                     * @param key
+                     * @returns {Boolean}
+                     */
+                    function getQueryParameter(key) {
+                        key = key.replace(/[*+?^$.\[\]{}()|\\\/]/g, "\\$&");
+                        var match = location.search.match(new RegExp("[?&]" + key + "=([^&]+)(&|$)"));
+                        return match && decodeURIComponent(match[1].replace(/\+/g, " "));
+                    }
 
-	</script>
+                    // Session inherited from query parameter, iframe, or opener
+                    function getSessionToken() {
+                        var phpSessionId = getQueryParameter('session_id');
+                        if (phpSessionId)
+                            return phpSessionId;
+
+                        phpSessionId = parent.document.cookie.match(/PHPSESSID=[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\;/i);
+
+                        if ((phpSessionId == null) && (window.opener))
+                            phpSessionId = window.opener.document.cookie.match(/PHPSESSID=[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\;/i);
+
+                        if (phpSessionId == null)
+                            return '';
+
+                        if (typeof(phpSessionId) == 'undefined')
+                            return '';
+
+                        if (phpSessionId.length <= 0)
+                            return '';
+
+                        phpSessionId = phpSessionId[0];
+
+                        var end = phpSessionId.lastIndexOf(';');
+                        if (end == -1) end = phpSessionId.length;
+
+                        return phpSessionId.substring(10, end);
+                    }
+
+                    window.authorizations.add("X-DreamFactory-API-Key",
+                            new ApiKeyAuthorization("X-DreamFactory-API-Key", "36fda24fe5588fa4285ac6c6c2fdfbdb6b6bc9834699774c9bf777f706d05a88", "header")
+                    );
+                    window.authorizations.add("X-DreamFactory-Session-Token",
+                            new ApiKeyAuthorization("X-DreamFactory-Session-Token", getSessionToken(), "header")
+                    );
+                    window.swaggerUi.load();
+                }
+        );
+
+    </script>
 </head>
 <body>
 

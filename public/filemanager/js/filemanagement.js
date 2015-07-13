@@ -1,6 +1,6 @@
 var currentPath = null;
 var apiKey = "b5cb82af7b5d4130f36149f90aa2746782e59a872ac70454ac188743cb55b0ba";
-var sessionToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsInVzZXJfaWQiOjEsImZvcmV2ZXIiOmZhbHNlLCJpc3MiOiJodHRwOlwvXC9kZi5sb2NhbFwvYXBpXC92MlwvdXNlclwvc2Vzc2lvbiIsImlhdCI6IjE0MzY1MzYxNzkiLCJleHAiOiIxNDM2NTcyMTc5IiwibmJmIjoiMTQzNjUzNjE3OSIsImp0aSI6IjA2YTNiMWJmMDY3Y2I3NTU0NmQ3Zjc3ZTYwNTFmMjQ1In0.L5zCSBnXy8ZZIKMqVF8OOB2oSeUoq9Qolu12bXyIICY";
+
 
 // setup
 
@@ -76,6 +76,37 @@ $(document).ready(function () {
 
     loadRootFolder();
 });
+
+// Session inherited from query parameter, iframe, or opener
+function getSessionToken() {
+    var phpSessionId = CommonUtilities.getQueryParameter('session_id');
+    if (phpSessionId)
+        return phpSessionId;
+
+    phpSessionId = parent.document.cookie.match(/PHPSESSID=[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\;/i);
+
+    if ((phpSessionId == null) && (window.opener))
+        phpSessionId = window.opener.document.cookie.match(/PHPSESSID=[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\;/i);
+
+    if (phpSessionId == null)
+        return '';
+
+    if (typeof(phpSessionId) == 'undefined')
+        return '';
+
+    if (phpSessionId.length <= 0)
+        return '';
+
+    phpSessionId = phpSessionId[0];
+
+    var end = phpSessionId.lastIndexOf(';');
+    if (end == -1) end = phpSessionId.length;
+
+    return phpSessionId.substring(10, end);
+}
+
+var sessionToken = getSessionToken();
+
 
 // UI Building
 
@@ -386,6 +417,10 @@ function handleFileSelect(evt) {
 function loadRootFolder() {
 
     var path = CommonUtilities.getQueryParameter('path');
+
+    if ((path == null) || (path == ''))
+        path = '/';
+
     loadFolder(path);
 }
 
@@ -445,7 +480,6 @@ function loadFolder(path) {
                     document.getSelection().removeAllRanges();
                 } catch (e) {/* silent! */
                 }
-                ;
                 currentPath = path;
                 printLocation(path);
                 var tmp = path.split('/');
