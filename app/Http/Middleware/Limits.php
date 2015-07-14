@@ -25,9 +25,10 @@ class Limits
     public function handle($request, Closure $next)
     {
         // Get limits
-        $limits = \Config::get('api_limits');
+        $limits = Enterprise::getPolicyLimits();
 
         if (is_null($limits) === false) {
+
             $this->_inUnitTest = \Config::get('api_limits_test');
 
             list($userName, $userRole) = $this->_getUserAndRole();
@@ -38,48 +39,48 @@ class Limits
 
             // Build the list of API Hits to check
 
-            $apiKeysToCheck = array('api.default' => 0);
+            $apiKeysToCheck = array('default' => 0);
 
             if (empty($userRole) === false) {
-                $apiKeysToCheck['api.' . $userRole] = 0;
+                $apiKeysToCheck[$userRole] = 0;
             }
 
             if (empty($userName) === false) {
-                $apiKeysToCheck['api.' . $userName] = 0;
+                $apiKeysToCheck[$userName] = 0;
             }
 
             if (empty($serviceName) === false) {
-                $apiKeysToCheck['api.' . $serviceName] = 0;
+                $apiKeysToCheck[$serviceName] = 0;
 
                 if (empty($userRole) === false) {
-                    $apiKeysToCheck['api.' . $serviceName . '.' . $userRole] = 0;
+                    $apiKeysToCheck[$serviceName . '.' . $userRole] = 0;
                 }
 
                 if (empty($userName) === false) {
-                    $apiKeysToCheck['api.' . $serviceName . '.' . $userName] = 0;
+                    $apiKeysToCheck[$serviceName . '.' . $userName] = 0;
                 }
             }
 
             if (empty($apiName) === false) {
-                $apiKeysToCheck['api.' . $apiName] = 0;
+                $apiKeysToCheck[$apiName] = 0;
 
                 if (empty($userRole) === false) {
-                    $apiKeysToCheck['api.' . $apiName . '.' . $userRole] = 0;
+                    $apiKeysToCheck[$apiName . '.' . $userRole] = 0;
                 }
 
                 if (empty($userName) === false) {
-                    $apiKeysToCheck['api.' . $apiName . "." . $userName] = 0;
+                    $apiKeysToCheck[$apiName . "." . $userName] = 0;
                 }
 
                 if (empty($serviceName) === false) {
-                    $apiKeysToCheck['api.' . $apiName . "." . $serviceName] = 0;
+                    $apiKeysToCheck[$apiName . "." . $serviceName] = 0;
 
                     if (empty($userRole) === false) {
-                        $apiKeysToCheck['api.' . $apiName . "." . $serviceName . '.' . $userRole] = 0;
+                        $apiKeysToCheck[$apiName . "." . $serviceName . '.' . $userRole] = 0;
                     }
 
                     if (empty($userName) === false) {
-                        $apiKeysToCheck['api.' . $apiName . "." . $serviceName . '.' . $userName] = 0;
+                        $apiKeysToCheck[$apiName . "." . $serviceName . '.' . $userName] = 0;
                     }
                 }
             }

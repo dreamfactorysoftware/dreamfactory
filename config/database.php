@@ -26,7 +26,7 @@ return [
 	|
 	*/
 
-	'default' => 'mysql',
+	'default' => 'dreamfactory',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -83,6 +83,8 @@ return [
 			'password' => env('DB_PASSWORD', ''),
 			'prefix'   => '',
 		],
+
+		'dreamfactory' => Enterprise::getDatabaseConfig(),
 
 	],
 
