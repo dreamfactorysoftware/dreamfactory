@@ -3,6 +3,9 @@
 return [
     /** General API version number, 1.x was earlier product and may be supported by most services */
     'api_version'                  => '2.0',
+    /** Most API calls return a resource array or a single resource, if array, do we wrap it? */
+    'always_wrap_resources'        => true,
+    'resources_wrapper'            => 'resource',
     /** Local File Storage setup, see also local config/filesystems.php */
     'local_file_service_root'      => storage_path() . "/app",
     'local_file_service_root_test' => storage_path() . "/test",
