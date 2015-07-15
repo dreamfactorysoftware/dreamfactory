@@ -1,15 +1,17 @@
 /**
  * editor.js
  */
-//document.write('<title>Editing: '+CommonUtilities.getQueryParameter('path')+'</title>');
-
 
 EditorActions = {
     getFile : function(){
 
         $.ajax({
-            url:CurrentServer + '/rest' + EditorActions.getQueryParameter('path'),
-            data:'app_name=admin&method=GET',
+            url:CurrentServer + '/api/v2' + EditorActions.getQueryParameter('path'),
+            headers: {
+                "X-DreamFactory-API-Key": EditorActions.getQueryParameter('api_key'),
+                "X-DreamFactory-Session-Token": EditorActions.getQueryParameter('session_token')
+            },
+            data:'method=GET',
             cache:false,
             processData: false,
             dataType: "text",
@@ -52,7 +54,11 @@ EditorActions = {
         }
 
         $.ajax({
-            url:CurrentServer + '/rest' + EditorActions.getQueryParameter('path') + '?&app_name=admin',
+            url:CurrentServer + '/api/v2' + EditorActions.getQueryParameter('path'),
+            headers: {
+                "X-DreamFactory-API-Key": EditorActions.getQueryParameter('api_key'),
+                "X-DreamFactory-Session-Token": EditorActions.getQueryParameter('session_token')
+            },
             data: fileData,
             type:'PUT',
             processData: false,

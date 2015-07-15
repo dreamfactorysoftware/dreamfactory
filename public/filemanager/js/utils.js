@@ -81,7 +81,7 @@ function getErrorString(response) {
 				var details = result.error[0].context;
 				if (0 < details.errors.length) {
 					var index = details.errors[0];
-					value = xml2text(details.record[index]);
+					value = xml2text(details.resource[index]);
 				}
 			}
 			if (value) {
