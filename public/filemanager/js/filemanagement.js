@@ -79,7 +79,7 @@ $(document).ready(function () {
 
 // Session inherited from query parameter, iframe, or opener
 function getSessionToken() {
-    var phpSessionId = CommonUtilities.getQueryParameter('session_id');
+    var phpSessionId = CommonUtilities.getQueryParameter('session_token');
     if (phpSessionId)
         return phpSessionId;
 
@@ -287,14 +287,17 @@ function buildListingUI(json, svc) {
     $('.editor').click(function () {
         var path = $(this).data('path');
         var mime = $(this).data('mime');
-        var w = window.open('editor.html?path=' + path + '&mime=' + mime + '&', path + " " + mime, 'width=800,height=400,toolbars=no,statusbar=no,resizable=no');
+        var w = window.open('editor.html?path=' + path + '&mime=' + mime + '&api_key=' + apiKey + '&session_token=' + sessionToken,
+            path + " " + mime,
+            'width=800,height=400,toolbars=no,statusbar=no,resizable=no'
+        );
         w.focus();
         return false;
     });
     $('.download_file').click(function () {
         var target = $(this).data('path');
 
-        window.location.href = CurrentServer + '/api/v2' + target + "?api_key=" + apiKey + "&download=true";
+        window.location.href = CurrentServer + '/api/v2' + target + "?api_key=" + apiKey + "&session_token=" + sessionToken + "&download=true";
 
     });
     $('.folder_open').click(function () {
@@ -331,7 +334,10 @@ function buildListingUI(json, svc) {
             var mime = null;
             //var mime = $(this).data('mime');
 
-            var w = window.open('editor.html?path=' + path + '&mime=' + mime + '&', path + " " + mime, 'width=800,height=400,toolbars=no,statusbar=no,resizable=no');
+            var w = window.open('editor.html?path=' + path + '&mime=' + mime + '&api_key=' + apiKey + '&session_token=' + sessionToken,
+                path + " " + mime,
+                'width=800,height=400,toolbars=no,statusbar=no,resizable=no'
+            );
             w.focus();
             return false;
         }
@@ -450,11 +456,11 @@ function loadFolder(path) {
                 currentPath = path;
                 printLocation(path);
                 var json = {"folder": [], "file": []};
-                if (response.record) {
-                    for (var i in response.record) {
+                if (response.resource) {
+                    for (var i in response.resource) {
                         json.folder.push({
-                            "name": response.record[i].name,
-                            "path": response.record[i].name + '/'
+                            "name": response.resource[i].name,
+                            "path": response.resource[i].name + '/'
                         });
                     }
                 }
