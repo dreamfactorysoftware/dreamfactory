@@ -27,63 +27,50 @@ class Limits
         // Get limits
         $limits = Enterprise::getPolicyLimits();
 
-        if (is_null($limits) === false) {
+        if (is_null($limits) === false && is_null($this->_getServiceName()) === false) {
 
             $this->_inUnitTest = \Config::get('api_limits_test');
 
-            list($userName, $userRole) = $this->_getUserAndRole();
-
-            $apiName = $this->_getApiKey();
-
+            $userName = $this->_getUser(Session::getCurrentUserId());
+            $userRole = $this->_getRole(Session::getRoleId());
+            $apiName = $this->_getApiKey(Session::getApiKey());
             $serviceName = $this->_getServiceName();
 
             // Build the list of API Hits to check
 
             $apiKeysToCheck = array('default' => 0);
 
-            if (empty($userRole) === false) {
-                $apiKeysToCheck[$userRole] = 0;
+            $serviceKeys[$serviceName] = 0;
+            if (is_null($userRole) === false) {
+                $serviceKeys[$serviceName . '.' . $userRole] = 0;
+            }
+            if (is_null($userName) === false) {
+                $serviceKeys[$serviceName . '.' . $userName] = 0;
             }
 
-            if (empty($userName) === false) {
+            if (is_null($apiName) === false) {
+                $apiKeysToCheck[$apiName] = 0;
+                if (is_null($userRole) === false) {
+                    $apiKeysToCheck[$apiName . '.' . $userRole] = 0;
+                }
+                if (is_null($userName) === false) {
+                    $apiKeysToCheck[$apiName . '.' . $userName] = 0;
+                }
+
+                foreach ($serviceKeys as $key => $value) {
+                    $apiKeysToCheck[$apiName . '.' . $key] = $value;
+                }
+            }
+
+            if (is_null($userName) === false) {
                 $apiKeysToCheck[$userName] = 0;
             }
 
-            if (empty($serviceName) === false) {
-                $apiKeysToCheck[$serviceName] = 0;
-
-                if (empty($userRole) === false) {
-                    $apiKeysToCheck[$serviceName . '.' . $userRole] = 0;
-                }
-
-                if (empty($userName) === false) {
-                    $apiKeysToCheck[$serviceName . '.' . $userName] = 0;
-                }
+            if (is_null($userRole) === false) {
+                $apiKeysToCheck[$userRole] = 0;
             }
 
-            if (empty($apiName) === false) {
-                $apiKeysToCheck[$apiName] = 0;
-
-                if (empty($userRole) === false) {
-                    $apiKeysToCheck[$apiName . '.' . $userRole] = 0;
-                }
-
-                if (empty($userName) === false) {
-                    $apiKeysToCheck[$apiName . "." . $userName] = 0;
-                }
-
-                if (empty($serviceName) === false) {
-                    $apiKeysToCheck[$apiName . "." . $serviceName] = 0;
-
-                    if (empty($userRole) === false) {
-                        $apiKeysToCheck[$apiName . "." . $serviceName . '.' . $userRole] = 0;
-                    }
-
-                    if (empty($userName) === false) {
-                        $apiKeysToCheck[$apiName . "." . $serviceName . '.' . $userName] = 0;
-                    }
-                }
-            }
+            $apiKeysToCheck = array_merge($apiKeysToCheck, $serviceKeys);
 
             $overLimit = false;
             try {
@@ -98,7 +85,7 @@ class Limits
                         }
                     }
                 }
-            } catch (\Exception $e) {
+            } catch ( \Exception $e ) {
                 return ResponseFactory::getException(
                     new InternalServerErrorException('Unable to update cache'),
                     $request
@@ -116,37 +103,60 @@ class Limits
         return $next($request);
     }
 
-    /*
-     * Stub to get User and Role name from the authentication session/cookie
+    /**
+     * Return the User ID from the authenticated session prepended with user_ or null if there is no authenticated user
+     *
+     * @param $userId
+     *
+     * @return null|string
      */
-
-    private function _getUserAndRole()
+    private function _getUser($userId)
     {
         if ($this->_inUnitTest === true) {
-            return ['user_1', 'role_2'];
+            return 'user_1';
         } else {
-            return [
-                'user_' . Session::getCurrentUserId(),
-                'role_' . Session::getRoleId()
-            ];
+            return is_null($userId) === false ? 'user_' . $userId : null;
         }
     }
 
-    /*
-     * Stub to get the API Key
+    /**
+     * Return the Role ID from the authenticated session prepended with role_ or null if there is no authenticated user
+     * or the user has no roles assigned
+     *
+     * @param $roleId
+     *
+     * @return null|string
+     */
+    private function _getRole($roleId)
+    {
+        if ($this->_inUnitTest === true) {
+            return 'role_2';
+        } else {
+            return is_null($roleId) === false ? 'role_' . $roleId : null;
+        }
+    }
+
+    /**
+     * Return the API Key if set or null
+     *
+     * @param $apiKey
+     *
+     * @return null|string
      */
 
-    private function _getApiKey()
+    private function _getApiKey($apiKey)
     {
         if ($this->_inUnitTest === true) {
             return 'apiName';
         } else {
-            return Session::getApiKey();
+            return is_null($apiKey) === false ? 'key_' . $apiKey : null;
         }
     }
 
-    /*
-     * Stub to get the Service name
+    /**
+     * Return the service name.  May return null if a list of services has been requested
+     *
+     * @return null|string
      */
 
     private function _getServiceName()
@@ -158,7 +168,12 @@ class Limits
             $router = app('router');
             $service = strtolower($router->input('service'));
 
-            return $service;
+            if (is_null($service) === true ) {
+                return null;
+            } else {
+                return 'svc_' . $service;
+            }
+
         }
     }
 }
