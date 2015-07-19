@@ -37,9 +37,8 @@ class RestController extends Controller
         /** @noinspection PhpUnusedParameterInspection */
         $version = null
     ){
-        $includeProperties = Request::query('include_properties', false);
         try {
-            $services = ServiceHandler::listServices($includeProperties);
+            $services = ServiceHandler::listServices();
             $response = ResponseFactory::create($services);
         } catch (\Exception $e) {
             $response = ResponseFactory::create($e);
