@@ -11,23 +11,17 @@
 |
 */
 
-Route::get('/', 'SplashController@index');
-
-//Route::get('launchpad', 'LaunchpadController@index');
-
-//Route::get('admin', 'AdminController@index');
-
-Route::controllers([
-    'auth'     => 'Auth\AuthController',
-    'password' => 'Auth\PasswordController',
-]);
-
-//Todo:Any better way to do this?
 //Treat merge as patch
 $method = Request::getMethod();
 if (\DreamFactory\Library\Utility\Enums\Verbs::MERGE === strtoupper($method)) {
     Request::setMethod(\DreamFactory\Library\Utility\Enums\Verbs::PATCH);
 }
+
+Route::get('/', 'SplashController@index');
+
+Route::get('/setup', 'SplashController@createFirstUser');
+
+Route::post('/setup', 'SplashController@createFirstUser');
 
 $resourcePathPattern = '[0-9a-zA-Z-_@&\#\!=,:;\/\^\$\.\|\{\}\[\]\(\)\*\+\? ]+';
 $servicePattern = '[_0-9a-zA-Z-]+';

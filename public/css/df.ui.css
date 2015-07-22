@@ -1,0 +1,624 @@
+/*!
+ * df.ui.css
+ *
+ * Copyright 2014 DreamFactory Software, Inc.
+ * Licensed under the Apache License v2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * This is the CSS file for UI components and is automatically imported by /css/df.main.css
+ */
+.container-fluid.df-navbar {
+	padding-left: 0;
+}
+
+#page-content {
+	width:      100%;
+	min-height: 100%;
+	height:     inherit;
+	/* Negative indent footer by its height */
+	margin:     0;
+	/* Pad bottom by footer height */
+	padding:    0;
+	overflow:   auto;
+}
+
+#page-content > div {
+	padding-top:   0;
+	padding-left:  0;
+	padding-right: 0;
+}
+
+.box-wrapper {
+	margin:         0 auto;
+	min-width:      400px;
+	max-width:      440px;
+	padding-bottom: 44px;
+}
+
+.box-wrapper-wide {
+	max-width: 748px;
+}
+
+#footer {
+	position:         fixed;
+	bottom:           0;
+	right:            0;
+	left:             0;
+	/* Set the fixed height of the footer here */
+	height:           44px;
+	background-color: rgba(0, 0, 0, .75);
+	transition:       background-color .3s, color .3s;
+	color:            rgba(242, 242, 242, .8);
+	z-index:          10000;
+}
+
+#footer:hover {
+	background-color: rgba(0, 0, 0, 1);
+	transition:       background-color .25s, color .25s;
+	color:            rgba(255, 255, 255, 1);
+}
+
+#footer > .container {
+	padding-left:  15px;
+	padding-right: 15px;
+	padding-top:   4px;
+}
+
+#footer ul, ol {
+	margin-bottom: 0;
+}
+
+#footer .social-links {
+	/*margin-top: 4px;*/
+}
+
+#footer > .container p {
+	margin-bottom: 0;
+}
+
+/**************************************************************************
+** Navbar Styles
+**************************************************************************/
+
+.navbar {
+	padding-bottom: 0;
+	margin-bottom:  0;
+	height:         44px;
+	left:           0;
+	padding-left:   10px;
+	padding-right:  20px;
+	position:       fixed;
+	right:          0;
+}
+
+.navbar-toggle {
+	padding:          6px 7px;
+	background-color: rgba(0, 0, 0, 0.4);
+}
+
+.navbar-inverse {
+	background-color: rgba(0, 0, 0, .75);
+	transition:       background-color .3s, color .3s;
+	color:            rgba(242, 242, 242, .8);
+}
+
+.navbar-inverse:hover {
+	background-color: rgba(0, 0, 0, 1);
+	transition:       background-color .3s, color .3s;
+	color:            rgba(242, 242, 242, 1);
+}
+
+.container-fluid > .navbar-header {
+	width:        100%;
+	margin-left:  0;
+	margin-right: 0;
+}
+
+/**************************************************************************
+** Generic styles
+**************************************************************************/
+
+.dream-orange {
+	color:      rgba(255, 140, 0, 0.5);
+	transition: color 1.5s;
+}
+
+.df-brand {
+	position:       relative;
+	padding:        0;
+	font-family:    'Roboto', 'Open Sans', sans-serif;
+	text-transform: lowercase;
+	color:          rgba(255, 255, 255, .25);
+	font-size:      32px;
+	margin:         auto 0;
+	line-height:    44px;
+	letter-spacing: -1px;
+	font-weight:    bold;
+	transition:     color 1.5s;
+	vertical-align: middle;
+}
+
+.navbar-inverse:hover .df-brand {
+	color:      rgba(255, 255, 255, .5);
+	transition: color 1.5s;
+}
+
+.navbar-inverse:hover .dream-orange {
+	color:      rgba(255, 140, 0, 0.8);
+	transition: color 1.5s;
+}
+
+#angular-content > div > div > div.brand {
+	position:       relative;
+	padding:        0;
+	line-height:    40px;
+	margin-left:    0;
+	font-weight:    bold;
+	font-family:    'Lato', 'Arial', sans-serif;
+	text-transform: lowercase;
+	color:          rgba(0, 0, 0, .5);
+	font-size:      24pt;
+}
+
+.page-logo {
+	text-align: center;
+}
+
+.page-logo img {
+	width: 64px;
+}
+
+.df-logo {
+	margin-right: 20px;
+	margin-top:   3px;
+}
+
+.df-logo img {
+	height: 42px;
+}
+
+/**************************************************************************
+** Form Styles
+**************************************************************************/
+
+body[class^="body-starburst-"] .form-light h2:first-child {
+	width:         auto;
+	margin-top:    10px;
+	border-bottom: 1px inset #f0f0f0;
+}
+
+#formbox.form-light form p.lead {
+	color:       #fff;
+	font-size:   16px;
+	font-weight: bold;
+	text-align:  center;
+}
+
+body[class^="body-starburst-"] #formbox.form-light form p.lead {
+	color: #333;
+}
+
+.inset {
+	/* Shadows are visible under slightly transparent text color */
+	/*color:       rgba(224, 134, 37, 0.5);*/
+	/*text-shadow: 0 1px 1px #ccc, 0 0 0 #000, 0 1px 1px #ccc;*/
+	color: #ddd;
+}
+
+.dsp-version {
+}
+
+.form-buttons small {
+	line-height: 34px;
+	opacity:     .5;
+}
+
+.footer-text {
+	margin: 12px 0;
+}
+
+.footer-text > a {
+	color:      rgba(242, 242, 242, 0.8);
+	transition: opacity 1500ms;
+}
+
+.footer-text > a:hover {
+	color:      rgba(242, 242, 242, 1);
+	transition: opacity 1500ms;
+}
+
+.align-center {
+	text-align: center;
+	margin:     auto;
+}
+
+.container .credit {
+	margin: 20px 0;
+}
+
+/**************************************************************************
+** Form Classes (forms.css)
+**************************************************************************/
+
+#logo, #formbox, .page-logo img {
+	margin-left:  auto;
+	margin-right: auto;
+	position:     relative;
+}
+
+#logo img {
+	margin:  0 auto;
+	display: block;
+}
+
+#formbox {
+	width:         100%;
+	margin-bottom: 35px;
+	position:      relative;
+	margin:        15% auto 0;
+}
+
+#formbox.tall-box {
+	margin-top:    5%;
+	margin-bottom: 15%;
+}
+
+#formbox h2 {
+	text-align:    center;
+	margin-bottom: 20px;
+}
+
+#formbox.container p:first-of-type {
+	text-align: center;
+}
+
+#formbox h4 {
+	text-align: center;
+}
+
+#formbox form {
+	/*background: #2E363F;*/
+	position:    relative;
+	margin:      0 auto;
+	font-family: normal, sans-serif;
+	color:       #fff;
+}
+
+#form-login {
+	z-index: 200;
+	display: block;
+}
+
+#form-recover {
+	z-index: 100;
+	display: none;
+}
+
+#form-recover .form-actions {
+	margin-top: 10px;
+}
+
+#form-register {
+	z-index: 100;
+	display: block;
+}
+
+#form-register .form-actions {
+	margin-top: 10px;
+}
+
+#formbox .form-group {
+	text-align: center;
+	margin:     0 auto 14px;
+}
+
+#formbox .controls {
+	padding: 0 20px;
+}
+
+#formbox .control-group {
+	padding:       20px 0;
+	margin-bottom: 0;
+}
+
+.form-buttons {
+	border-top: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+form, .form-buttons {
+	background:  none;
+	padding-top: 15px;
+	margin:      0 0 100px;
+}
+
+.form-buttons button {
+	font-family: 'Open Sans', 'Helvetica Neue Light', 'Arial', sans-serif;
+	font-weight: 300;
+}
+
+#formbox .normal_text {
+	padding:     15px 10px;
+	text-align:  center;
+	font-size:   14px;
+	line-height: 20px;
+	/*background:  #2E363F;*/
+	color:       #fff;
+}
+
+/** style for "remember me" label on login view */
+#login-form > div:nth-child(6) > label {
+	margin-bottom:  0;
+	padding-bottom: 0;
+	margin-left:    4px;
+}
+
+/** Form error message **/
+.form-group div.error {
+	color:          #eeeeee;
+	text-align:     left;
+	font-size:      15px;
+	letter-spacing: normal;
+}
+
+.logo-container h3 {
+	margin-top:    0;
+	margin-bottom: 0;
+	padding-top:   0;
+}
+
+/** Alerts **/
+.alert-area .alert {
+	padding: 8px 14px;
+}
+
+.alert {
+	margin:     10px auto auto;
+	box-shadow: inset 0 0 0;
+}
+
+#formbox .lead {
+	font-size:   36px;
+	font-weight: bold;
+	color:       #ffffff;
+}
+
+.strong-disabled {
+	color: #333;
+}
+
+/**************************************************************************
+** Media Queries (do not add classes below this unless they are queries
+**************************************************************************/
+
+@media (max-width: 768px) {
+	.logo-container img {
+		width: 192px;
+	}
+
+	#logo {
+		width: 60%;
+	}
+
+	.df-logo {
+		margin-left: 10px;
+	}
+
+}
+
+@media (max-width: 480px) {
+	#logo {
+		width: 40%;
+	}
+
+	.df-logo {
+		margin-left:  0;
+		padding-left: 0;
+	}
+
+	.navbar-toggle {
+		margin-right: 0;
+	}
+
+	#formbox {
+		width: 435px;
+	}
+
+	#formbox .control-group {
+		padding:       8px 0;
+		margin-bottom: 0;
+	}
+
+	#footer > div > span.pull-left {
+		width: 100%;
+		float: none;
+	}
+
+	.footer-text {
+		text-align: center;
+		width:      100%;
+		display:    inline-block;
+	}
+
+	.dsp-footer-version {
+		display: none;
+	}
+}
+
+/**************************************************************************
+** Other junk
+**************************************************************************/
+
+/**
+ * Error pages
+ */
+.container-error {
+	color:      #fff;
+	margin-top: 42px;
+}
+
+.container-error a {
+	color: #ccc;
+}
+
+.container-error a:hover {
+	color: #fff;
+}
+
+.container-error h1, .container-error h3 {
+	font-family: "Droid Sans", "Open Sans", "Lato", Arial, sans-serif;
+	font-weight: normal;
+	text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.30);
+}
+
+body > div.container-fluid.container-inner {
+	padding-top:    24px;
+	padding-bottom: 25px;
+}
+
+.container-error {
+	margin-right:  auto;
+	margin-left:   auto;
+	padding-left:  5px;
+	padding-right: 5px;
+}
+
+.container-error h1:first-child {
+	margin-top: 0;
+}
+
+.container-error h3 {
+	margin-top: 45px;
+}
+
+.container-error .error {
+	font-size:   1.2em;
+	font-weight: normal;
+}
+
+#container.row {
+	margin:  0;
+	padding: 0;
+}
+
+/** Main menu **/
+.container-fluid .row .col-md-2 {
+	margin:  0;
+	padding: 0 4px;
+}
+
+/** Inner content **/
+.container-fluid .row .col-md-10 {
+	margin:  0;
+	padding: 0 4px 8px;
+}
+
+/** Panel defaults **/
+.panel-body {
+	color: #777;
+}
+
+.panel-default > .panel-heading {
+	color:          rgba(224, 134, 37, 1);
+	/*font-stretch: semi-condensed;*/
+	font-weight:    bold;
+	font-size:      2.4em;
+	padding-top:    4px;
+	padding-bottom: 4px;
+}
+
+#loading {
+	position: absolute;
+	top:      8px;
+	right:    8px;
+	color:    rgba(68, 68, 68, .5);
+}
+
+#sidebar > div > ul.app-navbar {
+	background-color: rgba(68, 68, 68, .4);
+}
+
+#sidebar {
+	margin-top:       4px;
+	padding:          4px 6px;
+	height:           100%;
+	display:          block;
+	border-radius:    0;
+	width:            auto;
+	background-color: rgba(68, 68, 68, 0.8);
+}
+
+/** media queries */
+@media screen and (max-width: 940px) {
+	#navbar-container {
+		padding: 0;
+		margin:  0;
+	}
+
+	.navbar-spacer {
+		padding-left:  10px;
+		padding-right: 10px;
+	}
+}
+
+/** media queries */
+@media screen and (max-width: 940px) {
+	.container-error {
+		padding-left:  15px;
+		padding-right: 15px;
+	}
+
+	#formbox {
+		margin: 25% auto;
+	}
+}
+
+/**************************************************************************
+** Callouts
+**************************************************************************/
+
+.callout {
+	margin:      20px 0;
+	padding:     20px;
+	border-left: 3px solid #eee
+}
+
+.callout h4 {
+	margin-top:    0;
+	margin-bottom: 5px
+}
+
+.callout p:last-child {
+	margin-bottom: 0
+}
+
+.callout code {
+	background-color: #fff;
+	border-radius:    3px
+}
+
+.callout-danger {
+	background-color: #fdf7f7;
+	border-color:     #d9534f
+}
+
+.callout-danger h4 {
+	color: #d9534f
+}
+
+.callout-warning {
+	background-color: #fcf8f2;
+	border-color:     #f0ad4e
+}
+
+.callout-warning h4 {
+	color: #f0ad4e
+}
+
+.callout-info {
+	background-color: #f4f8fa;
+	border-color:     #5bc0de
+}
+
+.callout-info h4 {
+	color: #5bc0de
+}

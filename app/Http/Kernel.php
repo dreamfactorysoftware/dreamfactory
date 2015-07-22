@@ -16,6 +16,7 @@ class Kernel extends HttpKernel
         'Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse',
         'Illuminate\Session\Middleware\StartSession',
         'Illuminate\View\Middleware\ShareErrorsFromSession',
+        'DreamFactory\Http\Middleware\FirstUserCheck',
         'DreamFactory\Http\Middleware\Cors'
         //'DreamFactory\Http\Middleware\VerifyCsrfToken',
     ];

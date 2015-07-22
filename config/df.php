@@ -2,7 +2,7 @@
 
 return [
     /** General API version number, 1.x was earlier product and may be supported by most services */
-    'api_version'                  => '2.0',
+    'api_version'                  => '2.0.0',
     /** Most API calls return a resource array or a single resource, if array, do we wrap it? */
     'always_wrap_resources'        => true,
     'resources_wrapper'            => 'resource',
