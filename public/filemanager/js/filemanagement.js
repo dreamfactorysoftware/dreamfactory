@@ -196,92 +196,61 @@ function buildFolderControl(path) {
 }
 
 function buildListingUI(json, svc) {
-    window.Container = json.container;
-//    var container;
-//    if(!json.container){
-//        $("mkdir").unbind('click');
-//        $("#mkdir").bind('click', function() {
-//            if ($(this).hasClass("disabled")) {
-//                return false;
-//            }
-//            var name = prompt("Enter name for new container");
-//            if(name) {
-//                createContainer(currentPath, name);
-//            }
-//        });
-//    }else{
-//        $("mkdir").off('click');
-//        $("#mkdir").click(function() {
-//            if ($(this).hasClass("disabled")) {
-//                return false;
-//            }
-//            var name = prompt("Enter name for new folder");
-//            if(name) {
-//                createFolder(currentPath, name);
-//            }
-//        });
-//    }
 
     var html = '';
     if (json.resource) {
         for (var i in json.resource) {
             var name = json.resource[i].name;
-            if (name != '.') {
-                //var path = json.folder[i].path;
-                if (svc != '') {
-                    path = svc + '/' + name + '/';
-                }
-                path = '/' + path;
-                var ctrl = buildFolderControl(path);
-                if (currentPath == '/') {
-                    var icon = 'gfx/service.png';
-                } else {
-                    var icon = 'gfx/folder-horizontal-open.png';
-                }
-                html += buildItem(path, icon, name, 'folder', ctrl);
+            var path = json.resource[i].path;
+            switch (json.resource[i].type) {
+                case 'service':
+                    if (svc != '') {
+                        path = svc + '/' + path;
+                    }
+                    path = '/' + path;
+                    var ctrl = buildFolderControl(path);
+                    if (currentPath == '/') {
+                        var icon = 'gfx/service.png';
+                    } else {
+                        var icon = 'gfx/folder-horizontal-open.png';
+                    }
+                    html += buildItem(path, icon, name, 'folder', ctrl);
+                    break;
+                case 'folder':
+                    if (svc != '') {
+                        path = svc + '/' + path;
+                    }
+                    path = '/' + path;
+                    var ctrl = buildFolderControl(path);
+                    if (currentPath == '/') {
+                        var icon = 'gfx/service.png';
+                    } else {
+                        var icon = 'gfx/folder-horizontal-open.png';
+                    }
+                    html += buildItem(path, icon, name, 'folder', ctrl);
+                    break;
+                case 'file':
+                    if (svc != '') {
+                        path = svc + '/' + path;
+                    }
+                    path = '/' + path;
+                    var editor = buildEditor(json.resource[i].contentType, path);
+                    var extra = '<div class="cLeft cW5">&nbsp;</div>';
+                    if (json.resource[i].lastModified) {
+                        extra += '<div class="cLeft cW20 fm_label">' + json.resource[i].lastModified + '</div>';
+                    }
+                    if (json.resource[i].contentType) {
+                        extra += '<div class="cLeft cW15 fm_label">' + json.resource[i].contentType + '</div>';
+                    }
+                    if (json.resource[i].size) {
+                        extra += '<div class="cLeft cW10 fm_label">' + json.resource[i].size + ' bytes</div>';
+                    }
+                    html += buildItem(path, getIcon(json.resource[i]), json.resource[i].name, 'file', editor, extra);
+                    break;
             }
         }
     }
-    if (json.folder) {
-        for (var i in json.folder) {
-            var name = json.folder[i].name;
-            if (name != '.') {
-                var path = json.folder[i].path;
-                if (svc != '') {
-                    path = svc + '/' + path;
-                }
-                path = '/' + path;
-                var ctrl = buildFolderControl(path);
-                if (currentPath == '/') {
-                    var icon = 'gfx/service.png';
-                } else {
-                    var icon = 'gfx/folder-horizontal-open.png';
-                }
-                html += buildItem(path, icon, name, 'folder', ctrl);
-            }
-        }
-    }
-    if (json.file) {
-        for (var i in json.file) {
-            var path = json.file[i].path;
-            if (svc != '') {
-                path = svc + '/' + path;
-            }
-            path = '/' + path;
-            var editor = buildEditor(json.file[i].contentType, path);
-            var extra = '<div class="cLeft cW5">&nbsp;</div>';
-            if (json.file[i].lastModified) {
-                extra += '<div class="cLeft cW20 fm_label">' + json.file[i].lastModified + '</div>';
-            }
-            if (json.file[i].contentType) {
-                extra += '<div class="cLeft cW15 fm_label">' + json.file[i].contentType + '</div>';
-            }
-            if (json.file[i].size) {
-                extra += '<div class="cLeft cW10 fm_label">' + json.file[i].size + ' bytes</div>';
-            }
-            html += buildItem(path, getIcon(json.file[i]), json.file[i].name, 'file', editor, extra);
-        }
-    }
+
     $('#listing').html(html);
 
     $('.editor').click(function () {
@@ -347,16 +316,10 @@ function buildListingUI(json, svc) {
 }
 
 function updateButtons() {
-
     if (currentPath == '/') {
         $('#mkdir').addClass("disabled");
         $('#importfile').addClass("disabled");
         $('#exportzip').addClass("disabled");
-    } else if (typeof window.Container == 'undefined') {
-        $('#mkdir').removeClass("disabled");
-        $('#importfile').addClass("disabled");
-        $('#exportzip').addClass("disabled");
-        $('#rm').addClass("disabled");
     } else {
         $('#mkdir').removeClass("disabled");
         $('#importfile').removeClass("disabled");
@@ -445,7 +408,7 @@ function loadFolder(path) {
             },
             dataType: 'json',
             url: CurrentServer + '/api/v2/system/service',
-            data: "method=GET&fields=name&filter=" + escape("type='local_file' or type='aws_s3' or type='azure_blob'"),
+            data: "fields=name&filter=" + escape("type='local_file' or type='aws_s3' or type='azure_blob' or type='rackspace_cloud_files'"),
             cache: false,
             success: function (response) {
                 try {
@@ -455,12 +418,13 @@ function loadFolder(path) {
                 ;
                 currentPath = path;
                 printLocation(path);
-                var json = {"folder": [], "file": []};
+                var json = {"resource": []};
                 if (response.resource) {
                     for (var i in response.resource) {
-                        json.folder.push({
+                        json.resource.push({
                             "name": response.resource[i].name,
-                            "path": response.resource[i].name + '/'
+                            "path": response.resource[i].name + '/',
+                            "type": 'service',
                         });
                     }
                 }
@@ -479,7 +443,7 @@ function loadFolder(path) {
             },
             dataType: 'json',
             url: CurrentServer + '/api/v2' + path,
-            data: 'method=GET',
+            data: '',
             cache: false,
             success: function (response) {
                 try {
@@ -551,8 +515,6 @@ function createFile(target, file) {
 }
 
 function createFolder(target, name) {
-    if (typeof window.Container != 'undefined') {
-
 
         $.ajax({
             headers: {
@@ -576,32 +538,6 @@ function createFolder(target, name) {
                 loadFolder(target);
             }
         });
-    } else {
-        createContainer(target, name);
-
-
-    }
-}
-function createContainer(target, name) {
-
-    $.ajax({
-        headers: {
-            "X-DreamFactory-API-Key": apiKey,
-            "X-DreamFactory-Session-Token": sessionToken
-        },
-        dataType: 'json',
-        type: 'POST',
-        url: CurrentServer + '/api/v2' + target,
-        data: JSON.stringify({name: name}),
-        cache: false,
-        success: function (response) {
-            loadFolder(target);
-        },
-        error: function (response) {
-            alertErr(response);
-            loadFolder(target);
-        }
-    });
 }
 function deleteSelected() {
 
@@ -619,16 +555,13 @@ function deleteSelected() {
         msg += "\nAre you sure you want to delete these selected items?";
         if (confirm(msg)) {
             var data = {};
+            data.resource = [];
             if (folders.length > 0) {
-                data.folder = folders;
+                data.resource.concat(folders);
             }
 
             if (files.length > 0) {
-                data.file = files;
-            }
-            if (typeof window.Container == 'undefined') {
-                data = {};
-                data.container = folders;
+                data.resource.concat(files);
             }
             data = JSON.stringify(data);
             $.ajax({
@@ -636,9 +569,12 @@ function deleteSelected() {
                     "X-DreamFactory-API-Key": apiKey,
                     "X-DreamFactory-Session-Token": sessionToken
                 },
+                beforeSend: function (request) {
+                    request.setRequestHeader("X-Method-Name", 'DELETE');
+                },
                 dataType: 'json',
                 type: 'POST',
-                url: CurrentServer + '/api/v2' + currentPath + '?method=DELETE&force=true',
+                url: CurrentServer + '/api/v2' + currentPath + '?force=true',
                 data: data,
                 cache: false,
                 processData: false,
@@ -673,13 +609,12 @@ function getSelectedItems() {
     var files = [];
     $('.highlighted').each(function () {
         var target = $(this).data('target');
-        // remove /app/, /doc/, etc.
         var tmp = target.split('/');
         target = target.substring(2 + tmp[1].length);
         if ($(this).data('type') == 'folder') {
-            folders[folders.length] = {path: target};
+            folders.push({path: target, type: 'folder'});
         } else {
-            files[files.length] = {path: target};
+            files.push({path: target, type: 'file'});
         }
     });
     return {
