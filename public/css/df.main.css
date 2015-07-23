@@ -1,0 +1,89 @@
+/*!
+ * df.main.css
+ *
+ * Copyright 2014 DreamFactory Software, Inc.
+ * Licensed under the Apache License v2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * This is the CSS file for server-side generated pages
+ *
+ * ** Please keep only tag modifications in this file.   **
+ * ** All other classes and mods should go in df.ui.css **
+ *
+ */
+@import url(//fonts.googleapis.com/css?family=Lato|Open+Sans|Roboto|Droid+Sans);
+@import url(/css/df.ui.css);
+@import url(/css/df.login.css);
+@import url(/css/df.tree.css);
+
+html, body {
+	height: 100%;
+}
+
+body {
+	min-height:       100%;
+	height:           auto;
+	font-family:      'Lato', 'Open Sans', 'Helvetica Neue Light', 'Arial', sans-serif;
+	font-weight:      300;
+	color:            #F2F2F2;
+	padding:          0;
+	margin:           0;
+	background-color: rgba(0, 0, 0, .75);
+}
+
+body > a {
+	color: #fafafa;
+}
+
+body > a:hover, body > a:focus, body > a:active {
+	color: #ffffff;
+}
+
+code {
+	font-size: 80%;
+}
+
+legend {
+	font-weight:   400;
+	margin-bottom: 10px;
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+	font-family: 'Lato', 'Open Sans', sans-serif;
+}
+
+body.body-error {
+	background:  #000000 url('/img/bg-stars.png') center;
+	color:       #ffffff;
+	font-family: "Roboto", "Droid Sans", "Helvetica Neue", Arial, Helvetica, sans-serif;
+	margin:      0;
+	text-align:  center;
+}
+
+body.body-error h1 {
+	font-size:     48px;
+	font-weight:   normal;
+	padding:       0 20px 5px;
+	border-bottom: 2px solid #222222;
+	display:       inline-block;
+	margin:        0 0 15px 0;
+}
+
+body.body-error h2 {
+	font-size:      14px;
+	font-weight:    normal;
+	margin:         0 0 30px 0;
+	text-transform: uppercase;
+}
+
+body.body-error p {
+	color: #444444;
+}
+
+.body-error a,
+.body-error a:active,
+.body-error a:visited,
+.body-error a:focus {
+	text-decoration: none;
+	color:           #3f6039;
+}

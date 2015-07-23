@@ -1,26 +1,13 @@
 <?php
 namespace DreamFactory\Http\Controllers;
 
+use DreamFactory\Core\Utility\CacheUtilities;
+use DreamFactory\Library\Utility\Enums\Verbs;
+use DreamFactory\Core\Components\Registrar;
 use Response;
-use Carbon\Carbon;
-use DreamFactory\Core\OAuth\Services\BaseOAuthService;
-use DreamFactory\Core\Utility\ServiceHandler;
-use DreamFactory\Core\ADLdap\Services\LDAP as LdapService;
-use DreamFactory\Core\ADLdap\Contracts\Provider as ADLdapProvider;
-use DreamFactory\Core\Utility\Session;
-use Laravel\Socialite\Contracts\Provider;
-use Laravel\Socialite\Contracts\User;
 
 class SplashController extends Controller
 {
-    /**
-     * Create new splash screen controller.
-     */
-    public function __construct()
-    {
-        $this->middleware('guest');
-    }
-
     /**
      * Show the application splash screen to the user.
      *
@@ -28,6 +15,43 @@ class SplashController extends Controller
      */
     public function index()
     {
-        return redirect(env('LANDING_PAGE', '/launchpad'));
+        return redirect(env('LANDING_PAGE', '/test_rest.html'));
+    }
+
+    public function createFirstUser()
+    {
+        $request = \Request::instance();
+        $method = $request->method();
+
+        if (Verbs::GET === $method) {
+            if (!CacheUtilities::adminExists()) {
+                $data = [
+                    'version'    => \Config::get('df.api_version'),
+                    'email'      => '',
+                    'name'       => '',
+                    'first_name' => '',
+                    'last_name'  => ''
+                ];
+
+                return view('firstUser', $data);
+            } else {
+                return redirect()->to('/');
+            }
+        } else if (Verbs::POST === $method) {
+            $data = $request->all();
+            $registrar = new Registrar();
+            $validator = $registrar->validator($data);
+
+            if ($validator->fails()) {
+                $errors = $validator->getMessageBag()->all();
+                $data = array_merge($data, ['errors' => $errors, 'version' => \Config::get('df.api_version')]);
+
+                return view('firstUser', $data);
+            } else {
+                $registrar->create($data);
+
+                return redirect()->to('/');
+            }
+        }
     }
 }

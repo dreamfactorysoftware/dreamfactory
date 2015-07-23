@@ -43,7 +43,7 @@ return [
 
         'local'     => [
             'driver' => 'local',
-            'root'   => env('LOCAL_FILE_ROOT', storage_path() . '/app'),
+            'root'   => storage_path() . env('LOCAL_FILE_ROOT', '/app'),
         ],
         's3'        => [
             'driver' => 's3',
