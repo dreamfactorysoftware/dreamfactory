@@ -570,7 +570,7 @@ function deleteSelected() {
                     "X-DreamFactory-Session-Token": sessionToken
                 },
                 beforeSend: function (request) {
-                    request.setRequestHeader("X-Method-Name", 'DELETE');
+                    request.setRequestHeader("X-HTTP-Method", 'DELETE');
                 },
                 dataType: 'json',
                 type: 'POST',
@@ -734,7 +734,7 @@ function importFile() {
             });
             break;
         case 'File':
-            $("#fileImportForm").attr("action", "/api/v2" + currentPath + "?" + params);
+            $("#fileImportForm").attr("action", "/api/v2" + currentPath + "?api_key=" + apiKey + "&session_token=" + sessionToken + params);
             $("#fileImportForm").submit();
             break;
     }
