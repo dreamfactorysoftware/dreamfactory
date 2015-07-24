@@ -135,6 +135,7 @@ return [
 		'Illuminate\Translation\TranslationServiceProvider',
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
+		'DreamFactory\Providers\EnterpriseServiceProvider',
 
         /**
          * DreamFactory Core
@@ -158,6 +159,7 @@ return [
 		'DreamFactory\Providers\ConfigServiceProvider',
 		'DreamFactory\Providers\EventServiceProvider',
 		'DreamFactory\Providers\RouteServiceProvider',
+
 
 	],
 
