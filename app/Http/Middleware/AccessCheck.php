@@ -21,6 +21,8 @@ use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use Tymon\JWTAuth\Payload;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
+use DreamFactory\Library\Utility\Enums\EnterpriseDefaults;
+
 
 class AccessCheck
 {
@@ -117,6 +119,23 @@ class AccessCheck
      *
      * @return mixed
      */
+    public static function getConsoleApiKey($request)
+    {
+        //Check for Console API key in request parameters.
+        $consoleApiKey = $request->query('console_key');
+        if (empty( $consoleApiKey )) {
+            //Check for API key in request HEADER.
+            $consoleApiKey = $request->header(EnterpriseDefaults::CONSOLE_X_HEADER);
+        }
+
+        return $consoleApiKey;
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return mixed
+     */
     public static function getJwt($request)
     {
         $token = static::getJWTFromAuthHeader();
@@ -149,6 +168,9 @@ class AccessCheck
         //Get the JWT.
         $token = static::getJwt($request);
         Session::setSessionToken($token);
+
+        //Get the Console API Key
+        $consoleApiKey = static::getConsoleApiKey($request);
 
         //Check for basic auth attempt.
         $basicAuthUser = $request->getUser();
@@ -189,6 +211,9 @@ class AccessCheck
         } elseif (!empty($apiKey)) {
             //Just Api Key is supplied. No authenticated session
             Session::setSessionData($appId);
+        } elseif (!empty($consoleApiKey) && $consoleApiKey === Enterprise::getConsoleKey() && $request->getMethod() === 'GET') {
+            //DFE Console request
+            return $next($request);
         } elseif (static::isException($request)) {
             //Path exception.
             return $next($request);
