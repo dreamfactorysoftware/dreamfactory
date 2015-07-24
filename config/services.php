@@ -24,9 +24,9 @@ return [
 	],
 
 	'ses' => [
-		'key' => '',
-		'secret' => '',
-		'region' => 'us-east-1',
+		'key'    => env('AWS_S3_KEY'),
+		'secret' => env('AWS_S3_SECRET'),
+		'region' => env('AWS_S3_REGION'),
 	],
 
 	'stripe' => [
