@@ -24,6 +24,7 @@ class FirstUserCheck implements Middleware
             if(!CacheUtilities::hasServiceTable()){
                 \Artisan::call('migrate');
                 \Artisan::call('db:seed');
+                CacheUtilities::resetServiceTableExists();
             }
 
             if(!CacheUtilities::adminExists()) {
