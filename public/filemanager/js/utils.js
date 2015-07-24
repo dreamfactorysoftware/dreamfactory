@@ -76,9 +76,9 @@ function getErrorString(response) {
 			result = response.data;
 		}
 		if (result && result.error) {
-			value = xml2text(result.error[0].message);
+			value = xml2text(result.error.message);
 			if (0 == value.indexOf('Batch Error')) {
-				var details = result.error[0].context;
+				var details = result.error.context;
 				if (0 < details.errors.length) {
 					var index = details.errors[0];
 					value = xml2text(details.resource[index]);
@@ -87,7 +87,7 @@ function getErrorString(response) {
 			if (value) {
 				return value;
 			}
-			value = result.error[0].code;
+			value = result.error.code;
 			if (value) {
 				code = value;
 			}

@@ -43,7 +43,7 @@ return [
 
         'local'     => [
             'driver' => 'local',
-            'root'   => storage_path() . env('LOCAL_FILE_ROOT', '/app'),
+            'root'   => storage_path() . '/' . ltrim(env('LOCAL_FILE_ROOT', 'app'), '/'),
         ],
         's3'        => [
             'driver' => 's3',
@@ -64,10 +64,10 @@ return [
         ],
         'azure'     => [
             'driver'       => 'azure',
-            'account_name' => env('AB_ACCOUNT_NAME'),
-            'account_key'  => env('AB_ACCOUNT_KEY'),
+            'account_name' => env('AZURE_ACCOUNT_NAME'),
+            'account_key'  => env('AZURE_ACCOUNT_KEY'),
             'protocol'     => 'https',
-            'container'    => env('AB_CONTAINER')
+            'container'    => env('AZURE_BLOB_CONTAINER')
         ]
 
     ],
