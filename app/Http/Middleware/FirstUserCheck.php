@@ -21,6 +21,10 @@ class FirstUserCheck implements Middleware
         $route = $request->getPathInfo();
 
         if('/setup' !== $route) {
+            if(!CacheUtilities::hasServiceTable()){
+                \Artisan::call('migrate');
+                \Artisan::call('db:seed');
+            }
 
             if(!CacheUtilities::adminExists()) {
                 return redirect()->to('/setup');
