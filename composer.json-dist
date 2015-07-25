@@ -62,6 +62,10 @@
     },
     {
       "type": "vcs",
+      "url": "git@github.com:dreamfactorysoftware/df-couchdb.git"
+    },
+    {
+      "type": "vcs",
       "url": "git@github.com:dreamfactorysoftware/df-rws.git"
     },
     {
@@ -91,6 +95,7 @@
   ],
   "require": {
     "laravel/framework": "5.0.*",
+    "tymon/jwt-auth": "0.5.*",
     "dreamfactory/df-admin-app": "dev-develop as dev-master",
     "dreamfactory/df-core": "dev-develop as dev-master",
     "dreamfactory/df-aws": "dev-develop as dev-master",
@@ -98,6 +103,7 @@
     "dreamfactory/df-rackspace": "dev-develop as dev-master",
     "dreamfactory/df-sqldb": "dev-develop as dev-master",
     "dreamfactory/df-mongodb": "dev-develop as dev-master",
+    "dreamfactory/df-couchdb": "dev-develop as dev-master",
     "dreamfactory/df-rws": "dev-develop as dev-master",
     "dreamfactory/df-salesforce": "dev-develop as dev-master",
     "dreamfactory/df-user": "dev-develop as dev-master",
