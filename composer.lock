@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7a15696011084e38eff62990057c91df",
+    "hash": "189d8ccbcb92b2798d8ead6ade7dd210",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -227,16 +227,16 @@
         },
         {
             "name": "danielstjules/stringy",
-            "version": "1.10.0",
+            "version": "1.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/danielstjules/Stringy.git",
-                "reference": "4749c205db47ee5b32e8d1adf6d9aff8db6caf3b"
+                "reference": "3cf18e9e424a6dedc38b7eb7ef580edb0929461b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/danielstjules/Stringy/zipball/4749c205db47ee5b32e8d1adf6d9aff8db6caf3b",
-                "reference": "4749c205db47ee5b32e8d1adf6d9aff8db6caf3b",
+                "url": "https://api.github.com/repos/danielstjules/Stringy/zipball/3cf18e9e424a6dedc38b7eb7ef580edb0929461b",
+                "reference": "3cf18e9e424a6dedc38b7eb7ef580edb0929461b",
                 "shasum": ""
             },
             "require": {
@@ -279,7 +279,7 @@
                 "utility",
                 "utils"
             ],
-            "time": "2015-07-23 00:54:12"
+            "time": "2015-02-10 06:19:18"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -382,17 +382,75 @@
             "time": "2014-12-20 21:24:13"
         },
         {
+            "name": "dreamfactory/azure-sdk-for-php",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dreamfactorysoftware/azure-sdk-for-php.git",
+                "reference": "3326524639e3f42521f7259ea6ca02a6e901e3d3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/azure-sdk-for-php/zipball/3326524639e3f42521f7259ea6ca02a6e901e3d3",
+                "reference": "3326524639e3f42521f7259ea6ca02a6e901e3d3",
+                "shasum": ""
+            },
+            "require": {
+                "pear-pear.php.net/http_request2": "*",
+                "pear-pear.php.net/mail_mime": "*",
+                "pear-pear.php.net/mail_mimedecode": "*",
+                "pear-pear.php.net/net_url2": "*"
+            },
+            "require-dev": {
+                "mikey179/vfsstream": "~1.2@stable",
+                "phpunit/phpunit": "~3.7@stable"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-develop": "0.4.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "WindowsAzure\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Azure PHP SDK",
+                    "email": "azurephpsdk@microsoft.com"
+                },
+                {
+                    "name": "Jerry Ablan",
+                    "email": "jerryablan@dreamfactory.com",
+                    "role": "DreamFactory Package Maintainer"
+                }
+            ],
+            "description": "This project provides a set of PHP client libraries that make it easy to access Windows Azure tables, blobs, queues, service runtime and service management APIs.",
+            "keywords": [
+                "azure",
+                "php",
+                "sdk"
+            ],
+            "time": "2014-08-08 21:07:14"
+        },
+        {
             "name": "dreamfactory/df-adldap",
             "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/df-adldap.git",
-                "reference": "1779bbf629ce14a4828cad07b96038aa98b7870d"
+                "reference": "5c2f3abad9fbe0d37174303d8eb8ecefa0aa2853"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-adldap/zipball/1779bbf629ce14a4828cad07b96038aa98b7870d",
-                "reference": "1779bbf629ce14a4828cad07b96038aa98b7870d",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-adldap/zipball/5c2f3abad9fbe0d37174303d8eb8ecefa0aa2853",
+                "reference": "5c2f3abad9fbe0d37174303d8eb8ecefa0aa2853",
                 "shasum": ""
             },
             "require": {
@@ -434,7 +492,7 @@
                 "issues": "https://github.com/dreamfactorysoftware/df-adldap/issues",
                 "wiki": "https://wiki.dreamfactory.com"
             },
-            "time": "2015-07-22 22:05:56"
+            "time": "2015-07-21 15:24:17"
         },
         {
             "name": "dreamfactory/df-admin-app",
@@ -497,12 +555,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/df-aws.git",
-                "reference": "b5223d927d75c374636fc87bdd4ca43b2c1bfc4a"
+                "reference": "3cf2e6680f687eb67187edcf2fb0c8de4704eb5c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-aws/zipball/b5223d927d75c374636fc87bdd4ca43b2c1bfc4a",
-                "reference": "b5223d927d75c374636fc87bdd4ca43b2c1bfc4a",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-aws/zipball/3cf2e6680f687eb67187edcf2fb0c8de4704eb5c",
+                "reference": "3cf2e6680f687eb67187edcf2fb0c8de4704eb5c",
                 "shasum": ""
             },
             "require": {
@@ -548,7 +606,66 @@
                 "issues": "https://github.com/dreamfactorysoftware/df-aws/issues",
                 "wiki": "https://wiki.dreamfactory.com"
             },
-            "time": "2015-07-24 19:38:14"
+            "time": "2015-07-21 02:09:31"
+        },
+        {
+            "name": "dreamfactory/df-azure",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:dreamfactorysoftware/df-azure.git",
+                "reference": "5877361a88be71ff80be108abcb44decb2c33d48"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-azure/zipball/5877361a88be71ff80be108abcb44decb2c33d48",
+                "reference": "5877361a88be71ff80be108abcb44decb2c33d48",
+                "shasum": ""
+            },
+            "require": {
+                "dreamfactory/azure-sdk-for-php": "dev-develop as dev-master",
+                "dreamfactory/df-core": "dev-develop as dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "DreamFactory\\Core\\Azure\\": "src/"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Arif Islam",
+                    "email": "arifislam@dreamfactory.com"
+                },
+                {
+                    "name": "Jerry Ablan",
+                    "email": "jerryablan@dreamfactory.com"
+                },
+                {
+                    "name": "Lee Hicks",
+                    "email": "leehicks@dreamfactory.com"
+                }
+            ],
+            "description": "Microsoft Azure package containing Azure services for the DreamFactory Platform 2.0. ",
+            "homepage": "https://www.dreamfactory.com/",
+            "keywords": [
+                "azure",
+                "azure blob",
+                "azure table",
+                "dreamfactory",
+                "dsp",
+                "rest"
+            ],
+            "support": {
+                "email": "support@dreamfactory.com",
+                "source": "https://github.com/dreamfactorysoftware/df-azure",
+                "issues": "https://github.com/dreamfactorysoftware/df-azure/issues",
+                "wiki": "https://wiki.dreamfactory.com"
+            },
+            "time": "2015-07-21 19:37:07"
         },
         {
             "name": "dreamfactory/df-core",
@@ -556,12 +673,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/df-core.git",
-                "reference": "54632cc3ed6961b2f00c03ac06c5d5ead353382a"
+                "reference": "156abc0eb6186212188367219b551f582662ea21"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/54632cc3ed6961b2f00c03ac06c5d5ead353382a",
-                "reference": "54632cc3ed6961b2f00c03ac06c5d5ead353382a",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/156abc0eb6186212188367219b551f582662ea21",
+                "reference": "156abc0eb6186212188367219b551f582662ea21",
                 "shasum": ""
             },
             "require": {
@@ -616,7 +733,7 @@
                 "source": "https://github.com/dreamfactorysoftware/df-core/tree/develop",
                 "issues": "https://github.com/dreamfactorysoftware/df-core/issues"
             },
-            "time": "2015-07-24 21:33:47"
+            "time": "2015-07-22 15:33:41"
         },
         {
             "name": "dreamfactory/df-mongodb",
@@ -624,12 +741,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/df-mongodb.git",
-                "reference": "6e7e53ea60a9c8610170cd44c5e554037db0bb62"
+                "reference": "b1ed17cb1bc74725b8ca648da3756e7853f75497"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-mongodb/zipball/6e7e53ea60a9c8610170cd44c5e554037db0bb62",
-                "reference": "6e7e53ea60a9c8610170cd44c5e554037db0bb62",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-mongodb/zipball/b1ed17cb1bc74725b8ca648da3756e7853f75497",
+                "reference": "b1ed17cb1bc74725b8ca648da3756e7853f75497",
                 "shasum": ""
             },
             "require": {
@@ -680,7 +797,7 @@
                 "issues": "https://github.com/dreamfactorysoftware/df-mongodb/issues",
                 "wiki": "https://wiki.dreamfactory.com"
             },
-            "time": "2015-07-22 22:10:45"
+            "time": "2015-07-21 19:37:36"
         },
         {
             "name": "dreamfactory/df-oauth",
@@ -688,12 +805,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/df-oauth.git",
-                "reference": "def692e387b814656779025c366b75c4606f887e"
+                "reference": "00c9c3116692f5f1dad0e51bcbcf52a7a3711fa4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-oauth/zipball/def692e387b814656779025c366b75c4606f887e",
-                "reference": "def692e387b814656779025c366b75c4606f887e",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-oauth/zipball/00c9c3116692f5f1dad0e51bcbcf52a7a3711fa4",
+                "reference": "00c9c3116692f5f1dad0e51bcbcf52a7a3711fa4",
                 "shasum": ""
             },
             "require": {
@@ -734,7 +851,7 @@
                 "issues": "https://github.com/dreamfactorysoftware/df-oauth/issues",
                 "wiki": "https://wiki.dreamfactory.com"
             },
-            "time": "2015-07-22 22:06:27"
+            "time": "2015-07-09 19:28:55"
         },
         {
             "name": "dreamfactory/df-rackspace",
@@ -742,12 +859,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/df-rackspace.git",
-                "reference": "851bfcde0d6cfeb470412f4a977bccff65bdaca0"
+                "reference": "0c072dc67cd942ba8e084db1a2e82f0aa86b71df"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-rackspace/zipball/851bfcde0d6cfeb470412f4a977bccff65bdaca0",
-                "reference": "851bfcde0d6cfeb470412f4a977bccff65bdaca0",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-rackspace/zipball/0c072dc67cd942ba8e084db1a2e82f0aa86b71df",
+                "reference": "0c072dc67cd942ba8e084db1a2e82f0aa86b71df",
                 "shasum": ""
             },
             "require": {
@@ -793,7 +910,7 @@
                 "issues": "https://github.com/dreamfactorysoftware/df-rackspace/issues",
                 "wiki": "https://wiki.dreamfactory.com"
             },
-            "time": "2015-07-23 18:57:50"
+            "time": "2015-07-16 21:37:51"
         },
         {
             "name": "dreamfactory/df-rws",
@@ -858,12 +975,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/df-salesforce.git",
-                "reference": "25ef319e9784cc5295360c4ee1aa8616b2d20410"
+                "reference": "63096bd4b57f0a5273b222c90fa0fb7677952a34"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-salesforce/zipball/25ef319e9784cc5295360c4ee1aa8616b2d20410",
-                "reference": "25ef319e9784cc5295360c4ee1aa8616b2d20410",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-salesforce/zipball/63096bd4b57f0a5273b222c90fa0fb7677952a34",
+                "reference": "63096bd4b57f0a5273b222c90fa0fb7677952a34",
                 "shasum": ""
             },
             "require": {
@@ -914,7 +1031,7 @@
                 "issues": "https://github.com/dreamfactorysoftware/df-salesforce/issues",
                 "wiki": "https://wiki.dreamfactory.com"
             },
-            "time": "2015-07-22 22:11:55"
+            "time": "2015-07-21 19:40:02"
         },
         {
             "name": "dreamfactory/df-sqldb",
@@ -922,12 +1039,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/df-sqldb.git",
-                "reference": "c27503b584bcd0556b496f9a31eca9d221a35024"
+                "reference": "fdc6d614f4e580c8852314d822417e73523a275f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-sqldb/zipball/c27503b584bcd0556b496f9a31eca9d221a35024",
-                "reference": "c27503b584bcd0556b496f9a31eca9d221a35024",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-sqldb/zipball/fdc6d614f4e580c8852314d822417e73523a275f",
+                "reference": "fdc6d614f4e580c8852314d822417e73523a275f",
                 "shasum": ""
             },
             "require": {
@@ -982,7 +1099,7 @@
                 "issues": "https://github.com/dreamfactorysoftware/df-sqldb/issues",
                 "wiki": "https://wiki.dreamfactory.com"
             },
-            "time": "2015-07-24 20:29:31"
+            "time": "2015-07-21 19:38:57"
         },
         {
             "name": "dreamfactory/df-sqldb-core",
@@ -990,12 +1107,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:dreamfactorysoftware/df-sqldb-core.git",
-                "reference": "7d5e103441ea5ccb6b26d7c9bd0f8b98207281f8"
+                "reference": "e5952c172311f8988879e72ca15dc2445a332c4d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-sqldb-core/zipball/7d5e103441ea5ccb6b26d7c9bd0f8b98207281f8",
-                "reference": "7d5e103441ea5ccb6b26d7c9bd0f8b98207281f8",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-sqldb-core/zipball/e5952c172311f8988879e72ca15dc2445a332c4d",
+                "reference": "e5952c172311f8988879e72ca15dc2445a332c4d",
                 "shasum": ""
             },
             "type": "library",
@@ -1051,7 +1168,7 @@
                 "issues": "https://github.com/dreamfactorysoftware/df-sqldb-core/issues",
                 "wiki": "https://github.com/dreamfactorysoftware/dreamfactory/wiki"
             },
-            "time": "2015-07-24 19:58:04"
+            "time": "2015-07-09 20:09:24"
         },
         {
             "name": "dreamfactory/df-user",
@@ -1633,7 +1750,7 @@
                     "name": "Jeremy Lindblom",
                     "email": "jeremeamia@gmail.com",
                     "homepage": "https://github.com/jeremeamia",
-                    "role": "developer"
+                    "role": "Developer"
                 }
             ],
             "description": "Serialize Closure objects, including their context and binding",
@@ -1777,16 +1894,16 @@
         },
         {
             "name": "laravel/socialite",
-            "version": "v2.0.9",
+            "version": "v2.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/socialite.git",
-                "reference": "feea1b456fc93930b4afe8c264142b74509bd943"
+                "reference": "2f77e4f4bc16a7984ab6f30409bdd05c55f9159c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/socialite/zipball/feea1b456fc93930b4afe8c264142b74509bd943",
-                "reference": "feea1b456fc93930b4afe8c264142b74509bd943",
+                "url": "https://api.github.com/repos/laravel/socialite/zipball/2f77e4f4bc16a7984ab6f30409bdd05c55f9159c",
+                "reference": "2f77e4f4bc16a7984ab6f30409bdd05c55f9159c",
                 "shasum": ""
             },
             "require": {
@@ -1827,7 +1944,7 @@
                 "laravel",
                 "oauth"
             ],
-            "time": "2015-07-23 13:53:32"
+            "time": "2015-07-09 23:55:17"
         },
         {
             "name": "league/flysystem",
@@ -2234,6 +2351,281 @@
                 "php"
             ],
             "time": "2015-07-14 17:31:05"
+        },
+        {
+            "name": "pear-pear.php.net/Archive_Tar",
+            "version": "1.4.0",
+            "dist": {
+                "type": "file",
+                "url": "http://pear.php.net/get/Archive_Tar-1.4.0.tgz",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "php": ">=5.2.0.0"
+            },
+            "replace": {
+                "pear-pear/archive_tar": "== 1.4.0.0"
+            },
+            "type": "pear-library",
+            "autoload": {
+                "classmap": [
+                    ""
+                ]
+            },
+            "include-path": [
+                "/"
+            ],
+            "license": [
+                "New BSD License"
+            ],
+            "description": "This class provides handling of tar files in PHP.\nIt supports creating, listing, extracting and adding to tar files.\nGzip support is available if PHP has the zlib extension built-in or\nloaded. Bz2 compression is also supported with the bz2 extension loaded."
+        },
+        {
+            "name": "pear-pear.php.net/Console_Getopt",
+            "version": "1.4.1",
+            "dist": {
+                "type": "file",
+                "url": "http://pear.php.net/get/Console_Getopt-1.4.1.tgz",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "php": ">=5.4.0.0"
+            },
+            "replace": {
+                "pear-pear/console_getopt": "== 1.4.1.0"
+            },
+            "type": "pear-library",
+            "autoload": {
+                "classmap": [
+                    ""
+                ]
+            },
+            "include-path": [
+                "/"
+            ],
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "description": "This is a PHP implementation of \"getopt\" supporting both\nshort and long options."
+        },
+        {
+            "name": "pear-pear.php.net/HTTP_Request2",
+            "version": "2.2.1",
+            "dist": {
+                "type": "file",
+                "url": "http://pear.php.net/get/HTTP_Request2-2.2.1.tgz",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "pear-pear.php.net/net_url2": ">=2.0.0.0",
+                "pear-pear.php.net/pear": ">=1.9.2.0",
+                "php": ">=5.2.0.0"
+            },
+            "replace": {
+                "pear-pear/http_request2": "== 2.2.1.0"
+            },
+            "type": "pear-library",
+            "autoload": {
+                "classmap": [
+                    ""
+                ]
+            },
+            "include-path": [
+                "/"
+            ],
+            "license": [
+                "BSD License"
+            ],
+            "description": "PHP5 rewrite of HTTP_Request package (with parts of HTTP_Client). Provides\ncleaner API and pluggable Adapters:\n  * Socket adapter, based on old HTTP_Request code,\n  * Curl adapter, wraps around PHP's cURL extension,\n  * Mock adapter, to use for testing packages dependent on HTTP_Request2.\nSupports POST requests with data and file uploads, basic and digest\nauthentication, cookies, managing cookies across requests, proxies, gzip and\ndeflate encodings, redirects, monitoring the request progress with Observers..."
+        },
+        {
+            "name": "pear-pear.php.net/Mail_Mime",
+            "version": "1.8.9",
+            "dist": {
+                "type": "file",
+                "url": "http://pear.php.net/get/Mail_Mime-1.8.9.tgz",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "php": ">=4.3.0.0"
+            },
+            "replace": {
+                "pear-pear/mail_mime": "== 1.8.9.0"
+            },
+            "type": "pear-library",
+            "autoload": {
+                "classmap": [
+                    ""
+                ]
+            },
+            "include-path": [
+                "/"
+            ],
+            "license": [
+                "BSD Style"
+            ],
+            "description": "Mail_Mime provides classes to deal with the creation and manipulation of MIME messages.\nIt allows people to create e-mail messages consisting of:\n* Text Parts\n* HTML Parts\n* Inline HTML Images\n* Attachments\n* Attached messages\n\nIt supports big messages, base64 and quoted-printable encodings and\nnon-ASCII characters in filenames, subjects, recipients, etc. encoded\nusing RFC2047 and/or RFC2231."
+        },
+        {
+            "name": "pear-pear.php.net/Mail_mimeDecode",
+            "version": "1.5.5",
+            "dist": {
+                "type": "file",
+                "url": "http://pear.php.net/get/Mail_mimeDecode-1.5.5.tgz",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "pear-pear.php.net/mail_mime": ">1.4.0.0",
+                "php": ">=4.3.0.0"
+            },
+            "replace": {
+                "pear-pear/mail_mimedecode": "== 1.5.5.0"
+            },
+            "type": "pear-library",
+            "autoload": {
+                "classmap": [
+                    ""
+                ]
+            },
+            "include-path": [
+                "/"
+            ],
+            "license": [
+                "BSD Style"
+            ],
+            "description": "Provides a class to deal with the decoding and interpreting of mime messages.\n This package used to be part of the Mail_Mime package, but has been split off."
+        },
+        {
+            "name": "pear-pear.php.net/Net_URL2",
+            "version": "2.2.0",
+            "dist": {
+                "type": "file",
+                "url": "http://pear.php.net/get/Net_URL2-2.2.0.tgz",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "php": ">=5.1.4.0"
+            },
+            "replace": {
+                "pear-pear/net_url2": "== 2.2.0.0"
+            },
+            "type": "pear-library",
+            "autoload": {
+                "classmap": [
+                    ""
+                ]
+            },
+            "include-path": [
+                "/"
+            ],
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Provides parsing of URLs into their constituent parts (scheme, host, path etc.), URL generation, and resolving of\n    relative URLs."
+        },
+        {
+            "name": "pear-pear.php.net/PEAR",
+            "version": "1.9.5",
+            "dist": {
+                "type": "file",
+                "url": "http://pear.php.net/get/PEAR-1.9.5.tgz",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "ext-pcre": "*",
+                "ext-xml": "*",
+                "pear-pear.php.net/archive_tar": ">=1.3.11.0",
+                "pear-pear.php.net/console_getopt": ">=1.2.0.0",
+                "pear-pear.php.net/structures_graph": ">=1.0.2.0",
+                "pear-pear.php.net/xml_util": ">=1.2.0.0",
+                "php": ">=4.4.0.0,!=5.0.0.0,!=5.1.0.0,!=5.1.1.0,!=5.1.2.0,!=5.1.3.0,!=5.1.4.0,!=5.1.5.0"
+            },
+            "conflict": {
+                "pear-pear.php.net/pear_frontend_gtk": "<0.4.0.0",
+                "pear-pear.php.net/pear_frontend_web": "<=0.4.0.0"
+            },
+            "replace": {
+                "pear-pear/pear": "== 1.9.5.0"
+            },
+            "type": "pear-library",
+            "autoload": {
+                "classmap": [
+                    ""
+                ]
+            },
+            "include-path": [
+                "/"
+            ],
+            "license": [
+                "New BSD License"
+            ],
+            "description": "The PEAR package contains:\n * the PEAR installer, for creating, distributing\n   and installing packages\n * the PEAR_Exception PHP5 error handling mechanism\n * the PEAR_ErrorStack advanced error handling mechanism\n * the PEAR_Error error handling mechanism\n * the OS_Guess class for retrieving info about the OS\n   where PHP is running on\n * the System class for quick handling of common operations\n   with files and directories\n * the PEAR base class\n  Features in a nutshell:\n  * full support for channels\n  * pre-download dependency validation\n  * new package.xml 2.0 format allows tremendous flexibility while maintaining BC\n  * support for optional dependency groups and limited support for sub-packaging\n  * robust dependency support\n  * full dependency validation on uninstall\n  * remote install for hosts with only ftp access - no more problems with\n    restricted host installation\n  * full support for mirroring\n  * support for bundling several packages into a single tarball\n  * support for static dependencies on a url-based package\n  * support for custom file roles and installation tasks"
+        },
+        {
+            "name": "pear-pear.php.net/Structures_Graph",
+            "version": "1.1.1",
+            "dist": {
+                "type": "file",
+                "url": "http://pear.php.net/get/Structures_Graph-1.1.1.tgz",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "php": ">=5.3.0.0"
+            },
+            "replace": {
+                "pear-pear/structures_graph": "== 1.1.1.0"
+            },
+            "type": "pear-library",
+            "autoload": {
+                "classmap": [
+                    ""
+                ]
+            },
+            "include-path": [
+                "/"
+            ],
+            "license": [
+                "LGPL-3.0+"
+            ],
+            "description": "Structures_Graph is a package for creating and manipulating graph datastructures. It allows building of directed\nand undirected graphs, with data and metadata stored in nodes. The library provides functions for graph traversing\nas well as for characteristic extraction from the graph topology."
+        },
+        {
+            "name": "pear-pear.php.net/XML_Util",
+            "version": "1.3.0",
+            "dist": {
+                "type": "file",
+                "url": "http://pear.php.net/get/XML_Util-1.3.0.tgz",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "ext-pcre": "*",
+                "php": ">=5.3.0.0"
+            },
+            "replace": {
+                "pear-pear/xml_util": "== 1.3.0.0"
+            },
+            "type": "pear-library",
+            "autoload": {
+                "classmap": [
+                    ""
+                ]
+            },
+            "include-path": [
+                "/"
+            ],
+            "license": [
+                "BSD License"
+            ],
+            "description": "Selection of methods that are often needed when working with XML documents.  Functionality includes creating of attribute lists from arrays, creation of tags, validation of XML names and more."
         },
         {
             "name": "phpforce/common",
@@ -4911,6 +5303,12 @@
             "alias": "dev-master",
             "alias_normalized": "9999999-dev",
             "version": "dev-develop",
+            "package": "dreamfactory/df-azure"
+        },
+        {
+            "alias": "dev-master",
+            "alias_normalized": "9999999-dev",
+            "version": "dev-develop",
             "package": "dreamfactory/df-rackspace"
         },
         {
@@ -4961,6 +5359,7 @@
         "dreamfactory/df-admin-app": 20,
         "dreamfactory/df-core": 20,
         "dreamfactory/df-aws": 20,
+        "dreamfactory/df-azure": 20,
         "dreamfactory/df-rackspace": 20,
         "dreamfactory/df-sqldb": 20,
         "dreamfactory/df-mongodb": 20,
