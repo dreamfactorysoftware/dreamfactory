@@ -37,9 +37,8 @@ class RestController extends Controller
         /** @noinspection PhpUnusedParameterInspection */
         $version = null
     ){
-        $includeProperties = Request::query('include_properties', false);
         try {
-            $services = ServiceHandler::listServices($includeProperties);
+            $services = ServiceHandler::listServices();
             $response = ResponseFactory::create($services);
         } catch (\Exception $e) {
             $response = ResponseFactory::create($e);
@@ -138,7 +137,11 @@ class RestController extends Controller
      */
     public function handlePOST($version = null, $service = null, $resource = null)
     {
-        $xMethod = Request::header('X-HTTP-Method');;
+        // Check for the various method override headers or query params
+        $xMethod =
+            Request::header('X-HTTP-Method',
+                Request::header('X-HTTP-Method-Override',
+                    Request::header('X-Method-Override', Request::query('method'))));;
         if (!empty($xMethod)) {
             if (!in_array($xMethod, Verbs::getDefinedConstants())) {
                 throw new MethodNotAllowedHttpException("Invalid verb tunneling with " . $xMethod);

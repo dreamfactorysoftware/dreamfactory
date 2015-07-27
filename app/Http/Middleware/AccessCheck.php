@@ -4,6 +4,7 @@ namespace DreamFactory\Http\Middleware;
 use \Auth;
 use \Closure;
 use DreamFactory\Core\Utility\JWTUtilities;
+use Illuminate\Contracts\Routing\Middleware;
 use \JWTAuth;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
@@ -24,7 +25,7 @@ use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
 use DreamFactory\Library\Utility\Enums\EnterpriseDefaults;
 
 
-class AccessCheck
+class AccessCheck implements Middleware
 {
     protected static $exceptions = [
         [
@@ -154,7 +155,7 @@ class AccessCheck
 
     /**
      * @param Request  $request
-     * @param callable $next
+     * @param Closure $next
      *
      * @return array|mixed|string
      */
