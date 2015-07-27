@@ -102,8 +102,9 @@
     "classmap": [
       "database"
     ],
-    "psr-4":    {
-      "DreamFactory\\": "app/"
+    "psr-4": {
+      "DreamFactory\\": "app/",
+      "DreamFactory\\Core\\": "workbench/repos/df-core/src/"
     }
   },
   "autoload-dev":      {
@@ -123,7 +124,7 @@
       "php artisan ide-helper:generate",
       "php artisan optimize",
       "php pull_migrations"
-    ]
+    ],
   },
   "config":            {
     "preferred-install": "dist"
