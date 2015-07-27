@@ -2,6 +2,7 @@
   "name": "dreamfactory/dreamfactory",
   "description": "The DreamFactory(tm) Platform.",
   "keywords": [
+    "api",
     "dreamfactory",
     "dsp",
     "rest"
@@ -61,7 +62,15 @@
     },
     {
       "type": "vcs",
+      "url": "git@github.com:dreamfactorysoftware/df-couchdb.git"
+    },
+    {
+      "type": "vcs",
       "url": "git@github.com:dreamfactorysoftware/df-rws.git"
+    },
+    {
+      "type": "vcs",
+      "url": "git@github.com:dreamfactorysoftware/df-salesforce.git"
     },
     {
       "type": "vcs",
@@ -80,10 +89,6 @@
       "url": "git@github.com:dreamfactorysoftware/df-adldap.git"
     },
     {
-      "type": "vcs",
-      "url": "git@github.com:dreamfactorysoftware/df-salesforce.git"
-    },
-    {
       "type": "pear",
       "url": "http://pear.php.net"
     }
@@ -98,11 +103,12 @@
     "dreamfactory/df-rackspace": "dev-develop as dev-master",
     "dreamfactory/df-sqldb": "dev-develop as dev-master",
     "dreamfactory/df-mongodb": "dev-develop as dev-master",
+    "dreamfactory/df-couchdb": "dev-develop as dev-master",
     "dreamfactory/df-rws": "dev-develop as dev-master",
+    "dreamfactory/df-salesforce": "dev-develop as dev-master",
     "dreamfactory/df-user": "dev-develop as dev-master",
     "dreamfactory/df-oauth": "dev-develop as dev-master",
-    "dreamfactory/df-adldap": "dev-develop as dev-master",
-    "dreamfactory/df-salesforce": "dev-develop as dev-master"
+    "dreamfactory/df-adldap": "dev-develop as dev-master"
   },
   "require-dev": {
     "barryvdh/laravel-ide-helper": "~2.0",
