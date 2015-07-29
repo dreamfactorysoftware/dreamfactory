@@ -3,6 +3,7 @@ namespace DreamFactory\Http\Middleware;
 
 use \Auth;
 use \Closure;
+use DreamFactory\Core\Utility\Enterprise;
 use DreamFactory\Core\Utility\JWTUtilities;
 use Illuminate\Contracts\Routing\Middleware;
 use \JWTAuth;
