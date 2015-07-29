@@ -12,7 +12,7 @@ class EnterpriseServiceProvider extends ServiceProvider
     {
         Enterprise::initialize();
         config(['database.connections.dreamfactory' => Enterprise::getDatabaseConfig()]);
-        if (!CacheUtilities::hasServiceTable()) {
+        if (!CacheUtilities::hasServiceTable() && strpos(php_sapi_name(), 'cli') === false) {
             \Artisan::call('migrate');
             \Artisan::call('db:seed');
             CacheUtilities::resetServiceTableExists();
