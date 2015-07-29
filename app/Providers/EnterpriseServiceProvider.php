@@ -1,6 +1,7 @@
 <?php
 namespace DreamFactory\Providers;
 
+use DreamFactory\Core\Utility\CacheUtilities;
 use Illuminate\Support\ServiceProvider;
 use DreamFactory\Core\Utility\Enterprise;
 
