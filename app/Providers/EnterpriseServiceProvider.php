@@ -4,21 +4,15 @@ namespace DreamFactory\Providers;
 use Illuminate\Support\ServiceProvider;
 use DreamFactory\Core\Utility\Enterprise;
 
+
 class EnterpriseServiceProvider extends ServiceProvider
 {
-
     /**
-     * Bootstrap any application services.
+     * Indicates if loading of the provider is deferred.
      *
-     * @return void
+     * @var bool
      */
-    public function boot()
-    {
-//******************************************************************************
-//* Initialize the DFE integration
-//******************************************************************************
-
-        Enterprise::initialize();    }
+    protected $defer = true;
 
     /**
      * Register any application services.
@@ -31,6 +25,13 @@ class EnterpriseServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->singleton('dfe.initialize', function($app) {
+           return Enterprise::initialize();
+        });
+    }
 
+    public function provides()
+    {
+        return ['dfe.initialize'];
     }
 }
