@@ -11,6 +11,11 @@ class EnterpriseServiceProvider extends ServiceProvider
     {
         Enterprise::initialize();
         config(['database.connections.dreamfactory' => Enterprise::getDatabaseConfig()]);
+        if (!CacheUtilities::hasServiceTable()) {
+            \Artisan::call('migrate');
+            \Artisan::call('db:seed');
+            CacheUtilities::resetServiceTableExists();
+        }
     }
 
     /**
