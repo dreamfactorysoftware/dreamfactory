@@ -113,17 +113,14 @@ return [
 		/*
 		 * Laravel Framework Service Providers...
 		 */
-
 		'Illuminate\Foundation\Providers\ArtisanServiceProvider',
 		'Illuminate\Auth\AuthServiceProvider',
 		'Illuminate\Bus\BusServiceProvider',
 		'Illuminate\Cache\CacheServiceProvider',
-		'DreamFactory\Providers\EnterpriseServiceProvider',
 		'Illuminate\Foundation\Providers\ConsoleSupportServiceProvider',
 		'Illuminate\Routing\ControllerServiceProvider',
 		'Illuminate\Cookie\CookieServiceProvider',
 		'Illuminate\Database\DatabaseServiceProvider',
-
 		'Illuminate\Encryption\EncryptionServiceProvider',
 		'Illuminate\Filesystem\FilesystemServiceProvider',
 		'Illuminate\Foundation\Providers\FoundationServiceProvider',
@@ -146,7 +143,6 @@ return [
         'DreamFactory\Core\DfServiceProvider',
         'DreamFactory\Core\DfCorsServiceProvider',
 
-
         /**
          * Third party packages...
          */
@@ -162,8 +158,6 @@ return [
 		'DreamFactory\Providers\ConfigServiceProvider',
 		'DreamFactory\Providers\EventServiceProvider',
 		'DreamFactory\Providers\RouteServiceProvider',
-
-
 	],
 
 	/*
