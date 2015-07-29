@@ -7,12 +7,11 @@ use DreamFactory\Core\Utility\Enterprise;
 
 class EnterpriseServiceProvider extends ServiceProvider
 {
-    /**
-     * Indicates if loading of the provider is deferred.
-     *
-     * @var bool
-     */
-    protected $defer = true;
+    public function boot()
+    {
+        Enterprise::initialize();
+        config(['database.connections.dreamfactory' => Enterprise::getDatabaseConfig()]);
+    }
 
     /**
      * Register any application services.
@@ -25,13 +24,6 @@ class EnterpriseServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('dfe.initialize', function($app) {
-           return Enterprise::initialize();
-        });
-    }
 
-    public function provides()
-    {
-        return ['dfe.initialize'];
     }
 }

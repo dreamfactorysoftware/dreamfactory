@@ -84,7 +84,7 @@ return [
 			'prefix'   => '',
 		],
 
-		'dreamfactory' => \DreamFactory\Core\Utility\Enterprise::getDatabaseConfig(),
+		'dreamfactory' => [],
 
 	],
 
