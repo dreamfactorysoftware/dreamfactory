@@ -207,7 +207,7 @@ return [
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
         'Socialize' => 'Laravel\Socialite\Facades\Socialite',
-        'JWTAuth' => 'Tymon\JWTAuth\Facades\JWTAuth',
+        'JWTAuth'   => 'Tymon\JWTAuth\Facades\JWTAuth',
 
 	],
 
