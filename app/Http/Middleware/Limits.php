@@ -29,7 +29,7 @@ class Limits
         // Get limits
         $limits = Enterprise::getPolicyLimits();
 
-        if (is_null($limits) === false && is_null($this->_getServiceName()) === false) {
+        if (!empty($limits) && is_null($this->_getServiceName()) === false) {
 
             $this->_inUnitTest = \Config::get('api_limits_test');
 
