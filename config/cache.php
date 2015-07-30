@@ -74,6 +74,6 @@ return [
 	|
 	*/
 
-	'prefix' => 'dreamfactory:',
+	'prefix' => 'dreamfactory.'.gethostname().':',
 
 ];
