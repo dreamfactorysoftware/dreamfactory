@@ -4,8 +4,8 @@ namespace DreamFactory\Http\Middleware;
 
 use DreamFactory\Core\Utility\CacheUtilities;
 use Illuminate\Contracts\Routing\Middleware;
-use Closure;
 use Illuminate\Database\QueryException;
+use Closure;
 
 class FirstUserCheck implements Middleware
 {
@@ -28,10 +28,17 @@ class FirstUserCheck implements Middleware
                     return redirect()->to('/setup');
                 }
             } catch (QueryException $e) {
-                \Artisan::call('migrate');
-                \Artisan::call('db:seed');
+                $code = $e->getCode();
 
-                return redirect()->to('/setup');
+                if($code === '42S02') {
+                    //Mysql base table or view not found.
+                    \Artisan::call('migrate');
+                    \Artisan::call('db:seed');
+
+                    return redirect()->to('/setup');
+                } else {
+                    throw $e;
+                }
             }
         }
 
