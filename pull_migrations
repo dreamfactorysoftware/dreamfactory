@@ -36,25 +36,20 @@ function rcopy($src, $dst)
     return true;
 }
 
-$sources = [
-    'vendor/dreamfactory/df-core/database/migrations/',
-    // Optional services
-    'vendor/dreamfactory/df-aws/database/migrations/',
-    'vendor/dreamfactory/df-azure/database/migrations/',
-    'vendor/dreamfactory/df-couchdb/database/migrations/',
-    'vendor/dreamfactory/df-mongodb/database/migrations/',
-    'vendor/dreamfactory/df-rackspace/database/migrations/',
-    'vendor/dreamfactory/df-rws/database/migrations/',
-    'vendor/dreamfactory/df-salesforce/database/migrations/',
-    'vendor/dreamfactory/df-sqldb/database/migrations/',
-    // Optional user management services
-    'vendor/dreamfactory/df-user/database/migrations/',
-    'vendor/dreamfactory/df-adldap/database/migrations/',
-    'vendor/dreamfactory/df-oauth/database/migrations/',
-];
-
+$source = 'vendor/';
 $destination = 'database/migrations/';
 
-foreach ($sources as $source) {
-    rcopy($source, $destination);
+$vendors = new DirectoryIterator($source);
+foreach ($vendors as $vendor) {
+    if (!$vendor->isDot() && $vendor->isDir()) {
+        $products = new DirectoryIterator($source . $vendor);
+        foreach ($products as $product) {
+            if (!$product->isDot() && $product->isDir()) {
+                $potential = $product->getRealPath() . '/database/migrations/';
+                if (is_dir($potential)) {
+                    rcopy($potential, $destination);
+                }
+            }
+        }
+    }
 }
