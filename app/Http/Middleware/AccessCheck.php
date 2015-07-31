@@ -178,7 +178,10 @@ class AccessCheck implements Middleware
         $basicAuthUser = $request->getUser();
         $basicAuthPassword = $request->getPassword();
 
-        if (!empty($basicAuthUser) && !empty($basicAuthPassword)) {
+        if (!empty( $consoleApiKey ) && $consoleApiKey === Enterprise::getConsoleKey()) {
+            //DFE Console request
+            return $next($request);
+        } elseif (!empty($basicAuthUser) && !empty($basicAuthPassword)) {
             //Attempting to login using basic auth.
             Auth::onceBasic();
             /** @var User $authenticatedUser */
@@ -213,9 +216,6 @@ class AccessCheck implements Middleware
         } elseif (!empty($apiKey)) {
             //Just Api Key is supplied. No authenticated session
             Session::setSessionData($appId);
-        } elseif (!empty($consoleApiKey) && $consoleApiKey === Enterprise::getConsoleKey() && $request->getMethod() === 'GET') {
-            //DFE Console request
-            return $next($request);
         } elseif (static::isException($request)) {
             //Path exception.
             return $next($request);

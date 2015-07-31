@@ -74,16 +74,22 @@ class Limits
 
             $apiKeysToCheck = array_merge($apiKeysToCheck, $serviceKeys);
 
+            $timePeriods = ['minute', 'hour', 'day', '7-day', '30-day'];
+
             $overLimit = false;
+
             try {
                 foreach ($limits['api'] as $key => $limit) {
-                    if (array_key_exists($key, $apiKeysToCheck) === true) {
+                    foreach ($timePeriods as $period) {
+                        $keyToCheck = $key . '.' . $period;
+                        if (array_key_exists($keyToCheck, $apiKeysToCheck) === true) {
 
-                        $cacheValue = \Cache::get($key, 0);
-                        $cacheValue++;
-                        \Cache::put($key, $cacheValue, $limit['period']);
-                        if ($cacheValue > $limit['limit']) {
-                            $overLimit = true;
+                            $cacheValue = \Cache::get($keyToCheck, 0);
+                            $cacheValue++;
+                            \Cache::put($keyToCheck, $cacheValue, $limit['period']);
+                            if ($cacheValue > $limit['limit']) {
+                                $overLimit = true;
+                            }
                         }
                     }
                 }
@@ -115,9 +121,9 @@ class Limits
     private function _getUser($userId)
     {
         if ($this->_inUnitTest === true) {
-            return 'user_1';
+            return 'user:1';
         } else {
-            return is_null($userId) === false ? 'user_' . $userId : null;
+            return is_null($userId) === false ? 'user:' . $userId : null;
         }
     }
 
@@ -132,9 +138,9 @@ class Limits
     private function _getRole($roleId)
     {
         if ($this->_inUnitTest === true) {
-            return 'role_2';
+            return 'role:2';
         } else {
-            return is_null($roleId) === false ? 'role_' . $roleId : null;
+            return is_null($roleId) === false ? 'role:' . $roleId : null;
         }
     }
 
@@ -149,9 +155,9 @@ class Limits
     private function _getApiKey($apiKey)
     {
         if ($this->_inUnitTest === true) {
-            return 'apiName';
+            return 'api_key:apiName';
         } else {
-            return is_null($apiKey) === false ? 'key_' . $apiKey : null;
+            return is_null($apiKey) === false ? 'api_key:' . $apiKey : null;
         }
     }
 
@@ -164,7 +170,7 @@ class Limits
     private function _getServiceName()
     {
         if ($this->_inUnitTest === true) {
-            return 'serviceName';
+            return 'service:serviceName';
         } else {
             /** @var Router $router */
             $router = app('router');
@@ -173,7 +179,7 @@ class Limits
             if (is_null($service) === true ) {
                 return null;
             } else {
-                return 'svc_' . $service;
+                return 'service:' . $service;
             }
 
         }
