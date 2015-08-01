@@ -9,7 +9,7 @@ class Application extends \Illuminate\Foundation\Application
     {
         parent::__construct($basePath);
 
-//        static::$storage_path = $this->basePath . DIRECTORY_SEPARATOR . 'storage';
+        static::$storage_path = $this->basePath . DIRECTORY_SEPARATOR . 'storage';
     }
     /**
      * Get the path to the storage directory.
