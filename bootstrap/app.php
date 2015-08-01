@@ -11,7 +11,7 @@
 |
 */
 
-$app = new DreamFactory\Application(
+$app = new Illuminate\Foundation\Application(
 	realpath(__DIR__.'/../')
 );
 

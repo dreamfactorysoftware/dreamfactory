@@ -18,7 +18,6 @@ class EnterpriseServiceProvider extends ServiceProvider
     public function boot()
     {
         Enterprise::initialize();
-        //\Dreamfactory\Application::$storage_path = Enterprise::getStoragePath();
         config(['database.connections.dreamfactory' => Enterprise::getDatabaseConfig()]);
     }
 
