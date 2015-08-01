@@ -39,5 +39,6 @@ return [
             'maxAge'              => 0,
             'hosts'               => [],
         ]
-    ]
+    ],
+    'storage_path'                => base_path() . DIRECTORY_SEPARATOR . 'storage'
 ];
