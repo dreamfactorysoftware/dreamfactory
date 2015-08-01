@@ -8,6 +8,13 @@ use DreamFactory\Core\Utility\Enterprise;
 
 class EnterpriseServiceProvider extends ServiceProvider
 {
+    /**
+     * Indicates if loading of the provider is deferred.
+     *
+     * @var bool
+     */
+    protected $defer = true;
+
     public function boot()
     {
         Enterprise::initialize();
