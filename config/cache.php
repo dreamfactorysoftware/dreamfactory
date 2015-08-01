@@ -44,7 +44,7 @@ return [
 
 		'file' => [
 			'driver' => 'file',
-			'path'   => storage_path().'/framework/cache/'.md5(gethostname()),
+			'path'   => storage_path().'/framework/cache/'.md5($_SERVER['SERVER_NAME']),
 		],
 
 		'memcached' => [
@@ -74,6 +74,6 @@ return [
 	|
 	*/
 
-	'prefix' => 'dreamfactory.'.md5(gethostname()).':',
+	'prefix' => 'dreamfactory.'.md5($_SERVER['SERVER_NAME']).':',
 
 ];
