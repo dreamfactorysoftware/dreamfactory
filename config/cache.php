@@ -44,7 +44,8 @@ return [
 
 		'file' => [
 			'driver' => 'file',
-			'path'   => storage_path().'/framework/cache/'.md5($_SERVER['SERVER_NAME']),
+			'path'   => storage_path().'/framework/cache/'.
+			\Illuminate\Support\Arr::has($_SERVER, 'SERVER_NAME')? md5($_SERVER['SERVER_NAME']) : md5(gethostname()),
 		],
 
 		'memcached' => [
