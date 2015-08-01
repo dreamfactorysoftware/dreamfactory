@@ -18,6 +18,11 @@ class Application extends \Illuminate\Foundation\Application
      */
     public function storagePath()
     {
+        return $this->getStoragePath();
+    }
+
+    private function getStoragePath()
+    {
         return static::$storage_path;
     }
 }
