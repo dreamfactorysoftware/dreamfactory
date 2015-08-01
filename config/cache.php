@@ -44,7 +44,7 @@ return [
 
 		'file' => [
 			'driver' => 'file',
-			'path'   => storage_path().'/framework/cache',
+			'path'   => storage_path().'/framework/cache/'.md5(gethostname()),
 		],
 
 		'memcached' => [
@@ -74,6 +74,6 @@ return [
 	|
 	*/
 
-	'prefix' => 'dreamfactory.'.gethostname().':',
+	'prefix' => 'dreamfactory.'.md5(gethostname()).':',
 
 ];
