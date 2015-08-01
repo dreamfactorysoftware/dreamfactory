@@ -3,7 +3,7 @@
 class Application extends \Illuminate\Foundation\Application
 {
 
-//    public static $storage_path;
+    public static $storage_path;
 //
 //    public function __construct($basePath = null)
 //    {
