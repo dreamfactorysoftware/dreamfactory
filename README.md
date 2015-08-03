@@ -1,2 +1,2 @@
-# dsp-laravel
-DreamFactory DSP 2.0 Application
+# dreamfactory
+DreamFactory 2.0 Application.
