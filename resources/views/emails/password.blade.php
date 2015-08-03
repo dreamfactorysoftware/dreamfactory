@@ -1,1 +1,10 @@
-Click here to reset your password for DreamFactory DSP 2.0: {{ url('password/reset/'.urlencode($token)) }}
+Hi {{ $name }},
+<br><br>
+You have requested to reset your password. Go to the following url, enter the code below, and set your new password.
+<br><br>
+{{ $link }}
+<br><br>
+Confirmation Code: {{ $code }}
+<br><br>
+Thanks,<br>
+DreamFactory

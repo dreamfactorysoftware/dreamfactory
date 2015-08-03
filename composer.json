@@ -1,104 +1,67 @@
 {
-  "name":              "dreamfactory/dreamfactory",
-  "description":       "The DreamFactory(tm) Platform.",
-  "keywords":          ["dreamfactory", "dsp", "rest"],
-  "homepage":          "https://www.dreamfactory.com/",
-  "license":           "Apache-2.0",
-  "authors":           [
+  "name": "dreamfactory/dreamfactory",
+  "description": "The DreamFactory(tm) Platform.",
+  "keywords": [
+    "api",
+    "dreamfactory",
+    "dsp",
+    "rest"
+  ],
+  "homepage": "https://www.dreamfactory.com/",
+  "license": "Apache-2.0",
+  "authors": [
     {
-      "name":  "Arif Islam",
+      "name": "Arif Islam",
       "email": "arifislam@dreamfactory.com"
     },
     {
-      "name":  "Jerry Ablan",
+      "name": "Jerry Ablan",
       "email": "jerryablan@dreamfactory.com"
     },
     {
-      "name":  "Lee Hicks",
+      "name": "Lee Hicks",
       "email": "leehicks@dreamfactory.com"
     }
   ],
-  "support":           {
-    "email":  "support@dreamfactory.com",
+  "support": {
+    "email": "support@dreamfactory.com",
     "source": "https://github.com/dreamfactorysoftware/dreamfactory",
     "issues": "https://github.com/dreamfactorysoftware/dreamfactory/issues",
-    "wiki":   "https://wiki.dreamfactory.com"
+    "wiki": "https://wiki.dreamfactory.com"
   },
   "minimum-stability": "dev",
-  "prefer-stable":     true,
-  "repositories":      [
+  "prefer-stable": true,
+  "repositories": [
     {
-      "type": "vcs",
-      "url":  "git@github.com:dreamfactorysoftware/df-admin-app.git"
-    },
-    {
-      "type": "vcs",
-      "url":  "git@github.com:dreamfactorysoftware/df-core.git"
-    },
-    {
-      "type": "vcs",
-      "url":  "git@github.com:dreamfactorysoftware/df-aws.git"
-    },
-    {
-      "type": "vcs",
-      "url":  "git@github.com:dreamfactorysoftware/df-rackspace.git"
-    },
-    {
-      "type": "vcs",
-      "url":  "git@github.com:dreamfactorysoftware/df-sqldb.git"
-    },
-    {
-      "type": "vcs",
-      "url":  "git@github.com:dreamfactorysoftware/df-mongodb.git"
-    },
-    {
-      "type": "vcs",
-      "url":  "git@github.com:dreamfactorysoftware/df-rws.git"
-    },
-    {
-      "type": "vcs",
-      "url":  "git@github.com:dreamfactorysoftware/df-sqldb-core.git"
-    },
-    {
-      "type": "vcs",
-      "url":  "git@github.com:dreamfactorysoftware/df-user.git"
-    },
-    {
-      "type": "vcs",
-      "url":  "git@github.com:dreamfactorysoftware/df-oauth.git"
-    },
-    {
-      "type": "vcs",
-      "url":  "git@github.com:dreamfactorysoftware/df-adldap.git"
-    },
-    {
-      "type": "vcs",
-      "url":  "git@github.com:dreamfactorysoftware/df-salesforce.git"
+      "type": "pear",
+      "url": "http://pear.php.net"
     }
   ],
-  "require":           {
-    "laravel/framework":          "5.0.*",
-    "tymon/jwt-auth":             "0.5.*",
-    "dreamfactory/df-admin-app":  "dev-develop as dev-master",
-    "dreamfactory/df-core":       "dev-develop as dev-master",
-    "dreamfactory/df-aws":        "dev-develop as dev-master",
-    "dreamfactory/df-rackspace":  "dev-develop as dev-master",
-    "dreamfactory/df-sqldb":      "dev-develop as dev-master",
-    "dreamfactory/df-mongodb":    "dev-develop as dev-master",
-    "dreamfactory/df-rws":        "dev-develop as dev-master",
-    "dreamfactory/df-user":       "dev-develop as dev-master",
-    "dreamfactory/df-oauth":      "dev-develop as dev-master",
-    "dreamfactory/df-adldap":     "dev-develop as dev-master",
-    "dreamfactory/df-salesforce": "dev-develop as dev-master"
+  "require": {
+    "laravel/framework": "5.0.*",
+    "tymon/jwt-auth": "0.5.*",
+    "dreamfactory/df-admin-app": "dev-develop as dev-master",
+    "dreamfactory/df-core": "dev-develop as dev-master",
+    "dreamfactory/df-aws": "dev-develop as dev-master",
+    "dreamfactory/df-azure": "dev-develop as dev-master",
+    "dreamfactory/df-rackspace": "dev-develop as dev-master",
+    "dreamfactory/df-sqldb": "dev-develop as dev-master",
+    "dreamfactory/df-mongodb": "dev-develop as dev-master",
+    "dreamfactory/df-couchdb": "dev-develop as dev-master",
+    "dreamfactory/df-rws": "dev-develop as dev-master",
+    "dreamfactory/df-salesforce": "dev-develop as dev-master",
+    "dreamfactory/df-user": "dev-develop as dev-master",
+    "dreamfactory/df-oauth": "dev-develop as dev-master",
+    "dreamfactory/df-adldap": "dev-develop as dev-master"
   },
-  "require-dev":       {
+  "require-dev": {
     "barryvdh/laravel-ide-helper": "~2.0",
-    "laracasts/generators":        "~1.0",
-    "laracasts/testdummy":         "~2.0",
-    "phpunit/phpunit":             "~4.0",
-    "phpspec/phpspec":             "~2.1"
+    "laracasts/generators": "~1.0",
+    "laracasts/testdummy": "~2.0",
+    "phpunit/phpunit": "~4.0",
+    "phpspec/phpspec": "~2.1"
   },
-  "autoload":          {
+  "autoload": {
     "classmap": [
       "database"
     ],
@@ -107,31 +70,36 @@
       "DreamFactory\\Core\\": "workbench/repos/df-core/src/"
     }
   },
-  "autoload-dev":      {
+  "autoload-dev": {
     "classmap": [
       "tests/TestCase.php"
     ]
   },
-  "scripts":           {
+  "scripts": {
     "post-install-cmd": [
       "php artisan clear-compiled",
       "php artisan ide-helper:generate",
       "php artisan optimize",
       "php pull_migrations"
     ],
-    "post-update-cmd":  [
+    "post-update-cmd": [
       "php artisan clear-compiled",
       "php artisan ide-helper:generate",
       "php artisan optimize",
       "php pull_migrations"
+    ],
+    "post-create-project-cmd": [
+      "php -r \"copy('.env-dist', '.env');\"",
+      "php -r \"copy('phpunit.xml-dist', 'phpunit.xml');\"",
+      "php artisan key:generate"
     ]
   },
-  "config":            {
+  "config": {
     "preferred-install": "dist"
   },
-  "extra":             {
-    "branch-alias":    {
-      "dev-develop": "2.0.x-dev"
+  "extra": {
+    "branch-alias": {
+      "dev-develop": "0.0.x-dev"
     },
     "installer-paths": {
       "public/{$name}/": ["type:dreamfactory-app"]

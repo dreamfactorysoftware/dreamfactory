@@ -54,7 +54,7 @@ return [
 	|
 	*/
 
-	'from' => ['address' => 'arif@dreamfactory.com', 'name' => 'DreamFactory Software'],
+	'from' => ['address' => 'no-reply@dreamfactory.com', 'name' => 'DreamFactory'],
 
 	/*
 	|--------------------------------------------------------------------------

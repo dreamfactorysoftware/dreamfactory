@@ -33,64 +33,13 @@
   "prefer-stable": true,
   "repositories": [
     {
-      "type": "vcs",
-      "url": "git@github.com:dreamfactorysoftware/df-admin-app.git"
-    },
-    {
-      "type": "vcs",
-      "url": "git@github.com:dreamfactorysoftware/df-core.git"
-    },
-    {
-      "type": "vcs",
-      "url": "git@github.com:dreamfactorysoftware/df-aws.git"
-    },
-    {
-      "type": "vcs",
-      "url": "git@github.com:dreamfactorysoftware/df-azure.git"
-    },
-    {
-      "type": "vcs",
-      "url": "git@github.com:dreamfactorysoftware/df-rackspace.git"
-    },
-    {
-      "type": "vcs",
-      "url": "git@github.com:dreamfactorysoftware/df-sqldb.git"
-    },
-    {
-      "type": "vcs",
-      "url": "git@github.com:dreamfactorysoftware/df-mongodb.git"
-    },
-    {
-      "type": "vcs",
-      "url": "git@github.com:dreamfactorysoftware/df-rws.git"
-    },
-    {
-      "type": "vcs",
-      "url": "git@github.com:dreamfactorysoftware/df-salesforce.git"
-    },
-    {
-      "type": "vcs",
-      "url": "git@github.com:dreamfactorysoftware/df-sqldb-core.git"
-    },
-    {
-      "type": "vcs",
-      "url": "git@github.com:dreamfactorysoftware/df-user.git"
-    },
-    {
-      "type": "vcs",
-      "url": "git@github.com:dreamfactorysoftware/df-oauth.git"
-    },
-    {
-      "type": "vcs",
-      "url": "git@github.com:dreamfactorysoftware/df-adldap.git"
-    },
-    {
       "type": "pear",
       "url": "http://pear.php.net"
     }
   ],
   "require": {
     "laravel/framework": "5.0.*",
+    "tymon/jwt-auth": "0.5.*",
     "dreamfactory/df-admin-app": "dev-develop as dev-master",
     "dreamfactory/df-core": "dev-develop as dev-master",
     "dreamfactory/df-aws": "dev-develop as dev-master",
@@ -98,6 +47,7 @@
     "dreamfactory/df-rackspace": "dev-develop as dev-master",
     "dreamfactory/df-sqldb": "dev-develop as dev-master",
     "dreamfactory/df-mongodb": "dev-develop as dev-master",
+    "dreamfactory/df-couchdb": "dev-develop as dev-master",
     "dreamfactory/df-rws": "dev-develop as dev-master",
     "dreamfactory/df-salesforce": "dev-develop as dev-master",
     "dreamfactory/df-user": "dev-develop as dev-master",
@@ -116,7 +66,7 @@
       "database"
     ],
     "psr-4": {
-      "App\\": "app/"
+      "DreamFactory\\": "app/"
     }
   },
   "autoload-dev": {
