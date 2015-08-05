@@ -3,8 +3,9 @@ namespace DreamFactory\Http\Middleware;
 
 use \Auth;
 use \Closure;
-use DreamFactory\Core\Utility\Enterprise;
 use DreamFactory\Core\Utility\JWTUtilities;
+use DreamFactory\Managed\Enums\ManagedDefaults;
+use DreamFactory\Managed\Support\Managed;
 use Illuminate\Contracts\Routing\Middleware;
 use \JWTAuth;
 use Illuminate\Http\Request;
@@ -23,7 +24,7 @@ use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use Tymon\JWTAuth\Payload;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
-use DreamFactory\Library\Utility\Enums\EnterpriseDefaults;
+
 
 
 class AccessCheck implements Middleware
@@ -127,7 +128,7 @@ class AccessCheck implements Middleware
         $consoleApiKey = $request->query('console_key');
         if (empty( $consoleApiKey )) {
             //Check for API key in request HEADER.
-            $consoleApiKey = $request->header(EnterpriseDefaults::CONSOLE_X_HEADER);
+            $consoleApiKey = $request->header(ManagedDefaults::CONSOLE_X_HEADER);
         }
 
         return $consoleApiKey;
@@ -178,7 +179,7 @@ class AccessCheck implements Middleware
         $basicAuthUser = $request->getUser();
         $basicAuthPassword = $request->getPassword();
 
-        if (!empty( $consoleApiKey ) && $consoleApiKey === Enterprise::getConsoleKey()) {
+        if (!empty( $consoleApiKey ) && $consoleApiKey === Managed::getConsoleKey()) {
             //DFE Console request
             return $next($request);
         } elseif (!empty($basicAuthUser) && !empty($basicAuthPassword)) {
