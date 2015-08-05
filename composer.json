@@ -21,6 +21,10 @@
     {
       "name": "Lee Hicks",
       "email": "leehicks@dreamfactory.com"
+    },
+    {
+      "name": "David Weiner",
+      "email": "davidweiner@dreamfactory.com"
     }
   ],
   "support": {
@@ -81,6 +85,10 @@
       "url": "git@github.com:dreamfactorysoftware/df-adldap.git"
     },
     {
+      "type": "vcs",
+      "url": "git@github.com:dreamfactorysoftware/df-managed.git"
+    },
+    {
       "type": "pear",
       "url": "http://pear.php.net"
     }
@@ -100,7 +108,8 @@
     "dreamfactory/df-salesforce": "dev-develop as dev-master",
     "dreamfactory/df-user": "dev-develop as dev-master",
     "dreamfactory/df-oauth": "dev-develop as dev-master",
-    "dreamfactory/df-adldap": "dev-develop as dev-master"
+    "dreamfactory/df-adldap": "dev-develop as dev-master",
+    "dreamfactory/df-managed": "dev-develop as dev_master"
   },
   "require-dev": {
     "barryvdh/laravel-ide-helper": "~2.0",
@@ -114,8 +123,7 @@
       "database"
     ],
     "psr-4": {
-      "DreamFactory\\": "app/",
-      "DreamFactory\\Core\\": "workbench/repos/df-core/src/"
+      "DreamFactory\\": "app/"
     }
   },
   "autoload-dev": {
