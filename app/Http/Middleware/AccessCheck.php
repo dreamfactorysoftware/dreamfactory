@@ -3,6 +3,7 @@ namespace DreamFactory\Http\Middleware;
 
 use \Auth;
 use \Closure;
+use DreamFactory\Core\Models\App;
 use DreamFactory\Core\Utility\JWTUtilities;
 use Illuminate\Contracts\Routing\Middleware;
 use \JWTAuth;
@@ -17,7 +18,6 @@ use DreamFactory\Core\Utility\ResponseFactory;
 use DreamFactory\Core\Models\Role;
 use DreamFactory\Core\Models\User;
 use DreamFactory\Core\Utility\Session;
-use DreamFactory\Core\Utility\CacheUtilities;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use Tymon\JWTAuth\Payload;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
@@ -145,7 +145,7 @@ class AccessCheck implements Middleware
         //Get the api key.
         $apiKey = static::getApiKey($request);
         Session::setApiKey($apiKey);
-        $appId = CacheUtilities::getAppIdByApiKey($apiKey);
+        $appId = App::getAppIdByApiKey($apiKey);
 
         //Get the JWT.
         $token = static::getJwt($request);

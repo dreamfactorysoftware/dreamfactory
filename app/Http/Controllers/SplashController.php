@@ -1,7 +1,7 @@
 <?php
 namespace DreamFactory\Http\Controllers;
 
-use DreamFactory\Core\Utility\CacheUtilities;
+use DreamFactory\Core\Models\User;
 use DreamFactory\Library\Utility\Enums\Verbs;
 use DreamFactory\Core\Components\Registrar;
 use Response;
@@ -24,7 +24,7 @@ class SplashController extends Controller
         $method = $request->method();
 
         if (Verbs::GET === $method) {
-            if (!CacheUtilities::adminExists()) {
+            if (!User::adminExists()) {
                 $data = [
                     'version'    => \Config::get('df.api_version'),
                     'email'      => '',
