@@ -38,9 +38,7 @@ class StorageController extends Controller
             }
 
             if ($allowed) {
-                $container = substr($path, 0, strpos($path, '/'));
-                $path = ltrim(substr($path, strpos($path, '/') + 1), '/');
-                $service->streamFile($container, $path);
+                $service->streamFile(null, $path);
             } else {
                 throw new ForbiddenException('You do not have access to requested file.');
             }
