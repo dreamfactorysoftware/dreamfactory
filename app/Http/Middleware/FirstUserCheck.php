@@ -2,7 +2,7 @@
 
 namespace DreamFactory\Http\Middleware;
 
-use DreamFactory\Core\Utility\CacheUtilities;
+use DreamFactory\Core\Models\User;
 use Illuminate\Contracts\Routing\Middleware;
 use Illuminate\Database\QueryException;
 use Closure;
@@ -24,7 +24,7 @@ class FirstUserCheck implements Middleware
 
         if ('/setup' !== $route) {
             try {
-                if (!CacheUtilities::adminExists()) {
+                if (!User::adminExists()) {
                     return redirect()->to('/setup');
                 }
             } catch (QueryException $e) {
