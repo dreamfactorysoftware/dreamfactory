@@ -7,10 +7,10 @@ DreamFactory 2.0 Application.
 
 1. Clone this repository.
 2. Copy .env-dist file to .env file and make necessary changes their including specifying DB connection info. By default it is setup to use MySql database. If you would like to use a different database please see config/database.php file.
-3. Make sure that the 'storage' directry has proper permission so that your web server can write to it. 
-4. Run composer update.
+3. Make sure that the 'storage' directory has proper permissions so that your web server can write to it. 
+4. Run composer update. This will resolve all necessary dependencies as well as point out the ones that it cannot automatically resolve.
 5. And that's it! Launch a web browser and point to your web server. It should prompt you with creating an admin user. 
 6. Once you create the first admin user you can login with that user and start using dreamfactory!
 
 
-More help is on the way. please stay tuned...
+More help is on the way. Please stay tuned...
