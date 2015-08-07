@@ -21,6 +21,10 @@
     {
       "name": "Lee Hicks",
       "email": "leehicks@dreamfactory.com"
+    },
+    {
+      "name": "David Weiner",
+      "email": "davidweiner@dreamfactory.com"
     }
   ],
   "support": {
@@ -35,6 +39,10 @@
     {
       "type": "vcs",
       "url": "git@github.com:dreamfactorysoftware/df-admin-app.git"
+    },
+    {
+      "type": "vcs",
+      "url": "git@github.com:dreamfactorysoftware/df-managed.git"
     },
     {
       "type": "pear",
@@ -56,7 +64,8 @@
     "dreamfactory/df-salesforce": "dev-develop as dev-master",
     "dreamfactory/df-user": "dev-develop as dev-master",
     "dreamfactory/df-oauth": "dev-develop as dev-master",
-    "dreamfactory/df-adldap": "dev-develop as dev-master"
+    "dreamfactory/df-adldap": "dev-develop as dev-master",
+    "dreamfactory/df-managed": "dev-develop as dev-master"
   },
   "require-dev": {
     "barryvdh/laravel-ide-helper": "~2.0",

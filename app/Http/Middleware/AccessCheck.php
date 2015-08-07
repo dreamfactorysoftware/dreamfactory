@@ -5,6 +5,8 @@ use \Auth;
 use \Closure;
 use DreamFactory\Core\Models\App;
 use DreamFactory\Core\Utility\JWTUtilities;
+use DreamFactory\Managed\Enums\ManagedDefaults;
+use DreamFactory\Managed\Support\Managed;
 use Illuminate\Contracts\Routing\Middleware;
 use \JWTAuth;
 use Illuminate\Http\Request;
@@ -22,6 +24,8 @@ use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use Tymon\JWTAuth\Payload;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
+
+
 
 class AccessCheck implements Middleware
 {
@@ -118,6 +122,23 @@ class AccessCheck implements Middleware
      *
      * @return mixed
      */
+    public static function getConsoleApiKey($request)
+    {
+        //Check for Console API key in request parameters.
+        $consoleApiKey = $request->query('console_key');
+        if (empty( $consoleApiKey )) {
+            //Check for API key in request HEADER.
+            $consoleApiKey = $request->header(ManagedDefaults::CONSOLE_X_HEADER);
+        }
+
+        return $consoleApiKey;
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return mixed
+     */
     public static function getJwt($request)
     {
         $token = static::getJWTFromAuthHeader();
@@ -151,11 +172,17 @@ class AccessCheck implements Middleware
         $token = static::getJwt($request);
         Session::setSessionToken($token);
 
+        //Get the Console API Key
+        $consoleApiKey = static::getConsoleApiKey($request);
+
         //Check for basic auth attempt.
         $basicAuthUser = $request->getUser();
         $basicAuthPassword = $request->getPassword();
 
-        if (!empty($basicAuthUser) && !empty($basicAuthPassword)) {
+        if (!empty( $consoleApiKey ) && $consoleApiKey === Managed::getConsoleKey()) {
+            //DFE Console request
+            return $next($request);
+        } elseif (!empty($basicAuthUser) && !empty($basicAuthPassword)) {
             //Attempting to login using basic auth.
             Auth::onceBasic();
             /** @var User $authenticatedUser */

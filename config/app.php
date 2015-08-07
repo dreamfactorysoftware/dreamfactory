@@ -95,7 +95,7 @@ return [
 	|
 	*/
 
-	'log' => 'daily',
+	'log' => 'single',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -117,6 +117,7 @@ return [
 		'Illuminate\Auth\AuthServiceProvider',
 		'Illuminate\Bus\BusServiceProvider',
 		'Illuminate\Cache\CacheServiceProvider',
+        'DreamFactory\Managed\Providers\ManagedServiceProvider',
 		'Illuminate\Foundation\Providers\ConsoleSupportServiceProvider',
 		'Illuminate\Routing\ControllerServiceProvider',
 		'Illuminate\Cookie\CookieServiceProvider',
@@ -136,12 +137,13 @@ return [
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 
+
         /**
          * DreamFactory Core
          */
+
         'DreamFactory\Core\DfServiceProvider',
         'DreamFactory\Core\DfCorsServiceProvider',
-
 
         /**
          * Third party packages...
@@ -158,7 +160,6 @@ return [
 		'DreamFactory\Providers\ConfigServiceProvider',
 		'DreamFactory\Providers\EventServiceProvider',
 		'DreamFactory\Providers\RouteServiceProvider',
-
 	],
 
 	/*
