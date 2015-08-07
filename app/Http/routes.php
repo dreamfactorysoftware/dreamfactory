@@ -24,7 +24,7 @@ Route::get('/setup', 'SplashController@createFirstUser');
 Route::post('/setup', 'SplashController@createFirstUser');
 
 $resourcePathPattern = '[0-9a-zA-Z-_@&\#\!=,:;\/\^\$\.\|\{\}\[\]\(\)\*\+\? ]+';
-$servicePattern = '[_0-9a-zA-Z-]+';
+$servicePattern = '[_0-9a-zA-Z-.]+';
 
 Route::group(
     ['prefix' => 'api'],
