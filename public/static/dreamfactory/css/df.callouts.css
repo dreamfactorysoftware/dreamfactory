@@ -1,0 +1,325 @@
+/*!
+ * This file is part of the DreamFactory Services Platform(tm) (DSP)
+ *
+ * DreamFactory Services Platform(tm) <http://github.com/dreamfactorysoftware/dsp-core>
+ * Copyright 2012-2014 DreamFactory Software, Inc. <support@dreamfactory.com>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+blockquote, .callout {
+	margin:             1.5em 0 1.5em;
+	padding:            .75em .5em .75em 1em;
+	background:         #fff;
+	-webkit-box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+	-moz-box-shadow:    0 0 6px rgba(0, 0, 0, 0.5);
+	box-shadow:         0 0 6px rgba(0, 0, 0, 0.5);
+	font-size:          14px;
+	font-family:        "Open Sans", Arial, sans-serif;
+}
+
+.column, .columns {
+	margin:      1.5em 0 1.5em -1.5em;
+	padding:     .75em .5em .75em 1em;
+	border-left: .5em solid transparent;
+}
+
+.callout {
+	border-left: .5em solid #fff;
+}
+
+.callout h2:first-child, blockquote h2:first-child {
+	margin: 0 0 1em;
+}
+
+.callout h3:first-child, blockquote h3:first-child {
+	margin: 0 0 1.2em;
+}
+
+.callout h4:first-child, blockquote h4:first-child {
+	margin: 0 0 1.3333em;
+}
+
+.callout h5:first-child, .callout h6:first-child, blockquote h5:first-child, blockquote h6:first-child {
+	margin: 0 0 1.5em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout ol, .callout ul {
+	margin: .75em 0 .75em 1.5em;
+}
+
+.column ol, .column ul, .columns ol, .columns ul {
+	margin-top:    0;
+	margin-bottom: 0;
+}
+
+.callout li ol, .callout li ul, .column li ol, .column li ul, .columns li ol, .columns li ul {
+	margin: 0 0 0 1.5em;
+}
+
+.callout p + p {
+	margin-top: 1.5em;
+}
+
+.changed-block {
+	border-left: .5em solid #47ad09;
+}
+
+.highlight-block {
+	/*border: 1px solid #999;*/
+	border-left: .5em solid #d4af37;
+}
+
+.note-block {
+	border-left: .5em solid hsl(5, 50%, 70%);
+	background:  hsla(5, 70%, 70%, .15);
+	font-style:  italic;
+}
+
+.callout .book {
+	width: 25%;
+}
+
+@media (min-width: 768px) {
+	#navigation {
+		padding-left: 20px
+	}
+}
+
+#side-nav {
+	margin-top:    20px;
+	margin-bottom: 20px
+}
+
+.sidebar .nav > li > a {
+	display:     block;
+	font-size:   13px;
+	font-weight: 500;
+	color:       #999;
+	padding:     4px 20px
+}
+
+.sidebar .nav > li > a:hover, .sidebar .nav > li > a:focus {
+	padding-left:     19px;
+	color:            #563d7c;
+	text-decoration:  none;
+	background-color: transparent;
+	border-left:      1px solid #563d7c
+}
+
+.sidebar .nav > .active > a, .sidebar .nav > .active:hover > a, .sidebar .nav > .active:focus > a {
+	padding-left:     18px;
+	font-weight:      700;
+	color:            #563d7c;
+	background-color: transparent;
+	border-left:      2px solid #563d7c
+}
+
+.sidebar .nav .nav {
+	display:        none;
+	padding-bottom: 10px
+}
+
+.sidebar .nav .nav > li > a {
+	padding-top:    1px;
+	padding-bottom: 1px;
+	padding-left:   30px;
+	font-size:      12px;
+	font-weight:    400
+}
+
+.sidebar .nav .nav > li > a:hover, .sidebar .nav .nav > li > a:focus {
+	padding-left: 29px
+}
+
+.sidebar .nav .nav > .active > a, .sidebar .nav .nav > .active:hover > a, .sidebar .nav .nav > .active:focus > a {
+	font-weight:  500;
+	padding-left: 28px
+}
+
+.back-to-top {
+	display:     none;
+	margin-top:  10px;
+	margin-left: 10px;
+	padding:     4px 10px;
+	font-size:   12px;
+	font-weight: 500;
+	color:       #999
+}
+
+.back-to-top:hover {
+	text-decoration: none;
+	color:           #563d7c
+}
+
+@media (min-width: 768px) {
+	.back-to-top {
+		display: block
+	}
+}
+
+@media (min-width: 992px) {
+	.sidebar .nav > .active > ul {
+		display: block
+	}
+
+	.sidebar.affix, .sidebar.affix-bottom {
+		width: 213px
+	}
+
+	.sidebar.affix {
+		position: fixed;
+		top:      20px
+	}
+
+	.sidebar.affix-bottom {
+		position: absolute
+	}
+
+	.sidebar.affix-bottom .bs-docs-sidenav, .sidebar.affix .bs-docs-sidenav {
+		margin-top:    0;
+		margin-bottom: 0
+	}
+}
+
+@media (min-width: 1200px) {
+	.sidebar.affix-bottom, .sidebar.affix {
+		width: 263px
+	}
+}
+
+.bs-callout {
+	margin:      20px 0;
+	padding:     20px;
+	border-left: 3px solid #eee
+}
+
+.bs-callout h4 {
+	margin-top:    0;
+	margin-bottom: 5px
+}
+
+.bs-callout p:last-child {
+	margin-bottom: 0
+}
+
+.bs-callout code {
+	background-color: #fff;
+	border-radius:    3px
+}
+
+.bs-callout-danger {
+	background-color: #fdf7f7;
+	border-color:     #d9534f
+}
+
+.bs-callout-danger h4 {
+	color: #d9534f
+}
+
+.bs-callout-warning {
+	background-color: #fcf8f2;
+	border-color:     #f0ad4e
+}
+
+.bs-callout-warning h4 {
+	color: #f0ad4e
+}
+
+.bs-callout-info {
+	background-color: #f4f8fa;
+	border-color:     #5bc0de
+}
+
+.bs-callout-info h4 {
+	color: #5bc0de
+}
+
+.color-swatches {
+	margin:   0 -5px;
+	overflow: hidden
+}
+
+.color-swatch {
+	float:         left;
+	width:         60px;
+	height:        60px;
+	margin:        0 5px;
+	border-radius: 3px
+}
+
+@media (min-width: 768px) {
+	.color-swatch {
+		width:  100px;
+		height: 100px
+	}
+}
+
+.color-swatches .gray-darker {
+	background-color: #222
+}
+
+.color-swatches .gray-dark {
+	background-color: #333
+}
+
+.color-swatches .gray {
+	background-color: #555
+}
+
+.color-swatches .gray-light {
+	background-color: #999
+}
+
+.color-swatches .gray-lighter {
+	background-color: #eee
+}
+
+.color-swatches .brand-primary {
+	background-color: #428bca
+}
+
+.color-swatches .brand-success {
+	background-color: #5cb85c
+}
+
+.color-swatches .brand-warning {
+	background-color: #f0ad4e
+}
+
+.color-swatches .brand-danger {
+	background-color: #d9534f
+}
+
+.color-swatches .brand-info {
+	background-color: #5bc0de
+}
+
+.color-swatches .bs-purple {
+	background-color: #563d7c
+}
+
+.color-swatches .bs-purple-light {
+	background-color: #c7bfd3
+}
+
+.color-swatches .bs-purple-lighter {
+	background-color: #e5e1ea
+}
+
+.color-swatches .bs-gray {
+	background-color: #f9f9f9
+}

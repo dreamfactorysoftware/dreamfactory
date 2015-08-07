@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>DF REST Tester v1.0</title>
+	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script>
+
+        jQuery.support.cors = true;
+
+	function go() {
+		var method = $('#method').val();
+		var xmethod = $('#xmethod').val();
+		var folder = $('#folder').val();
+		var app = $('#app').val();
+		var token = $('#token').val();
+		var url = $('#url').val();
+		var username = $('#username').val();
+		var password = $('#password').val();
+        var auth = $('#auth').val();
+
+		while(url.indexOf('=[')>=0) {
+			url = url.replace(/\[.*?\]/, function(a, b) {
+				var val = a.substr(1, a.length - 2);
+				return encodeURIComponent(val);
+			});
+		}
+
+		$('#url').val(url);
+
+
+		var json = null;
+
+		try {
+			if($('#json').val().length > 0)json = JSON.stringify(JSON.parse($('#json').val()));
+			$.ajax({ // our base connection
+					   url: $('#url').val(),
+					   async: true,
+					   type: method,
+					   dataType: 'json',
+					   contentType: 'application/json',
+					   cache: false,
+					   processData: false,
+					   data: json,
+					   beforeSend: function(xhr) {
+						   if(xmethod != '-NONE-') {
+							   xhr.setRequestHeader("X-HTTP-Method", xmethod);
+						   }
+						   if(folder != '') {
+							   xhr.setRequestHeader("X-Folder-Name", folder);
+						   }
+						   if(app != '') {
+							   xhr.setRequestHeader("X-DreamFactory-Api-Key", app);
+						   }
+						   if(token != '') {
+							   xhr.setRequestHeader("X-DreamFactory-Session-Token", token);
+						   }
+                           if(auth){
+                               xhr.setRequestHeader("Authorization", "Bearer "+auth);
+                           }
+						   if(username && password){
+							   xhr.setRequestHeader("Authorization", "Basic "+btoa(username+':'+password));
+						   }
+					   },
+					   success: function(json){
+                           if(json.response && json.response.redirect){
+                               window.location.href = json.response.url;
+                           }
+                           else {
+                               $('#out').removeClass('error');
+                               $('#out').html(JSON.stringify(json, null, '\t'));
+                           }
+					   },
+					   error: function(err) {
+						   $('#out').addClass('error');
+						   $('#out').html(JSON.stringify(err.responseJSON, null, '\t'));
+					   }
+				   });
+		} catch (e) {
+			$('#out').html(" >> "+e);
+		}
+	}
+
+    function getUrlParameter(sParam)
+    {
+        var sPageURL = window.location.search.substring(1);
+        var sURLVariables = sPageURL.split('&');
+        for (var i = 0; i < sURLVariables.length; i++)
+        {
+            var sParameterName = sURLVariables[i].split('=');
+            if (sParameterName[0] == sParam)
+            {
+                return sParameterName[1];
+            }
+        }
+    }
+
+	function geturl() { return $('#url').val(); }
+
+	</script>
+	<style type="text/css">
+		.error {
+			color: red;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		URL (anything inside [ ] is url encoded):
+		<br/>
+		<input type="text" id="url" value="/api/v2/" size="120"/>
+	</div>
+	<div>
+		JSON INPUT:
+		<br/>
+		<textarea id="json" rows="5" cols="48"></textarea>
+		<br/>
+		Method:
+		<select id="method">
+			<option>GET</option>
+			<option>POST</option>
+			<option>PUT</option>
+			<option>PATCH</option>
+			<option>MERGE</option>
+			<option>DELETE</option>
+		</select>
+		<br/>
+		X-Method:
+		<select id="xmethod">
+			<option>-NONE-</option>
+			<option>GET</option>
+			<option>PUT</option>
+			<option>PATCH</option>
+			<option>MERGE</option>
+			<option>DELETE</option>
+		</select>
+		<br/>
+		<div>
+			X-Folder-Name:
+			<input type="text" id="folder" value="" size="40"/>
+		</div>
+		<div>
+			X-DreamFactory-Api-Key:
+			<input type="text" id="app" value="" size="80"/>
+		</div>
+		<div>
+			X-DreamFactory-Session-Token:
+			<input type="text" id="token" value="" size="120"/>
+		</div>
+        <div>
+            Authorization Header:
+            <input type="text" id="auth" value="" size="120"/>
+        </div>
+		<div>
+			HTTP Auth username:
+			<input type="text" id="username" value="" size="20"/>
+		</div>
+		<div>
+			HTTP Auth password:
+			<input type="text" id="password" value="" size="20"/>
+		</div>
+		<br/>
+		<button onclick="go()">SUBMIT</button>
+	</div>
+	<br/>
+	<br/>
+	<div>
+		<!-- The data encoding type, enctype, MUST be specified as below -->
+		<form enctype="multipart/form-data" action="/rest/system/user/" method="POST">
+			<input type="hidden" name="app_name" value="admin" />
+			<!-- MAX_FILE_SIZE must precede the file input field -->
+			<input type="hidden" name="MAX_FILE_SIZE" value="30000" />
+			<!-- Name of input element determines name in $_FILES array -->
+			Test importing users via file: <br/>
+			<input name="file" type="file" />
+			<br/>
+			<br/>
+			<input type="submit" value="Send File" />
+		</form>
+	</div>
+	<br/>
+	<br/>
+	<div>
+		<!-- The data encoding type, enctype, MUST be specified as below -->
+		<form enctype="multipart/form-data" onsubmit="postForm(this)" action="/rest/system/app"  method="POST">
+			<input type="hidden" name="app_name" value="admin" />
+			<!-- MAX_FILE_SIZE must precede the file input field -->
+			<input type="hidden" name="MAX_FILE_SIZE" value="3000000000000" />
+			<!-- Name of input element determines name in $_FILES array -->
+			Test importing apps via file: <br/>
+			<input name="files" type="file" />
+			<br/>
+			<br/>
+			<input type="submit" value="Send File" />
+		</form>
+	</div>
+	<br/>
+	<br/>
+	<div>
+		JSON OUTPUT:
+		<pre id="out"></pre>
+	</div>
+    <script>
+
+		function postForm(form){
+			var jwt = $('#token').val();
+			form.action = form.action+'?session_token='+jwt;
+		}
+
+        // First, parse the query string
+//        var params = {}, queryString = location.hash.substring(1),
+//                regex = /([^&=]+)=([^&]*)/g, m;
+//        while (m = regex.exec(queryString)) {
+//            params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+//        }
+
+        var queryString = location.search.substring(1);
+
+        if(queryString) {
+            $.ajax({ // our base connection
+                url: '/api/v2/user/session?oauth_callback=true&'+queryString,
+                async: true,
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                cache: false,
+                processData: false,
+                //data: JSON.stringify(data),
+                beforeSend: function (xhr) {
+
+                },
+                success: function (json) {
+                    $('#token').val(json.session_token);
+                },
+                error: function (err) {
+                    $('#out').addClass('error');
+                    $('#out').html(JSON.stringify(err.responseJSON, null, '\t'));
+                }
+            });
+        }
+    </script>
+</body>
+</html>
