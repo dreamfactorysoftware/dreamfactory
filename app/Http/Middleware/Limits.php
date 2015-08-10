@@ -40,7 +40,7 @@ class Limits
 
             // Build the list of API Hits to check
 
-            $apiKeysToCheck = array('default' => 0);
+            $apiKeysToCheck = ['cluster.default' => 0, 'instance.default' => 0];
 
             $serviceKeys[$serviceName] = 0;
             if (is_null($userRole) === false) {
