@@ -44,7 +44,7 @@ return [
 
 		'file' => [
 			'driver' => 'file',
-			'path'   => \DreamFactory\Managed\Support\Managed::getPrivatePath() .'/framework/cache/',
+			'path'   => storage_path().'/framework/cache/',
 		],
 
 		'memcached' => [
