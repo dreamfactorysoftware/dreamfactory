@@ -1,5 +1,7 @@
 <?php
 
+$hostname = ((isset($_SERVER['SERVER_NAME']))? $_SERVER['SERVER_NAME'] : gethostname());
+
 return [
 
 	/*
@@ -44,7 +46,7 @@ return [
 
 		'file' => [
 			'driver' => 'file',
-			'path'   => storage_path().'/framework/cache/'.md5(((isset($_SERVER['SERVER_NAME']))? $_SERVER['SERVER_NAME'] : gethostname())),
+			'path'   => storage_path().'/framework/cache/'.md5($hostname),
 		],
 
 		'memcached' => [
@@ -74,6 +76,6 @@ return [
 	|
 	*/
 
-	'prefix' => 'dreamfactory.'.md5(((isset($_SERVER['SERVER_NAME']))? $_SERVER['SERVER_NAME'] : gethostname())).'.:',
+	'prefix' => 'dreamfactory.'.md5($hostname).'.:',
 
 ];

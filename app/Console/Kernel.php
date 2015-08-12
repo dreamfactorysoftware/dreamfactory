@@ -13,6 +13,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         'DreamFactory\Console\Commands\Inspire',
+        'DreamFactory\Console\Commands\DfCacheClear'
     ];
 
     /**
