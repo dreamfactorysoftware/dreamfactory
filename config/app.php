@@ -117,7 +117,6 @@ return [
 		'Illuminate\Auth\AuthServiceProvider',
 		'Illuminate\Bus\BusServiceProvider',
 		'Illuminate\Cache\CacheServiceProvider',
-        'DreamFactory\Managed\Providers\ManagedServiceProvider',
 		'Illuminate\Foundation\Providers\ConsoleSupportServiceProvider',
 		'Illuminate\Routing\ControllerServiceProvider',
 		'Illuminate\Cookie\CookieServiceProvider',
@@ -142,6 +141,7 @@ return [
          * DreamFactory Core
          */
 
+		'DreamFactory\Managed\Providers\ManagedServiceProvider',
         'DreamFactory\Core\DfServiceProvider',
         'DreamFactory\Core\DfCorsServiceProvider',
 
