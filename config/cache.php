@@ -1,7 +1,5 @@
 <?php
 
-$hostname = ((isset($_SERVER['SERVER_NAME']))? $_SERVER['SERVER_NAME'] : gethostname());
-
 return [
 
 	/*
@@ -46,7 +44,7 @@ return [
 
 		'file' => [
 			'driver' => 'file',
-			'path'   => storage_path().'/framework/cache/'.md5($hostname),
+			'path'   => DreamFactory\Managed\Support\Managed::getCachePath(),
 		],
 
 		'memcached' => [
@@ -76,6 +74,6 @@ return [
 	|
 	*/
 
-	'prefix' => 'dreamfactory.'.md5($hostname).'.:',
+	'prefix' => \DreamFactory\Managed\Support\Managed::getCacheKeyPrefix(),
 
 ];
