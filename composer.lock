@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b0a3a3a614481214d97fbbbec6b000a1",
+    "hash": "63d3ed7cbaa0cf97a2272866a964f877",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -516,18 +516,17 @@
                     "DreamFactory\\Core\\ADLdap\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
             "authors": [
                 {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                },
-                {
                     "name": "Arif Islam",
                     "email": "arifislam@dreamfactory.com"
+                },
+                {
+                    "name": "Lee Hicks",
+                    "email": "leehicks@dreamfactory.com"
                 }
             ],
             "description": "Active Directory & LDAP support for DreamFactory Platform 2.0",
@@ -539,6 +538,12 @@
                 "ldap",
                 "rest"
             ],
+            "support": {
+                "email": "support@dreamfactory.com",
+                "source": "https://github.com/dreamfactorysoftware/df-adldap",
+                "issues": "https://github.com/dreamfactorysoftware/df-adldap/issues",
+                "wiki": "https://wiki.dreamfactory.com"
+            },
             "time": "2015-08-07 02:18:21"
         },
         {
@@ -547,12 +552,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-admin-app.git",
-                "reference": "6078ac3c3d91a772ae43665c9603ce51773ce0ea"
+                "reference": "0ffee620ae4b881f5a3d68d50ae3d0b4fa9155e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-admin-app/zipball/6078ac3c3d91a772ae43665c9603ce51773ce0ea",
-                "reference": "6078ac3c3d91a772ae43665c9603ce51773ce0ea",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-admin-app/zipball/0ffee620ae4b881f5a3d68d50ae3d0b4fa9155e3",
+                "reference": "0ffee620ae4b881f5a3d68d50ae3d0b4fa9155e3",
                 "shasum": ""
             },
             "require": {
@@ -594,7 +599,7 @@
                 "email": "support@dreamfactory.com",
                 "wiki": "https://wiki.dreamfactory.com"
             },
-            "time": "2015-08-06 15:55:25"
+            "time": "2015-08-11 14:21:36"
         },
         {
             "name": "dreamfactory/df-aws",
@@ -620,11 +625,14 @@
                     "DreamFactory\\Core\\Aws\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
             "authors": [
+                {
+                    "name": "Arif Islam",
+                    "email": "arifislam@dreamfactory.com"
+                },
                 {
                     "name": "Jerry Ablan",
                     "email": "jerryablan@dreamfactory.com"
@@ -632,10 +640,6 @@
                 {
                     "name": "Lee Hicks",
                     "email": "leehicks@dreamfactory.com"
-                },
-                {
-                    "name": "Arif Islam",
-                    "email": "arifislam@dreamfactory.com"
                 }
             ],
             "description": "AWS package containing services for the DreamFactory Platform 2.0.",
@@ -648,6 +652,12 @@
                 "rest",
                 "s3"
             ],
+            "support": {
+                "email": "support@dreamfactory.com",
+                "source": "https://github.com/dreamfactorysoftware/df-aws",
+                "issues": "https://github.com/dreamfactorysoftware/df-aws/issues",
+                "wiki": "https://wiki.dreamfactory.com"
+            },
             "time": "2015-07-29 18:11:01"
         },
         {
@@ -674,11 +684,14 @@
                     "DreamFactory\\Core\\Azure\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
             "authors": [
+                {
+                    "name": "Arif Islam",
+                    "email": "arifislam@dreamfactory.com"
+                },
                 {
                     "name": "Jerry Ablan",
                     "email": "jerryablan@dreamfactory.com"
@@ -686,10 +699,6 @@
                 {
                     "name": "Lee Hicks",
                     "email": "leehicks@dreamfactory.com"
-                },
-                {
-                    "name": "Arif Islam",
-                    "email": "arifislam@dreamfactory.com"
                 }
             ],
             "description": "Microsoft Azure package containing Azure services for the DreamFactory Platform 2.0. ",
@@ -702,6 +711,12 @@
                 "dsp",
                 "rest"
             ],
+            "support": {
+                "email": "support@dreamfactory.com",
+                "source": "https://github.com/dreamfactorysoftware/df-azure",
+                "issues": "https://github.com/dreamfactorysoftware/df-azure/issues",
+                "wiki": "https://wiki.dreamfactory.com"
+            },
             "time": "2015-07-30 17:30:48"
         },
         {
@@ -710,12 +725,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-core.git",
-                "reference": "bab282bb72e772f42e318155ebd7d14f6292e2a8"
+                "reference": "3edcb4678be2c6e300cb1a0f3f40affa2325abe0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/bab282bb72e772f42e318155ebd7d14f6292e2a8",
-                "reference": "bab282bb72e772f42e318155ebd7d14f6292e2a8",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/3edcb4678be2c6e300cb1a0f3f40affa2325abe0",
+                "reference": "3edcb4678be2c6e300cb1a0f3f40affa2325abe0",
                 "shasum": ""
             },
             "require": {
@@ -767,7 +782,7 @@
                 "paas",
                 "rest"
             ],
-            "time": "2015-08-06 23:50:52"
+            "time": "2015-08-11 17:39:36"
         },
         {
             "name": "dreamfactory/df-couchdb",
@@ -798,11 +813,14 @@
                     "DreamFactory\\Core\\CouchDb\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
             "authors": [
+                {
+                    "name": "Arif Islam",
+                    "email": "arifislam@dreamfactory.com"
+                },
                 {
                     "name": "Jerry Ablan",
                     "email": "jerryablan@dreamfactory.com"
@@ -810,10 +828,6 @@
                 {
                     "name": "Lee Hicks",
                     "email": "leehicks@dreamfactory.com"
-                },
-                {
-                    "name": "Arif Islam",
-                    "email": "arifislam@dreamfactory.com"
                 }
             ],
             "description": "The DreamFactory(tm) CouchDB Service.",
@@ -827,7 +841,72 @@
                 "nosql",
                 "rest"
             ],
+            "support": {
+                "email": "support@dreamfactory.com",
+                "source": "https://github.com/dreamfactorysoftware/df-couchdb",
+                "issues": "https://github.com/dreamfactorysoftware/df-couchdb/issues",
+                "wiki": "https://wiki.dreamfactory.com"
+            },
             "time": "2015-08-01 20:50:07"
+        },
+        {
+            "name": "dreamfactory/df-managed",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dreamfactorysoftware/df-managed.git",
+                "reference": "36bc13a2800a2db00a65441a8fe8301113c0760a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-managed/zipball/36bc13a2800a2db00a65441a8fe8301113c0760a",
+                "reference": "36bc13a2800a2db00a65441a8fe8301113c0760a",
+                "shasum": ""
+            },
+            "require": {
+                "dreamfactory/php-utils": "1.*"
+            },
+            "require-dev": {
+                "laravel/laravel": "5.1.*",
+                "phpunit/phpunit": "@stable"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-develop": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "DreamFactory\\Managed\\": "src/"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Jerry Ablan",
+                    "email": "jerryablan@dreamfactory.com"
+                },
+                {
+                    "name": "David L. Weiner",
+                    "email": "davidweiner@dreamfactory.com"
+                }
+            ],
+            "description": "DreamFactory(tm) Managed Integration Library",
+            "homepage": "https://www.dreamfactory.com/",
+            "keywords": [
+                "dreamfactory",
+                "dsp",
+                "enterprise",
+                "storage"
+            ],
+            "support": {
+                "source": "https://github.com/dreamfactorysoftware/df-managed/tree/develop",
+                "issues": "https://github.com/dreamfactorysoftware/df-managed/issues"
+            },
+            "time": "2015-08-12 16:47:52"
         },
         {
             "name": "dreamfactory/df-mongodb",
@@ -857,11 +936,14 @@
                     "DreamFactory\\Core\\MongoDb\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
             "authors": [
+                {
+                    "name": "Arif Islam",
+                    "email": "arifislam@dreamfactory.com"
+                },
                 {
                     "name": "Jerry Ablan",
                     "email": "jerryablan@dreamfactory.com"
@@ -869,10 +951,6 @@
                 {
                     "name": "Lee Hicks",
                     "email": "leehicks@dreamfactory.com"
-                },
-                {
-                    "name": "Arif Islam",
-                    "email": "arifislam@dreamfactory.com"
                 }
             ],
             "description": "The DreamFactory(tm) MongoDB Service.",
@@ -886,6 +964,12 @@
                 "nosql",
                 "rest"
             ],
+            "support": {
+                "email": "support@dreamfactory.com",
+                "source": "https://github.com/dreamfactorysoftware/df-mongodb",
+                "issues": "https://github.com/dreamfactorysoftware/df-mongodb/issues",
+                "wiki": "https://wiki.dreamfactory.com"
+            },
             "time": "2015-08-01 20:49:28"
         },
         {
@@ -913,18 +997,17 @@
                     "DreamFactory\\Core\\OAuth\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
             "authors": [
                 {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                },
-                {
                     "name": "Arif Islam",
                     "email": "arifislam@dreamfactory.com"
+                },
+                {
+                    "name": "Lee Hicks",
+                    "email": "leehicks@dreamfactory.com"
                 }
             ],
             "description": "OAuth support for DreamFactory Platform 2.0",
@@ -935,6 +1018,12 @@
                 "oauth",
                 "rest"
             ],
+            "support": {
+                "email": "support@dreamfactory.com",
+                "source": "https://github.com/dreamfactorysoftware/df-oauth",
+                "issues": "https://github.com/dreamfactorysoftware/df-oauth/issues",
+                "wiki": "https://wiki.dreamfactory.com"
+            },
             "time": "2015-08-01 04:28:30"
         },
         {
@@ -961,11 +1050,14 @@
                     "DreamFactory\\Core\\Rackspace\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
             "authors": [
+                {
+                    "name": "Arif Islam",
+                    "email": "arifislam@dreamfactory.com"
+                },
                 {
                     "name": "Jerry Ablan",
                     "email": "jerryablan@dreamfactory.com"
@@ -973,22 +1065,24 @@
                 {
                     "name": "Lee Hicks",
                     "email": "leehicks@dreamfactory.com"
-                },
-                {
-                    "name": "Arif Islam",
-                    "email": "arifislam@dreamfactory.com"
                 }
             ],
             "description": "Rackspace package containing Rackspace/OpenStack components for the DreamFactory(tm) core.",
             "homepage": "https://www.dreamfactory.com/",
             "keywords": [
-                "Openstack",
                 "dreamfactory",
                 "dsp",
+                "openstack",
                 "rackspace",
                 "rest",
                 "storage blob"
             ],
+            "support": {
+                "email": "support@dreamfactory.com",
+                "source": "https://github.com/dreamfactorysoftware/df-rackspace",
+                "issues": "https://github.com/dreamfactorysoftware/df-rackspace/issues",
+                "wiki": "https://wiki.dreamfactory.com"
+            },
             "time": "2015-07-27 15:21:35"
         },
         {
@@ -1014,11 +1108,14 @@
                     "DreamFactory\\Core\\Rws\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
             "authors": [
+                {
+                    "name": "Arif Islam",
+                    "email": "arifislam@dreamfactory.com"
+                },
                 {
                     "name": "Jerry Ablan",
                     "email": "jerryablan@dreamfactory.com"
@@ -1026,10 +1123,6 @@
                 {
                     "name": "Lee Hicks",
                     "email": "leehicks@dreamfactory.com"
-                },
-                {
-                    "name": "Arif Islam",
-                    "email": "arifislam@dreamfactory.com"
                 }
             ],
             "description": "Remote Web Service for the DreamFactory Platform 2.0.",
@@ -1041,6 +1134,12 @@
                 "rest",
                 "web"
             ],
+            "support": {
+                "email": "support@dreamfactory.com",
+                "source": "https://github.com/dreamfactorysoftware/df-rws",
+                "issues": "https://github.com/dreamfactorysoftware/df-rws/issues",
+                "wiki": "https://wiki.dreamfactory.com"
+            },
             "time": "2015-08-06 17:44:13"
         },
         {
@@ -1072,11 +1171,14 @@
                     "DreamFactory\\Core\\Salesforce\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
             "authors": [
+                {
+                    "name": "Arif Islam",
+                    "email": "arifislam@dreamfactory.com"
+                },
                 {
                     "name": "Jerry Ablan",
                     "email": "jerryablan@dreamfactory.com"
@@ -1084,10 +1186,6 @@
                 {
                     "name": "Lee Hicks",
                     "email": "leehicks@dreamfactory.com"
-                },
-                {
-                    "name": "Arif Islam",
-                    "email": "arifislam@dreamfactory.com"
                 }
             ],
             "description": "The DreamFactory(tm) Salesforce Service.",
@@ -1100,6 +1198,12 @@
                 "rest",
                 "salesforce"
             ],
+            "support": {
+                "email": "support@dreamfactory.com",
+                "source": "https://github.com/dreamfactorysoftware/df-salesforce",
+                "issues": "https://github.com/dreamfactorysoftware/df-salesforce/issues",
+                "wiki": "https://wiki.dreamfactory.com"
+            },
             "time": "2015-08-07 01:49:49"
         },
         {
@@ -1131,11 +1235,14 @@
                     "DreamFactory\\Core\\SqlDb\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
             "authors": [
+                {
+                    "name": "Arif Islam",
+                    "email": "arifislam@dreamfactory.com"
+                },
                 {
                     "name": "Jerry Ablan",
                     "email": "jerryablan@dreamfactory.com"
@@ -1143,10 +1250,6 @@
                 {
                     "name": "Lee Hicks",
                     "email": "leehicks@dreamfactory.com"
-                },
-                {
-                    "name": "Arif Islam",
-                    "email": "arifislam@dreamfactory.com"
                 }
             ],
             "description": "The DreamFactory(tm) SQL DB Service.",
@@ -1164,6 +1267,12 @@
                 "sql",
                 "sqlserver"
             ],
+            "support": {
+                "email": "support@dreamfactory.com",
+                "source": "https://github.com/dreamfactorysoftware/df-sqldb",
+                "issues": "https://github.com/dreamfactorysoftware/df-sqldb/issues",
+                "wiki": "https://wiki.dreamfactory.com"
+            },
             "time": "2015-08-06 23:51:48"
         },
         {
@@ -1248,11 +1357,14 @@
                     "DreamFactory\\Core\\User\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
             "authors": [
+                {
+                    "name": "Arif Islam",
+                    "email": "arifislam@dreamfactory.com"
+                },
                 {
                     "name": "Jerry Ablan",
                     "email": "jerryablan@dreamfactory.com"
@@ -1260,10 +1372,6 @@
                 {
                     "name": "Lee Hicks",
                     "email": "leehicks@dreamfactory.com"
-                },
-                {
-                    "name": "Arif Islam",
-                    "email": "arifislam@dreamfactory.com"
                 }
             ],
             "description": "User Management package for DreamFactory.",
@@ -1274,6 +1382,12 @@
                 "dsp",
                 "user"
             ],
+            "support": {
+                "email": "support@dreamfactory.com",
+                "source": "https://github.com/dreamfactorysoftware/df-user",
+                "issues": "https://github.com/dreamfactorysoftware/df-user/issues",
+                "wiki": "https://wiki.dreamfactory.com"
+            },
             "time": "2015-08-05 16:27:17"
         },
         {
@@ -1330,12 +1444,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/php-utils.git",
-                "reference": "c9910be0a1ee669747711d0a3d0094dc94e89d61"
+                "reference": "03eb2e426405b7580f2ed04721023ea897eb1b7d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/php-utils/zipball/c9910be0a1ee669747711d0a3d0094dc94e89d61",
-                "reference": "c9910be0a1ee669747711d0a3d0094dc94e89d61",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/php-utils/zipball/03eb2e426405b7580f2ed04721023ea897eb1b7d",
+                "reference": "03eb2e426405b7580f2ed04721023ea897eb1b7d",
                 "shasum": ""
             },
             "require": {
@@ -1373,7 +1487,7 @@
                 "dreamfactory",
                 "utility"
             ],
-            "time": "2015-08-06 14:57:15"
+            "time": "2015-08-10 23:58:30"
         },
         {
             "name": "guzzle/guzzle",
@@ -1909,7 +2023,7 @@
                     "name": "Jeremy Lindblom",
                     "email": "jeremeamia@gmail.com",
                     "homepage": "https://github.com/jeremeamia",
-                    "role": "developer"
+                    "role": "Developer"
                 }
             ],
             "description": "Serialize Closure objects, including their context and binding",
@@ -2251,16 +2365,16 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "1.15.0",
+            "version": "1.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "dc5150cc608f2334c72c3b6a553ec9668a4156b0"
+                "reference": "c0c0b4bee3aabce7182876b0d912ef2595563db7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/dc5150cc608f2334c72c3b6a553ec9668a4156b0",
-                "reference": "dc5150cc608f2334c72c3b6a553ec9668a4156b0",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/c0c0b4bee3aabce7182876b0d912ef2595563db7",
+                "reference": "c0c0b4bee3aabce7182876b0d912ef2595563db7",
                 "shasum": ""
             },
             "require": {
@@ -2297,7 +2411,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.15.x-dev"
+                    "dev-master": "1.16.x-dev"
                 }
             },
             "autoload": {
@@ -2323,7 +2437,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2015-07-12 13:54:09"
+            "time": "2015-08-09 17:44:44"
         },
         {
             "name": "mtdowling/cron-expression",
@@ -4947,16 +5061,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "4.7.7",
+            "version": "4.8.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "9b97f9d807b862c2de2a36e86690000801c85724"
+                "reference": "fd3050e26e3105f416d74c4d33aea659b406c59d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/9b97f9d807b862c2de2a36e86690000801c85724",
-                "reference": "9b97f9d807b862c2de2a36e86690000801c85724",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/fd3050e26e3105f416d74c4d33aea659b406c59d",
+                "reference": "fd3050e26e3105f416d74c4d33aea659b406c59d",
                 "shasum": ""
             },
             "require": {
@@ -4966,7 +5080,7 @@
                 "ext-reflection": "*",
                 "ext-spl": "*",
                 "php": ">=5.3.3",
-                "phpspec/prophecy": "~1.3,>=1.3.1",
+                "phpspec/prophecy": "^1.3.1",
                 "phpunit/php-code-coverage": "~2.1",
                 "phpunit/php-file-iterator": "~1.4",
                 "phpunit/php-text-template": "~1.2",
@@ -4974,7 +5088,7 @@
                 "phpunit/phpunit-mock-objects": "~2.3",
                 "sebastian/comparator": "~1.1",
                 "sebastian/diff": "~1.2",
-                "sebastian/environment": "~1.2",
+                "sebastian/environment": "~1.3",
                 "sebastian/exporter": "~1.2",
                 "sebastian/global-state": "~1.0",
                 "sebastian/version": "~1.0",
@@ -4989,7 +5103,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.7.x-dev"
+                    "dev-master": "4.8.x-dev"
                 }
             },
             "autoload": {
@@ -5015,7 +5129,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2015-07-13 11:28:34"
+            "time": "2015-08-10 09:16:56"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -5622,6 +5736,12 @@
             "alias_normalized": "9999999-dev",
             "version": "dev-develop",
             "package": "dreamfactory/df-adldap"
+        },
+        {
+            "alias": "dev-master",
+            "alias_normalized": "9999999-dev",
+            "version": "dev-develop",
+            "package": "dreamfactory/df-managed"
         }
     ],
     "minimum-stability": "dev",
@@ -5638,7 +5758,8 @@
         "dreamfactory/df-salesforce": 20,
         "dreamfactory/df-user": 20,
         "dreamfactory/df-oauth": 20,
-        "dreamfactory/df-adldap": 20
+        "dreamfactory/df-adldap": 20,
+        "dreamfactory/df-managed": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

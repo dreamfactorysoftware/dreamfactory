@@ -1,5 +1,6 @@
 <?php namespace DreamFactory\Console\Commands;
 
+use DreamFactory\Managed\Support\Managed;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
@@ -28,7 +29,7 @@ class DfCacheClear extends Command {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->cacheRoot = storage_path().'/framework/cache/';
+		$this->cacheRoot = Managed::getCacheRoot();
 	}
 
 	/**
@@ -38,8 +39,10 @@ class DfCacheClear extends Command {
 	 */
 	public function fire()
 	{
+		$this->laravel['events']->fire('cache:clearing', ['file']);
 		$this->removeDirectory($this->cacheRoot);
-		$this->info('Cleared DreamFactory cache ');
+		$this->laravel['events']->fire('cache:cleared', ['file']);
+		$this->info('Cleared DreamFactory cache for all instances!');
 	}
 
 	/**
