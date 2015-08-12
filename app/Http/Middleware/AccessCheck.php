@@ -228,7 +228,7 @@ class AccessCheck implements Middleware
             );
         }
 
-        if (Session::isAccessAllowed()) {
+        if (static::isAccessAllowed()) {
             return $next($request);
         } elseif (static::isException($request)) {
             //API key and/or (non-admin) user logged in, but if access is still not allowed then check for exception case.
@@ -291,5 +291,23 @@ class AccessCheck implements Middleware
         }
 
         return false;
+    }
+
+    /**
+     * Checks to see if Access is Allowed based on Role-Service-Access.
+     *
+     * @return bool
+     * @throws \DreamFactory\Core\Exceptions\NotImplementedException
+     */
+    public static function isAccessAllowed()
+    {
+        /** @var Router $router */
+        $router = app('router');
+        $service = strtolower($router->input('service'));
+        $component = strtolower($router->input('resource'));
+        $action = VerbsMask::toNumeric(\Request::getMethod());
+        $allowed = Session::getServicePermissions($service, $component);
+
+        return ($action & $allowed) ? true : false;
     }
 }
