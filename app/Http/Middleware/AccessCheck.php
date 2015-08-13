@@ -27,7 +27,7 @@ use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
 
 
 
-class AccessCheck implements Middleware
+class AccessCheck
 {
     protected static $exceptions = [
         [
