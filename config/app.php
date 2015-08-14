@@ -118,6 +118,7 @@ return [
 		Illuminate\Broadcasting\BroadcastServiceProvider::class,
 		Illuminate\Bus\BusServiceProvider::class,
 		Illuminate\Cache\CacheServiceProvider::class,
+		DreamFactory\Managed\Providers\ManagedServiceProvider::class,
 		Illuminate\Foundation\Providers\ConsoleSupportServiceProvider::class,
 		Illuminate\Routing\ControllerServiceProvider::class,
 		Illuminate\Cookie\CookieServiceProvider::class,
@@ -142,8 +143,7 @@ return [
          * DreamFactory Core
          */
 
-		DreamFactory\Managed\Providers\ManagedServiceProvider::class,
-        DreamFactory\Core\Providers\DfServiceProvider::class,
+		DreamFactory\Core\Providers\DfServiceProvider::class,
         DreamFactory\Core\Providers\DfCorsServiceProvider::class,
 
         /**
