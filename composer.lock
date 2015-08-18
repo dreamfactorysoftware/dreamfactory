@@ -601,19 +601,24 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-aws.git",
-                "reference": "01cd1c32c25c0b6fac02e5bfaf627e07cde87712"
+                "reference": "8b3729024730da4998a09fcf4b945129958def41"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-aws/zipball/01cd1c32c25c0b6fac02e5bfaf627e07cde87712",
-                "reference": "01cd1c32c25c0b6fac02e5bfaf627e07cde87712",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-aws/zipball/8b3729024730da4998a09fcf4b945129958def41",
+                "reference": "8b3729024730da4998a09fcf4b945129958def41",
                 "shasum": ""
             },
             "require": {
                 "aws/aws-sdk-php": "~3.2.0",
-                "dreamfactory/df-core": "dev-develop as dev-master"
+                "dreamfactory/df-core": "~0.0.2"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-develop": "0.0.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "DreamFactory\\Core\\Aws\\": "src/"
@@ -647,7 +652,7 @@
                 "rest",
                 "s3"
             ],
-            "time": "2015-08-14 20:59:47"
+            "time": "2015-08-18 16:06:41"
         },
         {
             "name": "dreamfactory/df-azure",
@@ -655,12 +660,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-azure.git",
-                "reference": "af9166c092c6eddd77e8df9ae9ac735419f3342c"
+                "reference": "60bfd66c7c34ea2ef64e9f44a1e2f6fb9004e543"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-azure/zipball/af9166c092c6eddd77e8df9ae9ac735419f3342c",
-                "reference": "af9166c092c6eddd77e8df9ae9ac735419f3342c",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-azure/zipball/60bfd66c7c34ea2ef64e9f44a1e2f6fb9004e543",
+                "reference": "60bfd66c7c34ea2ef64e9f44a1e2f6fb9004e543",
                 "shasum": ""
             },
             "require": {
@@ -668,6 +673,11 @@
                 "dreamfactory/df-core": "dev-develop as dev-master"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-develop": "0.0.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "DreamFactory\\Core\\Azure\\": "src/"
@@ -701,7 +711,7 @@
                 "dsp",
                 "rest"
             ],
-            "time": "2015-08-14 18:12:02"
+            "time": "2015-08-18 16:08:14"
         },
         {
             "name": "dreamfactory/df-core",
@@ -709,12 +719,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-core.git",
-                "reference": "f8a0ba8fadf80218c56ebd3e06f6d800b6aea6da"
+                "reference": "f5ce0af88fff06470c7d08ad0c0038a32a48a867"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/f8a0ba8fadf80218c56ebd3e06f6d800b6aea6da",
-                "reference": "f8a0ba8fadf80218c56ebd3e06f6d800b6aea6da",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/f5ce0af88fff06470c7d08ad0c0038a32a48a867",
+                "reference": "f5ce0af88fff06470c7d08ad0c0038a32a48a867",
                 "shasum": ""
             },
             "require": {
@@ -766,7 +776,7 @@
                 "paas",
                 "rest"
             ],
-            "time": "2015-08-17 21:28:02"
+            "time": "2015-08-18 16:05:30"
         },
         {
             "name": "dreamfactory/df-couchdb",
@@ -774,17 +784,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-couchdb.git",
-                "reference": "57eb5e633364b248bac5dae1ef05035e197d3e0f"
+                "reference": "6cdf623c7fd3b15e2e8158970a4fe69c64e04c47"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-couchdb/zipball/57eb5e633364b248bac5dae1ef05035e197d3e0f",
-                "reference": "57eb5e633364b248bac5dae1ef05035e197d3e0f",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-couchdb/zipball/6cdf623c7fd3b15e2e8158970a4fe69c64e04c47",
+                "reference": "6cdf623c7fd3b15e2e8158970a4fe69c64e04c47",
                 "shasum": ""
             },
             "require": {
                 "dready92/php-on-couch": "*",
-                "dreamfactory/df-core": "dev-develop as dev-master"
+                "dreamfactory/df-core": "~0.0.2"
             },
             "type": "library",
             "extra": {
@@ -826,7 +836,7 @@
                 "nosql",
                 "rest"
             ],
-            "time": "2015-08-14 17:25:41"
+            "time": "2015-08-18 20:07:58"
         },
         {
             "name": "dreamfactory/df-managed",
@@ -893,16 +903,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-mongodb.git",
-                "reference": "74283e1257094c56a41453495081e89acd4602d8"
+                "reference": "9418154d08758ae7fd802b0d67401059e65bec1c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-mongodb/zipball/74283e1257094c56a41453495081e89acd4602d8",
-                "reference": "74283e1257094c56a41453495081e89acd4602d8",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-mongodb/zipball/9418154d08758ae7fd802b0d67401059e65bec1c",
+                "reference": "9418154d08758ae7fd802b0d67401059e65bec1c",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "dev-develop as dev-master"
+                "dreamfactory/df-core": "~0.0.2"
             },
             "type": "library",
             "extra": {
@@ -944,7 +954,7 @@
                 "nosql",
                 "rest"
             ],
-            "time": "2015-08-14 17:24:51"
+            "time": "2015-08-18 19:56:12"
         },
         {
             "name": "dreamfactory/df-oauth",
@@ -1112,12 +1122,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-salesforce.git",
-                "reference": "e44294b20115da28e1a3ebca22a2a42d5ce08376"
+                "reference": "3490ea4455be03c686018737ae65df379dc09747"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-salesforce/zipball/e44294b20115da28e1a3ebca22a2a42d5ce08376",
-                "reference": "e44294b20115da28e1a3ebca22a2a42d5ce08376",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-salesforce/zipball/3490ea4455be03c686018737ae65df379dc09747",
+                "reference": "3490ea4455be03c686018737ae65df379dc09747",
                 "shasum": ""
             },
             "require": {
@@ -1163,7 +1173,7 @@
                 "rest",
                 "salesforce"
             ],
-            "time": "2015-08-07 01:49:49"
+            "time": "2015-08-18 16:10:14"
         },
         {
             "name": "dreamfactory/df-sqldb",
@@ -1171,12 +1181,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-sqldb.git",
-                "reference": "43dc2fe2e28b34815106bb1eac73a826ed21a750"
+                "reference": "8d61fcdda8b4f177648987724cbea5b343bd1d45"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-sqldb/zipball/43dc2fe2e28b34815106bb1eac73a826ed21a750",
-                "reference": "43dc2fe2e28b34815106bb1eac73a826ed21a750",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-sqldb/zipball/8d61fcdda8b4f177648987724cbea5b343bd1d45",
+                "reference": "8d61fcdda8b4f177648987724cbea5b343bd1d45",
                 "shasum": ""
             },
             "require": {
@@ -1227,7 +1237,7 @@
                 "sql",
                 "sqlserver"
             ],
-            "time": "2015-08-18 03:22:00"
+            "time": "2015-08-18 16:05:47"
         },
         {
             "name": "dreamfactory/df-sqldb-core",
@@ -1398,12 +1408,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/php-utils.git",
-                "reference": "435a1212046d6a71c4e6c0f428ad79d0d33e369e"
+                "reference": "7efe909c449df1b4ab64a64b24a136a06ed3234f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/php-utils/zipball/435a1212046d6a71c4e6c0f428ad79d0d33e369e",
-                "reference": "435a1212046d6a71c4e6c0f428ad79d0d33e369e",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/php-utils/zipball/7efe909c449df1b4ab64a64b24a136a06ed3234f",
+                "reference": "7efe909c449df1b4ab64a64b24a136a06ed3234f",
                 "shasum": ""
             },
             "require": {
@@ -1441,7 +1451,7 @@
                 "dreamfactory",
                 "utility"
             ],
-            "time": "2015-08-18 04:29:34"
+            "time": "2015-08-18 17:40:23"
         },
         {
             "name": "guzzle/guzzle",
