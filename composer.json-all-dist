@@ -21,6 +21,10 @@
     {
       "name": "Lee Hicks",
       "email": "leehicks@dreamfactory.com"
+    },
+    {
+      "name": "David Weiner",
+      "email": "davidweiner@dreamfactory.com"
     }
   ],
   "support": {
@@ -37,12 +41,16 @@
       "url": "git@github.com:dreamfactorysoftware/df-admin-app.git"
     },
     {
+      "type": "vcs",
+      "url": "git@github.com:dreamfactorysoftware/df-managed.git"
+    },
+    {
       "type": "pear",
       "url": "http://pear.php.net"
     }
   ],
   "require": {
-    "laravel/framework": "5.0.*",
+    "laravel/framework": "5.1.*",
     "tymon/jwt-auth": "0.5.*",
     "dreamfactory/df-admin-app": "dev-develop as dev-master",
     "dreamfactory/df-core": "dev-develop as dev-master",
@@ -56,10 +64,10 @@
     "dreamfactory/df-salesforce": "dev-develop as dev-master",
     "dreamfactory/df-user": "dev-develop as dev-master",
     "dreamfactory/df-oauth": "dev-develop as dev-master",
-    "dreamfactory/df-adldap": "dev-develop as dev-master"
+    "dreamfactory/df-adldap": "dev-develop as dev-master",
+    "dreamfactory/df-managed": "dev-develop as dev-master"
   },
   "require-dev": {
-    "barryvdh/laravel-ide-helper": "~2.0",
     "laracasts/generators": "~1.0",
     "laracasts/testdummy": "~2.0",
     "phpunit/phpunit": "~4.0",
@@ -80,21 +88,17 @@
   },
   "scripts": {
     "post-install-cmd": [
+      "php -r \"copy('.env-dist', '.env');\"",
+      "php -r \"copy('phpunit.xml-dist', 'phpunit.xml');\"",
+      "php artisan key:generate",
       "php artisan clear-compiled",
-      "php artisan ide-helper:generate",
       "php artisan optimize",
       "php pull_migrations"
     ],
     "post-update-cmd": [
       "php artisan clear-compiled",
-      "php artisan ide-helper:generate",
       "php artisan optimize",
       "php pull_migrations"
-    ],
-    "post-create-project-cmd": [
-      "php -r \"copy('.env-dist', '.env');\"",
-      "php -r \"copy('phpunit.xml-dist', 'phpunit.xml');\"",
-      "php artisan key:generate"
     ]
   },
   "config": {
