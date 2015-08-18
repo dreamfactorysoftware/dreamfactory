@@ -602,12 +602,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-core.git",
-                "reference": "f5ce0af88fff06470c7d08ad0c0038a32a48a867"
+                "reference": "a64583f71e62500e26ab57007277780ff3de120c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/f5ce0af88fff06470c7d08ad0c0038a32a48a867",
-                "reference": "f5ce0af88fff06470c7d08ad0c0038a32a48a867",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/a64583f71e62500e26ab57007277780ff3de120c",
+                "reference": "a64583f71e62500e26ab57007277780ff3de120c",
                 "shasum": ""
             },
             "require": {
@@ -659,7 +659,7 @@
                 "paas",
                 "rest"
             ],
-            "time": "2015-08-18 16:05:30"
+            "time": "2015-08-18 22:12:10"
         },
         {
             "name": "dreamfactory/df-couchdb",
@@ -727,12 +727,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-managed.git",
-                "reference": "7452624335213731788c2c614e0119d378890df4"
+                "reference": "17f91c7381cb28e37b95ed1452603f048946f103"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-managed/zipball/7452624335213731788c2c614e0119d378890df4",
-                "reference": "7452624335213731788c2c614e0119d378890df4",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-managed/zipball/17f91c7381cb28e37b95ed1452603f048946f103",
+                "reference": "17f91c7381cb28e37b95ed1452603f048946f103",
                 "shasum": ""
             },
             "require": {
@@ -745,7 +745,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "1.x-dev"
+                    "dev-develop": "0.0.x-dev"
                 }
             },
             "autoload": {
@@ -764,6 +764,10 @@
                 {
                     "name": "David L. Weiner",
                     "email": "davidweiner@dreamfactory.com"
+                },
+                {
+                    "name": "Arif Islam",
+                    "email": "arifislam@dreamfactory.com"
                 }
             ],
             "description": "DreamFactory(tm) Managed Integration Library",
@@ -778,7 +782,7 @@
                 "source": "https://github.com/dreamfactorysoftware/df-managed/tree/develop",
                 "issues": "https://github.com/dreamfactorysoftware/df-managed/issues"
             },
-            "time": "2015-08-14 21:53:45"
+            "time": "2015-08-18 21:40:48"
         },
         {
             "name": "dreamfactory/df-mongodb",
@@ -899,19 +903,24 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-rackspace.git",
-                "reference": "9f4261403f64eb9a42fbcc44b9405596e185c5e8"
+                "reference": "bd2c4ca5f7cc7d1910ea36315df09f9e0188f44c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-rackspace/zipball/9f4261403f64eb9a42fbcc44b9405596e185c5e8",
-                "reference": "9f4261403f64eb9a42fbcc44b9405596e185c5e8",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-rackspace/zipball/bd2c4ca5f7cc7d1910ea36315df09f9e0188f44c",
+                "reference": "bd2c4ca5f7cc7d1910ea36315df09f9e0188f44c",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "dev-develop as dev-master",
+                "dreamfactory/df-core": "~0.0.2",
                 "rackspace/php-opencloud": "~1.5.0@stable"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-develop": "0.0.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "DreamFactory\\Core\\Rackspace\\": "src/"
@@ -945,7 +954,7 @@
                 "rest",
                 "storage blob"
             ],
-            "time": "2015-07-27 15:21:35"
+            "time": "2015-08-18 21:07:36"
         },
         {
             "name": "dreamfactory/df-rws",
