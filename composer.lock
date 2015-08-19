@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "aee168112422659b54dd6606d836abef",
+    "hash": "07d4dbce3830def4978c332a21e370ae",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -430,16 +430,16 @@
         },
         {
             "name": "dreamfactory/df-adldap",
-            "version": "dev-develop",
+            "version": "0.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-adldap.git",
-                "reference": "62c5d705f7e661760663cb35ecb76ccafc034e1c"
+                "reference": "b5d063b259c9db7e46165af74f4269af7513a9ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-adldap/zipball/62c5d705f7e661760663cb35ecb76ccafc034e1c",
-                "reference": "62c5d705f7e661760663cb35ecb76ccafc034e1c",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-adldap/zipball/b5d063b259c9db7e46165af74f4269af7513a9ae",
+                "reference": "b5d063b259c9db7e46165af74f4269af7513a9ae",
                 "shasum": ""
             },
             "require": {
@@ -480,20 +480,20 @@
                 "ldap",
                 "rest"
             ],
-            "time": "2015-08-17 21:41:03"
+            "time": "2015-08-17 21:40:52"
         },
         {
             "name": "dreamfactory/df-admin-app",
-            "version": "dev-develop",
+            "version": "0.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-admin-app.git",
-                "reference": "0ffee620ae4b881f5a3d68d50ae3d0b4fa9155e3"
+                "reference": "1639d32d5a7c039cb6e36445ac2dc8da699d67ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-admin-app/zipball/0ffee620ae4b881f5a3d68d50ae3d0b4fa9155e3",
-                "reference": "0ffee620ae4b881f5a3d68d50ae3d0b4fa9155e3",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-admin-app/zipball/1639d32d5a7c039cb6e36445ac2dc8da699d67ef",
+                "reference": "1639d32d5a7c039cb6e36445ac2dc8da699d67ef",
                 "shasum": ""
             },
             "require": {
@@ -502,10 +502,11 @@
             "type": "dreamfactory-app",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "0.9-dev"
+                    "dev-develop": "0.0.x-dev"
                 },
                 "installer-name": "dreamfactory"
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
@@ -519,36 +520,29 @@
             "description": "DreamFactory(tm) Admin Console",
             "homepage": "https://github.com/dreamfactorysoftware/df-admin-app/",
             "keywords": [
+                "Service Bus",
                 "admin",
-                "cloud-computing",
+                "api",
+                "dreamfactory",
                 "dsp",
-                "dsp-core",
                 "esb",
-                "framework",
                 "remote web services",
-                "rest",
-                "service bus"
+                "rest"
             ],
-            "support": {
-                "source": "https://github.com/dreamfactorysoftware/df-admin-app",
-                "issues": "https://github.com/dreamfactorysoftware/df-admin-app/issues",
-                "email": "support@dreamfactory.com",
-                "wiki": "https://wiki.dreamfactory.com"
-            },
-            "time": "2015-08-11 14:21:36"
+            "time": "2015-08-19 13:17:22"
         },
         {
             "name": "dreamfactory/df-aws",
-            "version": "dev-develop",
+            "version": "0.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-aws.git",
-                "reference": "8b3729024730da4998a09fcf4b945129958def41"
+                "reference": "43b829bd76682d198e3323e51e419dcfc4fe032a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-aws/zipball/8b3729024730da4998a09fcf4b945129958def41",
-                "reference": "8b3729024730da4998a09fcf4b945129958def41",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-aws/zipball/43b829bd76682d198e3323e51e419dcfc4fe032a",
+                "reference": "43b829bd76682d198e3323e51e419dcfc4fe032a",
                 "shasum": ""
             },
             "require": {
@@ -594,20 +588,20 @@
                 "rest",
                 "s3"
             ],
-            "time": "2015-08-18 16:06:41"
+            "time": "2015-08-18 20:39:15"
         },
         {
             "name": "dreamfactory/df-core",
-            "version": "dev-develop",
+            "version": "0.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-core.git",
-                "reference": "a64583f71e62500e26ab57007277780ff3de120c"
+                "reference": "e50e55a160a0536561d5c5a63d7e22ba4f6b886e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/a64583f71e62500e26ab57007277780ff3de120c",
-                "reference": "a64583f71e62500e26ab57007277780ff3de120c",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/e50e55a160a0536561d5c5a63d7e22ba4f6b886e",
+                "reference": "e50e55a160a0536561d5c5a63d7e22ba4f6b886e",
                 "shasum": ""
             },
             "require": {
@@ -659,20 +653,20 @@
                 "paas",
                 "rest"
             ],
-            "time": "2015-08-18 22:12:10"
+            "time": "2015-08-19 13:39:57"
         },
         {
             "name": "dreamfactory/df-couchdb",
-            "version": "dev-develop",
+            "version": "0.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-couchdb.git",
-                "reference": "6cdf623c7fd3b15e2e8158970a4fe69c64e04c47"
+                "reference": "6ee512fca14eba519ec2c216c0d065068b9764a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-couchdb/zipball/6cdf623c7fd3b15e2e8158970a4fe69c64e04c47",
-                "reference": "6cdf623c7fd3b15e2e8158970a4fe69c64e04c47",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-couchdb/zipball/6ee512fca14eba519ec2c216c0d065068b9764a1",
+                "reference": "6ee512fca14eba519ec2c216c0d065068b9764a1",
                 "shasum": ""
             },
             "require": {
@@ -719,20 +713,20 @@
                 "nosql",
                 "rest"
             ],
-            "time": "2015-08-18 20:07:58"
+            "time": "2015-08-18 20:07:47"
         },
         {
             "name": "dreamfactory/df-managed",
-            "version": "dev-develop",
+            "version": "0.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-managed.git",
-                "reference": "17f91c7381cb28e37b95ed1452603f048946f103"
+                "reference": "327bea667b3c86dc75e36ddab8ffb5f78e36ae68"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-managed/zipball/17f91c7381cb28e37b95ed1452603f048946f103",
-                "reference": "17f91c7381cb28e37b95ed1452603f048946f103",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-managed/zipball/327bea667b3c86dc75e36ddab8ffb5f78e36ae68",
+                "reference": "327bea667b3c86dc75e36ddab8ffb5f78e36ae68",
                 "shasum": ""
             },
             "require": {
@@ -753,6 +747,7 @@
                     "DreamFactory\\Managed\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
@@ -762,12 +757,12 @@
                     "email": "jerryablan@dreamfactory.com"
                 },
                 {
-                    "name": "David L. Weiner",
-                    "email": "davidweiner@dreamfactory.com"
-                },
-                {
                     "name": "Arif Islam",
                     "email": "arifislam@dreamfactory.com"
+                },
+                {
+                    "name": "David L. Weiner",
+                    "email": "davidweiner@dreamfactory.com"
                 }
             ],
             "description": "DreamFactory(tm) Managed Integration Library",
@@ -778,24 +773,20 @@
                 "enterprise",
                 "storage"
             ],
-            "support": {
-                "source": "https://github.com/dreamfactorysoftware/df-managed/tree/develop",
-                "issues": "https://github.com/dreamfactorysoftware/df-managed/issues"
-            },
-            "time": "2015-08-18 21:40:48"
+            "time": "2015-08-18 21:40:27"
         },
         {
             "name": "dreamfactory/df-mongodb",
-            "version": "dev-develop",
+            "version": "0.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-mongodb.git",
-                "reference": "9418154d08758ae7fd802b0d67401059e65bec1c"
+                "reference": "90ac2cd21fbc7a2e28b9882e22d270187d8d29f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-mongodb/zipball/9418154d08758ae7fd802b0d67401059e65bec1c",
-                "reference": "9418154d08758ae7fd802b0d67401059e65bec1c",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-mongodb/zipball/90ac2cd21fbc7a2e28b9882e22d270187d8d29f4",
+                "reference": "90ac2cd21fbc7a2e28b9882e22d270187d8d29f4",
                 "shasum": ""
             },
             "require": {
@@ -841,20 +832,20 @@
                 "nosql",
                 "rest"
             ],
-            "time": "2015-08-18 19:56:12"
+            "time": "2015-08-18 19:55:54"
         },
         {
             "name": "dreamfactory/df-oauth",
-            "version": "dev-develop",
+            "version": "0.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-oauth.git",
-                "reference": "a3ddca6e7e03e29bfc03bbcc714cf9de0922bf02"
+                "reference": "8ff11fe1df2bb12a91e1c50ccc10bc4426a77e4b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-oauth/zipball/a3ddca6e7e03e29bfc03bbcc714cf9de0922bf02",
-                "reference": "a3ddca6e7e03e29bfc03bbcc714cf9de0922bf02",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-oauth/zipball/8ff11fe1df2bb12a91e1c50ccc10bc4426a77e4b",
+                "reference": "8ff11fe1df2bb12a91e1c50ccc10bc4426a77e4b",
                 "shasum": ""
             },
             "require": {
@@ -895,20 +886,20 @@
                 "oauth",
                 "rest"
             ],
-            "time": "2015-08-17 21:38:37"
+            "time": "2015-08-17 21:39:54"
         },
         {
             "name": "dreamfactory/df-rackspace",
-            "version": "dev-develop",
+            "version": "0.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-rackspace.git",
-                "reference": "bd2c4ca5f7cc7d1910ea36315df09f9e0188f44c"
+                "reference": "afa4aa573351e529afbf0692d960ead913278e06"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-rackspace/zipball/bd2c4ca5f7cc7d1910ea36315df09f9e0188f44c",
-                "reference": "bd2c4ca5f7cc7d1910ea36315df09f9e0188f44c",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-rackspace/zipball/afa4aa573351e529afbf0692d960ead913278e06",
+                "reference": "afa4aa573351e529afbf0692d960ead913278e06",
                 "shasum": ""
             },
             "require": {
@@ -954,20 +945,20 @@
                 "rest",
                 "storage blob"
             ],
-            "time": "2015-08-18 21:07:36"
+            "time": "2015-08-18 21:09:27"
         },
         {
             "name": "dreamfactory/df-rws",
-            "version": "dev-develop",
+            "version": "0.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-rws.git",
-                "reference": "2830ec90e3df8a6044daa78eefc5c037d6454f46"
+                "reference": "32a5d62779b4292bde18126924045b9330e33c38"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-rws/zipball/2830ec90e3df8a6044daa78eefc5c037d6454f46",
-                "reference": "2830ec90e3df8a6044daa78eefc5c037d6454f46",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-rws/zipball/32a5d62779b4292bde18126924045b9330e33c38",
+                "reference": "32a5d62779b4292bde18126924045b9330e33c38",
                 "shasum": ""
             },
             "require": {
@@ -1011,7 +1002,7 @@
                 "rest",
                 "web"
             ],
-            "time": "2015-08-18 20:46:22"
+            "time": "2015-08-18 20:47:41"
         },
         {
             "name": "dreamfactory/df-salesforce",
@@ -1074,16 +1065,16 @@
         },
         {
             "name": "dreamfactory/df-sqldb",
-            "version": "dev-develop",
+            "version": "0.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-sqldb.git",
-                "reference": "095890098df14db93232544120b7c9439dc53e76"
+                "reference": "cc818ec7f00f4476bf44fce23e67a41fefb787e4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-sqldb/zipball/095890098df14db93232544120b7c9439dc53e76",
-                "reference": "095890098df14db93232544120b7c9439dc53e76",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-sqldb/zipball/cc818ec7f00f4476bf44fce23e67a41fefb787e4",
+                "reference": "cc818ec7f00f4476bf44fce23e67a41fefb787e4",
                 "shasum": ""
             },
             "require": {
@@ -1134,7 +1125,7 @@
                 "sql",
                 "sqlserver"
             ],
-            "time": "2015-08-18 21:02:24"
+            "time": "2015-08-18 21:02:57"
         },
         {
             "name": "dreamfactory/df-sqldb-core",
@@ -1197,16 +1188,16 @@
         },
         {
             "name": "dreamfactory/df-user",
-            "version": "dev-develop",
+            "version": "0.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-user.git",
-                "reference": "4885acaa6fe47321b214977cf33a91c5e764804b"
+                "reference": "d28f4840eb18a10c9708c5b962a43d0f0f22d58d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-user/zipball/4885acaa6fe47321b214977cf33a91c5e764804b",
-                "reference": "4885acaa6fe47321b214977cf33a91c5e764804b",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-user/zipball/d28f4840eb18a10c9708c5b962a43d0f0f22d58d",
+                "reference": "d28f4840eb18a10c9708c5b962a43d0f0f22d58d",
                 "shasum": ""
             },
             "require": {
@@ -1249,7 +1240,7 @@
                 "dsp",
                 "user"
             ],
-            "time": "2015-08-17 21:35:07"
+            "time": "2015-08-17 21:36:43"
         },
         {
             "name": "dreamfactory/installer",
@@ -4601,16 +4592,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "4.8.4",
+            "version": "4.8.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "55bf1d6092b0e13a1f26bd5eaffeef3d8ad85ea7"
+                "reference": "9b7417edaf28059ea63d86be941e6004dbfcc0cc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/55bf1d6092b0e13a1f26bd5eaffeef3d8ad85ea7",
-                "reference": "55bf1d6092b0e13a1f26bd5eaffeef3d8ad85ea7",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/9b7417edaf28059ea63d86be941e6004dbfcc0cc",
+                "reference": "9b7417edaf28059ea63d86be941e6004dbfcc0cc",
                 "shasum": ""
             },
             "require": {
@@ -4669,24 +4660,24 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2015-08-15 04:21:23"
+            "time": "2015-08-19 09:20:57"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
-            "version": "2.3.6",
+            "version": "2.3.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit-mock-objects.git",
-                "reference": "18dfbcb81d05e2296c0bcddd4db96cade75e6f42"
+                "reference": "5e2645ad49d196e020b85598d7c97e482725786a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/18dfbcb81d05e2296c0bcddd4db96cade75e6f42",
-                "reference": "18dfbcb81d05e2296c0bcddd4db96cade75e6f42",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/5e2645ad49d196e020b85598d7c97e482725786a",
+                "reference": "5e2645ad49d196e020b85598d7c97e482725786a",
                 "shasum": ""
             },
             "require": {
-                "doctrine/instantiator": "~1.0,>=1.0.2",
+                "doctrine/instantiator": "^1.0.2",
                 "php": ">=5.3.3",
                 "phpunit/php-text-template": "~1.2",
                 "sebastian/exporter": "~1.2"
@@ -4725,7 +4716,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2015-07-10 06:54:24"
+            "time": "2015-08-19 09:14:08"
         },
         {
             "name": "sebastian/comparator",
@@ -5198,102 +5189,9 @@
             "time": "2015-07-28 14:07:07"
         }
     ],
-    "aliases": [
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-admin-app"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-core"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-aws"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-rackspace"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-sqldb"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-mongodb"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-couchdb"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-rws"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-salesforce"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-user"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-oauth"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-adldap"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-managed"
-        }
-    ],
+    "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "dreamfactory/df-admin-app": 20,
-        "dreamfactory/df-core": 20,
-        "dreamfactory/df-aws": 20,
-        "dreamfactory/df-rackspace": 20,
-        "dreamfactory/df-sqldb": 20,
-        "dreamfactory/df-mongodb": 20,
-        "dreamfactory/df-couchdb": 20,
-        "dreamfactory/df-rws": 20,
-        "dreamfactory/df-salesforce": 20,
-        "dreamfactory/df-user": 20,
-        "dreamfactory/df-oauth": 20,
-        "dreamfactory/df-adldap": 20,
-        "dreamfactory/df-managed": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": [],
