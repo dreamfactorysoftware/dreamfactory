@@ -1,0 +1,93 @@
+##	This file is part of the DreamFactory Services Platform(tm) (DSP)
+##
+##	DreamFactory Services Platform(tm) <http://github.com/dreamfactorysoftware/dsp-core>
+##	Copyright 2012-2014 DreamFactory Software, Inc. <support@dreamfactory.com>
+##
+##	Licensed under the Apache License, Version 2.0 (the "License");
+##	you may not use this file except in compliance with the License.
+##	You may obtain a copy of the License at
+##
+##	http://www.apache.org/licenses/LICENSE-2.0
+##
+##	Unless required by applicable law or agreed to in writing, software
+##	distributed under the License is distributed on an "AS IS" BASIS,
+##	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+##	See the License for the specific language governing permissions and
+##	limitations under the License.
+
+##**************************************************************************
+##
+##	This file is included by nginx.conf into the "http" section after all
+##	all /etc/nginx/conf.d/*.conf files are included.
+##
+##**************************************************************************
+
+##
+## http {
+##	include /etc/nginx/conf.d/*.conf;
+##
+
+##**************************************************************************
+## This file configures two separate servers for HTTP and HTTPS
+##**************************************************************************
+
+# dsp.local:80
+server {
+	listen 80 default_server;
+
+	server_name dsp.local;
+
+	# Change these values accordingly
+	set $doc_root "var/www/launchpad/web";
+	set $error_log "var/www/launchpad/log/error.log";
+	set $access_log "var/www/launchpad/log/access.log";
+
+	# Doc root
+	root /$doc_root;
+
+	# Change locations/names as you please
+	error_log /$error_log;
+	#access_log /$access_log combined;
+
+	# Our DSP locations
+	include dsp-locations.conf;
+}
+
+# dsp.local:443
+server {
+	listen 443 ssl;
+
+	server_name dsp.local;
+
+	# Change these values accordingly
+	set $doc_root "var/www/launchpad/web";
+	set $error_log "var/www/launchpad/log/error.log";
+	set $access_log "var/www/launchpad/log/access.log";
+
+	# Doc root
+	root /$doc_root;
+
+	# Change locations/names as you please
+	error_log /$error_log;
+	#access_log /$access_log combined;
+
+	# SSL config
+	# This way you can keep it locked down a little better
+	# or not. Just uncomment the directives and remove the include.
+	include conf.d/ssl/dreamfactory.ssl.conf;
+
+	#ssl_certificate /path/to/your/signed/cert.pem;
+	#ssl_certificate_key /path/to/your/signed/cert.key;
+	#ssl_session_cache shared:SSL:10m;
+	#ssl_session_timeout 10m;
+	#ssl_protocols SSLv3 TLSv1 TLSv1.1 TLSv1.2;
+	#ssl_ciphers HIGH:!aNULL:!MD5;
+	#ssl_prefer_server_ciphers on;
+
+	# Our DSP locations
+	include dsp-locations.conf;
+}
+
+##
+## }
+##

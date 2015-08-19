@@ -7,7 +7,7 @@ use Illuminate\Contracts\Routing\Middleware;
 use Illuminate\Database\QueryException;
 use Closure;
 
-class FirstUserCheck implements Middleware
+class FirstUserCheck
 {
 
     /**

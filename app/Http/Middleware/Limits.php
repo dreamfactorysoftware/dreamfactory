@@ -7,7 +7,9 @@ use DreamFactory\Core\Exceptions\InternalServerErrorException;
 use DreamFactory\Core\Exceptions\TooManyRequestsException;
 use DreamFactory\Core\Utility\ResponseFactory;
 use DreamFactory\Core\Utility\Session;
+use DreamFactory\Managed\Support\Managed;
 use Illuminate\Contracts\Routing\Middleware;
+use Illuminate\Routing\Router;
 
 class Limits
 {
@@ -25,79 +27,73 @@ class Limits
     public function handle($request, Closure $next)
     {
         // Get limits
-        $limits = \Config::get('api_limits');
+        $limits = Managed::getLimits();
 
-        if (is_null($limits) === false) {
+        if (!empty($limits) && is_null($this->_getServiceName()) === false) {
+
             $this->_inUnitTest = \Config::get('api_limits_test');
 
-            list($userName, $userRole) = $this->_getUserAndRole();
-
-            $apiName = $this->_getApiKey();
-
+            $userName = $this->_getUser(Session::getCurrentUserId());
+            $userRole = $this->_getRole(Session::getRoleId());
+            $apiName = $this->_getApiKey(Session::getApiKey());
             $serviceName = $this->_getServiceName();
 
             // Build the list of API Hits to check
 
-            $apiKeysToCheck = array('api.default' => 0);
+            $apiKeysToCheck = ['cluster.default' => 0, 'instance.default' => 0];
 
-            if (empty($userRole) === false) {
-                $apiKeysToCheck['api.' . $userRole] = 0;
+            $serviceKeys[$serviceName] = 0;
+            if (is_null($userRole) === false) {
+                $serviceKeys[$serviceName . '.' . $userRole] = 0;
+            }
+            if (is_null($userName) === false) {
+                $serviceKeys[$serviceName . '.' . $userName] = 0;
             }
 
-            if (empty($userName) === false) {
-                $apiKeysToCheck['api.' . $userName] = 0;
-            }
-
-            if (empty($serviceName) === false) {
-                $apiKeysToCheck['api.' . $serviceName] = 0;
-
-                if (empty($userRole) === false) {
-                    $apiKeysToCheck['api.' . $serviceName . '.' . $userRole] = 0;
+            if (is_null($apiName) === false) {
+                $apiKeysToCheck[$apiName] = 0;
+                if (is_null($userRole) === false) {
+                    $apiKeysToCheck[$apiName . '.' . $userRole] = 0;
+                }
+                if (is_null($userName) === false) {
+                    $apiKeysToCheck[$apiName . '.' . $userName] = 0;
                 }
 
-                if (empty($userName) === false) {
-                    $apiKeysToCheck['api.' . $serviceName . '.' . $userName] = 0;
+                foreach ($serviceKeys as $key => $value) {
+                    $apiKeysToCheck[$apiName . '.' . $key] = $value;
                 }
             }
 
-            if (empty($apiName) === false) {
-                $apiKeysToCheck['api.' . $apiName] = 0;
-
-                if (empty($userRole) === false) {
-                    $apiKeysToCheck['api.' . $apiName . '.' . $userRole] = 0;
-                }
-
-                if (empty($userName) === false) {
-                    $apiKeysToCheck['api.' . $apiName . "." . $userName] = 0;
-                }
-
-                if (empty($serviceName) === false) {
-                    $apiKeysToCheck['api.' . $apiName . "." . $serviceName] = 0;
-
-                    if (empty($userRole) === false) {
-                        $apiKeysToCheck['api.' . $apiName . "." . $serviceName . '.' . $userRole] = 0;
-                    }
-
-                    if (empty($userName) === false) {
-                        $apiKeysToCheck['api.' . $apiName . "." . $serviceName . '.' . $userName] = 0;
-                    }
-                }
+            if (is_null($userName) === false) {
+                $apiKeysToCheck[$userName] = 0;
             }
+
+            if (is_null($userRole) === false) {
+                $apiKeysToCheck[$userRole] = 0;
+            }
+
+            $apiKeysToCheck = array_merge($apiKeysToCheck, $serviceKeys);
+
+            $timePeriods = ['minute', 'hour', 'day', '7-day', '30-day'];
 
             $overLimit = false;
+
             try {
                 foreach ($limits['api'] as $key => $limit) {
-                    if (array_key_exists($key, $apiKeysToCheck) === true) {
+                    foreach ($timePeriods as $period) {
+                        $keyToCheck = $key . '.' . $period;
+                        if (array_key_exists($keyToCheck, $apiKeysToCheck) === true) {
 
-                        $cacheValue = \Cache::get($key, 0);
-                        $cacheValue++;
-                        \Cache::put($key, $cacheValue, $limit['period']);
-                        if ($cacheValue > $limit['limit']) {
-                            $overLimit = true;
+                            $cacheValue = \Cache::get($keyToCheck, 0);
+                            $cacheValue++;
+                            \Cache::put($keyToCheck, $cacheValue, $limit['period']);
+                            if ($cacheValue > $limit['limit']) {
+                                $overLimit = true;
+                            }
                         }
                     }
                 }
-            } catch (\Exception $e) {
+            } catch ( \Exception $e ) {
                 return ResponseFactory::getException(
                     new InternalServerErrorException('Unable to update cache'),
                     $request
@@ -115,49 +111,77 @@ class Limits
         return $next($request);
     }
 
-    /*
-     * Stub to get User and Role name from the authentication session/cookie
+    /**
+     * Return the User ID from the authenticated session prepended with user_ or null if there is no authenticated user
+     *
+     * @param $userId
+     *
+     * @return null|string
      */
-
-    private function _getUserAndRole()
+    private function _getUser($userId)
     {
         if ($this->_inUnitTest === true) {
-            return ['user_1', 'role_2'];
+            return 'user:1';
         } else {
-            return [
-                'user_' . Session::getCurrentUserId(),
-                'role_' . Session::getRoleId()
-            ];
+            return is_null($userId) === false ? 'user:' . $userId : null;
         }
     }
 
-    /*
-     * Stub to get the API Key
+    /**
+     * Return the Role ID from the authenticated session prepended with role_ or null if there is no authenticated user
+     * or the user has no roles assigned
+     *
+     * @param $roleId
+     *
+     * @return null|string
      */
-
-    private function _getApiKey()
+    private function _getRole($roleId)
     {
         if ($this->_inUnitTest === true) {
-            return 'apiName';
+            return 'role:2';
         } else {
-            return Session::getApiKey();
+            return is_null($roleId) === false ? 'role:' . $roleId : null;
         }
     }
 
-    /*
-     * Stub to get the Service name
+    /**
+     * Return the API Key if set or null
+     *
+     * @param $apiKey
+     *
+     * @return null|string
+     */
+
+    private function _getApiKey($apiKey)
+    {
+        if ($this->_inUnitTest === true) {
+            return 'api_key:apiName';
+        } else {
+            return is_null($apiKey) === false ? 'api_key:' . $apiKey : null;
+        }
+    }
+
+    /**
+     * Return the service name.  May return null if a list of services has been requested
+     *
+     * @return null|string
      */
 
     private function _getServiceName()
     {
         if ($this->_inUnitTest === true) {
-            return 'serviceName';
+            return 'service:serviceName';
         } else {
             /** @var Router $router */
             $router = app('router');
             $service = strtolower($router->input('service'));
 
-            return $service;
+            if (is_null($service) === true ) {
+                return null;
+            } else {
+                return 'service:' . $service;
+            }
+
         }
     }
 }

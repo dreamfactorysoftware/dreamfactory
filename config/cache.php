@@ -44,7 +44,7 @@ return [
 
 		'file' => [
 			'driver' => 'file',
-			'path'   => storage_path().'/framework/cache/',
+			'path'   => DreamFactory\Managed\Support\Managed::getCachePath(),
 		],
 
 		'memcached' => [
@@ -74,6 +74,6 @@ return [
 	|
 	*/
 
-	'prefix' => 'dreamfactory.:',
+	'prefix' => \DreamFactory\Managed\Support\Managed::getCacheKeyPrefix(),
 
 ];

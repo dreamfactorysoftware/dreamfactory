@@ -43,6 +43,10 @@
     {
       "type": "vcs",
       "url": "git@github.com:dreamfactorysoftware/df-managed.git"
+    },
+    {
+      "type": "pear",
+      "url": "http://pear.php.net"
     }
   ],
   "require": {
@@ -51,6 +55,7 @@
     "dreamfactory/df-admin-app": "dev-develop as dev-master",
     "dreamfactory/df-core": "dev-develop as dev-master",
     "dreamfactory/df-aws": "dev-develop as dev-master",
+    "dreamfactory/df-azure": "dev-develop as dev-master",
     "dreamfactory/df-rackspace": "dev-develop as dev-master",
     "dreamfactory/df-sqldb": "dev-develop as dev-master",
     "dreamfactory/df-mongodb": "dev-develop as dev-master",
