@@ -1,5 +1,7 @@
 <?php
 
+use DreamFactory\Managed\Support\Managed;
+
 return [
 
 	/*
@@ -44,7 +46,7 @@ return [
 
 		'file' => [
 			'driver' => 'file',
-			'path'   => DreamFactory\Managed\Support\Managed::getCachePath(),
+			'path'   => Managed::getCachePath(),
 		],
 
 		'memcached' => [
@@ -74,6 +76,6 @@ return [
 	|
 	*/
 
-	'prefix' => \DreamFactory\Managed\Support\Managed::getCacheKeyPrefix(),
+	'prefix' => Managed::getCacheKeyPrefix(),
 
 ];

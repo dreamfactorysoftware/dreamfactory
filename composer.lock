@@ -434,12 +434,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-adldap.git",
-                "reference": "62c5d705f7e661760663cb35ecb76ccafc034e1c"
+                "reference": "2a335bdf9fadcab9acc9d7f4cc188c24b8a9b13c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-adldap/zipball/62c5d705f7e661760663cb35ecb76ccafc034e1c",
-                "reference": "62c5d705f7e661760663cb35ecb76ccafc034e1c",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-adldap/zipball/2a335bdf9fadcab9acc9d7f4cc188c24b8a9b13c",
+                "reference": "2a335bdf9fadcab9acc9d7f4cc188c24b8a9b13c",
                 "shasum": ""
             },
             "require": {
@@ -480,7 +480,7 @@
                 "ldap",
                 "rest"
             ],
-            "time": "2015-08-17 21:41:03"
+            "time": "2015-08-19 18:07:44"
         },
         {
             "name": "dreamfactory/df-admin-app",
@@ -488,12 +488,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-admin-app.git",
-                "reference": "0ffee620ae4b881f5a3d68d50ae3d0b4fa9155e3"
+                "reference": "6cca879549f9c998b5960adbaf9875793545d6c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-admin-app/zipball/0ffee620ae4b881f5a3d68d50ae3d0b4fa9155e3",
-                "reference": "0ffee620ae4b881f5a3d68d50ae3d0b4fa9155e3",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-admin-app/zipball/6cca879549f9c998b5960adbaf9875793545d6c7",
+                "reference": "6cca879549f9c998b5960adbaf9875793545d6c7",
                 "shasum": ""
             },
             "require": {
@@ -502,7 +502,7 @@
             "type": "dreamfactory-app",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "0.9-dev"
+                    "dev-develop": "0.0.x-dev"
                 },
                 "installer-name": "dreamfactory"
             },
@@ -520,11 +520,10 @@
             "homepage": "https://github.com/dreamfactorysoftware/df-admin-app/",
             "keywords": [
                 "admin",
-                "cloud-computing",
+                "api",
+                "dreamfactory",
                 "dsp",
-                "dsp-core",
                 "esb",
-                "framework",
                 "remote web services",
                 "rest",
                 "service bus"
@@ -535,7 +534,7 @@
                 "email": "support@dreamfactory.com",
                 "wiki": "https://wiki.dreamfactory.com"
             },
-            "time": "2015-08-11 14:21:36"
+            "time": "2015-08-19 13:16:53"
         },
         {
             "name": "dreamfactory/df-aws",
@@ -602,18 +601,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-core.git",
-                "reference": "a64583f71e62500e26ab57007277780ff3de120c"
+                "reference": "d0cf7d20153f27896aef7831cbec0303eca1368b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/a64583f71e62500e26ab57007277780ff3de120c",
-                "reference": "a64583f71e62500e26ab57007277780ff3de120c",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/d0cf7d20153f27896aef7831cbec0303eca1368b",
+                "reference": "d0cf7d20153f27896aef7831cbec0303eca1368b",
                 "shasum": ""
             },
             "require": {
                 "barryvdh/laravel-cors": "0.7.x",
                 "dreamfactory/df-sqldb-core": "~0.0.2",
-                "dreamfactory/php-utils": "dev-develop as dev-master",
+                "dreamfactory/php-utils": "1.1.*",
                 "guzzlehttp/guzzle": "~5.0",
                 "php": "~5.5"
             },
@@ -659,7 +658,7 @@
                 "paas",
                 "rest"
             ],
-            "time": "2015-08-18 22:12:10"
+            "time": "2015-08-24 15:01:50"
         },
         {
             "name": "dreamfactory/df-couchdb",
@@ -727,16 +726,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-managed.git",
-                "reference": "17f91c7381cb28e37b95ed1452603f048946f103"
+                "reference": "3b85dd4cdbb59b5f4cf99303605f21ccc0d2ff6d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-managed/zipball/17f91c7381cb28e37b95ed1452603f048946f103",
-                "reference": "17f91c7381cb28e37b95ed1452603f048946f103",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-managed/zipball/3b85dd4cdbb59b5f4cf99303605f21ccc0d2ff6d",
+                "reference": "3b85dd4cdbb59b5f4cf99303605f21ccc0d2ff6d",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/php-utils": "1.*"
+                "dreamfactory/php-utils": "1.1.*"
             },
             "require-dev": {
                 "laravel/laravel": "5.1.*",
@@ -782,7 +781,7 @@
                 "source": "https://github.com/dreamfactorysoftware/df-managed/tree/develop",
                 "issues": "https://github.com/dreamfactorysoftware/df-managed/issues"
             },
-            "time": "2015-08-18 21:40:48"
+            "time": "2015-08-24 16:07:19"
         },
         {
             "name": "dreamfactory/df-mongodb",
@@ -962,12 +961,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-rws.git",
-                "reference": "2830ec90e3df8a6044daa78eefc5c037d6454f46"
+                "reference": "939b852879e69db7fd40c71cb5631af03a398896"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-rws/zipball/2830ec90e3df8a6044daa78eefc5c037d6454f46",
-                "reference": "2830ec90e3df8a6044daa78eefc5c037d6454f46",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-rws/zipball/939b852879e69db7fd40c71cb5631af03a398896",
+                "reference": "939b852879e69db7fd40c71cb5631af03a398896",
                 "shasum": ""
             },
             "require": {
@@ -1011,7 +1010,7 @@
                 "rest",
                 "web"
             ],
-            "time": "2015-08-18 20:46:22"
+            "time": "2015-08-24 20:30:48"
         },
         {
             "name": "dreamfactory/df-salesforce",
@@ -1078,17 +1077,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-sqldb.git",
-                "reference": "095890098df14db93232544120b7c9439dc53e76"
+                "reference": "fe3c03b0642dac375fdf7f2bfdce5342c977e8bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-sqldb/zipball/095890098df14db93232544120b7c9439dc53e76",
-                "reference": "095890098df14db93232544120b7c9439dc53e76",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-sqldb/zipball/fe3c03b0642dac375fdf7f2bfdce5342c977e8bf",
+                "reference": "fe3c03b0642dac375fdf7f2bfdce5342c977e8bf",
                 "shasum": ""
             },
             "require": {
                 "dreamfactory/df-core": "~0.0.2",
-                "dreamfactory/df-sqldb-core": "~0.0.2"
+                "dreamfactory/df-sqldb-core": "~0.0.3",
+                "dreamfactory/php-utils": "1.1.*"
             },
             "type": "library",
             "extra": {
@@ -1134,20 +1134,20 @@
                 "sql",
                 "sqlserver"
             ],
-            "time": "2015-08-18 21:02:24"
+            "time": "2015-08-24 19:39:27"
         },
         {
             "name": "dreamfactory/df-sqldb-core",
-            "version": "0.0.2",
+            "version": "0.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-sqldb-core.git",
-                "reference": "8a58d8cb085dfed68f16e759858ddc9361af675f"
+                "reference": "c80f137f28e9e6f1a0c7b8705ca2aa9e421b7880"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-sqldb-core/zipball/8a58d8cb085dfed68f16e759858ddc9361af675f",
-                "reference": "8a58d8cb085dfed68f16e759858ddc9361af675f",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-sqldb-core/zipball/c80f137f28e9e6f1a0c7b8705ca2aa9e421b7880",
+                "reference": "c80f137f28e9e6f1a0c7b8705ca2aa9e421b7880",
                 "shasum": ""
             },
             "type": "library",
@@ -1193,7 +1193,7 @@
                 "sql",
                 "sqlserver"
             ],
-            "time": "2015-08-17 14:27:04"
+            "time": "2015-08-24 19:34:44"
         },
         {
             "name": "dreamfactory/df-user",
@@ -1301,16 +1301,16 @@
         },
         {
             "name": "dreamfactory/php-utils",
-            "version": "dev-develop",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/php-utils.git",
-                "reference": "7efe909c449df1b4ab64a64b24a136a06ed3234f"
+                "reference": "fd92b1edc5d7947264977354c26c3194f2abb184"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/php-utils/zipball/7efe909c449df1b4ab64a64b24a136a06ed3234f",
-                "reference": "7efe909c449df1b4ab64a64b24a136a06ed3234f",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/php-utils/zipball/fd92b1edc5d7947264977354c26c3194f2abb184",
+                "reference": "fd92b1edc5d7947264977354c26c3194f2abb184",
                 "shasum": ""
             },
             "require": {
@@ -1323,7 +1323,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "1.0.x-dev"
+                    "dev-develop": "1.1.x-dev"
                 }
             },
             "autoload": {
@@ -1348,7 +1348,7 @@
                 "dreamfactory",
                 "utility"
             ],
-            "time": "2015-08-18 17:40:23"
+            "time": "2015-08-25 13:57:49"
         },
         {
             "name": "guzzle/guzzle",
@@ -2123,16 +2123,16 @@
         },
         {
             "name": "league/oauth1-client",
-            "version": "1.5.0",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/oauth1-client.git",
-                "reference": "815b2dbd2b866409f3de6e4046a76e66b5af608e"
+                "reference": "4d4edd9b6014f882e319231a9b3351e3a1dfdc81"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/oauth1-client/zipball/815b2dbd2b866409f3de6e4046a76e66b5af608e",
-                "reference": "815b2dbd2b866409f3de6e4046a76e66b5af608e",
+                "url": "https://api.github.com/repos/thephpleague/oauth1-client/zipball/4d4edd9b6014f882e319231a9b3351e3a1dfdc81",
+                "reference": "4d4edd9b6014f882e319231a9b3351e3a1dfdc81",
                 "shasum": ""
             },
             "require": {
@@ -2140,9 +2140,9 @@
                 "php": ">=5.3.0"
             },
             "require-dev": {
-                "mockery/mockery": "0.7.2",
-                "phpunit/phpunit": "*",
-                "satooshi/php-coveralls": "dev-master"
+                "mockery/mockery": "~0.9",
+                "phpunit/phpunit": "~4.0",
+                "squizlabs/php_codesniffer": "~2.0"
             },
             "type": "library",
             "extra": {
@@ -2182,7 +2182,7 @@
                 "tumblr",
                 "twitter"
             ],
-            "time": "2015-05-18 00:04:43"
+            "time": "2015-08-22 09:49:14"
         },
         {
             "name": "monolog/monolog",
@@ -4601,16 +4601,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "4.8.4",
+            "version": "4.8.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "55bf1d6092b0e13a1f26bd5eaffeef3d8ad85ea7"
+                "reference": "2246830f4a1a551c67933e4171bf2126dc29d357"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/55bf1d6092b0e13a1f26bd5eaffeef3d8ad85ea7",
-                "reference": "55bf1d6092b0e13a1f26bd5eaffeef3d8ad85ea7",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/2246830f4a1a551c67933e4171bf2126dc29d357",
+                "reference": "2246830f4a1a551c67933e4171bf2126dc29d357",
                 "shasum": ""
             },
             "require": {
@@ -4669,24 +4669,24 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2015-08-15 04:21:23"
+            "time": "2015-08-24 04:09:38"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
-            "version": "2.3.6",
+            "version": "2.3.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit-mock-objects.git",
-                "reference": "18dfbcb81d05e2296c0bcddd4db96cade75e6f42"
+                "reference": "5e2645ad49d196e020b85598d7c97e482725786a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/18dfbcb81d05e2296c0bcddd4db96cade75e6f42",
-                "reference": "18dfbcb81d05e2296c0bcddd4db96cade75e6f42",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/5e2645ad49d196e020b85598d7c97e482725786a",
+                "reference": "5e2645ad49d196e020b85598d7c97e482725786a",
                 "shasum": ""
             },
             "require": {
-                "doctrine/instantiator": "~1.0,>=1.0.2",
+                "doctrine/instantiator": "^1.0.2",
                 "php": ">=5.3.3",
                 "phpunit/php-text-template": "~1.2",
                 "sebastian/exporter": "~1.2"
@@ -4725,7 +4725,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2015-07-10 06:54:24"
+            "time": "2015-08-19 09:14:08"
         },
         {
             "name": "sebastian/comparator",

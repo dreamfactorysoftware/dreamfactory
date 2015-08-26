@@ -7,8 +7,9 @@ return [
     'always_wrap_resources'        => true,
     'resources_wrapper'            => 'resource',
     /** Local File Storage setup, see also local config/filesystems.php */
-    'local_file_service_root'      => storage_path() . "/app",
+    'local_file_service_root'      => storage_path() . '/' . ltrim(env('LOCAL_FILE_ROOT', '/app'), '/'),
     'local_file_service_root_test' => storage_path() . "/test",
+    'standalone'                   => env('DF_STANDALONE', true),
     'db'                           => [
         /** The default number of records to return at once for database queries */
         'max_records_returned' => 1000,
@@ -42,5 +43,5 @@ return [
             'hosts'               => [],
         ]
     ],
-    'storage_path'                => base_path() . DIRECTORY_SEPARATOR . 'storage'
+    'storage_path'                 => storage_path()
 ];
