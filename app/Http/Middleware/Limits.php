@@ -27,7 +27,11 @@ class Limits
     public function handle($request, Closure $next)
     {
         // Get limits
-        $limits = Managed::getLimits();
+        if(config('df.standalone')){
+            $limits = null;
+        } else {
+            $limits = Managed::getLimits();
+        }
 
         if (!empty($limits) && is_null($this->_getServiceName()) === false) {
 
