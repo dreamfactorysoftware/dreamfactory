@@ -89,13 +89,11 @@
       "php artisan key:generate",
       "php artisan clear-compiled",
       "php artisan optimize",
-      "php artisan ide-helper:generate",
       "php pull_migrations"
     ],
     "post-update-cmd": [
       "php artisan clear-compiled",
       "php artisan optimize",
-      "php artisan ide-helper:generate",
       "php pull_migrations"
     ]
   },
