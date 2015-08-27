@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "452d786c396399ec7960f509c22b9361",
+    "hash": "aee168112422659b54dd6606d836abef",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -726,12 +726,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-managed.git",
-                "reference": "4b244be16c220927705e44839445907dbd0cf8b7"
+                "reference": "a7642249c26930e344f5f6ff143d419de7464b0d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-managed/zipball/4b244be16c220927705e44839445907dbd0cf8b7",
-                "reference": "4b244be16c220927705e44839445907dbd0cf8b7",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-managed/zipball/a7642249c26930e344f5f6ff143d419de7464b0d",
+                "reference": "a7642249c26930e344f5f6ff143d419de7464b0d",
                 "shasum": ""
             },
             "require": {
@@ -781,7 +781,7 @@
                 "source": "https://github.com/dreamfactorysoftware/df-managed/tree/develop",
                 "issues": "https://github.com/dreamfactorysoftware/df-managed/issues"
             },
-            "time": "2015-08-27 18:46:10"
+            "time": "2015-08-27 19:44:50"
         },
         {
             "name": "dreamfactory/df-mongodb",
@@ -5270,6 +5270,12 @@
             "alias_normalized": "9999999-dev",
             "version": "dev-develop",
             "package": "dreamfactory/df-adldap"
+        },
+        {
+            "alias": "dev-master",
+            "alias_normalized": "9999999-dev",
+            "version": "dev-develop",
+            "package": "dreamfactory/df-managed"
         }
     ],
     "minimum-stability": "dev",
@@ -5285,7 +5291,8 @@
         "dreamfactory/df-salesforce": 20,
         "dreamfactory/df-user": 20,
         "dreamfactory/df-oauth": 20,
-        "dreamfactory/df-adldap": 20
+        "dreamfactory/df-adldap": 20,
+        "dreamfactory/df-managed": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

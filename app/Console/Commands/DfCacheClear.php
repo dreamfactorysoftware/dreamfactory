@@ -29,7 +29,12 @@ class DfCacheClear extends Command {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->cacheRoot = Managed::getCacheRoot();
+
+		if(config('df.standalone')){
+			$this->cacheRoot = storage_path('framework/cache');
+		} else {
+			$this->cacheRoot = Managed::getCacheRoot();
+		}
 	}
 
 	/**
