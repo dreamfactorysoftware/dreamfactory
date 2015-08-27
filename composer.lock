@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "aee168112422659b54dd6606d836abef",
+    "hash": "452d786c396399ec7960f509c22b9361",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -601,12 +601,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-core.git",
-                "reference": "d0cf7d20153f27896aef7831cbec0303eca1368b"
+                "reference": "996176e091eebd0bbd61a4d42a321d30209e037b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/d0cf7d20153f27896aef7831cbec0303eca1368b",
-                "reference": "d0cf7d20153f27896aef7831cbec0303eca1368b",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/996176e091eebd0bbd61a4d42a321d30209e037b",
+                "reference": "996176e091eebd0bbd61a4d42a321d30209e037b",
                 "shasum": ""
             },
             "require": {
@@ -658,7 +658,7 @@
                 "paas",
                 "rest"
             ],
-            "time": "2015-08-24 15:01:50"
+            "time": "2015-08-27 14:05:02"
         },
         {
             "name": "dreamfactory/df-couchdb",
@@ -726,12 +726,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-managed.git",
-                "reference": "3b85dd4cdbb59b5f4cf99303605f21ccc0d2ff6d"
+                "reference": "2afb50421f95db643231ef48a017112bbfcb35d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-managed/zipball/3b85dd4cdbb59b5f4cf99303605f21ccc0d2ff6d",
-                "reference": "3b85dd4cdbb59b5f4cf99303605f21ccc0d2ff6d",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-managed/zipball/2afb50421f95db643231ef48a017112bbfcb35d4",
+                "reference": "2afb50421f95db643231ef48a017112bbfcb35d4",
                 "shasum": ""
             },
             "require": {
@@ -744,7 +744,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "0.0.x-dev"
+                    "dev-develop": "0.1.x-dev"
                 }
             },
             "autoload": {
@@ -769,7 +769,7 @@
                     "email": "arifislam@dreamfactory.com"
                 }
             ],
-            "description": "DreamFactory(tm) Managed Integration Library",
+            "description": "DreamFactory(tm) Managed Service Library",
             "homepage": "https://www.dreamfactory.com/",
             "keywords": [
                 "dreamfactory",
@@ -781,7 +781,7 @@
                 "source": "https://github.com/dreamfactorysoftware/df-managed/tree/develop",
                 "issues": "https://github.com/dreamfactorysoftware/df-managed/issues"
             },
-            "time": "2015-08-24 16:07:19"
+            "time": "2015-08-27 17:22:52"
         },
         {
             "name": "dreamfactory/df-mongodb",
@@ -5270,12 +5270,6 @@
             "alias_normalized": "9999999-dev",
             "version": "dev-develop",
             "package": "dreamfactory/df-adldap"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-managed"
         }
     ],
     "minimum-stability": "dev",
@@ -5291,8 +5285,7 @@
         "dreamfactory/df-salesforce": 20,
         "dreamfactory/df-user": 20,
         "dreamfactory/df-oauth": 20,
-        "dreamfactory/df-adldap": 20,
-        "dreamfactory/df-managed": 20
+        "dreamfactory/df-adldap": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
