@@ -46,7 +46,7 @@ return [
 
 		'file' => [
 			'driver' => 'file',
-			'path'   => Managed::getCachePath(),
+			'path'   => storage_path('framework/cache'),
 		],
 
 		'memcached' => [
@@ -76,6 +76,6 @@ return [
 	|
 	*/
 
-	'prefix' => Managed::getCacheKeyPrefix(),
+	'prefix' => 'laravel',
 
 ];
