@@ -48,7 +48,7 @@ class SplashController extends Controller
 
                 return view('firstUser', $data);
             } else {
-                $registrar->create($data);
+                $registrar->createFirstAdmin($data);
 
                 return redirect()->to('/');
             }

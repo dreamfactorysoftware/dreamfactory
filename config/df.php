@@ -32,6 +32,7 @@ return [
     'allow_forever_sessions'       => false,
     'confirm_reset_url'            => env('CONFIRM_RESET_URL', '/dreamfactory/dist/#/reset-password'),
     'confirm_invite_url'           => env('CONFIRM_INVITE_URL', '/dreamfactory/dist/#/user-invite'),
+    'confirm_register_url'         => env('CONFIRM_REGISTER_URL', '/dreamfactory/dist/#/register-confirm'),
     'cors'                         => [
         'defaults' => [
             'supportsCredentials' => false,
