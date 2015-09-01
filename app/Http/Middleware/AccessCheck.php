@@ -5,6 +5,7 @@ use \Auth;
 use \Closure;
 use DreamFactory\Core\Models\App;
 use DreamFactory\Core\Utility\JWTUtilities;
+use DreamFactory\Core\Utility\ServiceHandler;
 use DreamFactory\Managed\Enums\ManagedDefaults;
 use DreamFactory\Managed\Support\Managed;
 use Illuminate\Contracts\Routing\Middleware;
@@ -167,6 +168,7 @@ class AccessCheck
      */
     public function handle($request, Closure $next)
     {
+        static::setExceptions();
         //Get the api key.
         $apiKey = static::getApiKey($request);
         Session::setApiKey($apiKey);
@@ -313,5 +315,20 @@ class AccessCheck
         $allowed = Session::getServicePermissions($service, $component);
 
         return ($action & $allowed) ? true : false;
+    }
+
+    protected static function setExceptions()
+    {
+        if(class_exists(\DreamFactory\Core\User\Services\User::class)) {
+            $userService = ServiceHandler::getService('user');
+
+            if ($userService->config['allow_open_registration']) {
+                static::$exceptions[] = [
+                    'verb_mask' => 2, //Allow POST only
+                    'service'   => 'user',
+                    'resource'  => 'register'
+                ];
+            }
+        }
     }
 }
