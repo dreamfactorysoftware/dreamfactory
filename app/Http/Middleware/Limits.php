@@ -31,7 +31,14 @@ class Limits
             return $next($request);
         } else {
             $limits = Managed::getLimits();
+
+            // The limits array comes across from the console as a bunch of Std Objects, need to turn it back
+            // into an array
             $limits['api'] = (array)$limits['api'];
+
+            foreach(array_keys($limits['api']) as $key) {
+                $limits['api'][$key] = (array)$limits['api'][$key];
+            }
         }
 
 
