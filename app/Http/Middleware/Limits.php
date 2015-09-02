@@ -28,10 +28,12 @@ class Limits
     {
         // Get limits
         if(config('df.standalone')){
-            $limits = null;
+            return $next($request);
         } else {
             $limits = Managed::getLimits();
+            $limits['api'] = (array)$limits['api'];
         }
+
 
         if (!empty($limits) && is_null($this->_getServiceName()) === false) {
 
@@ -83,15 +85,15 @@ class Limits
             $overLimit = false;
 
             try {
-                foreach ($limits['api'] as $key => $limit) {
+                foreach (array_keys($apiKeysToCheck) as $key) {
                     foreach ($timePeriods as $period) {
                         $keyToCheck = $key . '.' . $period;
-                        if (array_key_exists($keyToCheck, $apiKeysToCheck) === true) {
+                        if (array_key_exists($keyToCheck, $limits['api']) === true) {
 
                             $cacheValue = \Cache::get($keyToCheck, 0);
                             $cacheValue++;
-                            \Cache::put($keyToCheck, $cacheValue, $limit['period']);
-                            if ($cacheValue > $limit['limit']) {
+                            \Cache::put($keyToCheck, $cacheValue, $limits['api'][$key]['period']);
+                            if ($cacheValue > $limits['api'][$key]['limit']) {
                                 $overLimit = true;
                             }
                         }
