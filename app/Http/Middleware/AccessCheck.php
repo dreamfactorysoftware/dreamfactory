@@ -4,11 +4,10 @@ namespace DreamFactory\Http\Middleware;
 use \Auth;
 use \Closure;
 use DreamFactory\Core\Models\App;
+use DreamFactory\Core\Models\Service;
 use DreamFactory\Core\Utility\JWTUtilities;
-use DreamFactory\Core\Utility\ServiceHandler;
 use DreamFactory\Managed\Enums\ManagedDefaults;
 use DreamFactory\Managed\Support\Managed;
-use Illuminate\Contracts\Routing\Middleware;
 use \JWTAuth;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
@@ -25,8 +24,6 @@ use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use Tymon\JWTAuth\Payload;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
-
-
 
 class AccessCheck
 {
@@ -87,24 +84,26 @@ class AccessCheck
      */
     protected static function getJWTFromAuthHeader()
     {
-        if(env('APP_ENV') === 'testing'){
+        if (env('APP_ENV') === 'testing') {
             //getallheaders method is not available in unit test mode.
             return [];
         }
 
-        if (!function_exists('getallheaders'))  {
+        if (!function_exists('getallheaders')) {
             function getallheaders()
             {
                 if (!is_array($_SERVER)) {
-                    return array();
+                    return [];
                 }
 
-                $headers = array();
+                $headers = [];
                 foreach ($_SERVER as $name => $value) {
                     if (substr($name, 0, 5) == 'HTTP_') {
-                        $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
+                        $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] =
+                            $value;
                     }
                 }
+
                 return $headers;
             }
         }
@@ -112,9 +111,10 @@ class AccessCheck
         $token = null;
         $headers = getallheaders();
         $authHeader = ArrayUtils::get($headers, 'Authorization');
-        if(strpos($authHeader, 'Bearer')!==false){
+        if (strpos($authHeader, 'Bearer') !== false) {
             $token = substr($authHeader, 7);
         }
+
         return $token;
     }
 
@@ -126,12 +126,12 @@ class AccessCheck
     public static function getConsoleApiKey($request)
     {
         //If instance is standalone return null
-        if(config('df.standalone')){
+        if (config('df.standalone')) {
             return null;
         }
         //Check for Console API key in request parameters.
         $consoleApiKey = $request->query('console_key');
-        if (empty( $consoleApiKey )) {
+        if (empty($consoleApiKey)) {
             //Check for API key in request HEADER.
             $consoleApiKey = $request->header(ManagedDefaults::CONSOLE_X_HEADER);
         }
@@ -147,13 +147,13 @@ class AccessCheck
     public static function getJwt($request)
     {
         $token = static::getJWTFromAuthHeader();
-        if(empty($token)) {
+        if (empty($token)) {
             $token = $request->header('X_DREAMFACTORY_SESSION_TOKEN');
         }
-        if(empty($token)){
+        if (empty($token)) {
             $token = $request->input('session_token');
         }
-        if(empty($token)){
+        if (empty($token)) {
             $token = $request->input('token');
         }
 
@@ -161,7 +161,7 @@ class AccessCheck
     }
 
     /**
-     * @param Request  $request
+     * @param Request $request
      * @param Closure $next
      *
      * @return array|mixed|string
@@ -185,7 +185,7 @@ class AccessCheck
         $basicAuthUser = $request->getUser();
         $basicAuthPassword = $request->getPassword();
 
-        if (!config('df.standalone') && !empty( $consoleApiKey ) && $consoleApiKey === Managed::getConsoleKey()) {
+        if (!config('df.standalone') && !empty($consoleApiKey) && $consoleApiKey === Managed::getConsoleKey()) {
             //DFE Console request
             return $next($request);
         } elseif (!empty($basicAuthUser) && !empty($basicAuthPassword)) {
@@ -212,12 +212,12 @@ class AccessCheck
                 Session::setSessionData($appId, $userId);
             } catch (TokenExpiredException $e) {
                 JWTUtilities::clearAllExpiredTokenMaps();
-                if(!static::isException($request)) {
+                if (!static::isException($request)) {
                     return ResponseFactory::getException(new UnauthorizedException($e->getMessage()), $request);
                 }
-            } catch(TokenBlacklistedException $e){
+            } catch (TokenBlacklistedException $e) {
                 return ResponseFactory::getException(new ForbiddenException($e->getMessage()), $request);
-            } catch (TokenInvalidException $e){
+            } catch (TokenInvalidException $e) {
                 return ResponseFactory::getException(new BadRequestException('Invalid token supplied.'), $request);
             }
         } elseif (!empty($apiKey)) {
@@ -319,10 +319,10 @@ class AccessCheck
 
     protected static function setExceptions()
     {
-        if(class_exists(\DreamFactory\Core\User\Services\User::class)) {
-            $userService = ServiceHandler::getService('user');
+        if (class_exists(\DreamFactory\Core\User\Services\User::class)) {
+            $userService = Service::getCachedByName('user');
 
-            if ($userService->config['allow_open_registration']) {
+            if ($userService['config']['allow_open_registration']) {
                 static::$exceptions[] = [
                     'verb_mask' => 2, //Allow POST only
                     'service'   => 'user',
