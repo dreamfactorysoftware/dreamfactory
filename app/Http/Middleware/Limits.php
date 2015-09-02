@@ -99,8 +99,8 @@ class Limits
 
                             $cacheValue = \Cache::get($keyToCheck, 0);
                             $cacheValue++;
-                            \Cache::put($keyToCheck, $cacheValue, $limits['api'][$key]['period']);
-                            if ($cacheValue > $limits['api'][$key]['limit']) {
+                            \Cache::put($keyToCheck, $cacheValue, $limits['api'][$keyToCheck]['period']);
+                            if ($cacheValue > $limits['api'][$keyToCheck]['limit']) {
                                 $overLimit = true;
                             }
                         }
