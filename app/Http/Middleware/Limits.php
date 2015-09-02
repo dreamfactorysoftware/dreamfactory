@@ -26,8 +26,11 @@ class Limits
      */
     public function handle($request, Closure $next)
     {
+        //Get the Console API Key
+        $consoleApiKey = AccessCheck::getConsoleApiKey($request);
+
         // Get limits
-        if(config('df.standalone')){
+        if(config('df.standalone') === true || $consoleApiKey === Managed::getConsoleKey()){
             return $next($request);
         } else {
             $limits = Managed::getLimits();
