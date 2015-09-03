@@ -43,7 +43,7 @@ return [
 
         'local'     => [
             'driver' => 'local',
-            'root'   => storage_path() . '/' . ltrim(env('LOCAL_FILE_ROOT', 'app'), '/'),
+            'root'   => storage_path() . '/' . ltrim(env('DF_LOCAL_FILE_ROOT', 'app'), '/'),
         ],
         's3'        => [
             'driver' => 's3',

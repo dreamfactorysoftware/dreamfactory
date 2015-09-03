@@ -15,7 +15,7 @@ class SplashController extends Controller
      */
     public function index()
     {
-        return redirect(env('LANDING_PAGE', '/test_rest.html'));
+        return redirect(config('df.landing_page', '/test_rest.html'));
     }
 
     public function createFirstUser()
