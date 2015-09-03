@@ -22,7 +22,7 @@ class FirstUserCheck
     {
         $route = $request->getPathInfo();
 
-        if ('/setup' !== $route) {
+        if ('/setup' !== $route && '/setup_db' !== $route) {
             try {
                 if (!User::adminExists()) {
                     return redirect()->to('/setup');
@@ -32,10 +32,8 @@ class FirstUserCheck
 
                 if($code === '42S02') {
                     //Mysql base table or view not found.
-                    \Artisan::call('migrate');
-                    \Artisan::call('db:seed');
-
-                    return redirect()->to('/setup');
+                    \Cache::put('setup_db', true, config('df.default_cache_ttl'));
+                    return redirect()->to('/setup_db');
                 } else {
                     throw $e;
                 }
