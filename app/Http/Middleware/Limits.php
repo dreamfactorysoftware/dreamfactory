@@ -26,8 +26,24 @@ class Limits
      */
     public function handle($request, Closure $next)
     {
+        //Get the Console API Key
+        $consoleApiKey = AccessCheck::getConsoleApiKey($request);
+
         // Get limits
-        $limits = Managed::getLimits();
+        if(config('df.standalone') === true || $consoleApiKey === Managed::getConsoleKey()){
+            return $next($request);
+        } else {
+            $limits = Managed::getLimits();
+
+            // The limits array comes across from the console as a bunch of Std Objects, need to turn it back
+            // into an array
+            $limits['api'] = (array)$limits['api'];
+
+            foreach(array_keys($limits['api']) as $key) {
+                $limits['api'][$key] = (array)$limits['api'][$key];
+            }
+        }
+
 
         if (!empty($limits) && is_null($this->_getServiceName()) === false) {
 
@@ -79,15 +95,15 @@ class Limits
             $overLimit = false;
 
             try {
-                foreach ($limits['api'] as $key => $limit) {
+                foreach (array_keys($apiKeysToCheck) as $key) {
                     foreach ($timePeriods as $period) {
                         $keyToCheck = $key . '.' . $period;
-                        if (array_key_exists($keyToCheck, $apiKeysToCheck) === true) {
+                        if (array_key_exists($keyToCheck, $limits['api']) === true) {
 
                             $cacheValue = \Cache::get($keyToCheck, 0);
                             $cacheValue++;
-                            \Cache::put($keyToCheck, $cacheValue, $limit['period']);
-                            if ($cacheValue > $limit['limit']) {
+                            \Cache::put($keyToCheck, $cacheValue, $limits['api'][$keyToCheck]['period']);
+                            if ($cacheValue > $limits['api'][$keyToCheck]['limit']) {
                                 $overLimit = true;
                             }
                         }

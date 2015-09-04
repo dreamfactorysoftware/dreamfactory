@@ -11,8 +11,15 @@
 |
 */
 
+use DreamFactory\Managed\Support\Managed;
+use Monolog\Handler\StreamHandler;
+use Monolog\Formatter\LineFormatter;
+use Monolog\Handler\SyslogHandler;
+use Monolog\Handler\ErrorLogHandler;
+use Monolog\Handler\RotatingFileHandler;
+
 $app = new Illuminate\Foundation\Application(
-	realpath(__DIR__.'/../')
+    realpath(__DIR__ . '/../')
 );
 
 /*
@@ -27,19 +34,43 @@ $app = new Illuminate\Foundation\Application(
 */
 
 $app->singleton(
-	'Illuminate\Contracts\Http\Kernel',
-	'DreamFactory\Http\Kernel'
+    'Illuminate\Contracts\Http\Kernel',
+    'DreamFactory\Http\Kernel'
 );
 
 $app->singleton(
-	'Illuminate\Contracts\Console\Kernel',
-	'DreamFactory\Console\Kernel'
+    'Illuminate\Contracts\Console\Kernel',
+    'DreamFactory\Console\Kernel'
 );
 
 $app->singleton(
-	'Illuminate\Contracts\Debug\ExceptionHandler',
-	'DreamFactory\Exceptions\Handler'
+    'Illuminate\Contracts\Debug\ExceptionHandler',
+    'DreamFactory\Exceptions\Handler'
 );
+
+$app->configureMonologUsing(function ($monolog){
+    $logFile = storage_path('logs/dreamfactory.log');
+    if (!config('df.standalone')) {
+        $logFile = Managed::getLogFile();
+    }
+
+    $mode = config('app.log');
+
+    if ($mode === 'syslog') {
+        $monolog->pushHandler(new SyslogHandler('dreamfactory'));
+    } else {
+        if ($mode === 'single') {
+            $handler = new StreamHandler($logFile);
+        } else if ($mode === 'errorlog') {
+            $handler = new ErrorLogHandler();
+        } else {
+            $handler = new RotatingFileHandler($logFile, 5);
+        }
+
+        $monolog->pushHandler($handler);
+        $handler->setFormatter(new LineFormatter(null, null, true, true));
+    }
+});
 
 /*
 |--------------------------------------------------------------------------

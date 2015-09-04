@@ -128,10 +128,10 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+
         /**
          * DreamFactory Core
          */
-        DreamFactory\Managed\Providers\ManagedServiceProvider::class,
         DreamFactory\Core\Providers\DfServiceProvider::class,
         DreamFactory\Core\Providers\DfCorsServiceProvider::class,
 

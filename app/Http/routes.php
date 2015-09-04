@@ -23,6 +23,10 @@ Route::get('/setup', 'SplashController@createFirstUser');
 
 Route::post('/setup', 'SplashController@createFirstUser');
 
+Route::get('/setup_db', 'SplashController@setupDb');
+
+Route::post('/setup_db', 'SplashController@setupDb');
+
 $resourcePathPattern = '[0-9a-zA-Z-_@&\#\!=,:;\/\^\$\.\|\{\}\[\]\(\)\*\+\? ]+';
 $servicePattern = '[_0-9a-zA-Z-.]+';
 

@@ -15,7 +15,7 @@ class SplashController extends Controller
      */
     public function index()
     {
-        return redirect(env('LANDING_PAGE', '/test_rest.html'));
+        return redirect(config('df.landing_page', '/test_rest.html'));
     }
 
     public function createFirstUser()
@@ -48,9 +48,66 @@ class SplashController extends Controller
 
                 return view('firstUser', $data);
             } else {
-                $registrar->create($data);
+                $registrar->createFirstAdmin($data);
 
                 return redirect()->to('/');
+            }
+        }
+    }
+
+    /**
+     * Sets up db by running migration and seeder.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function setupDb()
+    {
+        $setup = \Cache::get('setup_db', false);
+        if(!$setup){
+            return redirect()->to('/');
+        }
+
+        $request = \Request::instance();
+        $method = $request->method();
+
+        if(Verbs::GET === $method){
+            return view('setup', [
+                'version' => config('df.api_version')
+            ]);
+        } else if(Verbs::POST === $method) {
+            try {
+                $setup = \Cache::pull('setup_db', false);
+                if ($setup) {
+                    \Artisan::call('migrate');
+                    \Artisan::call('db:seed');
+
+                    if ($request->ajax()) {
+                        echo json_encode(['success' => true, 'redirect_path' => '/setup']);
+                    } else {
+                        return redirect()->to('/setup');
+                    }
+                } else {
+                    if ($request->ajax()) {
+                        echo json_encode([
+                            'success' => false,
+                            'message' => 'Setup not required. System is already setup'
+                        ]);
+                    } else {
+                        return redirect()->to('/');
+                    }
+                }
+            } catch (\Exception $e) {
+                if ($request->ajax()) {
+                    echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+                } else {
+                    return view(
+                        'errors.generic',
+                        [
+                            'error' => $e->getMessage(),
+                            'version' => config('df.api_version')
+                        ]
+                    );
+                }
             }
         }
     }
