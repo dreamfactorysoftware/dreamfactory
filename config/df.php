@@ -1,6 +1,9 @@
 <?php
 
 return [
+    // Name of this DreamFactory instance. Defaults to server name.
+    'instance_name'                => env('DF_INSTANCE_NAME', gethostname()),
+
     // General API version number, 1.x was earlier product and may be supported by most services
     'api_version'                  => '2.0',
 
