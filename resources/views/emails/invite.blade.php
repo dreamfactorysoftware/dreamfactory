@@ -22,7 +22,7 @@
             You have been invited to the DreamFactory Instance of {{ $instanceName }}. Go to the following url, enter the code below, and set your password to confirm your account.<br/>
             <br/>
             {{ $link }}
-            <br/>
+            <br/><br/>
             Confirmation Code: {{ $code }}}<br/>
         </div>
 
