@@ -4,12 +4,18 @@ return [
     // Name of this DreamFactory instance. Defaults to server name.
     'instance_name'                => env('DF_INSTANCE_NAME', gethostname()),
 
+    // XML root tag for http request with XML payload.
+    'xml_request_root'             => 'dfapi',
+
     // General API version number, 1.x was earlier product and may be supported by most services
     'api_version'                  => '2.0',
 
     // Most API calls return a resource array or a single resource, if array, do we wrap it?
     'always_wrap_resources'        => true,
     'resources_wrapper'            => 'resource',
+
+    // Default content-type of response when accepts header is missing or empty.
+    'default_response_type'        => 'application/json',
 
     // Local File Storage setup, see also local config/filesystems.php
     'storage_path'                 => storage_path(),
