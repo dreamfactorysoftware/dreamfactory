@@ -557,11 +557,10 @@ function deleteSelected() {
             var data = {};
             data.resource = [];
             if (folders.length > 0) {
-                data.resource.concat(folders);
+                data.resource = data.resource.concat(folders);
             }
-
             if (files.length > 0) {
-                data.resource.concat(files);
+                data.resource = data.resource.concat(files);
             }
             data = JSON.stringify(data);
             $.ajax({

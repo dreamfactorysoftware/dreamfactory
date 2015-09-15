@@ -7,8 +7,9 @@
 
  $contentHeader       The callout/header of the email's body
  $firstName                The name of the recipient.
- $link                The password reset link
- $code                The reset code
+ $link                The password reset link.
+ $code                The reset code.
+ $instanceName        Name of the DreamFactory Instance.
 
 --}}
 @section('contentBody')
@@ -18,11 +19,11 @@
         </p>
 
         <div>
-            You have requested to reset your password. Go to the following url, enter the code below, and set your new password.
-            <br><br>
+            You have registered an user account on the DreamFactory instance of {{ $instanceName }}. Go to the following url, enter the code below, and set your password to confirm your account.<br/>
+            <br/>
             {{ $link }}
-            <br><br>
-            Confirmation Code: {{ $code }}
+            <br/><br/>
+            Confirmation Code: {{ $code }}}<br/>
         </div>
 
         <p>
