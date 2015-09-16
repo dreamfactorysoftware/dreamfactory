@@ -44,7 +44,7 @@ $(document).ready(function () {
         if ($(this).hasClass("disabled")) {
             return false;
         }
-        $("#fileIframe").attr("src", "/api/v2" + currentPath + "?zip=true&api_key=" + apiKey);
+        $("#fileIframe").attr("src", "/api/v2" + currentPath + "?zip=true&api_key=" + apiKey + "&session_token=" + sessionToken);
     });
 
     $("#rm").click(function () {
