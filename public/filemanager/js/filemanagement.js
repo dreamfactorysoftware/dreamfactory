@@ -44,7 +44,7 @@ $(document).ready(function () {
         if ($(this).hasClass("disabled")) {
             return false;
         }
-        $("#fileIframe").attr("src", "/api/v2" + currentPath + "?zip=true&api_key=" + apiKey);
+        $("#fileIframe").attr("src", "/api/v2" + currentPath + "?zip=true&api_key=" + apiKey + "&session_token=" + sessionToken);
     });
 
     $("#rm").click(function () {
@@ -557,11 +557,10 @@ function deleteSelected() {
             var data = {};
             data.resource = [];
             if (folders.length > 0) {
-                data.resource.concat(folders);
+                data.resource = data.resource.concat(folders);
             }
-
             if (files.length > 0) {
-                data.resource.concat(files);
+                data.resource = data.resource.concat(files);
             }
             data = JSON.stringify(data);
             $.ajax({

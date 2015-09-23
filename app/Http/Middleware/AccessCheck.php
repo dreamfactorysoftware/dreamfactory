@@ -4,10 +4,10 @@ namespace DreamFactory\Http\Middleware;
 use \Auth;
 use \Closure;
 use DreamFactory\Core\Models\App;
+use DreamFactory\Core\Models\Service;
 use DreamFactory\Core\Utility\JWTUtilities;
 use DreamFactory\Managed\Enums\ManagedDefaults;
 use DreamFactory\Managed\Support\Managed;
-use Illuminate\Contracts\Routing\Middleware;
 use \JWTAuth;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
@@ -24,8 +24,6 @@ use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use Tymon\JWTAuth\Payload;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
-
-
 
 class AccessCheck
 {
@@ -86,24 +84,26 @@ class AccessCheck
      */
     protected static function getJWTFromAuthHeader()
     {
-        if(env('APP_ENV') === 'testing'){
+        if (env('APP_ENV') === 'testing') {
             //getallheaders method is not available in unit test mode.
             return [];
         }
 
-        if (!function_exists('getallheaders'))  {
+        if (!function_exists('getallheaders')) {
             function getallheaders()
             {
                 if (!is_array($_SERVER)) {
-                    return array();
+                    return [];
                 }
 
-                $headers = array();
+                $headers = [];
                 foreach ($_SERVER as $name => $value) {
                     if (substr($name, 0, 5) == 'HTTP_') {
-                        $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
+                        $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] =
+                            $value;
                     }
                 }
+
                 return $headers;
             }
         }
@@ -111,9 +111,10 @@ class AccessCheck
         $token = null;
         $headers = getallheaders();
         $authHeader = ArrayUtils::get($headers, 'Authorization');
-        if(strpos($authHeader, 'Bearer')!==false){
+        if (strpos($authHeader, 'Bearer') !== false) {
             $token = substr($authHeader, 7);
         }
+
         return $token;
     }
 
@@ -125,12 +126,12 @@ class AccessCheck
     public static function getConsoleApiKey($request)
     {
         //If instance is standalone return null
-        if(config('df.standalone')){
+        if (config('df.standalone')) {
             return null;
         }
         //Check for Console API key in request parameters.
         $consoleApiKey = $request->query('console_key');
-        if (empty( $consoleApiKey )) {
+        if (empty($consoleApiKey)) {
             //Check for API key in request HEADER.
             $consoleApiKey = $request->header(ManagedDefaults::CONSOLE_X_HEADER);
         }
@@ -146,13 +147,13 @@ class AccessCheck
     public static function getJwt($request)
     {
         $token = static::getJWTFromAuthHeader();
-        if(empty($token)) {
+        if (empty($token)) {
             $token = $request->header('X_DREAMFACTORY_SESSION_TOKEN');
         }
-        if(empty($token)){
+        if (empty($token)) {
             $token = $request->input('session_token');
         }
-        if(empty($token)){
+        if (empty($token)) {
             $token = $request->input('token');
         }
 
@@ -160,92 +161,87 @@ class AccessCheck
     }
 
     /**
-     * @param Request  $request
+     * @param Request $request
      * @param Closure $next
      *
      * @return array|mixed|string
      */
     public function handle($request, Closure $next)
     {
-        //Get the api key.
-        $apiKey = static::getApiKey($request);
-        Session::setApiKey($apiKey);
-        $appId = App::getAppIdByApiKey($apiKey);
+        try {
+            static::setExceptions();
+            //Get the api key.
+            $apiKey = static::getApiKey($request);
+            Session::setApiKey($apiKey);
+            $appId = App::getAppIdByApiKey($apiKey);
 
-        //Get the JWT.
-        $token = static::getJwt($request);
-        Session::setSessionToken($token);
+            //Get the JWT.
+            $token = static::getJwt($request);
+            Session::setSessionToken($token);
 
-        //Get the Console API Key
-        $consoleApiKey = static::getConsoleApiKey($request);
+            //Get the Console API Key
+            $consoleApiKey = static::getConsoleApiKey($request);
 
-        //Check for basic auth attempt.
-        $basicAuthUser = $request->getUser();
-        $basicAuthPassword = $request->getPassword();
+            //Check for basic auth attempt.
+            $basicAuthUser = $request->getUser();
+            $basicAuthPassword = $request->getPassword();
 
-        if (!config('df.standalone') && !empty( $consoleApiKey ) && $consoleApiKey === Managed::getConsoleKey()) {
-            //DFE Console request
-            return $next($request);
-        } elseif (!empty($basicAuthUser) && !empty($basicAuthPassword)) {
-            //Attempting to login using basic auth.
-            Auth::onceBasic();
-            /** @var User $authenticatedUser */
-            $authenticatedUser = Auth::user();
-            if (!empty($authenticatedUser)) {
-                $userId = $authenticatedUser->id;
-                Session::setSessionData($appId, $userId);
-            } else {
-                return ResponseFactory::getException(
-                    new UnauthorizedException('Unauthorized. User credentials did not match.'),
-                    $request
-                );
-            }
-        } elseif (!empty($token)) {
-            //JWT supplied meaning an authenticated user session/token.
-            try {
-                JWTAuth::setToken($token);
-                /** @type Payload $payload */
-                $payload = JWTAuth::getPayload();
-                $userId = $payload->get('user_id');
-                Session::setSessionData($appId, $userId);
-            } catch (TokenExpiredException $e) {
-                JWTUtilities::clearAllExpiredTokenMaps();
-                if(!static::isException($request)) {
-                    return ResponseFactory::getException(new UnauthorizedException($e->getMessage()), $request);
+            if (!config('df.standalone') && !empty($consoleApiKey) && $consoleApiKey === Managed::getConsoleKey()) {
+                //DFE Console request
+                return $next($request);
+            } elseif (!empty($basicAuthUser) && !empty($basicAuthPassword)) {
+                //Attempting to login using basic auth.
+                Auth::onceBasic();
+                /** @var User $authenticatedUser */
+                $authenticatedUser = Auth::user();
+                if (!empty($authenticatedUser)) {
+                    $userId = $authenticatedUser->id;
+                    Session::setSessionData($appId, $userId);
+                } else {
+                    throw new UnauthorizedException('Unauthorized. User credentials did not match.');
                 }
-            } catch(TokenBlacklistedException $e){
-                return ResponseFactory::getException(new ForbiddenException($e->getMessage()), $request);
-            } catch (TokenInvalidException $e){
-                return ResponseFactory::getException(new BadRequestException('Invalid token supplied.'), $request);
-            }
-        } elseif (!empty($apiKey)) {
-            //Just Api Key is supplied. No authenticated session
-            Session::setSessionData($appId);
-        } elseif (static::isException($request)) {
-            //Path exception.
-            return $next($request);
-        } else {
-            //No token and/or Api Key supplied.
-            return ResponseFactory::getException(
-                new BadRequestException('Bad request. No token or api key provided.'),
-                $request
-            );
-        }
-
-        if (static::isAccessAllowed()) {
-            return $next($request);
-        } elseif (static::isException($request)) {
-            //API key and/or (non-admin) user logged in, but if access is still not allowed then check for exception case.
-            return $next($request);
-        } else {
-            if (!Session::isAuthenticated()) {
-                return ResponseFactory::getException(
-                    new UnauthorizedException('Unauthorized.'),
-                    $request
-                );
+            } elseif (!empty($token)) {
+                //JWT supplied meaning an authenticated user session/token.
+                try {
+                    JWTAuth::setToken($token);
+                    /** @type Payload $payload */
+                    $payload = JWTAuth::getPayload();
+                    $userId = $payload->get('user_id');
+                    Session::setSessionData($appId, $userId);
+                } catch (TokenExpiredException $e) {
+                    JWTUtilities::clearAllExpiredTokenMaps();
+                    if (!static::isException($request)) {
+                        throw new UnauthorizedException($e->getMessage());
+                    }
+                } catch (TokenBlacklistedException $e) {
+                    throw new ForbiddenException($e->getMessage());
+                } catch (TokenInvalidException $e) {
+                    throw new BadRequestException('Invalid token supplied.');
+                }
+            } elseif (!empty($apiKey)) {
+                //Just Api Key is supplied. No authenticated session
+                Session::setSessionData($appId);
+            } elseif (static::isException($request)) {
+                //Path exception.
+                return $next($request);
             } else {
-                return ResponseFactory::getException(new ForbiddenException('Access Forbidden.'), $request);
+                throw new BadRequestException('Bad request. No token or api key provided.');
             }
+
+            if (static::isAccessAllowed()) {
+                return $next($request);
+            } elseif (static::isException($request)) {
+                //API key and/or (non-admin) user logged in, but if access is still not allowed then check for exception case.
+                return $next($request);
+            } else {
+                if (!Session::isAuthenticated()) {
+                    throw new UnauthorizedException('Unauthorized.');
+                } else {
+                    throw new ForbiddenException('Access Forbidden.');
+                }
+            }
+        } catch (\Exception $e){
+            return ResponseFactory::getException($e, $request);
         }
     }
 
@@ -313,5 +309,20 @@ class AccessCheck
         $allowed = Session::getServicePermissions($service, $component);
 
         return ($action & $allowed) ? true : false;
+    }
+
+    protected static function setExceptions()
+    {
+        if (class_exists(\DreamFactory\Core\User\Services\User::class)) {
+            $userService = Service::getCachedByName('user');
+
+            if ($userService['config']['allow_open_registration']) {
+                static::$exceptions[] = [
+                    'verb_mask' => 2, //Allow POST only
+                    'service'   => 'user',
+                    'resource'  => 'register'
+                ];
+            }
+        }
     }
 }

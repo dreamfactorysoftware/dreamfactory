@@ -51,46 +51,5 @@ class DatabaseSeeder extends Seeder
         if (class_exists('DreamFactory\\Core\\ADLdap\\Database\\Seeds\\DatabaseSeeder')) {
             $this->call('DreamFactory\\Core\\ADLdap\\Database\\Seeds\\DatabaseSeeder');
         }
-
-        /*
-        // Add additional services here
-        if (class_exists('DreamFactory\\Core\\SqlDb\\Services\\SqlDb')) {
-            \DreamFactory\Core\Models\Service::create(
-                [
-                    'name'        => 'db',
-                    'label'       => 'SQL Database',
-                    'description' => 'A SQL database service.',
-                    'is_active'   => true,
-                    'type'        => 'sql_db',
-                    'mutable'     => true,
-                    'deletable'   => true,
-                    'config'      => [
-                        'driver'   => 'mysql',
-                        'dsn'      => 'mysql:host=localhost;port=3306;dbname=test',
-                        'username' => 'test',
-                        'password' => 'test'
-                    ]
-                ]);
-        }
-
-        if (class_exists('DreamFactory\\Core\\MongoDb\\Services\\MongoDb')) {
-            \DreamFactory\Core\Models\Service::create(
-                [
-                    'name'        => 'mongodb',
-                    'label'       => 'MongoDB',
-                    'description' => 'A MongoDB database service.',
-                    'is_active'   => true,
-                    'type'        => 'mongodb',
-                    'mutable'     => true,
-                    'deletable'   => true,
-                    'config'      => [
-                        'dsn' => 'mongodb://localhost/dreamfactory',
-                    ]
-                ]
-            );
-
-            $this->command->info('Additional services seeded!');
-        }
-        //*/
     }
 }

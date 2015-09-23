@@ -54,7 +54,7 @@ return [
 	|
 	*/
 
-	'from' => ['address' => 'no-reply@dreamfactory.com', 'name' => 'DreamFactory'],
+	'from' => ['address' => 'no-reply@dreamfactory.com', 'name' => 'DO NOT REPLY'],
 
 	/*
 	|--------------------------------------------------------------------------

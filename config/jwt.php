@@ -24,7 +24,7 @@ return [
     |
     */
 
-    'ttl' => env('JWT_TTL', 60),
+    'ttl' => env('DF_JWT_TTL', 60),
 
     /*
     |--------------------------------------------------------------------------
@@ -38,7 +38,7 @@ return [
     |
     */
 
-    'refresh_ttl' => env('JWT_REFRESH_TTL', 20160),
+    'refresh_ttl' => env('DF_JWT_REFRESH_TTL', 20160),
 
     /*
     |--------------------------------------------------------------------------
@@ -147,9 +147,7 @@ return [
         |
         */
 
-        'auth' => function ($app) {
-            return new Tymon\JWTAuth\Providers\Auth\IlluminateAuthAdapter($app['auth']);
-        },
+        'auth' => 'Tymon\JWTAuth\Providers\Auth\IlluminateAuthAdapter',
 
         /*
         |--------------------------------------------------------------------------
@@ -160,9 +158,7 @@ return [
         |
         */
 
-        'storage' => function ($app) {
-            return new Tymon\JWTAuth\Providers\Storage\IlluminateCacheAdapter($app['cache']);
-        }
+        'storage' => 'Tymon\JWTAuth\Providers\Storage\IlluminateCacheAdapter'
 
     ]
 
