@@ -3,7 +3,7 @@ namespace DreamFactory\Http\Controllers;
 
 use DreamFactory\Core\Models\User;
 use DreamFactory\Library\Utility\Enums\Verbs;
-use DreamFactory\Core\Components\Registrar;
+use Validator;
 use Response;
 
 class SplashController extends Controller
@@ -20,11 +20,11 @@ class SplashController extends Controller
 
     public function createFirstUser()
     {
-        $request = \Request::instance();
-        $method = $request->method();
+        if (!User::adminExists()) {
+            $request = \Request::instance();
+            $method = $request->method();
 
-        if (Verbs::GET === $method) {
-            if (!User::adminExists()) {
+            if (Verbs::GET === $method) {
                 $data = [
                     'version'    => \Config::get('df.api_version'),
                     'email'      => '',
@@ -34,25 +34,17 @@ class SplashController extends Controller
                 ];
 
                 return view('firstUser', $data);
-            } else {
-                return redirect()->to('/');
-            }
-        } else if (Verbs::POST === $method) {
-            $data = $request->all();
-            $registrar = new Registrar();
-            $validator = $registrar->validator($data);
+            } else if (Verbs::POST === $method) {
+                $data = $request->all();
+                $user = User::createFirstAdmin($data);
 
-            if ($validator->fails()) {
-                $errors = $validator->getMessageBag()->all();
-                $data = array_merge($data, ['errors' => $errors, 'version' => \Config::get('df.api_version')]);
-
-                return view('firstUser', $data);
-            } else {
-                $registrar->createFirstAdmin($data);
-
-                return redirect()->to('/');
+                if (!$user) {
+                    return view('firstUser', $data);
+                }
             }
         }
+
+        return redirect()->to('/');
     }
 
     /**
@@ -62,53 +54,49 @@ class SplashController extends Controller
      */
     public function setupDb()
     {
-        $setup = \Cache::get('setup_db', false);
-        if(!$setup){
-            return redirect()->to('/');
-        }
+        if (\Cache::get('setup_db', false)) {
+            $request = \Request::instance();
+            $method = $request->method();
 
-        $request = \Request::instance();
-        $method = $request->method();
+            if (Verbs::GET === $method) {
+                return view('setup', [
+                    'version' => config('df.api_version')
+                ]);
+            } else if (Verbs::POST === $method) {
+                try {
+                    if (\Cache::pull('setup_db', false)) {
+                        \Artisan::call('migrate');
+                        \Artisan::call('db:seed');
 
-        if(Verbs::GET === $method){
-            return view('setup', [
-                'version' => config('df.api_version')
-            ]);
-        } else if(Verbs::POST === $method) {
-            try {
-                $setup = \Cache::pull('setup_db', false);
-                if ($setup) {
-                    \Artisan::call('migrate');
-                    \Artisan::call('db:seed');
-
-                    if ($request->ajax()) {
-                        echo json_encode(['success' => true, 'redirect_path' => '/setup']);
+                        if ($request->ajax()) {
+                            echo json_encode(['success' => true, 'redirect_path' => '/setup']);
+                        } else {
+                            return redirect()->to('/setup');
+                        }
                     } else {
-                        return redirect()->to('/setup');
+                        if ($request->ajax()) {
+                            echo json_encode([
+                                'success' => false,
+                                'message' => 'Setup not required. System is already setup'
+                            ]);
+                        }
                     }
-                } else {
+                } catch (\Exception $e) {
                     if ($request->ajax()) {
-                        echo json_encode([
-                            'success' => false,
-                            'message' => 'Setup not required. System is already setup'
-                        ]);
+                        echo json_encode(['success' => false, 'message' => $e->getMessage()]);
                     } else {
-                        return redirect()->to('/');
+                        return view(
+                            'errors.generic',
+                            [
+                                'error'   => $e->getMessage(),
+                                'version' => config('df.api_version')
+                            ]
+                        );
                     }
-                }
-            } catch (\Exception $e) {
-                if ($request->ajax()) {
-                    echo json_encode(['success' => false, 'message' => $e->getMessage()]);
-                } else {
-                    return view(
-                        'errors.generic',
-                        [
-                            'error' => $e->getMessage(),
-                            'version' => config('df.api_version')
-                        ]
-                    );
                 }
             }
         }
+
+        return redirect()->to('/');
     }
 }
