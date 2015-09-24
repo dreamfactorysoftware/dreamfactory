@@ -94,12 +94,12 @@
       "php artisan key:generate",
       "php artisan clear-compiled",
       "php artisan optimize",
-      "php pull_migrations"
+      "php artisan dreamfactory:pull-migrations"
     ],
     "post-update-cmd": [
       "php artisan clear-compiled",
       "php artisan optimize",
-      "php pull_migrations"
+      "php artisan dreamfactory:pull-migrations"
     ]
   },
   "config": {
