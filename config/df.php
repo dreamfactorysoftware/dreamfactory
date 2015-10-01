@@ -21,8 +21,6 @@ return [
     // Local File Storage setup, see also local config/filesystems.php
     'storage_path'                 => storage_path(),
     'local_file_service_container' => '/' . ltrim(env('DF_LOCAL_FILE_ROOT', '/app'), '/'),
-    'local_file_service_root'      => storage_path() . '/' . ltrim(env('DF_LOCAL_FILE_ROOT', '/app'), '/'),
-    'local_file_service_root_test' => storage_path() . "/test",
 
     // Set this false for hosted/managed environment.
     'standalone'                   => env('DF_STANDALONE', true),
