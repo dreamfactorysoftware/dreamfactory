@@ -227,6 +227,6 @@ class RestController extends Controller
             return $response;
         }
 
-        return ResponseFactory::sendResponse($response);
+        return ResponseFactory::sendResponse($response, null, null, $resource);
     }
 }
