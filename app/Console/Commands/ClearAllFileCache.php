@@ -30,11 +30,11 @@ class ClearAllFileCache extends Command
     {
         parent::__construct();
 
-		if(config('df.standalone')){
-			$this->cacheRoot = storage_path('framework/cache');
-		} else {
-			$this->cacheRoot = Managed::getCacheRoot();
-		}
+        if (config('df.standalone')) {
+            $this->cacheRoot = storage_path('framework/cache');
+        } else {
+            $this->cacheRoot = Managed::getCacheRoot();
+        }
     }
 
     /**
@@ -55,18 +55,20 @@ class ClearAllFileCache extends Command
      *
      * @param $path
      */
-    protected function removeDirectory($path) {
+    protected function removeDirectory($path)
+    {
         $files = glob($path . '/*');
         foreach ($files as $file) {
-            if(is_dir($file)){
+            if (is_dir($file)) {
                 static::removeDirectory($file);
-            } else if(basename($file)!=='.gitignore'){
+            } else if (basename($file) !== '.gitignore') {
                 unlink($file);
             }
         }
-        if($path !== $this->cacheRoot) {
+        if ($path !== $this->cacheRoot) {
             rmdir($path);
         }
+
         return;
     }
 }

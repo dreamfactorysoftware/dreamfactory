@@ -41,6 +41,8 @@ return [
         'date_format'          => null,
         'datetime_format'      => null,
         'timestamp_format'     => null,
+        // Default location to store SQLite3 database files
+        'sqlite_storage'       => env('DF_SQLITE_STORAGE', storage_path() . '/databases/'),
     ],
 
     // Cache / Session config
