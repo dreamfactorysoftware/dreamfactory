@@ -168,86 +168,80 @@ class AccessCheck
      */
     public function handle($request, Closure $next)
     {
-        static::setExceptions();
-        //Get the api key.
-        $apiKey = static::getApiKey($request);
-        Session::setApiKey($apiKey);
-        $appId = App::getAppIdByApiKey($apiKey);
+        try {
+            static::setExceptions();
+            //Get the api key.
+            $apiKey = static::getApiKey($request);
+            Session::setApiKey($apiKey);
+            $appId = App::getAppIdByApiKey($apiKey);
 
-        //Get the JWT.
-        $token = static::getJwt($request);
-        Session::setSessionToken($token);
+            //Get the JWT.
+            $token = static::getJwt($request);
+            Session::setSessionToken($token);
 
-        //Get the Console API Key
-        $consoleApiKey = static::getConsoleApiKey($request);
+            //Get the Console API Key
+            $consoleApiKey = static::getConsoleApiKey($request);
 
-        //Check for basic auth attempt.
-        $basicAuthUser = $request->getUser();
-        $basicAuthPassword = $request->getPassword();
+            //Check for basic auth attempt.
+            $basicAuthUser = $request->getUser();
+            $basicAuthPassword = $request->getPassword();
 
-        if (!config('df.standalone') && !empty($consoleApiKey) && $consoleApiKey === Managed::getConsoleKey()) {
-            //DFE Console request
-            return $next($request);
-        } elseif (!empty($basicAuthUser) && !empty($basicAuthPassword)) {
-            //Attempting to login using basic auth.
-            Auth::onceBasic();
-            /** @var User $authenticatedUser */
-            $authenticatedUser = Auth::user();
-            if (!empty($authenticatedUser)) {
-                $userId = $authenticatedUser->id;
-                Session::setSessionData($appId, $userId);
-            } else {
-                return ResponseFactory::getException(
-                    new UnauthorizedException('Unauthorized. User credentials did not match.'),
-                    $request
-                );
-            }
-        } elseif (!empty($token)) {
-            //JWT supplied meaning an authenticated user session/token.
-            try {
-                JWTAuth::setToken($token);
-                /** @type Payload $payload */
-                $payload = JWTAuth::getPayload();
-                $userId = $payload->get('user_id');
-                Session::setSessionData($appId, $userId);
-            } catch (TokenExpiredException $e) {
-                JWTUtilities::clearAllExpiredTokenMaps();
-                if (!static::isException($request)) {
-                    return ResponseFactory::getException(new UnauthorizedException($e->getMessage()), $request);
+            if (!config('df.standalone') && !empty($consoleApiKey) && $consoleApiKey === Managed::getConsoleKey()) {
+                //DFE Console request
+                return $next($request);
+            } elseif (!empty($basicAuthUser) && !empty($basicAuthPassword)) {
+                //Attempting to login using basic auth.
+                Auth::onceBasic();
+                /** @var User $authenticatedUser */
+                $authenticatedUser = Auth::user();
+                if (!empty($authenticatedUser)) {
+                    $userId = $authenticatedUser->id;
+                    Session::setSessionData($appId, $userId);
+                } else {
+                    throw new UnauthorizedException('Unauthorized. User credentials did not match.');
                 }
-            } catch (TokenBlacklistedException $e) {
-                return ResponseFactory::getException(new ForbiddenException($e->getMessage()), $request);
-            } catch (TokenInvalidException $e) {
-                return ResponseFactory::getException(new BadRequestException('Invalid token supplied.'), $request);
-            }
-        } elseif (!empty($apiKey)) {
-            //Just Api Key is supplied. No authenticated session
-            Session::setSessionData($appId);
-        } elseif (static::isException($request)) {
-            //Path exception.
-            return $next($request);
-        } else {
-            //No token and/or Api Key supplied.
-            return ResponseFactory::getException(
-                new BadRequestException('Bad request. No token or api key provided.'),
-                $request
-            );
-        }
-
-        if (static::isAccessAllowed()) {
-            return $next($request);
-        } elseif (static::isException($request)) {
-            //API key and/or (non-admin) user logged in, but if access is still not allowed then check for exception case.
-            return $next($request);
-        } else {
-            if (!Session::isAuthenticated()) {
-                return ResponseFactory::getException(
-                    new UnauthorizedException('Unauthorized.'),
-                    $request
-                );
+            } elseif (!empty($token)) {
+                //JWT supplied meaning an authenticated user session/token.
+                try {
+                    JWTAuth::setToken($token);
+                    /** @type Payload $payload */
+                    $payload = JWTAuth::getPayload();
+                    $userId = $payload->get('user_id');
+                    Session::setSessionData($appId, $userId);
+                } catch (TokenExpiredException $e) {
+                    JWTUtilities::clearAllExpiredTokenMaps();
+                    if (!static::isException($request)) {
+                        throw new UnauthorizedException($e->getMessage());
+                    }
+                } catch (TokenBlacklistedException $e) {
+                    throw new ForbiddenException($e->getMessage());
+                } catch (TokenInvalidException $e) {
+                    throw new BadRequestException('Invalid token supplied.');
+                }
+            } elseif (!empty($apiKey)) {
+                //Just Api Key is supplied. No authenticated session
+                Session::setSessionData($appId);
+            } elseif (static::isException($request)) {
+                //Path exception.
+                return $next($request);
             } else {
-                return ResponseFactory::getException(new ForbiddenException('Access Forbidden.'), $request);
+                throw new BadRequestException('Bad request. No token or api key provided.');
             }
+
+            if (static::isAccessAllowed()) {
+                return $next($request);
+            } elseif (static::isException($request)) {
+                //API key and/or (non-admin) user logged in, but if access is still not allowed then check for exception case.
+                return $next($request);
+            } else {
+                if (!Session::isAuthenticated()) {
+                    throw new UnauthorizedException('Unauthorized.');
+                } else {
+                    throw new ForbiddenException('Access Forbidden.');
+                }
+            }
+        } catch (\Exception $e){
+            return ResponseFactory::getException($e, $request);
         }
     }
 

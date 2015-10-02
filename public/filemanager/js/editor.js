@@ -67,10 +67,13 @@ EditorActions = {
                 xhr.setRequestHeader("X-File-Name",EditorActions.getFileName());
             },
             success:function (response) {
-                $.pnotify({
+                new PNotify({
                     title: EditorActions.getFileName(),
                     type: 'success',
-                    text: 'Saved Successfully'
+                    text: 'Saved Successfully',
+                    animation: 'fade',
+                    animate_speed: 150,
+                    delay: 1500
                 });
             },
             error:function (response) {

@@ -23,7 +23,7 @@
             <br/>
             {{ $link }}
             <br/><br/>
-            Confirmation Code: {{ $code }}}<br/>
+            Confirmation Code: {{ $code }}<br/>
         </div>
 
         <p>

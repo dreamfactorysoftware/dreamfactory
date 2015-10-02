@@ -19,6 +19,7 @@
 		var username = $('#username').val();
 		var password = $('#password').val();
         var auth = $('#auth').val();
+		var accept = $('#accept').val();
 
 		while(url.indexOf('=[')>=0) {
 			url = url.replace(/\[.*?\]/, function(a, b) {
@@ -59,6 +60,9 @@
                            if(auth){
                                xhr.setRequestHeader("Authorization", "Bearer "+auth);
                            }
+						   if(accept){
+							   xhr.setRequestHeader("Accept", accept);
+						   }
 						   if(username && password){
 							   xhr.setRequestHeader("Authorization", "Basic "+btoa(username+':'+password));
 						   }
@@ -66,15 +70,23 @@
 					   success: function(json){
                            if(json.response && json.response.redirect){
                                window.location.href = json.response.url;
-                           }
-                           else {
+                           } else {
                                $('#out').removeClass('error');
                                $('#out').html(JSON.stringify(json, null, '\t'));
                            }
 					   },
 					   error: function(err) {
-						   $('#out').addClass('error');
-						   $('#out').html(JSON.stringify(err.responseJSON, null, '\t'));
+						   if(err.status !== 200 && err.status !== 201){
+							   $('#out').addClass('error');
+						   } else {
+							   $('#out').removeClass('error');
+						   }
+
+						   if(err.responseJSON) {
+							   $('#out').html(JSON.stringify(err.responseJSON, null, '\t'));
+						   } else {
+							   $('#out').html(err.responseText);
+						   }
 					   }
 				   });
 		} catch (e) {
@@ -153,6 +165,10 @@
             <input type="text" id="auth" value="" size="120"/>
         </div>
 		<div>
+			Accept Header:
+			<input type="text" id="accept" value="application/json" size="120"/>
+		</div>
+		<div>
 			HTTP Auth username:
 			<input type="text" id="username" value="" size="20"/>
 		</div>
@@ -198,7 +214,7 @@
 	<br/>
 	<br/>
 	<div>
-		JSON OUTPUT:
+		OUTPUT:
 		<pre id="out"></pre>
 	</div>
     <script>

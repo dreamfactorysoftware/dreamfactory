@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>DreamFactory Services Platform&trade;</title>
+    <title>DreamFactory&trade;</title>
     <meta name="page-route" content="web/index" />
 
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
@@ -62,7 +62,7 @@
 <div id="footer">
     <div class="container-fluid">
         <span class="pull-left dsp-footer-copyright">
-            <p class="footer-text">&copy; <a target="_blank" href="https://www.dreamfactory.com">DreamFactory Software, Inc.</a> 2012-<?php echo date(
+            <p class="footer-text">&copy; <a target="_blank" href="https://www.dreamfactory.com">DreamFactory Software, Inc.</a> 2015-<?php echo date(
                         'Y'
                 ); ?>. All Rights Reserved.
             </p>
