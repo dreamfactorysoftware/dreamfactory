@@ -50,7 +50,7 @@
                     Please wait while we setup and configure your DreamFactory instance.
                     <br>
                     <br>
-                    <i>Please do not hit the back or refresh buttion while you wait here!</i>
+                    <i>Please do not hit the back or refresh button while you wait here!</i>
                     <br><hr>
                 </div>
             </div>
