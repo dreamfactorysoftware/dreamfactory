@@ -42,17 +42,21 @@
 
 <div id="page-content">
     <div class="container-fluid container-inner">
-        <div id="error-container" class="alert center">
-            <div class="alert center alert-warning" style="margin-top:40px; width: 500px">
+        <div class="alert center">
+            <div id="loadingFrame" class="alert center alert-warning" style="margin-top:40px; width: 500px">
                 <span style="font-size: 18pt;: center">Hello and Welcome to DreamFactory 2.0!</span><br><br>
                 <div id="loadingMsg" style="display: none;">
                     You will be up and ready in just few seconds.
                     Please wait while we setup and configure your DreamFactory instance.
                     <br>
                     <br>
-                    <i>Please do not hit the back or refresh buttion while you wait here!</i>
+                    <i>Please do not hit the back or refresh button while you wait here!</i>
                     <br><hr>
                 </div>
+            </div>
+            <div id="errorFrame" class="alert center alert-danger" style="margin-top:40px; width: 800px; display: none">
+                <span style="font-size: 14pt;">Installation failed. Please run the migration and seeder manually.</span><hr>
+                <div id="errorMsg"></div>
             </div>
         </div>
     </div>
@@ -97,11 +101,17 @@
                 if(json.success){
                     location.href=json.redirect_path;
                 } else {
-                    location.href='/';
+                    $('#loadingFrame').slideUp();
+                    $('#errorMsg').html(json.message);
+                    $('#errorFrame').slideDown();
+                    console.log(json)
                 }
             },
             error: function (err) {
-                location.href='/setup_db';
+                $('#loadingFrame').slideUp();
+                $('#errorMsg').html(err.responseText);
+                $('#errorFrame').slideDown();
+                console.log(err)
             }
         });
     }, 2000);
