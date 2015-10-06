@@ -65,17 +65,17 @@ class SplashController extends Controller
             } else if (Verbs::POST === $method) {
                 try {
                     if (\Cache::pull('setup_db', false)) {
-                        \Artisan::call('migrate');
-                        \Artisan::call('db:seed');
+                        \Artisan::call('migrate', ['--force' => true]);
+                        \Artisan::call('db:seed', ['--force' => true]);
 
                         if ($request->ajax()) {
-                            echo json_encode(['success' => true, 'redirect_path' => '/setup']);
+                            return json_encode(['success' => true, 'redirect_path' => '/setup']);
                         } else {
                             return redirect()->to('/setup');
                         }
                     } else {
                         if ($request->ajax()) {
-                            echo json_encode([
+                            return json_encode([
                                 'success' => false,
                                 'message' => 'Setup not required. System is already setup'
                             ]);
@@ -83,7 +83,7 @@ class SplashController extends Controller
                     }
                 } catch (\Exception $e) {
                     if ($request->ajax()) {
-                        echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+                        return json_encode(['success' => false, 'message' => $e->getMessage()]);
                     } else {
                         return view(
                             'errors.generic',
