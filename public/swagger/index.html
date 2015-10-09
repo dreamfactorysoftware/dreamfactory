@@ -12,6 +12,8 @@
     <script src='jquery.min.js' type='text/javascript'></script>
     <script type="text/javascript">
 
+        var _apiKey = "36fda24fe5588fa4285ac6c6c2fdfbdb6b6bc9834699774c9bf777f706d05a88";
+
         // Session inherited from query parameter, iframe, or opener
         function getSessionToken() {
             var phpSessionId = getQueryParameter('session_id');
@@ -119,7 +121,7 @@
                     );
 
                     window.authorizations.add("X-DreamFactory-API-Key",
-                            new ApiKeyAuthorization("X-DreamFactory-API-Key", "36fda24fe5588fa4285ac6c6c2fdfbdb6b6bc9834699774c9bf777f706d05a88", "header")
+                            new ApiKeyAuthorization("X-DreamFactory-API-Key", _apiKey, "header")
                     );
                     window.authorizations.add("X-DreamFactory-Session-Token",
                             new ApiKeyAuthorization("X-DreamFactory-Session-Token", getSessionToken(), "header")
