@@ -4,8 +4,9 @@ return [
     // Name of this DreamFactory instance. Defaults to server name.
     'instance_name'                => env('DF_INSTANCE_NAME', gethostname()),
 
-    // XML root tag for http request with XML payload.
+    // XML root tag for http request and response.
     'xml_request_root'             => 'dfapi',
+    'xml_response_root'            => 'dfapi',
 
     // General API version number, 1.x was earlier product and may be supported by most services
     'api_version'                  => '2.0',
@@ -20,8 +21,6 @@ return [
     // Local File Storage setup, see also local config/filesystems.php
     'storage_path'                 => storage_path(),
     'local_file_service_container' => '/' . ltrim(env('DF_LOCAL_FILE_ROOT', '/app'), '/'),
-    'local_file_service_root'      => storage_path() . '/' . ltrim(env('DF_LOCAL_FILE_ROOT', '/app'), '/'),
-    'local_file_service_root_test' => storage_path() . "/test",
 
     // Set this false for hosted/managed environment.
     'standalone'                   => env('DF_STANDALONE', true),
@@ -42,6 +41,8 @@ return [
         'date_format'          => null,
         'datetime_format'      => null,
         'timestamp_format'     => null,
+        // Default location to store SQLite3 database files
+        'sqlite_storage'       => env('DF_SQLITE_STORAGE', storage_path() . '/databases/'),
     ],
 
     // Cache / Session config

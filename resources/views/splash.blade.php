@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>DreamFactory DSP 2.0</title>
+		<title>DreamFactory</title>
 		
 		<link href='//fonts.googleapis.com/css?family=Lato:100' rel='stylesheet' type='text/css'>
 
@@ -41,7 +41,7 @@
 	<body>
 		<div class="container">
 			<div class="content">
-				<div class="title">DreamFactory DSP 2.0</div>
+				<div class="title">DreamFactory 2.0</div>
 				<div class="quote">{{ Inspiring::quote() }}</div>
                 <div>
                     <br>

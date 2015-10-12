@@ -3,20 +3,17 @@
 namespace DreamFactory\Http\Middleware;
 
 use DreamFactory\Core\Models\User;
-use Illuminate\Contracts\Routing\Middleware;
 use Illuminate\Database\QueryException;
 use Closure;
 
 class FirstUserCheck
 {
-
     /**
-     * Handle an incoming request.
+     * @param          $request
+     * @param \Closure $next
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Closure                 $next
-     *
-     * @return mixed
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function handle($request, Closure $next)
     {
@@ -28,14 +25,13 @@ class FirstUserCheck
                     return redirect()->to('/setup');
                 }
             } catch (QueryException $e) {
-                $code = $e->getCode();
-
-                if($code === '42S02') {
-                    //Mysql base table or view not found.
+                try {
+                    //base table or view not found.
                     \Cache::put('setup_db', true, config('df.default_cache_ttl'));
+
                     return redirect()->to('/setup_db');
-                } else {
-                    throw $e;
+                } catch (\Exception $ex) {
+                    throw $ex;
                 }
             }
         }
