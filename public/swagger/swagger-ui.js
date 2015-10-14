@@ -1139,7 +1139,7 @@ var Docs = {
         if (stack1 = helpers.url) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
         else { stack1 = depth0.url; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
         buffer += escapeExpression(stack1)
-            + "?session_token="+getSessionToken()+"'>Raw</a>\n    </li>\n  </ul>\n</div>\n<ul class='endpoints' id='";
+            + "?api_key="+_apiKey+"&session_token="+getSessionToken()+"'>Raw</a>\n    </li>\n  </ul>\n</div>\n<ul class='endpoints' id='";
         if (stack1 = helpers.id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
         else { stack1 = depth0.id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
         buffer += escapeExpression(stack1)
