@@ -15,13 +15,13 @@ return [
     'default_response_type'        => 'application/json',
     // Local File Storage setup, see also local config/filesystems.php
     'storage_path'                 => storage_path(),
-    'local_file_service_container' => '/' . ltrim(env('DF_LOCAL_FILE_ROOT', '/app'), '/'),
+    'local_file_service_container' => trim(env('DF_LOCAL_FILE_ROOT', 'app'), '/'),
     // Set this false for hosted/managed environment.
-    'standalone'                   => env('DF_STANDALONE', true),
+    'standalone'                   => env('DF_MANAGED', false),
     // DB configs
     'db'                           => [
         // The default number of records to return at once for database queries
-        'max_records_returned' => 1000,
+        'max_records_returned' => env('DF_DB_MAX_RECORDS_RETURNED', 1000),
         //-------------------------------------------------------------------------
         //	Date and Time Format Options
         //  The default date and time formats used for in and out requests for
@@ -35,16 +35,26 @@ return [
         'datetime_format'      => null,
         'timestamp_format'     => null,
         // Default location to store SQLite3 database files
-        'sqlite_storage'       => env('DF_SQLITE_STORAGE', storage_path() . '/databases/'),
+        'sqlite_storage'       => env('DF_SQLITE_STORAGE', storage_path('databases/')),
+        // FreeTDS configuration (Linux and OS X only)
         'freetds'              => [
-            'sqlsrv'      => env('DF_FREETDS_SQLSRV', base_path() . '/server/config/freetds/sqlsrv.conf'),
-            'sqlanywhere' => env('DF_FREETDS_SQLANYWHERE', base_path() . '/server/config/freetds/sqlanywhere.conf'),
-            'sybase'      => env('DF_FREETDS_SYBASE', base_path() . '/server/config/freetds/sybase.conf'),
+            // DB connection types, these dictate the TDS version and other config
+            // Location of SQL Server conf file, defaults to server/config/freetds/sqlsrv.conf
+            'sqlsrv'      => env('DF_FREETDS_SQLSRV', base_path('server/config/freetds/sqlsrv.conf')),
+            // Location of SAP/Sybase conf file, defaults to server/config/freetds/sqlanywhere.conf
+            'sqlanywhere' => env('DF_FREETDS_SQLANYWHERE', base_path('server/config/freetds/sqlanywhere.conf')),
+            // Location of old Sybase conf file, defaults to server/config/freetds/sybase.conf
+            'sybase'      => env('DF_FREETDS_SYBASE', base_path('server/config/freetds/sybase.conf')),
+            // Enabling and location of dump file, defaults to disabled or default freetds.conf setting
+            'dump'        => env('DF_FREETDS_DUMP'),
+            // Location of connection dump file, defaults to disabled
+            'dumpconfig'  => env('DF_FREETDS_DUMPCONFIG'),
         ]
     ],
-    // Cache / Session config
+    // Cache config, in minutes
     'default_cache_ttl'            => env('DF_CACHE_TTL', 300),
-    'allow_forever_sessions'       => false,
+    // Session config
+    'allow_forever_sessions'       => env('DF_ALLOW_FOREVER_SESSIONS', false),
     // System URLs
     'confirm_reset_url'            => env('DF_CONFIRM_RESET_URL', '/dreamfactory/dist/#/reset-password'),
     'confirm_invite_url'           => env('DF_CONFIRM_INVITE_URL', '/dreamfactory/dist/#/user-invite'),
@@ -63,5 +73,11 @@ return [
             'maxAge'              => 0,
             'hosts'               => [],
         ]
+    ],
+    'scripting' =>[
+        // true to disable all scripting, or comma-delimited list of v8js, nodejs, and/or php
+        'disable' => env('DF_SCRIPTING_DISABLE'),
+        // path to the installed nodejs executable
+        'node_path' => env('DF_NODEJS_PATH'),
     ]
 ];
