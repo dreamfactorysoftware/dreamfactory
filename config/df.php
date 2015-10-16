@@ -1,13 +1,14 @@
 <?php
 
 return [
+    'version'                      => '2.0.beta',
+    // General API version number, 1.x was earlier product and may be supported by most services
+    'api_version'                  => '2.0',
     // Name of this DreamFactory instance. Defaults to server name.
     'instance_name'                => env('DF_INSTANCE_NAME', gethostname()),
     // XML root tag for http request and response.
     'xml_request_root'             => 'dfapi',
     'xml_response_root'            => 'dfapi',
-    // General API version number, 1.x was earlier product and may be supported by most services
-    'api_version'                  => '2.0',
     // Most API calls return a resource array or a single resource, if array, do we wrap it?
     'always_wrap_resources'        => true,
     'resources_wrapper'            => 'resource',
@@ -74,9 +75,9 @@ return [
             'hosts'               => [],
         ]
     ],
-    'scripting' =>[
+    'scripting'                    => [
         // 'all' to disable all scripting, or comma-delimited list of v8js, nodejs, and/or php
-        'disable' => env('DF_SCRIPTING_DISABLE'),
+        'disable'     => env('DF_SCRIPTING_DISABLE'),
         // path to the installed nodejs executable
         'nodejs_path' => env('DF_NODEJS_PATH'),
     ]
