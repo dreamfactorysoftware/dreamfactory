@@ -2,10 +2,7 @@
 
 namespace DreamFactory\Console\Commands;
 
-use DreamFactory\Core\Enums\DataFormats;
 use DreamFactory\Core\Models\User;
-use DreamFactory\Core\Utility\ServiceHandler;
-use DreamFactory\Library\Utility\Enums\Verbs;
 use Illuminate\Console\Command;
 
 class Setup extends Command
@@ -22,7 +19,7 @@ class Setup extends Command
      *
      * @var string
      */
-    protected $description = 'Command description.';
+    protected $description = 'Setup DreamFactory 2.0 instance.';
 
     /**
      * Create a new command instance.
