@@ -4,8 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "26a41622c21001c54a8ffea8ecfb826b",
-    "content-hash": "442a96699579ff961506df3a899c0d3c",
+    "hash": "28b4807b68d090622d357535659de33c",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -722,16 +721,16 @@
         },
         {
             "name": "dreamfactory/df-managed",
-            "version": "0.1.9",
+            "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-managed.git",
-                "reference": "3320c2d81332091023c9e693cb6d46346be477d2"
+                "reference": "0971adbd01365da4abef98957800893e51b686cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-managed/zipball/3320c2d81332091023c9e693cb6d46346be477d2",
-                "reference": "3320c2d81332091023c9e693cb6d46346be477d2",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-managed/zipball/0971adbd01365da4abef98957800893e51b686cf",
+                "reference": "0971adbd01365da4abef98957800893e51b686cf",
                 "shasum": ""
             },
             "require": {
@@ -753,7 +752,6 @@
                     "DreamFactory\\Managed\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
@@ -763,12 +761,12 @@
                     "email": "jerryablan@dreamfactory.com"
                 },
                 {
-                    "name": "Arif Islam",
-                    "email": "arifislam@dreamfactory.com"
-                },
-                {
                     "name": "David L. Weiner",
                     "email": "davidweiner@dreamfactory.com"
+                },
+                {
+                    "name": "Arif Islam",
+                    "email": "arifislam@dreamfactory.com"
                 }
             ],
             "description": "DreamFactory(tm) Managed Service Library",
@@ -779,7 +777,11 @@
                 "enterprise",
                 "storage"
             ],
-            "time": "2015-10-12 22:38:21"
+            "support": {
+                "source": "https://github.com/dreamfactorysoftware/df-managed/tree/develop",
+                "issues": "https://github.com/dreamfactorysoftware/df-managed/issues"
+            },
+            "time": "2015-10-12 22:38:28"
         },
         {
             "name": "dreamfactory/df-mongodb",
@@ -5308,6 +5310,12 @@
             "alias_normalized": "9999999-dev",
             "version": "dev-develop",
             "package": "dreamfactory/df-adldap"
+        },
+        {
+            "alias": "dev-master",
+            "alias_normalized": "9999999-dev",
+            "version": "dev-develop",
+            "package": "dreamfactory/df-managed"
         }
     ],
     "minimum-stability": "dev",
@@ -5323,7 +5331,8 @@
         "dreamfactory/df-salesforce": 20,
         "dreamfactory/df-user": 20,
         "dreamfactory/df-oauth": 20,
-        "dreamfactory/df-adldap": 20
+        "dreamfactory/df-adldap": 20,
+        "dreamfactory/df-managed": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
