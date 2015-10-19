@@ -26,12 +26,12 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth'            => 'DreamFactory\Http\Middleware\Authenticate',
-        'auth.basic'      => 'Illuminate\Auth\Middleware\AuthenticateWithBasicAuth',
-        'guest'           => 'DreamFactory\Http\Middleware\RedirectIfAuthenticated',
-        'data_collection' => 'DreamFactory\Http\Middleware\DataCollection',
-        'api_limits'      => 'DreamFactory\Http\Middleware\Limits',
-        'access_check'    => 'DreamFactory\Http\Middleware\AccessCheck',
+        'auth'         => 'DreamFactory\Http\Middleware\Authenticate',
+        'auth.basic'   => 'Illuminate\Auth\Middleware\AuthenticateWithBasicAuth',
+        'guest'        => 'DreamFactory\Http\Middleware\RedirectIfAuthenticated',
+        //'data_collection' => 'DreamFactory\Http\Middleware\DataCollection',
+        'api_limits'   => 'DreamFactory\Http\Middleware\Limits',
+        'access_check' => 'DreamFactory\Http\Middleware\AccessCheck',
     ];
 
 }
