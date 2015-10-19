@@ -4,7 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "28b4807b68d090622d357535659de33c",
+    "hash": "26a41622c21001c54a8ffea8ecfb826b",
+    "content-hash": "442a96699579ff961506df3a899c0d3c",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -721,20 +722,19 @@
         },
         {
             "name": "dreamfactory/df-managed",
-            "version": "dev-develop",
+            "version": "0.1.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-managed.git",
-                "reference": "0971adbd01365da4abef98957800893e51b686cf"
+                "reference": "04c01043cd276062924ad9c86347127a559b4f5a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-managed/zipball/0971adbd01365da4abef98957800893e51b686cf",
-                "reference": "0971adbd01365da4abef98957800893e51b686cf",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-managed/zipball/04c01043cd276062924ad9c86347127a559b4f5a",
+                "reference": "04c01043cd276062924ad9c86347127a559b4f5a",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/fabric-audit": "1.1.*",
                 "dreamfactory/php-utils": "1.1.*"
             },
             "require-dev": {
@@ -752,6 +752,7 @@
                     "DreamFactory\\Managed\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
@@ -761,12 +762,12 @@
                     "email": "jerryablan@dreamfactory.com"
                 },
                 {
-                    "name": "David L. Weiner",
-                    "email": "davidweiner@dreamfactory.com"
-                },
-                {
                     "name": "Arif Islam",
                     "email": "arifislam@dreamfactory.com"
+                },
+                {
+                    "name": "David L. Weiner",
+                    "email": "davidweiner@dreamfactory.com"
                 }
             ],
             "description": "DreamFactory(tm) Managed Service Library",
@@ -777,11 +778,7 @@
                 "enterprise",
                 "storage"
             ],
-            "support": {
-                "source": "https://github.com/dreamfactorysoftware/df-managed/tree/develop",
-                "issues": "https://github.com/dreamfactorysoftware/df-managed/issues"
-            },
-            "time": "2015-10-12 22:38:28"
+            "time": "2015-10-19 18:22:31"
         },
         {
             "name": "dreamfactory/df-mongodb",
@@ -1190,59 +1187,6 @@
                 "user"
             ],
             "time": "2015-10-13 21:37:46"
-        },
-        {
-            "name": "dreamfactory/fabric-audit",
-            "version": "1.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/dreamfactorysoftware/fabric-audit.git",
-                "reference": "b96061079ef21f7eba0f159ea2181e394a4cb044"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/fabric-audit/zipball/b96061079ef21f7eba0f159ea2181e394a4cb044",
-                "reference": "b96061079ef21f7eba0f159ea2181e394a4cb044",
-                "shasum": ""
-            },
-            "require": {
-                "dreamfactory/php-utils": "~1.0"
-            },
-            "require-dev": {
-                "laravel/framework": "5.1.*",
-                "phpunit/phpunit": "@stable",
-                "psr/log": "~1.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-develop": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "DreamFactory\\Library\\Fabric\\Auditing\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "proprietary"
-            ],
-            "authors": [
-                {
-                    "name": "Jerry Ablan",
-                    "email": "jerryablan@dreamfactory.com"
-                }
-            ],
-            "description": "DreamFactory Enterprise(tm) Auditing Library",
-            "homepage": "https://www.dreamfactory.com/",
-            "keywords": [
-                "dreamfactory",
-                "fabric",
-                "queue",
-                "utility"
-            ],
-            "time": "2015-10-12 22:30:08"
         },
         {
             "name": "dreamfactory/installer",
@@ -5310,12 +5254,6 @@
             "alias_normalized": "9999999-dev",
             "version": "dev-develop",
             "package": "dreamfactory/df-adldap"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-managed"
         }
     ],
     "minimum-stability": "dev",
@@ -5331,8 +5269,7 @@
         "dreamfactory/df-salesforce": 20,
         "dreamfactory/df-user": 20,
         "dreamfactory/df-oauth": 20,
-        "dreamfactory/df-adldap": 20,
-        "dreamfactory/df-managed": 20
+        "dreamfactory/df-adldap": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
