@@ -4,7 +4,6 @@ use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
 {
-
     /**
      * The application's global HTTP middleware stack.
      *
@@ -27,11 +26,12 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth'       => 'DreamFactory\Http\Middleware\Authenticate',
-        'auth.basic' => 'Illuminate\Auth\Middleware\AuthenticateWithBasicAuth',
-        'guest'      => 'DreamFactory\Http\Middleware\RedirectIfAuthenticated',
-        'api_limits' => 'DreamFactory\Http\Middleware\Limits',
-        'access_check' => 'DreamFactory\Http\Middleware\AccessCheck'
+        'auth'            => 'DreamFactory\Http\Middleware\Authenticate',
+        'auth.basic'      => 'Illuminate\Auth\Middleware\AuthenticateWithBasicAuth',
+        'guest'           => 'DreamFactory\Http\Middleware\RedirectIfAuthenticated',
+        'data_collection' => 'DreamFactory\Http\Middleware\DataCollection',
+        'api_limits'      => 'DreamFactory\Http\Middleware\Limits',
+        'access_check'    => 'DreamFactory\Http\Middleware\AccessCheck',
     ];
 
 }
