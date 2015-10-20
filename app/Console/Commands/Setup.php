@@ -100,6 +100,7 @@ class Setup extends Command
 
         $this->dirWarn();
         $this->info('Setup complete! Please launch your instance using a browser.');
+        $this->info('You can run "php artisan serve" to try out your DreamFactory 2.0 instance without setting up a web server.');
     }
 
     /**
