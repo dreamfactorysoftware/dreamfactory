@@ -60,7 +60,7 @@ return [
     'confirm_reset_url'            => env('DF_CONFIRM_RESET_URL', '/dreamfactory/dist/#/reset-password'),
     'confirm_invite_url'           => env('DF_CONFIRM_INVITE_URL', '/dreamfactory/dist/#/user-invite'),
     'confirm_register_url'         => env('DF_CONFIRM_REGISTER_URL', '/dreamfactory/dist/#/register-confirm'),
-    'landing_page'                 => env('DF_LANDING_PAGE', '/dreamfactory/dist'),
+    'landing_page'                 => env('DF_LANDING_PAGE', '/dreamfactory/dist/index.html'),
     // Enable/disable detailed CORS logging
     'log_cors_info'                => false,
     // Default CORS setting
