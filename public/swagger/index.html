@@ -12,6 +12,47 @@
     <script src='jquery.min.js' type='text/javascript'></script>
     <script type="text/javascript">
 
+        var _apiKey = "36fda24fe5588fa4285ac6c6c2fdfbdb6b6bc9834699774c9bf777f706d05a88";
+
+        // Session inherited from query parameter, iframe, or opener
+        function getSessionToken() {
+            var phpSessionId = getQueryParameter('session_id');
+            if (phpSessionId)
+                return phpSessionId;
+
+            phpSessionId = parent.document.cookie.match(/PHPSESSID=[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\;/i);
+
+            if ((phpSessionId == null) && (window.opener))
+                phpSessionId = window.opener.document.cookie.match(/PHPSESSID=[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\;/i);
+
+            if (phpSessionId == null)
+                return '';
+
+            if (typeof(phpSessionId) == 'undefined')
+                return '';
+
+            if (phpSessionId.length <= 0)
+                return '';
+
+            phpSessionId = phpSessionId[0];
+
+            var end = phpSessionId.lastIndexOf(';');
+            if (end == -1) end = phpSessionId.length;
+
+            return phpSessionId.substring(10, end);
+        }
+
+        /**
+         * Simplified access to the Query string on the current page's URL
+         * @param key
+         * @returns {Boolean}
+         */
+        function getQueryParameter(key) {
+            key = key.replace(/[*+?^$.\[\]{}()|\\\/]/g, "\\$&");
+            var match = location.search.match(new RegExp("[?&]" + key + "=([^&]+)(&|$)"));
+            return match && decodeURIComponent(match[1].replace(/\+/g, " "));
+        }
+
         (function () {
             var method;
             var noop = function () {
@@ -79,47 +120,8 @@
                             }
                     );
 
-                    /**
-                     * Simplified access to the Query string on the current page's URL
-                     * @param key
-                     * @returns {Boolean}
-                     */
-                    function getQueryParameter(key) {
-                        key = key.replace(/[*+?^$.\[\]{}()|\\\/]/g, "\\$&");
-                        var match = location.search.match(new RegExp("[?&]" + key + "=([^&]+)(&|$)"));
-                        return match && decodeURIComponent(match[1].replace(/\+/g, " "));
-                    }
-
-                    // Session inherited from query parameter, iframe, or opener
-                    function getSessionToken() {
-                        var phpSessionId = getQueryParameter('session_id');
-                        if (phpSessionId)
-                            return phpSessionId;
-
-                        phpSessionId = parent.document.cookie.match(/PHPSESSID=[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\;/i);
-
-                        if ((phpSessionId == null) && (window.opener))
-                            phpSessionId = window.opener.document.cookie.match(/PHPSESSID=[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\;/i);
-
-                        if (phpSessionId == null)
-                            return '';
-
-                        if (typeof(phpSessionId) == 'undefined')
-                            return '';
-
-                        if (phpSessionId.length <= 0)
-                            return '';
-
-                        phpSessionId = phpSessionId[0];
-
-                        var end = phpSessionId.lastIndexOf(';');
-                        if (end == -1) end = phpSessionId.length;
-
-                        return phpSessionId.substring(10, end);
-                    }
-
                     window.authorizations.add("X-DreamFactory-API-Key",
-                            new ApiKeyAuthorization("X-DreamFactory-API-Key", "36fda24fe5588fa4285ac6c6c2fdfbdb6b6bc9834699774c9bf777f706d05a88", "header")
+                            new ApiKeyAuthorization("X-DreamFactory-API-Key", _apiKey, "header")
                     );
                     window.authorizations.add("X-DreamFactory-Session-Token",
                             new ApiKeyAuthorization("X-DreamFactory-Session-Token", getSessionToken(), "header")

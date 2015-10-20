@@ -26,7 +26,8 @@ return [
 		realpath(__DIR__.'/../app/Http/Middleware/AccessCheck.php'),
 		realpath(__DIR__.'/../app/Http/Middleware/Cors.php'),
 		realpath(__DIR__.'/../app/Http/Middleware/FirstUserCheck.php'),
-		realpath(__DIR__.'/../app/Http/Middleware/Limits.php')
+		realpath(__DIR__.'/../app/Http/Middleware/Limits.php'),
+		realpath(__DIR__.'/../app/Http/Middleware/DataCollection.php'),
 	],
 
 	/*

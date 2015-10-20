@@ -1,45 +1,45 @@
 {
-  "name": "dreamfactory/dreamfactory",
-  "description": "The DreamFactory(tm) Platform.",
-  "keywords": [
+  "name":              "dreamfactory/dreamfactory",
+  "description":       "The DreamFactory(tm) Platform.",
+  "keywords":          [
     "api",
     "dreamfactory",
     "dsp",
     "rest"
   ],
-  "homepage": "https://www.dreamfactory.com/",
-  "license": "Apache-2.0",
-  "authors": [
+  "homepage":          "https://www.dreamfactory.com/",
+  "license":           "Apache-2.0",
+  "authors":           [
     {
-      "name": "Arif Islam",
+      "name":  "Arif Islam",
       "email": "arifislam@dreamfactory.com"
     },
     {
-      "name": "Jerry Ablan",
+      "name":  "Jerry Ablan",
       "email": "jerryablan@dreamfactory.com"
     },
     {
-      "name": "Lee Hicks",
+      "name":  "Lee Hicks",
       "email": "leehicks@dreamfactory.com"
     },
     {
-      "name": "David Weiner",
+      "name":  "David Weiner",
       "email": "davidweiner@dreamfactory.com"
     }
   ],
-  "support": {
-    "email": "support@dreamfactory.com",
+  "support":           {
+    "email":  "support@dreamfactory.com",
     "source": "https://github.com/dreamfactorysoftware/dreamfactory",
     "issues": "https://github.com/dreamfactorysoftware/dreamfactory/issues",
-    "wiki": "https://wiki.dreamfactory.com"
+    "wiki":   "https://wiki.dreamfactory.com"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "repositories": [
-  ],
+  "repositories": [],
   "require": {
     "laravel/framework": "5.1.*",
     "tymon/jwt-auth": "0.5.*",
+    "dreamfactory/df-managed": "0.1.*",
     "dreamfactory/df-admin-app": "~0.0",
     "dreamfactory/df-core": "~0.0",
     "dreamfactory/df-aws": "~0.0",
@@ -51,30 +51,29 @@
     "dreamfactory/df-salesforce": "~0.0",
     "dreamfactory/df-user": "~0.0",
     "dreamfactory/df-oauth": "~0.0",
-    "dreamfactory/df-adldap": "~0.0",
-    "dreamfactory/df-managed": "~0.0"
+    "dreamfactory/df-adldap": "~0.0"
   },
-  "require-dev": {
+  "require-dev":       {
     "barryvdh/laravel-ide-helper": "~2.0",
-    "laracasts/generators": "~1.0",
-    "laracasts/testdummy": "~2.0",
-    "phpunit/phpunit": "~4.0",
-    "phpspec/phpspec": "~2.1"
+    "laracasts/generators":        "~1.0",
+    "laracasts/testdummy":         "~2.0",
+    "phpunit/phpunit":             "~4.0",
+    "phpspec/phpspec":             "~2.1"
   },
-  "autoload": {
+  "autoload":          {
     "classmap": [
       "database"
     ],
-    "psr-4": {
+    "psr-4":    {
       "DreamFactory\\": "app/"
     }
   },
-  "autoload-dev": {
+  "autoload-dev":      {
     "classmap": [
       "tests/TestCase.php"
     ]
   },
-  "scripts": {
+  "scripts":           {
     "post-install-cmd": [
       "php -r \"copy('.env-dist', '.env');\"",
       "php -r \"copy('phpunit.xml-dist', 'phpunit.xml');\"",
@@ -83,21 +82,23 @@
       "php artisan optimize",
       "php artisan dreamfactory:pull-migrations"
     ],
-    "post-update-cmd": [
+    "post-update-cmd":  [
       "php artisan clear-compiled",
       "php artisan optimize",
       "php artisan dreamfactory:pull-migrations"
     ]
   },
-  "config": {
+  "config":            {
     "preferred-install": "dist"
   },
-  "extra": {
-    "branch-alias": {
+  "extra":             {
+    "branch-alias":    {
       "dev-develop": "0.0.x-dev"
     },
     "installer-paths": {
-      "public/{$name}/": ["type:dreamfactory-app"]
+      "public/{$name}/": [
+        "type:dreamfactory-app"
+      ]
     }
   }
 }
