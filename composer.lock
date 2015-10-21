@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d8caa25c3bcfb2d45b94995f8125c35d",
+    "hash": "f638acfae28e958a8a4b930fe212b52d",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -716,16 +716,16 @@
         },
         {
             "name": "dreamfactory/df-managed",
-            "version": "0.1.10",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-managed.git",
-                "reference": "04c01043cd276062924ad9c86347127a559b4f5a"
+                "reference": "db72910be443f91b768e288aad286ddfd2ab0d44"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-managed/zipball/04c01043cd276062924ad9c86347127a559b4f5a",
-                "reference": "04c01043cd276062924ad9c86347127a559b4f5a",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-managed/zipball/db72910be443f91b768e288aad286ddfd2ab0d44",
+                "reference": "db72910be443f91b768e288aad286ddfd2ab0d44",
                 "shasum": ""
             },
             "require": {
@@ -738,7 +738,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "0.1.x-dev"
+                    "dev-develop": "1.0.x-dev"
                 }
             },
             "autoload": {
@@ -746,6 +746,7 @@
                     "DreamFactory\\Managed\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
@@ -755,12 +756,12 @@
                     "email": "jerryablan@dreamfactory.com"
                 },
                 {
-                    "name": "David L. Weiner",
-                    "email": "davidweiner@dreamfactory.com"
-                },
-                {
                     "name": "Arif Islam",
                     "email": "arifislam@dreamfactory.com"
+                },
+                {
+                    "name": "David L. Weiner",
+                    "email": "davidweiner@dreamfactory.com"
                 }
             ],
             "description": "DreamFactory(tm) Managed Service Library",
@@ -771,11 +772,7 @@
                 "enterprise",
                 "storage"
             ],
-            "support": {
-                "source": "https://github.com/dreamfactorysoftware/df-managed/tree/0.1.10",
-                "issues": "https://github.com/dreamfactorysoftware/df-managed/issues"
-            },
-            "time": "2015-10-19 18:22:31"
+            "time": "2015-10-20 17:43:18"
         },
         {
             "name": "dreamfactory/df-mongodb",
