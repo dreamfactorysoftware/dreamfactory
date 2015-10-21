@@ -37,7 +37,7 @@ install and run DreamFactory 2.0.
 #### Installation
 
 
-* Clone this repository to a directory under your home directory.
+* Clone this repository to a directory on your system.
 > git clone https://github.com/dreamfactorysoftware/dreamfactory.git ~/df2
 
 * Change directory
