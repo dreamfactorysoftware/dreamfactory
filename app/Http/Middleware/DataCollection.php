@@ -21,7 +21,13 @@ class DataCollection
     public function handle($request, Closure $next)
     {
         //  Send the audit data
-        //Managed::auditRequest($request, Session::getPublicInfo());
+        try {
+            $session = Session::getPublicInfo();
+        } catch (\Exception $ex) {
+            $session = null;
+        }
+
+        Managed::auditRequest($request, $session);
 
         return $next($request);
     }
