@@ -62,13 +62,19 @@ class Setup extends Command
     {
         $force = $this->option('force');
 
-        $this->info('Welcome to DreamFactory 2.0 setup wizard.');
+        $this->info('**********************************************************************************************************************');
+        $this->info('* Welcome to DreamFactory 2.0 setup wizard.');
+        $this->info('**********************************************************************************************************************');
         $this->info('Running Migrations...');
         $this->call('migrate', ['--force' => $force]);
+        $this->info('**********************************************************************************************************************');
 
+        $this->info('**********************************************************************************************************************');
         $this->info('Running Seeder...');
         $this->call('db:seed', ['--force' => $force]);
+        $this->info('**********************************************************************************************************************');
 
+        $this->info('**********************************************************************************************************************');
         $this->info('Creating the first admin user...');
         $user = false;
         while (!$user) {
@@ -93,14 +99,16 @@ class Setup extends Command
 
             if (!$user) {
                 $this->error('Failed to create user.' . print_r($data['errors'], true));
-                $this->dirWarn();
                 $this->info('Please try again...');
             }
         }
+        $this->info('**********************************************************************************************************************');
 
         $this->dirWarn();
-        $this->info('Setup complete! Please launch your instance using a browser.');
-        $this->info('You can run "php artisan serve" to try out your DreamFactory 2.0 instance without setting up a web server.');
+        $this->info('*********************************************** Setup Successful! ****************************************************');
+        $this->info('* Setup is complete! Your instance is ready. Please launch your instance using a browser.');
+        $this->info('* You can run "php artisan serve" to try out your instance without setting up a web server.');
+        $this->info('**********************************************************************************************************************');
     }
 
     /**
@@ -108,10 +116,13 @@ class Setup extends Command
      */
     protected function dirWarn()
     {
-        $this->warn('************************************************* WARNING! ***********************************************************');
+        $this->warn('*************************************************** WARNING! *********************************************************');
         $this->warn('* Please make sure following directories and all directories under them are readable and writable by your web server ');
         $this->warn('*   -> storage/');
         $this->warn('*   -> bootstrap/cache/');
+        $this->warn('* Example:');
+        $this->warn('*      > sudo chown -R {www user}:{your user group} storage/ bootstrap/cache/ ');
+        $this->warn('*      > sudo chmod -R 2775 storage/ bootstrap/cache/ ');
         $this->warn('**********************************************************************************************************************');
     }
 }
