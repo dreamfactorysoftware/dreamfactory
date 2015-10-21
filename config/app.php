@@ -155,6 +155,7 @@ return [
         DreamFactory\Providers\ConfigServiceProvider::class,
         DreamFactory\Providers\EventServiceProvider::class,
         DreamFactory\Providers\RouteServiceProvider::class,
+        DreamFactory\Managed\Providers\AuditServiceProvider::class,
     ],
     /*
     |--------------------------------------------------------------------------
