@@ -35,12 +35,7 @@
   },
   "minimum-stability": "dev",
   "prefer-stable":     true,
-  "repositories":      [
-    {
-      "type": "vcs",
-      "url":  "git@github.com:dreamfactorysoftware/df-admin-app.git"
-    }
-  ],
+  "repositories":      [],
   "require":           {
     "laravel/framework":          "5.1.*",
     "tymon/jwt-auth":             "0.5.*",
@@ -70,7 +65,19 @@
       "database"
     ],
     "psr-4":    {
-      "DreamFactory\\": "app/"
+      "DreamFactory\\": "app/",
+      "DreamFactory\\Core\\": "workbench/repos/df-core/src/",
+      "DreamFactory\\Core\\SqlDb\\": "workbench/repos/df-sqldb/src/",
+      "DreamFactory\\Core\\MongoDb\\": "workbench/repos/df-mongodb/src/",
+      "DreamFactory\\Core\\CouchDb\\": "workbench/repos/df-couchdb/src/",
+      "DreamFactory\\Core\\Aws\\": "workbench/repos/df-aws/src/",
+      "DreamFactory\\Core\\Azure\\": "workbench/repos/df-azure/src/",
+      "DreamFactory\\Core\\Rackspace\\": "workbench/repos/df-rackspace/src/",
+      "DreamFactory\\Core\\Rws\\": "workbench/repos/df-rws/src/",
+      "DreamFactory\\Core\\Salesforce\\": "workbench/repos/df-salesforce/src/",
+      "DreamFactory\\Core\\User\\": "workbench/repos/df-user/src/",
+      "DreamFactory\\Core\\ADLdap\\": "workbench/repos/df-adldap/src/",
+      "DreamFactory\\Core\\OAuth\\": "workbench/repos/df-oauth/src/"
     }
   },
   "autoload-dev":      {
