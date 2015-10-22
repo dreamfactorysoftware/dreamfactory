@@ -10,7 +10,7 @@ Learn more at https://www.dreamfactory.com
 
 ## Quick Setup
 
-This instruction is meant for quickly installing DreamFactory 2.0 on your system and try it out. The commands shown here 
+These instructions allow you to quickly install DreamFactory 2.0 on your system and try it out. The commands shown here 
 are primarily for a Linux based OS. But this should also work on Windows with all the required software and extensions installed.
 
 > _Note: This quick setup instruction assumes that you are familiar with composer, git and the basics of how to setup a Web 
@@ -40,7 +40,7 @@ install and run DreamFactory 2.0.
 * Clone this repository to a directory on your system.
 > git clone https://github.com/dreamfactorysoftware/dreamfactory.git ~/df2
 
-* Change directory
+* Change directory.
 > cd ~/df2
 
 * Install dependencies using composer.
@@ -63,7 +63,7 @@ install and run DreamFactory 2.0.
 
 To connect to your own Database Server...
 
-* Edit the .evn file at the installation root and change the following configuration.
+* Edit the .env file at the installation root and change the following configuration.
 > DB_DRIVER=mysql     ## Supported drivers are sqlite (default), mysql, pgsql, sqlsrv<br>
 > DB_HOST=localhost<br>
 > DB_DATABASE=dreamfactory<br>
