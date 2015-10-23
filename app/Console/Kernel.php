@@ -18,6 +18,7 @@ class Kernel extends ConsoleKernel
         'DreamFactory\Console\Commands\Import',
         'DreamFactory\Console\Commands\ImportPackage',
         'DreamFactory\Console\Commands\PullMigrations',
+        'DreamFactory\Console\Commands\Setup'
     ];
 
     /**

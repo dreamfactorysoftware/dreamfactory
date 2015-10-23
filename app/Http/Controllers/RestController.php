@@ -16,14 +16,16 @@ use DreamFactory\Core\Contracts\ServiceResponseInterface;
  */
 class RestController extends Controller
 {
-
     /**
      * Create new Rest Controller.
      */
     public function __construct()
     {
         $this->middleware('access_check');
-        $this->middleware('api_limits');
+        if (!config('df.standalone')) {
+            $this->middleware('api_limits');
+            $this->middleware('data_collection');
+        }
     }
 
     /**

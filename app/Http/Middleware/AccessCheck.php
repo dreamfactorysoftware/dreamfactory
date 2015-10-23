@@ -206,6 +206,7 @@ class AccessCheck
                     JWTAuth::setToken($token);
                     /** @type Payload $payload */
                     $payload = JWTAuth::getPayload();
+                    JWTUtilities::verifyUser($payload);
                     $userId = $payload->get('user_id');
                     Session::setSessionData($appId, $userId);
                 } catch (TokenExpiredException $e) {
@@ -240,7 +241,7 @@ class AccessCheck
                     throw new ForbiddenException('Access Forbidden.');
                 }
             }
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             return ResponseFactory::getException($e, $request);
         }
     }
