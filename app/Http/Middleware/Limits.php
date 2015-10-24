@@ -53,6 +53,7 @@ class Limits
             $userRole = $this->_getRole(Session::getRoleId());
             $apiName = $this->_getApiKey(Session::getApiKey());
             $serviceName = $this->_getServiceName();
+            $clusterName = Managed::getClusterName();
 
             // Build the list of API Hits to check
 
@@ -77,6 +78,20 @@ class Limits
 
                 foreach ($serviceKeys as $key => $value) {
                     $apiKeysToCheck[$apiName . '.' . $key] = $value;
+                }
+            }
+
+            if (is_null($clusterName) === false) {
+                $apiKeysToCheck[$clusterName] = 0;
+                if (is_null($userRole) === false) {
+                    $apiKeysToCheck[$clusterName . '.' . $userRole] = 0;
+                }
+                if (is_null($userName) === false) {
+                    $apiKeysToCheck[$clusterName . '.' . $userName] = 0;
+                }
+
+                foreach ($serviceKeys as $key => $value) {
+                    $apiKeysToCheck[$clusterName . '.' . $key] = $value;
                 }
             }
 
