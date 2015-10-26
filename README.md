@@ -59,7 +59,10 @@ install and run DreamFactory 2.0.
 * Install dependencies using composer.
 > composer install --no-dev
 
-* Run DreamFactory setup wizard. This will prompt you to create your admin user account.
+* Run DreamFactory setup wizard. First time running this will create your system environment file (.env), generate application key, and will prompt you to configure your Database.
+> php artisan dreamfactory:setup
+
+* Run the above command again to complete the setup process. This time it will run the migration, seeder, and will prompt you to create your admin user account.
 > php artisan dreamfactory:setup
 
 * Make sure your web server can read/write from/to storage/ (sub directories) and bootstrap/cache/ directories.
@@ -72,9 +75,9 @@ install and run DreamFactory 2.0.
 >php artisan serve
 
 
-#### Connecting to your own Database Server
+#### Connecting to another Database Server after initial setup
 
-To connect to your own Database Server...
+To connect to a different Database Server after initial setup...
 
 * Edit the .env file at the installation root and change the following configuration.
 > DB_DRIVER=mysql     ## Supported drivers are sqlite (default), mysql, pgsql, sqlsrv<br>
