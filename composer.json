@@ -34,24 +34,24 @@
     "wiki":   "https://wiki.dreamfactory.com"
   },
   "minimum-stability": "dev",
-  "prefer-stable": true,
-  "repositories": [],
-  "require": {
-    "laravel/framework": "5.1.*",
-    "tymon/jwt-auth": "0.5.*",
-    "dreamfactory/df-managed": "1.0.*",
-    "dreamfactory/df-admin-app": "~0.0",
-    "dreamfactory/df-core": "~0.0",
-    "dreamfactory/df-aws": "~0.0",
-    "dreamfactory/df-rackspace": "~0.0",
-    "dreamfactory/df-sqldb": "~0.0",
-    "dreamfactory/df-mongodb": "~0.0",
-    "dreamfactory/df-couchdb": "~0.0",
-    "dreamfactory/df-rws": "~0.0",
-    "dreamfactory/df-salesforce": "~0.0",
-    "dreamfactory/df-user": "~0.0",
-    "dreamfactory/df-oauth": "~0.0",
-    "dreamfactory/df-adldap": "~0.0"
+  "prefer-stable":     true,
+  "repositories":      [],
+  "require":           {
+    "laravel/framework":          "5.1.*",
+    "tymon/jwt-auth":             "0.5.*",
+    "dreamfactory/df-managed":    "1.0.*",
+    "dreamfactory/df-admin-app":  "2.0.*",
+    "dreamfactory/df-core":       "0.1.*",
+    "dreamfactory/df-aws":        "0.1.*",
+    "dreamfactory/df-rackspace":  "0.1.*",
+    "dreamfactory/df-sqldb":      "0.1.*",
+    "dreamfactory/df-mongodb":    "0.1.*",
+    "dreamfactory/df-couchdb":    "0.1.*",
+    "dreamfactory/df-rws":        "0.1.*",
+    "dreamfactory/df-salesforce": "0.1.*",
+    "dreamfactory/df-user":       "0.1.*",
+    "dreamfactory/df-oauth":      "0.1.*",
+    "dreamfactory/df-adldap":     "0.1.*"
   },
   "require-dev":       {
     "barryvdh/laravel-ide-helper": "~2.0",
@@ -94,7 +94,7 @@
   },
   "extra":             {
     "branch-alias":    {
-      "dev-develop": "0.0.x-dev"
+      "dev-develop": "2.0.x-dev"
     },
     "installer-paths": {
       "public/{$name}/": [

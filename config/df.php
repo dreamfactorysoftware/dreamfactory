@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'version'                      => '2.0.beta',
+    'version'                      => '2.0.0',
     // General API version number, 1.x was earlier product and may be supported by most services
     'api_version'                  => '2.0',
     // Name of this DreamFactory instance. Defaults to server name.

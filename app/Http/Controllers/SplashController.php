@@ -26,7 +26,7 @@ class SplashController extends Controller
 
             if (Verbs::GET === $method) {
                 $data = [
-                    'version'    => \Config::get('df.api_version'),
+                    'version'    => \Config::get('df.version'),
                     'email'      => '',
                     'name'       => '',
                     'first_name' => '',
@@ -60,7 +60,7 @@ class SplashController extends Controller
 
             if (Verbs::GET === $method) {
                 return view('setup', [
-                    'version' => config('df.api_version')
+                    'version' => config('df.version')
                 ]);
             } else if (Verbs::POST === $method) {
                 try {
@@ -89,7 +89,7 @@ class SplashController extends Controller
                             'errors.generic',
                             [
                                 'error'   => $e->getMessage(),
-                                'version' => config('df.api_version')
+                                'version' => config('df.version')
                             ]
                         );
                     }
