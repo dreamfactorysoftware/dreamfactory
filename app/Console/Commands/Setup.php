@@ -13,7 +13,7 @@ class Setup extends Command
      *
      * @var string
      */
-    protected $signature = 'dreamfactory:setup';
+    protected $signature = 'dreamfactory:setup {--force}';
 
     /**
      * The console command description.
