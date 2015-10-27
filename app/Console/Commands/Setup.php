@@ -135,6 +135,9 @@ class Setup extends Command
         $this->warn('**********************************************************************************************************************');
     }
 
+    /**
+     * Configures the .env file with app key and database configuration.
+     */
     protected function runConfig()
     {
         $this->info('**********************************************************************************************************************');
@@ -152,47 +155,42 @@ class Setup extends Command
             $this->info('Created phpunit.xml with default configuration.');
         }
 
-        if ($this->confirm('Would you like to use SQLite database for system tables?', true)) {
+        $db = $this->choice('Which database would you like to use for system tables?',
+                ['sqlite', 'mysql', 'pgsql', 'sqlsrv'], 0);
+
+        if ('sqlite' === $db) {
             $this->createSqliteDbFile();
         } else {
-            $db =
-                $this->choice('Which database would you like to use for system tables?',
-                    ['mysql', 'pgsql', 'sqlsrv', 'sqlite'], 3);
+            $driver = $db;
+            $host = $this->ask('Enter your ' . $db . ' Host');
+            $database = $this->ask('Enter your Database name');
+            $username = $this->ask('Enter your Database Username');
 
-            if ('sqlite' === $db) {
-                $this->createSqliteDbFile();
-            } else {
-                $driver = $db;
-                $host = $this->ask('Enter your ' . $db . ' Host');
-                $database = $this->ask('Enter your Database name');
-                $username = $this->ask('Enter your Database Username');
+            $passwordMatch = false;
+            while (!$passwordMatch) {
+                $password = $this->secret('Enter your Database Password');
+                $password2 = $this->secret('Re-enter your Database Password');
 
-                $passwordMatch = false;
-                while (!$passwordMatch) {
-                    $password = $this->secret('Enter your Database Password');
-                    $password2 = $this->secret('Re-enter your Database Password');
-
-                    if ($password === $password2) {
-                        $passwordMatch = true;
-                    } else {
-                        $this->error('Passwords did not match. Please try again.');
-                    }
+                if ($password === $password2) {
+                    $passwordMatch = true;
+                } else {
+                    $this->error('Passwords did not match. Please try again.');
                 }
-
-                $port = $this->ask('Enter your Database Port', '3306');
-
-                $config = [
-                    'DB_DRIVER'   => $driver,
-                    'DB_HOST'     => $host,
-                    'DB_DATABASE' => $database,
-                    'DB_USERNAME' => $username,
-                    'DB_PASSWORD' => $password,
-                    'DB_PORT'     => $port
-                ];
-
-                FileUtilities::updateEnvSetting($config);
-                $this->info('Configured ' . $db . ' Database');
             }
+
+            $port = $this->ask('Enter your Database Port', '3306');
+
+            $config = [
+                'DB_DRIVER'   => $driver,
+                'DB_HOST'     => $host,
+                'DB_DATABASE' => $database,
+                'DB_USERNAME' => $username,
+                'DB_PASSWORD' => $password,
+                'DB_PORT'     => $port
+            ];
+
+            FileUtilities::updateEnvSetting($config);
+            $this->info('Configured ' . $db . ' Database');
         }
 
         $this->info('Configuration complete!');
@@ -213,6 +211,9 @@ class Setup extends Command
         $this->warn('**********************************************************************************************************************');
     }
 
+    /**
+     * Creates SQLite database file.
+     */
     protected function createSqliteDbFile()
     {
         if (!file_exists('storage/databases/database.sqlite')) {
@@ -221,6 +222,11 @@ class Setup extends Command
         }
     }
 
+    /**
+     * Checks to see if .env file is configured or not.
+     *
+     * @return bool
+     */
     protected function isConfigRequired()
     {
         if (!file_exists('.env')) {
