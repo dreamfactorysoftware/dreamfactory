@@ -30,7 +30,7 @@ class Limits
         $consoleApiKey = AccessCheck::getConsoleApiKey($request);
 
         // Get limits
-        if(config('df.standalone') === true || $consoleApiKey === Managed::getConsoleKey()){
+        if (!config('df.managed') || $consoleApiKey === Managed::getConsoleKey()) {
             return $next($request);
         } else {
             $limits = Managed::getLimits();
@@ -39,11 +39,10 @@ class Limits
             // into an array
             $limits['api'] = (array)$limits['api'];
 
-            foreach(array_keys($limits['api']) as $key) {
+            foreach (array_keys($limits['api']) as $key) {
                 $limits['api'][$key] = (array)$limits['api'][$key];
             }
         }
-
 
         if (!empty($limits) && is_null($this->_getServiceName()) === false) {
 
@@ -124,7 +123,7 @@ class Limits
                         }
                     }
                 }
-            } catch ( \Exception $e ) {
+            } catch (\Exception $e) {
                 return ResponseFactory::getException(
                     new InternalServerErrorException('Unable to update cache'),
                     $request
@@ -207,12 +206,11 @@ class Limits
             $router = app('router');
             $service = strtolower($router->input('service'));
 
-            if (is_null($service) === true ) {
+            if (is_null($service) === true) {
                 return null;
             } else {
                 return 'service:' . $service;
             }
-
         }
     }
 }

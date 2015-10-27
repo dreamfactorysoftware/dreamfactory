@@ -22,7 +22,7 @@ class RestController extends Controller
     public function __construct()
     {
         $this->middleware('access_check');
-        if (!config('df.standalone')) {
+        if (config('df.managed')) {
             $this->middleware('api_limits');
             $this->middleware('data_collection');
         }

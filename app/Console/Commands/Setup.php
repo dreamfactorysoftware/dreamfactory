@@ -156,20 +156,21 @@ class Setup extends Command
         }
 
         $db = $this->choice('Which database would you like to use for system tables?',
-                ['sqlite', 'mysql', 'pgsql', 'sqlsrv'], 0);
+            ['sqlite', 'mysql', 'pgsql', 'sqlsrv'], 0);
 
         if ('sqlite' === $db) {
             $this->createSqliteDbFile();
         } else {
             $driver = $db;
             $host = $this->ask('Enter your ' . $db . ' Host');
-            $database = $this->ask('Enter your Database name');
-            $username = $this->ask('Enter your Database Username');
+            $database = $this->ask('Enter your database name');
+            $username = $this->ask('Enter your database username');
 
+            $password = '';
             $passwordMatch = false;
             while (!$passwordMatch) {
-                $password = $this->secret('Enter your Database Password');
-                $password2 = $this->secret('Re-enter your Database Password');
+                $password = $this->secret('Enter your database password');
+                $password2 = $this->secret('Re-enter your database password');
 
                 if ($password === $password2) {
                     $passwordMatch = true;
