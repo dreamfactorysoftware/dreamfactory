@@ -50,7 +50,7 @@ $app->singleton(
 
 $app->configureMonologUsing(function ($monolog){
     $logFile = storage_path('logs/dreamfactory.log');
-    if (!config('df.standalone')) {
+    if (config('df.managed')) {
         $logFile = Managed::getLogFile();
     }
 

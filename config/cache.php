@@ -42,7 +42,7 @@ return [
         ],
         'file'      => [
             'driver' => 'file',
-            'path'   => (env('DF_STANDALONE', true))? storage_path('framework/cache') : Managed::getCachePath(),
+            'path'   => (env('DF_MANAGED'))? Managed::getCachePath() : storage_path('framework/cache'),
         ],
         'memcached' => [
             'driver'  => 'memcached',
@@ -71,6 +71,6 @@ return [
     |
     */
 
-    'prefix'  => (env('DF_STANDALONE', true))? 'dreamfactory' : Managed::getCacheKeyPrefix(),
+    'prefix'  => (env('DF_MANAGED'))? Managed::getCacheKeyPrefix() : 'dreamfactory',
 
 ];

@@ -3,6 +3,7 @@
 namespace DreamFactory\Console\Commands;
 
 use DreamFactory\Core\Models\User;
+use DreamFactory\Core\Utility\FileUtilities;
 use Illuminate\Console\Command;
 
 class Setup extends Command
@@ -23,8 +24,6 @@ class Setup extends Command
 
     /**
      * Create a new command instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -62,16 +61,25 @@ class Setup extends Command
     {
         $force = $this->option('force');
 
+        if ($this->isConfigRequired()) {
+            $this->runConfig();
+
+            return;
+        }
+
         $this->info('**********************************************************************************************************************');
-        $this->info('* Welcome to DreamFactory 2.0 setup wizard.');
+        $this->info('* Welcome to DreamFactory setup wizard.');
         $this->info('**********************************************************************************************************************');
+
         $this->info('Running Migrations...');
         $this->call('migrate', ['--force' => $force]);
+        $this->info('Migration completed successfully.');
         $this->info('**********************************************************************************************************************');
 
         $this->info('**********************************************************************************************************************');
         $this->info('Running Seeder...');
         $this->call('db:seed', ['--force' => $force]);
+        $this->info('All tables were seeded successfully.');
         $this->info('**********************************************************************************************************************');
 
         $this->info('**********************************************************************************************************************');
@@ -102,6 +110,7 @@ class Setup extends Command
                 $this->info('Please try again...');
             }
         }
+        $this->info('Successfully created first admin user.');
         $this->info('**********************************************************************************************************************');
 
         $this->dirWarn();
@@ -124,5 +133,107 @@ class Setup extends Command
         $this->warn('*      > sudo chown -R {www user}:{your user group} storage/ bootstrap/cache/ ');
         $this->warn('*      > sudo chmod -R 2775 storage/ bootstrap/cache/ ');
         $this->warn('**********************************************************************************************************************');
+    }
+
+    /**
+     * Configures the .env file with app key and database configuration.
+     */
+    protected function runConfig()
+    {
+        $this->info('**********************************************************************************************************************');
+        $this->info('* Configuring DreamFactory... ');
+        $this->info('**********************************************************************************************************************');
+
+        if (!file_exists('.env')) {
+            copy('.env-dist', '.env');
+            $this->info('Created .env file with default configuration.');
+            $this->call('key:generate');
+        }
+
+        if (!file_exists('phpunit.xml')) {
+            copy('phpunit.xml-dist', 'phpunit.xml');
+            $this->info('Created phpunit.xml with default configuration.');
+        }
+
+        $db = $this->choice('Which database would you like to use for system tables?',
+            ['sqlite', 'mysql', 'pgsql', 'sqlsrv'], 0);
+
+        if ('sqlite' === $db) {
+            $this->createSqliteDbFile();
+        } else {
+            $driver = $db;
+            $host = $this->ask('Enter your ' . $db . ' Host');
+            $database = $this->ask('Enter your database name');
+            $username = $this->ask('Enter your database username');
+
+            $password = '';
+            $passwordMatch = false;
+            while (!$passwordMatch) {
+                $password = $this->secret('Enter your database password');
+                $password2 = $this->secret('Re-enter your database password');
+
+                if ($password === $password2) {
+                    $passwordMatch = true;
+                } else {
+                    $this->error('Passwords did not match. Please try again.');
+                }
+            }
+
+            $port = $this->ask('Enter your Database Port', '3306');
+
+            $config = [
+                'DB_DRIVER'   => $driver,
+                'DB_HOST'     => $host,
+                'DB_DATABASE' => $database,
+                'DB_USERNAME' => $username,
+                'DB_PASSWORD' => $password,
+                'DB_PORT'     => $port
+            ];
+
+            FileUtilities::updateEnvSetting($config);
+            $this->info('Configured ' . $db . ' Database');
+        }
+
+        $this->info('Configuration complete!');
+        $this->configComplete();
+    }
+
+    /**
+     * Shows config completion warning.
+     */
+    protected function configComplete()
+    {
+        $this->warn('*************************************************** WARNING! *********************************************************');
+        $this->warn('*');
+        $this->warn('* Please take a moment to review the .env file. You can make any changes as necessary there. ');
+        $this->warn('*');
+        $this->warn('* Please run "php artisan dreamfactory:setup" again to complete the setup process.');
+        $this->warn('*');
+        $this->warn('**********************************************************************************************************************');
+    }
+
+    /**
+     * Creates SQLite database file.
+     */
+    protected function createSqliteDbFile()
+    {
+        if (!file_exists('storage/databases/database.sqlite')) {
+            touch('storage/databases/database.sqlite');
+            $this->info('Created SQLite database file at storage/databases/database.sqlite');
+        }
+    }
+
+    /**
+     * Checks to see if .env file is configured or not.
+     *
+     * @return bool
+     */
+    protected function isConfigRequired()
+    {
+        if (!file_exists('.env')) {
+            return true;
+        }
+
+        return false;
     }
 }

@@ -18,7 +18,7 @@ return [
     'storage_path'                 => storage_path(),
     'local_file_service_container' => trim(env('DF_LOCAL_FILE_ROOT', 'app'), '/'),
     // Set this false for hosted/managed environment.
-    'standalone'                   => env('DF_STANDALONE', true),
+    'managed'                      => env('DF_MANAGED', false),
     // DB configs
     'db'                           => [
         // The default number of records to return at once for database queries

@@ -125,11 +125,12 @@ class AccessCheck
      */
     public static function getConsoleApiKey($request)
     {
-        //If instance is standalone return null
-        if (config('df.standalone')) {
+        //  If instance is not managed return null
+        if (!config('df.managed')) {
             return null;
         }
-        //Check for Console API key in request parameters.
+
+        //  Check for Console API key in request parameters.
         $consoleApiKey = $request->query('console_key');
         if (empty($consoleApiKey)) {
             //Check for API key in request HEADER.
@@ -186,7 +187,7 @@ class AccessCheck
             $basicAuthUser = $request->getUser();
             $basicAuthPassword = $request->getPassword();
 
-            if (!config('df.standalone') && !empty($consoleApiKey) && $consoleApiKey === Managed::getConsoleKey()) {
+            if (config('df.managed') && !empty($consoleApiKey) && $consoleApiKey === Managed::getConsoleKey()) {
                 //DFE Console request
                 return $next($request);
             } elseif (!empty($basicAuthUser) && !empty($basicAuthPassword)) {

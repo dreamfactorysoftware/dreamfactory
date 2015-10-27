@@ -75,10 +75,6 @@
   },
   "scripts":           {
     "post-install-cmd": [
-      "php -r \"copy('.env-dist', '.env');\"",
-      "php -r \"copy('phpunit.xml-dist', 'phpunit.xml');\"",
-      "php -r \"touch('storage/databases/database.sqlite');\"",
-      "php artisan key:generate",
       "php artisan clear-compiled",
       "php artisan optimize",
       "php artisan dreamfactory:pull-migrations"

@@ -30,10 +30,10 @@ class ClearAllFileCache extends Command
     {
         parent::__construct();
 
-        if (config('df.standalone')) {
-            $this->cacheRoot = storage_path('framework/cache');
-        } else {
+        if (config('df.managed')) {
             $this->cacheRoot = Managed::getCacheRoot();
+        } else {
+            $this->cacheRoot = storage_path('framework/cache');
         }
     }
 
