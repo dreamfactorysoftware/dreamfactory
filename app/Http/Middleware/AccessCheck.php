@@ -218,7 +218,7 @@ class AccessCheck
                 } catch (TokenBlacklistedException $e) {
                     throw new ForbiddenException($e->getMessage());
                 } catch (TokenInvalidException $e) {
-                    throw new BadRequestException('Invalid token supplied.');
+                    throw new BadRequestException('Invalid token: ' . $e->getMessage(), 401);
                 }
             } elseif (!empty($apiKey)) {
                 //Just Api Key is supplied. No authenticated session
