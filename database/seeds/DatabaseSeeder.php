@@ -30,6 +30,9 @@ class DatabaseSeeder extends Seeder
         if (class_exists('DreamFactory\\Core\\Rws\\Database\\Seeds\\DatabaseSeeder')) {
             $this->call('DreamFactory\\Core\\Rws\\Database\\Seeds\\DatabaseSeeder');
         }
+        if (class_exists('DreamFactory\\Core\\Soap\\Database\\Seeds\\DatabaseSeeder')) {
+            $this->call('DreamFactory\\Core\\Soap\\Database\\Seeds\\DatabaseSeeder');
+        }
         if (class_exists('DreamFactory\\Core\\Aws\\Database\\Seeds\\DatabaseSeeder')) {
             $this->call('DreamFactory\\Core\\Aws\\Database\\Seeds\\DatabaseSeeder');
         }
