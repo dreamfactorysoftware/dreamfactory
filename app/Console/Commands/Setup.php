@@ -179,7 +179,7 @@ class Setup extends Command
                 }
             }
 
-            $port = $this->ask('Enter your Database Port', '3306');
+            $port = $this->ask('Enter your Database Port', config('database.connections.'.$db.'.port'));
 
             $config = [
                 'DB_DRIVER'   => $driver,
