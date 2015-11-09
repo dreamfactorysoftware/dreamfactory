@@ -156,7 +156,7 @@ class Setup extends Command
         }
 
         $db = $this->choice('Which database would you like to use for system tables?',
-            ['sqlite', 'mysql', 'pgsql', 'sqlsrv'], 0);
+            ['sqlite', 'mysql', 'pgsql'], 0);
 
         if ('sqlite' === $db) {
             $this->createSqliteDbFile();
