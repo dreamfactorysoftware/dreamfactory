@@ -65,7 +65,7 @@ seed the default services, and will prompt you to create your admin user account
 To connect to a different Database Server after initial setup...
 
 * Edit the .env file at the installation root and change the following configuration.
-> DB_DRIVER=mysql     ## Supported drivers are sqlite (default), mysql, pgsql, sqlsrv<br>
+> DB_DRIVER=mysql     ## Supported drivers are sqlite (default), mysql, pgsql<br>
 > DB_HOST=localhost<br>
 > DB_DATABASE=dreamfactory<br>
 > DB_USERNAME=username<br>
