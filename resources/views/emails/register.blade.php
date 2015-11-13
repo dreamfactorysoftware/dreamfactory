@@ -15,15 +15,15 @@
 @section('contentBody')
     <div style="padding: 10px;">
         <p>
-            Hi {{ $firstName }},
+            Hi {{ $first_name }},
         </p>
 
         <div>
-            You have registered an user account on the DreamFactory instance of {{ $instanceName }}. Go to the following url, enter the code below, and set your password to confirm your account.<br/>
+            You have registered an user account on the DreamFactory instance of {{ $instance_name }}. Go to the following url, enter the code below, and set your password to confirm your account.<br/>
             <br/>
             {{ $link }}
             <br/><br/>
-            Confirmation Code: {{ $code }}<br/>
+            Confirmation Code: {{ $confirm_code }}<br/>
         </div>
 
         <p>
