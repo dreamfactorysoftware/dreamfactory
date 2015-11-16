@@ -14,7 +14,6 @@ return [
 	*/
 
 	'files' => [
-
 		realpath(__DIR__.'/../app/Providers/AppServiceProvider.php'),
 		realpath(__DIR__.'/../app/Providers/BusServiceProvider.php'),
 		realpath(__DIR__.'/../app/Providers/ConfigServiceProvider.php'),
@@ -26,8 +25,6 @@ return [
 		realpath(__DIR__.'/../app/Http/Middleware/AccessCheck.php'),
 		realpath(__DIR__.'/../app/Http/Middleware/Cors.php'),
 		realpath(__DIR__.'/../app/Http/Middleware/FirstUserCheck.php'),
-		realpath(__DIR__.'/../app/Http/Middleware/Limits.php'),
-		realpath(__DIR__.'/../app/Http/Middleware/DataCollection.php'),
 	],
 
 	/*

@@ -1,29 +1,27 @@
 <?php
 namespace DreamFactory\Http\Middleware;
 
-use \Auth;
-use \Closure;
-use DreamFactory\Core\Models\App;
-use DreamFactory\Core\Models\Service;
-use DreamFactory\Core\Utility\JWTUtilities;
-use DreamFactory\Managed\Enums\ManagedDefaults;
-use DreamFactory\Managed\Support\Managed;
-use \JWTAuth;
-use Illuminate\Http\Request;
-use Illuminate\Routing\Router;
+use Auth;
+use Closure;
 use DreamFactory\Core\Enums\VerbsMask;
-use DreamFactory\Library\Utility\ArrayUtils;
 use DreamFactory\Core\Exceptions\BadRequestException;
 use DreamFactory\Core\Exceptions\ForbiddenException;
 use DreamFactory\Core\Exceptions\UnauthorizedException;
-use DreamFactory\Core\Utility\ResponseFactory;
+use DreamFactory\Core\Models\App;
 use DreamFactory\Core\Models\Role;
+use DreamFactory\Core\Models\Service;
 use DreamFactory\Core\Models\User;
+use DreamFactory\Core\Utility\JWTUtilities;
+use DreamFactory\Core\Utility\ResponseFactory;
 use DreamFactory\Core\Utility\Session;
+use DreamFactory\Library\Utility\ArrayUtils;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Router;
+use JWTAuth;
+use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use Tymon\JWTAuth\Payload;
-use Tymon\JWTAuth\Exceptions\TokenExpiredException;
-use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
 
 class AccessCheck
 {
@@ -31,33 +29,33 @@ class AccessCheck
         [
             'verb_mask' => 31, //Allow all verbs
             'service'   => 'system',
-            'resource'  => 'admin/session'
+            'resource'  => 'admin/session',
         ],
         [
             'verb_mask' => 31, //Allow all verbs
             'service'   => 'user',
-            'resource'  => 'session'
+            'resource'  => 'session',
         ],
         [
             'verb_mask' => 2, //Allow POST only
             'service'   => 'user',
-            'resource'  => 'password'
+            'resource'  => 'password',
         ],
         [
             'verb_mask' => 2, //Allow POST only
             'service'   => 'system',
-            'resource'  => 'admin/password'
+            'resource'  => 'admin/password',
         ],
         [
             'verb_mask' => 1,
             'service'   => 'system',
-            'resource'  => 'environment'
+            'resource'  => 'environment',
         ],
         [
             'verb_mask' => 1,
             'service'   => 'user',
-            'resource'  => 'profile'
-        ]
+            'resource'  => 'profile',
+        ],
     ];
 
     /**
@@ -84,7 +82,7 @@ class AccessCheck
      */
     protected static function getJWTFromAuthHeader()
     {
-        if (env('APP_ENV') === 'testing') {
+        if ('testing' === env('APP_ENV')) {
             //getallheaders method is not available in unit test mode.
             return [];
         }
@@ -123,28 +121,6 @@ class AccessCheck
      *
      * @return mixed
      */
-    public static function getConsoleApiKey($request)
-    {
-        //  If instance is not managed return null
-        if (!config('df.managed')) {
-            return null;
-        }
-
-        //  Check for Console API key in request parameters.
-        $consoleApiKey = $request->query('console_key');
-        if (empty($consoleApiKey)) {
-            //Check for API key in request HEADER.
-            $consoleApiKey = $request->header(ManagedDefaults::CONSOLE_X_HEADER);
-        }
-
-        return $consoleApiKey;
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return mixed
-     */
     public static function getJwt($request)
     {
         $token = static::getJWTFromAuthHeader();
@@ -169,6 +145,11 @@ class AccessCheck
      */
     public function handle($request, Closure $next)
     {
+        //  Allow console requests through
+        if (env('DF_IS_VALID_CONSOLE_REQUEST', false)) {
+            return $next($request);
+        }
+
         try {
             static::setExceptions();
             //Get the api key.
@@ -180,17 +161,11 @@ class AccessCheck
             $token = static::getJwt($request);
             Session::setSessionToken($token);
 
-            //Get the Console API Key
-            $consoleApiKey = static::getConsoleApiKey($request);
-
             //Check for basic auth attempt.
             $basicAuthUser = $request->getUser();
             $basicAuthPassword = $request->getPassword();
 
-            if (config('df.managed') && !empty($consoleApiKey) && $consoleApiKey === Managed::getConsoleKey()) {
-                //DFE Console request
-                return $next($request);
-            } elseif (!empty($basicAuthUser) && !empty($basicAuthPassword)) {
+            if (!empty($basicAuthUser) && !empty($basicAuthPassword)) {
                 //Attempting to login using basic auth.
                 Auth::onceBasic();
                 /** @var User $authenticatedUser */
@@ -261,7 +236,7 @@ class AccessCheck
         $roleData = [
             'name'     => $role->name,
             'id'       => $role->id,
-            'services' => $rsa
+            'services' => $rsa,
         ];
 
         return $roleData;
@@ -322,7 +297,7 @@ class AccessCheck
                 static::$exceptions[] = [
                     'verb_mask' => 2, //Allow POST only
                     'service'   => 'user',
-                    'resource'  => 'register'
+                    'resource'  => 'register',
                 ];
             }
         }

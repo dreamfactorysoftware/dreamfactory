@@ -27,7 +27,7 @@ return [
     |
     */
 
-    'cloud'   => 's3',
+    'cloud' => 's3',
     /*
     |--------------------------------------------------------------------------
     | Filesystem Disks
@@ -39,11 +39,13 @@ return [
     |
     */
 
-    'disks'   => [
+    'disks' => [
 
         'local'     => [
             'driver' => 'local',
-            'root'   => storage_path() . '/' . ltrim(env('DF_LOCAL_FILE_ROOT', 'app'), '/'),
+            'root'   => env('DF_MANAGED_STORAGE_PATH', storage_path()) .
+                DIRECTORY_SEPARATOR .
+                ltrim(env('DF_LOCAL_FILE_ROOT', 'app'), '/'),
         ],
         's3'        => [
             'driver' => 's3',
@@ -60,15 +62,15 @@ return [
             'container'    => env('ROS_CONTAINER'),
             'url'          => env('ROS_URL'),
             'region'       => env('ROS_REGION'),
-            'storage_type' => env('ROS_STORAGE_TYPE')
+            'storage_type' => env('ROS_STORAGE_TYPE'),
         ],
         'azure'     => [
             'driver'       => 'azure',
             'account_name' => env('AZURE_ACCOUNT_NAME'),
             'account_key'  => env('AZURE_ACCOUNT_KEY'),
             'protocol'     => 'https',
-            'container'    => env('AZURE_BLOB_CONTAINER')
-        ]
+            'container'    => env('AZURE_BLOB_CONTAINER'),
+        ],
 
     ],
 

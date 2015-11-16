@@ -1,13 +1,13 @@
 <?php
 namespace DreamFactory\Http\Controllers;
 
+use DreamFactory\Core\Contracts\ServiceResponseInterface;
+use DreamFactory\Core\Utility\ResponseFactory;
+use DreamFactory\Core\Utility\ServiceHandler;
+use DreamFactory\Library\Utility\Enums\Verbs;
 use Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
-use DreamFactory\Library\Utility\Enums\Verbs;
-use DreamFactory\Core\Utility\ResponseFactory;
-use DreamFactory\Core\Utility\ServiceHandler;
-use DreamFactory\Core\Contracts\ServiceResponseInterface;
 
 /**
  * Class RestController
@@ -22,11 +22,6 @@ class RestController extends Controller
     public function __construct()
     {
         $this->middleware('access_check');
-
-        if (config('df.managed')) {
-            $this->middleware('data_collection');
-            $this->middleware('api_limits');
-        }
     }
 
     /**
