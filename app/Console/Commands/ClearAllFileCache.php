@@ -1,40 +1,22 @@
 <?php
-
 namespace DreamFactory\Console\Commands;
 
-use DreamFactory\Managed\Support\Managed;
 use Illuminate\Console\Command;
 
 class ClearAllFileCache extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
+    /** @inheritdoc */
     protected $signature = 'dreamfactory:clear-file-cache';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
+    /** @inheritdoc */
     protected $description = 'Command to clear all DreamFactory file-based cache, locally or in hosted environment.';
 
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
+    /** @inheritdoc */
     public function __construct()
     {
         parent::__construct();
 
-        if (config('df.managed')) {
-            $this->cacheRoot = Managed::getCacheRoot();
-        } else {
-            $this->cacheRoot = storage_path('framework/cache');
-        }
+        $this->cacheRoot = config('cache.path', storage_path('framework/cache'));
     }
 
     /**

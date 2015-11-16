@@ -57,7 +57,7 @@ return [
 	|
 	*/
 
-	'files' => storage_path().'/framework/sessions',
+    'files' => env('DF_MANAGED_SESSION_PATH', storage_path() . '/framework/sessions'),
 
 	/*
 	|--------------------------------------------------------------------------
