@@ -2,6 +2,7 @@
 
 namespace DreamFactory\Console\Commands;
 
+use DreamFactory\Core\ADLdap\Models\RoleADLdap;
 use DreamFactory\Core\Enums\ServiceTypeGroups;
 use DreamFactory\Core\Exceptions\BadRequestException;
 use DreamFactory\Core\Exceptions\RestException;
@@ -68,23 +69,33 @@ class ADGroupImport extends Command
             $roles = [];
 
             foreach ($groups as $group) {
-                $role = [
-                    'name'        => $group['dn'],
-                    'description' => $group['description'],
-                ];
+                $dfRole = RoleADLdap::whereDn($group['dn'])->first();
+                if (empty($dfRole)) {
+                    $role = [
+                        'name'                   => static::dnToRoleName($group['dn']),
+                        'description'            => $group['description'],
+                        'is_active'              => true,
+                        'role_adldap_by_role_id' => [
+                            [
+                                'dn' => $group['dn']
+                            ]
+                        ]
+                    ];
 
-                $this->info('|--------------------------------------------------------------------');
-                $this->info('| Role: ' . $role['name']);
-                $this->info('| Description: ' . $role['description']);
-                $this->info('|--------------------------------------------------------------------');
+                    $this->info('|--------------------------------------------------------------------');
+                    $this->info('| DN: ' . $group['dn']);
+                    $this->info('| Role Name: ' . $role['name']);
+                    $this->info('| Description: ' . $role['description']);
+                    $this->info('|--------------------------------------------------------------------');
 
-                $roles[] = $role;
+                    $roles[] = $role;
+                }
             }
 
             $roleCount = count($roles);
             if ($roleCount > 0) {
                 $this->warn('Total Roles to import: [' . $roleCount . ']');
-                if ($this->confirm('The above Roles will be inserted to your DreamFactroy instance based on your Active Directory groups. Do you wish to continue?')) {
+                if ($this->confirm('The above roles will be imported into your DreamFactroy instance based on your Active Directory groups. Do you wish to continue?')) {
                     $this->line('Importing Roles...');
                     $payload = ResourcesWrapper::wrapResources($roles);
                     ServiceHandler::handleRequest(Verbs::POST, 'system', 'role', ['continue' => true], $payload);
@@ -92,6 +103,8 @@ class ADGroupImport extends Command
                 } else {
                     $this->info('Aborted import process. No Roles were imported');
                 }
+            } else if (count($groups) > 0 && $roleCount === 0) {
+                $this->info('All groups found on the Active Directory server are already imported.');
             } else {
                 $this->warn('No group was found on Active Directory server.');
             }
@@ -103,5 +116,24 @@ class ADGroupImport extends Command
         } catch (\Exception $e) {
             $this->error($e->getMessage());
         }
+    }
+
+    public static function dnToRoleName($dn)
+    {
+        $attributes = explode(',', $dn);
+        $attValues = [];
+
+        foreach ($attributes as $attribute) {
+            $value = substr($attribute, 3);
+            $attValues[] = str_replace(' ', '', $value);
+        }
+
+        $roleName = implode('+', $attValues);
+
+        if (strlen($roleName) > 64) {
+            $roleName = substr($roleName, 0, 59) . '_' . sprintf("%04d", mt_rand(1, 9999));
+        }
+
+        return $roleName;
     }
 }
