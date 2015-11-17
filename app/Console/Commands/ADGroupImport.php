@@ -44,6 +44,11 @@ class ADGroupImport extends Command
      */
     public function handle()
     {
+        if(!class_exists('DreamFactory\\Core\\ADLdap\\Services\\ADLdap')){
+            $this->error('Command unavailable. Please install \'dreamfactory/df-adldap\' package to use this command.');
+            return;
+        }
+
         try {
             $serviceName = $this->argument('service');
             $username = $this->option('username');
