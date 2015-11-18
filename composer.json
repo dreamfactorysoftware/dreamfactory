@@ -38,7 +38,7 @@
   "require":           {
     "laravel/framework":          "5.1.*",
     "tymon/jwt-auth":             "0.5.*",
-    "dreamfactory/df-managed":    "1.0.*",
+    "dreamfactory/df-managed":    "2.0.*",
     "dreamfactory/df-admin-app":  "2.0.*",
     "dreamfactory/df-core":       "0.1.*",
     "dreamfactory/df-aws":        "0.1.*",
@@ -65,10 +65,7 @@
       "database"
     ],
     "psr-4":    {
-      "DreamFactory\\":                   "app/",
-      "DreamFactory\\Core\\" :            "workbench/repos/df-core/src/",
-      "DreamFactory\\Core\\ADLdap\\":     "workbench/repos/df-adldap/src/",
-      "DreamFactory\\Core\\User\\":       "workbench/repos/df-user/src/"
+      "DreamFactory\\": "app/"
     }
   },
   "autoload-dev":      {
