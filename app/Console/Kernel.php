@@ -12,13 +12,13 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-//        'DreamFactory\Console\Commands\Inspire',
         'DreamFactory\Console\Commands\ClearAllFileCache',
         'DreamFactory\Console\Commands\Request',
         'DreamFactory\Console\Commands\Import',
         'DreamFactory\Console\Commands\ImportPackage',
         'DreamFactory\Console\Commands\PullMigrations',
-        'DreamFactory\Console\Commands\Setup'
+        'DreamFactory\Console\Commands\Setup',
+        'DreamFactory\Console\Commands\ADGroupImport'
     ];
 
     /**
