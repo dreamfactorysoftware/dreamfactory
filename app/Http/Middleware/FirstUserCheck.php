@@ -19,7 +19,12 @@ class FirstUserCheck
     {
         if (!in_array($route = $request->getPathInfo(), ['/setup', '/setup_db',])) {
             try {
-                if (!User::adminExists()) {
+                if (!\Cache::get('migration_successful')) {
+                    // Need to run db migration and seeder.
+                    \Cache::put('setup_db', true, config('df.default_cache_ttl'));
+
+                    return redirect()->to('/setup_db');
+                } else if (!User::adminExists()) {
                     return redirect()->to('/setup');
                 }
             } catch (QueryException $e) {
