@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "01e780ae590d2ae236792420ca28c306",
-    "content-hash": "00d0efb7c9485fa6e8d663bf352e74d8",
+    "hash": "bc01e8bc786a6a82d38bf1a5f47cb9a4",
+    "content-hash": "e08aad838ea23ae941e3af9e6cf286dc",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1835,7 +1835,7 @@
                     "name": "Jeremy Lindblom",
                     "email": "jeremeamia@gmail.com",
                     "homepage": "https://github.com/jeremeamia",
-                    "role": "developer"
+                    "role": "Developer"
                 }
             ],
             "description": "Serialize Closure objects, including their context and binding",
@@ -5215,7 +5215,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "dreamfactory/df-managed": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": [],
