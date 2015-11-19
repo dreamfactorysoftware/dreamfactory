@@ -68,8 +68,6 @@ class SplashController extends Controller
                         \Artisan::call('migrate', ['--force' => true]);
                         \Artisan::call('db:seed', ['--force' => true]);
 
-                        \Cache::forever('migration_successful', true);
-
                         if ($request->ajax()) {
                             return json_encode(['success' => true, 'redirect_path' => '/setup']);
                         } else {
