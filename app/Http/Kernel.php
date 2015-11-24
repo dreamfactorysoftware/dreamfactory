@@ -12,6 +12,8 @@ use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use DreamFactory\Http\Middleware\AuthCheck;
+use DreamFactory\Managed\Http\Middleware\ImposeClusterLimits;
 
 class Kernel extends HttpKernel
 {
@@ -28,6 +30,7 @@ class Kernel extends HttpKernel
         ShareErrorsFromSession::class,
         FirstUserCheck::class,
         Cors::class,
+        AuthCheck::class,
     ];
 
     /**
