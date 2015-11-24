@@ -107,57 +107,60 @@ class AuthCheck
      */
     public function handle(Request $request, \Closure $next)
     {
-        try {
+        if (!in_array($route = $request->getPathInfo(), ['/setup', '/setup_db',])) {
+            try {
+                $apiKey = static::getApiKey($request);
+                Session::setApiKey($apiKey);
+                $appId = App::getAppIdByApiKey($apiKey);
 
-            $apiKey = static::getApiKey($request);
-            Session::setApiKey($apiKey);
-            $appId = App::getAppIdByApiKey($apiKey);
+                //Get the JWT.
+                $token = static::getJwt($request);
+                Session::setSessionToken($token);
 
-            //Get the JWT.
-            $token = static::getJwt($request);
-            Session::setSessionToken($token);
+                //Check for basic auth attempt.
+                $basicAuthUser = $request->getUser();
+                $basicAuthPassword = $request->getPassword();
 
-            //Check for basic auth attempt.
-            $basicAuthUser = $request->getUser();
-            $basicAuthPassword = $request->getPassword();
-
-            if (!empty($basicAuthUser) && !empty($basicAuthPassword)) {
-                //Attempting to login using basic auth.
-                Auth::onceBasic();
-                /** @var User $authenticatedUser */
-                $authenticatedUser = Auth::user();
-                if (!empty($authenticatedUser)) {
-                    $userId = $authenticatedUser->id;
-                    Session::setSessionData($appId, $userId);
-                } else {
-                    throw new UnauthorizedException('Unauthorized. User credentials did not match.');
+                if (!empty($basicAuthUser) && !empty($basicAuthPassword)) {
+                    //Attempting to login using basic auth.
+                    Auth::onceBasic();
+                    /** @var User $authenticatedUser */
+                    $authenticatedUser = Auth::user();
+                    if (!empty($authenticatedUser)) {
+                        $userId = $authenticatedUser->id;
+                        Session::setSessionData($appId, $userId);
+                    } else {
+                        throw new UnauthorizedException('Unauthorized. User credentials did not match.');
+                    }
+                } elseif (!empty($token)) {
+                    //JWT supplied meaning an authenticated user session/token.
+                    try {
+                        JWTAuth::setToken($token);
+                        /** @type Payload $payload */
+                        $payload = JWTAuth::getPayload();
+                        JWTUtilities::verifyUser($payload);
+                        $userId = $payload->get('user_id');
+                        Session::setSessionData($appId, $userId);
+                    } catch (TokenExpiredException $e) {
+                        JWTUtilities::clearAllExpiredTokenMaps();
+                        Session::set('token_expired', true);
+                        Session::set('token_expired_msg', $e->getMessage());
+                    } catch (TokenBlacklistedException $e) {
+                        throw new ForbiddenException($e->getMessage());
+                    } catch (TokenInvalidException $e) {
+                        throw new BadRequestException('Invalid token: ' . $e->getMessage(), 401);
+                    }
+                } elseif (!empty($apiKey)) {
+                    //Just Api Key is supplied. No authenticated session
+                    Session::setSessionData($appId);
                 }
-            } elseif (!empty($token)) {
-                //JWT supplied meaning an authenticated user session/token.
-                try {
-                    JWTAuth::setToken($token);
-                    /** @type Payload $payload */
-                    $payload = JWTAuth::getPayload();
-                    JWTUtilities::verifyUser($payload);
-                    $userId = $payload->get('user_id');
-                    Session::setSessionData($appId, $userId);
-                } catch (TokenExpiredException $e) {
-                    JWTUtilities::clearAllExpiredTokenMaps();
-                    Session::set('token_expired', true);
-                    Session::set('token_expired_msg', $e->getMessage());
-                } catch (TokenBlacklistedException $e) {
-                    throw new ForbiddenException($e->getMessage());
-                } catch (TokenInvalidException $e) {
-                    throw new BadRequestException('Invalid token: ' . $e->getMessage(), 401);
-                }
-            } elseif (!empty($apiKey)) {
-                //Just Api Key is supplied. No authenticated session
-                Session::setSessionData($appId);
+
+                return $next($request);
+            } catch (\Exception $e) {
+                return ResponseFactory::getException($e, $request);
             }
-
-            return $next($request);
-        } catch (\Exception $e) {
-            return ResponseFactory::getException($e, $request);
         }
+
+        return $next($request);
     }
 }
