@@ -13,7 +13,6 @@ use Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use DreamFactory\Http\Middleware\AuthCheck;
-use DreamFactory\Managed\Http\Middleware\ImposeClusterLimits;
 
 class Kernel extends HttpKernel
 {
