@@ -43,7 +43,7 @@ class AccessCheck
             'resource'  => 'environment',
         ],
         [
-            'verb_mask' => 1,
+            'verb_mask' => 15,
             'service'   => 'user',
             'resource'  => 'profile',
         ],
