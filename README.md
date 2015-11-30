@@ -1,4 +1,4 @@
-## DreamFactory 2.0.1
+## DreamFactory 2.0.2
 
 [![Build Status](https://travis-ci.org/dreamfactory/dreamfactory.svg)](https://travis-ci.org/dreamfactory/dreamfactory)
 [![License](https://poser.pugx.org/dreamfactory/dreamfactory/license.svg)](http://www.apache.org/licenses/LICENSE-2.0)
