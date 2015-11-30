@@ -156,7 +156,7 @@ class Setup extends Command
         }
 
         $db = $this->choice('Which database would you like to use for system tables?',
-            ['sqlite', 'mysql', 'pgsql', 'sqlsrv'], 0);
+            ['sqlite', 'mysql', 'pgsql'], 0);
 
         if ('sqlite' === $db) {
             $this->createSqliteDbFile();
@@ -179,7 +179,7 @@ class Setup extends Command
                 }
             }
 
-            $port = $this->ask('Enter your Database Port', '3306');
+            $port = $this->ask('Enter your Database Port', config('database.connections.'.$db.'.port'));
 
             $config = [
                 'DB_DRIVER'   => $driver,

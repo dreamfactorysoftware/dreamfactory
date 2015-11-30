@@ -1,6 +1,18 @@
-<?php namespace DreamFactory\Http;
+<?php
+namespace DreamFactory\Http;
 
+use DreamFactory\Http\Middleware\AccessCheck;
+use DreamFactory\Http\Middleware\Cors;
+use DreamFactory\Http\Middleware\FirstUserCheck;
+use DreamFactory\Managed\Bootstrap\ManagedInstance;
+use Illuminate\Auth\Middleware\AuthenticateWithBasicAuth;
+use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode;
+use Illuminate\Session\Middleware\StartSession;
+use Illuminate\View\Middleware\ShareErrorsFromSession;
+use DreamFactory\Http\Middleware\AuthCheck;
 
 class Kernel extends HttpKernel
 {
@@ -10,14 +22,14 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middleware = [
-        'Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode',
-        'Illuminate\Cookie\Middleware\EncryptCookies',
-        'Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse',
-        'Illuminate\Session\Middleware\StartSession',
-        'Illuminate\View\Middleware\ShareErrorsFromSession',
-        'DreamFactory\Http\Middleware\FirstUserCheck',
-        'DreamFactory\Http\Middleware\Cors',
-        //'DreamFactory\Http\Middleware\VerifyCsrfToken',
+        CheckForMaintenanceMode::class,
+        EncryptCookies::class,
+        AddQueuedCookiesToResponse::class,
+        StartSession::class,
+        ShareErrorsFromSession::class,
+        FirstUserCheck::class,
+        Cors::class,
+        AuthCheck::class,
     ];
 
     /**
@@ -26,12 +38,24 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth'            => 'DreamFactory\Http\Middleware\Authenticate',
-        'auth.basic'      => 'Illuminate\Auth\Middleware\AuthenticateWithBasicAuth',
-        'guest'           => 'DreamFactory\Http\Middleware\RedirectIfAuthenticated',
-        'api_limits'      => 'DreamFactory\Http\Middleware\Limits',
-        'access_check'    => 'DreamFactory\Http\Middleware\AccessCheck',
-        'data_collection' => 'DreamFactory\Http\Middleware\DataCollection',
+        'auth.basic'   => AuthenticateWithBasicAuth::class,
+        'access_check' => AccessCheck::class,
     ];
 
+    //******************************************************************************
+    //* Methods
+    //******************************************************************************
+
+    /**
+     * Inject our bootstrapper into the mix
+     */
+    protected function bootstrappers()
+    {
+        $_stack = parent::bootstrappers();
+
+        //  Insert our guy
+        array_unshift($_stack, array_shift($_stack), ManagedInstance::class);
+
+        return $_stack;
+    }
 }

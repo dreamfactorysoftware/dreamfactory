@@ -77,6 +77,7 @@ return [
 			'schema'   => 'public',
 		],
 
+		// SQL Server is not supported as a system database
 		'sqlsrv' => [
 			'driver'   => 'sqlsrv',
 			'host'     => env('DB_HOST', 'localhost'),

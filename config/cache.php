@@ -1,7 +1,5 @@
 <?php
 
-use DreamFactory\Managed\Support\Managed;
-
 return [
 
     /*
@@ -42,7 +40,7 @@ return [
         ],
         'file'      => [
             'driver' => 'file',
-            'path'   => (env('DF_MANAGED'))? Managed::getCachePath() : storage_path('framework/cache'),
+            'path'   => env('DF_CACHE_PATH', storage_path('framework/cache')),
         ],
         'memcached' => [
             'driver'  => 'memcached',
@@ -58,7 +56,6 @@ return [
             'driver'     => 'redis',
             'connection' => 'default',
         ],
-
     ],
     /*
     |--------------------------------------------------------------------------
@@ -71,6 +68,6 @@ return [
     |
     */
 
-    'prefix'  => (env('DF_MANAGED'))? Managed::getCacheKeyPrefix() : 'dreamfactory',
+    'prefix'  =>  env('DF_CACHE_PREFIX', 'dreamfactory'),
 
 ];

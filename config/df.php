@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'version'                      => '2.0.1',
+    'version'                      => '2.0.2',
     // General API version number, 1.x was earlier product and may be supported by most services
     'api_version'                  => '2.0',
     // Name of this DreamFactory instance. Defaults to server name.
@@ -15,10 +15,8 @@ return [
     // Default content-type of response when accepts header is missing or empty.
     'default_response_type'        => 'application/json',
     // Local File Storage setup, see also local config/filesystems.php
-    'storage_path'                 => storage_path(),
+    'storage_path'                 => env('DF_MANAGED_STORAGE_PATH', storage_path()),
     'local_file_service_container' => trim(env('DF_LOCAL_FILE_ROOT', 'app'), '/'),
-    // Set this false for hosted/managed environment.
-    'managed'                      => env('DF_MANAGED', false),
     // DB configs
     'db'                           => [
         // The default number of records to return at once for database queries

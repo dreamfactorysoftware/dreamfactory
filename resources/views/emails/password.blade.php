@@ -14,7 +14,7 @@
 @section('contentBody')
     <div style="padding: 10px;">
         <p>
-            Hi {{ $firstName }},
+            Hi {{ $first_name }},
         </p>
 
         <div>
@@ -22,7 +22,7 @@
             <br><br>
             {{ $link }}
             <br><br>
-            Confirmation Code: {{ $code }}
+            Confirmation Code: {{ $confirm_code }}
         </div>
 
         <p>

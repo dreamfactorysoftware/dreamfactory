@@ -89,7 +89,7 @@
                 <tbody>
                 <tr>
                     <td style="font-family:Roboto,'Open Sans',Helvetica,Arial,sans-serif;color:#333333;">
-                        <h2 class="content-header">{{ $contentHeader }}</h2>
+                        <h2 class="content-header">{{ $content_header }}</h2>
                     </td>
                 </tr>
                 <tr>
