@@ -485,16 +485,16 @@
         },
         {
             "name": "dreamfactory/df-admin-app",
-            "version": "2.0.4",
+            "version": "2.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-admin-app.git",
-                "reference": "04afbac8dcac464ccaed8b6535bb170b436aeb3a"
+                "reference": "ccd468e9e01b2546e0a1a5a15b1f7bdaff0c980f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-admin-app/zipball/04afbac8dcac464ccaed8b6535bb170b436aeb3a",
-                "reference": "04afbac8dcac464ccaed8b6535bb170b436aeb3a",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-admin-app/zipball/ccd468e9e01b2546e0a1a5a15b1f7bdaff0c980f",
+                "reference": "ccd468e9e01b2546e0a1a5a15b1f7bdaff0c980f",
                 "shasum": ""
             },
             "require": {
@@ -530,7 +530,7 @@
                 "remote web services",
                 "rest"
             ],
-            "time": "2015-11-30 21:05:35"
+            "time": "2015-12-03 20:14:19"
         },
         {
             "name": "dreamfactory/df-aws",
@@ -593,16 +593,16 @@
         },
         {
             "name": "dreamfactory/df-core",
-            "version": "0.1.6",
+            "version": "0.1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-core.git",
-                "reference": "c0f4c4a93df1e2c44564ec6c4165287186068975"
+                "reference": "f2f1ad9477eefec05cb26aa2c5ff4dd5dc21324f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/c0f4c4a93df1e2c44564ec6c4165287186068975",
-                "reference": "c0f4c4a93df1e2c44564ec6c4165287186068975",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/f2f1ad9477eefec05cb26aa2c5ff4dd5dc21324f",
+                "reference": "f2f1ad9477eefec05cb26aa2c5ff4dd5dc21324f",
                 "shasum": ""
             },
             "require": {
@@ -653,7 +653,7 @@
                 "paas",
                 "rest"
             ],
-            "time": "2015-11-30 20:59:18"
+            "time": "2015-12-03 19:57:44"
         },
         {
             "name": "dreamfactory/df-couchdb",
@@ -717,16 +717,16 @@
         },
         {
             "name": "dreamfactory/df-managed",
-            "version": "2.0.6",
+            "version": "2.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-managed.git",
-                "reference": "75f4963402e312797945c6e6d61585845abb4527"
+                "reference": "0c6bb367f53b7eafbd6b5f4f7a3e9292a2b1343d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-managed/zipball/75f4963402e312797945c6e6d61585845abb4527",
-                "reference": "75f4963402e312797945c6e6d61585845abb4527",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-managed/zipball/0c6bb367f53b7eafbd6b5f4f7a3e9292a2b1343d",
+                "reference": "0c6bb367f53b7eafbd6b5f4f7a3e9292a2b1343d",
                 "shasum": ""
             },
             "require": {
@@ -774,7 +774,7 @@
                 "manager",
                 "remote"
             ],
-            "time": "2015-11-20 16:39:01"
+            "time": "2015-12-01 15:49:36"
         },
         {
             "name": "dreamfactory/df-mongodb",
@@ -1853,16 +1853,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.1.25",
+            "version": "v5.1.26",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "53979acc664debc401bfcb61086c4fc4f196b22d"
+                "reference": "be7fbb60376bd61f07e9c637473e5b2cf7eebe5c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/53979acc664debc401bfcb61086c4fc4f196b22d",
-                "reference": "53979acc664debc401bfcb61086c4fc4f196b22d",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/be7fbb60376bd61f07e9c637473e5b2cf7eebe5c",
+                "reference": "be7fbb60376bd61f07e9c637473e5b2cf7eebe5c",
                 "shasum": ""
             },
             "require": {
@@ -1936,7 +1936,7 @@
                 "aws/aws-sdk-php": "Required to use the SQS queue driver and SES mail driver (~3.0).",
                 "doctrine/dbal": "Required to rename columns and drop SQLite columns (~2.4).",
                 "fzaninotto/faker": "Required to use the eloquent factory builder (~1.4).",
-                "guzzlehttp/guzzle": "Required to use the Mailgun and Mandrill mail drivers (~5.3|~6.0).",
+                "guzzlehttp/guzzle": "Required to use the Mailgun and Mandrill mail drivers and the ping methods on schedules (~5.3|~6.0).",
                 "iron-io/iron_mq": "Required to use the iron queue driver (~2.0).",
                 "league/flysystem-aws-s3-v3": "Required to use the Flysystem S3 driver (~1.0).",
                 "league/flysystem-rackspace": "Required to use the Flysystem Rackspace driver (~1.0).",
@@ -1978,7 +1978,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2015-11-30 19:24:36"
+            "time": "2015-12-02 21:59:57"
         },
         {
             "name": "laravel/socialite",
@@ -2501,16 +2501,16 @@
         },
         {
             "name": "paragonie/random_compat",
-            "version": "1.1.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "19f765b66c6fbb56ee3b11bc16d52e38eebdc295"
+                "reference": "a208865a5aeffc2dbbef2a5b3409887272d93f32"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/19f765b66c6fbb56ee3b11bc16d52e38eebdc295",
-                "reference": "19f765b66c6fbb56ee3b11bc16d52e38eebdc295",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/a208865a5aeffc2dbbef2a5b3409887272d93f32",
+                "reference": "a208865a5aeffc2dbbef2a5b3409887272d93f32",
                 "shasum": ""
             },
             "require": {
@@ -2545,7 +2545,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2015-11-10 00:45:41"
+            "time": "2015-12-01 02:52:15"
         },
         {
             "name": "phpforce/common",
@@ -4901,16 +4901,16 @@
         },
         {
             "name": "sebastian/environment",
-            "version": "1.3.2",
+            "version": "1.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/environment.git",
-                "reference": "6324c907ce7a52478eeeaede764f48733ef5ae44"
+                "reference": "6e7133793a8e5a5714a551a8324337374be209df"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/6324c907ce7a52478eeeaede764f48733ef5ae44",
-                "reference": "6324c907ce7a52478eeeaede764f48733ef5ae44",
+                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/6e7133793a8e5a5714a551a8324337374be209df",
+                "reference": "6e7133793a8e5a5714a551a8324337374be209df",
                 "shasum": ""
             },
             "require": {
@@ -4947,7 +4947,7 @@
                 "environment",
                 "hhvm"
             ],
-            "time": "2015-08-03 06:14:51"
+            "time": "2015-12-02 08:37:27"
         },
         {
             "name": "sebastian/exporter",
@@ -5208,25 +5208,25 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.8.0",
+            "version": "v3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "f79824187de95064a2f5038904c4d7f0227fedb5"
+                "reference": "177a015cb0e19ff4a49e0e2e2c5fc1c1bee07002"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/f79824187de95064a2f5038904c4d7f0227fedb5",
-                "reference": "f79824187de95064a2f5038904c4d7f0227fedb5",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/177a015cb0e19ff4a49e0e2e2c5fc1c1bee07002",
+                "reference": "177a015cb0e19ff4a49e0e2e2c5fc1c1bee07002",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.9"
+                "php": ">=5.5.9"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.8-dev"
+                    "dev-master": "3.0-dev"
                 }
             },
             "autoload": {
@@ -5253,7 +5253,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2015-11-30 12:35:10"
+            "time": "2015-11-30 12:36:17"
         }
     ],
     "aliases": [],
