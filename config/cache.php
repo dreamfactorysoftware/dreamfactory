@@ -1,7 +1,7 @@
 <?php
+use DreamFactory\Managed\Enums\ManagedDefaults;
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Default Cache Store
@@ -12,7 +12,6 @@ return [
     | not explicitly specified when executing a given caching function.
     |
     */
-
     'default' => env('CACHE_DRIVER', 'file'),
     /*
     |--------------------------------------------------------------------------
@@ -24,25 +23,23 @@ return [
     | same cache driver to group types of items stored in your caches.
     |
     */
-
     'stores'  => [
-
-        'apc'       => [
+        'apc'                                                               => [
             'driver' => 'apc',
         ],
-        'array'     => [
+        'array'                                                             => [
             'driver' => 'array',
         ],
-        'database'  => [
+        'database'                                                          => [
             'driver'     => 'database',
             'table'      => 'cache',
             'connection' => null,
         ],
-        'file'      => [
+        'file'                                                              => [
             'driver' => 'file',
             'path'   => env('DF_CACHE_PATH', storage_path('framework/cache')),
         ],
-        'memcached' => [
+        'memcached'                                                         => [
             'driver'  => 'memcached',
             'servers' => [
                 [
@@ -52,9 +49,14 @@ return [
                 ],
             ],
         ],
-        'redis'     => [
+        'redis'                                                             => [
             'driver'     => 'redis',
             'connection' => 'default',
+        ],
+        /** Managed instance limits cache */
+        env('DF_LIMITS_CACHE_STORE', ManagedDefaults::DEFAULT_LIMITS_STORE) => [
+            'driver' => 'file',
+            'path'   => env('DF_LIMITS_CACHE_PATH', storage_path('framework/cache')),
         ],
     ],
     /*
@@ -67,7 +69,5 @@ return [
     | value to get prefixed to all our keys so we can avoid collisions.
     |
     */
-
-    'prefix'  =>  env('DF_CACHE_PREFIX', 'dreamfactory'),
-
+    'prefix'  => env('DF_CACHE_PREFIX', 'dreamfactory'),
 ];
