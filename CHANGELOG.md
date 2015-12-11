@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 ### Changed
+- Using 'AES-256-CBC' as default Cipher in config/app.php. See DF_CIPHER in .evn or .env-dist for more details.
 
 ### Fixed
 

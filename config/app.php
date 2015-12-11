@@ -74,7 +74,7 @@ return [
     */
 
     'key'    => env('APP_KEY', 'SomeRandomString'),
-    'cipher'          => 'AES-256-CBC',
+    'cipher' => env('DF_CIPHER', 'AES-256-CBC'),
     /*
     |--------------------------------------------------------------------------
     | Logging Configuration
