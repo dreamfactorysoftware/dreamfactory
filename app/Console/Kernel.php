@@ -18,7 +18,8 @@ class Kernel extends ConsoleKernel
         'DreamFactory\Console\Commands\ImportPackage',
         'DreamFactory\Console\Commands\PullMigrations',
         'DreamFactory\Console\Commands\Setup',
-        'DreamFactory\Console\Commands\ADGroupImport'
+        'DreamFactory\Console\Commands\ADGroupImport',
+        'DreamFactory\Console\Commands\HomesteadConfig'
     ];
 
     /**
