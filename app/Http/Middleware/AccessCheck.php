@@ -6,6 +6,7 @@ use DreamFactory\Core\Enums\VerbsMask;
 use DreamFactory\Core\Exceptions\BadRequestException;
 use DreamFactory\Core\Exceptions\ForbiddenException;
 use DreamFactory\Core\Exceptions\UnauthorizedException;
+use DreamFactory\Core\Models\Role;
 use DreamFactory\Core\Models\Service;
 use DreamFactory\Core\User\Services\User;
 use DreamFactory\Core\Utility\ResponseFactory;
@@ -74,10 +75,16 @@ class AccessCheck
                 $apiKey = Session::getApiKey();
                 $token = Session::getSessionToken();
 
-                if(empty($apiKey) && empty($token)){
+                if (empty($apiKey) && empty($token)) {
                     throw new BadRequestException('Bad request. No token or api key provided.');
-                } elseif(true === Session::get('token_expired')){
+                } elseif (true === Session::get('token_expired')) {
                     throw new UnauthorizedException(Session::get('token_expired_msg'));
+                } elseif (true === Session::get('token_blacklisted')) {
+                    throw new ForbiddenException(Session::get('token_blacklisted_msg'));
+                } elseif (true === Session::get('token_invalid')) {
+                    throw new BadRequestException('Invalid token: ' . Session::get('token_invalid_msg'), 401);
+                } else if (!Role::getCachedInfo(Session::getRoleId(), 'is_active')) {
+                    throw new ForbiddenException("Role is not active.");
                 } elseif (!Session::isAuthenticated()) {
                     throw new UnauthorizedException('Unauthorized.');
                 } else {

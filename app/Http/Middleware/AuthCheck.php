@@ -12,8 +12,6 @@ use Illuminate\Http\Request;
 use DreamFactory\Core\Utility\Session;
 use DreamFactory\Core\Models\App;
 use DreamFactory\Core\Exceptions\UnauthorizedException;
-use DreamFactory\Core\Exceptions\BadRequestException;
-use DreamFactory\Core\Exceptions\ForbiddenException;
 use DreamFactory\Core\Models\User;
 use DreamFactory\Core\Utility\ResponseFactory;
 use DreamFactory\Library\Utility\ArrayUtils;
@@ -134,6 +132,18 @@ class AuthCheck
                     }
                 } elseif (!empty($token)) {
                     //JWT supplied meaning an authenticated user session/token.
+
+                    /**
+                     * Note: All caught exception from JWT are stored in session variables.
+                     * These are later checked and handled appropriately in the AccessCheck middleware.
+                     *
+                     * This is to allow processing API calls that do not require any valid
+                     * authenticated session. For example POST user/session to login,
+                     * PUT user/session to refresh old JWT, GET system/environment etc.
+                     *
+                     * This also allows for auditing API calls that are called by not permitted/processed.
+                     * It also allows counting unauthorized API calls against Enterprise Console limits.
+                     */
                     try {
                         JWTAuth::setToken($token);
                         /** @type Payload $payload */
@@ -146,9 +156,11 @@ class AuthCheck
                         Session::set('token_expired', true);
                         Session::set('token_expired_msg', $e->getMessage());
                     } catch (TokenBlacklistedException $e) {
-                        throw new ForbiddenException($e->getMessage());
+                        Session::set('token_blacklisted', true);
+                        Session::set('token_blacklisted_msg', $e->getMessage());
                     } catch (TokenInvalidException $e) {
-                        throw new BadRequestException('Invalid token: ' . $e->getMessage(), 401);
+                        Session::set('token_invalid', true);
+                        Session::set('token_invalid_msg', 'Invalid token: ' . $e->getMessage());
                     }
                 } elseif (!empty($apiKey)) {
                     //Just Api Key is supplied. No authenticated session

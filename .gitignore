@@ -1,8 +1,7 @@
 /bootstrap/compiled.php
-/vendor
-/.idea
-/log
-/public/test_report
+.vagrant
+vendor
+.idea
 /public/dreamfactory
 /workbench
 composer.phar
@@ -11,6 +10,8 @@ _ide_helper.php
 phpunit.xml
 .DS_Store
 Thumbs.db
-/storage/cache
-/bootstrap/cache
+/storage/cache/*
+/storage/framework/cache/*
+/bootstrap/cache/*
 .dfe.cluster.json
+Homestead.yaml
