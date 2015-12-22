@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'version'                      => '2.0.2',
+    'version'                      => '2.0.3',
     // General API version number, 1.x was earlier product and may be supported by most services
     'api_version'                  => '2.0',
     // Name of this DreamFactory instance. Defaults to server name.
@@ -34,7 +34,8 @@ return [
         'datetime_format'      => null,
         'timestamp_format'     => null,
         // Default location to store SQLite3 database files
-        'sqlite_storage'       => env('DF_SQLITE_STORAGE', storage_path('databases/')),
+        'sqlite_storage'       => env('DF_SQLITE_STORAGE',
+            rtrim(env('DF_MANAGED_STORAGE_PATH', storage_path()), '/') . '/databases/'),
         // FreeTDS configuration (Linux and OS X only)
         'freetds'              => [
             // DB connection types, these dictate the TDS version and other config
