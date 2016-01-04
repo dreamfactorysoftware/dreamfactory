@@ -82,7 +82,7 @@ class AccessCheck
                 } elseif (true === Session::get('token_blacklisted')) {
                     throw new ForbiddenException(Session::get('token_blacklisted_msg'));
                 } elseif (true === Session::get('token_invalid')) {
-                    throw new BadRequestException('Invalid token: ' . Session::get('token_invalid_msg'), 401);
+                    throw new BadRequestException(Session::get('token_invalid_msg'), 401);
                 } else if (!Role::getCachedInfo(Session::getRoleId(), 'is_active')) {
                     throw new ForbiddenException("Role is not active.");
                 } elseif (!Session::isAuthenticated()) {
