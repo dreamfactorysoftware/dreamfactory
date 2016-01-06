@@ -408,7 +408,7 @@ function loadFolder(path) {
             },
             dataType: 'json',
             url: CurrentServer + '/api/v2/system/service',
-            data: "fields=name&filter=" + escape("type='local_file' or type='aws_s3' or type='azure_blob' or type='rackspace_cloud_files'"),
+            data: "fields=name&filter=" + escape("type='local_file' or type='aws_s3' or type='azure_blob' or type='rackspace_cloud_files' or type='openstack_object_storage'"),
             cache: false,
             success: function (response) {
                 try {
