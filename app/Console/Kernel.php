@@ -1,16 +1,11 @@
 <?php namespace DreamFactory\Console;
 
-use Illuminate\Console\Scheduling\Schedule;
+use DreamFactory\Managed\Bootstrap\ManagedInstance;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
-
-    /**
-     * The Artisan commands provided by your application.
-     *
-     * @var array
-     */
+    /** @inheritdoc */
     protected $commands = [
         'DreamFactory\Console\Commands\ClearAllFileCache',
         'DreamFactory\Console\Commands\Request',
@@ -19,18 +14,23 @@ class Kernel extends ConsoleKernel
         'DreamFactory\Console\Commands\PullMigrations',
         'DreamFactory\Console\Commands\Setup',
         'DreamFactory\Console\Commands\ADGroupImport',
-        'DreamFactory\Console\Commands\HomesteadConfig'
+        'DreamFactory\Console\Commands\HomesteadConfig',
     ];
 
+    //******************************************************************************
+    //* Methods
+    //******************************************************************************
+
     /**
-     * Define the application's command schedule.
-     *
-     * @param  \Illuminate\Console\Scheduling\Schedule $schedule
-     *
-     * @return void
+     * Inject our bootstrapper into the mix
      */
-    protected function schedule(Schedule $schedule)
+    protected function bootstrappers()
     {
-//        $schedule->command('inspire')->hourly();
+        $_stack = parent::bootstrappers();
+
+        //  Insert our guy
+        array_unshift($_stack, array_shift($_stack), ManagedInstance::class);
+
+        return $_stack;
     }
 }
