@@ -74,6 +74,14 @@ Route::group(
     }
 );
 
+/**
+ * Controller route to allow the Enterprise Console to talk to instances.  If this route is removed or disabled
+ * Enterprise functions will break
+ */
+if (env('DF_MANAGED', false)) {
+    Route::controller('/instance', '\DreamFactory\Managed\Http\Controllers\InstanceController');
+}
+
 Route::get('{storage}/{path}', 'StorageController@handleGET')->where(
     ['storage' => $servicePattern, 'path' => $resourcePathPattern]
 );
