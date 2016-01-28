@@ -489,12 +489,21 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-admin-app.git",
+<<<<<<< HEAD
                 "reference": "fc334062a04832599834ab8070a296f22e75d107"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/dreamfactorysoftware/df-admin-app/zipball/fc334062a04832599834ab8070a296f22e75d107",
                 "reference": "fc334062a04832599834ab8070a296f22e75d107",
+=======
+                "reference": "4c24bd3def12cbdf3be23efdba5b55803fba95aa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-admin-app/zipball/4c24bd3def12cbdf3be23efdba5b55803fba95aa",
+                "reference": "4c24bd3def12cbdf3be23efdba5b55803fba95aa",
+>>>>>>> 4174c4a3c176afa85ebf6bf420624f0d7d101d6a
                 "shasum": ""
             },
             "require": {
@@ -530,7 +539,11 @@
                 "remote web services",
                 "rest"
             ],
+<<<<<<< HEAD
             "time": "2016-01-28 20:47:19"
+=======
+            "time": "2016-01-28 15:22:16"
+>>>>>>> 4174c4a3c176afa85ebf6bf420624f0d7d101d6a
         },
         {
             "name": "dreamfactory/df-aws",
@@ -597,12 +610,21 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-core.git",
+<<<<<<< HEAD
                 "reference": "f8f1c7ea2b840283fea590d24b96d8b2bba9f482"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/f8f1c7ea2b840283fea590d24b96d8b2bba9f482",
                 "reference": "f8f1c7ea2b840283fea590d24b96d8b2bba9f482",
+=======
+                "reference": "0950b5850b1764caeee445fb77740a7d5f24a82d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/0950b5850b1764caeee445fb77740a7d5f24a82d",
+                "reference": "0950b5850b1764caeee445fb77740a7d5f24a82d",
+>>>>>>> 4174c4a3c176afa85ebf6bf420624f0d7d101d6a
                 "shasum": ""
             },
             "require": {
@@ -653,7 +675,11 @@
                 "paas",
                 "rest"
             ],
+<<<<<<< HEAD
             "time": "2016-01-28 17:55:04"
+=======
+            "time": "2016-01-28 15:27:02"
+>>>>>>> 4174c4a3c176afa85ebf6bf420624f0d7d101d6a
         },
         {
             "name": "dreamfactory/df-couchdb",
@@ -721,12 +747,21 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-managed.git",
+<<<<<<< HEAD
                 "reference": "49e1aa4214924951d3e754f7b6882ca064de69e9"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/dreamfactorysoftware/df-managed/zipball/49e1aa4214924951d3e754f7b6882ca064de69e9",
                 "reference": "49e1aa4214924951d3e754f7b6882ca064de69e9",
+=======
+                "reference": "6072b746157859b4894ecae77181d0bb81f3bef1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-managed/zipball/6072b746157859b4894ecae77181d0bb81f3bef1",
+                "reference": "6072b746157859b4894ecae77181d0bb81f3bef1",
+>>>>>>> 4174c4a3c176afa85ebf6bf420624f0d7d101d6a
                 "shasum": ""
             },
             "require": {
@@ -774,7 +809,11 @@
                 "manager",
                 "remote"
             ],
+<<<<<<< HEAD
             "time": "2016-01-28 19:06:24"
+=======
+            "time": "2016-01-27 19:26:05"
+>>>>>>> 4174c4a3c176afa85ebf6bf420624f0d7d101d6a
         },
         {
             "name": "dreamfactory/df-mongodb",
@@ -1390,6 +1429,54 @@
             "time": "2016-01-08 21:56:57"
         },
         {
+<<<<<<< HEAD
+=======
+            "name": "dreamfactory/swagger-ui",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dreamfactorysoftware/swagger-ui.git",
+                "reference": "11e8c5911909fd8512df4fcf74b3c07b41ae40f9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/swagger-ui/zipball/11e8c5911909fd8512df4fcf74b3c07b41ae40f9",
+                "reference": "11e8c5911909fd8512df4fcf74b3c07b41ae40f9",
+                "shasum": ""
+            },
+            "require": {
+                "dreamfactory/installer": "*"
+            },
+            "type": "dreamfactory-app",
+            "extra": {
+                "branch-alias": {
+                    "dev-develop": "0.0.x-dev"
+                },
+                "installer-name": "swagger-ui"
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "DreamFactory Software, Inc.",
+                    "email": "support@dreamfactory.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "DreamFactory(tm) Swagger UI",
+            "homepage": "https://github.com/dreamfactorysoftware/swagger-ui/",
+            "keywords": [
+                "api",
+                "dreamfactory",
+                "rest",
+                "swagger"
+            ],
+            "time": "2016-01-28 15:31:59"
+        },
+        {
+>>>>>>> 4174c4a3c176afa85ebf6bf420624f0d7d101d6a
             "name": "guzzle/guzzle",
             "version": "v3.9.3",
             "source": {

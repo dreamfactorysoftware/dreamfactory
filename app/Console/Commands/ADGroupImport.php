@@ -20,7 +20,11 @@ class ADGroupImport extends Command
      *
      * @var string
      */
-    protected $signature = 'dreamfactory:ad-group-import {service} {--username=} {--password=}';
+    protected $signature = 'dreamfactory:ad-group-import
+                            {service : Provide the AD/LDAP service name to use}
+                            {--filter= : Optional ldap_search filter. Accepts standard LDAP query}
+                            {--username= : Optional username to connect using a specific account}
+                            {--password= : Password for optional username}';
 
     /**
      * The console command description.
@@ -44,8 +48,9 @@ class ADGroupImport extends Command
      */
     public function handle()
     {
-        if(!class_exists('DreamFactory\\Core\\ADLdap\\Services\\ADLdap')){
+        if (!class_exists('DreamFactory\\Core\\ADLdap\\Services\\ADLdap')) {
             $this->error('Command unavailable. Please install \'dreamfactory/df-adldap\' package to use this command.');
+
             return;
         }
 
@@ -53,6 +58,7 @@ class ADGroupImport extends Command
             $serviceName = $this->argument('service');
             $username = $this->option('username');
             $password = $this->option('password');
+            $filter = $this->option('filter');
 
             /** @type ADLdap $service */
             $service = ServiceHandler::getService($serviceName);
@@ -70,7 +76,7 @@ class ADGroupImport extends Command
             $service->authenticateAdminUser($username, $password);
 
             $this->line('Fetching Active Directory groups...');
-            $groups = $service->getDriver()->listGroup(['dn', 'description']);
+            $groups = $service->getDriver()->listGroup(['dn', 'description'], $filter);
             $roles = [];
 
             foreach ($groups as $group) {
@@ -119,7 +125,11 @@ class ADGroupImport extends Command
                 $this->error(print_r($e->getContext(), true));
             }
         } catch (\Exception $e) {
-            $this->error($e->getMessage());
+            $msg = $e->getMessage();
+            $this->error($msg);
+            if (strpos($msg, 'Sizelimit exceeded') !== false) {
+                $this->error('Please use "--filter=" option to avoid exceeding Sizelimit');
+            }
         }
     }
 
