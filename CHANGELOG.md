@@ -9,12 +9,17 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
-## [2.0.4]
+## [0.2.0] - 2016-01-29
+
+### Changed
+- **MAJOR** Updated code base to use OpenAPI (fka Swagger) Specification 2.0 from 1.2
+
+## [2.0.4] - 2016-01-06
 ### Fixed
 - Bug fixes for df-core dependencies
 - FileManager app to include OpenStack Object Storage
 
-## [2.0.3]
+## [2.0.3] - 2015-12-22
 ### Added
 - Laravel Homestead setup for quick launch of testing environment.
 - More environment changes for managed instances, including limit tracking.
@@ -44,7 +49,8 @@ For older installs, see DF_CIPHER in .env or .env-dist for more details.
 ## 2.0.0 - 2015-10-27
 First official release of the new open-source DreamFactory project.
 
-[Unreleased]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.0.4...HEAD
+[Unreleased]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.1.0...HEAD
+[2.1.0]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.0.4...2.1.0
 [2.0.4]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.0.3...2.0.4
 [2.0.3]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.0.2...2.0.3
 [2.0.2]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.0.1...2.0.2
