@@ -15,16 +15,16 @@
       "email": "arifislam@dreamfactory.com"
     },
     {
+      "name":  "David Weiner",
+      "email": "davidweiner@dreamfactory.com"
+    },
+    {
       "name":  "Jerry Ablan",
       "email": "jerryablan@dreamfactory.com"
     },
     {
       "name":  "Lee Hicks",
       "email": "leehicks@dreamfactory.com"
-    },
-    {
-      "name":  "David Weiner",
-      "email": "davidweiner@dreamfactory.com"
     }
   ],
   "support":           {
@@ -45,27 +45,29 @@
     "laravel/framework":          "5.1.*",
     "tymon/jwt-auth":             "0.5.*",
     "dreamfactory/df-managed":    "2.0.*",
-    "dreamfactory/df-admin-app":  "2.0.*",
-    "dreamfactory/df-core":       "0.1.*",
-    "dreamfactory/df-aws":        "0.1.*",
-    "dreamfactory/df-azure":      "0.1.*",
-    "dreamfactory/df-rackspace":  "0.1.*",
-    "dreamfactory/df-sqldb":      "0.1.*",
-    "dreamfactory/df-mongodb":    "0.1.*",
-    "dreamfactory/df-couchdb":    "0.1.*",
-    "dreamfactory/df-rws":        "0.1.*",
-    "dreamfactory/df-salesforce": "0.1.*",
-    "dreamfactory/df-soap":       "0.1.*",
-    "dreamfactory/df-user":       "0.1.*",
-    "dreamfactory/df-oauth":      "0.1.*",
-    "dreamfactory/df-adldap":     "0.1.*"
+    "dreamfactory/df-admin-app":  "2.1.*",
+    "dreamfactory/df-swagger-ui": "0.2.*",
+    "dreamfactory/df-core":       "0.2.*",
+    "dreamfactory/df-aws":        "0.2.*",
+    "dreamfactory/df-azure":      "0.2.*",
+    "dreamfactory/df-rackspace":  "0.2.*",
+    "dreamfactory/df-sqldb":      "0.2.*",
+    "dreamfactory/df-mongodb":    "0.2.*",
+    "dreamfactory/df-couchdb":    "0.2.*",
+    "dreamfactory/df-rws":        "0.2.*",
+    "dreamfactory/df-salesforce": "0.2.*",
+    "dreamfactory/df-soap":       "0.2.*",
+    "dreamfactory/df-user":       "0.2.*",
+    "dreamfactory/df-oauth":      "0.2.*",
+    "dreamfactory/df-adldap":     "0.2.*"
   },
   "require-dev":       {
     "barryvdh/laravel-ide-helper": "~2.0",
     "laracasts/generators":        "~1.0",
     "laracasts/testdummy":         "~2.0",
     "phpunit/phpunit":             "~4.0",
-    "phpspec/phpspec":             "~2.1"
+    "phpspec/phpspec":             "~2.1",
+    "laravel/homestead":           "dev-master"
   },
   "autoload":          {
     "classmap": [
@@ -84,12 +86,14 @@
     "post-install-cmd": [
       "php artisan clear-compiled",
       "php artisan optimize",
-      "php artisan dreamfactory:pull-migrations"
+      "php artisan dreamfactory:pull-migrations",
+      "php artisan dreamfactory:homestead-config"
     ],
     "post-update-cmd":  [
       "php artisan clear-compiled",
       "php artisan optimize",
-      "php artisan dreamfactory:pull-migrations"
+      "php artisan dreamfactory:pull-migrations",
+      "php artisan dreamfactory:homestead-config"
     ]
   },
   "config":            {
@@ -97,7 +101,7 @@
   },
   "extra":             {
     "branch-alias":    {
-      "dev-develop": "2.0.x-dev"
+      "dev-develop": "2.1.x-dev"
     },
     "installer-paths": {
       "public/{$name}/": [
