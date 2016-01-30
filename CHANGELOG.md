@@ -9,10 +9,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
-## [0.2.0] - 2016-01-29
+## [2.1.0] - 2016-01-29
 
 ### Changed
 - **MAJOR** Updated code base to use OpenAPI (fka Swagger) Specification 2.0 from 1.2
+- Replacing old swagger UI with fork of latest Swagger 2.0 UI
 
 ## [2.0.4] - 2016-01-06
 ### Fixed
