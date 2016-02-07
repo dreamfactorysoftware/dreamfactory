@@ -27,6 +27,8 @@ Route::get('/setup_db', 'SplashController@setupDb');
 
 Route::post('/setup_db', 'SplashController@setupDb');
 
+Route::get('/status', 'StatusController@index');
+
 $resourcePathPattern = '[0-9a-zA-Z-_@&\#\!=,:;\/\^\$\.\|\{\}\[\]\(\)\*\+\? ]+';
 $servicePattern = '[_0-9a-zA-Z-.]+';
 
