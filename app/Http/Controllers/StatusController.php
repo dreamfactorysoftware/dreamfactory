@@ -36,7 +36,6 @@ class StatusController extends Controller
         }
 
         $appCount = App::all()->count();
-        $appGroupCount = AppGroup::all()->count();
         $adminCount = User::whereIsSysAdmin(1)->count();
         $userCount = User::whereIsSysAdmin(0)->count();
         $serviceCount = Service::all()->count();
@@ -51,7 +50,6 @@ class StatusController extends Controller
             "host_os"   => PHP_OS,
             "resources" => [
                 "app"       => $appCount,
-                "app_group" => $appGroupCount,
                 "admin"     => $adminCount,
                 "user"      => $userCount,
                 "service"   => $serviceCount,
