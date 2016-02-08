@@ -3,7 +3,6 @@ namespace DreamFactory\Http\Controllers;
 
 use DreamFactory\Core\Models\User;
 use DreamFactory\Library\Utility\Enums\Verbs;
-use Validator;
 use Response;
 
 class SplashController extends Controller
