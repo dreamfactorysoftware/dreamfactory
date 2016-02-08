@@ -21,8 +21,9 @@ class StatusController extends Controller
         $port = $s['SERVER_PORT'];
         $port = ((!$ssl && $port == '80') || ($ssl && $port == '443')) ? '' : ':' . $port;
         $host = (isset($s['HTTP_HOST']) ? $s['HTTP_HOST'] : $s['SERVER_NAME']);
+        $host = (strpos($host, ':') !== false)? $host : $host . $port;
 
-        return $protocol . '://' . $host . $port;
+        return $protocol . '://' . $host;
     }
 
     public function index()
