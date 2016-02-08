@@ -2,9 +2,7 @@
 
 namespace DreamFactory\Http\Controllers;
 
-use DreamFactory\Core\Exceptions\InternalServerErrorException;
 use DreamFactory\Core\Models\App;
-use DreamFactory\Core\Models\AppGroup;
 use DreamFactory\Core\Models\Role;
 use DreamFactory\Core\Models\Service;
 use DreamFactory\Core\Models\User;
