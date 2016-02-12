@@ -19,13 +19,15 @@ class StatusController extends Controller
         $port = $s['SERVER_PORT'];
         $port = ((!$ssl && $port == '80') || ($ssl && $port == '443')) ? '' : ':' . $port;
         $host = (isset($s['HTTP_HOST']) ? $s['HTTP_HOST'] : $s['SERVER_NAME']);
-        $host = (strpos($host, ':') !== false)? $host : $host . $port;
+        $host = (strpos($host, ':') !== false) ? $host : $host . $port;
 
         return $protocol . '://' . $host;
     }
 
     public function index()
     {
+        \Log::info("[REQUEST] Instance status");
+
         $uri = static::getURI($_SERVER);
 
         $dist = env('DF_INSTALL', '');
@@ -47,11 +49,11 @@ class StatusController extends Controller
             "version"   => \Config::get('df.version'),
             "host_os"   => PHP_OS,
             "resources" => [
-                "app"       => $appCount,
-                "admin"     => $adminCount,
-                "user"      => $userCount,
-                "service"   => $serviceCount,
-                "role"      => $roleCount
+                "app"     => $appCount,
+                "admin"   => $adminCount,
+                "user"    => $userCount,
+                "service" => $serviceCount,
+                "role"    => $roleCount
             ]
         ];
 

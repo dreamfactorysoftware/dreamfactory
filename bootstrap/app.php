@@ -11,11 +11,11 @@
 |
 */
 
-use Monolog\Handler\StreamHandler;
+use DreamFactory\Core\LogHandlers\StreamHandler;
 use Monolog\Formatter\LineFormatter;
-use Monolog\Handler\SyslogHandler;
-use Monolog\Handler\ErrorLogHandler;
-use Monolog\Handler\RotatingFileHandler;
+use DreamFactory\Core\LogHandlers\SyslogHandler;
+use DreamFactory\Core\LogHandlers\ErrorLogHandler;
+use DreamFactory\Core\LogHandlers\RotatingFileHandler;
 use Monolog\Logger;
 
 $app = new Illuminate\Foundation\Application(
@@ -49,7 +49,10 @@ $app->singleton(
 );
 
 $app->configureMonologUsing(function (Logger $monolog){
-    $logFile = env('DF_MANAGED_LOG_PATH', storage_path('logs')) . DIRECTORY_SEPARATOR . env('DF_MANAGED_LOG_FILE', 'dreamfactory.log');
+    $logFile =
+        env('DF_MANAGED_LOG_PATH', storage_path('logs')) .
+        DIRECTORY_SEPARATOR .
+        env('DF_MANAGED_LOG_FILE', 'dreamfactory.log');
 
     $mode = config('app.log');
 

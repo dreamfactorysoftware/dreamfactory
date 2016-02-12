@@ -6,6 +6,8 @@ return [
     'api_version'                  => '2.0',
     // Name of this DreamFactory instance. Defaults to server name.
     'instance_name'                => env('DF_INSTANCE_NAME', gethostname()),
+    // Log level
+    'log_level'                    => env('DF_LOG_LEVEL', 'WARNING'),
     // XML root tag for http request and response.
     'xml_request_root'             => 'dfapi',
     'xml_response_root'            => 'dfapi',

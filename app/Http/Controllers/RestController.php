@@ -222,6 +222,9 @@ class RestController extends Controller
         }
 
         if ($response instanceof RedirectResponse) {
+            \Log::info('[RESPONSE] Redirect', ['Status Code' => $response->getStatusCode()]);
+            \Log::debug('[RESPONSE]', ['Target URL' => $response->getTargetUrl()]);
+
             return $response;
         }
 
