@@ -36,13 +36,13 @@
   "minimum-stability": "dev",
   "prefer-stable":     true,
   "require":           {
-    "laravel/framework":               "5.1.*",
+    "laravel/framework":               "5.2.*",
     "tymon/jwt-auth":                  "0.5.*",
     "dreamfactory/df-managed":         "dev-develop as dev-master",
     "dreamfactory/df-admin-app":       "dev-develop as dev-master",
     "dreamfactory/df-filemanager-app": "dev-develop as dev-master",
     "dreamfactory/df-swagger-ui":      "dev-develop as dev-master",
-    "dreamfactory/df-core":            "dev-develop as dev-master",
+    "dreamfactory/df-core":            "dev-feature/upgrade_l52 as 0.2.0",
     "dreamfactory/df-aws":             "dev-develop as dev-master",
     "dreamfactory/df-rackspace":       "dev-develop as dev-master",
     "dreamfactory/df-sqldb":           "dev-develop as dev-master",
@@ -61,7 +61,9 @@
     "laracasts/testdummy":         "~2.0",
     "phpunit/phpunit":             "~4.0",
     "phpspec/phpspec":             "~2.1",
-    "laravel/homestead":           "dev-master"
+    "laravel/homestead":           "dev-master",
+    "symfony/dom-crawler": "~3.0",
+    "symfony/css-selector": "~3.0"
   },
   "autoload":          {
     "classmap": [
