@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 ### Changed
+- Upgraded Laravel framework to 5.2
 
 ### Fixed
 
