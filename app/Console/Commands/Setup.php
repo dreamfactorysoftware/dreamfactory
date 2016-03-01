@@ -4,6 +4,7 @@ namespace DreamFactory\Console\Commands;
 
 use DreamFactory\Core\Models\User;
 use DreamFactory\Core\Utility\FileUtilities;
+use DreamFactory\Library\Utility\ArrayUtils;
 use Illuminate\Console\Command;
 
 class Setup extends Command
@@ -13,7 +14,15 @@ class Setup extends Command
      *
      * @var string
      */
-    protected $signature = 'dreamfactory:setup {--force}';
+    protected $signature = 'dreamfactory:setup
+                            {--force : Force run migration and seeder.}
+                            {--db_host= : Database host.}
+                            {--db_driver= : System database driver. [sqlite, mysql, pgsql].}
+                            {--db_database= : Database name.}
+                            {--db_username= : Database username.}
+                            {--db_password= : Database password.}
+                            {--db_port= : Database port.}
+                            {--df_install=GitHub : Installation source/environment.}';
 
     /**
      * The console command description.
@@ -50,6 +59,25 @@ class Setup extends Command
         } catch (\Exception $e) {
             $this->error($e->getMessage());
         }
+    }
+
+    /**
+     * Used to determine interactive mode on/off
+     *
+     * @return bool
+     */
+    protected function doInteractive()
+    {
+        $interactive = true;
+        $options = $this->option();
+
+        foreach ($options as $key => $value) {
+            if (substr($key, 0, 3) === 'db_' && !empty($value)) {
+                $interactive = false;
+            }
+        }
+
+        return $interactive;
     }
 
     /**
@@ -155,47 +183,83 @@ class Setup extends Command
             $this->info('Created phpunit.xml with default configuration.');
         }
 
-        $db = $this->choice('Which database would you like to use for system tables?',
-            ['sqlite', 'mysql', 'pgsql'], 0);
+        if ($this->doInteractive()) {
+            $db = $this->choice('Which database would you like to use for system tables?',
+                ['sqlite', 'mysql', 'pgsql', 'sqlsrv'], 0);
 
-        if ('sqlite' === $db) {
-            $this->createSqliteDbFile();
-        } else {
-            $driver = $db;
-            $host = $this->ask('Enter your ' . $db . ' Host');
-            $database = $this->ask('Enter your database name');
-            $username = $this->ask('Enter your database username');
+            if ('sqlite' === $db) {
+                $this->createSqliteDbFile();
+            } else {
+                $driver = $db;
+                $host = $this->ask('Enter your ' . $db . ' Host');
+                $database = $this->ask('Enter your database name');
+                $username = $this->ask('Enter your database username');
 
-            $password = '';
-            $passwordMatch = false;
-            while (!$passwordMatch) {
-                $password = $this->secret('Enter your database password');
-                $password2 = $this->secret('Re-enter your database password');
+                $password = '';
+                $passwordMatch = false;
+                while (!$passwordMatch) {
+                    $password = $this->secret('Enter your database password');
+                    $password2 = $this->secret('Re-enter your database password');
 
-                if ($password === $password2) {
-                    $passwordMatch = true;
-                } else {
-                    $this->error('Passwords did not match. Please try again.');
+                    if ($password === $password2) {
+                        $passwordMatch = true;
+                    } else {
+                        $this->error('Passwords did not match. Please try again.');
+                    }
                 }
+
+                $port = $this->ask('Enter your Database Port', config('database.connections.' . $db . '.port'));
+
+                $config = [
+                    'DB_DRIVER'   => $driver,
+                    'DB_HOST'     => $host,
+                    'DB_DATABASE' => $database,
+                    'DB_USERNAME' => $username,
+                    'DB_PASSWORD' => $password,
+                    'DB_PORT'     => $port,
+                    'DF_INSTALL'  => $this->option('df_install')
+                ];
+
+                FileUtilities::updateEnvSetting($config);
+                $this->info('Configured ' . $db . ' Database');
+            }
+        } else {
+            $driver = $this->option('db_driver');
+            if(!in_array($driver, ['sqlite', 'mysql', 'pgsql', 'sqlsrv'])){
+                $this->warn('DB DRIVER '.$driver.' is not supported. Using default driver sqlite.');
+                $driver = 'sqlite';
             }
 
-            $port = $this->ask('Enter your Database Port', config('database.connections.'.$db.'.port'));
+            if ('sqlite' === $driver) {
+                $this->createSqliteDbFile();
+            } else {
+                $config = [];
+                static::setIfValid($config, 'DF_INSTALL', $this->option('df_install'));
+                static::setIfValid($config, 'DB_HOST', $this->option('db_host'));
+                static::setIfValid($config, 'DB_DRIVER', $this->option('db_driver'));
+                static::setIfValid($config, 'DB_DATABASE', $this->option('db_database'));
+                static::setIfValid($config, 'DB_USERNAME', $this->option('db_username'));
+                static::setIfValid($config, 'DB_PASSWORD', $this->option('db_password'));
+                static::setIfValid($config, 'DB_PORT', $this->option('db_port'));
 
-            $config = [
-                'DB_DRIVER'   => $driver,
-                'DB_HOST'     => $host,
-                'DB_DATABASE' => $database,
-                'DB_USERNAME' => $username,
-                'DB_PASSWORD' => $password,
-                'DB_PORT'     => $port
-            ];
-
-            FileUtilities::updateEnvSetting($config);
-            $this->info('Configured ' . $db . ' Database');
+                FileUtilities::updateEnvSetting($config);
+                $this->info('Configured ' . $driver . ' Database');
+            }
         }
 
         $this->info('Configuration complete!');
         $this->configComplete();
+    }
+
+    /**
+     * @param $array
+     * @param $key
+     * @param $value
+     */
+    protected static function setIfValid(& $array, $key, $value){
+        if(!empty($value)){
+            $array[$key] = $value;
+        }
     }
 
     /**
