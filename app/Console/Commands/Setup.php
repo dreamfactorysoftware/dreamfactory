@@ -23,7 +23,8 @@ class Setup extends Command
                             {--db_username= : Database username.}
                             {--db_password= : Database password.}
                             {--db_port= : Database port.}
-                            {--df_install=GitHub : Installation source/environment.}';
+                            {--df_install=GitHub : Installation source/environment.}
+                            {--cache_driver= : System cache driver. [file, redis, memcached]';
 
     /**
      * The console command description.
@@ -235,6 +236,12 @@ class Setup extends Command
                 $driver = 'sqlite';
             }
 
+            $cacheDriver = $this->option('cache_driver');
+            if (!in_array($cacheDriver, ['file', 'redis', 'memcached'])) {
+                $this->warn('CACHE DRIVER' . $cacheDriver . ' is not supported.  Using default driver file.');
+                $cacheDriver = 'file';
+            }
+
             if ('sqlite' === $driver) {
                 $this->createSqliteDbFile();
             } else {
@@ -246,6 +253,7 @@ class Setup extends Command
                 static::setIfValid($config, 'DB_USERNAME', $this->option('db_username'));
                 static::setIfValid($config, 'DB_PASSWORD', $this->option('db_password'));
                 static::setIfValid($config, 'DB_PORT', $this->option('db_port'));
+                static::setIfValid($config, 'CACHE_DRIVER', $cacheDriver);
 
                 FileUtilities::updateEnvSetting($config);
                 $this->info('Configured ' . $driver . ' Database');
