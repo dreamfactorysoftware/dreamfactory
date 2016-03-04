@@ -16,6 +16,7 @@ class Setup extends Command
      */
     protected $signature = 'dreamfactory:setup
                             {--force : Force run migration and seeder.}
+                            {--no-app-key : Skip generating APP_KEY. }
                             {--db_host= : Database host.}
                             {--db_driver= : System database driver. [sqlite, mysql, pgsql].}
                             {--db_database= : Database name.}
@@ -175,7 +176,11 @@ class Setup extends Command
         if (!file_exists('.env')) {
             copy('.env-dist', '.env');
             $this->info('Created .env file with default configuration.');
-            $this->call('key:generate');
+            if ($this->option('no-app-key') === false) {
+                $this->call('key:generate');
+            } else {
+                $this->info('Skipping APP_KEY generate.');
+            }
         }
 
         if (!file_exists('phpunit.xml')) {
@@ -225,8 +230,8 @@ class Setup extends Command
             }
         } else {
             $driver = $this->option('db_driver');
-            if(!in_array($driver, ['sqlite', 'mysql', 'pgsql', 'sqlsrv'])){
-                $this->warn('DB DRIVER '.$driver.' is not supported. Using default driver sqlite.');
+            if (!in_array($driver, ['sqlite', 'mysql', 'pgsql', 'sqlsrv'])) {
+                $this->warn('DB DRIVER ' . $driver . ' is not supported. Using default driver sqlite.');
                 $driver = 'sqlite';
             }
 
@@ -256,8 +261,9 @@ class Setup extends Command
      * @param $key
      * @param $value
      */
-    protected static function setIfValid(& $array, $key, $value){
-        if(!empty($value)){
+    protected static function setIfValid(& $array, $key, $value)
+    {
+        if (!empty($value)) {
             $array[$key] = $value;
         }
     }
