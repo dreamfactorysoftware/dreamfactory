@@ -24,7 +24,7 @@ class Setup extends Command
                             {--db_password= : Database password.}
                             {--db_port= : Database port.}
                             {--df_install=GitHub : Installation source/environment.}
-                            {--cache_driver= : System cache driver. [file, redis, memcached]';
+                            {--cache_driver= : System cache driver. [file, redis, memcached]}';
 
     /**
      * The console command description.
