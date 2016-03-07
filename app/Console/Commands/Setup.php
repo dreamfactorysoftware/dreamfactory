@@ -18,7 +18,7 @@ class Setup extends Command
                             {--force : Force run migration and seeder.}
                             {--no-app-key : Skip generating APP_KEY. }
                             {--db_host= : Database host.}
-                            {--db_driver= : System database driver. [sqlite, mysql, pgsql].}
+                            {--db_driver= : System database driver. [sqlite, mysql, pgsql, sqlsrv].}
                             {--db_database= : Database name.}
                             {--db_username= : Database username.}
                             {--db_password= : Database password.}
