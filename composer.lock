@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "abe1976a8c15ca3761e1d3aea796686c",
-    "content-hash": "04c49157e299e82b51d10e69c5368324",
+    "hash": "c6ed054b5f09de033ef2c3e42657e9cc",
+    "content-hash": "26901e68d992e14a3ac009974a3f3f85",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -672,12 +672,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-filemanager-app.git",
-                "reference": "73cd1b8aafa09f300570df8bb372d684f22c6981"
+                "reference": "53347fe7ee49396229452a7ccad59cf9b58fe064"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-filemanager-app/zipball/73cd1b8aafa09f300570df8bb372d684f22c6981",
-                "reference": "73cd1b8aafa09f300570df8bb372d684f22c6981",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-filemanager-app/zipball/53347fe7ee49396229452a7ccad59cf9b58fe064",
+                "reference": "53347fe7ee49396229452a7ccad59cf9b58fe064",
                 "shasum": ""
             },
             "require": {
@@ -709,7 +709,7 @@
                 "file manager",
                 "rest"
             ],
-            "time": "2016-02-11 21:58:12"
+            "time": "2016-03-08 15:59:08"
         },
         {
             "name": "dreamfactory/df-managed",
@@ -1183,16 +1183,16 @@
         },
         {
             "name": "dreamfactory/df-swagger-ui",
-            "version": "dev-develop",
+            "version": "0.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-swagger-ui.git",
-                "reference": "f81cd89a3731e851ea4de1fd9b8a8a5af2ebde1c"
+                "reference": "f54da39dc93703133d3c212d55fa469f0c379ba1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-swagger-ui/zipball/f81cd89a3731e851ea4de1fd9b8a8a5af2ebde1c",
-                "reference": "f81cd89a3731e851ea4de1fd9b8a8a5af2ebde1c",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-swagger-ui/zipball/f54da39dc93703133d3c212d55fa469f0c379ba1",
+                "reference": "f54da39dc93703133d3c212d55fa469f0c379ba1",
                 "shasum": ""
             },
             "require": {
@@ -1224,7 +1224,7 @@
                 "rest",
                 "swagger"
             ],
-            "time": "2016-03-04 19:18:48"
+            "time": "2016-03-08 16:28:58"
         },
         {
             "name": "dreamfactory/df-user",
@@ -5700,19 +5700,12 @@
             "alias_normalized": "9999999-dev",
             "version": "dev-develop",
             "package": "dreamfactory/df-filemanager-app"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-swagger-ui"
         }
     ],
     "minimum-stability": "dev",
     "stability-flags": {
         "dreamfactory/df-admin-app": 20,
         "dreamfactory/df-filemanager-app": 20,
-        "dreamfactory/df-swagger-ui": 20,
         "laravel/homestead": 20
     },
     "prefer-stable": true,
