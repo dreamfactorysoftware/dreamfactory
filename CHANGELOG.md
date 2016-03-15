@@ -6,7 +6,18 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 ### Changed
+
+### Fixed
+
+## [2.1.1] - 2016-03-14
+### Added
+- More env config option in setup command
+- Now allowing login with JWT passed as URL parameter
+- Added log level support, see DF_LOG_LEVEL in .env-dist for options
+
+### Changed
 - Upgraded Laravel framework to 5.2
+- File Manager app is now standalone composer pulled app
 
 ### Fixed
 
