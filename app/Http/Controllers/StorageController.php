@@ -11,6 +11,12 @@ class StorageController extends Controller
     public function handleGET($storage, $path)
     {
         try {
+            \Log::info('[REQUEST] Storage', [
+                'Method'  => 'GET',
+                'Service' => $storage,
+                'Path'    => $path
+            ]);
+
             $storage = strtolower($storage);
 
             /** @type BaseFileService $service */
@@ -38,6 +44,8 @@ class StorageController extends Controller
             }
 
             if ($allowed) {
+                \Log::info('[RESPONSE] File stream');
+
                 $service->streamFile(null, $path);
             } else {
                 throw new ForbiddenException('You do not have access to requested file.');
@@ -46,6 +54,7 @@ class StorageController extends Controller
             $content = $e->getMessage();
             $status = $e->getCode();
             $contentType = 'text/html';
+            \Log::info('[RESPONSE]', ['Status Code' => $status, 'Content-Type' => $contentType]);
 
             return DfResponse::create($content, $status, ["Content-Type" => $contentType]);
         }

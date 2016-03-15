@@ -14,7 +14,13 @@ class SplashController extends Controller
      */
     public function index()
     {
-        return redirect(config('df.landing_page', '/test_rest.html'));
+        $token = \Request::input('session_token');
+        $param = '';
+        if(!empty($token)){
+            $param = '?session_token='.$token;
+        }
+
+        return redirect(config('df.landing_page', '/test_rest.html') . $param);
     }
 
     public function createFirstUser()

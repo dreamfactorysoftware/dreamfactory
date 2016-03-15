@@ -36,21 +36,24 @@
   "minimum-stability": "dev",
   "prefer-stable":     true,
   "require":           {
-    "laravel/framework":          "5.1.*",
-    "tymon/jwt-auth":             "0.5.*",
-    "dreamfactory/df-managed":    "2.0.*",
-    "dreamfactory/df-admin-app":  "2.1.*",
-    "dreamfactory/df-swagger-ui": "0.2.*",
-    "dreamfactory/df-core":       "0.2.*",
-    "dreamfactory/df-sqldb":      "0.2.*"
+    "laravel/framework":               "5.2.*",
+    "tymon/jwt-auth":                  "0.5.*",
+    "dreamfactory/df-managed":         "2.0.*",
+    "dreamfactory/df-admin-app":       "2.1.*",
+    "dreamfactory/df-filemanager-app": "0.1.*",
+    "dreamfactory/df-swagger-ui":      "0.2.*",
+    "dreamfactory/df-core":            "0.2.*",
+    "dreamfactory/df-sqldb":           "0.2.*"
   },
   "require-dev":       {
-    "barryvdh/laravel-ide-helper": "~2.0",
-    "laracasts/generators":        "~1.0",
-    "laracasts/testdummy":         "~2.0",
-    "phpunit/phpunit":             "~4.0",
-    "phpspec/phpspec":             "~2.1",
-    "laravel/homestead":           "dev-master"
+    "barryvdh/laravel-ide-helper":     "~2.0",
+    "laracasts/generators":            "~1.0",
+    "laracasts/testdummy":             "~2.0",
+    "phpunit/phpunit":                 "~4.0",
+    "phpspec/phpspec":                 "~2.1",
+    "laravel/homestead":               "dev-master",
+    "symfony/dom-crawler":             "~3.0",
+    "symfony/css-selector":            "~3.0"
   },
   "autoload":          {
     "classmap": [
