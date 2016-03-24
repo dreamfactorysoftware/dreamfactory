@@ -28,6 +28,10 @@ class AuthCheck
         //Check for API key in request parameters.
         $apiKey = $request->query('api_key');
         if (empty($apiKey)) {
+            //Check for API key in request payload.
+            $apiKey = $request->input('api_key');
+        }
+        if (empty($apiKey)) {
             //Check for API key in request HEADER.
             $apiKey = $request->header('X_DREAMFACTORY_API_KEY');
         }

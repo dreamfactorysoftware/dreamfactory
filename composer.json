@@ -38,11 +38,13 @@
   "require":           {
     "laravel/framework":               "5.2.*",
     "tymon/jwt-auth":                  "0.5.*",
+    "jenssegers/mongodb":              "3.0.*",
+    "yajra/laravel-oci8":              "5.2.*",
     "dreamfactory/df-managed":         "dev-develop as dev-master",
     "dreamfactory/df-admin-app":       "dev-develop as dev-master",
     "dreamfactory/df-filemanager-app": "dev-develop as dev-master",
     "dreamfactory/df-swagger-ui":      "dev-develop as dev-master",
-    "dreamfactory/df-core":            "dev-develop as dev-master",
+    "dreamfactory/df-core":            "dev-feature/db-rework as 0.2.x-dev",
     "dreamfactory/df-aws":             "dev-develop as dev-master",
     "dreamfactory/df-rackspace":       "dev-develop as dev-master",
     "dreamfactory/df-sqldb":           "dev-develop as dev-master",
@@ -70,7 +72,9 @@
       "database"
     ],
     "psr-4":    {
-      "DreamFactory\\": "app/"
+      "DreamFactory\\":              "app/",
+      "DreamFactory\\Core\\":        "workbench/repos/df-core/src/",
+      "DreamFactory\\Core\\SqlDb\\": "workbench/repos/df-sqldb/src/"
     }
   },
   "autoload-dev":      {
