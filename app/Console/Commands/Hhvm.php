@@ -4,14 +4,16 @@ namespace DreamFactory\Console\Commands;
 
 use Illuminate\Console\Command;
 
-class ConfigHhvm extends Command
+class Hhvm extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'dreamfactory:config-hhvm {--port=8080}';
+    protected $signature = 'dreamfactory:hhvm 
+                            {--port=8080 : Port number to run hhvm on.}
+                            {--config-only : Use this option to create the config file only.}';
 
     /**
      * The console command description.
@@ -73,6 +75,10 @@ StaticFile {
 }
 config;
         file_put_contents($file, $config);
-        $this->info('Generated hhvm config file with port ' . $port);
+        $this->info('Generated config file '.$file);
+        if(false === $this->option('config-only')) {
+            $this->info('Starting hhvm on port ' . $port . ' ...');
+            exec("hhvm -m server -c $file", $out);
+        }
     }
 }
