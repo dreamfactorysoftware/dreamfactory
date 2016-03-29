@@ -17,7 +17,8 @@ class ImportPackage extends Command
      */
     protected $signature = 'dreamfactory:import-pkg 
                             {path? : Relative path to the package file/folder/url}
-                            {--password= : Password for encrypted package}';
+                            {--password= : Password for encrypted package}
+                            {--delete : Delete package after import}';
 
     /**
      * The console command description.
@@ -119,7 +120,7 @@ class ImportPackage extends Command
         if ($extension === Packager::FILE_EXTENSION) {
             $this->importOldPackage($file);
         } else {
-            $package = new Package($file, false);
+            $package = new Package($file, $this->option('delete'));
             $package->setPassword($this->option('password'));
             $importer = new Importer($package);
             $importer->import();
