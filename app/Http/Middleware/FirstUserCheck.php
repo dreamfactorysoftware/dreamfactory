@@ -23,7 +23,7 @@ class FirstUserCheck
                     return redirect()->to('/setup');
                 } else if(false === \Cache::get('package_imported', false)){
                     if(!empty(env('DF_PACKAGE_DIR'))) {
-                        \Artisan::call('dreamfactory:import-pkg', ['--delete' => true]);
+                        \Artisan::call('dreamfactory:import-pkg');
                         \Cache::forever('package_imported', true);
                     }
                 }
