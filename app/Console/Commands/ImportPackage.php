@@ -59,7 +59,7 @@ class ImportPackage extends Command
         if (is_file($path) || FileUtilities::url_exist($path)) {
             $this->importPackage($path);
             $this->printResult();
-        } else if (is_dir($path)) {
+        } elseif (is_dir($path)) {
             $files = static::getFilesFromPath($path);
             if (count($files) == 0) {
                 $this->warn('No package to import from ' . $path);
@@ -91,7 +91,7 @@ class ImportPackage extends Command
             $fileCount = count(static::getFilesFromPath($this->getPath()));
             if ($errorCount < $fileCount) {
                 $this->warn('Not all files were imported successfully. See details below.');
-            } else if ($errorCount == $fileCount) {
+            } elseif ($errorCount == $fileCount) {
                 $this->error('None of your files where imported successfully. See details below.');
             }
             $this->warn('---------------------------------------------------------------------------------------');
@@ -167,10 +167,10 @@ class ImportPackage extends Command
 
         if (false !== $items = scandir($path)) {
             foreach ($items as $item) {
-                $file = $path.$item;
+                $file = $path . $item;
                 if (is_file($file)) {
                     $extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
-                    if(in_array($extension, [Packager::FILE_EXTENSION, Package::FILE_EXTENSION])) {
+                    if (in_array($extension, [Packager::FILE_EXTENSION, Package::FILE_EXTENSION])) {
                         $files[] = $file;
                     }
                 }
