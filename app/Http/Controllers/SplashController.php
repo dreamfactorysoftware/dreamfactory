@@ -72,6 +72,9 @@ class SplashController extends Controller
                     if (\Cache::pull('setup_db', false)) {
                         \Artisan::call('migrate', ['--force' => true]);
                         \Artisan::call('db:seed', ['--force' => true]);
+                        if(!empty(env('DF_PACKAGE_DIR'))) {
+                            \Artisan::call('dreamfactory:import-pkg');
+                        }
 
                         if ($request->ajax()) {
                             return json_encode(['success' => true, 'redirect_path' => '/setup']);
