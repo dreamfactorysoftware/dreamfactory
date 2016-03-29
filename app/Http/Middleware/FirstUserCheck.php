@@ -21,8 +21,8 @@ class FirstUserCheck
             try {
                 if (!User::adminExists()) {
                     return redirect()->to('/setup');
-                } else if(false === \Cache::get('package_imported', false)){
-                    if(!empty(env('DF_PACKAGE_DIR'))) {
+                } else if(!empty(env('DF_PACKAGE_DIR'))){
+                    if(false === \Cache::get('package_imported', false)) {
                         \Artisan::call('dreamfactory:import-pkg');
                         \Cache::forever('package_imported', true);
                     }
