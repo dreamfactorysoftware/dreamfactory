@@ -17,7 +17,7 @@ class FirstUserCheck
      */
     public function handle($request, Closure $next)
     {
-        if (!in_array($route = $request->getPathInfo(), ['/setup', '/setup_db',])) {
+        if (!in_array($route = $request->getPathInfo(), ['/setup', '/setup_db'])) {
             try {
                 if (!User::adminExists()) {
                     return redirect()->to('/setup');
