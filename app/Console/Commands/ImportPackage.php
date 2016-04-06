@@ -202,7 +202,7 @@ class ImportPackage extends Command
     {
         $path = $this->argument('path');
         if (empty($path)) {
-            $path = env('DF_PACKAGE_DIR');
+            $path = config('df.package_path');
         }
 
         return $path;
