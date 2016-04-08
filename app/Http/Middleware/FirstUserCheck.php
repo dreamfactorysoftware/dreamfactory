@@ -17,10 +17,15 @@ class FirstUserCheck
      */
     public function handle($request, Closure $next)
     {
-        if (!in_array($route = $request->getPathInfo(), ['/setup', '/setup_db',])) {
+        if (!in_array($route = $request->getPathInfo(), ['/setup', '/setup_db'])) {
             try {
                 if (!User::adminExists()) {
                     return redirect()->to('/setup');
+                } elseif (!empty(config('df.package_path'))) {
+                    if (false === \Cache::get('package_imported', false)) {
+                        \Artisan::call('dreamfactory:import-pkg');
+                        \Cache::forever('package_imported', true);
+                    }
                 }
             } catch (QueryException $e) {
                 try {

@@ -18,6 +18,8 @@ return [
     'default_response_type'        => 'application/json',
     // Local File Storage setup, see also local config/filesystems.php
     'storage_path'                 => env('DF_MANAGED_STORAGE_PATH', storage_path()),
+    // Path to package file/folder/url to import during instance launch.
+    'package_path'                 => env('DF_PACKAGE_PATH'),
     'local_file_service_container' => trim(env('DF_LOCAL_FILE_ROOT', 'app'), '/'),
     // DB configs
     'db'                           => [
