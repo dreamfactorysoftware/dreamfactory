@@ -130,7 +130,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 
         /**
-         * DreamFactory Core
+         * DreamFactory Specific
          */
         DreamFactory\Core\Providers\DfServiceProvider::class,
         DreamFactory\Core\Providers\DfCorsServiceProvider::class,
@@ -138,14 +138,15 @@ return [
         /**
          * Third party packages...
          */
+        Laravel\Socialite\SocialiteServiceProvider::class,
+        Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
+        Jenssegers\Mongodb\MongodbServiceProvider::class,
 
         /**
          * Uncomment the following line to generate IDE helper
          * using "php artisan ide-helper:generate" command,
          * */
         //Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
-        Laravel\Socialite\SocialiteServiceProvider::class,
-        Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
 
         /*
          * Application Service Providers...
