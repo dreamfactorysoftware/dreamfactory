@@ -24,7 +24,14 @@ class Setup extends Command
                             {--db_password= : Database password.}
                             {--db_port= : Database port.}
                             {--df_install=GitHub : Installation source/environment.}
-                            {--cache_driver= : System cache driver. [file, redis, memcached]}';
+                            {--cache_driver= : System cache driver. [file, redis, memcached]}
+                            {--redis_host= : Cache driver redis host}
+                            {--redis_port= : Cache driver redis port}
+                            {--redis_database= : Cache driver redis database}
+                            {--redis_password= : Cache driver redis password}
+                            {--memcached_host= : Cache driver memcached host}
+                            {--memcached_port= : Cache driver memcached port}
+                            {--memcached_weight= : Cache driver memcached weight}';
 
     /**
      * The console command description.
@@ -225,9 +232,6 @@ class Setup extends Command
                     'DB_PORT'     => $port,
                     'DF_INSTALL'  => $this->option('df_install')
                 ];
-
-                FileUtilities::updateEnvSetting($config);
-                $this->info('Configured ' . $db . ' Database');
             }
         } else {
             $driver = $this->option('db_driver');
@@ -236,16 +240,10 @@ class Setup extends Command
                 $driver = 'sqlite';
             }
 
-            $cacheDriver = $this->option('cache_driver');
-            if (!in_array($cacheDriver, ['file', 'redis', 'memcached'])) {
-                $this->warn('CACHE DRIVER' . $cacheDriver . ' is not supported.  Using default driver file.');
-                $cacheDriver = 'file';
-            }
-
+            $config = [];
             if ('sqlite' === $driver) {
                 $this->createSqliteDbFile();
             } else {
-                $config = [];
                 static::setIfValid($config, 'DF_INSTALL', $this->option('df_install'));
                 static::setIfValid($config, 'DB_HOST', $this->option('db_host'));
                 static::setIfValid($config, 'DB_DRIVER', $this->option('db_driver'));
@@ -253,15 +251,36 @@ class Setup extends Command
                 static::setIfValid($config, 'DB_USERNAME', $this->option('db_username'));
                 static::setIfValid($config, 'DB_PASSWORD', $this->option('db_password'));
                 static::setIfValid($config, 'DB_PORT', $this->option('db_port'));
-                static::setIfValid($config, 'CACHE_DRIVER', $cacheDriver);
-
-                FileUtilities::updateEnvSetting($config);
-                $this->info('Configured ' . $driver . ' Database');
             }
+
         }
 
+        $this->updateCacheConfig($config);
+        FileUtilities::updateEnvSetting($config);
         $this->info('Configuration complete!');
         $this->configComplete();
+    }
+
+    protected function updateCacheConfig(& $config)
+    {
+        $cacheDriver = $this->option('cache_driver');
+        if (!in_array($cacheDriver, ['file', 'redis', 'memcached'])) {
+            $this->warn('CACHE DRIVER ' . $cacheDriver . ' is not supported. Using default driver file.');
+            $cacheDriver = 'file';
+        }
+
+        static::setIfValid($config, 'CACHE_DRIVER', $cacheDriver);
+
+        if('redis' === strtolower($cacheDriver)) {
+            static::setIfValid($config, 'REDIS_HOST', $this->option('redis_host'));
+            static::setIfValid($config, 'REDIS_PORT', $this->option('redis_port'));
+            static::setIfValid($config, 'REDIS_DATABASE', $this->option('redis_database'));
+            static::setIfValid($config, 'REDIS_PASSWORD', $this->option('redis_password'));
+        } elseif ('memcached' === strtolower($cacheDriver)) {
+            static::setIfValid($config, 'MEMCACHED_HOST', $this->option('memcached_host'));
+            static::setIfValid($config, 'MEMCACHED_PORT', $this->option('memcached_port'));
+            static::setIfValid($config, 'MEMCACHED_WEIGHT', $this->option('memcached_weight'));
+        }
     }
 
     /**
