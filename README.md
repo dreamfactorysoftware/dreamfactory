@@ -45,7 +45,7 @@ but this should also work on Windows with all the required software and extensio
 generate application key, and will prompt you to configure your Database.
 > php artisan dreamfactory:setup
 
-* Run the above command again to complete the setup process. This time it will run the database schema migration, 
+* Run the above command **again** to complete the setup process. This time it will run the database schema migration, 
 seed the default services, and will prompt you to create your admin user account.
 > php artisan dreamfactory:setup
 
