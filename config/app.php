@@ -133,14 +133,11 @@ return [
          * DreamFactory Specific
          */
         DreamFactory\Core\Providers\DfServiceProvider::class,
-        DreamFactory\Core\Providers\DfCorsServiceProvider::class,
 
         /**
          * Third party packages...
          */
-        Laravel\Socialite\SocialiteServiceProvider::class,
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
-        Jenssegers\Mongodb\MongodbServiceProvider::class,
 
         /**
          * Uncomment the following line to generate IDE helper
