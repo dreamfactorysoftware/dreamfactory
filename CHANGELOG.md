@@ -9,6 +9,23 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+## [2.1.2] - 2016-04-25
+### Added
+* Redesigned Packaging feature, including new system/package API and artisan commands for import and export.
+- Added Redis and Memcached config options to dreamfactory:setup command 
+- Added Memcached config values in environment 
+- Updated dreamfactory:import-pkg command to use new package format
+- Updating initial setup to import any packages available
+- Added artisan dreamfactory:config-hhvm command to create hhvm config file 
+- Basic support for www-form-urlencoded payload in API requests
+- Add rewrite rule to allow basic auth on AWS cloud and VM. 
+
+### Changed
+- Cleanup service providers 
+- Handling file stream output using StreamedResponse 
+
+### Fixed
+
 ## [2.1.1] - 2016-03-14
 ### Added
 - More env config option in setup command

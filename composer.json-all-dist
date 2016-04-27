@@ -66,11 +66,10 @@
     "barryvdh/laravel-ide-helper": "~2.1",
     "laracasts/generators":        "~1.0",
     "laracasts/testdummy":         "~2.0",
-    "phpunit/phpunit":                 "~4.0",
-    "phpspec/phpspec":                 "~2.1",
-    "laravel/homestead":               "dev-master",
-    "symfony/dom-crawler":             "~3.0",
-    "symfony/css-selector":            "~3.0"
+    "phpunit/phpunit":             "~4.0",
+    "phpspec/phpspec":             "~2.1",
+    "symfony/dom-crawler":         "~3.0",
+    "symfony/css-selector":        "~3.0"
   },
   "autoload":          {
     "classmap": [
@@ -89,14 +88,12 @@
     "post-install-cmd": [
       "php artisan clear-compiled",
       "php artisan optimize",
-      "php artisan dreamfactory:pull-migrations",
-      "php artisan dreamfactory:homestead-config"
+      "php artisan dreamfactory:pull-migrations"
     ],
     "post-update-cmd":  [
       "php artisan clear-compiled",
       "php artisan optimize",
-      "php artisan dreamfactory:pull-migrations",
-      "php artisan dreamfactory:homestead-config"
+      "php artisan dreamfactory:pull-migrations"
     ]
   },
   "config":            {
