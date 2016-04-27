@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "bc39f557ce0149f84124efc01760ede0",
+    "hash": "e440738d7348a215a02a6010c44ebe5c",
     "content-hash": "5e0b3d535eff1d11f1a9d1fc5eaae0a0",
     "packages": [
         {
@@ -52,6 +52,7 @@
         },
         {
             "name": "aws/aws-sdk-php",
+<<<<<<< HEAD
             "version": "3.18.2",
             "source": {
                 "type": "git",
@@ -62,6 +63,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/b02e402e4795819a06dc0e4ebf59f2585e8afbcd",
                 "reference": "b02e402e4795819a06dc0e4ebf59f2585e8afbcd",
+=======
+            "version": "3.18.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/aws/aws-sdk-php.git",
+                "reference": "ed9bfdfd19b1e50a13f7ac772fd3d09a00ed8ed1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/ed9bfdfd19b1e50a13f7ac772fd3d09a00ed8ed1",
+                "reference": "ed9bfdfd19b1e50a13f7ac772fd3d09a00ed8ed1",
+>>>>>>> d2a6fc234f53e1d3df6b499f5b7da7fdd286ae62
                 "shasum": ""
             },
             "require": {
@@ -128,7 +141,11 @@
                 "s3",
                 "sdk"
             ],
+<<<<<<< HEAD
             "time": "2016-04-26 20:02:37"
+=======
+            "time": "2016-04-21 21:16:40"
+>>>>>>> d2a6fc234f53e1d3df6b499f5b7da7fdd286ae62
         },
         {
             "name": "barryvdh/laravel-cors",
@@ -887,12 +904,21 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-admin-app.git",
+<<<<<<< HEAD
                 "reference": "05128ac4b2cf8ab046c416cfe16688eb7c8d7e00"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/dreamfactorysoftware/df-admin-app/zipball/05128ac4b2cf8ab046c416cfe16688eb7c8d7e00",
                 "reference": "05128ac4b2cf8ab046c416cfe16688eb7c8d7e00",
+=======
+                "reference": "c34c561d40aa491e552640cd9c81e1a64a0980ff"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-admin-app/zipball/c34c561d40aa491e552640cd9c81e1a64a0980ff",
+                "reference": "c34c561d40aa491e552640cd9c81e1a64a0980ff",
+>>>>>>> d2a6fc234f53e1d3df6b499f5b7da7fdd286ae62
                 "shasum": ""
             },
             "require": {
@@ -928,7 +954,11 @@
                 "remote web services",
                 "rest"
             ],
+<<<<<<< HEAD
             "time": "2016-04-26 23:35:40"
+=======
+            "time": "2016-04-25 15:49:26"
+>>>>>>> d2a6fc234f53e1d3df6b499f5b7da7fdd286ae62
         },
         {
             "name": "dreamfactory/df-aws",
@@ -995,12 +1025,21 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-core.git",
+<<<<<<< HEAD
                 "reference": "72526689f9e50d574c7d5772425d33b9cee84387"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/72526689f9e50d574c7d5772425d33b9cee84387",
                 "reference": "72526689f9e50d574c7d5772425d33b9cee84387",
+=======
+                "reference": "9f89d7af4da8e94d6924fca6d23d3306a51f2283"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/9f89d7af4da8e94d6924fca6d23d3306a51f2283",
+                "reference": "9f89d7af4da8e94d6924fca6d23d3306a51f2283",
+>>>>>>> d2a6fc234f53e1d3df6b499f5b7da7fdd286ae62
                 "shasum": ""
             },
             "require": {
@@ -1054,7 +1093,11 @@
                 "paas",
                 "rest"
             ],
+<<<<<<< HEAD
             "time": "2016-04-27 00:36:57"
+=======
+            "time": "2016-04-22 21:28:14"
+>>>>>>> d2a6fc234f53e1d3df6b499f5b7da7fdd286ae62
         },
         {
             "name": "dreamfactory/df-couchdb",

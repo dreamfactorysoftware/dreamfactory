@@ -120,8 +120,7 @@ class ImportPackage extends Command
         if ($extension === Packager::FILE_EXTENSION) {
             $this->importOldPackage($file);
         } else {
-            $package = new Package($file, $this->option('delete'));
-            $package->setPassword($this->option('password'));
+            $package = new Package($file, $this->option('delete'), $this->option('password'));
             $importer = new Importer($package);
             $importer->import();
             $log = $importer->getLog();
