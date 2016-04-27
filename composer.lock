@@ -52,16 +52,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.18.2",
+            "version": "3.18.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "b02e402e4795819a06dc0e4ebf59f2585e8afbcd"
+                "reference": "899c5c982582d811754a57d2ca941c7f2dc8090b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/b02e402e4795819a06dc0e4ebf59f2585e8afbcd",
-                "reference": "b02e402e4795819a06dc0e4ebf59f2585e8afbcd",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/899c5c982582d811754a57d2ca941c7f2dc8090b",
+                "reference": "899c5c982582d811754a57d2ca941c7f2dc8090b",
                 "shasum": ""
             },
             "require": {
@@ -128,7 +128,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2016-04-26 20:02:37"
+            "time": "2016-04-27 16:44:34"
         },
         {
             "name": "barryvdh/laravel-cors",
@@ -1224,6 +1224,7 @@
         },
         {
             "name": "dreamfactory/df-mongodb",
+<<<<<<< HEAD
             "version": "dev-develop",
             "source": {
                 "type": "git",
@@ -1234,6 +1235,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/dreamfactorysoftware/df-mongodb/zipball/18d30de9c3a99d4e3706dec6958a9a0d72ae5fbf",
                 "reference": "18d30de9c3a99d4e3706dec6958a9a0d72ae5fbf",
+=======
+            "version": "0.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dreamfactorysoftware/df-mongodb.git",
+                "reference": "35f694eec84deed1028a748f4e04e7eb0dd7dcef"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-mongodb/zipball/35f694eec84deed1028a748f4e04e7eb0dd7dcef",
+                "reference": "35f694eec84deed1028a748f4e04e7eb0dd7dcef",
+>>>>>>> hotfix/2.1.2
                 "shasum": ""
             },
             "require": {
@@ -1280,7 +1293,11 @@
                 "nosql",
                 "rest"
             ],
+<<<<<<< HEAD
             "time": "2016-04-22 16:11:02"
+=======
+            "time": "2016-04-27 18:32:12"
+>>>>>>> hotfix/2.1.2
         },
         {
             "name": "dreamfactory/df-oauth",
@@ -2446,16 +2463,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.2.30",
+            "version": "v5.2.31",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "ecfbbfbf96105439cc9a40bc78277bdb0268e34d"
+                "reference": "2fa2797604bf54b06faf7bb139a9fc0d66826fea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/ecfbbfbf96105439cc9a40bc78277bdb0268e34d",
-                "reference": "ecfbbfbf96105439cc9a40bc78277bdb0268e34d",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/2fa2797604bf54b06faf7bb139a9fc0d66826fea",
+                "reference": "2fa2797604bf54b06faf7bb139a9fc0d66826fea",
                 "shasum": ""
             },
             "require": {
@@ -2571,7 +2588,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2016-04-19 19:12:18"
+            "time": "2016-04-27 13:02:09"
         },
         {
             "name": "laravel/socialite",
