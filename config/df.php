@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'version'                      => '2.1.1',
+    'version'                      => '2.1.2',
     // General API version number, 1.x was earlier product and may be supported by most services
     'api_version'                  => '2.0',
     // Name of this DreamFactory instance. Defaults to server name.
@@ -18,6 +18,8 @@ return [
     'default_response_type'        => 'application/json',
     // Local File Storage setup, see also local config/filesystems.php
     'storage_path'                 => env('DF_MANAGED_STORAGE_PATH', storage_path()),
+    // Path to package file/folder/url to import during instance launch.
+    'package_path'                 => env('DF_PACKAGE_PATH'),
     'local_file_service_container' => trim(env('DF_LOCAL_FILE_ROOT', 'app'), '/'),
     // DB configs
     'db'                           => [
@@ -77,9 +79,10 @@ return [
         ],
     ],
     'scripting'                    => [
-        // 'all' to disable all scripting, or comma-delimited list of v8js, nodejs, and/or php
-        'disable'     => env('DF_SCRIPTING_DISABLE'),
+        // 'all' to disable all scripting, or comma-delimited list of v8js, nodejs, python, and/or php
+        'disable'   => env('DF_SCRIPTING_DISABLE'),
         // path to the installed nodejs executable
         'nodejs_path' => env('DF_NODEJS_PATH'),
+        'python_path' => env('DF_PYTHON_PATH'),
     ],
 ];

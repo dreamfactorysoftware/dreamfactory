@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
         'DreamFactory\Console\Commands\Setup',
         'DreamFactory\Console\Commands\ADGroupImport',
         'DreamFactory\Console\Commands\HomesteadConfig',
+        'DreamFactory\Console\Commands\Hhvm'
     ];
 
     //******************************************************************************

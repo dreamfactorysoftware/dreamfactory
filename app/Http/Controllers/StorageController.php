@@ -5,6 +5,7 @@ use DreamFactory\Core\Exceptions\ForbiddenException;
 use DreamFactory\Core\Utility\ServiceHandler;
 use DreamFactory\Core\Services\BaseFileService;
 use DreamFactory\Core\Components\DfResponse;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class StorageController extends Controller
 {
@@ -46,7 +47,12 @@ class StorageController extends Controller
             if ($allowed) {
                 \Log::info('[RESPONSE] File stream');
 
-                $service->streamFile(null, $path);
+                $response = new StreamedResponse();
+                $response->setCallback(function() use ($service, $path){
+                    $service->streamFile(null, $path);
+                });
+
+                return $response;
             } else {
                 throw new ForbiddenException('You do not have access to requested file.');
             }
