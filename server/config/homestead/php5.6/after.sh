@@ -4,6 +4,8 @@
 # add any commands you wish to this file and they will
 # be run after the Homestead machine is provisioned.
 
+echo ">>> Updating apt-get"
+
 sudo apt-get -qq update > afterScriptLog.txt
 
 echo ">>> Installing php-ldap extension"
@@ -22,7 +24,11 @@ sudo ln -s /etc/php5/mods-available/mongodb.ini /etc/php5/fpm/conf.d/99-mongodb.
 sudo service php5-fpm restart
 sudo service nginx restart
 
-echo ">>> Setting up dreamfactory with homestead mysql database"
+echo ">>> Installing 'zip' command"
+
+sudo apt-get install -qq -y zip > afterScriptLog.txt
+
+echo ">>> Setting up dreamfactory .env with homestead mysql database"
 
 cd */.
 sudo php artisan cache:clear
@@ -30,6 +36,6 @@ sudo php artisan config:clear
 sudo php artisan clear-compiled
 cp .env .env-backup-homestead
 rm .env
-php artisan dreamfactory:setup --db_driver=mysql --db_host=127.0.0.1 --db_database=homestead --db_username=homestead --db_password=secret --cache_driver=file
+php artisan dreamfactory:setup --db_driver=mysql --db_host=127.0.0.1 --db_database=homestead --db_username=homestead --db_password=secret --cache_driver=file > ../afterScriptLog.txt
 
-echo ">>> Setup complete."
+echo ">>> Setup complete. Launch your instance."
