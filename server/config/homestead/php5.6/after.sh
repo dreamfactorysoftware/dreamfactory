@@ -8,9 +8,13 @@ echo ">>> Updating apt-get"
 
 sudo apt-get -qq update > afterScriptLog.txt
 
-echo ">>> Installing php-ldap extension"
+echo ">>> Installing php5-ldap extension"
 
 sudo apt-get install -qq -y php5-ldap > afterScriptLog.txt
+
+echo ">>> Installing php5-mssql extension"
+
+sudo apt-get install -qq -y php5-mssql > afterScriptLog.txt
 
 echo ">>> Installing mongodb driver"
 
@@ -21,8 +25,14 @@ sudo pecl install mongodb > afterScriptLog.txt
 sudo echo "extension=mongodb.so" > /etc/php5/mods-available/mongodb.ini
 sudo ln -s /etc/php5/mods-available/mongodb.ini /etc/php5/cli/conf.d/99-mongodb.ini
 sudo ln -s /etc/php5/mods-available/mongodb.ini /etc/php5/fpm/conf.d/99-mongodb.ini
-sudo service php5-fpm restart
-sudo service nginx restart
+
+echo ">>> Installing v8js extension"
+
+sudo apt-get install -qq -y libv8-dev > afterScriptLog.txt
+sudo pecl install v8js-0.1.3 > afterScriptLog.txt
+sudo echo "extension=v8js.so" > /etc/php5/mods-available/v8js.ini
+sudo ln -s /etc/php5/mods-available/v8js.ini /etc/php5/cli/conf.d/99-v8js.ini
+sudo ln -s /etc/php5/mods-available/v8js.ini /etc/php5/fpm/conf.d/99-v8js.ini
 
 echo ">>> Installing 'zip' command"
 
@@ -37,5 +47,8 @@ sudo php artisan clear-compiled
 cp .env .env-backup-homestead
 rm .env
 php artisan dreamfactory:setup --db_driver=mysql --db_host=127.0.0.1 --db_database=homestead --db_username=homestead --db_password=secret --cache_driver=file > ../afterScriptLog.txt
+
+sudo service php5-fpm restart
+sudo service nginx restart
 
 echo ">>> Setup complete. Launch your instance."
