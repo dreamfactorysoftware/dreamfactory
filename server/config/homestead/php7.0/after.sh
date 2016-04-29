@@ -10,29 +10,29 @@ sudo apt-get -qq update > afterScriptLog.txt
 
 echo ">>> Installing php ldap extension"
 
-sudo apt-get install -qq -y php5-ldap > afterScriptLog.txt
+sudo apt-get install -qq -y php-ldap > afterScriptLog.txt
 
-echo ">>> Installing php mssql extension"
+#echo ">>> Installing php mssql extension"
 
-sudo apt-get install -qq -y php5-mssql > afterScriptLog.txt
+#sudo apt-get install -qq -y php5-mssql > afterScriptLog.txt
 
-echo ">>> Installing php mongodb extension"
+echo ">>> Installing mongodb driver"
 
 sudo apt-get install -qq -y autoconf g++ make openssl libssl-dev libcurl4-openssl-dev > afterScriptLog.txt
 sudo apt-get install -qq -y libcurl4-openssl-dev pkg-config > afterScriptLog.txt
 sudo apt-get install -qq -y libsasl2-dev > afterScriptLog.txt
 sudo pecl install mongodb > afterScriptLog.txt
-sudo echo "extension=mongodb.so" > /etc/php5/mods-available/mongodb.ini
-sudo ln -s /etc/php5/mods-available/mongodb.ini /etc/php5/cli/conf.d/99-mongodb.ini
-sudo ln -s /etc/php5/mods-available/mongodb.ini /etc/php5/fpm/conf.d/99-mongodb.ini
+sudo echo "extension=mongodb.so" > /etc/php/7.0/mods-available/mongodb.ini
+sudo ln -s /etc/php/7.0/mods-available/mongodb.ini /etc/php/7.0/cli/conf.d/99-mongodb.ini
+sudo ln -s /etc/php/7.0/mods-available/mongodb.ini /etc/php/7.0/fpm/conf.d/99-mongodb.ini
 
-echo ">>> Installing php v8js extension"
+#echo ">>> Installing v8js extension"
 
-sudo apt-get install -qq -y libv8-dev > afterScriptLog.txt
-sudo pecl install v8js-0.1.3 > afterScriptLog.txt
-sudo echo "extension=v8js.so" > /etc/php5/mods-available/v8js.ini
-sudo ln -s /etc/php5/mods-available/v8js.ini /etc/php5/cli/conf.d/99-v8js.ini
-sudo ln -s /etc/php5/mods-available/v8js.ini /etc/php5/fpm/conf.d/99-v8js.ini
+#sudo apt-get install -qq -y libv8-dev > afterScriptLog.txt
+#sudo pecl install v8js-0.1.3 > afterScriptLog.txt
+#sudo echo "extension=v8js.so" > /etc/php/7.0/mods-available/v8js.ini
+#sudo ln -s /etc/php/7.0/mods-available/v8js.ini /etc/php/7.0/cli/conf.d/99-v8js.ini
+#sudo ln -s /etc/php/7.0/mods-available/v8js.ini /etc/php/7.0/fpm/conf.d/99-v8js.ini
 
 echo ">>> Installing 'zip' command"
 
