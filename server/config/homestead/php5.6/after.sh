@@ -15,6 +15,10 @@ sudo apt-get install -qq -y php5-ldap > afterScriptLog.txt
 echo ">>> Installing php mssql extension"
 
 sudo apt-get install -qq -y php5-mssql > afterScriptLog.txt
+cd */.
+sudo mv /etc/freetds/freetds.conf /etc/freetds/freetds.conf.original
+sudo cp server/config/freetds/sqlsrv.conf /etc/freetds/freetds.conf
+sudo cp server/config/freetds/locales.conf /etc/freetds/locales.conf
 
 echo ">>> Installing php mongodb extension"
 
@@ -40,7 +44,6 @@ sudo apt-get install -qq -y zip > afterScriptLog.txt
 
 echo ">>> Setting up dreamfactory .env with homestead mysql database"
 
-cd */.
 sudo php artisan cache:clear
 sudo php artisan config:clear
 sudo php artisan clear-compiled
