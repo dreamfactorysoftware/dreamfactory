@@ -4,9 +4,9 @@ namespace DreamFactory\Console\Commands;
 
 use DreamFactory\Core\Enums\DataFormats;
 use DreamFactory\Core\Utility\FileUtilities;
-use DreamFactory\Core\Utility\ServiceHandler;
 use DreamFactory\Library\Utility\Enums\Verbs;
 use Illuminate\Console\Command;
+use ServiceManager;
 
 class Import extends Command
 {
@@ -27,7 +27,6 @@ class Import extends Command
     /**
      * Create a new command instance.
      *
-     * @return void
      */
     public function __construct()
     {
@@ -58,7 +57,7 @@ class Import extends Command
 
             $service = $this->option('service');
             $resource = $this->option('resource');
-            $result = ServiceHandler::handleRequest(Verbs::POST, $service, $resource, [], $data, $format);
+            ServiceManager::handleRequest($service, Verbs::POST, $resource, [], [], $data, $format);
 
             $this->info('Import complete!');
         } catch (\Exception $e) {

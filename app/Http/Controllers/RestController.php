@@ -2,10 +2,14 @@
 namespace DreamFactory\Http\Controllers;
 
 use DreamFactory\Core\Contracts\ServiceResponseInterface;
+use DreamFactory\Core\Models\Service;
+use DreamFactory\Core\Utility\ResourcesWrapper;
 use DreamFactory\Core\Utility\ResponseFactory;
-use DreamFactory\Core\Utility\ServiceHandler;
+use DreamFactory\Core\Utility\ServiceRequest;
 use DreamFactory\Library\Utility\Enums\Verbs;
+use Log;
 use Request;
+use ServiceManager;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
@@ -36,7 +40,7 @@ class RestController extends Controller
         $version = null
     ){
         try {
-            $services = ServiceHandler::listServices();
+            $services = ResourcesWrapper::wrapResources(Service::available());
             $response = ResponseFactory::create($services);
         } catch (\Exception $e) {
             $response = ResponseFactory::create($e);
@@ -216,7 +220,23 @@ class RestController extends Controller
                 }
             }
 
-            $response = ServiceHandler::processRequest($version, $service, $resource);
+            $request = new ServiceRequest();
+            $request->setApiVersion($version);
+
+            Log::info('[REQUEST]', [
+                'API Version' => $request->getApiVersion(),
+                'Method'      => $request->getMethod(),
+                'Service'     => $service,
+                'Resource'    => $resource
+            ]);
+
+            Log::debug('[REQUEST]', [
+                'Parameters' => json_encode($request->getParameters(), JSON_UNESCAPED_SLASHES),
+                'API Key'    => $request->getHeader('X_DREAMFACTORY_API_KEY'),
+                'JWT'        => $request->getHeader('X_DREAMFACTORY_SESSION_TOKEN')
+            ]);
+
+            $response = ServiceManager::getService($service)->handleRequest($request, $resource);
         } catch (\Exception $e) {
             $response = ResponseFactory::create($e);
         }

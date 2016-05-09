@@ -6,12 +6,11 @@ use DreamFactory\Core\ADLdap\Models\RoleADLdap;
 use DreamFactory\Core\Enums\ServiceTypeGroups;
 use DreamFactory\Core\Exceptions\BadRequestException;
 use DreamFactory\Core\Exceptions\RestException;
-use DreamFactory\Core\Models\Service;
 use DreamFactory\Core\Utility\ResourcesWrapper;
-use DreamFactory\Core\Utility\ServiceHandler;
 use DreamFactory\Core\ADLdap\Services\ADLdap;
 use DreamFactory\Library\Utility\Enums\Verbs;
 use Illuminate\Console\Command;
+use ServiceManager;
 
 class ADGroupImport extends Command
 {
@@ -61,10 +60,8 @@ class ADGroupImport extends Command
             $filter = $this->option('filter');
 
             /** @type ADLdap $service */
-            $service = ServiceHandler::getService($serviceName);
-            $serviceModel = Service::find($service->getServiceId());
-            $serviceType = $serviceModel->serviceType()->first();
-            $serviceGroup = $serviceType->group;
+            $service = ServiceManager::getService($serviceName);
+            $serviceGroup = $service->getServiceTypeInfo()->getGroup();
 
             if ($serviceGroup !== ServiceTypeGroups::LDAP) {
                 throw new BadRequestException('Invalid service name [' .
@@ -109,7 +106,7 @@ class ADGroupImport extends Command
                 if ($this->confirm('The above roles will be imported into your DreamFactroy instance based on your Active Directory groups. Do you wish to continue?')) {
                     $this->line('Importing Roles...');
                     $payload = ResourcesWrapper::wrapResources($roles);
-                    ServiceHandler::handleRequest(Verbs::POST, 'system', 'role', ['continue' => true], $payload);
+                    ServiceManager::handleRequest('system', Verbs::POST, 'role', ['continue' => true], [], $payload);
                     $this->info('Successfully imported all Active Directory groups as Roles.');
                 } else {
                     $this->info('Aborted import process. No Roles were imported');
