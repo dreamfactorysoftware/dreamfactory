@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "64434099077db3394fd240117377eeef",
-    "content-hash": "288af5b7874277deca2ee18e2008f47e",
+    "hash": "7c36f6cd21f719a731adf77ac5534024",
+    "content-hash": "9416a4145e7074c62b31889ef2b19ddf",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -52,16 +52,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.18.3",
+            "version": "3.18.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "899c5c982582d811754a57d2ca941c7f2dc8090b"
+                "reference": "e22ee28280547dccfef2646a67a9e8fa05c811cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/899c5c982582d811754a57d2ca941c7f2dc8090b",
-                "reference": "899c5c982582d811754a57d2ca941c7f2dc8090b",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/e22ee28280547dccfef2646a67a9e8fa05c811cf",
+                "reference": "e22ee28280547dccfef2646a67a9e8fa05c811cf",
                 "shasum": ""
             },
             "require": {
@@ -128,7 +128,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2016-04-27 16:44:34"
+            "time": "2016-05-05 19:57:48"
         },
         {
             "name": "barryvdh/laravel-cors",
@@ -232,51 +232,6 @@
                 "preload"
             ],
             "time": "2015-11-09 22:51:51"
-        },
-        {
-            "name": "cooperl/laravel-db2",
-            "version": "2.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/cooperl22/laravel-db2.git",
-                "reference": "79c3cf22d091f64dded62519b123a70c22d898e2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/cooperl22/laravel-db2/zipball/79c3cf22d091f64dded62519b123a70c22d898e2",
-                "reference": "79c3cf22d091f64dded62519b123a70c22d898e2",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/database": "~5.0",
-                "illuminate/support": "~5.0",
-                "php": ">=5.4.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Cooperl\\Database\\DB2\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Maxime Rault",
-                    "role": "Developer"
-                }
-            ],
-            "description": "laravel-db2 is a simple DB2 service provider for Laravel. It provides DB2 Connection by extending the Illuminate Database component of the laravel framework.",
-            "keywords": [
-                "database",
-                "db2",
-                "laravel",
-                "odbc",
-                "pdo"
-            ],
-            "time": "2016-02-05 08:13:08"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -828,71 +783,17 @@
             "time": "2013-04-03 09:46:52"
         },
         {
-            "name": "dreamfactory/df-adldap",
-            "version": "dev-develop",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/dreamfactorysoftware/df-adldap.git",
-                "reference": "9dae6ec85655db595d7776c3b30bc2cf47c5829b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-adldap/zipball/9dae6ec85655db595d7776c3b30bc2cf47c5829b",
-                "reference": "9dae6ec85655db595d7776c3b30bc2cf47c5829b",
-                "shasum": ""
-            },
-            "require": {
-                "dreamfactory/df-core": "~0.2.0",
-                "dreamfactory/df-user": "~0.2.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-develop": "0.2.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "DreamFactory\\Core\\ADLdap\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                },
-                {
-                    "name": "Arif Islam",
-                    "email": "arifislam@dreamfactory.com"
-                }
-            ],
-            "description": "Active Directory & LDAP support for DreamFactory Platform 2.0",
-            "homepage": "https://www.dreamfactory.com/",
-            "keywords": [
-                "ad",
-                "dreamfactory",
-                "dsp",
-                "ldap",
-                "rest"
-            ],
-            "time": "2016-04-21 19:31:35"
-        },
-        {
             "name": "dreamfactory/df-admin-app",
             "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-admin-app.git",
-                "reference": "2c9ec0f6f6447375d5609a50b19bc831623220b5"
+                "reference": "31a2dfb27b6fd0acb985ba55484b61829e42ff7e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-admin-app/zipball/2c9ec0f6f6447375d5609a50b19bc831623220b5",
-                "reference": "2c9ec0f6f6447375d5609a50b19bc831623220b5",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-admin-app/zipball/31a2dfb27b6fd0acb985ba55484b61829e42ff7e",
+                "reference": "31a2dfb27b6fd0acb985ba55484b61829e42ff7e",
                 "shasum": ""
             },
             "require": {
@@ -928,7 +829,7 @@
                 "remote web services",
                 "rest"
             ],
-            "time": "2016-04-28 05:32:42"
+            "time": "2016-05-03 17:41:35"
         },
         {
             "name": "dreamfactory/df-aws",
@@ -936,12 +837,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-aws.git",
-                "reference": "edb461546345b228e7bd21fd6525233f87abc328"
+                "reference": "0e5b648707ecc61afc3431886addab1be53be19f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-aws/zipball/edb461546345b228e7bd21fd6525233f87abc328",
-                "reference": "edb461546345b228e7bd21fd6525233f87abc328",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-aws/zipball/0e5b648707ecc61afc3431886addab1be53be19f",
+                "reference": "0e5b648707ecc61afc3431886addab1be53be19f",
                 "shasum": ""
             },
             "require": {
@@ -987,7 +888,7 @@
                 "rest",
                 "s3"
             ],
-            "time": "2016-03-11 20:38:03"
+            "time": "2016-05-09 20:29:27"
         },
         {
             "name": "dreamfactory/df-core",
@@ -995,22 +896,20 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-core.git",
-                "reference": "72526689f9e50d574c7d5772425d33b9cee84387"
+                "reference": "9dab002c5826df9241f609b244484393b437ded4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/72526689f9e50d574c7d5772425d33b9cee84387",
-                "reference": "72526689f9e50d574c7d5772425d33b9cee84387",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/9dab002c5826df9241f609b244484393b437ded4",
+                "reference": "9dab002c5826df9241f609b244484393b437ded4",
                 "shasum": ""
             },
             "require": {
                 "barryvdh/laravel-cors": "0.7.x",
-                "cooperl/laravel-db2": "2.*",
                 "doctrine/dbal": "2.5.*",
                 "dreamfactory/php-utils": "1.1.*",
                 "guzzlehttp/guzzle": "~5.0",
-                "php": ">=5.5",
-                "yajra/laravel-pdo-via-oci8": "1.*"
+                "php": ">=5.5"
             },
             "require-dev": {
                 "phpunit/phpunit": "@stable"
@@ -1054,7 +953,7 @@
                 "paas",
                 "rest"
             ],
-            "time": "2016-04-27 00:36:57"
+            "time": "2016-05-09 20:27:47"
         },
         {
             "name": "dreamfactory/df-couchdb",
@@ -1062,12 +961,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-couchdb.git",
-                "reference": "c5ae5cb87c79eb319b9a6fffc74e6349b83b07ce"
+                "reference": "4dbcad0097abacbfb0bc4307645f52bc750adfde"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-couchdb/zipball/c5ae5cb87c79eb319b9a6fffc74e6349b83b07ce",
-                "reference": "c5ae5cb87c79eb319b9a6fffc74e6349b83b07ce",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-couchdb/zipball/4dbcad0097abacbfb0bc4307645f52bc750adfde",
+                "reference": "4dbcad0097abacbfb0bc4307645f52bc750adfde",
                 "shasum": ""
             },
             "require": {
@@ -1114,7 +1013,7 @@
                 "nosql",
                 "rest"
             ],
-            "time": "2016-01-30 03:07:11"
+            "time": "2016-05-09 20:30:07"
         },
         {
             "name": "dreamfactory/df-filemanager-app",
@@ -1122,12 +1021,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-filemanager-app.git",
-                "reference": "0f2b1b20a2a9545af98ffd32f8e60cb503a661e3"
+                "reference": "16965cba8ba716da4a9ed5257e61972b6a7c1f1c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-filemanager-app/zipball/0f2b1b20a2a9545af98ffd32f8e60cb503a661e3",
-                "reference": "0f2b1b20a2a9545af98ffd32f8e60cb503a661e3",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-filemanager-app/zipball/16965cba8ba716da4a9ed5257e61972b6a7c1f1c",
+                "reference": "16965cba8ba716da4a9ed5257e61972b6a7c1f1c",
                 "shasum": ""
             },
             "require": {
@@ -1159,7 +1058,7 @@
                 "file manager",
                 "rest"
             ],
-            "time": "2016-03-15 13:10:30"
+            "time": "2016-05-04 14:16:56"
         },
         {
             "name": "dreamfactory/df-managed",
@@ -1224,34 +1123,16 @@
         },
         {
             "name": "dreamfactory/df-mongodb",
-<<<<<<< HEAD
             "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-mongodb.git",
-                "reference": "56f892f6d4fd999652c345f43e278eaae7af92ff"
+                "reference": "c40d627c727b5169f259ed6e2efc123a93e34b9f"
             },
             "dist": {
                 "type": "zip",
-<<<<<<< HEAD
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-mongodb/zipball/18d30de9c3a99d4e3706dec6958a9a0d72ae5fbf",
-                "reference": "18d30de9c3a99d4e3706dec6958a9a0d72ae5fbf",
-=======
-            "version": "0.2.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/dreamfactorysoftware/df-mongodb.git",
-                "reference": "35f694eec84deed1028a748f4e04e7eb0dd7dcef"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-mongodb/zipball/35f694eec84deed1028a748f4e04e7eb0dd7dcef",
-                "reference": "35f694eec84deed1028a748f4e04e7eb0dd7dcef",
->>>>>>> hotfix/2.1.2
-=======
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-mongodb/zipball/56f892f6d4fd999652c345f43e278eaae7af92ff",
-                "reference": "56f892f6d4fd999652c345f43e278eaae7af92ff",
->>>>>>> 189575db3771bce6e6227cc59bb318c83bfeb3ba
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-mongodb/zipball/c40d627c727b5169f259ed6e2efc123a93e34b9f",
+                "reference": "c40d627c727b5169f259ed6e2efc123a93e34b9f",
                 "shasum": ""
             },
             "require": {
@@ -1298,15 +1179,7 @@
                 "nosql",
                 "rest"
             ],
-<<<<<<< HEAD
-<<<<<<< HEAD
-            "time": "2016-04-22 16:11:02"
-=======
-            "time": "2016-04-27 18:32:12"
->>>>>>> hotfix/2.1.2
-=======
-            "time": "2016-04-27 18:32:23"
->>>>>>> 189575db3771bce6e6227cc59bb318c83bfeb3ba
+            "time": "2016-05-09 20:30:24"
         },
         {
             "name": "dreamfactory/df-oauth",
@@ -1314,12 +1187,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-oauth.git",
-                "reference": "3218e6ae18e9830468b3a3a3584c09ddff8c569b"
+                "reference": "9c48511334efc2a485e833685abaef49cf6d84a4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-oauth/zipball/3218e6ae18e9830468b3a3a3584c09ddff8c569b",
-                "reference": "3218e6ae18e9830468b3a3a3584c09ddff8c569b",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-oauth/zipball/9c48511334efc2a485e833685abaef49cf6d84a4",
+                "reference": "9c48511334efc2a485e833685abaef49cf6d84a4",
                 "shasum": ""
             },
             "require": {
@@ -1360,7 +1233,7 @@
                 "oauth",
                 "rest"
             ],
-            "time": "2016-02-01 22:29:59"
+            "time": "2016-05-09 20:30:52"
         },
         {
             "name": "dreamfactory/df-rackspace",
@@ -1368,12 +1241,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-rackspace.git",
-                "reference": "2d6c87c3e53600ef62d5375dc3cd52417ffd674f"
+                "reference": "f5c6c188187dd59ab7441ce88ce381171c46cf63"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-rackspace/zipball/2d6c87c3e53600ef62d5375dc3cd52417ffd674f",
-                "reference": "2d6c87c3e53600ef62d5375dc3cd52417ffd674f",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-rackspace/zipball/f5c6c188187dd59ab7441ce88ce381171c46cf63",
+                "reference": "f5c6c188187dd59ab7441ce88ce381171c46cf63",
                 "shasum": ""
             },
             "require": {
@@ -1419,7 +1292,7 @@
                 "rest",
                 "storage blob"
             ],
-            "time": "2016-01-30 03:18:29"
+            "time": "2016-05-09 20:32:30"
         },
         {
             "name": "dreamfactory/df-rws",
@@ -1427,12 +1300,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-rws.git",
-                "reference": "7b2aa08dbfc30b32c13eba69a68b508ae4bc45f0"
+                "reference": "772cf33d8cb2f5144cef24684b02afc491c64e35"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-rws/zipball/7b2aa08dbfc30b32c13eba69a68b508ae4bc45f0",
-                "reference": "7b2aa08dbfc30b32c13eba69a68b508ae4bc45f0",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-rws/zipball/772cf33d8cb2f5144cef24684b02afc491c64e35",
+                "reference": "772cf33d8cb2f5144cef24684b02afc491c64e35",
                 "shasum": ""
             },
             "require": {
@@ -1476,123 +1349,7 @@
                 "rest",
                 "web"
             ],
-            "time": "2016-02-09 20:22:22"
-        },
-        {
-            "name": "dreamfactory/df-salesforce",
-            "version": "dev-develop",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/dreamfactorysoftware/df-salesforce.git",
-                "reference": "0ff0ba50c4bb3471096ce744342b438b8a042f34"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-salesforce/zipball/0ff0ba50c4bb3471096ce744342b438b8a042f34",
-                "reference": "0ff0ba50c4bb3471096ce744342b438b8a042f34",
-                "shasum": ""
-            },
-            "require": {
-                "dreamfactory/df-core": "~0.2.0",
-                "phpforce/soap-client": "*"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-develop": "0.2.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "DreamFactory\\Core\\Salesforce\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "Jerry Ablan",
-                    "email": "jerryablan@dreamfactory.com"
-                },
-                {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                },
-                {
-                    "name": "Arif Islam",
-                    "email": "arifislam@dreamfactory.com"
-                }
-            ],
-            "description": "The DreamFactory(tm) Salesforce Service.",
-            "homepage": "https://www.dreamfactory.com/",
-            "keywords": [
-                "database",
-                "db",
-                "dreamfactory",
-                "dsp",
-                "rest",
-                "salesforce"
-            ],
-            "time": "2016-01-30 03:11:30"
-        },
-        {
-            "name": "dreamfactory/df-soap",
-            "version": "dev-develop",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/dreamfactorysoftware/df-soap.git",
-                "reference": "aa707ea316eee5958136aff7e98196f1aa4b50b8"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-soap/zipball/aa707ea316eee5958136aff7e98196f1aa4b50b8",
-                "reference": "aa707ea316eee5958136aff7e98196f1aa4b50b8",
-                "shasum": ""
-            },
-            "require": {
-                "dreamfactory/df-core": "~0.2.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-develop": "0.2.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "DreamFactory\\Core\\Soap\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "Jerry Ablan",
-                    "email": "jerryablan@dreamfactory.com"
-                },
-                {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                },
-                {
-                    "name": "Arif Islam",
-                    "email": "arifislam@dreamfactory.com"
-                }
-            ],
-            "description": "SOAP Service for the DreamFactory Platform 2.0.",
-            "homepage": "https://www.dreamfactory.com/",
-            "keywords": [
-                "dreamfactory",
-                "dsp",
-                "rest",
-                "soap",
-                "wsdl"
-            ],
-            "time": "2016-04-01 19:49:44"
+            "time": "2016-05-09 20:32:13"
         },
         {
             "name": "dreamfactory/df-sqldb",
@@ -1600,12 +1357,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-sqldb.git",
-                "reference": "2756f46308c7f7f36ed3b26047e61043817ff6c3"
+                "reference": "cf35bad728ace757620e784e6e1e72b12aca23f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-sqldb/zipball/2756f46308c7f7f36ed3b26047e61043817ff6c3",
-                "reference": "2756f46308c7f7f36ed3b26047e61043817ff6c3",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-sqldb/zipball/cf35bad728ace757620e784e6e1e72b12aca23f6",
+                "reference": "cf35bad728ace757620e784e6e1e72b12aca23f6",
                 "shasum": ""
             },
             "require": {
@@ -1656,7 +1413,7 @@
                 "sql",
                 "sqlserver"
             ],
-            "time": "2016-04-22 15:55:37"
+            "time": "2016-05-09 20:31:31"
         },
         {
             "name": "dreamfactory/df-swagger-ui",
@@ -1709,12 +1466,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-user.git",
-                "reference": "72b799a551ab430693d665d9c6c264f894bb974d"
+                "reference": "8d1aecb03e9630ef48c6fded61cd583825ce9cf1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-user/zipball/72b799a551ab430693d665d9c6c264f894bb974d",
-                "reference": "72b799a551ab430693d665d9c6c264f894bb974d",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-user/zipball/8d1aecb03e9630ef48c6fded61cd583825ce9cf1",
+                "reference": "8d1aecb03e9630ef48c6fded61cd583825ce9cf1",
                 "shasum": ""
             },
             "require": {
@@ -1757,7 +1514,7 @@
                 "dsp",
                 "user"
             ],
-            "time": "2016-04-21 19:22:00"
+            "time": "2016-05-09 20:33:06"
         },
         {
             "name": "dreamfactory/installer",
@@ -3228,104 +2985,6 @@
             "time": "2016-03-18 20:34:03"
         },
         {
-            "name": "phpforce/common",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phpforce/common.git",
-                "reference": "aa96dfb6b0f43024c95a9d9c88396013e7513f9c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phpforce/common/zipball/aa96dfb6b0f43024c95a9d9c88396013e7513f9c",
-                "reference": "aa96dfb6b0f43024c95a9d9c88396013e7513f9c",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0",
-                "symfony/event-dispatcher": ">=2.1"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Phpforce\\Common": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "David de Boer",
-                    "email": "david@ddeboer.nl",
-                    "homepage": "http://ddeboer.nl"
-                }
-            ],
-            "description": "Common library for the PhpForce Salesforce libraries",
-            "keywords": [
-                "crm",
-                "force.com",
-                "salesforce",
-                "soap",
-                "web services"
-            ],
-            "time": "2014-01-09 10:36:21"
-        },
-        {
-            "name": "phpforce/soap-client",
-            "version": "0.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phpforce/soap-client.git",
-                "reference": "9a17e514794683bda9d9008a6672bbf36495b4d9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phpforce/soap-client/zipball/9a17e514794683bda9d9008a6672bbf36495b4d9",
-                "reference": "9a17e514794683bda9d9008a6672bbf36495b4d9",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0",
-                "phpforce/common": "dev-master",
-                "psr/log": "*"
-            },
-            "require-dev": {
-                "doctrine/common": ">=2.3"
-            },
-            "suggest": {
-                "doctrine/common": "For caching SOAP responses",
-                "monolog/monolog": "For logging SOAP transactions"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Phpforce\\SoapClient": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "David de Boer",
-                    "email": "david@ddeboer.nl",
-                    "homepage": "http://ddeboer.nl"
-                }
-            ],
-            "description": "A PHP client for the Salesforce SOAP API",
-            "keywords": [
-                "crm",
-                "force.com",
-                "salesforce",
-                "soap",
-                "web services"
-            ],
-            "time": "2015-04-05 15:19:06"
-        },
-        {
             "name": "phpseclib/phpseclib",
             "version": "0.3.10",
             "source": {
@@ -3630,16 +3289,16 @@
         },
         {
             "name": "react/promise",
-            "version": "v2.4.0",
+            "version": "v2.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/reactphp/promise.git",
-                "reference": "f942da7b505d1a294284ab343d05df42d02ad6d9"
+                "reference": "8025426794f1944de806618671d4fa476dc7626f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/reactphp/promise/zipball/f942da7b505d1a294284ab343d05df42d02ad6d9",
-                "reference": "f942da7b505d1a294284ab343d05df42d02ad6d9",
+                "url": "https://api.github.com/repos/reactphp/promise/zipball/8025426794f1944de806618671d4fa476dc7626f",
+                "reference": "8025426794f1944de806618671d4fa476dc7626f",
                 "shasum": ""
             },
             "require": {
@@ -3670,20 +3329,20 @@
                 }
             ],
             "description": "A lightweight implementation of CommonJS Promises/A for PHP",
-            "time": "2016-03-31 13:10:33"
+            "time": "2016-05-03 17:50:52"
         },
         {
             "name": "swiftmailer/swiftmailer",
-            "version": "v5.4.1",
+            "version": "v5.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "0697e6aa65c83edf97bb0f23d8763f94e3f11421"
+                "reference": "d8db871a54619458a805229a057ea2af33c753e8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/0697e6aa65c83edf97bb0f23d8763f94e3f11421",
-                "reference": "0697e6aa65c83edf97bb0f23d8763f94e3f11421",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/d8db871a54619458a805229a057ea2af33c753e8",
+                "reference": "d8db871a54619458a805229a057ea2af33c753e8",
                 "shasum": ""
             },
             "require": {
@@ -3723,20 +3382,20 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2015-06-06 14:19:39"
+            "time": "2016-05-01 08:45:47"
         },
         {
             "name": "symfony/console",
-            "version": "v2.8.4",
+            "version": "v2.8.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "9a5aef5fc0d4eff86853d44202b02be8d5a20154"
+                "reference": "48221d3de4dc22d2cd57c97e8b9361821da86609"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/9a5aef5fc0d4eff86853d44202b02be8d5a20154",
-                "reference": "9a5aef5fc0d4eff86853d44202b02be8d5a20154",
+                "url": "https://api.github.com/repos/symfony/console/zipball/48221d3de4dc22d2cd57c97e8b9361821da86609",
+                "reference": "48221d3de4dc22d2cd57c97e8b9361821da86609",
                 "shasum": ""
             },
             "require": {
@@ -3783,20 +3442,20 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2016-03-17 09:19:04"
+            "time": "2016-04-26 12:00:47"
         },
         {
             "name": "symfony/debug",
-            "version": "v2.8.4",
+            "version": "v2.8.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/debug.git",
-                "reference": "056d028521c18f4932c421f1ffa4c74cd644cda8"
+                "reference": "40bc3196e14ed6a1684bbc4e7446d59341a48b0f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/debug/zipball/056d028521c18f4932c421f1ffa4c74cd644cda8",
-                "reference": "056d028521c18f4932c421f1ffa4c74cd644cda8",
+                "url": "https://api.github.com/repos/symfony/debug/zipball/40bc3196e14ed6a1684bbc4e7446d59341a48b0f",
+                "reference": "40bc3196e14ed6a1684bbc4e7446d59341a48b0f",
                 "shasum": ""
             },
             "require": {
@@ -3840,20 +3499,20 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
-            "time": "2016-03-16 15:31:59"
+            "time": "2016-03-30 10:37:34"
         },
         {
             "name": "symfony/dependency-injection",
-            "version": "v3.0.4",
+            "version": "v3.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dependency-injection.git",
-                "reference": "6a9058101b591edced21ca3c83c80a3978f5c6b0"
+                "reference": "4973244b171257b987332386405b0f393230de52"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/6a9058101b591edced21ca3c83c80a3978f5c6b0",
-                "reference": "6a9058101b591edced21ca3c83c80a3978f5c6b0",
+                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/4973244b171257b987332386405b0f393230de52",
+                "reference": "4973244b171257b987332386405b0f393230de52",
                 "shasum": ""
             },
             "require": {
@@ -3899,20 +3558,20 @@
             ],
             "description": "Symfony DependencyInjection Component",
             "homepage": "https://symfony.com",
-            "time": "2016-03-30 10:41:14"
+            "time": "2016-04-25 11:17:47"
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v3.0.4",
+            "version": "v3.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
-                "reference": "9002dcf018d884d294b1ef20a6f968efc1128f39"
+                "reference": "17b04e6b1ede45b57d3ad5146abe50df6c3968b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/9002dcf018d884d294b1ef20a6f968efc1128f39",
-                "reference": "9002dcf018d884d294b1ef20a6f968efc1128f39",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/17b04e6b1ede45b57d3ad5146abe50df6c3968b4",
+                "reference": "17b04e6b1ede45b57d3ad5146abe50df6c3968b4",
                 "shasum": ""
             },
             "require": {
@@ -3959,11 +3618,11 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2016-03-10 10:34:12"
+            "time": "2016-04-12 18:09:53"
         },
         {
             "name": "symfony/finder",
-            "version": "v3.0.4",
+            "version": "v3.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/finder.git",
@@ -4012,16 +3671,16 @@
         },
         {
             "name": "symfony/http-foundation",
-            "version": "v2.8.4",
+            "version": "v2.8.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-foundation.git",
-                "reference": "06d6b2c755b2f34ce21e688b62072e9c625709c4"
+                "reference": "ed9357bf86f041bd69a197742ee22c97989467d7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/06d6b2c755b2f34ce21e688b62072e9c625709c4",
-                "reference": "06d6b2c755b2f34ce21e688b62072e9c625709c4",
+                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/ed9357bf86f041bd69a197742ee22c97989467d7",
+                "reference": "ed9357bf86f041bd69a197742ee22c97989467d7",
                 "shasum": ""
             },
             "require": {
@@ -4063,20 +3722,20 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "https://symfony.com",
-            "time": "2016-03-27 12:57:53"
+            "time": "2016-04-05 16:36:54"
         },
         {
             "name": "symfony/http-kernel",
-            "version": "v2.8.4",
+            "version": "v2.8.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-kernel.git",
-                "reference": "2c45576fee2eb228d4771342a05b0565e4711ba2"
+                "reference": "ecbb0ce32661daed460c39a188a312449ce59a72"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-kernel/zipball/2c45576fee2eb228d4771342a05b0565e4711ba2",
-                "reference": "2c45576fee2eb228d4771342a05b0565e4711ba2",
+                "url": "https://api.github.com/repos/symfony/http-kernel/zipball/ecbb0ce32661daed460c39a188a312449ce59a72",
+                "reference": "ecbb0ce32661daed460c39a188a312449ce59a72",
                 "shasum": ""
             },
             "require": {
@@ -4145,7 +3804,7 @@
             ],
             "description": "Symfony HttpKernel Component",
             "homepage": "https://symfony.com",
-            "time": "2016-03-25 01:40:30"
+            "time": "2016-04-29 15:33:46"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -4430,16 +4089,16 @@
         },
         {
             "name": "symfony/process",
-            "version": "v2.8.4",
+            "version": "v2.8.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "fb467471952ef5cf8497c029980e556b47545333"
+                "reference": "1276bd9be89be039748cf753a2137f4ef149cd74"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/fb467471952ef5cf8497c029980e556b47545333",
-                "reference": "fb467471952ef5cf8497c029980e556b47545333",
+                "url": "https://api.github.com/repos/symfony/process/zipball/1276bd9be89be039748cf753a2137f4ef149cd74",
+                "reference": "1276bd9be89be039748cf753a2137f4ef149cd74",
                 "shasum": ""
             },
             "require": {
@@ -4475,20 +4134,20 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
-            "time": "2016-03-23 13:11:46"
+            "time": "2016-04-14 15:22:22"
         },
         {
             "name": "symfony/routing",
-            "version": "v3.0.4",
+            "version": "v3.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/routing.git",
-                "reference": "d061b609f2d0769494c381ec92f5c5cc5e4a20aa"
+                "reference": "6ab6fd5ee754fb53a303a5621ae35f3afd5970ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/routing/zipball/d061b609f2d0769494c381ec92f5c5cc5e4a20aa",
-                "reference": "d061b609f2d0769494c381ec92f5c5cc5e4a20aa",
+                "url": "https://api.github.com/repos/symfony/routing/zipball/6ab6fd5ee754fb53a303a5621ae35f3afd5970ac",
+                "reference": "6ab6fd5ee754fb53a303a5621ae35f3afd5970ac",
                 "shasum": ""
             },
             "require": {
@@ -4550,11 +4209,11 @@
                 "uri",
                 "url"
             ],
-            "time": "2016-03-23 13:23:25"
+            "time": "2016-04-28 09:48:42"
         },
         {
             "name": "symfony/translation",
-            "version": "v3.0.4",
+            "version": "v3.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
@@ -4618,16 +4277,16 @@
         },
         {
             "name": "symfony/var-dumper",
-            "version": "v3.0.4",
+            "version": "v3.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
-                "reference": "3841ed86527d18ee2c35fe4afb1b2fc60f8fae79"
+                "reference": "0e918c269093ba4c77fca14e9424fa74ed16f1a6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/3841ed86527d18ee2c35fe4afb1b2fc60f8fae79",
-                "reference": "3841ed86527d18ee2c35fe4afb1b2fc60f8fae79",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/0e918c269093ba4c77fca14e9424fa74ed16f1a6",
+                "reference": "0e918c269093ba4c77fca14e9424fa74ed16f1a6",
                 "shasum": ""
             },
             "require": {
@@ -4677,7 +4336,7 @@
                 "debug",
                 "dump"
             ],
-            "time": "2016-03-10 10:34:12"
+            "time": "2016-04-25 11:17:47"
         },
         {
             "name": "tymon/jwt-auth",
@@ -4791,42 +4450,6 @@
                 "environment"
             ],
             "time": "2016-04-15 10:48:49"
-        },
-        {
-            "name": "yajra/laravel-pdo-via-oci8",
-            "version": "v1.0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/yajra/pdo-via-oci8.git",
-                "reference": "29634571acd0086ae984dc2f957704ba1b60eae8"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/yajra/pdo-via-oci8/zipball/29634571acd0086ae984dc2f957704ba1b60eae8",
-                "reference": "29634571acd0086ae984dc2f957704ba1b60eae8",
-                "shasum": ""
-            },
-            "require-dev": {
-                "phpunit/phpunit": "4.0.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Yajra\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Arjay Angeles",
-                    "email": "aqangeles@gmail.com"
-                }
-            ],
-            "description": "PDO userspace driver proxying calls to PHP OCI8 driver",
-            "time": "2016-04-28 03:07:33"
         }
     ],
     "packages-dev": [
@@ -4894,6 +4517,51 @@
             "time": "2016-03-03 08:45:00"
         },
         {
+            "name": "cooperl/laravel-db2",
+            "version": "2.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cooperl22/laravel-db2.git",
+                "reference": "0e83f3783bb44a0de8d4d8dfc8a3bad9f03ac9b6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cooperl22/laravel-db2/zipball/0e83f3783bb44a0de8d4d8dfc8a3bad9f03ac9b6",
+                "reference": "0e83f3783bb44a0de8d4d8dfc8a3bad9f03ac9b6",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "~5.0",
+                "illuminate/support": "~5.0",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Cooperl\\Database\\DB2\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Maxime Rault",
+                    "role": "Developer"
+                }
+            ],
+            "description": "laravel-db2 is a simple DB2 service provider for Laravel. It provides DB2 Connection by extending the Illuminate Database component of the laravel framework.",
+            "keywords": [
+                "database",
+                "db2",
+                "laravel",
+                "odbc",
+                "pdo"
+            ],
+            "time": "2016-05-09 07:20:17"
+        },
+        {
             "name": "doctrine/instantiator",
             "version": "1.0.5",
             "source": {
@@ -4949,33 +4617,29 @@
         },
         {
             "name": "fzaninotto/faker",
-            "version": "v1.5.0",
+            "version": "v1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fzaninotto/Faker.git",
-                "reference": "d0190b156bcca848d401fb80f31f504f37141c8d"
+                "reference": "44f9a286a04b80c76a4e5fb7aad8bb539b920123"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/d0190b156bcca848d401fb80f31f504f37141c8d",
-                "reference": "d0190b156bcca848d401fb80f31f504f37141c8d",
+                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/44f9a286a04b80c76a4e5fb7aad8bb539b920123",
+                "reference": "44f9a286a04b80c76a4e5fb7aad8bb539b920123",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3"
+                "php": "^5.3.3|^7.0"
             },
             "require-dev": {
+                "ext-intl": "*",
                 "phpunit/phpunit": "~4.0",
                 "squizlabs/php_codesniffer": "~1.5"
             },
-            "suggest": {
-                "ext-intl": "*"
-            },
             "type": "library",
             "extra": {
-                "branch-alias": {
-                    "dev-master": "1.5.x-dev"
-                }
+                "branch-alias": []
             },
             "autoload": {
                 "psr-4": {
@@ -4997,7 +4661,7 @@
                 "faker",
                 "fixtures"
             ],
-            "time": "2015-05-29 06:29:14"
+            "time": "2016-04-29 12:21:54"
         },
         {
             "name": "laracasts/generators",
@@ -5845,16 +5509,16 @@
         },
         {
             "name": "sebastian/environment",
-            "version": "1.3.5",
+            "version": "1.3.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/environment.git",
-                "reference": "dc7a29032cf72b54f36dac15a1ca5b3a1b6029bf"
+                "reference": "2292b116f43c272ff4328083096114f84ea46a56"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/dc7a29032cf72b54f36dac15a1ca5b3a1b6029bf",
-                "reference": "dc7a29032cf72b54f36dac15a1ca5b3a1b6029bf",
+                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/2292b116f43c272ff4328083096114f84ea46a56",
+                "reference": "2292b116f43c272ff4328083096114f84ea46a56",
                 "shasum": ""
             },
             "require": {
@@ -5891,7 +5555,7 @@
                 "environment",
                 "hhvm"
             ],
-            "time": "2016-02-26 18:40:46"
+            "time": "2016-05-04 07:59:13"
         },
         {
             "name": "sebastian/exporter",
@@ -6100,7 +5764,7 @@
         },
         {
             "name": "symfony/class-loader",
-            "version": "v3.0.4",
+            "version": "v3.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/class-loader.git",
@@ -6156,7 +5820,7 @@
         },
         {
             "name": "symfony/css-selector",
-            "version": "v3.0.4",
+            "version": "v3.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/css-selector.git",
@@ -6209,16 +5873,16 @@
         },
         {
             "name": "symfony/dom-crawler",
-            "version": "v3.0.4",
+            "version": "v3.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dom-crawler.git",
-                "reference": "18a06d7a9af41718c20764a674a0ebba3bc40d1f"
+                "reference": "49b588841225b205700e5122fa01911cabada857"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/18a06d7a9af41718c20764a674a0ebba3bc40d1f",
-                "reference": "18a06d7a9af41718c20764a674a0ebba3bc40d1f",
+                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/49b588841225b205700e5122fa01911cabada857",
+                "reference": "49b588841225b205700e5122fa01911cabada857",
                 "shasum": ""
             },
             "require": {
@@ -6261,11 +5925,11 @@
             ],
             "description": "Symfony DomCrawler Component",
             "homepage": "https://symfony.com",
-            "time": "2016-03-23 13:23:25"
+            "time": "2016-04-12 18:09:53"
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.0.4",
+            "version": "v3.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
@@ -6311,6 +5975,42 @@
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
             "time": "2016-03-04 07:55:57"
+        },
+        {
+            "name": "yajra/laravel-pdo-via-oci8",
+            "version": "v1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yajra/pdo-via-oci8.git",
+                "reference": "58cbaf051ea63a199e0b3f369d20cb261a79cc90"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yajra/pdo-via-oci8/zipball/58cbaf051ea63a199e0b3f369d20cb261a79cc90",
+                "reference": "58cbaf051ea63a199e0b3f369d20cb261a79cc90",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.0.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Yajra\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Arjay Angeles",
+                    "email": "aqangeles@gmail.com"
+                }
+            ],
+            "description": "PDO userspace driver proxying calls to PHP OCI8 driver",
+            "time": "2016-04-30 02:09:48"
         }
     ],
     "aliases": [
@@ -6384,18 +6084,6 @@
             "alias": "dev-master",
             "alias_normalized": "9999999-dev",
             "version": "dev-develop",
-            "package": "dreamfactory/df-salesforce"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-soap"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
             "package": "dreamfactory/df-user"
         },
         {
@@ -6403,12 +6091,6 @@
             "alias_normalized": "9999999-dev",
             "version": "dev-develop",
             "package": "dreamfactory/df-oauth"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-adldap"
         }
     ],
     "minimum-stability": "dev",
@@ -6424,11 +6106,8 @@
         "dreamfactory/df-mongodb": 20,
         "dreamfactory/df-couchdb": 20,
         "dreamfactory/df-rws": 20,
-        "dreamfactory/df-salesforce": 20,
-        "dreamfactory/df-soap": 20,
         "dreamfactory/df-user": 20,
-        "dreamfactory/df-oauth": 20,
-        "dreamfactory/df-adldap": 20
+        "dreamfactory/df-oauth": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
