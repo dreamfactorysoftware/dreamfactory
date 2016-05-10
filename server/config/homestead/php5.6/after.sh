@@ -42,6 +42,14 @@ echo ">>> Installing 'zip' command"
 
 sudo apt-get install -qq -y zip > afterScriptLog.txt
 
+echo ">>> Installing Python bunch"
+
+sudo pip install bunch > afterScriptLog.txt
+
+echo ">>> Installing Node.js sync-request"
+
+sudo npm install sync-request > afterScriptLog.txt
+
 echo ">>> Setting up dreamfactory .env with homestead mysql database"
 
 sudo php artisan cache:clear
