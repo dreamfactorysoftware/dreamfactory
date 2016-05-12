@@ -2,6 +2,7 @@
 namespace DreamFactory\Http\Controllers;
 
 use DreamFactory\Core\Models\User;
+use DreamFactory\Core\Utility\Session;
 use DreamFactory\Library\Utility\Enums\Verbs;
 use Response;
 
@@ -16,8 +17,8 @@ class SplashController extends Controller
     {
         $token = \Request::input('session_token');
         $param = '';
-        if(!empty($token)){
-            $param = '?session_token='.$token;
+        if (!empty($token)) {
+            $param = '?session_token=' . $token;
         }
 
         return redirect(config('df.landing_page', '/test_rest.html') . $param);
@@ -46,10 +47,20 @@ class SplashController extends Controller
                 if (!$user) {
                     return view('firstUser', $data);
                 }
+
+                $jwt = null;
+                if (true === $login = Session::setUserInfoWithJWT($user)) {
+                    $sessionInfo = Session::getPublicInfo();
+                    $jwt = array_get($sessionInfo, 'session_token');
+                }
             }
         }
 
-        return redirect()->to('/');
+        if (!empty($jwt)) {
+            return redirect()->to('/?session_token=' . $jwt);
+        } else {
+            return redirect()->to('/');
+        }
     }
 
     /**
