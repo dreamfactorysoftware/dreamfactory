@@ -30,6 +30,10 @@ sudo ln -s /etc/php/7.0/mods-available/mongodb.ini /etc/php/7.0/fpm/conf.d/99-mo
 #sudo ln -s /etc/php/7.0/mods-available/v8js.ini /etc/php/7.0/fpm/conf.d/99-v8js.ini
 cd */.
 
+echo ">>> Installing phpMyAdmin (http://host/pma)"
+sudo apt-get install -qq -y phpmyadmin > afterScriptLog.txt
+sudo ln -s /usr/share/phpmyadmin/ public/pma
+
 echo ">>> Setting up workbench/repos/df-admin-app with bower and grunt"
 echo ">>> Installing bower"
 sudo npm install -g bower > afterScriptLog.txt
