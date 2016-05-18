@@ -17,6 +17,10 @@ sudo mv /etc/freetds/freetds.conf /etc/freetds/freetds.conf.original
 sudo cp server/config/freetds/sqlsrv.conf /etc/freetds/freetds.conf
 sudo cp server/config/freetds/locales.conf /etc/freetds/locales.conf
 
+echo ">>> Installing phpMyAdmin (http://host/pma)"
+sudo apt-get install -qq -y phpmyadmin > afterScriptLog.txt
+sudo ln -s /usr/share/phpmyadmin/ public/pma
+
 echo ">>> Installing php mongodb extension"
 sudo apt-get install -qq -y autoconf g++ make openssl libssl-dev libcurl4-openssl-dev > afterScriptLog.txt
 sudo apt-get install -qq -y libcurl4-openssl-dev pkg-config > afterScriptLog.txt
