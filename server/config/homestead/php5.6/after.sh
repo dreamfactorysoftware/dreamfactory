@@ -67,8 +67,8 @@ sudo apt-get install -qq -y zip > afterScriptLog.txt
 echo ">>> Installing Python bunch"
 sudo pip install bunch > afterScriptLog.txt
 
-echo ">>> Installing Node.js sync-request"
-sudo npm install sync-request > afterScriptLog.txt
+echo ">>> Installing Node.js lodash"
+sudo npm install lodash > afterScriptLog.txt
 
 sudo service php5-fpm restart
 sudo service nginx restart
