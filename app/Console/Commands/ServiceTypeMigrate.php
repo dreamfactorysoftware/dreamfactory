@@ -2,14 +2,15 @@
 
 namespace DreamFactory\Console\Commands;
 
+use DreamFactory\Core\Components\DsnToConnectionConfig;
 use DreamFactory\Core\Exceptions\RestException;
-use DreamFactory\Library\Utility\Scalar;
 use Illuminate\Console\Command;
 use DB;
 use Schema;
 
 class ServiceTypeMigrate extends Command
 {
+    use DsnToConnectionConfig;
     /**
      * The name and signature of the console command.
      *
@@ -55,94 +56,10 @@ class ServiceTypeMigrate extends Command
                     foreach ($configs as $entry) {
                         /** @type array $entry */
                         $entry = (array)$entry;
-                        $dsn = array_get($entry, 'dsn');
-                        $driver = array_get($entry, 'driver');
-                        $newType = $driver;
-                        $config = [];
-                        switch ($driver) {
-                            case 'ibm':
-                                $newType = 'ibmdb2';
-                                $config = static::adaptConfig($dsn);
-                                break;
-                            case 'oci':
-                            case 'oracle':
-                                $newType = 'oracle';
-                                if (!empty($dsn)) {
-                                    $dsn = str_replace(' ', '', $dsn);
-                                    // traditional connection string uses (), reset find
-                                    if (false !== ($pos = stripos($dsn, 'host='))) {
-                                        $temp = substr($dsn, $pos + 5);
-                                        $config['host'] =
-                                            (false !== $pos = stripos($temp, ')')) ? substr($temp, 0, $pos) : $temp;
-                                    }
-                                    if (false !== ($pos = stripos($dsn, 'port='))) {
-                                        $temp = substr($dsn, $pos + 5);
-                                        $config['port'] =
-                                            (false !== $pos = stripos($temp, ')')) ? substr($temp, 0, $pos) : $temp;
-                                    }
-                                    if (false !== ($pos = stripos($dsn, 'sid='))) {
-                                        $temp = substr($dsn, $pos + 4);
-                                        $config['database'] =
-                                            (false !== $pos = stripos($temp, ')')) ? substr($temp, 0, $pos) : $temp;
-                                    }
-                                    if (false !== ($pos = stripos($dsn, 'service_name='))) {
-                                        $temp = substr($dsn, $pos + 13);
-                                        $config['service_name'] =
-                                            (false !== $pos = stripos($temp, ')')) ? substr($temp, 0, $pos) : $temp;
-                                    }
-                                }
-                                break;
-                            case 'sqlite':
-                                if (!empty($dsn)) {
-                                    // default PDO DSN pieces
-                                    $dsn = str_replace(' ', '', $dsn);
-                                    $file = substr($dsn, 7);
-                                    $config['database'] = $file;
-                                }
-                                break;
-                            case 'dblib':
-                            case 'sqlsrv':
-                                $newType = 'sqlsrv';
-                                if (!empty($dsn)) {
-                                    // default PDO DSN pieces
-                                    $config = static::adaptConfig($dsn);
-                                    // SQL Server native driver specifics
-                                    if (!isset($config['host']) && (false !== ($pos = stripos($dsn, 'Server=')))) {
-                                        $temp = substr($dsn, $pos + 7);
-                                        $host = (false !== $pos = stripos($temp, ';')) ? substr($temp, 0, $pos) : $temp;
-                                        if (!isset($config['port']) && (false !== ($pos = stripos($host, ',')))) {
-                                            $temp = substr($host, $pos + 1);
-                                            $host = substr($host, 0, $pos);
-                                            $config['port'] =
-                                                (false !== $pos = stripos($temp, ';')) ? substr($temp, 0, $pos) : $temp;
-                                        }
-                                        $config['host'] = $host;
-                                    }
-                                    if (!isset($config['database']) &&
-                                        (false !== ($pos = stripos($dsn, 'Database=')))
-                                    ) {
-                                        $temp = substr($dsn, $pos + 9);
-                                        $config['database'] =
-                                            (false !== $pos = stripos($temp, ';')) ? substr($temp, 0, $pos) : $temp;
-                                    }
-                                }
-                                break;
-                            case 'sqlanywhere':
-                            case 'pgsql':
-                            case 'mysql':
-                                $config = static::adaptConfig($dsn);
-                                break;
-                            default:
-                                continue 2;
-                        }
-                        $id = array_get($entry, 'service_id');
-                        $this->info('| ID: ' . $id . ' New Type: ' . $newType);
-                        $config['username'] = array_get($entry, 'username');
-                        $config['password'] = array_get($entry, 'password');
-                        if (Scalar::boolval(array_get($entry, 'default_schema_only', false))) {
-                            $config['default_schema_only'] = true;
-                        }
+                        $newType = '';
+                        $config = static::adaptConfig($entry, $newType);
                         $config = json_encode($config);
+                        $id = array_get($entry, 'service_id');
                         $this->info('| Service ID: ' . $id . ' New Config: ' . $config);
                         if (!$pretend) {
                             DB::table('service')->where('id', $id)->update(['type' => $newType]);
@@ -177,46 +94,6 @@ class ServiceTypeMigrate extends Command
         } catch (\Exception $e) {
             $msg = $e->getMessage();
             $this->error($msg);
-            if (strpos($msg, 'Sizelimit exceeded') !== false) {
-                $this->error('Please use "--filter=" option to avoid exceeding Sizelimit');
-            }
         }
-    }
-
-    public static function adaptConfig($dsn = '')
-    {
-        if (empty($dsn)) {
-            return [];
-        }
-
-        $config = [];
-        // default PDO DSN pieces
-        $dsn = str_replace(' ', '', $dsn);
-        if (false !== ($pos = strpos($dsn, 'port='))) {
-            $temp = substr($dsn, $pos + 5);
-            $config['port'] = (false !== $pos = strpos($temp, ';')) ? substr($temp, 0, $pos) : $temp;
-        }
-        if (false !== ($pos = strpos($dsn, 'host='))) {
-            $temp = substr($dsn, $pos + 5);
-            $host = (false !== $pos = stripos($temp, ';')) ? substr($temp, 0, $pos) : $temp;
-            if (!isset($config['port']) && (false !== ($pos = stripos($host, ':')))) {
-                $temp = substr($host, $pos + 1);
-                $host = substr($host, 0, $pos);
-                $config['port'] = (false !== $pos = stripos($temp, ';')) ? substr($temp, 0, $pos) : $temp;
-            }
-            $config['host'] = $host;
-        }
-        if (false !== ($pos = strpos($dsn, 'dbname='))) {
-            $temp = substr($dsn, $pos + 7);
-            $config['database'] = (false !== $pos = strpos($temp, ';')) ? substr($temp, 0, $pos) : $temp;
-        }
-        if (false !== ($pos = strpos($dsn, 'charset='))) {
-            $temp = substr($dsn, $pos + 8);
-            $config['charset'] = (false !== $pos = strpos($temp, ';')) ? substr($temp, 0, $pos) : $temp;
-        } else {
-            $config['charset'] = 'utf8';
-        }
-
-        return $config;
     }
 }
