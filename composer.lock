@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "da0607f494c00ac79c85d2256ddff876",
-    "content-hash": "b2eab9e6acd0bff3188aac407ef8041a",
+    "hash": "babdd9869dc34d454595029ba608a042",
+    "content-hash": "4f21c2369f3fda27d7d55fa3c6840773",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -951,12 +951,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-core.git",
-                "reference": "bccbf4bf39f6d6cc288c40c26f17914b0f6e9c78"
+                "reference": "0475257a6074cc0bf565b4cb651ef5b3ac1a575e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/bccbf4bf39f6d6cc288c40c26f17914b0f6e9c78",
-                "reference": "bccbf4bf39f6d6cc288c40c26f17914b0f6e9c78",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/0475257a6074cc0bf565b4cb651ef5b3ac1a575e",
+                "reference": "0475257a6074cc0bf565b4cb651ef5b3ac1a575e",
                 "shasum": ""
             },
             "require": {
@@ -1004,7 +1004,7 @@
                 "paas",
                 "rest"
             ],
-            "time": "2016-05-26 16:36:05"
+            "time": "2016-05-27 15:56:21"
         },
         {
             "name": "dreamfactory/df-couchdb",
@@ -2312,16 +2312,16 @@
         },
         {
             "name": "laravel/socialite",
-            "version": "v2.0.16",
+            "version": "v2.0.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/socialite.git",
-                "reference": "f3e3bdf9368b96b82635cb88ab02944b7d036669"
+                "reference": "81d39cde2226f7548d8d1aa99405278c87e50737"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/socialite/zipball/f3e3bdf9368b96b82635cb88ab02944b7d036669",
-                "reference": "f3e3bdf9368b96b82635cb88ab02944b7d036669",
+                "url": "https://api.github.com/repos/laravel/socialite/zipball/81d39cde2226f7548d8d1aa99405278c87e50737",
+                "reference": "81d39cde2226f7548d8d1aa99405278c87e50737",
                 "shasum": ""
             },
             "require": {
@@ -2362,7 +2362,7 @@
                 "laravel",
                 "oauth"
             ],
-            "time": "2016-05-25 12:58:08"
+            "time": "2016-05-27 12:42:05"
         },
         {
             "name": "league/flysystem",
@@ -3093,6 +3093,56 @@
                 "x509"
             ],
             "time": "2015-01-28 21:50:33"
+        },
+        {
+            "name": "predis/predis",
+            "version": "v1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nrk/predis.git",
+                "reference": "84060b9034d756b4d79641667d7f9efe1aeb8e04"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nrk/predis/zipball/84060b9034d756b4d79641667d7f9efe1aeb8e04",
+                "reference": "84060b9034d756b4d79641667d7f9efe1aeb8e04",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0"
+            },
+            "suggest": {
+                "ext-curl": "Allows access to Webdis when paired with phpiredis",
+                "ext-phpiredis": "Allows faster serialization and deserialization of the Redis protocol"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Predis\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniele Alessandri",
+                    "email": "suppakilla@gmail.com",
+                    "homepage": "http://clorophilla.net"
+                }
+            ],
+            "description": "Flexible and feature-complete PHP client library for Redis",
+            "homepage": "http://github.com/nrk/predis",
+            "keywords": [
+                "nosql",
+                "predis",
+                "redis"
+            ],
+            "time": "2015-07-30 18:34:15"
         },
         {
             "name": "psr/http-message",
