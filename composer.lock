@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "babdd9869dc34d454595029ba608a042",
-    "content-hash": "4f21c2369f3fda27d7d55fa3c6840773",
+    "hash": "4050440601ffffc727d4166a2f50c03d",
+    "content-hash": "7d5df7a84cdaee2ae24ed4522eff0503",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -784,16 +784,16 @@
         },
         {
             "name": "dreamfactory/df-admin-app",
-            "version": "dev-develop",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-admin-app.git",
-                "reference": "d4bc6e9ab5218d7aa4bfec8f8815c1e64acc9583"
+                "reference": "6339888cacca96edaffdc0cccc0ee94409b0bf39"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-admin-app/zipball/d4bc6e9ab5218d7aa4bfec8f8815c1e64acc9583",
-                "reference": "d4bc6e9ab5218d7aa4bfec8f8815c1e64acc9583",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-admin-app/zipball/6339888cacca96edaffdc0cccc0ee94409b0bf39",
+                "reference": "6339888cacca96edaffdc0cccc0ee94409b0bf39",
                 "shasum": ""
             },
             "require": {
@@ -829,30 +829,30 @@
                 "remote web services",
                 "rest"
             ],
-            "time": "2016-05-27 05:48:00"
+            "time": "2016-05-27 21:13:22"
         },
         {
             "name": "dreamfactory/df-aws",
-            "version": "dev-develop",
+            "version": "0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-aws.git",
-                "reference": "0e5b648707ecc61afc3431886addab1be53be19f"
+                "reference": "4a64c4d6cff39ca4804bd8db4a63426a69b64817"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-aws/zipball/0e5b648707ecc61afc3431886addab1be53be19f",
-                "reference": "0e5b648707ecc61afc3431886addab1be53be19f",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-aws/zipball/4a64c4d6cff39ca4804bd8db4a63426a69b64817",
+                "reference": "4a64c4d6cff39ca4804bd8db4a63426a69b64817",
                 "shasum": ""
             },
             "require": {
                 "aws/aws-sdk-php": "3.*",
-                "dreamfactory/df-core": "~0.2.0"
+                "dreamfactory/df-core": "~0.3.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "0.2.x-dev"
+                    "dev-develop": "0.3.x-dev"
                 }
             },
             "autoload": {
@@ -888,30 +888,30 @@
                 "rest",
                 "s3"
             ],
-            "time": "2016-05-09 20:29:27"
+            "time": "2016-05-27 21:21:34"
         },
         {
             "name": "dreamfactory/df-azure",
-            "version": "dev-develop",
+            "version": "0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-azure.git",
-                "reference": "ff72325063e9ae47c587d569a3af770083ad7648"
+                "reference": "799b5cc92835e24eb5ad40b5bac82e961bb23eea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-azure/zipball/ff72325063e9ae47c587d569a3af770083ad7648",
-                "reference": "ff72325063e9ae47c587d569a3af770083ad7648",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-azure/zipball/799b5cc92835e24eb5ad40b5bac82e961bb23eea",
+                "reference": "799b5cc92835e24eb5ad40b5bac82e961bb23eea",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "~0.2.0",
+                "dreamfactory/df-core": "~0.3.0",
                 "microsoft/azure-storage": "0.10.*"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "0.2.x-dev"
+                    "dev-develop": "0.3.x-dev"
                 }
             },
             "autoload": {
@@ -943,20 +943,20 @@
                 "dsp",
                 "rest"
             ],
-            "time": "2016-05-26 16:36:36"
+            "time": "2016-05-27 21:23:37"
         },
         {
             "name": "dreamfactory/df-core",
-            "version": "dev-develop",
+            "version": "0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-core.git",
-                "reference": "0475257a6074cc0bf565b4cb651ef5b3ac1a575e"
+                "reference": "c5057d04fc982fce7ce00b4be2c33b17a0fb7a91"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/0475257a6074cc0bf565b4cb651ef5b3ac1a575e",
-                "reference": "0475257a6074cc0bf565b4cb651ef5b3ac1a575e",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/c5057d04fc982fce7ce00b4be2c33b17a0fb7a91",
+                "reference": "c5057d04fc982fce7ce00b4be2c33b17a0fb7a91",
                 "shasum": ""
             },
             "require": {
@@ -972,7 +972,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "0.2.x-dev"
+                    "dev-develop": "0.3.x-dev"
                 }
             },
             "autoload": {
@@ -1004,30 +1004,30 @@
                 "paas",
                 "rest"
             ],
-            "time": "2016-05-27 15:56:21"
+            "time": "2016-05-27 20:42:40"
         },
         {
             "name": "dreamfactory/df-couchdb",
-            "version": "dev-develop",
+            "version": "0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-couchdb.git",
-                "reference": "4dbcad0097abacbfb0bc4307645f52bc750adfde"
+                "reference": "f90b4cdb1d1c83b0e030b1e114126e8176cf69c4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-couchdb/zipball/4dbcad0097abacbfb0bc4307645f52bc750adfde",
-                "reference": "4dbcad0097abacbfb0bc4307645f52bc750adfde",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-couchdb/zipball/f90b4cdb1d1c83b0e030b1e114126e8176cf69c4",
+                "reference": "f90b4cdb1d1c83b0e030b1e114126e8176cf69c4",
                 "shasum": ""
             },
             "require": {
                 "dready92/php-on-couch": "*",
-                "dreamfactory/df-core": "~0.2.0"
+                "dreamfactory/df-core": "~0.3.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "0.2.x-dev"
+                    "dev-develop": "0.3.x-dev"
                 }
             },
             "autoload": {
@@ -1040,10 +1040,6 @@
                 "Apache-2.0"
             ],
             "authors": [
-                {
-                    "name": "Jerry Ablan",
-                    "email": "jerryablan@dreamfactory.com"
-                },
                 {
                     "name": "Lee Hicks",
                     "email": "leehicks@dreamfactory.com"
@@ -1064,20 +1060,20 @@
                 "nosql",
                 "rest"
             ],
-            "time": "2016-05-09 20:30:07"
+            "time": "2016-05-27 23:10:18"
         },
         {
             "name": "dreamfactory/df-filemanager-app",
-            "version": "dev-develop",
+            "version": "0.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-filemanager-app.git",
-                "reference": "16965cba8ba716da4a9ed5257e61972b6a7c1f1c"
+                "reference": "ef8b240ea9aad44184701fb7566d2c0877462d2f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-filemanager-app/zipball/16965cba8ba716da4a9ed5257e61972b6a7c1f1c",
-                "reference": "16965cba8ba716da4a9ed5257e61972b6a7c1f1c",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-filemanager-app/zipball/ef8b240ea9aad44184701fb7566d2c0877462d2f",
+                "reference": "ef8b240ea9aad44184701fb7566d2c0877462d2f",
                 "shasum": ""
             },
             "require": {
@@ -1109,25 +1105,24 @@
                 "file manager",
                 "rest"
             ],
-            "time": "2016-05-04 14:16:56"
+            "time": "2016-03-15 13:37:33"
         },
         {
             "name": "dreamfactory/df-managed",
-            "version": "dev-develop",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-managed.git",
-                "reference": "f9811e2a4d09289995f765a284229578dbd3800d"
+                "reference": "4328f5d215bf3899c6f1276ffd63bba44cd1be7d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-managed/zipball/f9811e2a4d09289995f765a284229578dbd3800d",
-                "reference": "f9811e2a4d09289995f765a284229578dbd3800d",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-managed/zipball/4328f5d215bf3899c6f1276ffd63bba44cd1be7d",
+                "reference": "4328f5d215bf3899c6f1276ffd63bba44cd1be7d",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "0.2.*",
-                "dreamfactory/php-utils": "1.1.*"
+                "dreamfactory/df-core": "0.3.*"
             },
             "require-dev": {
                 "laravel/framework": "5.1.*",
@@ -1136,7 +1131,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "2.0.x-dev"
+                    "dev-develop": "2.1.x-dev"
                 }
             },
             "autoload": {
@@ -1152,6 +1147,10 @@
                 {
                     "name": "Jerry Ablan",
                     "email": "jerryablan@dreamfactory.com"
+                },
+                {
+                    "name": "Lee Hicks",
+                    "email": "leehicks@dreamfactory.com"
                 },
                 {
                     "name": "Arif Islam",
@@ -1170,30 +1169,30 @@
                 "manager",
                 "remote"
             ],
-            "time": "2016-05-23 13:21:59"
+            "time": "2016-05-28 01:05:41"
         },
         {
             "name": "dreamfactory/df-mongodb",
-            "version": "dev-develop",
+            "version": "0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-mongodb.git",
-                "reference": "14353134cf1ac5e5d73298f41a37c23a56578a33"
+                "reference": "9348929d3a8ecccf0a1763902bd1b97f30241f07"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-mongodb/zipball/14353134cf1ac5e5d73298f41a37c23a56578a33",
-                "reference": "14353134cf1ac5e5d73298f41a37c23a56578a33",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-mongodb/zipball/9348929d3a8ecccf0a1763902bd1b97f30241f07",
+                "reference": "9348929d3a8ecccf0a1763902bd1b97f30241f07",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "~0.2.8",
+                "dreamfactory/df-core": "~0.3.0",
                 "jenssegers/mongodb": "3.0.*"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "0.2.x-dev"
+                    "dev-develop": "0.3.x-dev"
                 }
             },
             "autoload": {
@@ -1206,10 +1205,6 @@
                 "Apache-2.0"
             ],
             "authors": [
-                {
-                    "name": "Jerry Ablan",
-                    "email": "jerryablan@dreamfactory.com"
-                },
                 {
                     "name": "Lee Hicks",
                     "email": "leehicks@dreamfactory.com"
@@ -1230,31 +1225,31 @@
                 "nosql",
                 "rest"
             ],
-            "time": "2016-05-23 21:02:13"
+            "time": "2016-05-28 00:00:56"
         },
         {
             "name": "dreamfactory/df-oauth",
-            "version": "dev-develop",
+            "version": "0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-oauth.git",
-                "reference": "9c48511334efc2a485e833685abaef49cf6d84a4"
+                "reference": "2b69f42a425b084a9c950c66d444e21156bfdf67"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-oauth/zipball/9c48511334efc2a485e833685abaef49cf6d84a4",
-                "reference": "9c48511334efc2a485e833685abaef49cf6d84a4",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-oauth/zipball/2b69f42a425b084a9c950c66d444e21156bfdf67",
+                "reference": "2b69f42a425b084a9c950c66d444e21156bfdf67",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "~0.2.0",
-                "dreamfactory/df-user": "~0.2.0",
+                "dreamfactory/df-core": "~0.3.0",
+                "dreamfactory/df-user": "~0.3.0",
                 "laravel/socialite": "~2.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "0.2.x-dev"
+                    "dev-develop": "0.3.x-dev"
                 }
             },
             "autoload": {
@@ -1284,30 +1279,30 @@
                 "oauth",
                 "rest"
             ],
-            "time": "2016-05-09 20:30:52"
+            "time": "2016-05-28 00:47:32"
         },
         {
             "name": "dreamfactory/df-rackspace",
-            "version": "dev-develop",
+            "version": "0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-rackspace.git",
-                "reference": "f5c6c188187dd59ab7441ce88ce381171c46cf63"
+                "reference": "e0e2c6474210f29e4e841882ba6daadee2df5461"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-rackspace/zipball/f5c6c188187dd59ab7441ce88ce381171c46cf63",
-                "reference": "f5c6c188187dd59ab7441ce88ce381171c46cf63",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-rackspace/zipball/e0e2c6474210f29e4e841882ba6daadee2df5461",
+                "reference": "e0e2c6474210f29e4e841882ba6daadee2df5461",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "~0.2.0",
+                "dreamfactory/df-core": "~0.3.0",
                 "rackspace/php-opencloud": "~1.5.0@stable"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "0.2.x-dev"
+                    "dev-develop": "0.3.x-dev"
                 }
             },
             "autoload": {
@@ -1320,10 +1315,6 @@
                 "Apache-2.0"
             ],
             "authors": [
-                {
-                    "name": "Jerry Ablan",
-                    "email": "jerryablan@dreamfactory.com"
-                },
                 {
                     "name": "Lee Hicks",
                     "email": "leehicks@dreamfactory.com"
@@ -1343,29 +1334,29 @@
                 "rest",
                 "storage blob"
             ],
-            "time": "2016-05-09 20:32:30"
+            "time": "2016-05-28 00:54:29"
         },
         {
             "name": "dreamfactory/df-rws",
-            "version": "dev-develop",
+            "version": "0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-rws.git",
-                "reference": "a013eaa8166369a884f5ff0f2850f5679baf6301"
+                "reference": "37f92c7321657cc929df0ea1cb869f25774d22d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-rws/zipball/a013eaa8166369a884f5ff0f2850f5679baf6301",
-                "reference": "a013eaa8166369a884f5ff0f2850f5679baf6301",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-rws/zipball/37f92c7321657cc929df0ea1cb869f25774d22d4",
+                "reference": "37f92c7321657cc929df0ea1cb869f25774d22d4",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "~0.2.0"
+                "dreamfactory/df-core": "~0.3.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "0.2.x-dev"
+                    "dev-develop": "0.3.x-dev"
                 }
             },
             "autoload": {
@@ -1378,10 +1369,6 @@
                 "Apache-2.0"
             ],
             "authors": [
-                {
-                    "name": "Jerry Ablan",
-                    "email": "jerryablan@dreamfactory.com"
-                },
                 {
                     "name": "Lee Hicks",
                     "email": "leehicks@dreamfactory.com"
@@ -1400,30 +1387,29 @@
                 "rest",
                 "web"
             ],
-            "time": "2016-05-19 15:35:57"
+            "time": "2016-05-28 00:51:38"
         },
         {
             "name": "dreamfactory/df-sqldb",
-            "version": "dev-develop",
+            "version": "0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-sqldb.git",
-                "reference": "225cb32a052c8d0f6fa6a4378b18534f2ad8ee51"
+                "reference": "651beea4dab92bb35bc46d295e6a314a751f5987"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-sqldb/zipball/225cb32a052c8d0f6fa6a4378b18534f2ad8ee51",
-                "reference": "225cb32a052c8d0f6fa6a4378b18534f2ad8ee51",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-sqldb/zipball/651beea4dab92bb35bc46d295e6a314a751f5987",
+                "reference": "651beea4dab92bb35bc46d295e6a314a751f5987",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "~0.2.8",
-                "dreamfactory/php-utils": "1.1.*"
+                "dreamfactory/df-core": "~0.3.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "0.2.x-dev"
+                    "dev-develop": "0.3.x-dev"
                 }
             },
             "autoload": {
@@ -1436,10 +1422,6 @@
                 "Apache-2.0"
             ],
             "authors": [
-                {
-                    "name": "Jerry Ablan",
-                    "email": "jerryablan@dreamfactory.com"
-                },
                 {
                     "name": "Lee Hicks",
                     "email": "leehicks@dreamfactory.com"
@@ -1464,20 +1446,20 @@
                 "sql",
                 "sqlserver"
             ],
-            "time": "2016-05-25 19:13:59"
+            "time": "2016-05-28 00:08:20"
         },
         {
             "name": "dreamfactory/df-swagger-ui",
-            "version": "dev-develop",
+            "version": "0.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-swagger-ui.git",
-                "reference": "24320684ed7db366f1178ddd76c16f2153e68b0c"
+                "reference": "f54da39dc93703133d3c212d55fa469f0c379ba1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-swagger-ui/zipball/24320684ed7db366f1178ddd76c16f2153e68b0c",
-                "reference": "24320684ed7db366f1178ddd76c16f2153e68b0c",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-swagger-ui/zipball/f54da39dc93703133d3c212d55fa469f0c379ba1",
+                "reference": "f54da39dc93703133d3c212d55fa469f0c379ba1",
                 "shasum": ""
             },
             "require": {
@@ -1509,29 +1491,29 @@
                 "rest",
                 "swagger"
             ],
-            "time": "2016-03-08 16:28:11"
+            "time": "2016-03-08 16:28:58"
         },
         {
             "name": "dreamfactory/df-user",
-            "version": "dev-develop",
+            "version": "0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-user.git",
-                "reference": "8d1aecb03e9630ef48c6fded61cd583825ce9cf1"
+                "reference": "1dbff2654950fbc40d4e7759cf581a6f53b79059"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-user/zipball/8d1aecb03e9630ef48c6fded61cd583825ce9cf1",
-                "reference": "8d1aecb03e9630ef48c6fded61cd583825ce9cf1",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-user/zipball/1dbff2654950fbc40d4e7759cf581a6f53b79059",
+                "reference": "1dbff2654950fbc40d4e7759cf581a6f53b79059",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "~0.2.0"
+                "dreamfactory/df-core": "~0.3.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "0.2.x-dev"
+                    "dev-develop": "0.3.x-dev"
                 }
             },
             "autoload": {
@@ -1544,10 +1526,6 @@
                 "Apache-2.0"
             ],
             "authors": [
-                {
-                    "name": "Jerry Ablan",
-                    "email": "jerryablan@dreamfactory.com"
-                },
                 {
                     "name": "Lee Hicks",
                     "email": "leehicks@dreamfactory.com"
@@ -1565,7 +1543,7 @@
                 "dsp",
                 "user"
             ],
-            "time": "2016-05-09 20:33:06"
+            "time": "2016-05-28 00:46:17"
         },
         {
             "name": "dreamfactory/installer",
@@ -5954,109 +5932,9 @@
             "time": "2016-03-04 07:55:57"
         }
     ],
-    "aliases": [
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-managed"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-admin-app"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-filemanager-app"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-swagger-ui"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-core"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-aws"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-azure"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-rackspace"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-sqldb"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-mongodb"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-couchdb"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-rws"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-user"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-oauth"
-        }
-    ],
+    "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "dreamfactory/df-managed": 20,
-        "dreamfactory/df-admin-app": 20,
-        "dreamfactory/df-filemanager-app": 20,
-        "dreamfactory/df-swagger-ui": 20,
-        "dreamfactory/df-core": 20,
-        "dreamfactory/df-aws": 20,
-        "dreamfactory/df-azure": 20,
-        "dreamfactory/df-rackspace": 20,
-        "dreamfactory/df-sqldb": 20,
-        "dreamfactory/df-mongodb": 20,
-        "dreamfactory/df-couchdb": 20,
-        "dreamfactory/df-rws": 20,
-        "dreamfactory/df-user": 20,
-        "dreamfactory/df-oauth": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": [],

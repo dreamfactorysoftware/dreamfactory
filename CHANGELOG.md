@@ -9,6 +9,19 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+## [2.2.0] - 2016-05-27
+- MAJOR: Licensing for AD/LDAP, SOAP, Salesforce, MS SQL Server, SAP SQL Anywhere, and Oracle services has changed, and have been removed from the default installation. Please contact support@dreamfactory.com for further information.
+
+### Added
+- New service type migration command for pre-2.2 database upgrade, run after migration and seeding.
+- Including predis/predis package by default
+- Including df-azure using microsoftazure/storage by default
+- Added laravel/homestead support for php5.6 and php7
+- Added locales.conf for running sqlsrv as system db
+
+### Fixed
+- Auto login after creating first admin
+
 ## [2.1.2] - 2016-04-25
 ### Added
 * Redesigned Packaging feature, including new system/package API and artisan commands for import and export.
@@ -24,8 +37,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Cleanup service providers 
 - Handling file stream output using StreamedResponse 
 
-### Fixed
-
 ## [2.1.1] - 2016-03-14
 ### Added
 - More env config option in setup command
@@ -35,8 +46,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Upgraded Laravel framework to 5.2
 - File Manager app is now standalone composer pulled app
-
-### Fixed
 
 ## [2.1.0] - 2016-01-29
 
