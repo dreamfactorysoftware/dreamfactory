@@ -4,9 +4,8 @@ namespace DreamFactory\Console\Commands;
 
 use DreamFactory\Core\Enums\DataFormats;
 use DreamFactory\Core\Utility\FileUtilities;
-use DreamFactory\Core\Utility\ServiceHandler;
-use DreamFactory\Library\Utility\Enums\Verbs;
 use Illuminate\Console\Command;
+use ServiceManager;
 
 class Request extends Command
 {
@@ -27,7 +26,6 @@ class Request extends Command
     /**
      * Create a new command instance.
      *
-     * @return void
      */
     public function __construct()
     {
@@ -58,7 +56,7 @@ class Request extends Command
             $verb = strtoupper($this->option('verb'));
             $service = $this->option('service');
             $resource = $this->option('resource');
-            $result = ServiceHandler::handleRequest($verb, $service, $resource, [], $data, $format);
+            $result = ServiceManager::handleRequest($service, $verb, $resource, [], [], $data, $format);
             $this->info(print_r($result, true));
 
             $this->info('Request complete!');

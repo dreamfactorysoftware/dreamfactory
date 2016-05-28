@@ -2,6 +2,7 @@
 .vagrant
 vendor
 .idea
+/public/pma
 /public/dreamfactory
 /public/filemanager
 /public/df-swagger-ui
@@ -9,6 +10,7 @@ vendor
 composer.phar
 _ide_helper.php
 .env
+.env-backup-homestead
 phpunit.xml
 .DS_Store
 Thumbs.db
@@ -17,6 +19,9 @@ Thumbs.db
 /bootstrap/cache/*
 .dfe.cluster.json
 Homestead.yaml
-Vagrantfile
 hhvm.hdf
 www.pid
+afterScriptLog.txt
+composer.json-*
+.env-bak
+node_modules
