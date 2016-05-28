@@ -10,7 +10,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 ## [2.2.0] - 2016-05-27
-- MAJOR: Licensing for AD/LDAP, SOAP, Salesforce, MS SQL Server, SAP SQL Anywhere, and Oracle services has changed, and have been removed from the default installation. Please contact support@dreamfactory.com for further information.
+### Changed
+The following services are now under a commercial license and have been removed from the default installation. Please contact support@dreamfactory.com for further information.
+
+- AD/LDAP, SOAP, Salesforce, MS SQL Server, SAP SQL Anywhere, and Oracle.
 
 ### Added
 - New service type migration command for pre-2.2 database upgrade, run after migration and seeding.
@@ -88,7 +91,10 @@ For older installs, see DF_CIPHER in .env or .env-dist for more details.
 ## 2.0.0 - 2015-10-27
 First official release of the new open-source DreamFactory project.
 
-[Unreleased]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.1.0...HEAD
+[Unreleased]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.2.0...HEAD
+[2.2.0]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.1.2...2.2.0
+[2.1.2]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.1.1...2.1.2
+[2.1.1]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.1.0...2.1.1
 [2.1.0]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.0.4...2.1.0
 [2.0.4]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.0.3...2.0.4
 [2.0.3]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.0.2...2.0.3
