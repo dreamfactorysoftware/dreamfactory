@@ -14,7 +14,6 @@ use DreamFactory\Core\Models\App;
 use DreamFactory\Core\Exceptions\UnauthorizedException;
 use DreamFactory\Core\Models\User;
 use DreamFactory\Core\Utility\ResponseFactory;
-use DreamFactory\Library\Utility\ArrayUtils;
 
 class AuthCheck
 {
@@ -97,7 +96,7 @@ class AuthCheck
 
         $token = null;
         $headers = getallheaders();
-        $authHeader = ArrayUtils::get($headers, 'Authorization');
+        $authHeader = array_get($headers, 'Authorization');
         if (strpos($authHeader, 'Bearer') !== false) {
             $token = substr($authHeader, 7);
         }

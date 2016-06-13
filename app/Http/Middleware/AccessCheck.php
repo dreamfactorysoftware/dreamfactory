@@ -11,7 +11,6 @@ use DreamFactory\Core\Models\Service;
 use DreamFactory\Core\User\Services\User;
 use DreamFactory\Core\Utility\ResponseFactory;
 use DreamFactory\Core\Utility\Session;
-use DreamFactory\Library\Utility\ArrayUtils;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
 
@@ -113,9 +112,9 @@ class AccessCheck
         $action = VerbsMask::toNumeric($request->getMethod());
 
         foreach (static::$exceptions as $exception) {
-            if (($action & ArrayUtils::get($exception, 'verb_mask')) &&
-                $service === ArrayUtils::get($exception, 'service') &&
-                $resource === ArrayUtils::get($exception, 'resource')
+            if (($action & array_get($exception, 'verb_mask')) &&
+                $service === array_get($exception, 'service') &&
+                $resource === array_get($exception, 'resource')
             ) {
                 return true;
             }
