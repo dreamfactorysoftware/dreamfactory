@@ -4,6 +4,8 @@
 # add any commands you wish to this file and they will
 # be run after the Homestead machine is provisioned.
 
+# This script is compatible with "laravel/homestead": "^3.0"
+
 # Change OUTPUT to /dev/stdout to see shell output while provisioning.
 OUTPUT=/dev/null
 
