@@ -9,8 +9,12 @@
 # Change OUTPUT to /dev/stdout to see shell output while provisioning.
 OUTPUT=/dev/null
 
+echo ">>> Beginning DreamFactory provisioning..."
 echo ">>> Updating apt-get"
 sudo apt-get -qq update
+
+echo ">>> Upgrading PHP 7.0 and dependencies"
+sudo DEBIAN_FRONTEND=noninteractive apt-get -qq -y upgrade php7.0-fpm php7.0-cli php7.0-common php7.0-dev > $OUTPUT 2>&1
 
 echo ">>> Installing php ldap extension"
 sudo apt-get install -qq -y php7.0-ldap > $OUTPUT 2>&1
@@ -18,7 +22,7 @@ sudo apt-get install -qq -y php7.0-ldap > $OUTPUT 2>&1
 echo ">>> Installing php sybase extension"
 sudo apt-get install -qq -y php7.0-sybase > $OUTPUT 2>&1
 
-echo ">>> Installing mongodb driver"
+echo ">>> Installing php mongodb extension"
 sudo apt-get install -qq -y openssl pkg-config > $OUTPUT 2>&1
 sudo pecl install mongodb > $OUTPUT 2>&1
 sudo echo "extension=mongodb.so" > /etc/php/7.0/mods-available/mongodb.ini
@@ -27,7 +31,7 @@ sudo phpenmod mongodb
 echo ">>> Installing phpMyAdmin (http://host/pma)"
 composer create-project phpmyadmin/phpmyadmin --repository-url=https://www.phpmyadmin.net/packages.json --no-dev > $OUTPUT 2>&1
 cd */.
-sudo ln -s ../phpmyadmin/ public/pma > $OUTPUT 2>&1
+ln -s ~/phpmyadmin/ public/pma > $OUTPUT 2>&1
 
 echo ">>> Setting up workbench/repos/df-admin-app with bower and grunt"
 echo ">>> Installing bower"
@@ -61,7 +65,10 @@ sudo pip install bunch > $OUTPUT 2>&1
 echo ">>> Installing Node.js lodash"
 sudo npm install lodash > $OUTPUT 2>&1
 
+echo ">>> Configuring XDebug"
+printf "xdebug.remote_enable=1\nxdebug.remote_connect_back=1\nxdebug.max_nesting_level=512" | sudo tee -a /etc/php/7.0/mods-available/xdebug.ini > $OUTPUT 2>&1
+
 sudo service php7.0-fpm restart
 sudo service nginx restart
 
-echo ">>> Setup complete. Launch your instance."
+echo ">>> Provisioning complete. Launch your instance."
