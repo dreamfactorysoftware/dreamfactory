@@ -29,16 +29,15 @@ sudo echo "extension=mongodb.so" > /etc/php/7.0/mods-available/mongodb.ini
 sudo phpenmod mongodb
 
 echo ">>> Installing phpMyAdmin (http://host/pma)"
-composer create-project phpmyadmin/phpmyadmin --repository-url=https://www.phpmyadmin.net/packages.json --no-dev > $OUTPUT 2>&1
 cd */.
-ln -s ~/phpmyadmin/ public/pma > $OUTPUT 2>&1
+composer create-project phpmyadmin/phpmyadmin --repository-url=https://www.phpmyadmin.net/packages.json --no-dev public/pma > $OUTPUT 2>&1
 
 echo ">>> Setting up workbench/repos/df-admin-app with bower and grunt"
 echo ">>> Installing bower"
 sudo npm install -g bower > $OUTPUT 2>&1
 echo ">>> Installing grunt-cli"
 sudo npm install -g grunt-cli > $OUTPUT 2>&1
-mkdir -p workbench/repos
+mkdir -p workbench/repos > $OUTPUT 2>&1
 cd workbench/repos
 git clone https://github.com/dreamfactorysoftware/df-admin-app.git > $OUTPUT 2>&1
 cd df-admin-app
@@ -51,8 +50,8 @@ echo ">>> Setting up dreamfactory .env with homestead mysql database"
 sudo php artisan cache:clear
 sudo php artisan config:clear
 sudo php artisan clear-compiled
-cp .env .env-backup-homestead
-rm .env
+cp .env .env-backup-homestead > $OUTPUT 2>&1
+rm .env > $OUTPUT 2>&1
 php artisan dreamfactory:setup --db_driver=mysql --db_host=127.0.0.1 --db_database=homestead --db_username=homestead --db_password=secret --cache_driver=file > $OUTPUT 2>&1
 
 cd ../
