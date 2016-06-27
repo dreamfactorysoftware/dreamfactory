@@ -161,10 +161,16 @@ class AuthCheck
                     } catch (TokenExpiredException $e) {
                         JWTUtilities::clearAllExpiredTokenMaps();
                         Session::set('token_expired', true);
-                        Session::set('token_expired_msg', $e->getMessage());
+                        Session::set(
+                            'token_expired_msg', $e->getMessage() .
+                            ': Session expired. Please refresh your token (if still within refresh window) or re-login.'
+                        );
                     } catch (TokenBlacklistedException $e) {
                         Session::set('token_blacklisted', true);
-                        Session::set('token_blacklisted_msg', $e->getMessage());
+                        Session::set(
+                            'token_blacklisted_msg',
+                            $e->getMessage() . ': Session terminated. Please re-login.'
+                        );
                     } catch (TokenInvalidException $e) {
                         Session::set('token_invalid', true);
                         Session::set('token_invalid_msg', 'Invalid token: ' . $e->getMessage());
