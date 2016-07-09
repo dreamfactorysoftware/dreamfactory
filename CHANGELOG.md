@@ -9,6 +9,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+## [2.2.1] - 2016-07-08
+### Changed
+- Using latest homestead with php7
+- Updating vagrant provisioning script
+- Updating splash screen version number
+- DF-764 Updating API error messages
+
+### Fixed
+- DF-662 Fixing file streaming using file service over CORS
+
 ## [2.2.0] - 2016-05-27
 ### Changed
 The following services are now under a commercial license and have been removed from the default installation. Please contact support@dreamfactory.com for further information.
@@ -27,7 +37,7 @@ The following services are now under a commercial license and have been removed 
 
 ## [2.1.2] - 2016-04-25
 ### Added
-* Redesigned Packaging feature, including new system/package API and artisan commands for import and export.
+- Redesigned Packaging feature, including new system/package API and artisan commands for import and export.
 - Added Redis and Memcached config options to dreamfactory:setup command 
 - Added Memcached config values in environment 
 - Updated dreamfactory:import-pkg command to use new package format
@@ -91,7 +101,8 @@ For older installs, see DF_CIPHER in .env or .env-dist for more details.
 ## 2.0.0 - 2015-10-27
 First official release of the new open-source DreamFactory project.
 
-[Unreleased]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.2.0...HEAD
+[Unreleased]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.2.1...HEAD
+[2.2.1]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.2.0...2.2.1
 [2.2.0]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.1.2...2.2.0
 [2.1.2]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.1.1...2.1.2
 [2.1.1]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.1.0...2.1.1
