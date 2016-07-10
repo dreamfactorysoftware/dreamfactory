@@ -11,6 +11,7 @@ use Log;
 use Request;
 use ServiceManager;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 /**
@@ -244,6 +245,10 @@ class RestController extends Controller
         if ($response instanceof RedirectResponse) {
             \Log::info('[RESPONSE] Redirect', ['Status Code' => $response->getStatusCode()]);
             \Log::debug('[RESPONSE]', ['Target URL' => $response->getTargetUrl()]);
+
+            return $response;
+        } elseif ($response instanceof StreamedResponse) {
+            \Log::info('[RESPONSE] Stream', ['Status Code' => $response->getStatusCode()]);
 
             return $response;
         }

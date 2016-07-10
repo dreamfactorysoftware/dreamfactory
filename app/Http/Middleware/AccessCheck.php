@@ -11,7 +11,6 @@ use DreamFactory\Core\Models\Service;
 use DreamFactory\Core\User\Services\User;
 use DreamFactory\Core\Utility\ResponseFactory;
 use DreamFactory\Core\Utility\Session;
-use DreamFactory\Library\Utility\ArrayUtils;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
 
@@ -74,6 +73,7 @@ class AccessCheck
             } else {
                 $apiKey = Session::getApiKey();
                 $token = Session::getSessionToken();
+                $roleId = Session::getRoleId();
 
                 if (empty($apiKey) && empty($token)) {
                     throw new BadRequestException('Bad request. No token or api key provided.');
@@ -83,12 +83,26 @@ class AccessCheck
                     throw new ForbiddenException(Session::get('token_blacklisted_msg'));
                 } elseif (true === Session::get('token_invalid')) {
                     throw new BadRequestException(Session::get('token_invalid_msg'), 401);
-                } else if (!Role::getCachedInfo(Session::getRoleId(), 'is_active')) {
-                    throw new ForbiddenException("Role is not active.");
+                } elseif (empty($roleId)) {
+                    if (empty($apiKey)) {
+                        throw new BadRequestException(
+                            "No API Key provided. Please provide a valid API Key using X-Dreamfactory-API-Key request header or 'api_key' url query parameter."
+                        );
+                    } elseif (empty($token)) {
+                        throw new BadRequestException(
+                            "No session token (JWT) provided. Please provide a valid JWT using X-DreamFactory-Session-Token request header or 'session_token' url query parameter."
+                        );
+                    } else {
+                        throw new ForbiddenException(
+                            "Role not found. A Role may not be assigned to you for your App."
+                        );
+                    }
+                } elseif (!Role::getCachedInfo($roleId, 'is_active')) {
+                    throw new ForbiddenException("Access Forbidden. Role assigned to you for you App or the default role of your App is not active.");
                 } elseif (!Session::isAuthenticated()) {
-                    throw new UnauthorizedException('Unauthorized.');
+                    throw new UnauthorizedException('Unauthorized. User is not authenticated.');
                 } else {
-                    throw new ForbiddenException('Access Forbidden.');
+                    throw new ForbiddenException('Access Forbidden. You do not have enough privileges to access this resource.');
                 }
             }
         } catch (\Exception $e) {
@@ -113,9 +127,9 @@ class AccessCheck
         $action = VerbsMask::toNumeric($request->getMethod());
 
         foreach (static::$exceptions as $exception) {
-            if (($action & ArrayUtils::get($exception, 'verb_mask')) &&
-                $service === ArrayUtils::get($exception, 'service') &&
-                $resource === ArrayUtils::get($exception, 'resource')
+            if (($action & array_get($exception, 'verb_mask')) &&
+                $service === array_get($exception, 'service') &&
+                $resource === array_get($exception, 'resource')
             ) {
                 return true;
             }

@@ -4,7 +4,6 @@ namespace DreamFactory\Console\Commands;
 
 use DreamFactory\Core\Models\User;
 use DreamFactory\Core\Utility\FileUtilities;
-use DreamFactory\Library\Utility\ArrayUtils;
 use Illuminate\Console\Command;
 
 class Setup extends Command

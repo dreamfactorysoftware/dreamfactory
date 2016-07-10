@@ -44,7 +44,7 @@
     <div class="container-fluid container-inner">
         <div class="alert center">
             <div id="loadingFrame" class="alert center alert-warning" style="margin-top:40px; width: 500px">
-                <span style="font-size: 18pt;: center">Hello and Welcome to DreamFactory 2.0!</span><br><br>
+                <span style="font-size: 18pt;: center">Hello and Welcome to DreamFactory v{{$version}}!</span><br><br>
                 <div id="loadingMsg" style="display: none;">
                     You will be up and ready in just few seconds.
                     Please wait while we setup and configure your DreamFactory instance.
