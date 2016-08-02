@@ -54,7 +54,7 @@ class StorageController extends Controller
 
                 $response = new StreamedResponse();
                 $response->setCallback(function () use ($service, $path){
-                    $service->streamFile(null, $path);
+                    $service->streamFile($service->getContainerId(), $path);
                 });
 
                 return $response;
