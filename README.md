@@ -69,7 +69,7 @@ seed the default services, and will prompt you to create your admin user account
     ```sh
     # Example:
     
-    sudo chown -R {www user}:{your user group} storage/ bootstrap/cache/<br>
+    sudo chown -R {www user}:{your user group} storage/ bootstrap/cache/
     sudo chmod -R 2775 storage/ bootstrap/cache/
     ```
 
@@ -111,7 +111,7 @@ To connect to a different Database Server after initial setup...
     ```sh
     # Example:
     
-    sudo chown -R {www user}:{your user group} storage/ bootstrap/cache/<br>
+    sudo chown -R {www user}:{your user group} storage/ bootstrap/cache/
     sudo chmod -R 2775 storage/ bootstrap/cache/
     ```
 
