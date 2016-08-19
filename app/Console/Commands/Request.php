@@ -57,7 +57,11 @@ class Request extends Command
             $service = $this->option('service');
             $resource = $this->option('resource');
             $result = ServiceManager::handleRequest($service, $verb, $resource, [], [], $data, $format);
-            $this->info(print_r($result, true));
+            if ($result->getStatusCode() >= 300) {
+                $this->error(print_r($result, true));
+            } else {
+                $this->info(print_r($result, true));
+            }
 
             $this->info('Request complete!');
         } catch (\Exception $e) {

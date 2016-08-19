@@ -103,11 +103,15 @@ class ADGroupImport extends Command
             $roleCount = count($roles);
             if ($roleCount > 0) {
                 $this->warn('Total Roles to import: [' . $roleCount . ']');
-                if ($this->confirm('The above roles will be imported into your DreamFactroy instance based on your Active Directory groups. Do you wish to continue?')) {
+                if ($this->confirm('The above roles will be imported into your DreamFactory instance based on your Active Directory groups. Do you wish to continue?')) {
                     $this->line('Importing Roles...');
                     $payload = ResourcesWrapper::wrapResources($roles);
-                    ServiceManager::handleRequest('system', Verbs::POST, 'role', ['continue' => true], [], $payload);
-                    $this->info('Successfully imported all Active Directory groups as Roles.');
+                    $result = ServiceManager::handleRequest('system', Verbs::POST, 'role', ['continue' => true], [], $payload);
+                    if ($result->getStatusCode() >= 300) {
+                        $this->error(print_r($result->getContent(), true));
+                    } else {
+                        $this->info('Successfully imported all Active Directory groups as Roles.');
+                    }
                 } else {
                     $this->info('Aborted import process. No Roles were imported');
                 }
@@ -124,8 +128,8 @@ class ADGroupImport extends Command
         } catch (\Exception $e) {
             $msg = $e->getMessage();
             $this->error($msg);
-            if (strpos($msg, 'Sizelimit exceeded') !== false) {
-                $this->error('Please use "--filter=" option to avoid exceeding Sizelimit');
+            if (strpos($msg, 'Size limit exceeded') !== false) {
+                $this->error('Please use "--filter=" option to avoid exceeding size limit');
             }
         }
     }

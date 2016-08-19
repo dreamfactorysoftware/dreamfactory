@@ -106,7 +106,7 @@ class AccessCheck
                 }
             }
         } catch (\Exception $e) {
-            return ResponseFactory::getException($e, $request);
+            return ResponseFactory::sendException($e, $request);
         }
     }
 
