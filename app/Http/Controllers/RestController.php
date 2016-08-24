@@ -39,15 +39,15 @@ class RestController extends Controller
     public function index(
         /** @noinspection PhpUnusedParameterInspection */
         $version = null
-    ){
+    ) {
         try {
             $services = ResourcesWrapper::wrapResources(Service::available());
             $response = ResponseFactory::create($services);
-        } catch (\Exception $e) {
-            $response = ResponseFactory::create($e);
-        }
 
-        return ResponseFactory::sendResponse($response);
+            return ResponseFactory::sendResponse($response);
+        } catch (\Exception $e) {
+            return ResponseFactory::sendException($e);
+        }
     }
 
     /**
@@ -238,21 +238,20 @@ class RestController extends Controller
             ]);
 
             $response = ServiceManager::getService($service)->handleRequest($request, $resource);
+            if ($response instanceof RedirectResponse) {
+                \Log::info('[RESPONSE] Redirect', ['Status Code' => $response->getStatusCode()]);
+                \Log::debug('[RESPONSE]', ['Target URL' => $response->getTargetUrl()]);
+
+                return $response;
+            } elseif ($response instanceof StreamedResponse) {
+                \Log::info('[RESPONSE] Stream', ['Status Code' => $response->getStatusCode()]);
+
+                return $response;
+            }
+
+            return ResponseFactory::sendResponse($response, null, null, $resource);
         } catch (\Exception $e) {
-            $response = ResponseFactory::create($e);
+            return ResponseFactory::sendException($e);
         }
-
-        if ($response instanceof RedirectResponse) {
-            \Log::info('[RESPONSE] Redirect', ['Status Code' => $response->getStatusCode()]);
-            \Log::debug('[RESPONSE]', ['Target URL' => $response->getTargetUrl()]);
-
-            return $response;
-        } elseif ($response instanceof StreamedResponse) {
-            \Log::info('[RESPONSE] Stream', ['Status Code' => $response->getStatusCode()]);
-
-            return $response;
-        }
-
-        return ResponseFactory::sendResponse($response, null, null, $resource);
     }
 }

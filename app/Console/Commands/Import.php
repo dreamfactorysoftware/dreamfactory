@@ -57,9 +57,12 @@ class Import extends Command
 
             $service = $this->option('service');
             $resource = $this->option('resource');
-            ServiceManager::handleRequest($service, Verbs::POST, $resource, [], [], $data, $format);
-
-            $this->info('Import complete!');
+            $result = ServiceManager::handleRequest($service, Verbs::POST, $resource, [], [], $data, $format);
+            if ($result->getStatusCode() >= 300) {
+                $this->error(print_r($result->getContent(), true));
+            } else {
+                $this->info('Import complete!');
+            }
         } catch (\Exception $e) {
             $this->error($e->getMessage());
         }

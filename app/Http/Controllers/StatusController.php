@@ -35,11 +35,14 @@ class StatusController extends Controller
             $dist = 'Bitnami';
         }
 
-        $appCount = App::all()->count();
+        /** @noinspection PhpUndefinedMethodInspection */
+        $appCount = App::count();
         $adminCount = User::whereIsSysAdmin(1)->count();
         $userCount = User::whereIsSysAdmin(0)->count();
-        $serviceCount = Service::all()->count();
-        $roleCount = Role::all()->count();
+        /** @noinspection PhpUndefinedMethodInspection */
+        $serviceCount = Service::count();
+        /** @noinspection PhpUndefinedMethodInspection */
+        $roleCount = Role::count();
 
         $status = [
             "uri"       => $uri,

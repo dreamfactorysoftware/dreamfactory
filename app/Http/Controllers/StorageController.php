@@ -26,6 +26,11 @@ class StorageController extends Controller
             //Check for private paths here.
             $publicPaths = $service->publicPaths;
 
+            //Clean trailing slashes from paths
+            array_walk($publicPaths, function (&$value){
+                $value = rtrim($value, '/');
+            });
+
             $directory = rtrim(substr($path, 0, strlen(substr($path, 0, strrpos($path, '/')))), '/');
             $pieces = explode("/", $directory);
             $dir = null;
@@ -48,8 +53,8 @@ class StorageController extends Controller
                 \Log::info('[RESPONSE] File stream');
 
                 $response = new StreamedResponse();
-                $response->setCallback(function() use ($service, $path){
-                    $service->streamFile(null, $path);
+                $response->setCallback(function () use ($service, $path){
+                    $service->streamFile($service->getContainerId(), $path);
                 });
 
                 return $response;
