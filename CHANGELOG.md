@@ -9,6 +9,18 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+## [2.3.0] - 2016-08-22
+### Added
+- Added Cache service (df-cache) and Cassandra (df-cassandra) as well as Queued scripting feature
+
+### Changed
+- Updating homestead provisioning script to install v8js and php cassandra extension
+- Better exception responses
+
+### Fixed
+- Ignore public path trailing slash
+- Public path error on remote file storage
+
 ## [2.2.1] - 2016-07-08
 ### Changed
 - Using latest homestead with php7
@@ -101,7 +113,8 @@ For older installs, see DF_CIPHER in .env or .env-dist for more details.
 ## 2.0.0 - 2015-10-27
 First official release of the new open-source DreamFactory project.
 
-[Unreleased]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.2.1...HEAD
+[Unreleased]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.3.0...HEAD
+[2.3.0]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.2.1...2.3.0
 [2.2.1]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.2.0...2.2.1
 [2.2.0]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.1.2...2.2.0
 [2.1.2]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.1.1...2.1.2
