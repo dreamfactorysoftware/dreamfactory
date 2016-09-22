@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 ### Changed
+- DF-742 Customizable user confirmation code length.
 
 ### Fixed
 
