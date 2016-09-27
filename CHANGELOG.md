@@ -7,6 +7,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 - DF-742 Customizable user confirmation code length.
+- DF-641 Download files in chunks
 
 ### Fixed
 

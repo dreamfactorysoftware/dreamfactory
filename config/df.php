@@ -21,6 +21,8 @@ return [
     // Path to package file/folder/url to import during instance launch.
     'package_path'                 => env('DF_PACKAGE_PATH'),
     'local_file_service_container' => trim(env('DF_LOCAL_FILE_ROOT', 'app'), '/'),
+    // File chunk size for downloadable files in Byte. Default is 10MB
+    'file_chunk_size'              => env('DF_FILE_CHUNK_SIZE', 10000000),
     // DB configs
     'db'                           => [
         // The default number of records to return at once for database queries
