@@ -7,12 +7,11 @@ use DreamFactory\Core\Exceptions\BadRequestException;
 use DreamFactory\Core\Exceptions\ForbiddenException;
 use DreamFactory\Core\Exceptions\UnauthorizedException;
 use DreamFactory\Core\Models\Role;
-use DreamFactory\Core\Models\Service;
-use DreamFactory\Core\User\Services\User;
 use DreamFactory\Core\Utility\ResponseFactory;
 use DreamFactory\Core\Utility\Session;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
+use ServiceManager;
 
 class AccessCheck
 {
@@ -158,10 +157,11 @@ class AccessCheck
 
     protected static function setExceptions()
     {
-        if (class_exists(User::class)) {
-            $userService = Service::getCachedByName('user');
+        if (class_exists('\DreamFactory\Core\User\Services\User')) {
+            /** @var \DreamFactory\Core\User\Services\User $userService */
+            $userService = ServiceManager::getService('user');
 
-            if ($userService['config']['allow_open_registration']) {
+            if ($userService->allowOpenRegistration) {
                 static::$exceptions[] = [
                     'verb_mask' => 2, //Allow POST only
                     'service'   => 'user',
