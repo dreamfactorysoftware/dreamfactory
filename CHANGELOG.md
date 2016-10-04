@@ -6,10 +6,18 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 ### Changed
-- DF-742 Customizable user confirmation code length.
-- DF-641 Download files in chunks
 
 ### Fixed
+
+## [2.3.1] - 2016-10-04
+### Added
+- DF-742 Customizable user confirmation code length
+- DF-249 Configurable expiration for user confirmation codes
+- Adding python command path setting to distributed env file
+- Example WSDL added for Salesforce connections
+
+### Changed
+- DF-641 File services now support chunking for downloading large files
 
 ## [2.3.0] - 2016-08-22
 ### Added
@@ -115,7 +123,8 @@ For older installs, see DF_CIPHER in .env or .env-dist for more details.
 ## 2.0.0 - 2015-10-27
 First official release of the new open-source DreamFactory project.
 
-[Unreleased]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.3.0...HEAD
+[Unreleased]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.3.1...HEAD
+[2.3.1]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.3.0...2.3.1
 [2.3.0]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.2.1...2.3.0
 [2.2.1]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.2.0...2.2.1
 [2.2.0]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.1.2...2.2.0
