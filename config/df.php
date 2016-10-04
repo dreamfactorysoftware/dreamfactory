@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'version'                      => '2.3.0',
+    'version'                      => '2.3.1',
     // General API version number, 1.x was earlier product and may be supported by most services
     'api_version'                  => '2.0',
     // Name of this DreamFactory instance. Defaults to server name.
@@ -21,6 +21,8 @@ return [
     // Path to package file/folder/url to import during instance launch.
     'package_path'                 => env('DF_PACKAGE_PATH'),
     'local_file_service_container' => trim(env('DF_LOCAL_FILE_ROOT', 'app'), '/'),
+    // File chunk size for downloadable files in Byte. Default is 10MB
+    'file_chunk_size'              => env('DF_FILE_CHUNK_SIZE', 10000000),
     // DB configs
     'db'                           => [
         // The default number of records to return at once for database queries
@@ -63,6 +65,8 @@ return [
     'confirm_reset_url'            => env('DF_CONFIRM_RESET_URL', '/dreamfactory/dist/#/reset-password'),
     'confirm_invite_url'           => env('DF_CONFIRM_INVITE_URL', '/dreamfactory/dist/#/user-invite'),
     'confirm_register_url'         => env('DF_CONFIRM_REGISTER_URL', '/dreamfactory/dist/#/register-confirm'),
+    'confirm_code_length'          => env('DF_CONFIRM_CODE_LENGTH', 32),
+    'confirm_code_ttl'             => env('DF_CONFIRM_CODE_TTL', 1440), // 1440 minutes (24 hours).
     'landing_page'                 => env('DF_LANDING_PAGE', '/dreamfactory/dist/index.html'),
     // Enable/disable detailed CORS logging
     'log_cors_info'                => false,
