@@ -4,6 +4,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
+- DF-867 Added a pre-configured local file service for the logs and scripting directory
 
 ### Changed
 
