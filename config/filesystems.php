@@ -55,10 +55,6 @@ return [
                             storage_path('logs')
                         ),
         ],
-        'scripts'     => [
-            'driver' => 'local',
-            'root'   => storage_path('scripting'),
-        ],
 //        's3'        => [
 //            'driver' => 's3',
 //            'key'    => env('AWS_S3_KEY'),
