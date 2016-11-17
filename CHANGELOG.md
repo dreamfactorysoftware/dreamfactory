@@ -5,6 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added
 - DF-867 Added a pre-configured local file service for the logs directory
+- DF-552 Added support for Couchbase database
 
 ### Changed
 
