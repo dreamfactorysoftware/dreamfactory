@@ -31,23 +31,23 @@
     "laravel/framework":               "5.2.*",
     "tymon/jwt-auth":                  "0.5.*",
     "predis/predis":                   "~1.0",
-    "dreamfactory/df-managed":         "dev-develop as dev-master",
-    "dreamfactory/df-admin-app":       "dev-develop as dev-master",
-    "dreamfactory/df-filemanager-app": "dev-develop as dev-master",
-    "dreamfactory/df-swagger-ui":      "dev-develop as dev-master",
-    "dreamfactory/df-core":            "dev-develop as dev-master",
-    "dreamfactory/df-aws":             "dev-develop as dev-master",
-    "dreamfactory/df-azure":           "dev-develop as dev-master",
-    "dreamfactory/df-rackspace":       "dev-develop as dev-master",
-    "dreamfactory/df-sqldb":           "dev-develop as dev-master",
-    "dreamfactory/df-mongodb":         "dev-develop as dev-master",
-    "dreamfactory/df-couchdb":         "dev-develop as dev-master",
-    "dreamfactory/df-rws":             "dev-develop as dev-master",
-    "dreamfactory/df-user":            "dev-develop as dev-master",
-    "dreamfactory/df-oauth":           "dev-develop as dev-master",
-    "dreamfactory/df-cache":           "dev-develop as dev-master",
-    "dreamfactory/df-cassandra":       "dev-develop as dev-master",
-    "dreamfactory/df-couchbase":       "dev-develop as dev-master"
+    "dreamfactory/df-managed":         "~2.4.0",
+    "dreamfactory/df-admin-app":       "~2.4.1",
+    "dreamfactory/df-filemanager-app": "~0.1.0",
+    "dreamfactory/df-swagger-ui":      "~0.2.0",
+    "dreamfactory/df-core":            "~0.6.0",
+    "dreamfactory/df-aws":             "~0.6.0",
+    "dreamfactory/df-azure":           "~0.6.0",
+    "dreamfactory/df-rackspace":       "~0.6.0",
+    "dreamfactory/df-sqldb":           "~0.6.0",
+    "dreamfactory/df-mongodb":         "~0.6.0",
+    "dreamfactory/df-couchdb":         "~0.6.0",
+    "dreamfactory/df-rws":             "~0.6.0",
+    "dreamfactory/df-user":            "~0.6.0",
+    "dreamfactory/df-oauth":           "~0.6.0",
+    "dreamfactory/df-cache":           "~0.3.0",
+    "dreamfactory/df-cassandra":       "~0.3.0",
+    "dreamfactory/df-couchbase":       "~0.1.0"
   },
   "require-dev":       {
     "barryvdh/laravel-ide-helper": "~2.1",
@@ -91,7 +91,7 @@
   },
   "extra":             {
     "branch-alias":    {
-      "dev-develop": "2.3.x-dev"
+      "dev-develop": "2.4.x-dev"
     },
     "installer-paths": {
       "public/{$name}/": [
