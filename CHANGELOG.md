@@ -4,12 +4,17 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
+### Changed
+### Fixed
+
+## [2.4.0] - 2016-11-18
+### Added
 - DF-867 Added a pre-configured local file service for the logs directory
 - DF-552 Added support for Couchbase database
+- Lookup modifier configuration options.
 
 ### Changed
-
-### Fixed
+- CORS correction for global middleware addition
 
 ## [2.3.1] - 2016-10-04
 ### Added
@@ -125,7 +130,8 @@ For older installs, see DF_CIPHER in .env or .env-dist for more details.
 ## 2.0.0 - 2015-10-27
 First official release of the new open-source DreamFactory project.
 
-[Unreleased]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.3.1...HEAD
+[Unreleased]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.4.0...HEAD
+[2.4.0]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.3.1...2.4.0
 [2.3.1]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.3.0...2.3.1
 [2.3.0]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.2.1...2.3.0
 [2.2.1]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.2.0...2.2.1
