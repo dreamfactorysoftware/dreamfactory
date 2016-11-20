@@ -34,7 +34,7 @@
 	<body>
 		<div class="container">
 			<div class="content">
-				<div class="title">Service Unavailable</div>
+				<div class="title">Forbidden</div>
 			</div>
 		</div>
 	</body>

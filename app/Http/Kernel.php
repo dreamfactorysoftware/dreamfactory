@@ -1,8 +1,8 @@
 <?php
 namespace DreamFactory\Http;
 
+use Barryvdh\Cors\HandleCors;
 use DreamFactory\Http\Middleware\AccessCheck;
-use DreamFactory\Http\Middleware\Cors;
 use DreamFactory\Http\Middleware\FirstUserCheck;
 use DreamFactory\Managed\Bootstrap\ManagedInstance;
 use Illuminate\Auth\Middleware\AuthenticateWithBasicAuth;
@@ -28,7 +28,7 @@ class Kernel extends HttpKernel
         StartSession::class,
         ShareErrorsFromSession::class,
         FirstUserCheck::class,
-        Cors::class,
+        HandleCors::class,
         AuthCheck::class,
     ];
 

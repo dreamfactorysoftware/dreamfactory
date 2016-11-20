@@ -1,4 +1,4 @@
-## DreamFactory 2.3.1
+## DreamFactory 2.4.0
 
 [![License](https://poser.pugx.org/dreamfactory/dreamfactory/license.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/dreamfactorysoftware/dreamfactory?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
@@ -21,11 +21,11 @@ Documentation for the platform can be found on the [DreamFactory wiki](http://wi
 ## Required software and extensions
 
 Check our [wiki installation page](http://wiki.dreamfactory.com/DreamFactory/Installation) for the minimum 
-software and extensions required for your system to successfully install and run DreamFactory 2.0.
+software and extensions required for your system to successfully install and run DreamFactory 2.x.
 
 ## Quick Setup
 
-These instructions allow you to quickly install DreamFactory 2.0 on your system and try it out. 
+These instructions allow you to quickly install DreamFactory 2.x on your system and try it out. 
 The commands shown here are primarily for a Linux based OS, 
 but this should also work on Windows with all the required software and extensions installed.
 
@@ -55,7 +55,7 @@ seed the default services, and will prompt you to create your admin user account
 > sudo chown -R {www user}:{your user group} storage/ bootstrap/cache/<br>
 > sudo chmod -R 2775 storage/ bootstrap/cache/
 
-* Run the following command to try out DreamFactory 2.0 without configuring a Database and Web Server. 
+* Run the following command to try out DreamFactory 2.x without configuring a Database and Web Server. 
 >php artisan serve
 
 

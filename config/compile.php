@@ -21,7 +21,6 @@ return [
 		realpath(__DIR__.'/../app/Http/Controllers/SplashController.php'),
 		realpath(__DIR__.'/../app/Http/Controllers/StorageController.php'),
 		realpath(__DIR__.'/../app/Http/Middleware/AccessCheck.php'),
-		realpath(__DIR__.'/../app/Http/Middleware/Cors.php'),
 		realpath(__DIR__.'/../app/Http/Middleware/FirstUserCheck.php'),
 	],
 
