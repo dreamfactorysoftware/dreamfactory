@@ -7,7 +7,7 @@
 # This script is compatible with "laravel/homestead": "^3.0"
 
 # Change OUTPUT to /dev/stdout to see shell output while provisioning.
-OUTPUT=/dev/stdout
+OUTPUT=/dev/null
 
 echo ">>> Beginning DreamFactory provisioning..."
 echo ">>> Updating apt-get"
@@ -28,7 +28,31 @@ sudo pecl install mongodb > $OUTPUT 2>&1
 sudo echo "extension=mongodb.so" > /etc/php/7.1/mods-available/mongodb.ini
 sudo phpenmod mongodb
 
-#echo ">>> Installing php v8js extension from pre-build packages of df-docker"
+#echo ">>> Compiling V8 and installing php v8js"
+#sudo apt-get install -qq -y build-essential git python libglib2.0-dev > $OUTPUT 2>&1
+#cd /tmp
+#git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git > $OUTPUT 2>&1
+#export PATH=`pwd`/depot_tools:"$PATH" > $OUTPUT 2>&1
+#fetch v8 > $OUTPUT 2>&1
+#cd v8
+#git checkout 5.6.326.12 > $OUTPUT 2>&1
+#gclient sync > $OUTPUT 2>&1
+#tools/dev/v8gen.py -vv x64.release > $OUTPUT 2>&1
+#echo is_component_build = true >> out.gn/x64.release/args.gn > $OUTPUT 2>&1
+#ninja -C out.gn/x64.release/ > $OUTPUT 2>&1
+#sudo mkdir -p /opt/v8/{lib,include} > $OUTPUT 2>&1
+#sudo cp out.gn/x64.release/lib*.so out.gn/x64.release/*_blob.bin /opt/v8/lib/ > $OUTPUT 2>&1
+#sudo cp -R include/* /opt/v8/include/ > $OUTPUT 2>&1
+#cd /tmp
+#git clone https://github.com/phpv8/v8js.git > $OUTPUT 2>&1
+#cd v8js
+#phpize > $OUTPUT 2>&1
+#./configure --with-v8js=/opt/v8 > $OUTPUT 2>&1
+#make > $OUTPUT 2>&1
+#sudo make install > $OUTPUT 2>&1
+#sudo phpenmod v8js > $OUTPUT 2>&1
+#cd /tmp
+
 #git clone https://github.com/dreamfactorysoftware/df-docker.git > $OUTPUT 2>&1
 #cd df-docker
 #sudo mkdir -p /usr/lib /usr/include
