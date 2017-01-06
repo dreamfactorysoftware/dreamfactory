@@ -46,6 +46,21 @@ class AccessCheck
             'service'   => 'user',
             'resource'  => 'profile',
         ],
+        [
+            'verb_mask'    => 1,
+            'service_type' => 'saml',
+            'resource'     => 'sso',
+        ],
+        [
+            'verb_mask'    => 2,
+            'service_type' => 'saml',
+            'resource'     => 'acs',
+        ],
+        [
+            'verb_mask'    => 1,
+            'service_type' => 'saml',
+            'resource'     => 'metadata',
+        ],
     ];
 
     /**
@@ -126,7 +141,17 @@ class AccessCheck
         $action = VerbsMask::toNumeric($request->getMethod());
 
         foreach (static::$exceptions as $exception) {
-            if (($action & array_get($exception, 'verb_mask')) &&
+            $expServiceType = array_get($exception, 'service_type');
+            if (!empty($expServiceType)) {
+                $serviceObj = ServiceManager::getService($service);
+                $serviceType = $serviceObj->getType();
+                if (($action & array_get($exception, 'verb_mask')) &&
+                    $serviceType === $expServiceType &&
+                    $resource === array_get($exception, 'resource')
+                ) {
+                    return true;
+                }
+            } elseif (($action & array_get($exception, 'verb_mask')) &&
                 $service === array_get($exception, 'service') &&
                 $resource === array_get($exception, 'resource')
             ) {

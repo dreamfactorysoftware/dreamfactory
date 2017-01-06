@@ -4,6 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
+- DF-926 Adding SAML 2.0 support.
+
 ### Changed
 ### Fixed
 
