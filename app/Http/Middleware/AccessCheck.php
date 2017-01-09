@@ -9,9 +9,11 @@ use DreamFactory\Core\Exceptions\UnauthorizedException;
 use DreamFactory\Core\Models\Role;
 use DreamFactory\Core\Utility\ResponseFactory;
 use DreamFactory\Core\Utility\Session;
+use DreamFactory\Library\Utility\Enums\Verbs;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
 use ServiceManager;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 class AccessCheck
 {
@@ -145,12 +147,16 @@ class AccessCheck
      */
     public static function isAccessAllowed()
     {
+        if (!in_array($method = \Request::getMethod(), Verbs::getDefinedConstants())) {
+            throw new MethodNotAllowedHttpException("Invalid verb tunneling with " . $method);
+        }
+
         /** @var Router $router */
         $router = app('router');
         $service = strtolower($router->input('service'));
         $component = strtolower($router->input('resource'));
-        $action = VerbsMask::toNumeric(\Request::getMethod());
         $allowed = Session::getServicePermissions($service, $component);
+        $action = VerbsMask::toNumeric($method);
 
         return ($action & $allowed) ? true : false;
     }
