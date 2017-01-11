@@ -2,6 +2,7 @@
 namespace DreamFactory\Http;
 
 use Barryvdh\Cors\HandleCors;
+use DreamFactory\Core\Limit\Http\Middleware\EvaluateLimits;
 use DreamFactory\Http\Middleware\AccessCheck;
 use DreamFactory\Http\Middleware\FirstUserCheck;
 use DreamFactory\Managed\Bootstrap\ManagedInstance;
@@ -38,8 +39,17 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth.basic'   => AuthenticateWithBasicAuth::class,
-        'access_check' => AccessCheck::class,
+        'auth.basic'   => AuthenticateWithBasicAuth::class
+    ];
+
+    protected $middlewareGroups = [
+        'access_check' => [
+            'access_check' => AccessCheck::class,
+        ],
+        'api' => [
+            'access_check' => AccessCheck::class,
+            'evaluate_limits' => EvaluateLimits::class
+        ]
     ];
 
     //******************************************************************************

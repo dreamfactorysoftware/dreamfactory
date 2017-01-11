@@ -26,7 +26,7 @@ class RestController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('access_check');
+        $this->middleware('api');
     }
 
     /**
