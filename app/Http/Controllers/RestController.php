@@ -6,13 +6,11 @@ use DreamFactory\Core\Models\Service;
 use DreamFactory\Core\Utility\ResourcesWrapper;
 use DreamFactory\Core\Utility\ResponseFactory;
 use DreamFactory\Core\Utility\ServiceRequest;
-use DreamFactory\Library\Utility\Enums\Verbs;
 use Log;
-use Request;
 use ServiceManager;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
-use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 /**
  * Class RestController
@@ -34,7 +32,7 @@ class RestController extends Controller
      *
      * @param null|string $version
      *
-     * @return null|ServiceResponseInterface
+     * @return null|ServiceResponseInterface|Response
      */
     public function index(
         /** @noinspection PhpUnusedParameterInspection */
@@ -140,18 +138,6 @@ class RestController extends Controller
      */
     public function handlePOST($version = null, $service = null, $resource = null)
     {
-        // Check for the various method override headers or query params
-        $xMethod =
-            Request::header('X-HTTP-Method',
-                Request::header('X-HTTP-Method-Override',
-                    Request::header('X-Method-Override', Request::query('method'))));;
-        if (!empty($xMethod)) {
-            if (!in_array($xMethod, Verbs::getDefinedConstants())) {
-                throw new MethodNotAllowedHttpException("Invalid verb tunneling with " . $xMethod);
-            }
-            Request::setMethod($xMethod);
-        }
-
         return $this->handleService($version, $service, $resource);
     }
 
@@ -204,7 +190,7 @@ class RestController extends Controller
      * @param string      $service
      * @param null|string $resource
      *
-     * @return ServiceResponseInterface|null
+     * @return ServiceResponseInterface|Response|null
      */
     public function handleService($version = null, $service, $resource = null)
     {

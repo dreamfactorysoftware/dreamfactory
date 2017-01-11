@@ -11,10 +11,25 @@
 |
 */
 
-//Treat merge as patch
+/* Check for verb tunneling by the various method override headers or query params
+ * Tunnelling verb overrides:
+ *      X-Http-Method (Microsoft)
+ *      X-Http-Method-Override (Google/GData)
+ *      X-Method-Override (IBM)
+ * Symfony natively supports X-HTTP-METHOD-OVERRIDE header and "_method" URL parameter
+ * we just need to add our historical support for other options, including "method" URL parameter
+ */
+Request::enableHttpMethodParameterOverride(); // enables _method URL parameter
 $method = Request::getMethod();
-if (\DreamFactory\Library\Utility\Enums\Verbs::MERGE === strtoupper($method)) {
-    Request::setMethod(\DreamFactory\Library\Utility\Enums\Verbs::PATCH);
+if (('POST' === $method) &&
+    (!empty($dfOverride = Request::header('X-HTTP-Method',
+        Request::header('X-Method-Override', Request::query('method')))))
+) {
+    Request::setMethod($method = strtoupper($dfOverride));
+}
+// support old MERGE as PATCH
+if ('MERGE' === strtoupper($method)) {
+    Request::setMethod('PATCH');
 }
 
 Route::get('/', 'SplashController@index');
@@ -34,7 +49,7 @@ $servicePattern = '[_0-9a-zA-Z-.]+';
 
 Route::group(
     ['prefix' => 'api'],
-    function () use ($resourcePathPattern, $servicePattern){
+    function () use ($resourcePathPattern, $servicePattern) {
         Route::get('{version}/', 'RestController@index');
         Route::get('{version}/{service}/{resource?}', 'RestController@handleGET')->where(
             ['service' => $servicePattern, 'resource' => $resourcePathPattern]
@@ -56,7 +71,7 @@ Route::group(
 
 Route::group(
     ['prefix' => 'rest'],
-    function () use ($resourcePathPattern, $servicePattern){
+    function () use ($resourcePathPattern, $servicePattern) {
         Route::get('/', 'RestController@index');
         Route::get('{service}/{resource?}', 'RestController@handleV1GET')->where(
             ['service' => $servicePattern, 'resource' => $resourcePathPattern]
