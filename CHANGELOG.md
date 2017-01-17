@@ -4,10 +4,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
-- DF-926 Adding SAML 2.0 support.
+- DF-926 SAML 2.0 support as an authentication service
+- Support for Homestead ^4.0 with PHP7.1
 
 ### Changed
+- Updating v8js support on homestead for PHP7.1
+- Updating vagrant provision script
+- Refactored out database, email, and script services, updating dependencies
+
 ### Fixed
+- DF-958 Verb tunneling handling before routing for proper role access checking
 
 ## [2.4.1] - 2016-11-30
 ### Changed
