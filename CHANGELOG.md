@@ -4,6 +4,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
+### Changed
+### Fixed
+
+## [2.4.2] - 2017-01-17
+### Added
 - DF-926 SAML 2.0 support as an authentication service
 - Support for Homestead ^4.0 with PHP7.1
 
@@ -23,7 +28,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - DF-867 Added a pre-configured local file service for the logs directory
 - DF-552 Added support for Couchbase database
-- Lookup modifier configuration options.
+- Lookup modifier configuration options
 
 ### Changed
 - CORS correction for global middleware addition
@@ -142,7 +147,8 @@ For older installs, see DF_CIPHER in .env or .env-dist for more details.
 ## 2.0.0 - 2015-10-27
 First official release of the new open-source DreamFactory project.
 
-[Unreleased]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.4.1...HEAD
+[Unreleased]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.4.2...HEAD
+[2.4.2]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.4.1...2.4.2
 [2.4.1]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.4.0...2.4.1
 [2.4.0]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.3.1...2.4.0
 [2.3.1]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.3.0...2.3.1
