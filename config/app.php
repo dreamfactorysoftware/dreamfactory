@@ -207,10 +207,10 @@ return [
         /**
          * DreamFactory Specific
          */
-        'ScriptEngineManager'    => DreamFactory\Core\Facades\ScriptEngineManager::class,
         'ServiceManager'         => DreamFactory\Core\Facades\ServiceManager::class,
         'SystemResourceManager'  => DreamFactory\Core\Facades\SystemResourceManager::class,
         'SystemTableModelMapper' => DreamFactory\Core\Facades\SystemTableModelMapper::class,
         'DbSchemaExtensions'     => DreamFactory\Core\Facades\DbSchemaExtensions::class,
+        'ScriptEngineManager'    => DreamFactory\Core\Script\Facades\ScriptEngineManager::class,
     ],
 ];

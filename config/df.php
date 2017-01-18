@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'version'                      => '2.4.1',
+    'version'                      => '2.4.2',
     // General API version number, 1.x was earlier product and may be supported by most services
     'api_version'                  => '2.0',
     // Name of this DreamFactory instance. Defaults to server name.
@@ -32,7 +32,7 @@ return [
         //  The default date and time formats used for in and out requests for
         //  all database services, including stored procedures and system service resources.
         //  Default values of null means no formatting is performed on date and time field values.
-        //  For options see https://github.com/dreamfactorysoftware/dsp-core/wiki/Database-Date-Time-Formats
+        //  For options see http://wiki.dreamfactory.com/DreamFactory/Features/Database/Records
         //  Examples: 'm/d/y h:i:s A' or 'c' or DATE_COOKIE
         //-------------------------------------------------------------------------
         'time_format'          => null,

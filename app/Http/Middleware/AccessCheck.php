@@ -9,9 +9,11 @@ use DreamFactory\Core\Exceptions\UnauthorizedException;
 use DreamFactory\Core\Models\Role;
 use DreamFactory\Core\Utility\ResponseFactory;
 use DreamFactory\Core\Utility\Session;
+use DreamFactory\Library\Utility\Enums\Verbs;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
 use ServiceManager;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 class AccessCheck
 {
@@ -45,6 +47,21 @@ class AccessCheck
             'verb_mask' => 15,
             'service'   => 'user',
             'resource'  => 'profile',
+        ],
+        [
+            'verb_mask'    => 1,
+            'service_type' => 'saml',
+            'resource'     => 'sso',
+        ],
+        [
+            'verb_mask'    => 2,
+            'service_type' => 'saml',
+            'resource'     => 'acs',
+        ],
+        [
+            'verb_mask'    => 1,
+            'service_type' => 'saml',
+            'resource'     => 'metadata',
         ],
     ];
 
@@ -126,7 +143,17 @@ class AccessCheck
         $action = VerbsMask::toNumeric($request->getMethod());
 
         foreach (static::$exceptions as $exception) {
-            if (($action & array_get($exception, 'verb_mask')) &&
+            $expServiceType = array_get($exception, 'service_type');
+            if (!empty($expServiceType)) {
+                $serviceObj = ServiceManager::getService($service);
+                $serviceType = $serviceObj->getType();
+                if (($action & array_get($exception, 'verb_mask')) &&
+                    $serviceType === $expServiceType &&
+                    $resource === array_get($exception, 'resource')
+                ) {
+                    return true;
+                }
+            } elseif (($action & array_get($exception, 'verb_mask')) &&
                 $service === array_get($exception, 'service') &&
                 $resource === array_get($exception, 'resource')
             ) {
@@ -145,12 +172,16 @@ class AccessCheck
      */
     public static function isAccessAllowed()
     {
+        if (!in_array($method = \Request::getMethod(), Verbs::getDefinedConstants())) {
+            throw new MethodNotAllowedHttpException("Invalid verb tunneling with " . $method);
+        }
+
         /** @var Router $router */
         $router = app('router');
         $service = strtolower($router->input('service'));
         $component = strtolower($router->input('resource'));
-        $action = VerbsMask::toNumeric(\Request::getMethod());
         $allowed = Session::getServicePermissions($service, $component);
+        $action = VerbsMask::toNumeric($method);
 
         return ($action & $allowed) ? true : false;
     }
