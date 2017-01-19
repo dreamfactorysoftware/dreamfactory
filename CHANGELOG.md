@@ -4,10 +4,23 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
-- DF-926 Adding SAML 2.0 support.
+### Changed
+- DF-954 Made 'Bad request. No token or api key provided.' error message more verbose
+
+### Fixed
+
+## [2.4.2] - 2017-01-17
+### Added
+- DF-926 SAML 2.0 support as an authentication service
+- Support for Homestead ^4.0 with PHP7.1
 
 ### Changed
+- Updating v8js support on homestead for PHP7.1
+- Updating vagrant provision script
+- Refactored out database, email, and script services, updating dependencies
+
 ### Fixed
+- DF-958 Verb tunneling handling before routing for proper role access checking
 
 ## [2.4.1] - 2016-11-30
 ### Changed
@@ -17,7 +30,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - DF-867 Added a pre-configured local file service for the logs directory
 - DF-552 Added support for Couchbase database
-- Lookup modifier configuration options.
+- Lookup modifier configuration options
 
 ### Changed
 - CORS correction for global middleware addition
@@ -136,7 +149,8 @@ For older installs, see DF_CIPHER in .env or .env-dist for more details.
 ## 2.0.0 - 2015-10-27
 First official release of the new open-source DreamFactory project.
 
-[Unreleased]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.4.1...HEAD
+[Unreleased]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.4.2...HEAD
+[2.4.2]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.4.1...2.4.2
 [2.4.1]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.4.0...2.4.1
 [2.4.0]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.3.1...2.4.0
 [2.3.1]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.3.0...2.3.1
