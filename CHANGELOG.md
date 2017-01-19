@@ -5,6 +5,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added
 ### Changed
+- DF-954 Made 'Bad request. No token or api key provided.' error message more verbose
+
 ### Fixed
 
 ## [2.4.2] - 2017-01-17
