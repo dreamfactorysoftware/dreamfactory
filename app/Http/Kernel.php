@@ -14,6 +14,8 @@ class Kernel extends HttpKernel
      */
     protected $middleware = [
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
+        \DreamFactory\Http\Middleware\FirstUserCheck::class,
+        \Barryvdh\Cors\HandleCors::class,
     ];
 
     /**
@@ -29,14 +31,13 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \DreamFactory\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            \DreamFactory\Http\Middleware\FirstUserCheck::class,
-            \Barryvdh\Cors\HandleCors::class,
             \DreamFactory\Http\Middleware\AuthCheck::class,
         ],
 
         'api' => [
             'throttle:60,1',
             'bindings',
+            \DreamFactory\Http\Middleware\AuthCheck::class,
         ],
     ];
 
