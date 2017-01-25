@@ -92,7 +92,10 @@ class AccessCheck
                 $roleId = Session::getRoleId();
 
                 if (empty($apiKey) && empty($token)) {
-                    throw new BadRequestException('Bad request. No token or api key provided.');
+                    $msg = 'No session token (JWT) or API Key detected in request. ' .
+                        'Please send in X-DreamFactory-Session-Token and/or X-Dreamfactory-API-Key request header. ' .
+                        'You can also use URL query parameters session_token and/or api_key.';
+                    throw new BadRequestException($msg);
                 } elseif (true === Session::get('token_expired')) {
                     throw new UnauthorizedException(Session::get('token_expired_msg'));
                 } elseif (true === Session::get('token_blacklisted')) {
