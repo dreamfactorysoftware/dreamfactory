@@ -19,6 +19,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 - DF-958 Verb tunneling handling before routing for proper role access checking
+- Correcting DatabaseSeeder class for default services
 
 ## [2.4.1] - 2016-11-30
 ### Changed

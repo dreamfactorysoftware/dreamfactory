@@ -9,16 +9,16 @@
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.21.0",
+            "version": "3.21.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "ecbec81de6739a0ea278203f14df2b4c90ed4818"
+                "reference": "6408a4904a04eca44461a65ba4a0fae53f80417b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/ecbec81de6739a0ea278203f14df2b4c90ed4818",
-                "reference": "ecbec81de6739a0ea278203f14df2b4c90ed4818",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/6408a4904a04eca44461a65ba4a0fae53f80417b",
+                "reference": "6408a4904a04eca44461a65ba4a0fae53f80417b",
                 "shasum": ""
             },
             "require": {
@@ -85,24 +85,24 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2017-01-17 22:07:42"
+            "time": "2017-01-25 00:43:08"
         },
         {
             "name": "barryvdh/laravel-cors",
-            "version": "v0.8.2",
+            "version": "v0.8.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/barryvdh/laravel-cors.git",
-                "reference": "bc7f40a71221b46d24971da7f0230ed4a75a18c6"
+                "reference": "e05c3ba65e98c96df5f2e1f8b7b6d7e9de4a1837"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-cors/zipball/bc7f40a71221b46d24971da7f0230ed4a75a18c6",
-                "reference": "bc7f40a71221b46d24971da7f0230ed4a75a18c6",
+                "url": "https://api.github.com/repos/barryvdh/laravel-cors/zipball/e05c3ba65e98c96df5f2e1f8b7b6d7e9de4a1837",
+                "reference": "e05c3ba65e98c96df5f2e1f8b7b6d7e9de4a1837",
                 "shasum": ""
             },
             "require": {
-                "illuminate/support": "5.1.x|5.2.x|5.3.x",
+                "illuminate/support": "5.1.x|5.2.x|5.3.x|5.4.x",
                 "php": ">=5.5.9",
                 "symfony/http-foundation": "~2.7|~3.0",
                 "symfony/http-kernel": "~2.7|~3.0"
@@ -138,7 +138,7 @@
                 "crossdomain",
                 "laravel"
             ],
-            "time": "2016-08-11 08:46:01"
+            "time": "2017-01-25 12:53:12"
         },
         {
             "name": "classpreloader/classpreloader",
@@ -367,28 +367,29 @@
         },
         {
             "name": "doctrine/collections",
-            "version": "v1.3.0",
+            "version": "v1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/collections.git",
-                "reference": "6c1e4eef75f310ea1b3e30945e9f06e652128b8a"
+                "reference": "1a4fb7e902202c33cce8c55989b945612943c2ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/collections/zipball/6c1e4eef75f310ea1b3e30945e9f06e652128b8a",
-                "reference": "6c1e4eef75f310ea1b3e30945e9f06e652128b8a",
+                "url": "https://api.github.com/repos/doctrine/collections/zipball/1a4fb7e902202c33cce8c55989b945612943c2ba",
+                "reference": "1a4fb7e902202c33cce8c55989b945612943c2ba",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.2"
+                "php": "^5.6 || ^7.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4.0"
+                "doctrine/coding-standard": "~0.1@dev",
+                "phpunit/phpunit": "^5.7"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.2.x-dev"
+                    "dev-master": "1.3.x-dev"
                 }
             },
             "autoload": {
@@ -429,7 +430,7 @@
                 "collections",
                 "iterator"
             ],
-            "time": "2015-04-14 22:21:58"
+            "time": "2017-01-03 10:49:41"
         },
         {
             "name": "doctrine/common",
@@ -506,16 +507,16 @@
         },
         {
             "name": "doctrine/dbal",
-            "version": "v2.5.8",
+            "version": "v2.5.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "6314d55f60f85f0295c90688397b75c13faf9f0e"
+                "reference": "fc376f7a61498e18520cd6fa083752a4ca08072b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/6314d55f60f85f0295c90688397b75c13faf9f0e",
-                "reference": "6314d55f60f85f0295c90688397b75c13faf9f0e",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/fc376f7a61498e18520cd6fa083752a4ca08072b",
+                "reference": "fc376f7a61498e18520cd6fa083752a4ca08072b",
                 "shasum": ""
             },
             "require": {
@@ -573,7 +574,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2017-01-17 17:48:38"
+            "time": "2017-01-23 23:17:10"
         },
         {
             "name": "doctrine/inflector",
@@ -1074,6 +1075,7 @@
         },
         {
             "name": "dreamfactory/df-core",
+<<<<<<< HEAD
             "version": "dev-develop",
             "source": {
                 "type": "git",
@@ -1084,6 +1086,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/985eb4b28e2f17ffd24c35f10252a8fb92665c72",
                 "reference": "985eb4b28e2f17ffd24c35f10252a8fb92665c72",
+=======
+            "version": "0.7.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dreamfactorysoftware/df-core.git",
+                "reference": "4be6944b45352a21a1e06a6a1a5260f5f3babe19"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/4be6944b45352a21a1e06a6a1a5260f5f3babe19",
+                "reference": "4be6944b45352a21a1e06a6a1a5260f5f3babe19",
+>>>>>>> hotfix/2.4.2
                 "shasum": ""
             },
             "require": {
@@ -1132,7 +1146,11 @@
                 "paas",
                 "rest"
             ],
+<<<<<<< HEAD
             "time": "2017-01-16 20:11:27"
+=======
+            "time": "2017-01-25 17:29:34"
+>>>>>>> hotfix/2.4.2
         },
         {
             "name": "dreamfactory/df-couchbase",
@@ -1248,6 +1266,7 @@
         },
         {
             "name": "dreamfactory/df-database",
+<<<<<<< HEAD
             "version": "dev-develop",
             "source": {
                 "type": "git",
@@ -1258,6 +1277,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/dreamfactorysoftware/df-database/zipball/fd187c5ad975c2a72178d1fb58a72b83a35ac67a",
                 "reference": "fd187c5ad975c2a72178d1fb58a72b83a35ac67a",
+=======
+            "version": "0.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dreamfactorysoftware/df-database.git",
+                "reference": "41b05fbd562bc41b1efe09260b617378189c7673"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-database/zipball/41b05fbd562bc41b1efe09260b617378189c7673",
+                "reference": "41b05fbd562bc41b1efe09260b617378189c7673",
+>>>>>>> hotfix/2.4.2
                 "shasum": ""
             },
             "require": {
@@ -1300,7 +1331,11 @@
                 "dreamfactory",
                 "rest"
             ],
+<<<<<<< HEAD
             "time": "2017-01-18 15:12:40"
+=======
+            "time": "2017-01-20 18:53:36"
+>>>>>>> hotfix/2.4.2
         },
         {
             "name": "dreamfactory/df-email",
@@ -1736,6 +1771,7 @@
         },
         {
             "name": "dreamfactory/df-sqldb",
+<<<<<<< HEAD
             "version": "dev-develop",
             "source": {
                 "type": "git",
@@ -1746,6 +1782,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/dreamfactorysoftware/df-sqldb/zipball/2922a8ada1a6b973151626b5190394f8b3acc1c1",
                 "reference": "2922a8ada1a6b973151626b5190394f8b3acc1c1",
+=======
+            "version": "0.7.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dreamfactorysoftware/df-sqldb.git",
+                "reference": "e2a3945ae42abe52ff7773fad0209ea43477ad3e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-sqldb/zipball/e2a3945ae42abe52ff7773fad0209ea43477ad3e",
+                "reference": "e2a3945ae42abe52ff7773fad0209ea43477ad3e",
+>>>>>>> hotfix/2.4.2
                 "shasum": ""
             },
             "require": {
@@ -1792,7 +1840,11 @@
                 "sql",
                 "sqlserver"
             ],
+<<<<<<< HEAD
             "time": "2017-01-17 03:00:35"
+=======
+            "time": "2017-01-25 15:57:11"
+>>>>>>> hotfix/2.4.2
         },
         {
             "name": "dreamfactory/df-swagger-ui",
@@ -2557,16 +2609,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "1.0.32",
+            "version": "1.0.33",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "1b5c4a0031697f46e779a9d1b309c2e1b24daeab"
+                "reference": "5c7f98498b12d47f9de90ec9186a90000125777c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/1b5c4a0031697f46e779a9d1b309c2e1b24daeab",
-                "reference": "1b5c4a0031697f46e779a9d1b309c2e1b24daeab",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/5c7f98498b12d47f9de90ec9186a90000125777c",
+                "reference": "5c7f98498b12d47f9de90ec9186a90000125777c",
                 "shasum": ""
             },
             "require": {
@@ -2636,7 +2688,7 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2016-10-19 20:38:46"
+            "time": "2017-01-23 10:32:09"
         },
         {
             "name": "league/oauth1-client",
@@ -2761,16 +2813,16 @@
         },
         {
             "name": "mongodb/mongodb",
-            "version": "1.1.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mongodb/mongo-php-library.git",
-                "reference": "9dfb2c5fc917d7438b44eb8f4d247ba3e3984e75"
+                "reference": "318d4b95438a2ea68a550c2878678097f63fb9fe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mongodb/mongo-php-library/zipball/9dfb2c5fc917d7438b44eb8f4d247ba3e3984e75",
-                "reference": "9dfb2c5fc917d7438b44eb8f4d247ba3e3984e75",
+                "url": "https://api.github.com/repos/mongodb/mongo-php-library/zipball/318d4b95438a2ea68a550c2878678097f63fb9fe",
+                "reference": "318d4b95438a2ea68a550c2878678097f63fb9fe",
                 "shasum": ""
             },
             "require": {
@@ -2820,7 +2872,7 @@
                 "mongodb",
                 "persistence"
             ],
-            "time": "2016-12-06 14:54:33"
+            "time": "2017-01-17 19:59:32"
         },
         {
             "name": "monolog/monolog",
@@ -2902,16 +2954,16 @@
         },
         {
             "name": "mtdowling/cron-expression",
-            "version": "v1.1.0",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mtdowling/cron-expression.git",
-                "reference": "c9ee7886f5a12902b225a1a12f36bb45f9ab89e5"
+                "reference": "9504fa9ea681b586028adaaa0877db4aecf32bad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mtdowling/cron-expression/zipball/c9ee7886f5a12902b225a1a12f36bb45f9ab89e5",
-                "reference": "c9ee7886f5a12902b225a1a12f36bb45f9ab89e5",
+                "url": "https://api.github.com/repos/mtdowling/cron-expression/zipball/9504fa9ea681b586028adaaa0877db4aecf32bad",
+                "reference": "9504fa9ea681b586028adaaa0877db4aecf32bad",
                 "shasum": ""
             },
             "require": {
@@ -2922,8 +2974,8 @@
             },
             "type": "library",
             "autoload": {
-                "psr-0": {
-                    "Cron": "src/"
+                "psr-4": {
+                    "Cron\\": "src/Cron/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -2942,7 +2994,7 @@
                 "cron",
                 "schedule"
             ],
-            "time": "2016-01-26 21:23:30"
+            "time": "2017-01-23 04:29:33"
         },
         {
             "name": "mtdowling/jmespath.php",
@@ -4748,23 +4800,23 @@
     "packages-dev": [
         {
             "name": "barryvdh/laravel-ide-helper",
-            "version": "v2.2.2",
+            "version": "v2.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/barryvdh/laravel-ide-helper.git",
-                "reference": "105f14a50d0959a0e80004a15b3350fdf78f9623"
+                "reference": "a7fc2ec489aada6062d3a63ddc915004a21e38af"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-ide-helper/zipball/105f14a50d0959a0e80004a15b3350fdf78f9623",
-                "reference": "105f14a50d0959a0e80004a15b3350fdf78f9623",
+                "url": "https://api.github.com/repos/barryvdh/laravel-ide-helper/zipball/a7fc2ec489aada6062d3a63ddc915004a21e38af",
+                "reference": "a7fc2ec489aada6062d3a63ddc915004a21e38af",
                 "shasum": ""
             },
             "require": {
                 "barryvdh/reflection-docblock": "^2.0.4",
-                "illuminate/console": "^5.0,<5.4",
-                "illuminate/filesystem": "^5.0,<5.4",
-                "illuminate/support": "^5.0,<5.4",
+                "illuminate/console": "^5.0,<5.5",
+                "illuminate/filesystem": "^5.0,<5.5",
+                "illuminate/support": "^5.0,<5.5",
                 "php": ">=5.4.0",
                 "symfony/class-loader": "^2.3|^3.0"
             },
@@ -4810,7 +4862,7 @@
                 "phpstorm",
                 "sublime"
             ],
-            "time": "2016-11-15 08:21:23"
+            "time": "2017-01-05 21:20:42"
         },
         {
             "name": "barryvdh/reflection-docblock",
@@ -5671,16 +5723,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "4.8.31",
+            "version": "4.8.32",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "98b2b39a520766bec663ff5b7ff1b729db9dbfe3"
+                "reference": "f5e1941a8dacf0d904753ff2895c6f68e54bcee1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/98b2b39a520766bec663ff5b7ff1b729db9dbfe3",
-                "reference": "98b2b39a520766bec663ff5b7ff1b729db9dbfe3",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/f5e1941a8dacf0d904753ff2895c6f68e54bcee1",
+                "reference": "f5e1941a8dacf0d904753ff2895c6f68e54bcee1",
                 "shasum": ""
             },
             "require": {
@@ -5739,7 +5791,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-12-09 02:45:31"
+            "time": "2017-01-22 08:37:05"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
