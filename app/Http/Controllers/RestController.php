@@ -24,7 +24,12 @@ class RestController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('api');
+        if (array_key_exists('DreamFactory\Core\Limit\ServiceProvider', app()->getLoadedProviders())) {
+            $this->middleware('api');
+        } else {
+            $this->middleware('access_check');
+        }
+
     }
 
     /**
