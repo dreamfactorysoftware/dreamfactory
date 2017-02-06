@@ -43,16 +43,16 @@
 <div id="page-content">
     <div class="container-fluid container-inner">
         <div id="error-container" class="alert alert-error center">
-            @if (count($errors) > 0)
-                <div class="alert alert-danger" style="margin-top:40px">
-                    <strong>Whoops!</strong> There were some problems with your input.<br><br>
-                    <ul>
-                        @foreach ($errors as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+            {{--@if (count($errors) > 0)--}}
+                {{--<div class="alert alert-danger" style="margin-top:40px">--}}
+                    {{--<strong>Whoops!</strong> There were some problems with your input.<br><br>--}}
+                    {{--<ul>--}}
+                        {{--@foreach ($errors as $error)--}}
+                            {{--<li>{{ $error }}</li>--}}
+                        {{--@endforeach--}}
+                    {{--</ul>--}}
+                {{--</div>--}}
+            {{--@endif--}}
         </div>
 
             <div class="box-wrapper">
