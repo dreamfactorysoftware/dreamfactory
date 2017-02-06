@@ -8,14 +8,13 @@ return [
     |--------------------------------------------------------------------------
     |
     | Here you may specify the default filesystem disk that should be used
-    | by the framework. A "local" driver, as well as a variety of cloud
-    | based drivers are available for your choosing. Just store away!
-    |
-    | Supported: "local", "s3", "rackspace"
+    | by the framework. The "local" disk, as well as a variety of cloud
+    | based disks are available to your application. Just store away!
     |
     */
 
     'default' => 'local',
+
     /*
     |--------------------------------------------------------------------------
     | Default Cloud Filesystem Disk
@@ -28,6 +27,7 @@ return [
     */
 
     'cloud' => 's3',
+
     /*
     |--------------------------------------------------------------------------
     | Filesystem Disks
@@ -37,30 +37,35 @@ return [
     | may even configure multiple disks of the same driver. Defaults have
     | been setup for each driver as an example of the required options.
     |
+    | Supported Drivers: "local", "ftp", "s3", "rackspace"
+    |
     */
 
     'disks' => [
 
-        'local'     => [
+        'local' => [
             'driver' => 'local',
-            'root'   => env(
-                            'DF_MANAGED_STORAGE_PATH',
-                            storage_path()
-                        ) . DIRECTORY_SEPARATOR . ltrim(env('DF_LOCAL_FILE_ROOT', 'app'), '/'),
+            'root' => env('DF_MANAGED_STORAGE_PATH', storage_path()) . DIRECTORY_SEPARATOR . ltrim(env('DF_LOCAL_FILE_ROOT', 'app'), '/'),
         ],
-        'logs'     => [
+
+        'public' => [
             'driver' => 'local',
-            'root'   => env(
-                            'DF_MANAGED_LOG_PATH',
-                            storage_path('logs')
-                        ),
+            'root' => storage_path('app/public'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
         ],
+
+        'logs' => [
+            'driver' => 'local',
+            'root' => env('DF_MANAGED_LOG_PATH', storage_path('logs')),
+        ],
+
 //        's3'        => [
 //            'driver' => 's3',
-//            'key'    => env('AWS_S3_KEY'),
-//            'secret' => env('AWS_S3_SECRET'),
-//            'region' => env('AWS_S3_REGION'),
-//            'bucket' => env('AWS_S3_CONTAINER'),
+//            'key'    => env('AWS_KEY'),
+//            'secret' => env('AWS_SECRET'),
+//            'region' => env('AWS_REGION'),
+//            'bucket' => env('AWS_CONTAINER'),
 //        ],
 //        'rackspace' => [
 //            'driver'       => 'rackspace',
