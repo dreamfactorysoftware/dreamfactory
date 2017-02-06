@@ -9,8 +9,12 @@
          processIsolation="false"
          stopOnFailure="false">
     <testsuites>
-        <testsuite name="Application Test Suite">
-            <directory suffix="Test.php">./tests</directory>
+        <testsuite name="Feature Tests">
+            <directory suffix="Test.php">./tests/Feature</directory>
+        </testsuite>
+
+        <testsuite name="Unit Tests">
+            <directory suffix="Test.php">./tests/Unit</directory>
         </testsuite>
     </testsuites>
     <filter>
@@ -31,13 +35,13 @@
         <env name="SQLDB_DSN" value="mysql:host=localhost;dbname=df_unit_test"/>
         <env name="SQLDB_USER" value="username"/>
         <env name="SQLDB_PASSWORD" value="password"/>
-        <env name="AWS_S3_KEY" value="key"/>
-        <env name="AWS_S3_SECRET" value="secret"/>
-        <env name="AWS_S3_REGION" value="region"/>
-        <env name="AWS_S3_CONTAINER" value="dfunittestcontainer123"/>
-        <env name="AB_ACCOUNT_NAME" value="account"/>
-        <env name="AB_ACCOUNT_KEY" value="key"/>
-        <env name="AB_CONTAINER" value="dfunittestcontainer123"/>
+        <env name="AWS_KEY" value="key"/>
+        <env name="AWS_SECRET" value="secret"/>
+        <env name="AWS_REGION" value="region"/>
+        <env name="AWS_CONTAINER" value="dfunittestcontainer123"/>
+        <env name="AZURE_ACCOUNT_NAME" value="account"/>
+        <env name="AZURE_ACCOUNT_KEY" value="key"/>
+        <env name="AZURE_CONTAINER" value="dfunittestcontainer123"/>
         <env name="ROS_USERNAME" value="user"/>
         <env name="ROS_PASSWORD" value="password"/>
         <env name="ROS_TENANT_NAME" value="tenant"/>

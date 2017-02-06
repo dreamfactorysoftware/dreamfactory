@@ -46,7 +46,7 @@ return [
 
         'file' => [
             'driver' => 'file',
-            'path' => env('DF_CACHE_PATH', storage_path('framework/cache')),
+            'path' => env('DF_CACHE_PATH', storage_path('framework/cache/data')),
         ],
 
         'memcached' => [

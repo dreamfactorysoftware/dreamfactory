@@ -37,7 +37,7 @@
     "dreamfactory/df-script":          "~0.1.0",
     "dreamfactory/df-sqldb":           "~0.7.0",
     "dreamfactory/df-swagger-ui":      "~0.2.0",
-    "laravel/framework":               "5.3.*",
+    "laravel/framework":               "5.4.*",
     "php":                             ">=5.6.4",
     "tymon/jwt-auth":                  "0.5.*"
   },
@@ -48,10 +48,7 @@
     "laracasts/testdummy":         "~2.0",
     "laravel/homestead":           "^4.0",
     "mockery/mockery":             "0.9.*",
-    "phpunit/phpunit":             "~5.0",
-    "phpspec/phpspec":             "~2.1",
-    "symfony/dom-crawler":         "~3.1",
-    "symfony/css-selector":        "~3.1"
+    "phpunit/phpunit":             "~5.0"
   },
   "autoload":          {
     "classmap": [
@@ -62,9 +59,9 @@
     }
   },
   "autoload-dev":      {
-    "classmap": [
-      "tests/TestCase.php"
-    ]
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
   },
   "scripts":           {
     "post-install-cmd": [

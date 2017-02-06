@@ -14,8 +14,7 @@ class Kernel extends HttpKernel
      */
     protected $middleware = [
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
-        \DreamFactory\Http\Middleware\FirstUserCheck::class,
-        \Barryvdh\Cors\HandleCors::class,
+        \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
     ];
 
     /**
@@ -25,19 +24,9 @@ class Kernel extends HttpKernel
      */
     protected $middlewareGroups = [
         'web' => [
-            \DreamFactory\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
-            \Illuminate\Session\Middleware\StartSession::class,
-            \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-            \DreamFactory\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            \DreamFactory\Http\Middleware\AuthCheck::class,
-        ],
-
-        'api' => [
-            'throttle:60,1',
-            'bindings',
-            \DreamFactory\Http\Middleware\AuthCheck::class,
+            \DreamFactory\Http\Middleware\FirstUserCheck::class,
         ],
     ];
 
@@ -49,25 +38,11 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
-        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+//        'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
+//        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
-        'can' => \Illuminate\Auth\Middleware\Authorize::class,
-        'guest' => \DreamFactory\Http\Middleware\RedirectIfAuthenticated::class,
-        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'access_check' => \DreamFactory\Http\Middleware\AccessCheck::class,
+//        'can' => \Illuminate\Auth\Middleware\Authorize::class,
+//        'guest' => \DreamFactory\Http\Middleware\RedirectIfAuthenticated::class,
+//        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
     ];
-
-    /**
-     * Inject our bootstrapper into the mix
-     */
-    protected function bootstrappers()
-    {
-        $_stack = parent::bootstrappers();
-
-        //  Insert our guy
-        array_unshift($_stack, array_shift($_stack), \DreamFactory\Managed\Bootstrap\ManagedInstance::class);
-
-        return $_stack;
-    }
 }

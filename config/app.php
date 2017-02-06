@@ -164,27 +164,23 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 
         /*
-         * Package Service Providers...
-         */
-        Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
-        /*
          * Uncomment the following line to generate IDE helper
          * using "php artisan ide-helper:generate" command,
-         * */
-        //Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+         */
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 
         /*
-         * DreamFactory Specific Providers...
+         * Package Service Providers...
          */
-        DreamFactory\Core\Providers\DfServiceProvider::class,
+        DreamFactory\Core\LaravelServiceProvider::class,
 
         /*
          * Application Service Providers...
          */
         DreamFactory\Providers\AppServiceProvider::class,
-        DreamFactory\Providers\AuthServiceProvider::class, // laravel 5.3
-        DreamFactory\Providers\BroadcastServiceProvider::class,
-        DreamFactory\Providers\EventServiceProvider::class,
+//        DreamFactory\Providers\AuthServiceProvider::class, // laravel 5.3
+//        DreamFactory\Providers\BroadcastServiceProvider::class,
+//        DreamFactory\Providers\EventServiceProvider::class,
         DreamFactory\Providers\RouteServiceProvider::class,
     ],
 
@@ -205,6 +201,7 @@ return [
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
         'Auth' => Illuminate\Support\Facades\Auth::class,
         'Blade' => Illuminate\Support\Facades\Blade::class,
+        'Broadcast' => Illuminate\Support\Facades\Broadcast::class,
         'Bus' => Illuminate\Support\Facades\Bus::class,
         'Cache' => Illuminate\Support\Facades\Cache::class,
         'Config' => Illuminate\Support\Facades\Config::class,
@@ -237,16 +234,8 @@ return [
         /*
          * Package Facades...
          */
-        'Socialize'              => Laravel\Socialite\Facades\Socialite::class,
-        'JWTAuth'                => Tymon\JWTAuth\Facades\JWTAuth::class,
-
-        /*
-         * DreamFactory Specific Facades...
-         */
-        'ServiceManager'         => DreamFactory\Core\Facades\ServiceManager::class,
-        'SystemResourceManager'  => DreamFactory\Core\Facades\SystemResourceManager::class,
-        'SystemTableModelMapper' => DreamFactory\Core\Facades\SystemTableModelMapper::class,
-        'DbSchemaExtensions'     => DreamFactory\Core\Facades\DbSchemaExtensions::class,
-        'ScriptEngineManager'    => DreamFactory\Core\Script\Facades\ScriptEngineManager::class,
+        'Socialize' => Laravel\Socialite\Facades\Socialite::class,
+        'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
+        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
     ],
 ];
