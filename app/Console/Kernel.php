@@ -1,38 +1,32 @@
 <?php namespace DreamFactory\Console;
 
-use DreamFactory\Managed\Bootstrap\ManagedInstance;
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
     /** @inheritdoc */
-    protected $commands = [
-        'DreamFactory\Console\Commands\ClearAllFileCache',
-        'DreamFactory\Console\Commands\Request',
-        'DreamFactory\Console\Commands\Import',
-        'DreamFactory\Console\Commands\ImportPackage',
-        'DreamFactory\Console\Commands\PullMigrations',
-        'DreamFactory\Console\Commands\Setup',
-        'DreamFactory\Console\Commands\ADGroupImport',
-        'DreamFactory\Console\Commands\HomesteadConfig',
-        'DreamFactory\Console\Commands\ServiceTypeMigrate',
-        'DreamFactory\Console\Commands\Hhvm',
-    ];
-
-    //******************************************************************************
-    //* Methods
-    //******************************************************************************
+    protected $commands = [];
 
     /**
-     * Inject our bootstrapper into the mix
+     * Define the application's command schedule.
+     *
+     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
+     * @return void
      */
-    protected function bootstrappers()
+    protected function schedule(Schedule $schedule)
     {
-        $_stack = parent::bootstrappers();
+        // $schedule->command('inspire')
+        //          ->hourly();
+    }
 
-        //  Insert our guy
-        array_unshift($_stack, array_shift($_stack), ManagedInstance::class);
-
-        return $_stack;
+    /**
+     * Register the Closure based commands for the application.
+     *
+     * @return void
+     */
+    protected function commands()
+    {
+//        require base_path('routes/console.php');
     }
 }

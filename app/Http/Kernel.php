@@ -1,71 +1,48 @@
 <?php
 namespace DreamFactory\Http;
 
-use Barryvdh\Cors\HandleCors;
-use DreamFactory\Core\Limit\Http\Middleware\EvaluateLimits;
-use DreamFactory\Http\Middleware\AccessCheck;
-use DreamFactory\Http\Middleware\FirstUserCheck;
-use DreamFactory\Managed\Bootstrap\ManagedInstance;
-use Illuminate\Auth\Middleware\AuthenticateWithBasicAuth;
-use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
-use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
-use Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode;
-use Illuminate\Session\Middleware\StartSession;
-use Illuminate\View\Middleware\ShareErrorsFromSession;
-use DreamFactory\Http\Middleware\AuthCheck;
 
 class Kernel extends HttpKernel
 {
     /**
      * The application's global HTTP middleware stack.
      *
+     * These middleware are run during every request to your application.
+     *
      * @var array
      */
     protected $middleware = [
-        CheckForMaintenanceMode::class,
-        EncryptCookies::class,
-        AddQueuedCookiesToResponse::class,
-        StartSession::class,
-        ShareErrorsFromSession::class,
-        FirstUserCheck::class,
-        HandleCors::class,
-        AuthCheck::class,
+        \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
+        \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
+    ];
+
+    /**
+     * The application's route middleware groups.
+     *
+     * @var array
+     */
+    protected $middlewareGroups = [
+        'web' => [
+            \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \DreamFactory\Http\Middleware\FirstUserCheck::class,
+        ],
     ];
 
     /**
      * The application's route middleware.
      *
+     * These middleware may be assigned to groups or used individually.
+     *
      * @var array
      */
     protected $routeMiddleware = [
-        'auth.basic'   => AuthenticateWithBasicAuth::class
+//        'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
+//        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
+//        'can' => \Illuminate\Auth\Middleware\Authorize::class,
+//        'guest' => \DreamFactory\Http\Middleware\RedirectIfAuthenticated::class,
+//        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
     ];
-
-    protected $middlewareGroups = [
-        'access_check' => [
-            'access_check' => AccessCheck::class,
-        ],
-        'api' => [
-            'access_check' => AccessCheck::class,
-            'evaluate_limits' => EvaluateLimits::class
-        ]
-    ];
-
-    //******************************************************************************
-    //* Methods
-    //******************************************************************************
-
-    /**
-     * Inject our bootstrapper into the mix
-     */
-    protected function bootstrappers()
-    {
-        $_stack = parent::bootstrappers();
-
-        //  Insert our guy
-        array_unshift($_stack, array_shift($_stack), ManagedInstance::class);
-
-        return $_stack;
-    }
 }
