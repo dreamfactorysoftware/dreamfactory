@@ -28,6 +28,41 @@ sudo pecl install mongodb > $OUTPUT 2>&1
 sudo echo "extension=mongodb.so" > /etc/php/7.0/mods-available/mongodb.ini
 sudo phpenmod mongodb
 
+echo ">>> Installing php v8js extension from pre-build packages of df-docker"
+git clone https://github.com/dreamfactorysoftware/df-docker.git > $OUTPUT 2>&1
+cd df-docker
+sudo mkdir -p /usr/lib /usr/include
+sudo cp -R v8/usr/lib/libv8* /usr/lib/
+sudo cp -R v8/usr/include /usr/include/
+sudo cp v8/usr/lib/php/20151012/v8js.so /usr/lib/php/20151012/v8js.so
+sudo echo "extension=v8js.so" > /etc/php/7.0/mods-available/v8js.ini
+sudo phpenmod v8js
+cd ../
+sudo rm -R df-docker
+
+echo ">>> Installing php cassandra extension"
+mkdir cassandra
+cd cassandra
+sudo apt-get install -qq -y libgmp-dev libpcre3-dev g++ make cmake libssl-dev openssl > $OUTPUT 2>&1
+wget -q http://downloads.datastax.com/cpp-driver/ubuntu/16.04/dependenices/libuv/v1.8.0/libuv_1.8.0-1_amd64.deb
+wget -q http://downloads.datastax.com/cpp-driver/ubuntu/16.04/dependenices/libuv/v1.8.0/libuv-dev_1.8.0-1_amd64.deb
+wget -q http://downloads.datastax.com/cpp-driver/ubuntu/16.04/cassandra/v2.4.2/cassandra-cpp-driver_2.4.2-1_amd64.deb
+wget -q http://downloads.datastax.com/cpp-driver/ubuntu/16.04/cassandra/v2.4.2/cassandra-cpp-driver-dev_2.4.2-1_amd64.deb
+sudo dpkg -i libuv_1.8.0-1_amd64.deb > $OUTPUT 2>&1
+sudo dpkg -i libuv-dev_1.8.0-1_amd64.deb > $OUTPUT 2>&1
+sudo dpkg -i cassandra-cpp-driver_2.4.2-1_amd64.deb > $OUTPUT 2>&1
+sudo dpkg -i cassandra-cpp-driver-dev_2.4.2-1_amd64.deb > $OUTPUT 2>&1
+git clone https://github.com/datastax/php-driver.git > $OUTPUT 2>&1
+cd php-driver/ext
+phpize > $OUTPUT 2>&1
+./configure > $OUTPUT 2>&1
+make > $OUTPUT 2>&1
+sudo make install > $OUTPUT 2>&1
+sudo echo "extension=cassandra.so" > /etc/php/7.0/mods-available/cassandra.ini
+sudo phpenmod cassandra
+cd ../../../
+sudo rm -R cassandra
+
 echo ">>> Installing phpMyAdmin (http://host/pma)"
 cd */.
 composer create-project phpmyadmin/phpmyadmin --repository-url=https://www.phpmyadmin.net/packages.json --no-dev public/pma > $OUTPUT 2>&1

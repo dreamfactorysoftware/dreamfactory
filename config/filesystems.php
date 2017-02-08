@@ -8,14 +8,13 @@ return [
     |--------------------------------------------------------------------------
     |
     | Here you may specify the default filesystem disk that should be used
-    | by the framework. A "local" driver, as well as a variety of cloud
-    | based drivers are available for your choosing. Just store away!
-    |
-    | Supported: "local", "s3", "rackspace"
+    | by the framework. The "local" disk, as well as a variety of cloud
+    | based disks are available to your application. Just store away!
     |
     */
 
     'default' => 'local',
+
     /*
     |--------------------------------------------------------------------------
     | Default Cloud Filesystem Disk
@@ -28,6 +27,7 @@ return [
     */
 
     'cloud' => 's3',
+
     /*
     |--------------------------------------------------------------------------
     | Filesystem Disks
@@ -37,41 +37,53 @@ return [
     | may even configure multiple disks of the same driver. Defaults have
     | been setup for each driver as an example of the required options.
     |
+    | Supported Drivers: "local", "ftp", "s3", "rackspace"
+    |
     */
 
     'disks' => [
 
-        'local'     => [
+        'local' => [
             'driver' => 'local',
-            'root'   => env('DF_MANAGED_STORAGE_PATH', storage_path()) .
-                DIRECTORY_SEPARATOR .
-                ltrim(env('DF_LOCAL_FILE_ROOT', 'app'), '/'),
-        ],
-        's3'        => [
-            'driver' => 's3',
-            'key'    => env('AWS_S3_KEY'),
-            'secret' => env('AWS_S3_SECRET'),
-            'region' => env('AWS_S3_REGION'),
-            'bucket' => env('AWS_S3_CONTAINER'),
-        ],
-        'rackspace' => [
-            'driver'       => 'rackspace',
-            'username'     => env('ROS_USERNAME'),
-            'password'     => env('ROS_PASSWORD'),
-            'tenant_name'  => env('ROS_TENANT_NAME'),
-            'container'    => env('ROS_CONTAINER'),
-            'url'          => env('ROS_URL'),
-            'region'       => env('ROS_REGION'),
-            'storage_type' => env('ROS_STORAGE_TYPE'),
-        ],
-        'azure'     => [
-            'driver'       => 'azure',
-            'account_name' => env('AZURE_ACCOUNT_NAME'),
-            'account_key'  => env('AZURE_ACCOUNT_KEY'),
-            'protocol'     => 'https',
-            'container'    => env('AZURE_BLOB_CONTAINER'),
+            'root' => env('DF_MANAGED_STORAGE_PATH', storage_path()) . DIRECTORY_SEPARATOR . ltrim(env('DF_LOCAL_FILE_ROOT', 'app'), '/'),
         ],
 
+        'public' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+        ],
+
+        'logs' => [
+            'driver' => 'local',
+            'root' => env('DF_MANAGED_LOG_PATH', storage_path('logs')),
+        ],
+
+//        's3'        => [
+//            'driver' => 's3',
+//            'key'    => env('AWS_KEY'),
+//            'secret' => env('AWS_SECRET'),
+//            'region' => env('AWS_REGION'),
+//            'bucket' => env('AWS_CONTAINER'),
+//        ],
+//        'rackspace' => [
+//            'driver'       => 'rackspace',
+//            'username'     => env('ROS_USERNAME'),
+//            'password'     => env('ROS_PASSWORD'),
+//            'tenant_name'  => env('ROS_TENANT_NAME'),
+//            'container'    => env('ROS_CONTAINER'),
+//            'url'          => env('ROS_URL'),
+//            'region'       => env('ROS_REGION'),
+//            'storage_type' => env('ROS_STORAGE_TYPE'),
+//        ],
+//        'azure'     => [
+//            'driver'       => 'azure',
+//            'account_name' => env('AZURE_ACCOUNT_NAME'),
+//            'account_key'  => env('AZURE_ACCOUNT_KEY'),
+//            'protocol'     => 'https',
+//            'container'    => env('AZURE_BLOB_CONTAINER'),
+//        ],
     ],
 
 ];

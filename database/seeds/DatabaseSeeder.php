@@ -17,10 +17,15 @@ class DatabaseSeeder extends Seeder
         Model::unguard();
 
         $this->call(ServiceSeeder::class);
-        $this->call(AppSeeder::class);
+
+        if (class_exists('DreamFactory\\Core\\SqlDb\\Models\\Seeds\\DatabaseSeeder')) {
+            $this->call('DreamFactory\\Core\\SqlDb\\Models\\Seeds\\DatabaseSeeder');
+        }
 
         if (class_exists('DreamFactory\\Core\\User\\Models\\Seeds\\DatabaseSeeder')) {
             $this->call('DreamFactory\\Core\\User\\Models\\Seeds\\DatabaseSeeder');
         }
+
+        $this->call(AppSeeder::class);
     }
 }

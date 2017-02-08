@@ -12,14 +12,14 @@
 */
 
 use DreamFactory\Core\LogHandlers\StreamHandler;
-use Monolog\Formatter\LineFormatter;
 use DreamFactory\Core\LogHandlers\SyslogHandler;
 use DreamFactory\Core\LogHandlers\ErrorLogHandler;
 use DreamFactory\Core\LogHandlers\RotatingFileHandler;
+use Monolog\Formatter\LineFormatter;
 use Monolog\Logger;
 
 $app = new Illuminate\Foundation\Application(
-    realpath(__DIR__ . '/../')
+    realpath(__DIR__.'/../')
 );
 
 /*
@@ -34,18 +34,18 @@ $app = new Illuminate\Foundation\Application(
 */
 
 $app->singleton(
-    'Illuminate\Contracts\Http\Kernel',
-    'DreamFactory\Http\Kernel'
+    Illuminate\Contracts\Http\Kernel::class,
+    DreamFactory\Http\Kernel::class
 );
 
 $app->singleton(
-    'Illuminate\Contracts\Console\Kernel',
-    'DreamFactory\Console\Kernel'
+    Illuminate\Contracts\Console\Kernel::class,
+    DreamFactory\Console\Kernel::class
 );
 
 $app->singleton(
-    'Illuminate\Contracts\Debug\ExceptionHandler',
-    'DreamFactory\Exceptions\Handler'
+    Illuminate\Contracts\Debug\ExceptionHandler::class,
+    DreamFactory\Exceptions\Handler::class
 );
 
 $app->configureMonologUsing(function (Logger $monolog){
