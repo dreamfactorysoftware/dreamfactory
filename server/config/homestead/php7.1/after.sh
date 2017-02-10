@@ -44,28 +44,28 @@ sudo phpenmod v8js > $OUTPUT 2>&1
 cd ../../
 sudo rm -Rf v8-compiled
 
-echo ">>> Installing php cassandra extension"
-mkdir cassandra
-cd cassandra
-sudo apt-get install -qq -y libgmp-dev libpcre3-dev g++ make cmake libssl-dev openssl > $OUTPUT 2>&1
-wget -q http://downloads.datastax.com/cpp-driver/ubuntu/16.04/dependenices/libuv/v1.8.0/libuv_1.8.0-1_amd64.deb
-wget -q http://downloads.datastax.com/cpp-driver/ubuntu/16.04/dependenices/libuv/v1.8.0/libuv-dev_1.8.0-1_amd64.deb
-wget -q http://downloads.datastax.com/cpp-driver/ubuntu/16.04/cassandra/v2.4.2/cassandra-cpp-driver_2.4.2-1_amd64.deb
-wget -q http://downloads.datastax.com/cpp-driver/ubuntu/16.04/cassandra/v2.4.2/cassandra-cpp-driver-dev_2.4.2-1_amd64.deb
-sudo dpkg -i libuv_1.8.0-1_amd64.deb > $OUTPUT 2>&1
-sudo dpkg -i libuv-dev_1.8.0-1_amd64.deb > $OUTPUT 2>&1
-sudo dpkg -i cassandra-cpp-driver_2.4.2-1_amd64.deb > $OUTPUT 2>&1
-sudo dpkg -i cassandra-cpp-driver-dev_2.4.2-1_amd64.deb > $OUTPUT 2>&1
-git clone https://github.com/datastax/php-driver.git > $OUTPUT 2>&1
-cd php-driver/ext
-phpize > $OUTPUT 2>&1
-./configure > $OUTPUT 2>&1
-make > $OUTPUT 2>&1
-sudo make install > $OUTPUT 2>&1
-sudo echo "extension=cassandra.so" > /etc/php/7.1/mods-available/cassandra.ini
-sudo phpenmod cassandra
-cd ../../../
-sudo rm -R cassandra
+#echo ">>> Installing php cassandra extension"
+#mkdir cassandra
+#cd cassandra
+#sudo apt-get install -qq -y libgmp-dev libpcre3-dev g++ make cmake libssl-dev openssl > $OUTPUT 2>&1
+#wget -q http://downloads.datastax.com/cpp-driver/ubuntu/16.04/dependenices/libuv/v1.8.0/libuv_1.8.0-1_amd64.deb
+#wget -q http://downloads.datastax.com/cpp-driver/ubuntu/16.04/dependenices/libuv/v1.8.0/libuv-dev_1.8.0-1_amd64.deb
+#wget -q http://downloads.datastax.com/cpp-driver/ubuntu/16.04/cassandra/v2.4.2/cassandra-cpp-driver_2.4.2-1_amd64.deb
+#wget -q http://downloads.datastax.com/cpp-driver/ubuntu/16.04/cassandra/v2.4.2/cassandra-cpp-driver-dev_2.4.2-1_amd64.deb
+#sudo dpkg -i libuv_1.8.0-1_amd64.deb > $OUTPUT 2>&1
+#sudo dpkg -i libuv-dev_1.8.0-1_amd64.deb > $OUTPUT 2>&1
+#sudo dpkg -i cassandra-cpp-driver_2.4.2-1_amd64.deb > $OUTPUT 2>&1
+#sudo dpkg -i cassandra-cpp-driver-dev_2.4.2-1_amd64.deb > $OUTPUT 2>&1
+#git clone https://github.com/datastax/php-driver.git > $OUTPUT 2>&1
+#cd php-driver/ext
+#phpize > $OUTPUT 2>&1
+#./configure > $OUTPUT 2>&1
+#make > $OUTPUT 2>&1
+#sudo make install > $OUTPUT 2>&1
+#sudo echo "extension=cassandra.so" > /etc/php/7.1/mods-available/cassandra.ini
+#sudo phpenmod cassandra
+#cd ../../../
+#sudo rm -R cassandra
 
 echo ">>> Installing phpMyAdmin (http://host/pma)"
 cd */.
@@ -91,7 +91,7 @@ sudo php artisan config:clear
 sudo php artisan clear-compiled
 cp .env .env-backup-homestead > $OUTPUT 2>&1
 rm .env > $OUTPUT 2>&1
-php artisan dreamfactory:setup --db_driver=mysql --db_host=127.0.0.1 --db_database=homestead --db_username=homestead --db_password=secret --cache_driver=file > $OUTPUT 2>&1
+php artisan df:setup --db_driver=mysql --db_host=127.0.0.1 --db_database=homestead --db_username=homestead --db_password=secret --cache_driver=file > $OUTPUT 2>&1
 
 cd ../
 echo ">>> Installing 'zip' command"
