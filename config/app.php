@@ -167,7 +167,7 @@ return [
          * Uncomment the following line to generate IDE helper
          * using "php artisan ide-helper:generate" command,
          */
-        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        //Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 
         /*
          * Package Service Providers...
