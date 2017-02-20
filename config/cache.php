@@ -48,16 +48,11 @@ return [
             'driver' => 'file',
             'path' => env('DF_CACHE_PATH', storage_path('framework/cache/data')),
         ],
-<<<<<<< HEAD
-        'limit'                                       => [
+        'limit' => [
             'driver' => 'file',
             'path'   => env('LIMIT_CACHE_PATH', storage_path('framework/limit_cache')),
         ],
-        'memcached'                                => [
-            'driver'  => 'memcached',
-=======
-
-        'memcached' => [
+        'memcached'  => [
             'driver' => 'memcached',
             'persistent_id' => env('MEMCACHED_PERSISTENT_ID'),
             'sasl' => [
@@ -67,7 +62,6 @@ return [
             'options' => [
                 // Memcached::OPT_CONNECT_TIMEOUT  => 2000,
             ],
->>>>>>> 8ff25c04f8f263a540ff33eb12db47520d93437f
             'servers' => [
                 [
                     'host' => env('MEMCACHED_HOST', '127.0.0.1'),
