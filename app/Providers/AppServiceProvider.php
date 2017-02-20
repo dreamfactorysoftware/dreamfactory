@@ -1,21 +1,10 @@
-<?php
-namespace DreamFactory\Providers;
+<?php namespace DreamFactory\Providers;
 
 use DreamFactory\Services\Registrar;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        //
-    }
-
     /**
      * Register any application services.
      *
@@ -27,9 +16,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        if ($this->app->environment() !== 'production') {
-            $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
-        }
         $this->app->bind('Illuminate\Contracts\Auth\Registrar', Registrar::class);
     }
 }
