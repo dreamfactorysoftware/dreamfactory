@@ -48,8 +48,11 @@ return [
             'driver' => 'file',
             'path' => env('DF_CACHE_PATH', storage_path('framework/cache/data')),
         ],
-
-        'memcached' => [
+        'limit' => [
+            'driver' => 'file',
+            'path'   => env('LIMIT_CACHE_PATH', storage_path('framework/limit_cache')),
+        ],
+        'memcached'  => [
             'driver' => 'memcached',
             'persistent_id' => env('MEMCACHED_PERSISTENT_ID'),
             'sasl' => [
