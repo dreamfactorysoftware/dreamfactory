@@ -1,4 +1,4 @@
-## DreamFactory 2.4.2
+## DreamFactory 2.5.0
 
 [![License](https://poser.pugx.org/dreamfactory/dreamfactory/license.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/dreamfactorysoftware/dreamfactory?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
@@ -75,7 +75,7 @@ To connect to a different Database Server after initial setup...
 > php artisan cache:clear
 
 * Run DreamFactory setup wizard.
-> php artisan dreamfactory:setup
+> php artisan df:setup
 
 * Make sure your web server can read/write from/to storage/ (sub directories) and bootstrap/cache/ directories.
 > Example:
