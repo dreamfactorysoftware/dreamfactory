@@ -7,6 +7,20 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 ### Fixed
 
+## [2.5.0] - 2017-03-04
+- Restructuring to upgrade to Laravel 5.4
+
+### Added
+- Adding support for limits feature cache store
+- Added an APP_KEY placeholder for easy config in docker deployment
+
+### Changed
+- DF-954 Made 'Bad request. No token or api key provided.' error message more verbose
+- Updated vagrant provisioning script
+
+### Fixed
+- Fixed cassandra driver install for homestead setup
+
 ## [2.4.2] - 2017-01-17
 ### Added
 - DF-926 SAML 2.0 support as an authentication service
@@ -148,7 +162,8 @@ For older installs, see DF_CIPHER in .env or .env-dist for more details.
 ## 2.0.0 - 2015-10-27
 First official release of the new open-source DreamFactory project.
 
-[Unreleased]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.4.2...HEAD
+[Unreleased]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.5.0...HEAD
+[2.5.0]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.4.2...2.5.0
 [2.4.2]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.4.1...2.4.2
 [2.4.1]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.4.0...2.4.1
 [2.4.0]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.3.1...2.4.0

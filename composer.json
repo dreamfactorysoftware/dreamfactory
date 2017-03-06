@@ -9,10 +9,15 @@
   ],
   "homepage":          "https://www.dreamfactory.com/",
   "license":           "Apache-2.0",
+  "type":              "project",
   "authors":           [
     {
       "name":  "Arif Islam",
       "email": "arifislam@dreamfactory.com"
+    },
+    {
+      "name":  "Charles Harmon",
+      "email": "charlesharmon@dreamfactory.com"
     },
     {
       "name":  "Lee Hicks",
@@ -28,38 +33,36 @@
   "minimum-stability": "dev",
   "prefer-stable":     true,
   "require":           {
-    "dreamfactory/df-admin-app":       "~2.5.0",
-    "dreamfactory/df-aws":             "~0.7.0",
-    "dreamfactory/df-azure":           "~0.7.0",
-    "dreamfactory/df-cache":           "~0.4.0",
-    "dreamfactory/df-cassandra":       "~0.4.0",
-    "dreamfactory/df-core":            "~0.7.0",
-    "dreamfactory/df-couchbase":       "~0.2.0",
-    "dreamfactory/df-couchdb":         "~0.7.0",
-    "dreamfactory/df-email":           "~0.1.0",
+    "dreamfactory/df-admin-app":       "~2.6.0",
+    "dreamfactory/df-aws":             "~0.8.0",
+    "dreamfactory/df-azure":           "~0.8.0",
+    "dreamfactory/df-cache":           "~0.5.0",
+    "dreamfactory/df-cassandra":       "~0.5.0",
+    "dreamfactory/df-core":            "~0.8.0",
+    "dreamfactory/df-couchbase":       "~0.3.0",
+    "dreamfactory/df-couchdb":         "~0.8.0",
+    "dreamfactory/df-email":           "~0.2.0",
     "dreamfactory/df-filemanager-app": "~0.1.0",
-    "dreamfactory/df-managed":         "~2.5.0",
-    "dreamfactory/df-mongodb":         "~0.7.0",
-    "dreamfactory/df-oauth":           "~0.7.0",
-    "dreamfactory/df-rackspace":       "~0.7.0",
-    "dreamfactory/df-rws":             "~0.7.0",
-    "dreamfactory/df-script":          "~0.1.0",
-    "dreamfactory/df-sqldb":           "~0.7.0",
+    "dreamfactory/df-mongodb":         "~0.8.0",
+    "dreamfactory/df-oauth":           "~0.8.0",
+    "dreamfactory/df-rackspace":       "~0.8.0",
+    "dreamfactory/df-rws":             "~0.8.0",
+    "dreamfactory/df-script":          "~0.2.0",
+    "dreamfactory/df-sqldb":           "~0.8.0",
     "dreamfactory/df-swagger-ui":      "~0.2.0",
-    "dreamfactory/df-user":            "~0.7.0",
-    "laravel/framework":               "5.2.*",
+    "dreamfactory/df-user":            "~0.8.0",
+    "laravel/framework":               "5.4.*",
     "predis/predis":                   "~1.0",
-    "tymon/jwt-auth":                  "0.5.*"
+    "tymon/jwt-auth":                  "~1.0.0"
   },
   "require-dev":       {
     "barryvdh/laravel-ide-helper": "~2.1",
+    "fzaninotto/faker":            "~1.4",
     "laracasts/generators":        "~1.0",
     "laracasts/testdummy":         "~2.0",
     "laravel/homestead":           "^4.0",
-    "phpspec/phpspec":             "~2.1",
-    "phpunit/phpunit":             "~4.0",
-    "symfony/css-selector":        "~3.0",
-    "symfony/dom-crawler":         "~3.0"
+    "mockery/mockery":             "0.9.*",
+    "phpunit/phpunit":             "~5.0"
   },
   "autoload":          {
     "classmap": [
@@ -70,30 +73,31 @@
     }
   },
   "autoload-dev":      {
-    "classmap": [
-      "tests/TestCase.php"
-    ]
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
   },
   "scripts":           {
     "post-install-cmd": [
+      "Illuminate\\Foundation\\ComposerScripts::postInstall",
       "php artisan clear-compiled",
       "php artisan optimize",
-      "php artisan dreamfactory:pull-migrations",
-      "php artisan dreamfactory:homestead-config"
+      "php artisan df:homestead-config"
     ],
     "post-update-cmd":  [
+      "Illuminate\\Foundation\\ComposerScripts::postInstall",
       "php artisan clear-compiled",
       "php artisan optimize",
-      "php artisan dreamfactory:pull-migrations",
-      "php artisan dreamfactory:homestead-config"
+      "php artisan df:homestead-config"
     ]
   },
   "config":            {
-    "preferred-install": "dist"
+    "preferred-install": "dist",
+    "sort-packages":     true
   },
   "extra":             {
     "branch-alias":    {
-      "dev-develop": "2.4.x-dev"
+      "dev-develop": "2.5.x-dev"
     },
     "installer-paths": {
       "public/{$name}/": [
