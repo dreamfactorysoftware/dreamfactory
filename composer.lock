@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "aa9388e5c53d01543e9ee5be9c869334",
-    "content-hash": "69d96add8e6538d51eafd94bb1320c89",
+    "hash": "e4ab0ebd74ce48968dd057ab0ee533a6",
+    "content-hash": "60b3d52a080ea85fc875a54e61bfa7c3",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -139,37 +139,6 @@
                 "laravel"
             ],
             "time": "2017-02-15 21:21:33"
-        },
-        {
-            "name": "container-interop/container-interop",
-            "version": "1.2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/container-interop/container-interop.git",
-                "reference": "79cbf1341c22ec75643d841642dd5d6acd83bdb8"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/container-interop/container-interop/zipball/79cbf1341c22ec75643d841642dd5d6acd83bdb8",
-                "reference": "79cbf1341c22ec75643d841642dd5d6acd83bdb8",
-                "shasum": ""
-            },
-            "require": {
-                "psr/container": "^1.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Interop\\Container\\": "src/Interop/Container/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Promoting the interoperability of container objects (DIC, SL, etc.)",
-            "homepage": "https://github.com/container-interop/container-interop",
-            "time": "2017-02-14 19:40:03"
         },
         {
             "name": "doctrine/annotations",
@@ -743,59 +712,6 @@
             "time": "2016-11-02 17:01:21"
         },
         {
-            "name": "dreamfactory/df-adldap",
-            "version": "dev-develop",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/dreamfactorysoftware/df-adldap.git",
-                "reference": "4728305e35bb1272c9965e981c4fcab59107ad7f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-adldap/zipball/4728305e35bb1272c9965e981c4fcab59107ad7f",
-                "reference": "4728305e35bb1272c9965e981c4fcab59107ad7f",
-                "shasum": ""
-            },
-            "require": {
-                "dreamfactory/df-core": "~0.8.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-develop": "0.8.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "DreamFactory\\Core\\ADLdap\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "proprietary"
-            ],
-            "authors": [
-                {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                },
-                {
-                    "name": "Arif Islam",
-                    "email": "arifislam@dreamfactory.com"
-                }
-            ],
-            "description": "Active Directory & LDAP support for DreamFactory Platform 2.0",
-            "homepage": "https://www.dreamfactory.com/",
-            "keywords": [
-                "ad",
-                "api",
-                "dreamfactory",
-                "ldap",
-                "rest"
-            ],
-            "time": "2017-03-06 20:43:39"
-        },
-        {
             "name": "dreamfactory/df-admin-app",
             "version": "dev-develop",
             "source": {
@@ -849,12 +765,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-aws.git",
-                "reference": "ec155f267c8bd9011d676b57e3504d24564d0b49"
+                "reference": "cc03d31ea3bb9a7457d235ff65dca521b16fb7cd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-aws/zipball/ec155f267c8bd9011d676b57e3504d24564d0b49",
-                "reference": "ec155f267c8bd9011d676b57e3504d24564d0b49",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-aws/zipball/cc03d31ea3bb9a7457d235ff65dca521b16fb7cd",
+                "reference": "cc03d31ea3bb9a7457d235ff65dca521b16fb7cd",
                 "shasum": ""
             },
             "require": {
@@ -862,6 +778,7 @@
                 "dreamfactory/df-core": "~0.8.0",
                 "dreamfactory/df-database": "~0.2.0",
                 "dreamfactory/df-email": "~0.2.0",
+                "dreamfactory/df-file": "~0.1.0",
                 "dreamfactory/df-sqldb": "~0.8.0"
             },
             "type": "library",
@@ -900,7 +817,7 @@
                 "rest",
                 "s3"
             ],
-            "time": "2017-03-05 02:34:46"
+            "time": "2017-03-07 21:07:54"
         },
         {
             "name": "dreamfactory/df-azure",
@@ -908,18 +825,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-azure.git",
-                "reference": "a8f20a4ca53b7cb6302876cc1d78b7dd447096ea"
+                "reference": "3964f00108c77c9347d15f467829c1bf5be02a78"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-azure/zipball/a8f20a4ca53b7cb6302876cc1d78b7dd447096ea",
-                "reference": "a8f20a4ca53b7cb6302876cc1d78b7dd447096ea",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-azure/zipball/3964f00108c77c9347d15f467829c1bf5be02a78",
+                "reference": "3964f00108c77c9347d15f467829c1bf5be02a78",
                 "shasum": ""
             },
             "require": {
                 "dreamfactory/azure-documentdb-php-sdk": "~0.1.0",
                 "dreamfactory/df-core": "~0.8.0",
                 "dreamfactory/df-database": "~0.2.0",
+                "dreamfactory/df-file": "~0.1.0",
                 "microsoft/azure-storage": "0.13.*"
             },
             "type": "library",
@@ -957,68 +875,7 @@
                 "dsp",
                 "rest"
             ],
-            "time": "2017-03-05 02:37:57"
-        },
-        {
-            "name": "dreamfactory/df-azure-ad",
-            "version": "dev-develop",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/dreamfactorysoftware/df-azure-ad.git",
-                "reference": "8f52d5e44409017bd7f11095b8bcc2553cad0408"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-azure-ad/zipball/8f52d5e44409017bd7f11095b8bcc2553cad0408",
-                "reference": "8f52d5e44409017bd7f11095b8bcc2553cad0408",
-                "shasum": ""
-            },
-            "require": {
-                "dreamfactory/df-core": "~0.8.0",
-                "dreamfactory/df-oauth": "~0.8.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-develop": "0.2.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "DreamFactory\\Core\\AzureAD\\": "src/"
-                }
-            },
-            "license": [
-                "proprietary"
-            ],
-            "authors": [
-                {
-                    "name": "Arif Islam",
-                    "email": "arifislam@dreamfactory.com"
-                },
-                {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                }
-            ],
-            "description": "Azure Active Directory support for DreamFactory Platform 2.0",
-            "homepage": "https://www.dreamfactory.com/",
-            "keywords": [
-                "active",
-                "ad",
-                "api",
-                "azure",
-                "directory",
-                "dreamfactory",
-                "rest"
-            ],
-            "support": {
-                "email": "support@dreamfactory.com",
-                "source": "https://github.com/dreamfactorysoftware/df-azure-ad",
-                "issues": "https://github.com/dreamfactorysoftware/df-azure-ad/issues",
-                "wiki": "https://wiki.dreamfactory.com"
-            },
-            "time": "2017-03-05 02:41:22"
+            "time": "2017-03-07 21:08:35"
         },
         {
             "name": "dreamfactory/df-cache",
@@ -1417,6 +1274,63 @@
             "time": "2017-03-05 03:17:06"
         },
         {
+            "name": "dreamfactory/df-file",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dreamfactorysoftware/df-file.git",
+                "reference": "485ecc5a0667bc94fc406ead2c3f237ed7308fad"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-file/zipball/485ecc5a0667bc94fc406ead2c3f237ed7308fad",
+                "reference": "485ecc5a0667bc94fc406ead2c3f237ed7308fad",
+                "shasum": ""
+            },
+            "require": {
+                "dreamfactory/df-core": "~0.8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "@stable"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-develop": "0.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "DreamFactory\\Core\\File\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Lee Hicks",
+                    "email": "leehicks@dreamfactory.com"
+                },
+                {
+                    "name": "Arif Islam",
+                    "email": "arifislam@dreamfactory.com"
+                }
+            ],
+            "description": "File service for DreamFactory Platform 2.0",
+            "homepage": "https://www.dreamfactory.com/",
+            "keywords": [
+                "api",
+                "blob",
+                "dreamfactory",
+                "file",
+                "rest",
+                "storage"
+            ],
+            "time": "2017-03-07 20:45:06"
+        },
+        {
             "name": "dreamfactory/df-filemanager-app",
             "version": "dev-develop",
             "source": {
@@ -1460,181 +1374,6 @@
                 "rest"
             ],
             "time": "2017-03-04 06:44:06"
-        },
-        {
-            "name": "dreamfactory/df-ibmdb2",
-            "version": "dev-develop",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/dreamfactorysoftware/df-ibmdb2.git",
-                "reference": "866b9f4152ec6f03230cd2e38e5c8ddb9e933639"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-ibmdb2/zipball/866b9f4152ec6f03230cd2e38e5c8ddb9e933639",
-                "reference": "866b9f4152ec6f03230cd2e38e5c8ddb9e933639",
-                "shasum": ""
-            },
-            "require": {
-                "dreamfactory/df-core": "~0.8.0",
-                "dreamfactory/df-database": "~0.2.0",
-                "dreamfactory/df-sqldb": "~0.8.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-develop": "0.8.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "DreamFactory\\Core\\IbmDb2\\": "src/"
-                }
-            },
-            "license": [
-                "proprietary"
-            ],
-            "authors": [
-                {
-                    "name": "Arif Islam",
-                    "email": "arifislam@dreamfactory.com"
-                },
-                {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                }
-            ],
-            "description": "The DreamFactory(tm) IBM DB2 Service.",
-            "homepage": "https://www.dreamfactory.com/",
-            "keywords": [
-                "api",
-                "database",
-                "db",
-                "dreamfactory",
-                "ibm db2",
-                "rest",
-                "sql"
-            ],
-            "support": {
-                "email": "support@dreamfactory.com",
-                "source": "https://github.com/dreamfactorysoftware/df-ibmdb2",
-                "issues": "https://github.com/dreamfactorysoftware/df-ibmdb2/issues",
-                "wiki": "https://wiki.dreamfactory.com"
-            },
-            "time": "2017-03-05 03:27:31"
-        },
-        {
-            "name": "dreamfactory/df-limits",
-            "version": "dev-develop",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/dreamfactorysoftware/df-limits.git",
-                "reference": "669917f75cc0ba229fde53b1c6da9865fab7dd3b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-limits/zipball/669917f75cc0ba229fde53b1c6da9865fab7dd3b",
-                "reference": "669917f75cc0ba229fde53b1c6da9865fab7dd3b",
-                "shasum": ""
-            },
-            "require": {
-                "dreamfactory/df-core": "~0.8.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-develop": "0.1.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "DreamFactory\\Core\\Limit\\": "src/"
-                }
-            },
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "Charles Harmon",
-                    "email": "charlesharmon@dreamfactory.com"
-                }
-            ],
-            "description": "Limits configuration package for DreamFactory.",
-            "homepage": "https://www.dreamfactory.com/",
-            "keywords": [
-                "dreamfactory",
-                "limits"
-            ],
-            "support": {
-                "email": "support@dreamfactory.com",
-                "source": "https://github.com/dreamfactorysoftware/df-limits",
-                "issues": "https://github.com/dreamfactorysoftware/df-limits/issues",
-                "wiki": "https://wiki.dreamfactory.com"
-            },
-            "time": "2017-03-05 03:28:54"
-        },
-        {
-            "name": "dreamfactory/df-logger",
-            "version": "dev-develop",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/dreamfactorysoftware/df-logger.git",
-                "reference": "c58c4133e3e5b52b046b201a040604d067d82956"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-logger/zipball/c58c4133e3e5b52b046b201a040604d067d82956",
-                "reference": "c58c4133e3e5b52b046b201a040604d067d82956",
-                "shasum": ""
-            },
-            "require": {
-                "dreamfactory/df-core": "~0.8.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-develop": "0.5.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "DreamFactory\\Core\\Logger\\": "src/"
-                }
-            },
-            "license": [
-                "proprietary"
-            ],
-            "authors": [
-                {
-                    "name": "Arif Islam",
-                    "email": "arifislam@dreamfactory.com"
-                },
-                {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                }
-            ],
-            "description": "Logging service for DreamFactory Platform 2.0",
-            "homepage": "https://www.dreamfactory.com/",
-            "keywords": [
-                "api",
-                "dreamfactory",
-                "elasticsearch",
-                "elk",
-                "kibana",
-                "log",
-                "logger",
-                "logstash",
-                "rest"
-            ],
-            "support": {
-                "email": "support@dreamfactory.com",
-                "source": "https://github.com/dreamfactorysoftware/df-logger",
-                "issues": "https://github.com/dreamfactorysoftware/df-logger/issues",
-                "wiki": "https://wiki.dreamfactory.com"
-            },
-            "time": "2017-03-05 03:29:36"
         },
         {
             "name": "dreamfactory/df-mongodb",
@@ -1694,69 +1433,6 @@
             "time": "2017-03-06 00:49:27"
         },
         {
-            "name": "dreamfactory/df-notification",
-            "version": "dev-develop",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/dreamfactorysoftware/df-notification.git",
-                "reference": "c2af89b98c35108c1638481f358a31a6acd5409a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-notification/zipball/c2af89b98c35108c1638481f358a31a6acd5409a",
-                "reference": "c2af89b98c35108c1638481f358a31a6acd5409a",
-                "shasum": ""
-            },
-            "require": {
-                "dreamfactory/df-core": "~0.8.0",
-                "sly/notification-pusher": "2.*"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-develop": "0.1.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "DreamFactory\\Core\\Notification\\": "src/"
-                }
-            },
-            "license": [
-                "proprietary"
-            ],
-            "authors": [
-                {
-                    "name": "Arif Islam",
-                    "email": "arifislam@dreamfactory.com"
-                },
-                {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                }
-            ],
-            "description": "iOS and GCM push notification support for DreamFactory",
-            "homepage": "https://www.dreamfactory.com/",
-            "keywords": [
-                "APNS",
-                "GCM",
-                "android",
-                "apple",
-                "dreamfactory",
-                "google",
-                "iOS",
-                "notification",
-                "push"
-            ],
-            "support": {
-                "email": "support@dreamfactory.com",
-                "source": "https://github.com/dreamfactorysoftware/df-notification",
-                "issues": "https://github.com/dreamfactorysoftware/df-notification/issues",
-                "wiki": "https://wiki.dreamfactory.com"
-            },
-            "time": "2017-03-06 00:51:12"
-        },
-        {
             "name": "dreamfactory/df-oauth",
             "version": "dev-develop",
             "source": {
@@ -1812,82 +1488,22 @@
             "time": "2017-03-06 00:52:58"
         },
         {
-            "name": "dreamfactory/df-oracledb",
-            "version": "dev-develop",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/dreamfactorysoftware/df-oracledb.git",
-                "reference": "dcda30a8c4332c01a2fa5dba61dfbd8e2761fe1d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-oracledb/zipball/dcda30a8c4332c01a2fa5dba61dfbd8e2761fe1d",
-                "reference": "dcda30a8c4332c01a2fa5dba61dfbd8e2761fe1d",
-                "shasum": ""
-            },
-            "require": {
-                "dreamfactory/df-sqldb": "~0.8.0",
-                "yajra/laravel-oci8": "5.4.*"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-develop": "0.8.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "DreamFactory\\Core\\Oracle\\": "src/"
-                }
-            },
-            "license": [
-                "proprietary"
-            ],
-            "authors": [
-                {
-                    "name": "Arif Islam",
-                    "email": "arifislam@dreamfactory.com"
-                },
-                {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                }
-            ],
-            "description": "The DreamFactory(tm) Oracle DB Service.",
-            "homepage": "https://www.dreamfactory.com/",
-            "keywords": [
-                "api",
-                "database",
-                "db",
-                "dreamfactory",
-                "oracle",
-                "rest",
-                "sql"
-            ],
-            "support": {
-                "email": "support@dreamfactory.com",
-                "source": "https://github.com/dreamfactorysoftware/df-oracledb",
-                "issues": "https://github.com/dreamfactorysoftware/df-oracledb/issues",
-                "wiki": "https://wiki.dreamfactory.com"
-            },
-            "time": "2017-03-06 00:53:58"
-        },
-        {
             "name": "dreamfactory/df-rackspace",
             "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-rackspace.git",
-                "reference": "1ffed268800f2ee3acfb016f5b726b49b2d98889"
+                "reference": "09b95328485b52eb2d45a50e493016e245036fc6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-rackspace/zipball/1ffed268800f2ee3acfb016f5b726b49b2d98889",
-                "reference": "1ffed268800f2ee3acfb016f5b726b49b2d98889",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-rackspace/zipball/09b95328485b52eb2d45a50e493016e245036fc6",
+                "reference": "09b95328485b52eb2d45a50e493016e245036fc6",
                 "shasum": ""
             },
             "require": {
                 "dreamfactory/df-core": "~0.8.0",
+                "dreamfactory/df-file": "~0.1.0",
                 "rackspace/php-opencloud": "~1.5.0@stable"
             },
             "type": "library",
@@ -1925,7 +1541,7 @@
                 "rest",
                 "storage blob"
             ],
-            "time": "2017-03-06 00:54:57"
+            "time": "2017-03-07 21:09:18"
         },
         {
             "name": "dreamfactory/df-rws",
@@ -1981,122 +1597,6 @@
             "time": "2017-03-06 00:55:36"
         },
         {
-            "name": "dreamfactory/df-salesforce",
-            "version": "dev-develop",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/dreamfactorysoftware/df-salesforce.git",
-                "reference": "dd40f00e51dcdc7fe2090390eb77636b9700b51d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-salesforce/zipball/dd40f00e51dcdc7fe2090390eb77636b9700b51d",
-                "reference": "dd40f00e51dcdc7fe2090390eb77636b9700b51d",
-                "shasum": ""
-            },
-            "require": {
-                "dreamfactory/df-database": "~0.2.0",
-                "socialiteproviders/salesforce": "^2.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-develop": "0.8.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "DreamFactory\\Core\\Salesforce\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "proprietary"
-            ],
-            "authors": [
-                {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                },
-                {
-                    "name": "Arif Islam",
-                    "email": "arifislam@dreamfactory.com"
-                }
-            ],
-            "description": "The DreamFactory(tm) Salesforce Service.",
-            "homepage": "https://www.dreamfactory.com/",
-            "keywords": [
-                "api",
-                "database",
-                "db",
-                "dreamfactory",
-                "rest",
-                "salesforce"
-            ],
-            "time": "2017-03-06 00:56:32"
-        },
-        {
-            "name": "dreamfactory/df-saml",
-            "version": "dev-develop",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/dreamfactorysoftware/df-saml.git",
-                "reference": "26aa95bafab20ccd94b3291c38b2fd0ee1c6eb10"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-saml/zipball/26aa95bafab20ccd94b3291c38b2fd0ee1c6eb10",
-                "reference": "26aa95bafab20ccd94b3291c38b2fd0ee1c6eb10",
-                "shasum": ""
-            },
-            "require": {
-                "dreamfactory/df-core": "~0.8.0",
-                "onelogin/php-saml": "^2.10"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-develop": "0.2.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "DreamFactory\\Core\\Saml\\": "src/"
-                }
-            },
-            "license": [
-                "proprietary"
-            ],
-            "authors": [
-                {
-                    "name": "Arif Islam",
-                    "email": "arifislam@dreamfactory.com"
-                },
-                {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                }
-            ],
-            "description": "SAML 2.0 support for DreamFactory",
-            "homepage": "https://www.dreamfactory.com/",
-            "keywords": [
-                "api",
-                "auth",
-                "authentication",
-                "dreamfactory",
-                "rest",
-                "saml",
-                "xml"
-            ],
-            "support": {
-                "email": "support@dreamfactory.com",
-                "source": "https://github.com/dreamfactorysoftware/df-saml",
-                "issues": "https://github.com/dreamfactorysoftware/df-saml/issues",
-                "wiki": "https://wiki.dreamfactory.com"
-            },
-            "time": "2017-03-06 00:57:21"
-        },
-        {
             "name": "dreamfactory/df-script",
             "version": "dev-develop",
             "source": {
@@ -2150,121 +1650,6 @@
                 "v8js"
             ],
             "time": "2017-03-06 01:01:13"
-        },
-        {
-            "name": "dreamfactory/df-soap",
-            "version": "dev-develop",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/dreamfactorysoftware/df-soap.git",
-                "reference": "bc9a43a41123c3e68a251f4913033c779e9b5758"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-soap/zipball/bc9a43a41123c3e68a251f4913033c779e9b5758",
-                "reference": "bc9a43a41123c3e68a251f4913033c779e9b5758",
-                "shasum": ""
-            },
-            "require": {
-                "dreamfactory/df-core": "~0.8.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-develop": "0.8.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "DreamFactory\\Core\\Soap\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "proprietary"
-            ],
-            "authors": [
-                {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                },
-                {
-                    "name": "Arif Islam",
-                    "email": "arifislam@dreamfactory.com"
-                }
-            ],
-            "description": "SOAP Service for the DreamFactory Platform 2.0.",
-            "homepage": "https://www.dreamfactory.com/",
-            "keywords": [
-                "api",
-                "dreamfactory",
-                "rest",
-                "soap",
-                "wsdl"
-            ],
-            "time": "2017-03-06 01:38:11"
-        },
-        {
-            "name": "dreamfactory/df-sqlanywhere",
-            "version": "dev-develop",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/dreamfactorysoftware/df-sqlanywhere.git",
-                "reference": "8ac146fc14c19ca2f9052cb20674e82c956d0a10"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-sqlanywhere/zipball/8ac146fc14c19ca2f9052cb20674e82c956d0a10",
-                "reference": "8ac146fc14c19ca2f9052cb20674e82c956d0a10",
-                "shasum": ""
-            },
-            "require": {
-                "dreamfactory/df-core": "~0.8.0",
-                "dreamfactory/df-database": "~0.2.0",
-                "dreamfactory/df-sqldb": "~0.8.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-develop": "0.8.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "DreamFactory\\Core\\SqlAnywhere\\": "src/"
-                }
-            },
-            "license": [
-                "proprietary"
-            ],
-            "authors": [
-                {
-                    "name": "Arif Islam",
-                    "email": "arifislam@dreamfactory.com"
-                },
-                {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                }
-            ],
-            "description": "The DreamFactory(tm) SQL Anywhere DB Service.",
-            "homepage": "https://www.dreamfactory.com/",
-            "keywords": [
-                "api",
-                "database",
-                "db",
-                "dreamfactory",
-                "rest",
-                "sap",
-                "sql"
-            ],
-            "support": {
-                "email": "support@dreamfactory.com",
-                "source": "https://github.com/dreamfactorysoftware/df-sqlanywhere",
-                "issues": "https://github.com/dreamfactorysoftware/df-sqlanywhere/issues",
-                "wiki": "https://wiki.dreamfactory.com"
-            },
-            "time": "2017-03-06 01:39:08"
         },
         {
             "name": "dreamfactory/df-sqldb",
@@ -2325,69 +1710,6 @@
                 "sqlserver"
             ],
             "time": "2017-03-04 13:28:44"
-        },
-        {
-            "name": "dreamfactory/df-sqlsrv",
-            "version": "dev-develop",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/dreamfactorysoftware/df-sqlsrv.git",
-                "reference": "b85a5ca5b850b1e11a0a96471309dbbf0dc3f036"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-sqlsrv/zipball/b85a5ca5b850b1e11a0a96471309dbbf0dc3f036",
-                "reference": "b85a5ca5b850b1e11a0a96471309dbbf0dc3f036",
-                "shasum": ""
-            },
-            "require": {
-                "dreamfactory/df-core": "~0.8.0",
-                "dreamfactory/df-database": "~0.2.0",
-                "dreamfactory/df-sqldb": "~0.8.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-develop": "0.8.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "DreamFactory\\Core\\SqlSrv\\": "src/"
-                }
-            },
-            "license": [
-                "proprietary"
-            ],
-            "authors": [
-                {
-                    "name": "Arif Islam",
-                    "email": "arifislam@dreamfactory.com"
-                },
-                {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                }
-            ],
-            "description": "The DreamFactory(tm) SQL Server DB Service.",
-            "homepage": "https://www.dreamfactory.com/",
-            "keywords": [
-                "api",
-                "database",
-                "db",
-                "dreamfactory",
-                "rest",
-                "sql",
-                "sql server",
-                "sqlsrv"
-            ],
-            "support": {
-                "email": "support@dreamfactory.com",
-                "source": "https://github.com/dreamfactorysoftware/df-sqlsrv",
-                "issues": "https://github.com/dreamfactorysoftware/df-sqlsrv/issues",
-                "wiki": "https://wiki.dreamfactory.com"
-            },
-            "time": "2017-03-06 01:40:37"
         },
         {
             "name": "dreamfactory/df-swagger-ui",
@@ -3609,60 +2931,6 @@
             "time": "2017-01-16 07:55:07"
         },
         {
-            "name": "onelogin/php-saml",
-            "version": "2.10.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/onelogin/php-saml.git",
-                "reference": "e1d6b8dc2e6abea3185b59da8b52002eb7dc9a87"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/onelogin/php-saml/zipball/e1d6b8dc2e6abea3185b59da8b52002eb7dc9a87",
-                "reference": "e1d6b8dc2e6abea3185b59da8b52002eb7dc9a87",
-                "shasum": ""
-            },
-            "require": {
-                "ext-dom": "*",
-                "ext-mcrypt": "*",
-                "ext-openssl": "*",
-                "php": ">=5.3.2"
-            },
-            "require-dev": {
-                "pdepend/pdepend": "1.1.0",
-                "phploc/phploc": "*",
-                "phpunit/phpunit": "4.8",
-                "satooshi/php-coveralls": "1.0.1",
-                "sebastian/phpcpd": "*",
-                "squizlabs/php_codesniffer": "*"
-            },
-            "suggest": {
-                "ext-gettext": "Install gettext and php5-gettext libs to handle translations",
-                "ext-mcrypt": "Install mcrypt and php5-mcrypt libs in order to support encryption",
-                "lib-openssl": "Install openssl lib in order to handle with x509 certs (require to support sign and encryption)"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "extlib/xmlseclibs",
-                    "lib/Saml",
-                    "lib/Saml2"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "OneLogin PHP SAML Toolkit",
-            "homepage": "https://onelogin.zendesk.com/hc/en-us/sections/200245634-SAML-Toolkits",
-            "keywords": [
-                "SAML2",
-                "onelogin",
-                "saml"
-            ],
-            "time": "2017-02-28 18:37:39"
-        },
-        {
             "name": "paragonie/random_compat",
             "version": "v2.0.9",
             "source": {
@@ -3759,55 +3027,6 @@
                 "redis"
             ],
             "time": "2016-06-16 16:22:20"
-        },
-        {
-            "name": "psr/container",
-            "version": "1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-fig/container.git",
-                "reference": "b7ce3b176482dbbc1245ebf52b181af44c2cf55f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/container/zipball/b7ce3b176482dbbc1245ebf52b181af44c2cf55f",
-                "reference": "b7ce3b176482dbbc1245ebf52b181af44c2cf55f",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Psr\\Container\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "PHP-FIG",
-                    "homepage": "http://www.php-fig.org/"
-                }
-            ],
-            "description": "Common Container Interface (PHP FIG PSR-11)",
-            "homepage": "https://github.com/php-fig/container",
-            "keywords": [
-                "PSR-11",
-                "container",
-                "container-interface",
-                "container-interop",
-                "psr"
-            ],
-            "time": "2017-02-14 16:28:37"
         },
         {
             "name": "psr/http-message",
@@ -4035,70 +3254,6 @@
             "time": "2016-11-22 19:21:44"
         },
         {
-            "name": "sly/notification-pusher",
-            "version": "v2.2.13",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Ph3nol/NotificationPusher.git",
-                "reference": "3542d8bc8cf622568b85392e83141bfdeee7e6ff"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Ph3nol/NotificationPusher/zipball/3542d8bc8cf622568b85392e83141bfdeee7e6ff",
-                "reference": "3542d8bc8cf622568b85392e83141bfdeee7e6ff",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/inflector": "~1.0",
-                "php": ">=5.5",
-                "symfony/console": "~2.3|~3.0",
-                "symfony/options-resolver": "~2.3|~3.0",
-                "symfony/process": "~2.3|~3.0",
-                "zendframework/zendservice-apple-apns": "^1.1.0",
-                "zendframework/zendservice-google-gcm": "1.*"
-            },
-            "require-dev": {
-                "atoum/atoum": "dev-master"
-            },
-            "bin": [
-                "np"
-            ],
-            "type": "standalone",
-            "autoload": {
-                "psr-0": {
-                    "Sly": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Cédric Dugat",
-                    "email": "cedric@dugat.me"
-                },
-                {
-                    "name": "Contributors",
-                    "homepage": "https://github.com/Ph3nol/NotificationPusher/contributors"
-                }
-            ],
-            "description": "Standalone PHP library for easy devices notifications push.",
-            "homepage": "https://github.com/Ph3nol/NotificationPusher",
-            "keywords": [
-                "android",
-                "apns",
-                "apple",
-                "gcm",
-                "iphone",
-                "message",
-                "notification",
-                "push",
-                "pusher"
-            ],
-            "time": "2016-10-10 07:02:47"
-        },
-        {
             "name": "socialiteproviders/manager",
             "version": "v2.2.1",
             "source": {
@@ -4176,43 +3331,6 @@
             ],
             "description": "Microsoft Live OAuth2 Provider for Laravel Socialite",
             "time": "2016-12-09 09:49:53"
-        },
-        {
-            "name": "socialiteproviders/salesforce",
-            "version": "v2.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/SocialiteProviders/SalesForce.git",
-                "reference": "a634eb811823e354f022dcf06e8a52e126cd6e4e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/SocialiteProviders/SalesForce/zipball/a634eb811823e354f022dcf06e8a52e126cd6e4e",
-                "reference": "a634eb811823e354f022dcf06e8a52e126cd6e4e",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^5.6 || ^7.0",
-                "socialiteproviders/manager": "~2.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "SocialiteProviders\\SalesForce\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Andy Wendt",
-                    "email": "andy@awendt.com"
-                }
-            ],
-            "description": "SalesForce OAuth2 Provider for Laravel Socialite",
-            "time": "2016-11-16 13:48:14"
         },
         {
             "name": "socialiteproviders/twitter",
@@ -4784,60 +3902,6 @@
             "description": "Symfony HttpKernel Component",
             "homepage": "https://symfony.com",
             "time": "2017-02-16 23:59:56"
-        },
-        {
-            "name": "symfony/options-resolver",
-            "version": "v3.2.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/options-resolver.git",
-                "reference": "855429e3e9014b9dafee2a667de304c3aaa86fe6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/options-resolver/zipball/855429e3e9014b9dafee2a667de304c3aaa86fe6",
-                "reference": "855429e3e9014b9dafee2a667de304c3aaa86fe6",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.5.9"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.2-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\OptionsResolver\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony OptionsResolver Component",
-            "homepage": "https://symfony.com",
-            "keywords": [
-                "config",
-                "configuration",
-                "options"
-            ],
-            "time": "2017-01-02 20:32:22"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -5474,540 +4538,6 @@
                 "environment"
             ],
             "time": "2016-09-01 10:05:43"
-        },
-        {
-            "name": "yajra/laravel-oci8",
-            "version": "v5.4.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/yajra/laravel-oci8.git",
-                "reference": "6f851d75db5d800361e068d037e75cbe7ebd4175"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/yajra/laravel-oci8/zipball/6f851d75db5d800361e068d037e75cbe7ebd4175",
-                "reference": "6f851d75db5d800361e068d037e75cbe7ebd4175",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/database": "5.4.*",
-                "illuminate/support": "5.4.*",
-                "php": ">=5.6.4",
-                "yajra/laravel-pdo-via-oci8": "^1.3.1"
-            },
-            "require-dev": {
-                "mockery/mockery": "~0.9.4",
-                "phpunit/phpunit": "~5.4",
-                "scrutinizer/ocular": "~1.1"
-            },
-            "type": "library",
-            "autoload": {
-                "files": [
-                    "src/helper.php"
-                ],
-                "psr-4": {
-                    "Yajra\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Arjay Angeles",
-                    "email": "aqangeles@gmail.com"
-                }
-            ],
-            "description": "Oracle DB driver for Laravel 4|5 via OCI8",
-            "keywords": [
-                "laravel",
-                "laravel4",
-                "laravel5",
-                "oci8",
-                "oracle",
-                "pdo_oci"
-            ],
-            "time": "2017-02-17 02:50:09"
-        },
-        {
-            "name": "yajra/laravel-pdo-via-oci8",
-            "version": "v1.3.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/yajra/pdo-via-oci8.git",
-                "reference": "b3e52482af67770a0b3ea620f11ba0a1b38b4afd"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/yajra/pdo-via-oci8/zipball/b3e52482af67770a0b3ea620f11ba0a1b38b4afd",
-                "reference": "b3e52482af67770a0b3ea620f11ba0a1b38b4afd",
-                "shasum": ""
-            },
-            "require-dev": {
-                "phpunit/phpunit": "4.0.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Yajra\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Arjay Angeles",
-                    "email": "aqangeles@gmail.com"
-                }
-            ],
-            "description": "PDO userspace driver proxying calls to PHP OCI8 driver",
-            "time": "2017-02-02 02:51:53"
-        },
-        {
-            "name": "zendframework/zend-escaper",
-            "version": "2.5.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/zendframework/zend-escaper.git",
-                "reference": "2dcd14b61a72d8b8e27d579c6344e12c26141d4e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-escaper/zipball/2dcd14b61a72d8b8e27d579c6344e12c26141d4e",
-                "reference": "2dcd14b61a72d8b8e27d579c6344e12c26141d4e",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.5"
-            },
-            "require-dev": {
-                "fabpot/php-cs-fixer": "1.7.*",
-                "phpunit/phpunit": "~4.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.5-dev",
-                    "dev-develop": "2.6-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Zend\\Escaper\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "homepage": "https://github.com/zendframework/zend-escaper",
-            "keywords": [
-                "escaper",
-                "zf2"
-            ],
-            "time": "2016-06-30 19:48:38"
-        },
-        {
-            "name": "zendframework/zend-http",
-            "version": "2.6.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/zendframework/zend-http.git",
-                "reference": "09f4d279f46d86be63171ff62ee0f79eca878678"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-http/zipball/09f4d279f46d86be63171ff62ee0f79eca878678",
-                "reference": "09f4d279f46d86be63171ff62ee0f79eca878678",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^5.5 || ^7.0",
-                "zendframework/zend-loader": "^2.5",
-                "zendframework/zend-stdlib": "^2.5 || ^3.0",
-                "zendframework/zend-uri": "^2.5",
-                "zendframework/zend-validator": "^2.5"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.0",
-                "zendframework/zend-coding-standard": "~1.0.0",
-                "zendframework/zend-config": "^2.5"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.6-dev",
-                    "dev-develop": "2.7-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Zend\\Http\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "description": "provides an easy interface for performing Hyper-Text Transfer Protocol (HTTP) requests",
-            "homepage": "https://github.com/zendframework/zend-http",
-            "keywords": [
-                "http",
-                "zf2"
-            ],
-            "time": "2017-01-31 14:41:02"
-        },
-        {
-            "name": "zendframework/zend-json",
-            "version": "2.6.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/zendframework/zend-json.git",
-                "reference": "4c8705dbe4ad7d7e51b2876c5b9eea0ef916ba28"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-json/zipball/4c8705dbe4ad7d7e51b2876c5b9eea0ef916ba28",
-                "reference": "4c8705dbe4ad7d7e51b2876c5b9eea0ef916ba28",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^5.5 || ^7.0"
-            },
-            "require-dev": {
-                "fabpot/php-cs-fixer": "1.7.*",
-                "phpunit/phpunit": "~4.0",
-                "zendframework/zend-http": "^2.5.4",
-                "zendframework/zend-server": "^2.6.1",
-                "zendframework/zend-stdlib": "^2.5 || ^3.0",
-                "zendframework/zendxml": "^1.0.2"
-            },
-            "suggest": {
-                "zendframework/zend-http": "Zend\\Http component, required to use Zend\\Json\\Server",
-                "zendframework/zend-server": "Zend\\Server component, required to use Zend\\Json\\Server",
-                "zendframework/zend-stdlib": "Zend\\Stdlib component, for use with caching Zend\\Json\\Server responses",
-                "zendframework/zendxml": "To support Zend\\Json\\Json::fromXml() usage"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.6-dev",
-                    "dev-develop": "2.7-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Zend\\Json\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "description": "provides convenience methods for serializing native PHP to JSON and decoding JSON to native PHP",
-            "homepage": "https://github.com/zendframework/zend-json",
-            "keywords": [
-                "json",
-                "zf2"
-            ],
-            "time": "2016-02-04 21:20:26"
-        },
-        {
-            "name": "zendframework/zend-loader",
-            "version": "2.5.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/zendframework/zend-loader.git",
-                "reference": "c5fd2f071bde071f4363def7dea8dec7393e135c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-loader/zipball/c5fd2f071bde071f4363def7dea8dec7393e135c",
-                "reference": "c5fd2f071bde071f4363def7dea8dec7393e135c",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.23"
-            },
-            "require-dev": {
-                "fabpot/php-cs-fixer": "1.7.*",
-                "phpunit/phpunit": "~4.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.5-dev",
-                    "dev-develop": "2.6-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Zend\\Loader\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "homepage": "https://github.com/zendframework/zend-loader",
-            "keywords": [
-                "loader",
-                "zf2"
-            ],
-            "time": "2015-06-03 14:05:47"
-        },
-        {
-            "name": "zendframework/zend-stdlib",
-            "version": "3.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/zendframework/zend-stdlib.git",
-                "reference": "debedcfc373a293f9250cc9aa03cf121428c8e78"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-stdlib/zipball/debedcfc373a293f9250cc9aa03cf121428c8e78",
-                "reference": "debedcfc373a293f9250cc9aa03cf121428c8e78",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^5.6 || ^7.0"
-            },
-            "require-dev": {
-                "athletic/athletic": "~0.1",
-                "phpunit/phpunit": "~4.0",
-                "squizlabs/php_codesniffer": "^2.6.2"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.1-dev",
-                    "dev-develop": "3.2-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Zend\\Stdlib\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "homepage": "https://github.com/zendframework/zend-stdlib",
-            "keywords": [
-                "stdlib",
-                "zf2"
-            ],
-            "time": "2016-09-13 14:38:50"
-        },
-        {
-            "name": "zendframework/zend-uri",
-            "version": "2.5.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/zendframework/zend-uri.git",
-                "reference": "0bf717a239432b1a1675ae314f7c4acd742749ed"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-uri/zipball/0bf717a239432b1a1675ae314f7c4acd742749ed",
-                "reference": "0bf717a239432b1a1675ae314f7c4acd742749ed",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^5.5 || ^7.0",
-                "zendframework/zend-escaper": "^2.5",
-                "zendframework/zend-validator": "^2.5"
-            },
-            "require-dev": {
-                "fabpot/php-cs-fixer": "1.7.*",
-                "phpunit/phpunit": "~4.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.5-dev",
-                    "dev-develop": "2.6-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Zend\\Uri\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "description": "a component that aids in manipulating and validating » Uniform Resource Identifiers (URIs)",
-            "homepage": "https://github.com/zendframework/zend-uri",
-            "keywords": [
-                "uri",
-                "zf2"
-            ],
-            "time": "2016-02-17 22:38:51"
-        },
-        {
-            "name": "zendframework/zend-validator",
-            "version": "2.8.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/zendframework/zend-validator.git",
-                "reference": "99b528e01276054458da9553b587cfb959dfa436"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-validator/zipball/99b528e01276054458da9553b587cfb959dfa436",
-                "reference": "99b528e01276054458da9553b587cfb959dfa436",
-                "shasum": ""
-            },
-            "require": {
-                "container-interop/container-interop": "^1.1",
-                "php": "^5.5 || ^7.0",
-                "zendframework/zend-stdlib": "^2.7 || ^3.0"
-            },
-            "require-dev": {
-                "fabpot/php-cs-fixer": "1.7.*",
-                "phpunit/phpunit": "^4.0",
-                "zendframework/zend-cache": "^2.6.1",
-                "zendframework/zend-config": "^2.6",
-                "zendframework/zend-db": "^2.7",
-                "zendframework/zend-filter": "^2.6",
-                "zendframework/zend-http": "^2.5.4",
-                "zendframework/zend-i18n": "^2.6",
-                "zendframework/zend-math": "^2.6",
-                "zendframework/zend-servicemanager": "^2.7.5 || ^3.0.3",
-                "zendframework/zend-session": "^2.6.2",
-                "zendframework/zend-uri": "^2.5"
-            },
-            "suggest": {
-                "zendframework/zend-db": "Zend\\Db component",
-                "zendframework/zend-filter": "Zend\\Filter component, required by the Digits validator",
-                "zendframework/zend-i18n": "Zend\\I18n component to allow translation of validation error messages as well as to use the various Date validators",
-                "zendframework/zend-i18n-resources": "Translations of validator messages",
-                "zendframework/zend-math": "Zend\\Math component",
-                "zendframework/zend-servicemanager": "Zend\\ServiceManager component to allow using the ValidatorPluginManager and validator chains",
-                "zendframework/zend-session": "Zend\\Session component",
-                "zendframework/zend-uri": "Zend\\Uri component, required by the Uri and Sitemap\\Loc validators"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.8-dev",
-                    "dev-develop": "2.9-dev"
-                },
-                "zf": {
-                    "component": "Zend\\Validator",
-                    "config-provider": "Zend\\Validator\\ConfigProvider"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Zend\\Validator\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "description": "provides a set of commonly needed validators",
-            "homepage": "https://github.com/zendframework/zend-validator",
-            "keywords": [
-                "validator",
-                "zf2"
-            ],
-            "time": "2017-01-29 17:24:24"
-        },
-        {
-            "name": "zendframework/zendservice-apple-apns",
-            "version": "1.2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/zendframework/ZendService_Apple_Apns.git",
-                "reference": "ee2c44ee833206c1eb95b2fb7be1e2335e7570eb"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/ZendService_Apple_Apns/zipball/ee2c44ee833206c1eb95b2fb7be1e2335e7570eb",
-                "reference": "ee2c44ee833206c1eb95b2fb7be1e2335e7570eb",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3",
-                "zendframework/zend-json": "~2.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "3.7.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "ZendService\\Apple\\Apns\\": "library/",
-                    "ZendService\\Apple\\Exception\\": "library/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "description": "OOP Zend Framework 2 wrapper for Apple Push Notification Service",
-            "homepage": "http://packages.zendframework.com/",
-            "keywords": [
-                "apns",
-                "apple",
-                "notification",
-                "push",
-                "zf2"
-            ],
-            "time": "2015-12-09 22:55:07"
-        },
-        {
-            "name": "zendframework/zendservice-google-gcm",
-            "version": "1.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/zendframework/ZendService_Google_Gcm.git",
-                "reference": "86d16e9dcb4d41677e6f691642856b3eb95a1073"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/ZendService_Google_Gcm/zipball/86d16e9dcb4d41677e6f691642856b3eb95a1073",
-                "reference": "86d16e9dcb4d41677e6f691642856b3eb95a1073",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3",
-                "zendframework/zend-http": ">=2.0.0",
-                "zendframework/zend-json": ">=2.0.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "3.7.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "ZendService\\Google\\Gcm\\": "library/",
-                    "ZendService\\Google\\Exception\\": "library/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "description": "OOP wrapper for Google Cloud Messaging",
-            "homepage": "http://packages.zendframework.com/",
-            "keywords": [
-                "gcm",
-                "google",
-                "notification",
-                "push",
-                "zf2"
-            ],
-            "time": "2015-10-14 03:18:56"
         }
     ],
     "packages-dev": [
@@ -7746,12 +6276,6 @@
             "alias": "dev-master",
             "alias_normalized": "9999999-dev",
             "version": "dev-develop",
-            "package": "dreamfactory/df-adldap"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
             "package": "dreamfactory/df-admin-app"
         },
         {
@@ -7765,12 +6289,6 @@
             "alias_normalized": "9999999-dev",
             "version": "dev-develop",
             "package": "dreamfactory/df-azure"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-azure-ad"
         },
         {
             "alias": "dev-master",
@@ -7812,25 +6330,13 @@
             "alias": "dev-master",
             "alias_normalized": "9999999-dev",
             "version": "dev-develop",
+            "package": "dreamfactory/df-file"
+        },
+        {
+            "alias": "dev-master",
+            "alias_normalized": "9999999-dev",
+            "version": "dev-develop",
             "package": "dreamfactory/df-filemanager-app"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-ibmdb2"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-limits"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-logger"
         },
         {
             "alias": "dev-master",
@@ -7842,19 +6348,7 @@
             "alias": "dev-master",
             "alias_normalized": "9999999-dev",
             "version": "dev-develop",
-            "package": "dreamfactory/df-notification"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
             "package": "dreamfactory/df-oauth"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-oracledb"
         },
         {
             "alias": "dev-master",
@@ -7872,43 +6366,13 @@
             "alias": "dev-master",
             "alias_normalized": "9999999-dev",
             "version": "dev-develop",
-            "package": "dreamfactory/df-salesforce"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-saml"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
             "package": "dreamfactory/df-script"
         },
         {
             "alias": "dev-master",
             "alias_normalized": "9999999-dev",
             "version": "dev-develop",
-            "package": "dreamfactory/df-soap"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-sqlanywhere"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
             "package": "dreamfactory/df-sqldb"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-sqlsrv"
         },
         {
             "alias": "dev-master",
@@ -7925,34 +6389,23 @@
     ],
     "minimum-stability": "dev",
     "stability-flags": {
-        "dreamfactory/df-adldap": 20,
         "dreamfactory/df-admin-app": 20,
         "dreamfactory/df-aws": 20,
         "dreamfactory/df-azure": 20,
-        "dreamfactory/df-azure-ad": 20,
         "dreamfactory/df-cache": 20,
         "dreamfactory/df-cassandra": 20,
         "dreamfactory/df-core": 20,
         "dreamfactory/df-couchbase": 20,
         "dreamfactory/df-couchdb": 20,
         "dreamfactory/df-email": 20,
+        "dreamfactory/df-file": 20,
         "dreamfactory/df-filemanager-app": 20,
-        "dreamfactory/df-ibmdb2": 20,
-        "dreamfactory/df-limits": 20,
-        "dreamfactory/df-logger": 20,
         "dreamfactory/df-mongodb": 20,
-        "dreamfactory/df-notification": 20,
         "dreamfactory/df-oauth": 20,
-        "dreamfactory/df-oracledb": 20,
         "dreamfactory/df-rackspace": 20,
         "dreamfactory/df-rws": 20,
-        "dreamfactory/df-salesforce": 20,
-        "dreamfactory/df-saml": 20,
         "dreamfactory/df-script": 20,
-        "dreamfactory/df-soap": 20,
-        "dreamfactory/df-sqlanywhere": 20,
         "dreamfactory/df-sqldb": 20,
-        "dreamfactory/df-sqlsrv": 20,
         "dreamfactory/df-swagger-ui": 20,
         "dreamfactory/df-user": 20
     },
