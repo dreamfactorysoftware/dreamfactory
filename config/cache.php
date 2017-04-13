@@ -49,8 +49,17 @@ return [
             'path' => env('DF_CACHE_PATH', storage_path('framework/cache/data')),
         ],
         'limit' => [
-            'driver' => 'file',
-            'path'   => env('LIMIT_CACHE_PATH', storage_path('framework/limit_cache')),
+            'driver' => env('LIMIT_CACHE_DRIVER', 'file'),
+            'file' => [
+                'path'   => env('LIMIT_CACHE_PATH', storage_path('framework/limit_cache')),
+            ],
+            'redis' => [
+                'client' => 'predis',
+                'database' => env('LIMIT_CACHE_REDIS_DATABASE', 9),
+                'host' => env('LIMIT_CACHE_REDIS_HOST', '127.0.0.1'),
+                'port' => env('LIMIT_CACHE_REDIS_PORT', 6379),
+                'password' => env('LIMIT_CACHE_REDIS_PASSWORD', null), // Needed by Redis Cloud and other similar services
+            ]
         ],
         'memcached'  => [
             'driver' => 'memcached',
