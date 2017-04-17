@@ -32,30 +32,87 @@
   },
   "minimum-stability": "dev",
   "prefer-stable":     true,
+  "repositories":      [
+    {
+      "type": "vcs",
+      "url": "https://github.com/dreamfactorysoftware/df-sqlanywhere"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/dreamfactorysoftware/df-sqlsrv"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/dreamfactorysoftware/df-oracledb"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/dreamfactorysoftware/df-ibmdb2"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/dreamfactorysoftware/df-logger"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/dreamfactorysoftware/df-azure-ad"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/dreamfactorysoftware/df-saml"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/dreamfactorysoftware/df-notification"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/dreamfactorysoftware/df-firebird"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/dreamfactorysoftware/df-limits"
+    }
+  ],
   "require":           {
-    "dreamfactory/df-admin-app":       "dev-develop as dev-master",
-    "dreamfactory/df-apidoc":          "dev-develop as dev-master",
-    "dreamfactory/df-aws":             "dev-develop as dev-master",
-    "dreamfactory/df-azure":           "dev-develop as dev-master",
-    "dreamfactory/df-cache":           "dev-develop as dev-master",
-    "dreamfactory/df-cassandra":       "dev-develop as dev-master",
-    "dreamfactory/df-core":            "dev-develop as dev-master",
-    "dreamfactory/df-couchbase":       "dev-develop as dev-master",
-    "dreamfactory/df-couchdb":         "dev-develop as dev-master",
-    "dreamfactory/df-email":           "dev-develop as dev-master",
-    "dreamfactory/df-file":            "dev-develop as dev-master",
+    "a15lam/df-wemo": "dev-develop as dev-master",
+    "dreamfactory/df-adldap": "dev-develop as dev-master",
+    "dreamfactory/df-admin-app": "dev-develop as dev-master",
+    "dreamfactory/df-apidoc": "dev-develop as dev-master",
+    "dreamfactory/df-aws": "dev-develop as dev-master",
+    "dreamfactory/df-azure": "dev-develop as dev-master",
+    "dreamfactory/df-azure-ad": "dev-develop as dev-master",
+    "dreamfactory/df-cache": "dev-develop as dev-master",
+    "dreamfactory/df-cassandra": "dev-develop as dev-master",
+    "dreamfactory/df-core": "dev-develop as dev-master",
+    "dreamfactory/df-couchbase": "dev-develop as dev-master",
+    "dreamfactory/df-couchdb": "dev-develop as dev-master",
+    "dreamfactory/df-email": "dev-develop as dev-master",
+    "dreamfactory/df-file": "dev-develop as dev-master",
     "dreamfactory/df-filemanager-app": "dev-develop as dev-master",
-    "dreamfactory/df-mongodb":         "dev-develop as dev-master",
-    "dreamfactory/df-oauth":           "dev-develop as dev-master",
-    "dreamfactory/df-rackspace":       "dev-develop as dev-master",
-    "dreamfactory/df-rws":             "dev-develop as dev-master",
-    "dreamfactory/df-script":          "dev-develop as dev-master",
-    "dreamfactory/df-sqldb":           "dev-develop as dev-master",
-    "dreamfactory/df-swagger-ui":      "dev-develop as dev-master",
-    "dreamfactory/df-user":            "dev-develop as dev-master",
-    "laravel/framework":               "5.4.*",
-    "predis/predis":                   "~1.0",
-    "tymon/jwt-auth":                  "~1.0.0"
+    "dreamfactory/df-firebird": "dev-develop as dev-master",
+    "dreamfactory/df-ibmdb2": "dev-develop as dev-master",
+    "dreamfactory/df-limits": "dev-develop as dev-master",
+    "dreamfactory/df-logger": "dev-develop as dev-master",
+    "dreamfactory/df-mongodb": "dev-develop as dev-master",
+    "dreamfactory/df-notification": "dev-develop as dev-master",
+    "dreamfactory/df-oauth": "dev-develop as dev-master",
+    "dreamfactory/df-oracledb": "dev-develop as dev-master",
+    "dreamfactory/df-rackspace": "dev-develop as dev-master",
+    "dreamfactory/df-rws": "dev-develop as dev-master",
+    "dreamfactory/df-salesforce": "dev-develop as dev-master",
+    "dreamfactory/df-saml": "dev-develop as dev-master",
+    "dreamfactory/df-script": "dev-develop as dev-master",
+    "dreamfactory/df-soap": "dev-develop as dev-master",
+    "dreamfactory/df-sqlanywhere": "dev-develop as dev-master",
+    "dreamfactory/df-sqldb": "dev-develop as dev-master",
+    "dreamfactory/df-sqlsrv": "dev-develop as dev-master",
+    "dreamfactory/df-swagger-ui": "dev-develop as dev-master",
+    "dreamfactory/df-user": "dev-develop as dev-master",
+    "laravel/framework": "5.4.*",
+    "php-opencloud/openstack": "^2.0",
+    "predis/predis": "~1.0",
+    "tymon/jwt-auth": "~1.0.0"
   },
   "require-dev":       {
     "barryvdh/laravel-ide-helper": "~2.1",
@@ -71,7 +128,28 @@
       "database"
     ],
     "psr-4":    {
-      "DreamFactory\\": "app/"
+      "DreamFactory\\": "app/",
+      "DreamFactory\\Core\\": "workbench/repos/df-core/src/",
+      "DreamFactory\\Core\\OAuth\\": "workbench/repos/df-oauth/src/",
+      "DreamFactory\\Core\\Azure\\": "workbench/repos/df-azure/src/",
+      "DreamFactory\\Core\\ADLdap\\": "workbench/repos/df-adldap/src/",
+      "DreamFactory\\Core\\AzureAD\\": "workbench/repos/df-azure-ad/src/",
+      "DreamFactory\\Core\\Rws\\": "workbench/repos/df-rws/src/",
+      "DreamFactory\\Core\\Logger\\": "workbench/repos/df-logger/src/",
+      "DreamFactory\\Core\\Script\\": "workbench/repos/df-script/src/",
+      "DreamFactory\\Core\\Database\\": "workbench/repos/df-database/src/",
+      "DreamFactory\\Core\\Saml\\": "workbench/repos/df-saml/src/",
+      "DreamFactory\\Core\\User\\": "workbench/repos/df-user/src/",
+      "DreamFactory\\Core\\Notification\\": "workbench/repos/df-notification/src/",
+      "DreamFactory\\Core\\Firebird\\": "workbench/repos/df-firebird/src/",
+      "DreamFactory\\Core\\Email\\": "workbench/repos/df-email/src/",
+      "DreamFactory\\Core\\Aws\\": "workbench/repos/df-aws/src/",
+      "DreamFactory\\Core\\Cassandra\\": "workbench/repos/df-cassandra/src/",
+      "DreamFactory\\Core\\Cache\\": "workbench/repos/df-cache/src/",
+      "DreamFactory\\Core\\Rackspace\\": "workbench/repos/df-rackspace/src/",
+      "DreamFactory\\Core\\File\\": "workbench/repos/df-file/src/",
+      "DreamFactory\\Core\\ApiDoc\\": "workbench/repos/df-apidoc/src/",
+      "DreamFactory\\Core\\Soap\\": "workbench/repos/df-soap/src/"
     }
   },
   "autoload-dev":      {

@@ -1,4 +1,5 @@
 <?php
+
 namespace DreamFactory\Http\Controllers;
 
 use DreamFactory\Core\Models\User;
@@ -36,7 +37,9 @@ class SplashController extends Controller
                     'email'      => '',
                     'name'       => '',
                     'first_name' => '',
-                    'last_name'  => ''
+                    'last_name'  => '',
+                    'username'   => '',
+                    'errors'     => []
                 ];
 
                 return view('firstUser', $data);

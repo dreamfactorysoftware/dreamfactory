@@ -43,16 +43,16 @@
 <div id="page-content">
     <div class="container-fluid container-inner">
         <div id="error-container" class="alert alert-error center">
-            {{--@if (count($errors) > 0)--}}
-                {{--<div class="alert alert-danger" style="margin-top:40px">--}}
-                    {{--<strong>Whoops!</strong> There were some problems with your input.<br><br>--}}
-                    {{--<ul>--}}
-                        {{--@foreach ($errors as $error)--}}
-                            {{--<li>{{ $error }}</li>--}}
-                        {{--@endforeach--}}
-                    {{--</ul>--}}
-                {{--</div>--}}
-            {{--@endif--}}
+            @if (count($errors) > 0)
+                <div class="alert alert-danger" style="margin-top:40px">
+                    <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                    <ul>
+                        @foreach ($errors as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
         </div>
 
             <div class="box-wrapper">
@@ -79,6 +79,21 @@
                                        id="email"
                                        name="email" placeholder="Email Address"
                                        value="{{ $email }}" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="username" class="sr-only">Username</label>
+
+                            <div class="input-group">
+                                <span class="input-group-addon bg_dg"><i class="fa fa-user fa-fw"></i></span>
+
+                                <input tabindex="1"
+                                       class="form-control username"
+                                       autofocus
+                                       type="text"
+                                       id="username"
+                                       name="username" placeholder="Username (Optional, defaults to email address)"
+                                       value="{{ $username }}" />
                             </div>
                         </div>
                         <div class="form-group">
