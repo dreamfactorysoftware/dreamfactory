@@ -67,21 +67,6 @@
                         </p>
 
                         <div class="form-group">
-                            <label for="email" class="sr-only">Email Address</label>
-
-                            <div class="input-group">
-                                <span class="input-group-addon bg_dg"><i class="fa fa-envelope fa-fw"></i></span>
-
-                                <input tabindex="1"
-                                       class="form-control email required"
-                                       autofocus
-                                       type="email"
-                                       id="email"
-                                       name="email" placeholder="Email Address"
-                                       value="{{ $email }}" />
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label for="username" class="sr-only">Username</label>
 
                             <div class="input-group">
@@ -92,8 +77,23 @@
                                        autofocus
                                        type="text"
                                        id="username"
-                                       name="username" placeholder="Username (Optional, defaults to email address)"
+                                       name="username" placeholder="{{ $username_placeholder }}"
                                        value="{{ $username }}" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="sr-only">Email Address</label>
+
+                            <div class="input-group">
+                                <span class="input-group-addon bg_dg"><i class="fa fa-envelope fa-fw"></i></span>
+
+                                <input tabindex="1"
+                                       class="form-control email required"
+                                       autofocus
+                                       type="email"
+                                       id="email"
+                                       name="email" placeholder="{{ $email_placeholder }}"
+                                       value="{{ $email }}" />
                             </div>
                         </div>
                         <div class="form-group">
