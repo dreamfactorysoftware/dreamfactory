@@ -4,6 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
+- DF-895 Added support for username based authentication
+
 ### Changed
 ### Fixed
 

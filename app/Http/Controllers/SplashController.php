@@ -1,4 +1,5 @@
 <?php
+
 namespace DreamFactory\Http\Controllers;
 
 use DreamFactory\Core\Models\User;
@@ -29,19 +30,30 @@ class SplashController extends Controller
         if (!User::adminExists()) {
             $request = \Request::instance();
             $method = $request->method();
+            $data = [
+                'username_placeholder' => 'Username (Optional, defaults to email address)',
+                'email_placeholder'    => 'Email Address (Required for login)'
+            ];
+            $loginAttribute = strtolower(config('df.login_attribute', 'email'));
+            if ($loginAttribute === 'username') {
+                $data['username_placeholder'] = 'Username (Required for login)';
+                $data['email_placeholder'] = 'Email Address';
+            }
 
             if (Verbs::GET === $method) {
-                $data = [
-                    'version'    => \Config::get('df.version'),
-                    'email'      => '',
-                    'name'       => '',
-                    'first_name' => '',
-                    'last_name'  => ''
-                ];
+                $data = array_merge([
+                    'version'              => \Config::get('df.version'),
+                    'email'                => '',
+                    'name'                 => '',
+                    'first_name'           => '',
+                    'last_name'            => '',
+                    'username'             => '',
+                    'errors'               => []
+                ], $data);
 
                 return view('firstUser', $data);
             } else if (Verbs::POST === $method) {
-                $data = $request->all();
+                $data = array_merge($request->all(), $data);
                 $user = User::createFirstAdmin($data);
 
                 if (!$user) {
