@@ -87,7 +87,7 @@ To connect to a different Database Server after initial setup...
  * Edit the .env file at the installation root and change the following configuration.
 
     ```sh
-    DB_DRIVER=mysql     ## Supported drivers are sqlite (default), mysql, pgsql
+    DB_CONNECTION=mysql     ## Supported drivers are sqlite (default), mysql, pgsql
     DB_HOST=localhost
     DB_DATABASE=dreamfactory
     DB_USERNAME=username
