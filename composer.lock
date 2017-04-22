@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b01ffb766b0d249a73385b22af156088",
-    "content-hash": "683b4d45d5921e2344bf13b49a43abdb",
+    "hash": "757bd746ca447361f4462359dd3d0f56",
+    "content-hash": "999bf86139b1d930dbf7432b47f23fa3",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -1432,6 +1432,62 @@
             "time": "2017-03-08 17:31:32"
         },
         {
+            "name": "dreamfactory/df-firebird",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dreamfactorysoftware/df-firebird.git",
+                "reference": "42bd354024b99c8c870bb856c1e6367bb0a90fc5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-firebird/zipball/42bd354024b99c8c870bb856c1e6367bb0a90fc5",
+                "reference": "42bd354024b99c8c870bb856c1e6367bb0a90fc5",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/dbal": "2.5.*",
+                "dreamfactory/df-sqldb": "~0.9.0",
+                "jacquestvanzuydam/laravel-firebird": "dev-5.4-support as dev-master"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-develop": "0.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "DreamFactory\\Core\\Firebird\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Lee Hicks",
+                    "email": "leehicks@dreamfactory.com"
+                },
+                {
+                    "name": "Arif Islam",
+                    "email": "arifislam@dreamfactory.com"
+                }
+            ],
+            "description": "Firebird SQL Database support for DreamFactory",
+            "homepage": "https://www.dreamfactory.com/",
+            "keywords": [
+                "database",
+                "dreamfactory",
+                "firebird",
+                "pdo_firebird",
+                "pdo_interbase",
+                "sql"
+            ],
+            "time": "2017-04-21 21:37:39"
+        },
+        {
             "name": "dreamfactory/df-mongodb",
             "version": "0.9.0",
             "source": {
@@ -2185,6 +2241,46 @@
                 "url"
             ],
             "time": "2017-03-20 17:10:46"
+        },
+        {
+            "name": "jacquestvanzuydam/laravel-firebird",
+            "version": "dev-5.4-support",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jacquestvanzuydam/laravel-firebird.git",
+                "reference": "ba242f8d4c3b360cd0fbb50a069b71e79687933f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jacquestvanzuydam/laravel-firebird/zipball/ba242f8d4c3b360cd0fbb50a069b71e79687933f",
+                "reference": "ba242f8d4c3b360cd0fbb50a069b71e79687933f",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/container": "~5.4",
+                "illuminate/database": "~5.4",
+                "illuminate/events": "~5.4",
+                "illuminate/support": "~5.4",
+                "php": ">=5.6.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Firebird\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jacques van Zuydam",
+                    "email": "jtvanzuydam@gmail.com"
+                }
+            ],
+            "description": "A Firebird database package for the Laravel Framework",
+            "time": "2017-02-22 09:50:44"
         },
         {
             "name": "jenssegers/mongodb",

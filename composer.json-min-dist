@@ -4,7 +4,7 @@
   "keywords":          [
     "api",
     "dreamfactory",
-    "dsp",
+    "laravel",
     "rest"
   ],
   "homepage":          "https://www.dreamfactory.com/",
@@ -33,14 +33,14 @@
   "minimum-stability": "dev",
   "prefer-stable":     true,
   "require":           {
-    "dreamfactory/df-admin-app":       "~2.5.0",
+    "dreamfactory/df-admin-app":       "~2.7.0",
     "dreamfactory/df-apidoc":          "~0.1.0",
-    "dreamfactory/df-core":            "~0.7.0",
-    "dreamfactory/df-email":           "~0.1.0",
+    "dreamfactory/df-core":            "~0.9.0",
+    "dreamfactory/df-email":           "~0.3.0",
     "dreamfactory/df-file":            "~0.1.0",
     "dreamfactory/df-filemanager-app": "~0.1.0",
-    "dreamfactory/df-script":          "~0.1.0",
-    "dreamfactory/df-sqldb":           "~0.7.0",
+    "dreamfactory/df-script":          "~0.3.0",
+    "dreamfactory/df-sqldb":           "~0.9.0",
     "dreamfactory/df-swagger-ui":      "~0.2.0",
     "laravel/framework":               "5.4.*",
     "tymon/jwt-auth":                  "~1.0.0"
@@ -87,7 +87,7 @@
   },
   "extra":             {
     "branch-alias":    {
-      "dev-develop": "2.5.x-dev"
+      "dev-develop": "2.6.x-dev"
     },
     "installer-paths": {
       "public/{$name}/": [
