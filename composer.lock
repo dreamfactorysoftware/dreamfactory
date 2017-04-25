@@ -1045,16 +1045,16 @@
         },
         {
             "name": "dreamfactory/df-core",
-            "version": "0.9.0",
+            "version": "0.9.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-core.git",
-                "reference": "62162312f64d0ce9bb13af2fd9502158b87f3cb3"
+                "reference": "f9f6e52030464e7d542474bfa8f228bb28f2183a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/62162312f64d0ce9bb13af2fd9502158b87f3cb3",
-                "reference": "62162312f64d0ce9bb13af2fd9502158b87f3cb3",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/f9f6e52030464e7d542474bfa8f228bb28f2183a",
+                "reference": "f9f6e52030464e7d542474bfa8f228bb28f2183a",
                 "shasum": ""
             },
             "require": {
@@ -1103,7 +1103,7 @@
                 "paas",
                 "rest"
             ],
-            "time": "2017-04-21 18:34:13"
+            "time": "2017-04-25 16:34:13"
         },
         {
             "name": "dreamfactory/df-couchbase",
@@ -2528,16 +2528,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "1.0.37",
+            "version": "1.0.39",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "78b5cc4feb61a882302df4fbaf63b7662e5e4ccd"
+                "reference": "2474325ee924134bb05848663b12531f6f2e9fbe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/78b5cc4feb61a882302df4fbaf63b7662e5e4ccd",
-                "reference": "78b5cc4feb61a882302df4fbaf63b7662e5e4ccd",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/2474325ee924134bb05848663b12531f6f2e9fbe",
+                "reference": "2474325ee924134bb05848663b12531f6f2e9fbe",
                 "shasum": ""
             },
             "require": {
@@ -2559,12 +2559,12 @@
                 "league/flysystem-azure": "Allows you to use Windows Azure Blob storage",
                 "league/flysystem-cached-adapter": "Flysystem adapter decorator for metadata caching",
                 "league/flysystem-copy": "Allows you to use Copy.com storage",
-                "league/flysystem-dropbox": "Allows you to use Dropbox storage",
                 "league/flysystem-eventable-filesystem": "Allows you to use EventableFilesystem",
                 "league/flysystem-rackspace": "Allows you to use Rackspace Cloud Files",
                 "league/flysystem-sftp": "Allows you to use SFTP server storage via phpseclib",
                 "league/flysystem-webdav": "Allows you to use WebDAV storage",
-                "league/flysystem-ziparchive": "Allows you to use ZipArchive adapter"
+                "league/flysystem-ziparchive": "Allows you to use ZipArchive adapter",
+                "spatie/flysystem-dropbox": "Allows you to use Dropbox storage"
             },
             "type": "library",
             "extra": {
@@ -2607,7 +2607,7 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2017-03-22 15:43:14"
+            "time": "2017-04-25 15:24:43"
         },
         {
             "name": "league/oauth1-client",
