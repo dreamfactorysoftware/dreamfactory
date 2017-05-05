@@ -40,13 +40,13 @@ return [
 
         'database' => [
             'driver' => 'database',
-            'table' => 'cache',
-            'connection' => null,
+            'table' => env('CACHE_TABLE', 'cache'),
+            'connection' => env('DB_CONNECTION', 'sqlite'),
         ],
 
         'file' => [
             'driver' => 'file',
-            'path' => env('DF_CACHE_PATH', storage_path('framework/cache/data')),
+            'path' => env('CACHE_PATH', storage_path('framework/cache/data')),
         ],
         'limit' => [
             'driver' => env('LIMIT_CACHE_DRIVER', 'file'),
@@ -82,7 +82,7 @@ return [
 
         'redis' => [
             'driver' => 'redis',
-            'connection' => 'default',
+            'connection' => env('CACHE_CONNECTION', 'default'),
         ],
 
         /** Managed instance limits cache */
@@ -103,6 +103,6 @@ return [
     |
     */
 
-    'prefix' => env('DF_CACHE_PREFIX', 'dreamfactory'),
+    'prefix' => env('CACHE_PREFIX', 'dreamfactory'),
 
 ];

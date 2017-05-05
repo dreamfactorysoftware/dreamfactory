@@ -1,5 +1,12 @@
 <?php
 
+// load up any providers specific to DreamFactory
+$dfProviders = [];
+
+$dfAliases = [
+    //        'Socialize' => Laravel\Socialite\Facades\Socialite::class,
+];
+
 return [
 
     /*
@@ -12,7 +19,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => 'DreamFactory',
+    'name' => env('APP_NAME', 'DreamFactory'),
 
     /*
     |--------------------------------------------------------------------------
@@ -64,7 +71,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => env('APP_TIMEZONE', 'UTC'),
 
     /*
     |--------------------------------------------------------------------------
@@ -77,7 +84,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => env('APP_LOCALE', 'en'),
 
     /*
     |--------------------------------------------------------------------------
@@ -105,7 +112,7 @@ return [
 
     'key' => env('APP_KEY'),
 
-    'cipher' => env('DF_CIPHER', 'AES-256-CBC'),
+    'cipher' => env('APP_CIPHER', 'AES-256-CBC'),
 
     /*
     |--------------------------------------------------------------------------
@@ -122,7 +129,7 @@ return [
 
     'log' => env('APP_LOG', 'single'),
 
-    'log_level' => env('APP_LOG_LEVEL', 'debug'),
+    'log_level' => env('APP_LOG_LEVEL', 'warning'),
 
     /*
     |--------------------------------------------------------------------------
@@ -164,15 +171,10 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 
         /*
-         * Uncomment the following line to generate IDE helper
-         * using "php artisan ide-helper:generate" command,
-         */
-        //Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
-
-        /*
          * Package Service Providers...
          */
         DreamFactory\Core\LaravelServiceProvider::class,
+        $dfProviders,
 
         /*
          * Application Service Providers...
@@ -182,6 +184,12 @@ return [
 //        DreamFactory\Providers\BroadcastServiceProvider::class,
 //        DreamFactory\Providers\EventServiceProvider::class,
         DreamFactory\Providers\RouteServiceProvider::class,
+
+        /*
+         * Uncomment the following line to generate IDE helper
+         * using "php artisan ide-helper:generate" command,
+         */
+        //Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
     ],
 
     /*
@@ -234,7 +242,7 @@ return [
         /*
          * Package Facades...
          */
-        'Socialize' => Laravel\Socialite\Facades\Socialite::class,
+        $dfAliases,
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
     ],

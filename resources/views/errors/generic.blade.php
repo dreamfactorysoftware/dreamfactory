@@ -60,7 +60,7 @@
                 ); ?>. All Rights Reserved.
             </p>
         </span> <span class="pull-right dsp-footer-version"><p class="footer-text">
-                <a href="https://github.com/dreamfactorysoftware/dsp-core/"
+                <a href="https://github.com/dreamfactorysoftware/dreamfactory/"
                    target="_blank">v{{$version}}</a>
             </p></span>
     </div>
