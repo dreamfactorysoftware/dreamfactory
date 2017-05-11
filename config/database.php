@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => env('DB_CONNECTION', env('DB_DRIVER', 'sqlite')),
 
     /*
     |--------------------------------------------------------------------------
@@ -36,19 +36,19 @@ return [
         'sqlite' => [
             'driver' => 'sqlite',
             'database' => env('DB_DATABASE', database_path('database.sqlite')),
-            'prefix' => '',
+            'prefix' => env('DB_PREFIX', ''),
         ],
 
         'mysql' => [
             'driver' => 'mysql',
             'host' => env('DB_HOST', '127.0.0.1'),
             'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
+            'database' => env('DB_DATABASE', 'dreamfactory'),
+            'username' => env('DB_USERNAME', ''),
             'password' => env('DB_PASSWORD', ''),
             'charset' => env('DB_CHARSET', 'utf8mb4'),
             'collation' => env('DB_COLLATION', 'utf8mb4_unicode_ci'),
-            'prefix' => '',
+            'prefix' => env('DB_PREFIX', ''),
             'strict' => true,
             'engine' => null,
         ],
@@ -57,11 +57,11 @@ return [
             'driver' => 'pgsql',
             'host' => env('DB_HOST', '127.0.0.1'),
             'port' => env('DB_PORT', '5432'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
+            'database' => env('DB_DATABASE', 'dreamfactory'),
+            'username' => env('DB_USERNAME', ''),
             'password' => env('DB_PASSWORD', ''),
             'charset' => env('DB_CHARSET', 'utf8'),
-            'prefix' => '',
+            'prefix' => env('DB_PREFIX', ''),
             'schema' => 'public',
             'sslmode' => 'prefer',
         ],
@@ -70,10 +70,10 @@ return [
             'driver' => 'sqlsrv',
             'host' => env('DB_HOST', '127.0.0.1'),
             'port' => env('DB_PORT', '1433'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
+            'database' => env('DB_DATABASE', 'dreamfactory'),
+            'username' => env('DB_USERNAME', ''),
             'password' => env('DB_PASSWORD', ''),
-            'prefix' => '',
+            'prefix' => env('DB_PREFIX', ''),
         ],
     ],
 
@@ -110,6 +110,34 @@ return [
             'port' => env('REDIS_PORT', 6379),
             'database' => env('REDIS_DATABASE', 0),
             'password' => env('REDIS_PASSWORD', null), // Needed by Redis Cloud and other similar services
+        ],
+
+        'queue' => [
+            'host' => env('QUEUE_HOST', env('REDIS_HOST')),
+            'port' => env('QUEUE_PORT', env('REDIS_PORT')),
+            'database' => env('QUEUE_DATABASE', env('REDIS_DATABASE')),
+            'password' => env('QUEUE_PASSWORD', env('REDIS_PASSWORD')), // Needed by Redis Cloud and other similar services
+        ],
+
+        'broadcast' => [
+            'host' => env('BROADCAST_HOST', env('REDIS_HOST')),
+            'port' => env('BROADCAST_PORT', env('REDIS_PORT')),
+            'database' => env('BROADCAST_DATABASE', env('REDIS_DATABASE')),
+            'password' => env('BROADCAST_PASSWORD', env('REDIS_PASSWORD')), // Needed by Redis Cloud and other similar services
+        ],
+
+        'cache' => [
+            'host' => env('CACHE_HOST', env('REDIS_HOST')),
+            'port' => env('CACHE_PORT', env('REDIS_PORT')),
+            'database' => env('CACHE_DATABASE', env('REDIS_DATABASE')),
+            'password' => env('CACHE_PASSWORD', env('REDIS_PASSWORD')), // Needed by Redis Cloud and other similar services
+        ],
+
+        'limit_cache' => [
+            'host' => env('LIMIT_CACHE_HOST', env('REDIS_HOST')),
+            'port' => env('LIMIT_CACHE_PORT', env('REDIS_PORT')),
+            'database' => env('LIMIT_CACHE_DATABASE', env('REDIS_DATABASE')),
+            'password' => env('LIMIT_CACHE_PASSWORD', env('REDIS_PASSWORD')), // Needed by Redis Cloud and other similar services
         ],
 
     ],

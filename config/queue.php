@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => env('QUEUE_DRIVER', 'database'),
+    'default' => env('QUEUE_DRIVER', 'sync'),
 
     /*
     |--------------------------------------------------------------------------
@@ -37,32 +37,32 @@ return [
         'database' => [
             'driver' => 'database',
             'database' => env('DB_CONNECTION', 'sqlite'),
-            'table' => 'jobs',
-            'queue' => 'default',
-            'retry_after' => 90,
+            'table' => env('QUEUE_TABLE', 'jobs'),
+            'queue' => env('QUEUE_NAME', 'default'),
+            'retry_after' => env('QUEUE_RETRY_AFTER', 90),
         ],
 
         'beanstalkd' => [
             'driver' => 'beanstalkd',
-            'host' => 'localhost',
-            'queue' => 'default',
-            'retry_after' => 90,
+            'host' => env('BROADCAST_HOST','localhost'),
+            'queue' => env('QUEUE_NAME', 'default'),
+            'retry_after' => env('QUEUE_RETRY_AFTER', 90),
         ],
 
         'sqs' => [
             'driver' => 'sqs',
-            'key' => 'your-public-key',
-            'secret' => 'your-secret-key',
-            'prefix' => 'https://sqs.us-east-1.amazonaws.com/your-account-id',
-            'queue' => 'your-queue-name',
-            'region' => 'us-east-1',
+            'key' => env('SQS_KEY', env('AWS_KEY')),
+            'secret' => env('SQS_SECRET', env('AWS_SECRET')),
+            'region' => env('SQS_REGION', env('AWS_REGION', 'us-east-1')),
+            'prefix' => env('SQS_PREFIX', 'https://sqs.us-east-1.amazonaws.com/your-account-id'),
+            'queue' => env('QUEUE_NAME', 'default'),
         ],
 
         'redis' => [
             'driver' => 'redis',
-            'connection' => 'default',
-            'queue' => 'default',
-            'retry_after' => 90,
+            'connection' => 'queue',
+            'queue' => env('QUEUE_NAME', 'default'),
+            'retry_after' => env('QUEUE_RETRY_AFTER', 90),
         ],
 
     ],

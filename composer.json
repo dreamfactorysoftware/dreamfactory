@@ -32,94 +32,9 @@
   },
   "minimum-stability": "dev",
   "prefer-stable":     true,
-  "repositories":      [
-    {
-      "type": "vcs",
-      "url":  "https://github.com/dreamfactorysoftware/df-adldap"
-    },
-    {
-      "type": "vcs",
-      "url":  "https://github.com/dreamfactorysoftware/df-azure-ad"
-    },
-    {
-      "type": "vcs",
-      "url":  "https://github.com/dreamfactorysoftware/df-ibmdb2"
-    },
-    {
-      "type": "vcs",
-      "url":  "https://github.com/dreamfactorysoftware/df-limits"
-    },
-    {
-      "type": "vcs",
-      "url":  "https://github.com/dreamfactorysoftware/df-logger"
-    },
-    {
-      "type": "vcs",
-      "url":  "https://github.com/dreamfactorysoftware/df-notification"
-    },
-    {
-      "type": "vcs",
-      "url":  "https://github.com/dreamfactorysoftware/df-oracledb"
-    },
-    {
-      "type": "vcs",
-      "url":  "https://github.com/dreamfactorysoftware/df-salesforce"
-    },
-    {
-      "type": "vcs",
-      "url":  "https://github.com/dreamfactorysoftware/df-saml"
-    },
-    {
-      "type": "vcs",
-      "url":  "https://github.com/dreamfactorysoftware/df-soap"
-    },
-    {
-      "type": "vcs",
-      "url":  "https://github.com/dreamfactorysoftware/df-sqlanywhere"
-    },
-    {
-      "type": "vcs",
-      "url":  "https://github.com/dreamfactorysoftware/df-sqlsrv"
-    }
-  ],
   "require":           {
-    "dreamfactory/df-adldap":          "dev-develop as dev-master",
-    "dreamfactory/df-admin-app":       "dev-develop as dev-master",
-    "dreamfactory/df-apidoc":          "dev-develop as dev-master",
-    "dreamfactory/df-aws":             "dev-develop as dev-master",
-    "dreamfactory/df-azure":           "dev-develop as dev-master",
-    "dreamfactory/df-azure-ad":        "dev-develop as dev-master",
-    "dreamfactory/df-cache":           "dev-develop as dev-master",
-    "dreamfactory/df-cassandra":       "dev-develop as dev-master",
-    "dreamfactory/df-core":            "dev-develop as dev-master",
-    "dreamfactory/df-couchbase":       "dev-develop as dev-master",
-    "dreamfactory/df-couchdb":         "dev-develop as dev-master",
-    "dreamfactory/df-database":        "dev-develop as dev-master",
-    "dreamfactory/df-email":           "dev-develop as dev-master",
-    "dreamfactory/df-file":            "dev-develop as dev-master",
-    "dreamfactory/df-filemanager-app": "dev-develop as dev-master",
-    "dreamfactory/df-firebird":        "dev-develop as dev-master",
-    "dreamfactory/df-ibmdb2":          "dev-develop as dev-master",
-    "dreamfactory/df-limits":          "dev-develop as dev-master",
-    "dreamfactory/df-logger":          "dev-develop as dev-master",
-    "dreamfactory/df-mongodb":         "dev-develop as dev-master",
-    "dreamfactory/df-notification":    "dev-develop as dev-master",
-    "dreamfactory/df-oauth":           "dev-develop as dev-master",
-    "dreamfactory/df-oracledb":        "dev-develop as dev-master",
-    "dreamfactory/df-rackspace":       "dev-develop as dev-master",
-    "dreamfactory/df-rws":             "dev-develop as dev-master",
-    "dreamfactory/df-salesforce":      "dev-develop as dev-master",
-    "dreamfactory/df-saml":            "dev-develop as dev-master",
-    "dreamfactory/df-script":          "dev-develop as dev-master",
-    "dreamfactory/df-soap":            "dev-develop as dev-master",
-    "dreamfactory/df-sqlanywhere":     "dev-develop as dev-master",
-    "dreamfactory/df-sqldb":           "dev-develop as dev-master",
-    "dreamfactory/df-sqlsrv":          "dev-develop as dev-master",
-    "dreamfactory/df-swagger-ui":      "dev-develop as dev-master",
-    "dreamfactory/df-user":            "dev-develop as dev-master",
-    "laravel/framework":               "5.4.*",
-    "predis/predis":                   "~1.0",
-    "tymon/jwt-auth":                  "~1.0.0"
+    "dreamfactory/df-core": "dev-develop as dev-master",
+    "laravel/framework":    "5.4.*"
   },
   "require-dev":       {
     "barryvdh/laravel-ide-helper": "~2.1",
@@ -135,38 +50,7 @@
       "database"
     ],
     "psr-4":    {
-      "DreamFactory\\":                     "app/",
-      "DreamFactory\\Core\\":               "workbench/repos/df-core/src",
-      "DreamFactory\\Core\\ADLdap\\":       "workbench/repos/df-adldap/src",
-      "DreamFactory\\Core\\ApiDoc\\":       "workbench/repos/df-apidoc/src",
-      "DreamFactory\\Core\\Aws\\":          "workbench/repos/df-aws/src",
-      "DreamFactory\\Core\\Azure\\":        "workbench/repos/df-azure/src",
-      "DreamFactory\\Core\\AzureAD\\":      "workbench/repos/df-azure-ad/src",
-      "DreamFactory\\Core\\Cache\\":        "workbench/repos/df-cache/src",
-      "DreamFactory\\Core\\Cassandra\\":    "workbench/repos/df-cassandra/src",
-      "DreamFactory\\Core\\CouchDb\\":      "workbench/repos/df-couchdb/src",
-      "DreamFactory\\Core\\Couchbase\\":    "workbench/repos/df-couchbase/src",
-      "DreamFactory\\Core\\Database\\":     "workbench/repos/df-database/src",
-      "DreamFactory\\Core\\Email\\":        "workbench/repos/df-email/src",
-      "DreamFactory\\Core\\File\\":         "workbench/repos/df-file/src",
-      "DreamFactory\\Core\\Firebird\\":     "workbench/repos/df-firebird/src",
-      "DreamFactory\\Core\\IbmDb2\\":       "workbench/repos/df-ibmdb2/src",
-      "DreamFactory\\Core\\Limit\\":        "workbench/repos/df-limits/src",
-      "DreamFactory\\Core\\Logger\\":       "workbench/repos/df-logger/src",
-      "DreamFactory\\Core\\MongoDb\\":      "workbench/repos/df-mongodb/src",
-      "DreamFactory\\Core\\Notification\\": "workbench/repos/df-notification/src",
-      "DreamFactory\\Core\\OAuth\\":        "workbench/repos/df-oauth/src",
-      "DreamFactory\\Core\\Oracle\\":       "workbench/repos/df-oracledb/src",
-      "DreamFactory\\Core\\Rackspace\\":    "workbench/repos/df-rackspace/src",
-      "DreamFactory\\Core\\Rws\\":          "workbench/repos/df-rws/src",
-      "DreamFactory\\Core\\Salesforce\\":   "workbench/repos/df-salesforce/src",
-      "DreamFactory\\Core\\Saml\\":         "workbench/repos/df-saml/src",
-      "DreamFactory\\Core\\Script\\":       "workbench/repos/df-script/src",
-      "DreamFactory\\Core\\Soap\\":         "workbench/repos/df-soap/src",
-      "DreamFactory\\Core\\SqlAnywhere\\":  "workbench/repos/df-sqlanywhere/src",
-      "DreamFactory\\Core\\SqlDb\\":        "workbench/repos/df-sqldb/src",
-      "DreamFactory\\Core\\SqlSrv\\":       "workbench/repos/df-sqlsrv/src",
-      "DreamFactory\\Core\\User\\":         "workbench/repos/df-user/src"
+      "DreamFactory\\": "app/"
     }
   },
   "autoload-dev":      {

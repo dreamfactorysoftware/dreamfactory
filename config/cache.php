@@ -82,7 +82,7 @@ return [
 
         'redis' => [
             'driver' => 'redis',
-            'connection' => env('CACHE_CONNECTION', 'default'),
+            'connection' => 'cache',
         ],
 
         /** Managed instance limits cache */

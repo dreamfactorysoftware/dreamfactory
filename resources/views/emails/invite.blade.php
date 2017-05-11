@@ -19,7 +19,7 @@
         </p>
 
         <div>
-            You have been invited to the DreamFactory Instance of {{ $instance_name }}. Go to the following url, enter the code below, and set your password to confirm your account.<br/>
+            You have been invited to {{ $app_name }}. Go to the following url, enter the code below, and set your password to confirm your account.<br/>
             <br/>
             {{ $link }}
             <br/><br/>

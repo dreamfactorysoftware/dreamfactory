@@ -16,7 +16,7 @@ class EmailTemplateSeeder extends BaseModelSeeder
                                 Hi {first_name},
                                 </p>
                                 <p>
-                                    You have been invited to the DreamFactory Instance of {instance_name}. Go to the following url, enter the code below, and set
+                                    You have been invited to {app_name}. Go to the following url, enter the code below, and set
                                     your password to confirm your account.
                                     <br/>
                                     <br/>
@@ -41,7 +41,7 @@ class EmailTemplateSeeder extends BaseModelSeeder
                                     Hi {first_name},
                                 </p>
                                 <p>
-                                    You have registered an user account on the DreamFactory instance of {instance_name}. Go to the following url, enter the
+                                    You have registered a user account on {app_name}. Go to the following url, enter the
                                     code below, and set your password to confirm your account.
                                     <br/>
                                     <br/>
