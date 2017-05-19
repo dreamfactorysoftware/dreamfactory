@@ -44,7 +44,7 @@ return [
 
         'beanstalkd' => [
             'driver' => 'beanstalkd',
-            'host' => env('BROADCAST_HOST','localhost'),
+            'host' => env('QUEUE_HOST','localhost'),
             'queue' => env('QUEUE_NAME', 'default'),
             'retry_after' => env('QUEUE_RETRY_AFTER', 90),
         ],

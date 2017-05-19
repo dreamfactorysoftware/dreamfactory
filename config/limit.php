@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => env('CACHE_DRIVER', 'file'),
+    'default' => env('LIMIT_CACHE_DRIVER', 'file'),
 
     /*
     |--------------------------------------------------------------------------
@@ -40,13 +40,13 @@ return [
 
         'database' => [
             'driver' => 'database',
-            'table' => env('CACHE_TABLE', 'cache'),
+            'table' => env('LIMIT_CACHE_TABLE', 'limit'),
             'connection' => env('DB_CONNECTION', 'sqlite'),
         ],
 
         'file' => [
             'driver' => 'file',
-            'path' => env('CACHE_PATH', storage_path('framework/cache/data')),
+            'path' => env('LIMIT_CACHE_PATH', storage_path('framework/limit_cache')),
         ],
 
         'memcached'  => [
@@ -69,8 +69,17 @@ return [
         ],
 
         'redis' => [
-            'driver' => 'redis',
-            'connection' => 'cache',
+            'client' => 'predis',
+            'database' => env('LIMIT_CACHE_REDIS_DATABASE', 9),
+            'host' => env('LIMIT_CACHE_REDIS_HOST', '127.0.0.1'),
+            'port' => env('LIMIT_CACHE_REDIS_PORT', 6379),
+            'password' => env('LIMIT_CACHE_REDIS_PASSWORD', null), // Needed by Redis Cloud and other similar services
+        ],
+
+        /** Managed instance limits cache */
+        env('DF_LIMITS_CACHE_STORE', 'dfe-limits') => [
+            'driver' => 'file',
+            'path'   => env('DF_LIMITS_CACHE_PATH', storage_path('framework/cache')),
         ],
     ],
 
@@ -85,18 +94,6 @@ return [
     |
     */
 
-    'prefix' => env('CACHE_PREFIX', 'dreamfactory'),
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | Cache Default Time To Live
-    |--------------------------------------------------------------------------
-    |
-    | When the application does not specify a TTL, use this instead.
-    |
-    */
-
-    'default_ttl' => env('CACHE_DEFAULT_TTL', env('DF_CACHE_TTL', 300)), // old env for upgrades
+    'prefix' => env('LIMIT_CACHE_PREFIX', 'dreamfactory'),
 
 ];

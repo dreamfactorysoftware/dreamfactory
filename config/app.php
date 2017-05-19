@@ -1,13 +1,51 @@
 <?php
 
 // load up any providers specific to DreamFactory
-$dfProviders = [];
-
-$dfAliases = [
-    //        'Socialize' => Laravel\Socialite\Facades\Socialite::class,
+$dfProviders = [
+    DreamFactory\Core\LaravelServiceProvider::class,
+    DreamFactory\Core\ApiDoc\ServiceProvider::class,
+    DreamFactory\Core\Aws\ServiceProvider::class,
+    DreamFactory\Core\Azure\ServiceProvider::class,
+    DreamFactory\Core\AzureAD\ServiceProvider::class,
+    DreamFactory\Core\Cache\ServiceProvider::class,
+    DreamFactory\Core\Cassandra\ServiceProvider::class,
+    DreamFactory\Core\Couchbase\ServiceProvider::class,
+    DreamFactory\Core\CouchDb\ServiceProvider::class,
+    DreamFactory\Core\Database\ServiceProvider::class,
+    DreamFactory\Core\Email\ServiceProvider::class,
+    DreamFactory\Core\File\ServiceProvider::class,
+    DreamFactory\Core\Firebird\ServiceProvider::class,
+    DreamFactory\Core\IbmDb2\ServiceProvider::class,
+    DreamFactory\Core\Limit\ServiceProvider::class,
+    DreamFactory\Core\Logger\ServiceProvider::class,
+    DreamFactory\Core\MongoDb\ServiceProvider::class,
+    DreamFactory\Core\Notification\ServiceProvider::class,
+    DreamFactory\Core\OAuth\ServiceProvider::class,
+    DreamFactory\Core\Oidc\ServiceProvider::class,
+    DreamFactory\Core\Oracle\ServiceProvider::class,
+    DreamFactory\Core\Rackspace\ServiceProvider::class,
+    DreamFactory\Core\Rws\ServiceProvider::class,
+    DreamFactory\Core\Salesforce\ServiceProvider::class,
+    DreamFactory\Core\Saml\ServiceProvider::class,
+    DreamFactory\Core\Script\ServiceProvider::class,
+    DreamFactory\Core\Soap\ServiceProvider::class,
+    DreamFactory\Core\SqlAnywhere\ServiceProvider::class,
+    DreamFactory\Core\SqlDb\ServiceProvider::class,
+    DreamFactory\Core\SqlSrv\ServiceProvider::class,
+    DreamFactory\Core\User\ServiceProvider::class,
 ];
 
 return [
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Version
+    |--------------------------------------------------------------------------
+    |
+    | This is the version of your application, not the version of the API.
+    */
+
+    'version' => '2.6.0',
 
     /*
     |--------------------------------------------------------------------------
@@ -142,7 +180,7 @@ return [
     |
     */
 
-    'providers' => [
+    'providers' => array_merge([
 
         /*
          * Laravel Framework Service Providers...
@@ -171,12 +209,6 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 
         /*
-         * Package Service Providers...
-         */
-        DreamFactory\Core\LaravelServiceProvider::class,
-        $dfProviders,
-
-        /*
          * Application Service Providers...
          */
         DreamFactory\Providers\AppServiceProvider::class,
@@ -190,7 +222,8 @@ return [
          * using "php artisan ide-helper:generate" command,
          */
         //Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
-    ],
+
+    ], $dfProviders),
 
     /*
     |--------------------------------------------------------------------------
@@ -205,45 +238,39 @@ return [
 
     'aliases' => [
 
-        'App' => Illuminate\Support\Facades\App::class,
-        'Artisan' => Illuminate\Support\Facades\Artisan::class,
-        'Auth' => Illuminate\Support\Facades\Auth::class,
-        'Blade' => Illuminate\Support\Facades\Blade::class,
-        'Broadcast' => Illuminate\Support\Facades\Broadcast::class,
-        'Bus' => Illuminate\Support\Facades\Bus::class,
-        'Cache' => Illuminate\Support\Facades\Cache::class,
-        'Config' => Illuminate\Support\Facades\Config::class,
-        'Cookie' => Illuminate\Support\Facades\Cookie::class,
-        'Crypt' => Illuminate\Support\Facades\Crypt::class,
-        'DB' => Illuminate\Support\Facades\DB::class,
-        'Eloquent' => Illuminate\Database\Eloquent\Model::class,
-        'Event' => Illuminate\Support\Facades\Event::class,
-        'File' => Illuminate\Support\Facades\File::class,
-        'Gate' => Illuminate\Support\Facades\Gate::class,
-        'Hash' => Illuminate\Support\Facades\Hash::class,
-        'Lang' => Illuminate\Support\Facades\Lang::class,
-        'Log' => Illuminate\Support\Facades\Log::class,
-        'Mail' => Illuminate\Support\Facades\Mail::class,
+        'App'          => Illuminate\Support\Facades\App::class,
+        'Artisan'      => Illuminate\Support\Facades\Artisan::class,
+        'Auth'         => Illuminate\Support\Facades\Auth::class,
+        'Blade'        => Illuminate\Support\Facades\Blade::class,
+        'Broadcast'    => Illuminate\Support\Facades\Broadcast::class,
+        'Bus'          => Illuminate\Support\Facades\Bus::class,
+        'Cache'        => Illuminate\Support\Facades\Cache::class,
+        'Config'       => Illuminate\Support\Facades\Config::class,
+        'Cookie'       => Illuminate\Support\Facades\Cookie::class,
+        'Crypt'        => Illuminate\Support\Facades\Crypt::class,
+        'DB'           => Illuminate\Support\Facades\DB::class,
+        'Eloquent'     => Illuminate\Database\Eloquent\Model::class,
+        'Event'        => Illuminate\Support\Facades\Event::class,
+        'File'         => Illuminate\Support\Facades\File::class,
+        'Gate'         => Illuminate\Support\Facades\Gate::class,
+        'Hash'         => Illuminate\Support\Facades\Hash::class,
+        'Lang'         => Illuminate\Support\Facades\Lang::class,
+        'Log'          => Illuminate\Support\Facades\Log::class,
+        'Mail'         => Illuminate\Support\Facades\Mail::class,
         'Notification' => Illuminate\Support\Facades\Notification::class,
-        'Password' => Illuminate\Support\Facades\Password::class,
-        'Queue' => Illuminate\Support\Facades\Queue::class,
-        'Redirect' => Illuminate\Support\Facades\Redirect::class,
-        'Redis' => Illuminate\Support\Facades\Redis::class,
-        'Request' => Illuminate\Support\Facades\Request::class,
-        'Response' => Illuminate\Support\Facades\Response::class,
-        'Route' => Illuminate\Support\Facades\Route::class,
-        'Schema' => Illuminate\Support\Facades\Schema::class,
-        'Session' => Illuminate\Support\Facades\Session::class,
-        'Storage' => Illuminate\Support\Facades\Storage::class,
-        'URL' => Illuminate\Support\Facades\URL::class,
-        'Validator' => Illuminate\Support\Facades\Validator::class,
-        'View' => Illuminate\Support\Facades\View::class,
+        'Password'     => Illuminate\Support\Facades\Password::class,
+        'Queue'        => Illuminate\Support\Facades\Queue::class,
+        'Redirect'     => Illuminate\Support\Facades\Redirect::class,
+        'Redis'        => Illuminate\Support\Facades\Redis::class,
+        'Request'      => Illuminate\Support\Facades\Request::class,
+        'Response'     => Illuminate\Support\Facades\Response::class,
+        'Route'        => Illuminate\Support\Facades\Route::class,
+        'Schema'       => Illuminate\Support\Facades\Schema::class,
+        'Session'      => Illuminate\Support\Facades\Session::class,
+        'Storage'      => Illuminate\Support\Facades\Storage::class,
+        'URL'          => Illuminate\Support\Facades\URL::class,
+        'Validator'    => Illuminate\Support\Facades\Validator::class,
+        'View'         => Illuminate\Support\Facades\View::class,
 
-        /*
-         * Package Facades...
-         */
-        $dfAliases,
-        'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
-        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
     ],
 ];
