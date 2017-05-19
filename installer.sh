@@ -4,6 +4,12 @@
 # (choosing the first command found)
 read dialog <<< "$(which whiptail dialog 2> /dev/null)"
 
+# make sure we have BASH 4 or greater
+if (( ${BASH_VERSION%%.*} < 4 )); then
+    echo "This installer requires a BASH version of 4.0 or greater. You have version ${BASH_VERSION}."
+    exit
+fi
+
 ##==============================================================================
 ## Environment Settings - should default to the config/xxx.php file values
 ##==============================================================================
@@ -441,7 +447,7 @@ display_section() {
     width="$(tput cols)"
     span=$((($width + $textsize) / 2))
     bar=$(printf '%.0s=' $(seq 1 $width))
-    printf "\n${bar}\n||%${span}s\n${bar}\n" "$1"
+    printf "${bar}\n||%${span}s\n${bar}\n" "$1"
 }
 
 display_title() {
@@ -449,7 +455,7 @@ display_title() {
     width="$(tput cols)"
     span=$((($width + $textsize) / 2))
     bar=$(printf '%.0s-' $(seq 1 $width))
-    printf "\n${bar}\n|%${span}s\n${bar}\n" "$1"
+    printf "${bar}\n|%${span}s\n${bar}\n" "$1"
 }
 
 trim() {
@@ -482,9 +488,12 @@ in_array() {
 }
 
 action_menu() {
+    clear
     local title=${1} && shift
+    local msg=${1} && shift
     local items=("$@")
-    printf "$title\n"
+    display_section "${title}"
+    printf "\n$msg\n"
     for i in ${!items[@]}; do
         printf "%2d) %s\n" $((i+1)) "${items[i]}"
     done
@@ -493,10 +502,11 @@ action_menu() {
 
 action_menu_handle() {
     action_error=""
-    local prompt="What would you like to do? "
     local title=${1} && shift
+    local msg=${1} && shift
     local items=("$@")
-    while action_menu "${title}" "${items[@]}" && read -e -p "$prompt" -n1 action; do
+    local prompt="What would you like to do? "
+    while action_menu "${title}" "${msg}" "${items[@]}" && read -e -p "$prompt" -n1 action; do
         if (( action > 0 && action <= ${#items[@]} )); then
             break
         fi
@@ -505,6 +515,9 @@ action_menu_handle() {
 }
 
 features_menu() {
+    clear
+    local title=${1}
+    display_section "Feature Selections - ${title}"
     printf "$menu_msg\n"
     for i in ${!menu_items[@]}; do
         printf "%s %2d) %s" "${chosen_features[${menu_items[i]}]:- }" $((i+1)) "${features[${menu_items[i]}]}"
@@ -515,8 +528,9 @@ features_menu() {
 
 features_menu_handle() {
     features_error=""
+    local title=${1}
     local prompt="Select a number and ENTER to add (+) or remove () a feature, press ENTER when done: "
-    while features_menu && read -e -p "$prompt" num && [[ "$num" ]]; do
+    while features_menu "${title}" && read -e -p "$prompt" num && [[ "$num" ]]; do
         if [[ "$num" != *[![:digit:]]* ]] && (( num > 0 && num <= ${#menu_items[@]} )) ; then
             ((num--));
             [[ "${chosen_features[${menu_items[num]}]}" ]] && chosen_features[${menu_items[num]}]="" || chosen_features[${menu_items[num]}]="+"
@@ -527,6 +541,9 @@ features_menu_handle() {
 }
 
 settings_menu() {
+    clear
+    local title=${1}
+    display_section "Environment Settings - ${title}"
     printf "$menu_msg\n"
     for i in ${!menu_items[@]}; do
         printf "%2d) %s=%s\n" $((i+1)) "${menu_items[i]}" "${settings[${menu_items[i]}]}"
@@ -536,8 +553,9 @@ settings_menu() {
 
 settings_menu_handle() {
     settings_error=""
+    local title=${1}
     local prompt="Select a number and ENTER to edit a setting, or just ENTER to accept all settings as displayed: "
-    while settings_menu && read -e -p "$prompt" num && [[ "$num" ]]; do
+    while settings_menu "${title}" && read -e -p "$prompt" num && [[ "$num" ]]; do
         if [[ "$num" != *[![:digit:]]* ]] && (( num > 0 && num <= ${#menu_items[@]} )) ; then
             ((num--));
             name="${menu_items[num]}"
@@ -557,7 +575,6 @@ settings_menu_handle() {
 # Interactive portion
 #-------------------------------------------
 clear
-# add preliminary helper text for what we are about to do
 display_section "Welcome to the DreamFactory Installer"
 echo "During this installation process, follow the prompts requesting various selections about the features and environment settings desired."
 
@@ -567,14 +584,14 @@ env_source=".env-dist"
 composer_source="composer.json-dist"
 
 if [ -f ".env" ] || [ -f "composer.json" ] ; then
-    display_title "Install or Upgrade"
+    action_title="Install or Upgrade"
     action_msg="A previous installation has been detected."
     action_items=(
     "Keep existing configuration"
     "Re-install from the defaults"
     "Cancel installation"
     )
-    action_menu_handle "${action_msg}" "${action_items[@]}"
+    action_menu_handle "${action_title}" "${action_msg}" "${action_items[@]}"
     case $action in
       1 ) [ -f ".env" ] && env_source=".env"
           [ -f "composer.json" ] && composer_source="composer.json"
@@ -607,25 +624,25 @@ for composer_line in "${composer_requires[@]}"; do
     fi
 done
 
-
-display_section "Feature Selections"
-echo "The following menus allow you select a list of desired features by section.
-At the end of this script, the selections will be used to check for all required software and OS features.
-To change any of these settings at a later time, re-run this installation."
+clear
+action_title="Feature Selections"
 if [[ ${#chosen_features[@]} -ne 0 ]]; then
-    echo "The following features have been detected from your installation:"
+    action_msg="The following features have been detected from your installation:\n"
     for i in ${!chosen_features[@]}; do
-        [[ "${chosen_features[${i}]}" ]] && printf "\t${features[${i}]}\n"
+        [[ "${chosen_features[${i}]}" ]] && action_msg+="\t${features[${i}]}\n"
     done | sort
-    action_msg="\nWould you like to change your feature list?"
+    action_msg+="\nWould you like to change your feature list?"
     action_items=("Yes, change my features" "No, take features as is" "Cancel installation")
-    action_menu_handle "${action_msg}" "${action_items[@]}"
+    action_menu_handle "${action_title}" "${action_msg}" "${action_items[@]}"
 else
     action=1
 fi
 case $action in
     1 )
-        action_msg="\nChoose from the following feature sections:"
+        action_msg="The following menus allow you select a list of desired features by section."
+        action_msg+=" At the end of this script, the selections will be used to check for all required software and OS features."
+        action_msg+=" To change any of these features at a later time, re-run this installation."
+        action_msg+="\nChoose from the following feature sections:"
         action_items=(
         "Authentication & Authorization Services"
         "SQL & NoSQL Database Services"
@@ -637,10 +654,9 @@ case $action in
         "Other Features and Services"
         )
         action_error=""
-        while action_menu "${action_msg}" "${action_items[@]}" && read -e -p "Select a group by number, or press enter to be done. " -n1 group && [[ "$group" ]]; do
+        while action_menu "${action_title}" "${action_msg}" "${action_items[@]}" && read -e -p "Select a group by number, or press enter to be done. " -n1 group && [[ "$group" ]]; do
             case $group in
-                1 ) display_title "Authentication & Authorization Services"
-                    menu_msg="DreamFactory can always be authenticated against using the administrator accounts provisioned. Authentication and authorization can also be extended using the following optional features."
+                1 ) menu_msg="DreamFactory can always be authenticated against using the administrator accounts provisioned. Authentication and authorization can also be extended using the following optional features."
                     menu_items=(
                     "user"
                     "oauth_custom"
@@ -657,11 +673,10 @@ case $action in
                     "ldap"
                     "saml"
                     )
-                    features_menu_handle
+                    features_menu_handle "Authentication & Authorization Services"
                     ;;
 
-                2 ) display_title "SQL & NoSQL Database Services"
-                    menu_msg="DreamFactory supports connections to many database vendors. Choose the desired features to be supported on this install."
+                2 ) menu_msg="DreamFactory supports connections to many database vendors. Choose the desired features to be supported on this install."
                     menu_items=(
                     "cassandra"
                     "couchdb"
@@ -679,11 +694,10 @@ case $action in
                     "sqlite"
                     "salesforce_db"
                     )
-                    features_menu_handle
+                    features_menu_handle "SQL & NoSQL Database Services"
                     ;;
 
-                3 ) display_title "Caching Services"
-                    menu_msg="DreamFactory supports several popular stores for server-side caching. Choose the desired features to be supported on this install:"
+                3 ) menu_msg="DreamFactory supports several popular stores for server-side caching. Choose the desired features to be supported on this install:"
                     menu_items=(
                     "cache_apc"
                     "cache_database"
@@ -691,11 +705,10 @@ case $action in
                     "cache_memcached"
                     "cache_redis"
                     )
-                    features_menu_handle
+                    features_menu_handle "Caching Services"
                     ;;
 
-                4 ) display_title "Email Services"
-                    menu_msg="DreamFactory supports connections to many email senders. Choose the desired features to be supported on this install:"
+                4 ) menu_msg="DreamFactory supports connections to many email senders. Choose the desired features to be supported on this install:"
                     menu_items=(
                     "command_email"
                     "smtp_email"
@@ -704,11 +717,10 @@ case $action in
                     "sparkpost_email"
                     "aws_ses"
                     )
-                    features_menu_handle
+                    features_menu_handle "Email Services"
                     ;;
 
-                5 ) display_title "File Storage Services"
-                    menu_msg="DreamFactory supports several popular storage options for files. Choose the desired features to be supported on this install:"
+                5 ) menu_msg="DreamFactory supports several popular storage options for files. Choose the desired features to be supported on this install:"
                     menu_items=(
                     "local_file"
                     "aws_s3"
@@ -716,32 +728,29 @@ case $action in
                     "openstack_object_storage"
                     "rackspace_cloud_files"
                     )
-                    features_menu_handle
+                    features_menu_handle "File Storage Services"
                     ;;
 
-                6 ) display_title "Server-side Scripting"
-                    menu_msg="DreamFactory supports several popular languages for server-side scripting. Choose the desired features to be supported on this install:"
+                6 ) menu_msg="DreamFactory supports several popular languages for server-side scripting. Choose the desired features to be supported on this install:"
                     menu_items=(
                     "v8js"
                     "nodejs"
                     "php"
                     "python"
                     )
-                    features_menu_handle
+                    features_menu_handle "Server-side Scripting"
                     ;;
 
-                7 ) display_title "Notification Services"
-                    menu_msg="DreamFactory supports several popular notification services. Choose the desired features to be supported on this install:"
+                7 ) menu_msg="DreamFactory supports several popular notification services. Choose the desired features to be supported on this install:"
                     menu_items=(
                     "aws_sns"
                     "apn"
                     "gcm"
                     )
-                    features_menu_handle
+                    features_menu_handle "Notification Services"
                     ;;
 
-                8 ) display_title "Other Features and Services"
-                    menu_msg="Choose the desired features to be supported on this install:"
+                8 ) menu_msg="Choose the desired features to be supported on this install:"
                     menu_items=(
                     "api_doc"
                     "limits"
@@ -749,7 +758,7 @@ case $action in
                     "rws"
                     "soap"
                     )
-                    features_menu_handle
+                    features_menu_handle "Other Features and Services"
                     ;;
 
                 * ) { msg="Invalid selection: $group"; continue; }
@@ -761,24 +770,25 @@ case $action in
     3 ) exit;;
 esac
 
-display_section "Environment Settings"
-echo "The following menus allow you edit all of the allowed environment settings by section.
-At the end of this script, the selections will be used to build/update the .env file.
-To change any of these settings at a later time, either re-run this installation or edit the .env file manually."
+clear
+action_title="Environment Settings"
 if [ -f ".env" ] ; then
-    echo "The following settings have been detected from your environment (does not include defaults):"
+    action_msg="The following settings have been detected from your environment (does not include defaults):"
     declare -a print_settings=()
     for i in ${!settings[@]}; do
-        [[ "${settings[${i}]}" ]] && printf "\t${i} = ${settings[${i}]}\n"
+        [[ "${settings[${i}]}" ]] && action_msg+="\t${i} = ${settings[${i}]}\n"
     done | sort
-    action_msg="\nWould you like to change your environment settings?"
+    action_msg+="\nWould you like to change your environment settings?"
     action_items=("Yes, change my settings" "No, take settings as is" "Cancel installation")
-    action_menu_handle "${action_msg}" "${action_items[@]}"
+    action_menu_handle "${action_title}" "${action_msg}" "${action_items[@]}"
 else
     action=1
 fi
 case $action in
     1 )
+        group_msg="The following menus allow you edit all of the allowed environment settings by section."
+        group_msg+=" At the end of this script, the selections will be used to build/update the .env file."
+        group_msg+=" To change any of these settings at a later time, either re-run this installation or edit the .env file manually."
         group_msg="\nChoose from the following feature sections:"
         group_items=(
         "Application Settings"
@@ -792,10 +802,9 @@ case $action in
         "Other Settings"
         )
         action_error=""
-        while action_menu "${group_msg}" "${group_items[@]}" && read -e -p "Select a group by number, or press enter to be done. " -n1 group && [[ "$group" ]]; do
+        while action_menu "${action_title}" "${group_msg}" "${group_items[@]}" && read -e -p "Select a group by number, or press enter to be done. " -n1 group && [[ "$group" ]]; do
             case $group in
-                1 ) display_title "Application Settings"
-                    menu_msg="Current application settings:"
+                1 ) menu_msg="Current application settings:"
                     menu_items=(
                     "APP_CIPHER"
                     "APP_DEBUG"
@@ -810,11 +819,10 @@ case $action in
                     "DF_LANDING_PAGE"
                     )
 
-                    settings_menu_handle
+                    settings_menu_handle "Application Settings"
                     ;;
 
-                2 ) display_title "System Database settings"
-                    case "${settings["DB_CONNECTION"]}" in
+                2 ) case "${settings["DB_CONNECTION"]}" in
                         "sqlite" ) menu_items=("DB_CONNECTION" "DB_DATABASE")
                             [[ -z "${settings[DB_DATABASE]}" ]] && settings["DB_DATABASE"]="storage/databases/database.sqlite"
                             ;;
@@ -838,7 +846,7 @@ case $action in
                     menu_msg="Current system database settings:"
                     settings_error=""
                     prompt="Select a number and ENTER to edit a setting, or just ENTER to accept all settings as displayed: "
-                    while settings_menu && read -e -p "$prompt" num && [[ "$num" ]]; do
+                    while settings_menu "System Database settings" && read -e -p "$prompt" num && [[ "$num" ]]; do
                         if [[ "$num" != *[![:digit:]]* ]] && (( num > 0 && num <= ${#menu_items[@]} )) ; then
                             ((num--));
                             name="${menu_items[num]}"
@@ -886,11 +894,10 @@ case $action in
                     "DF_FREETDS_DUMP"
                     "DF_FREETDS_DUMPCONFIG"
                     )
-                    settings_menu_handle
+                    settings_menu_handle "Database Settings"
                     ;;
 
-                3 ) display_title "System Cache Settings"
-                    case "${settings["CACHE_DRIVER"]}" in
+                3 ) case "${settings["CACHE_DRIVER"]}" in
                         "file" ) menu_items=("CACHE_DRIVER" "CACHE_DEFAULT_TTL" "CACHE_PATH")
                             [[ -z "${settings[CACHE_PATH]}" ]] && settings["CACHE_PATH"]="storage/framework/cache/data"
                             ;;
@@ -905,7 +912,7 @@ case $action in
                     menu_msg="Current system cache settings:"
                     settings_error=""
                     prompt="Select a number and ENTER to edit a setting, or just ENTER to accept all settings as displayed: "
-                    while settings_menu && read -e -p "$prompt" num && [[ "$num" ]]; do
+                    while settings_menu "System Cache Settings" && read -e -p "$prompt" num && [[ "$num" ]]; do
                         if [[ "$num" != *[![:digit:]]* ]] && (( num > 0 && num <= ${#menu_items[@]} )) ; then
                             ((num--));
                             name="${menu_items[num]}"
@@ -945,7 +952,6 @@ case $action in
                     done
 
                     if [[ "${chosen_features[limits]}" ]]; then
-                        display_title "Limits Settings"
                         menu_msg="Current limits cache settings:"
                         case "${settings["LIMIT_CACHE_DRIVER"]}" in
                             "file" ) menu_items=("LIMIT_CACHE_DRIVER" "LIMIT_CACHE_PATH")
@@ -961,7 +967,7 @@ case $action in
                         esac
                         settings_error=""
                         prompt="Select a number and ENTER to edit a setting, or just ENTER to accept all settings as displayed: "
-                        while settings_menu && read -e -p "$prompt" num && [[ "$num" ]]; do
+                        while settings_menu "Limits Settings" && read -e -p "$prompt" num && [[ "$num" ]]; do
                             if [[ "$num" != *[![:digit:]]* ]] && (( num > 0 && num <= ${#menu_items[@]} )) ; then
                                 ((num--));
                                 name="${menu_items[num]}"
@@ -1002,8 +1008,7 @@ case $action in
                     fi
                     ;;
 
-                4 ) display_title "System Queuing Settings"
-                    echo "Note: Using the driver 'sync' will execute queued jobs immediately and doesn't really use queuing.
+                4 ) echo "Note: Using the driver 'sync' will execute queued jobs immediately and doesn't really use queuing.
                           Also using driver'null' discards jobs immediately, not executing them at all, useful for testing only."
                     case "${settings["QUEUE_DRIVER"]}" in
                         "sync" ) menu_items=("QUEUE_DRIVER") ;;
@@ -1018,7 +1023,7 @@ case $action in
                     menu_msg="Current system queuing settings:"
                     settings_error=""
                     prompt="Select a number and ENTER to edit a setting, or just ENTER to accept all settings as displayed: "
-                    while settings_menu && read -e -p "$prompt" num && [[ "$num" ]]; do
+                    while settings_menu "System Queuing Settings" && read -e -p "$prompt" num && [[ "$num" ]]; do
                         if [[ "$num" != *[![:digit:]]* ]] && (( num > 0 && num <= ${#menu_items[@]} )) ; then
                             ((num--));
                             name="${menu_items[num]}"
@@ -1057,8 +1062,7 @@ case $action in
                     done
                     ;;
 
-                5 ) display_title "System Email Settings"
-                    case "${settings["MAIL_DRIVER"]}" in
+                5 ) case "${settings["MAIL_DRIVER"]}" in
                         "smtp" ) menu_items=("MAIL_DRIVER" "MAIL_HOST" "MAIL_PORT" "MAIL_USERNAME" "MAIL_PASSWORD" "MAIL_ENCRYPTION" "MAIL_FROM_ADDRESS" "MAIL_FROM_NAME") ;;
                         "sendmail" )  menu_items=("MAIL_DRIVER" "CACHE_DEFAULT_TTL" "CACHE_TABLE") ;;
                         "mailgun" ) menu_items=("MAIL_DRIVER" "MAILGUN_DOMAIN" "MAILGUN_SECRET") ;;
@@ -1071,7 +1075,7 @@ case $action in
                     menu_msg="Current system mail settings:"
                     settings_error=""
                     prompt="Select a number and ENTER to edit a setting, or just ENTER to accept all settings as displayed: "
-                    while settings_menu && read -e -p "$prompt" num && [[ "$num" ]]; do
+                    while settings_menu "System Email Settings" && read -e -p "$prompt" num && [[ "$num" ]]; do
                         if [[ "$num" != *[![:digit:]]* ]] && (( num > 0 && num <= ${#menu_items[@]} )) ; then
                             ((num--));
                             name="${menu_items[num]}"
@@ -1115,8 +1119,7 @@ case $action in
                     done
                     ;;
 
-                6 ) display_title "DreamFactory API Settings"
-                    menu_msg="The following settings the API layout and the way the system handles requests and responses:"
+                6 ) menu_msg="The following settings the API layout and the way the system handles requests and responses:"
                     menu_items=(
                     "DF_API_ROUTE_PREFIX"
                     "DF_STATUS_ROUTE_PREFIX"
@@ -1126,11 +1129,10 @@ case $action in
                     "DF_RESOURCE_WRAPPER"
                     "DF_CONTENT_TYPE"
                     )
-                    settings_menu_handle
+                    settings_menu_handle "DreamFactory API Settings"
                     ;;
 
-                7 ) display_title "Server-side Scripting Settings"
-                    menu_msg="The following settings apply to event scripting and scripting services:"
+                7 ) menu_msg="The following settings apply to event scripting and scripting services:"
                     menu_items=("DF_SCRIPTING_DISABLE")
                     [[ "${chosen_features[nodejs]}" ]] && menu_items=("${menu_items[@]}" "DF_NODEJS_PATH")
                     [[ "${chosen_features[python]}" ]] && menu_items=("${menu_items[@]}" "DF_PYTHON_PATH")
@@ -1151,11 +1153,10 @@ case $action in
                     "DF_CONFIRM_ADMIN_INVITE_URL"
                     "DF_CONFIRM_REGISTER_URL"
                     )
-                    settings_menu_handle
+                    settings_menu_handle "Server-side Scripting Settings"
                     ;;
 
-                8 ) display_title "Event Broadcasting Settings"
-                    case "${settings["BROADCAST_DRIVER"]}" in
+                8 ) case "${settings["BROADCAST_DRIVER"]}" in
                         "pusher" ) menu_items=("BROADCAST_DRIVER" "PUSHER_APP_ID" "PUSHER_APP_KEY" "PUSHER_APP_SECRET") ;;
                         "redis" ) menu_items=("BROADCAST_DRIVER" "REDIS_HOST" "REDIS_PORT" "REDIS_DATABASE" "REDIS_PASSWORD") ;;
                         "log" ) menu_items=("BROADCAST_DRIVER") ;;
@@ -1164,7 +1165,7 @@ case $action in
                     menu_msg="Current event broadcast settings:"
                     settings_error=""
                     prompt="Select a number and ENTER to edit a setting, or just ENTER to accept all settings as displayed: "
-                    while settings_menu && read -e -p "$prompt" num && [[ "$num" ]]; do
+                    while settings_menu "Event Broadcasting Settings" && read -e -p "$prompt" num && [[ "$num" ]]; do
                         if [[ "$num" != *[![:digit:]]* ]] && (( num > 0 && num <= ${#menu_items[@]} )) ; then
                             ((num--));
                             name="${menu_items[num]}"
@@ -1196,15 +1197,14 @@ case $action in
                     done
                     ;;
 
-                9 ) display_title "Other Settings"
-                    menu_msg="The following settings apply to all database services, not just the system database:"
+                9 ) menu_msg="The following settings apply to all database services, not just the system database:"
                     menu_items=(
                     "DF_FILE_CHUNK_SIZE"
                     "DF_PACKAGE_PATH"
                     "DF_LOOKUP_MODIFIERS"
                     "DF_INSTALL"
                     )
-                    settings_menu_handle
+                    settings_menu_handle "Other Settings"
                     ;;
             esac
         done
@@ -1213,6 +1213,7 @@ case $action in
     3 ) exit;;
 esac
 
+clear
 if [[ "${chosen_settings[@]}" ]] ; then
     printf "\nChanges to make to environment:\n"
     for key in "${!chosen_settings[@]}"; do
@@ -1252,6 +1253,7 @@ if [[ "${chosen_settings[@]}" ]] ; then
 else
     printf "\nNo changes to make to environment settings.\n"
 fi
+
 
 if [[ "${chosen_features[@]}" ]] ; then
     printf "\nFeatures selected for this install:\n"
@@ -1294,7 +1296,7 @@ if [[ "${chosen_features[@]}" ]] ; then
         declare -a installed_exts
         declare -a required_exts
         for V in "${req_exts[@]}"; do
-            in_array cur_exts "${V}" && installed_exts+="${V}" || required_exts+="${V}";
+            in_array cur_exts "${V}" && installed_exts=("${installed_exts[@]}" "${V}") || required_exts=("${required_exts[@]}" "${V}");
         done
         printf "\nRequired PHP extensions already installed:\n"
         for V in "${installed_exts[@]}"; do printf "\t${V}\n"; done
