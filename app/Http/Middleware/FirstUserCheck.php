@@ -30,7 +30,7 @@ class FirstUserCheck
             } catch (QueryException $e) {
                 try {
                     //base table or view not found.
-                    \Cache::put('setup_db', true, config('cache.default_ttl'));
+                    \Cache::put('setup_db', true, config('df.default_cache_ttl'));
 
                     return redirect()->to('/setup_db');
                 } catch (\Exception $ex) {

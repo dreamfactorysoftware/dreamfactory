@@ -1,18 +1,29 @@
 #!/usr/bin/env bash
 
-# check whether whiptail or dialog is installed
-# (choosing the first command found)
-read dialog <<< "$(which whiptail dialog 2> /dev/null)"
-
 # make sure we have BASH 4 or greater
 if (( ${BASH_VERSION%%.*} < 4 )); then
     echo "This installer requires a BASH version of 4.0 or greater. You have version ${BASH_VERSION}."
+    if [[ "OSX" == os_type ]]; then
+        echo "Try 'brew install bash' and then restart the terminal"
+    fi
     exit
 fi
 
 ##==============================================================================
 ## Environment Settings - should default to the config/xxx.php file values
 ##==============================================================================
+declare -a settings_groups=(
+"Application Settings"
+"Database Settings"
+"Caching Settings"
+"Queuing Settings"
+"Email Settings"
+"API Settings"
+"Scripting Settings"
+"Broadcasting Settings"
+"Other Settings"
+)
+
 declare -A settings=(
 # Application
 ["APP_CIPHER"]="AES-256-CBC"
@@ -199,7 +210,7 @@ declare -A settings_msg=(
 ["DF_RESOURCE_WRAPPER"]="Most API calls return a resource array or a single resource, if array, what do we wrap it with?"
 ["DF_CONTENT_TYPE"]="Default content-type of response when accepts header is missing or empty."
 # Limits
-["LIMIT_CACHE_DRIVER"]="file"
+["LIMIT_CACHE_DRIVER"]="What type of driver or connection to use for limit cache storage."
 ["LIMIT_CACHE_PATH"]="Path to where limit tracking information will be stored."
 ["LIMIT_CACHE_REDIS_DATABASE"]="limit_cache"
 ["LIMIT_CACHE_REDIS_HOST"]="The hostname or IP address of the redis server."
@@ -233,6 +244,42 @@ declare -A settings_options=(
 ["DF_ALWAYS_WRAP_RESOURCES"]="true, false"
 # Limits
 ["LIMIT_CACHE_DRIVER"]="apc, array, database, file, memcached, redis"
+)
+
+declare -a feature_groups=(
+"Authentication & Authorization Services"
+"Caching Services"
+"Database Services (SQL & NoSQL)"
+"Email Services"
+"File Storage Services"
+"Notification Services"
+"Server-side Scripting"
+"UI Applications"
+"Other Features and Services"
+)
+
+declare -A features_in_groups=(
+["Authentication & Authorization Services"]="user oauth_custom oauth_bitbucket oauth_facebook oauth_github oauth_google oauth_linkedin oauth_microsoft_live oauth_twitter oauth_azure_ad oidc ad ldap saml"
+["Database Services (SQL & NoSQL)"]="cassandra couchdb aws_dynamodb aws_redshift_db couchbase firebird ibmdb2 sqlsrv mongodb mysql pgsql oracle sqlanywhere sqlite salesforce_db"
+["Caching Services"]="cache_apc cache_database cache_file cache_memcached cache_redis"
+["Email Services"]="command_email smtp_email mailgun_email mandrill_email sparkpost_email aws_ses"
+["File Storage Services"]="local_file aws_s3 azure_blob openstack_object_storage rackspace_cloud_files"
+["Notification Services"]="aws_sns apn gcm"
+["Server-side Scripting"]="v8js nodejs php python"
+["UI Applications"]="launchpad admin schema_mgr data_mgr file_mgr api_doc_ui"
+["Other Features and Services"]="api_doc limits logger rws soap"
+)
+
+declare -A feature_group_prompts=(
+["Authentication & Authorization Services"]="DreamFactory can always be authenticated against using the administrator accounts provisioned. Authentication and authorization can also be extended using the following optional features."
+["Database Services (SQL & NoSQL)"]="DreamFactory supports connections to many database vendors. Choose the desired features to be supported on this install."
+["Caching Services"]="DreamFactory supports several popular stores for server-side caching. Choose the desired features to be supported on this install:"
+["Email Services"]="DreamFactory supports connections to many email senders. Choose the desired features to be supported on this install:"
+["File Storage Services"]="DreamFactory supports several popular storage options for files. Choose the desired features to be supported on this install:"
+["Notification Services"]="DreamFactory supports several popular languages for server-side scripting. Choose the desired features to be supported on this install:"
+["Server-side Scripting"]="DreamFactory supports several popular notification services. Choose the desired features to be supported on this install:"
+["UI Applications"]="Choose the desired UI components to be loaded on this server:"
+["Other Features and Services"]="Choose the desired features to be supported on this install:"
 )
 
 declare -A features=(
@@ -297,6 +344,13 @@ declare -A features=(
 ["aws_sns"]="AWS SNS (Simple Notification System)"
 ["apn"]="Apple Push Notification"
 ["gcm"]="Google GCM Notification"
+# UI Applications
+["launchpad"]="DreamFactory Launchpad App"
+["admin"]="DreamFactory Administration App"
+["schema_mgr"]="Schema Manager App"
+["data_mgr"]="Data Manager App"
+["file_mgr"]="File Manager App"
+["api_doc_ui"]="API Documentation and Testing App"
 # Other features
 ["api_doc"]="API Docs using Open API (fka Swagger)"
 ["limits"]="API Limits"
@@ -367,6 +421,13 @@ declare -A feature_package_map=(
 ["aws_sns"]="df-aws"
 ["apn"]="df-notification"
 ["gcm"]="df-notification"
+# UI Applications
+["launchpad"]="df-admin-app"
+["admin"]="df-admin-app"
+["schema_mgr"]="df-admin-app"
+["data_mgr"]="df-admin-app"
+["file_mgr"]="df-filemanager-app"
+["api_doc_ui"]="df-swagger-ui"
 # Other features
 ["api_doc"]="df-apidoc"
 ["limits"]="df-limits"
@@ -417,30 +478,32 @@ declare -a feature_subscription_map=(
 "soap" "limits" "logger"
 )
 
-# Applications
-declare -A applications=(
-["launchpad"]="DreamFactory Launchpad"
-["admin"]="DreamFactory Administration"
-["schema_mgr"]="Schema Manager"
-["data_mgr"]="Data Manager"
-["file_mgr"]="File Manager"
-["api_doc"]="API Documentation and Testing"
-)
-
-declare -A app_package_map=(
-["launchpad"]="df-admin-app"
-["admin"]="df-admin-app"
-["schema_mgr"]="df-admin-app"
-["data_mgr"]="df-admin-app"
-["file_mgr"]="df-filemanager-app"
-["api_doc"]="df-swagger-ui"
-)
-
 # change tracking
 declare -A chosen_features
 declare -A chosen_settings
 # menu control
 declare -a menu_items
+
+os_type() {
+    case "$OSTYPE" in
+      bsd*)     echo "BSD" ;;
+      freebsd*) echo "BSD" ;;
+      cygwin*)  echo "WINDOWS" ;;
+      darwin*)  echo "OSX" ;;
+      linux*)   echo "LINUX" ;;
+      msys*)    echo "WINDOWS" ;;
+      solaris*) echo "SOLARIS" ;;
+      *)        echo "unknown: $OSTYPE" ;;
+    esac
+}
+
+jq_available() {
+    if jq --version >/dev/null 2>&1; then
+        return 0
+    fi
+
+    return 1
+}
 
 display_section() {
     textsize=${#1}
@@ -506,7 +569,7 @@ action_menu_handle() {
     local msg=${1} && shift
     local items=("$@")
     local prompt="What would you like to do? "
-    while action_menu "${title}" "${msg}" "${items[@]}" && read -e -p "$prompt" -n1 action; do
+    while action_menu "${title}" "${msg}" "${items[@]}" && read -e -p "$prompt" action; do
         if (( action > 0 && action <= ${#items[@]} )); then
             break
         fi
@@ -518,7 +581,7 @@ features_menu() {
     clear
     local title=${1}
     display_section "Feature Selections - ${title}"
-    printf "$menu_msg\n"
+    printf "\n$menu_msg\n"
     for i in ${!menu_items[@]}; do
         printf "%s %2d) %s" "${chosen_features[${menu_items[i]}]:- }" $((i+1)) "${features[${menu_items[i]}]}"
         in_array feature_subscription_map "${menu_items[i]}" && printf " (* subscription required)\n" || printf "\n";
@@ -544,7 +607,7 @@ settings_menu() {
     clear
     local title=${1}
     display_section "Environment Settings - ${title}"
-    printf "$menu_msg\n"
+    printf "\n$menu_msg\n"
     for i in ${!menu_items[@]}; do
         printf "%2d) %s=%s\n" $((i+1)) "${menu_items[i]}" "${settings[${menu_items[i]}]}"
     done
@@ -574,35 +637,11 @@ settings_menu_handle() {
 #-------------------------------------------
 # Interactive portion
 #-------------------------------------------
-clear
-display_section "Welcome to the DreamFactory Installer"
-echo "During this installation process, follow the prompts requesting various selections about the features and environment settings desired."
-
 # Initialize variables
 install_type="install"
 env_source=".env-dist"
-composer_source="composer.json-dist"
 
-if [ -f ".env" ] || [ -f "composer.json" ] ; then
-    action_title="Install or Upgrade"
-    action_msg="A previous installation has been detected."
-    action_items=(
-    "Keep existing configuration"
-    "Re-install from the defaults"
-    "Cancel installation"
-    )
-    action_menu_handle "${action_title}" "${action_msg}" "${action_items[@]}"
-    case $action in
-      1 ) [ -f ".env" ] && env_source=".env"
-          [ -f "composer.json" ] && composer_source="composer.json"
-          install_type="upgrade"
-          ;;
-      2 ) ;;
-      3 ) exit;;
-    esac
-fi
-
-# pull existing settings
+# pull default settings
 mapfile -t env_lines < <(sed -e '/\s*#.*$/d' -e '/^\s*$/d' ${env_source})
 for env_line in "${env_lines[@]}"; do
     env_key="${env_line%%=*}"
@@ -612,29 +651,70 @@ for env_line in "${env_lines[@]}"; do
     fi
 done
 
-# pull existing features
-mapfile -t composer_requires < <(awk '/"require":/{flag=1; next} /\}/{flag=0} flag' ${composer_source})
-for composer_line in "${composer_requires[@]}"; do
-    pkg=$(qtrim $(trim "${composer_line%%:*}"))
-    if [ "dreamfactory" == "${pkg%%/*}" ]; then
-        pkg="${pkg#*/}"
-        for feature in "${!feature_package_map[@]}"; do
-            [[ "${pkg}" == "${feature_package_map[${feature}]}" ]] && chosen_features["${feature}"]="+"
-        done
-    fi
-done
+if [ -f ".env" ] ; then
+    action_title="Install or Upgrade"
+    action_msg="A previous installation has been detected."
+    action_items=(
+    "Keep existing configuration"
+    "Re-install from the defaults"
+    "Cancel installation"
+    )
+    action_menu_handle "${action_title}" "${action_msg}" "${action_items[@]}"
+    case $action in
+        1 ) env_source=".env"
+            # pull existing settings
+            mapfile -t env_lines < <(sed -e '/\s*#.*$/d' -e '/^\s*$/d' ${env_source})
+            for env_line in "${env_lines[@]}"; do
+                env_key="${env_line%%=*}"
+                env_val="${env_line#*=}"
+                if [[ -n "${env_val}" && -n "${settings[${env_key}]+1}" ]]; then
+                    settings[${env_key}]="${env_val}"
+                fi
+            done
 
-clear
+            if [ -f "composer.json" ] ; then
+                # pull existing features
+                mapfile -t composer_requires < <(awk '/"require":/{flag=1; next} /\}/{flag=0} flag' composer.json)
+                for composer_line in "${composer_requires[@]}"; do
+                    pkg=$(qtrim $(trim "${composer_line%%:*}"))
+                    if [ "dreamfactory" == "${pkg%%/*}" ]; then
+                        pkg="${pkg#*/}"
+                        for feature in "${!feature_package_map[@]}"; do
+                            [[ "${pkg}" == "${feature_package_map[${feature}]}" ]] && chosen_features["${feature}"]="+"
+                        done
+                    fi
+                done
+            fi
+
+            install_type="upgrade"
+            ;;
+        2 ) ;;
+        3 ) exit ;;
+    esac
+fi
+
 action_title="Feature Selections"
 if [[ ${#chosen_features[@]} -ne 0 ]]; then
     action_msg="The following features have been detected from your installation:\n"
-    for i in ${!chosen_features[@]}; do
-        [[ "${chosen_features[${i}]}" ]] && action_msg+="\t${features[${i}]}\n"
-    done | sort
+    action_msg+=$(for i in ${!chosen_features[@]}; do
+        [[ "${chosen_features[${i}]}" ]] && printf "\t${features[${i}]}\n"
+    done | sort)
     action_msg+="\nWould you like to change your feature list?"
     action_items=("Yes, change my features" "No, take features as is" "Cancel installation")
     action_menu_handle "${action_title}" "${action_msg}" "${action_items[@]}"
 else
+    action_msg="Select one of the following templates to start:"
+    action_items=("Bare minimum" "Typical open-source features" "Everything available" "Cancel installation")
+    action_menu_handle "${action_title}" "${action_msg}" "${action_items[@]}"
+    case $action in
+        1 ) starters=() ;;
+        2 ) starters=("user" "mysql" "pgsql" "sqlite" "local_file" "smtp_email" "php" "v8js" "api_doc" "rws" "admin" "file_mgr" "api_doc_ui") ;;
+        3 ) starters=("${!features[@]}") ;;
+        4 ) exit ;;
+    esac
+    for feature in "${starters[@]}"; do
+        chosen_features["${feature}"]="+"
+    done
     action=1
 fi
 case $action in
@@ -643,127 +723,16 @@ case $action in
         action_msg+=" At the end of this script, the selections will be used to check for all required software and OS features."
         action_msg+=" To change any of these features at a later time, re-run this installation."
         action_msg+="\nChoose from the following feature sections:"
-        action_items=(
-        "Authentication & Authorization Services"
-        "SQL & NoSQL Database Services"
-        "Caching Services"
-        "Email Services"
-        "File Storage Services"
-        "Server-side Scripting"
-        "Notification Services"
-        "Other Features and Services"
-        )
         action_error=""
-        while action_menu "${action_title}" "${action_msg}" "${action_items[@]}" && read -e -p "Select a group by number, or press enter to be done. " -n1 group && [[ "$group" ]]; do
-            case $group in
-                1 ) menu_msg="DreamFactory can always be authenticated against using the administrator accounts provisioned. Authentication and authorization can also be extended using the following optional features."
-                    menu_items=(
-                    "user"
-                    "oauth_custom"
-                    "oauth_bitbucket"
-                    "oauth_facebook"
-                    "oauth_github"
-                    "oauth_google"
-                    "oauth_linkedin"
-                    "oauth_microsoft_live"
-                    "oauth_twitter"
-                    "oauth_azure_ad"
-                    "oidc"
-                    "ad"
-                    "ldap"
-                    "saml"
-                    )
-                    features_menu_handle "Authentication & Authorization Services"
-                    ;;
-
-                2 ) menu_msg="DreamFactory supports connections to many database vendors. Choose the desired features to be supported on this install."
-                    menu_items=(
-                    "cassandra"
-                    "couchdb"
-                    "aws_dynamodb"
-                    "aws_redshift_db"
-                    "couchbase"
-                    "firebird"
-                    "ibmdb2"
-                    "sqlsrv"
-                    "mongodb"
-                    "mysql"
-                    "pgsql"
-                    "oracle"
-                    "sqlanywhere"
-                    "sqlite"
-                    "salesforce_db"
-                    )
-                    features_menu_handle "SQL & NoSQL Database Services"
-                    ;;
-
-                3 ) menu_msg="DreamFactory supports several popular stores for server-side caching. Choose the desired features to be supported on this install:"
-                    menu_items=(
-                    "cache_apc"
-                    "cache_database"
-                    "cache_file"
-                    "cache_memcached"
-                    "cache_redis"
-                    )
-                    features_menu_handle "Caching Services"
-                    ;;
-
-                4 ) menu_msg="DreamFactory supports connections to many email senders. Choose the desired features to be supported on this install:"
-                    menu_items=(
-                    "command_email"
-                    "smtp_email"
-                    "mailgun_email"
-                    "mandrill_email"
-                    "sparkpost_email"
-                    "aws_ses"
-                    )
-                    features_menu_handle "Email Services"
-                    ;;
-
-                5 ) menu_msg="DreamFactory supports several popular storage options for files. Choose the desired features to be supported on this install:"
-                    menu_items=(
-                    "local_file"
-                    "aws_s3"
-                    "azure_blob"
-                    "openstack_object_storage"
-                    "rackspace_cloud_files"
-                    )
-                    features_menu_handle "File Storage Services"
-                    ;;
-
-                6 ) menu_msg="DreamFactory supports several popular languages for server-side scripting. Choose the desired features to be supported on this install:"
-                    menu_items=(
-                    "v8js"
-                    "nodejs"
-                    "php"
-                    "python"
-                    )
-                    features_menu_handle "Server-side Scripting"
-                    ;;
-
-                7 ) menu_msg="DreamFactory supports several popular notification services. Choose the desired features to be supported on this install:"
-                    menu_items=(
-                    "aws_sns"
-                    "apn"
-                    "gcm"
-                    )
-                    features_menu_handle "Notification Services"
-                    ;;
-
-                8 ) menu_msg="Choose the desired features to be supported on this install:"
-                    menu_items=(
-                    "api_doc"
-                    "limits"
-                    "logger"
-                    "rws"
-                    "soap"
-                    )
-                    features_menu_handle "Other Features and Services"
-                    ;;
-
-                * ) { msg="Invalid selection: $group"; continue; }
-                    ;;
-            esac
+        while action_menu "${action_title}" "${action_msg}" "${feature_groups[@]}" && read -e -p "Select a group by number, or press enter to be done. " group && [[ "$group" ]]; do
+            if [[ "$group" != *[![:digit:]]* ]] && (( group > 0 && group <= ${#action_items[@]} )) ; then
+                ((group--));
+                menu_msg=${feature_group_prompts["${feature_groups[$group]}"]}
+                menu_items=( ${features_in_groups["${feature_groups[$group]}"]} )
+                features_menu_handle "${feature_groups[$group]}"
+            else
+                action_error="Invalid selection: $group"; continue;
+            fi
         done
         ;;
     2 ) ;;
@@ -773,11 +742,11 @@ esac
 clear
 action_title="Environment Settings"
 if [ -f ".env" ] ; then
-    action_msg="The following settings have been detected from your environment (does not include defaults):"
+    action_msg="The following settings have been detected from your environment:\n"
     declare -a print_settings=()
-    for i in ${!settings[@]}; do
-        [[ "${settings[${i}]}" ]] && action_msg+="\t${i} = ${settings[${i}]}\n"
-    done | sort
+    action_msg+=$(for i in ${!settings[@]}; do
+        [[ "${settings[${i}]}" ]] && printf "\t${i} = ${settings[${i}]}\n"
+    done | sort)
     action_msg+="\nWould you like to change your environment settings?"
     action_items=("Yes, change my settings" "No, take settings as is" "Cancel installation")
     action_menu_handle "${action_title}" "${action_msg}" "${action_items[@]}"
@@ -789,20 +758,9 @@ case $action in
         group_msg="The following menus allow you edit all of the allowed environment settings by section."
         group_msg+=" At the end of this script, the selections will be used to build/update the .env file."
         group_msg+=" To change any of these settings at a later time, either re-run this installation or edit the .env file manually."
-        group_msg="\nChoose from the following feature sections:"
-        group_items=(
-        "Application Settings"
-        "Database Settings"
-        "Caching Settings"
-        "Queuing Settings"
-        "Email Settings"
-        "API Settings"
-        "Scripting Settings"
-        "Broadcasting Settings"
-        "Other Settings"
-        )
+        group_msg+="\nChoose from the following feature sections:"
         action_error=""
-        while action_menu "${action_title}" "${group_msg}" "${group_items[@]}" && read -e -p "Select a group by number, or press enter to be done. " -n1 group && [[ "$group" ]]; do
+        while action_menu "${action_title}" "${group_msg}" "${settings_groups[@]}" && read -e -p "Select a group by number, or press enter to be done. " group && [[ "$group" ]]; do
             case $group in
                 1 ) menu_msg="Current application settings:"
                     menu_items=(
@@ -1064,7 +1022,7 @@ case $action in
 
                 5 ) case "${settings["MAIL_DRIVER"]}" in
                         "smtp" ) menu_items=("MAIL_DRIVER" "MAIL_HOST" "MAIL_PORT" "MAIL_USERNAME" "MAIL_PASSWORD" "MAIL_ENCRYPTION" "MAIL_FROM_ADDRESS" "MAIL_FROM_NAME") ;;
-                        "sendmail" )  menu_items=("MAIL_DRIVER" "CACHE_DEFAULT_TTL" "CACHE_TABLE") ;;
+                        "sendmail" )  menu_items=("MAIL_DRIVER") ;;
                         "mailgun" ) menu_items=("MAIL_DRIVER" "MAILGUN_DOMAIN" "MAILGUN_SECRET") ;;
                         "mandrill" ) menu_items=("MAIL_DRIVER" "MANDRILL_SECRET") ;;
                         "ses" ) menu_items=("MAIL_DRIVER" "SES_KEY" "SES_SECRET" "SES_REGION") ;;
@@ -1091,7 +1049,7 @@ case $action in
                                         menu_items=("MAIL_DRIVER" "MAIL_HOST" "MAIL_PORT" "MAIL_USERNAME" "MAIL_PASSWORD" "MAIL_ENCRYPTION" "MAIL_FROM_ADDRESS" "MAIL_FROM_NAME")
                                         ;;
                                     "sendmail" )
-                                        menu_items=("MAIL_DRIVER" "CACHE_DEFAULT_TTL" "CACHE_TABLE")
+                                        menu_items=("MAIL_DRIVER")
                                         ;;
                                     "mailgun" ) chosen_features["mailgun"]="+"
                                         menu_items=("MAIL_DRIVER" "MAILGUN_DOMAIN" "MAILGUN_SECRET")
@@ -1218,8 +1176,8 @@ if [[ "${chosen_settings[@]}" ]] ; then
     printf "\nChanges to make to environment:\n"
     for key in "${!chosen_settings[@]}"; do
         printf "\t${key}=${chosen_settings[$key]}\n"
-    done
-    while read -e -p "Would you like to apply these environment settings? [y/n]" -n1 action; do
+    done | sort
+    while read -e -p "Would you like to apply these environment settings? [y/n] " -n1 action; do
     case $action in
         [yY]* )
             if [ -f ".env" ] ; then
@@ -1259,20 +1217,25 @@ if [[ "${chosen_features[@]}" ]] ; then
     printf "\nFeatures selected for this install:\n"
     # build required packages and extensions
     declare -a req_pkgs
-    declare -a req_exts
+    declare -a req_exts=("openssl" "PDO" "mbstring" "tokenizer" "xml")
+    for K in "${!chosen_features[@]}"; do [[ "${chosen_features[${K}]}" ]] && echo "${features[${K}]}"; done | sort
     for K in "${!chosen_features[@]}"; do
         if [[ "${chosen_features[${K}]}" ]]; then
-            echo "${features[${K}]}"
-            [[ "${feature_package_map[${K}]}" ]] && req_pkgs=("${req_pkgs[@]}" "${feature_package_map[${K}]}")
-            [[ "${feature_extension_map[${K}]}" ]] && req_exts=("${req_exts[@]}" "${feature_extension_map[${K}]}")
+            if [[ "${feature_package_map[${K}]}" ]] ; then
+                pkg="${feature_package_map[${K}]}"
+                [[ "${pkg}" == */* ]] || pkg="dreamfactory/${pkg}";
+                in_array req_pkgs "${pkg}" || req_pkgs=("${req_pkgs[@]}" "${pkg}")
+            fi
+            if [[ "${feature_extension_map[${K}]}" ]] ; then
+                ext="${feature_extension_map[${K}]}"
+                in_array req_exts "${ext}" || req_exts=("${req_exts[@]}" "${ext}")
+            fi
         fi
     done
-    printf "\nRequired composer packages for this install:\n"
-    for V in "${req_pkgs[@]}"; do
-        [[ $string == */* ]] && echo "${V}" || echo "dreamfactory/${V}";
-    done
 
-    while read -e -p "Would you like to apply these feature changes to your composer setup? [y/n]" -n1 action; do
+    printf "\nRequired composer packages for this install:\n"
+    for V in "${req_pkgs[@]}"; do printf "\t${V}\n"; done
+    while read -e -p "Would you like to apply these feature changes to your composer setup? [y/n] " -n1 action; do
         case $action in
             [yY]* )
                 if [ -f "composer.json" ] ; then
@@ -1283,6 +1246,16 @@ if [[ "${chosen_features[@]}" ]] ; then
                 else
                     cp "composer.json-dist" "composer.json"
                 fi
+
+#                if [[ jq_available ]] ; then
+#                    echo $(jq .require composer.json-dist)
+#                else
+                    mapfile -t base_requires < <(awk '/"require":/{flag=1; next} /\}/{flag=0} flag' composer.json-dist)
+                    require=""
+                    for V in "${req_pkgs[@]}"; do require+="    \"${V}\": \"dev-develop as dev-master\",\n"; done
+                    for V in "${base_requires[@]}"; do require+="${V}\n"; done
+                    awk -v out="${require}" '/"require":/{p=1;print;print out}/\}/{p=0}!p' composer.json > composer.tmp && mv composer.tmp composer.json
+#                fi
                 echo "Changes applied to composer.json file."
                 break
                 ;;

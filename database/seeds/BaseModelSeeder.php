@@ -11,9 +11,6 @@ class BaseModelSeeder extends Seeder
 
     protected $allowUpdate = false;
 
-    //  Add the default system_resources
-    protected $records = [];
-
     /**
      * Run the database seeds.
      *
@@ -31,10 +28,7 @@ class BaseModelSeeder extends Seeder
         $modelName = $this->modelClass;
         $created = [];
         $updated = [];
-        $extras = $this->getRecordExtras();
-        foreach ($this->records as $record) {
-            $record = array_merge($record, $extras);
-
+        foreach ($this->getRecords() as $record) {
             /** @type \Illuminate\Database\Eloquent\Builder $builder */
             $builder = null;
             $name = '';
@@ -81,7 +75,7 @@ class BaseModelSeeder extends Seeder
         }
     }
 
-    protected function getRecordExtras()
+    protected function getRecords()
     {
         return [];
     }

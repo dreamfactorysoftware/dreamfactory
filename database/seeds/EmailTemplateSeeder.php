@@ -6,12 +6,14 @@ class EmailTemplateSeeder extends BaseModelSeeder
 {
     protected $modelClass = EmailTemplate::class;
 
-    protected $records = [
-        [
-            'name'        => 'User Invite Default',
-            'description' => 'Email sent to invite new users to your DreamFactory instance.',
-            'subject'     => '[DF] New User Invitation',
-            'body_html'   => '<div style="padding: 10px;">
+    protected function getRecords()
+    {
+        return [
+            [
+                'name'        => 'User Invite Default',
+                'description' => 'Email sent to invite new users to your DreamFactory instance.',
+                'subject'     => '[DF] New User Invitation',
+                'body_html'   => '<div style="padding: 10px;">
                                 <p>
                                 Hi {first_name},
                                 </p>
@@ -29,14 +31,14 @@ class EmailTemplateSeeder extends BaseModelSeeder
                                     <cite>-- The Dream Team</cite>
                                 </p>
                               </div>',
-            'from_name'   => 'DO NOT REPLY',
-            'from_email'  => 'no-reply@dreamfactory.com'
-        ],
-        [
-            'name'        => 'User Registration Default',
-            'description' => 'Email sent to new users to complete registration.',
-            'subject'     => '[DF] Registration Confirmation',
-            'body_html'   => '<div style="padding: 10px;">
+                'from_name'   => 'DO NOT REPLY',
+                'from_email'  => 'no-reply@dreamfactory.com'
+            ],
+            [
+                'name'        => 'User Registration Default',
+                'description' => 'Email sent to new users to complete registration.',
+                'subject'     => '[DF] Registration Confirmation',
+                'body_html'   => '<div style="padding: 10px;">
                                 <p>
                                     Hi {first_name},
                                 </p>
@@ -55,14 +57,14 @@ class EmailTemplateSeeder extends BaseModelSeeder
                                     <cite>-- The Dream Team</cite>
                                 </p>
                             </div>',
-            'from_name'   => 'DO NOT REPLY',
-            'from_email'  => 'no-reply@dreamfactory.com'
-        ],
-        [
-            'name'        => 'Password Reset Default',
-            'description' => 'Email sent to users following a request to reset their password.',
-            'subject'     => '[DF] Password Reset',
-            'body_html'   => '<div style="padding: 10px;">
+                'from_name'   => 'DO NOT REPLY',
+                'from_email'  => 'no-reply@dreamfactory.com'
+            ],
+            [
+                'name'        => 'Password Reset Default',
+                'description' => 'Email sent to users following a request to reset their password.',
+                'subject'     => '[DF] Password Reset',
+                'body_html'   => '<div style="padding: 10px;">
                                 <p>
                                     Hi {first_name},
                                 </p>
@@ -79,8 +81,9 @@ class EmailTemplateSeeder extends BaseModelSeeder
                                     <cite>-- The Dream Team</cite>
                                 </p>
                             </div>',
-            'from_name'   => 'DO NOT REPLY',
-            'from_email'  => 'no-reply@dreamfactory.com'
-        ]
-    ];
+                'from_name'   => 'DO NOT REPLY',
+                'from_email'  => 'no-reply@dreamfactory.com'
+            ]
+        ];
+    }
 }

@@ -72,6 +72,7 @@ return [
             'driver' => 'redis',
             'connection' => 'cache',
         ],
+
     ],
 
     /*
