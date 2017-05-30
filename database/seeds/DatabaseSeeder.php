@@ -98,16 +98,18 @@ class DatabaseSeeder extends Seeder
         $emailTemplateOpenReg = EmailTemplate::whereName('User Registration Default')->first();
         $emailTemplateOpenRegId = (!empty($emailTemplateOpenReg)) ? $emailTemplateOpenReg->id : null;
         if ($system = Service::whereName('system')->first()) {
-            $record = [
-                'config'      => [
-                    'invite_email_service_id'    => $emailServiceId,
-                    'invite_email_template_id'   => $emailTemplateInviteId,
-                    'password_email_service_id'  => $emailServiceId,
-                    'password_email_template_id' => $emailTemplatePasswordId,
-                ]
-            ];
-            $system->update($record);
-
+            if (null == array_get($system->config, 'invite_email_service_id')) {
+                $record = [
+                    'config' => [
+                        'invite_email_service_id'    => $emailServiceId,
+                        'invite_email_template_id'   => $emailTemplateInviteId,
+                        'password_email_service_id'  => $emailServiceId,
+                        'password_email_template_id' => $emailTemplatePasswordId,
+                    ]
+                ];
+                $system->update($record);
+                $this->command->info('System service updated.');
+            }
         }
         if (class_exists('DreamFactory\Core\User\ServiceProvider')) {
             $records = [
