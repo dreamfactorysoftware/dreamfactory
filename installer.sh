@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# Set potential output colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m' # No Color
+
 # make sure we have BASH 4 or greater
 if (( ${BASH_VERSION%%.*} < 4 )); then
     echo "This installer requires a BASH version of 4.0 or greater. You have version ${BASH_VERSION}."
@@ -17,10 +22,9 @@ declare -a settings_groups=(
 "Database Settings"
 "Caching Settings"
 "Queuing Settings"
-"Email Settings"
 "API Settings"
 "Scripting Settings"
-"Broadcasting Settings"
+#"Broadcasting Settings"
 "Other Settings"
 )
 
@@ -59,27 +63,37 @@ declare -A settings=(
 ["CACHE_DEFAULT_TTL"]="300"
 # if CACHE_DRIVER=database
 ["CACHE_TABLE"]="cache"
-# if CACHE_DRIVER=memcached
-["MEMCACHED_HOST"]="127.0.0.1"
-["MEMCACHED_PORT"]="11211"
-["MEMCACHED_WEIGHT"]="100"
-["MEMCACHED_PERSISTENT_ID"]=""
-["MEMCACHED_USERNAME"]=""
-["MEMCACHED_PASSWORD"]=""
-# if CACHE_DRIVER=redis
-["REDIS_HOST"]="127.0.0.1"
-["REDIS_PORT"]="6379"
-["REDIS_DATABASE"]=""
-["REDIS_PASSWORD"]=""
+# if CACHE_DRIVER=memcached or redis
+["CACHE_HOST"]="127.0.0.1"
+["CACHE_PORT"]="6379"
+["CACHE_WEIGHT"]="100"
+["CACHE_PERSISTENT_ID"]=""
+["CACHE_USERNAME"]=""
+["CACHE_PASSWORD"]=""
+["CACHE_DATABASE"]="2"
+# Limits
+["LIMIT_CACHE_DRIVER"]="file"
+# if LIMIT_CACHE_DRIVER=file
+["LIMIT_CACHE_PATH"]="storage/framework/limit_cache"
+# if CACHE_DRIVER=database
+["LIMIT_CACHE_TABLE"]="limit_cache"
+# if LIMIT_CACHE_DRIVER=memcached or redis
+["LIMIT_CACHE_HOST"]="127.0.0.1"
+["LIMIT_CACHE_PORT"]="6379"
+["LIMIT_CACHE_WEIGHT"]="100"
+["LIMIT_CACHE_PERSISTENT_ID"]=""
+["LIMIT_CACHE_USERNAME"]=""
+["LIMIT_CACHE_PASSWORD"]=""
+["LIMIT_CACHE_DATABASE"]="9"
 # Queuing
 ["QUEUE_DRIVER"]="sync"
-["QUEUE_TABLE"]="jobs"
 ["QUEUE_NAME"]="default"
 ["QUEUE_RETRY_AFTER"]="90"
+# if QUEUE_DRIVER=database
+["QUEUE_TABLE"]="jobs"
 # if QUEUE_DRIVER=beanstalkd
 ["QUEUE_HOST"]="localhost"
 # if QUEUE_DRIVER=redis
-["QUEUE_HOST"]=""
 ["QUEUE_PORT"]=""
 ["QUEUE_DATABASE"]=""
 ["QUEUE_PASSWORD"]=""
@@ -94,9 +108,9 @@ declare -A settings=(
 ["PUSHER_APP_KEY"]=
 ["PUSHER_APP_SECRET"]=
 # if BROADCAST_DRIVER=redis
-["BROADCAST_HOST"]=""
-["BROADCAST_PORT"]=""
-["BROADCAST_DATABASE"]=""
+["BROADCAST_HOST"]="127.0.0.1"
+["BROADCAST_PORT"]="6379"
+["BROADCAST_DATABASE"]="1"
 ["BROADCAST_PASSWORD"]=""
 # Server-side Scripting
 ["DF_SCRIPTING_DISABLE"]=""
@@ -120,17 +134,7 @@ declare -A settings=(
 ["DF_ALLOW_FOREVER_SESSIONS"]="false"
 ["DF_CONFIRM_RESET_URL"]="'/dreamfactory/dist/#/reset-password'"
 ["DF_CONFIRM_INVITE_URL"]="'/dreamfactory/dist/#/user-invite'"
-["DF_CONFIRM_ADMIN_INVITE_URL"]="'/dreamfactory/dist/#/admin-invite'"
 ["DF_CONFIRM_REGISTER_URL"]="'/dreamfactory/dist/#/register-confirm'"
-# Limits
-["LIMIT_CACHE_DRIVER"]="file"
-# if LIMIT_CACHE_DRIVER=file
-["LIMIT_CACHE_PATH"]="storage/framework/limit_cache"
-# if LIMIT_CACHE_DRIVER=redis
-["LIMIT_CACHE_REDIS_DATABASE"]="limit_cache"
-["LIMIT_CACHE_REDIS_HOST"]="127.0.0.1"
-["LIMIT_CACHE_REDIS_PORT"]="6379"
-["LIMIT_CACHE_REDIS_PASSWORD"]=""
 # Other settings
 ["DF_PACKAGE_PATH"]=""
 ["DF_LOOKUP_MODIFIERS"]=""
@@ -164,27 +168,33 @@ declare -A settings_msg=(
 # FreeTDS configuration (Linux and OS X only)
 ["DF_FREETDS_DUMP"]="Enabling and location of dump file, defaults to disabled or default freetds.conf setting"
 ["DF_FREETDS_DUMPCONFIG"]="Location of connection dump file, defaults to disabled"
-# Storage
-["DF_FILE_CHUNK_SIZE"]="File chunk size for downloadable files in bytes. Default is 10MB."
 # Cache
 ["CACHE_DRIVER"]="What type of driver or connection to use for cache storage."
-["CACHE_PATH"]="The path to a folder where the cache files will be stored."
+["CACHE_PATH"]="The path to a folder where the system cache information will be stored."
 ["CACHE_DEFAULT_TTL"]="Default cache time-to-live, defaults to 300."
 ["CACHE_TABLE"]="The database table name where cached information will be stored."
-["CACHE_CONNECTION"]=""
-["MEMCACHED_HOST"]="The hostname or IP address of the memcached server."
-["MEMCACHED_PORT"]="The connection port for the host given, or blank if the provider default is used."
-["MEMCACHED_USERNAME"]="Credentials for the memcached service if required."
-["MEMCACHED_PASSWORD"]="Credentials for the memcached service if required."
-["MEMCACHED_PERSISTENT_ID"]=""
-["MEMCACHED_WEIGHT"]=""
+["CACHE_HOST"]="The hostname or IP address of the memcached or redis server."
+["CACHE_PORT"]="The connection port for the host given, or blank if the provider default is used."
+["CACHE_USERNAME"]="Credentials for the service if required."
+["CACHE_PASSWORD"]="Credentials for the service if required."
+["CACHE_PERSISTENT_ID"]="Memcached persistent ID setting."
+["CACHE_WEIGHT"]="Memcached weight setting."
+["CACHE_DATABASE"]="The desired Redis database number between 0 and 16 (or the limit set in your redis.conf file."
+# Limits
+["LIMIT_CACHE_DRIVER"]="What type of driver or connection to use for limit cache storage."
+["LIMIT_CACHE_PATH"]="Path to a folder where limit tracking information will be stored."
+["LIMIT_CACHE_TABLE"]="The database table name where limit tracking information will be stored."
+["LIMIT_CACHE_HOST"]="The hostname or IP address of the redis server."
+["LIMIT_CACHE_PORT"]="The connection port for the host given, or blank if the provider default is used."
+["LIMIT_CACHE_USERNAME"]="Credentials for the service if required."
+["LIMIT_CACHE_PASSWORD"]=""
+["LIMIT_CACHE_PERSISTENT_ID"]="Memcached persistent ID setting."
+["LIMIT_CACHE_WEIGHT"]="Memcached weight setting."
+["LIMIT_CACHE_DATABASE"]="The desired Redis database number between 0 and 16 (or the limit set in your redis.conf file."
 # Queuing
 ["QUEUE_DRIVER"]="What type of driver or connection to use for queuing jobs on the server."
 # Event Broadcasting
-["BROADCAST_DRIVER"]=""
-["PUSHER_APP_ID"]=
-["PUSHER_APP_KEY"]=
-["PUSHER_APP_SECRET"]=
+["BROADCAST_DRIVER"]="What type of driver or connection to use for broadcasting events from the server."
 # User Management
 ["DF_LOGIN_ATTRIBUTE"]="By default DreamFactory uses an email address for user authentication. You can change this to use username instead by setting this to 'username'."
 ["DF_CONFIRM_CODE_LENGTH"]="New user confirmation code length. Max/Default is 32. Minimum is 5."
@@ -195,7 +205,6 @@ declare -A settings_msg=(
 ["DF_JWT_REFRESH_TTL"]="The time allowed in which a JSON Web Token can be refreshed from its origination."
 ["DF_CONFIRM_RESET_URL"]="Application path to where password resets are to be handled."
 ["DF_CONFIRM_INVITE_URL"]="Application path to where invited users are to be handled."
-["DF_CONFIRM_ADMIN_INVITE_URL"]="Application path to where admin invites are to be handled."
 ["DF_CONFIRM_REGISTER_URL"]="Application path to where user registrations are to be handled."
 # Server-side Scripting
 ["DF_SCRIPTING_DISABLE"]="To disable all server-side scripting set this to 'all', or comma-delimited list of v8js, nodejs, python, and/or php to disable individually."
@@ -209,13 +218,8 @@ declare -A settings_msg=(
 ["DF_ALWAYS_WRAP_RESOURCES"]="Most API calls return a resource array or a single resource, if array, do we wrap it?"
 ["DF_RESOURCE_WRAPPER"]="Most API calls return a resource array or a single resource, if array, what do we wrap it with?"
 ["DF_CONTENT_TYPE"]="Default content-type of response when accepts header is missing or empty."
-# Limits
-["LIMIT_CACHE_DRIVER"]="What type of driver or connection to use for limit cache storage."
-["LIMIT_CACHE_PATH"]="Path to where limit tracking information will be stored."
-["LIMIT_CACHE_REDIS_DATABASE"]="limit_cache"
-["LIMIT_CACHE_REDIS_HOST"]="The hostname or IP address of the redis server."
-["LIMIT_CACHE_REDIS_PORT"]="The connection port for the host given, or blank if the provider default is used."
-["LIMIT_CACHE_REDIS_PASSWORD"]=""
+# Storage
+["DF_FILE_CHUNK_SIZE"]="File chunk size for downloadable files in bytes. Default is 10MB."
 # Other settings
 ["DF_PACKAGE_PATH"]="Path to a package file, folder, or URL to import during instance launch."
 ["DF_LOOKUP_MODIFIERS"]="Lookup management, comma-delimited list of allowed lookup modifying functions like urlencode, trim, etc. Note: Setting this will disable a large list of modifiers already internally configured."
@@ -301,7 +305,7 @@ declare -A features=(
 # Database features
 ["aws_dynamodb"]="AWS DynamoDB"
 ["aws_redshift_db"]="AWS Redshift DB"
-["azure_documentdb"]="Azure Tables"
+["azure_documentdb"]="Azure DocumentDB"
 ["azure_table"]="Azure Tables"
 ["cassandra"]="Apache Cassandra"
 ["couchdb"]="Apache CouchDB"
@@ -360,87 +364,88 @@ declare -A features=(
 )
 
 declare -A feature_package_map=(
-# Auth features
-["user"]="df-user"
-["oauth_custom"]="df-oauth"
-["oauth_bitbucket"]="df-oauth"
-["oauth_facebook"]="df-oauth"
-["oauth_github"]="df-oauth"
-["oauth_google"]="df-oauth"
-["oauth_linkedin"]="df-oauth"
-["oauth_microsoft_live"]="df-oauth"
-["oauth_twitter"]="df-oauth"
-["oauth_azure_ad"]="df-azure-ad"
-["oidc"]="df-oidc"
-["ad"]="df-adldap"
-["ldap"]="df-adldap"
-["saml"]="df-saml"
-# Database features
-["aws_dynamodb"]="df-aws"
-["aws_redshift_db"]="df-aws"
-["azure_documentdb"]="df-azure"
-["azure_table"]="df-azure"
-["cassandra"]="df-cassandra"
-["couchdb"]="df-couchdb"
-["couchbase"]="df-couchbase"
-["firebird"]="df-firebird"
-["ibmdb2"]="df-ibmdb2"
-["sqlsrv"]="df-sqlsrv"
-["mongodb"]="df-mongodb"
-["mysql"]="df-sqldb"
-["pgsql"]="df-sqldb"
-["oracle"]="df-oracledb"
-["sqlanywhere"]="df-sqlanywhere"
-["sqlite"]="df-sqldb"
-["salesforce_db"]="df-salesforce"
-# File features
-["local_file"]="df-file"
-["aws_s3"]="df-aws"
-["azure_blob"]="df-azure"
-["openstack_object_storage"]="df-rackspace"
-["rackspace_cloud_files"]="df-rackspace"
-# Email features
-["command_email"]="df-email"
-["smtp_email"]="df-email"
-["mailgun_email"]="df-email"
-["mandrill_email"]="df-email"
-["sparkpost_email"]="df-email"
-["aws_ses"]="df-aws"
-# Script features
-["v8js"]="df-script"
-["nodejs"]="df-script"
-["php"]="df-script"
-["python"]="df-script"
-# Cache features
-["cache_apc"]="df-cache"
-["cache_database"]="df-cache"
-["cache_file"]="df-cache"
-["cache_memcached"]="df-cache"
-["cache_redis"]="df-cache"
-# Notification features
-["aws_sns"]="df-aws"
-["apn"]="df-notification"
-["gcm"]="df-notification"
+# Auth
+["user"]="dreamfactory/df-user"
+["oauth_custom"]="dreamfactory/df-oauth"
+["oauth_bitbucket"]="dreamfactory/df-oauth"
+["oauth_facebook"]="dreamfactory/df-oauth"
+["oauth_github"]="dreamfactory/df-oauth"
+["oauth_google"]="dreamfactory/df-oauth"
+["oauth_linkedin"]="dreamfactory/df-oauth"
+["oauth_microsoft_live"]="dreamfactory/df-oauth"
+["oauth_twitter"]="dreamfactory/df-oauth"
+["oauth_azure_ad"]="dreamfactory/df-azure-ad"
+["oidc"]="dreamfactory/df-oidc"
+["ad"]="dreamfactory/df-adldap"
+["ldap"]="dreamfactory/df-adldap"
+["saml"]="dreamfactory/df-saml"
+# Database
+["aws_dynamodb"]="dreamfactory/df-aws"
+["aws_redshift_db"]="dreamfactory/df-aws"
+["azure_documentdb"]="dreamfactory/df-azure"
+["azure_table"]="dreamfactory/df-azure"
+["cassandra"]="dreamfactory/df-cassandra"
+["couchdb"]="dreamfactory/df-couchdb"
+["couchbase"]="dreamfactory/df-couchbase"
+["firebird"]="dreamfactory/df-firebird"
+["ibmdb2"]="dreamfactory/df-ibmdb2"
+["sqlsrv"]="dreamfactory/df-sqlsrv"
+["mongodb"]="dreamfactory/df-mongodb"
+["mysql"]="dreamfactory/df-sqldb"
+["pgsql"]="dreamfactory/df-sqldb"
+["oracle"]="dreamfactory/df-oracledb"
+["sqlanywhere"]="dreamfactory/df-sqlanywhere"
+["sqlite"]="dreamfactory/df-sqldb"
+["salesforce_db"]="dreamfactory/df-salesforce"
+# File
+["local_file"]="dreamfactory/df-file"
+["aws_s3"]="dreamfactory/df-aws"
+["azure_blob"]="dreamfactory/df-azure"
+["openstack_object_storage"]="dreamfactory/df-rackspace"
+["rackspace_cloud_files"]="dreamfactory/df-rackspace"
+# Email
+["command_email"]="dreamfactory/df-email"
+["smtp_email"]="dreamfactory/df-email"
+["mailgun_email"]="dreamfactory/df-email"
+["mandrill_email"]="dreamfactory/df-email"
+["sparkpost_email"]="dreamfactory/df-email"
+["aws_ses"]="dreamfactory/df-aws"
+# Script
+["v8js"]="dreamfactory/df-script"
+["nodejs"]="dreamfactory/df-script"
+["php"]="dreamfactory/df-script"
+["python"]="dreamfactory/df-script"
+# Cache
+["cache_apc"]="dreamfactory/df-cache"
+["cache_database"]="dreamfactory/df-cache"
+["cache_file"]="dreamfactory/df-cache"
+["cache_memcached"]="dreamfactory/df-cache"
+["cache_redis"]="dreamfactory/df-cache"
+# Notification
+["aws_sns"]="dreamfactory/df-aws"
+["apn"]="dreamfactory/df-notification"
+["gcm"]="dreamfactory/df-notification"
 # UI Applications
-["launchpad"]="df-admin-app"
-["admin"]="df-admin-app"
-["schema_mgr"]="df-admin-app"
-["data_mgr"]="df-admin-app"
-["file_mgr"]="df-filemanager-app"
-["api_doc_ui"]="df-swagger-ui"
-# Other features
-["api_doc"]="df-apidoc"
-["limits"]="df-limits"
-["logger"]="df-logger"
-["rws"]="df-rws"
-["soap"]="df-soap"
+["launchpad"]="dreamfactory/df-admin-app"
+["admin"]="dreamfactory/df-admin-app"
+["schema_mgr"]="dreamfactory/df-admin-app"
+["data_mgr"]="dreamfactory/df-admin-app"
+["file_mgr"]="dreamfactory/df-filemanager-app"
+["api_doc_ui"]="dreamfactory/df-swagger-ui"
+# Other
+["api_doc"]="dreamfactory/df-apidoc"
+["limits"]="dreamfactory/df-limits"
+["logger"]="dreamfactory/df-logger"
+["rws"]="dreamfactory/df-rws"
+["soap"]="dreamfactory/df-soap"
 )
 
 declare -A feature_extension_map=(
-# Auth features
+# Auth
 ["ad"]="ldap"
 ["ldap"]="ldap"
-# Database features
+["saml"]="mcrypt"
+# Database
 ["aws_redshift_db"]="pdo_pgsql"
 ["cassandra"]="cassandra"
 ["couchbase"]="couchbase"
@@ -453,34 +458,35 @@ declare -A feature_extension_map=(
 ["oracle"]="oci8"
 ["sqlanywhere"]="pdo_dblib"
 ["sqlite"]="pdo_sqlite"
-# Script features
+# Script
 ["v8js"]="v8js"
-# Cache features
+# Cache
 ["cache_apc"]="apc"
 ["cache_memcached"]="memcached"
 ["cache_redis"]="redis"
-# Notification features
+# Notification
 ["apn"]="curl"
 ["gcm"]="curl"
-# Other features
+# Other
 ["rws"]="curl"
 ["soap"]="soap"
 )
 
 declare -a feature_subscription_map=(
-# Auth features
+# Auth
 "oauth_azure_ad" "ad" "ldap" "oidc" "saml"
-# Database features
+# Database
 "ibmdb2" "sqlsrv" "sqlanywhere" "oracle"
-# Notification features
+# Notification
 "apn" "gcm"
-# Other features
+# Other
 "soap" "limits" "logger"
 )
 
 # change tracking
 declare -A chosen_features
 declare -A chosen_settings
+declare -A composer_map
 # menu control
 declare -a menu_items
 
@@ -534,6 +540,8 @@ qtrim() {
     local var="$*"
     # remove leading quote characters
     var="${var#\"}"
+    # remove trailing comma characters
+    var="${var%,}"
     # remove trailing quote characters
     var="${var%\"}"
     echo -n "$var"
@@ -639,16 +647,23 @@ settings_menu_handle() {
 #-------------------------------------------
 # Initialize variables
 install_type="install"
-env_source=".env-dist"
 
 # pull default settings
-mapfile -t env_lines < <(sed -e '/\s*#.*$/d' -e '/^\s*$/d' ${env_source})
+mapfile -t env_lines < <(sed -e '/\s*#.*$/d' -e '/^\s*$/d' ".env-dist")
 for env_line in "${env_lines[@]}"; do
     env_key="${env_line%%=*}"
     env_val="${env_line#*=}"
     if [[ -n "${env_val}" && -n "${settings[${env_key}]+1}" ]]; then
         settings[${env_key}]="${env_val}"
     fi
+done
+
+# pull default version mapping and available features
+mapfile -t composer_requires < <(awk '/"require":/{flag=1; next} /\}/{flag=0} flag' composer.json-dist)
+for composer_line in "${composer_requires[@]}"; do
+    pkg=$(qtrim $(trim "${composer_line%%:*}"))
+    version=$(qtrim $(trim "${composer_line#*:}"))
+    composer_map["${pkg}"]="${version}"
 done
 
 if [ -f ".env" ] ; then
@@ -661,9 +676,8 @@ if [ -f ".env" ] ; then
     )
     action_menu_handle "${action_title}" "${action_msg}" "${action_items[@]}"
     case $action in
-        1 ) env_source=".env"
-            # pull existing settings
-            mapfile -t env_lines < <(sed -e '/\s*#.*$/d' -e '/^\s*$/d' ${env_source})
+        1 ) # pull existing settings
+            mapfile -t env_lines < <(sed -e '/\s*#.*$/d' -e '/^\s*$/d' ".env")
             for env_line in "${env_lines[@]}"; do
                 env_key="${env_line%%=*}"
                 env_val="${env_line#*=}"
@@ -677,12 +691,9 @@ if [ -f ".env" ] ; then
                 mapfile -t composer_requires < <(awk '/"require":/{flag=1; next} /\}/{flag=0} flag' composer.json)
                 for composer_line in "${composer_requires[@]}"; do
                     pkg=$(qtrim $(trim "${composer_line%%:*}"))
-                    if [ "dreamfactory" == "${pkg%%/*}" ]; then
-                        pkg="${pkg#*/}"
-                        for feature in "${!feature_package_map[@]}"; do
-                            [[ "${pkg}" == "${feature_package_map[${feature}]}" ]] && chosen_features["${feature}"]="+"
-                        done
-                    fi
+                    for feature in "${!feature_package_map[@]}"; do
+                        [[ "${pkg}" == "${feature_package_map[${feature}]}" ]] && chosen_features["${feature}"]="+"
+                    done
                 done
             fi
 
@@ -743,7 +754,6 @@ clear
 action_title="Environment Settings"
 if [ -f ".env" ] ; then
     action_msg="The following settings have been detected from your environment:\n"
-    declare -a print_settings=()
     action_msg+=$(for i in ${!settings[@]}; do
         [[ "${settings[${i}]}" ]] && printf "\t${i} = ${settings[${i}]}\n"
     done | sort)
@@ -862,8 +872,8 @@ case $action in
                         "database" ) menu_items=("CACHE_DRIVER" "CACHE_DEFAULT_TTL" "CACHE_TABLE")
                             [[ -z "${settings[CACHE_TABLE]}" ]] && settings["CACHE_TABLE"]="cache"
                             ;;
-                        "memcached" ) menu_items=("CACHE_DRIVER" "CACHE_DEFAULT_TTL" "MEMCACHED_HOST" "MEMCACHED_PORT" "MEMCACHED_USERNAME" "MEMCACHED_PASSWORD" "MEMCACHED_PERSISTENT_ID" "MEMCACHED_WEIGHT") ;;
-                        "redis" ) menu_items=("CACHE_DRIVER" "CACHE_DEFAULT_TTL" "REDIS_HOST" "REDIS_PORT" "REDIS_DATABASE" "REDIS_PASSWORD") ;;
+                        "memcached" ) menu_items=("CACHE_DRIVER" "CACHE_DEFAULT_TTL" "CACHE_HOST" "CACHE_PORT" "CACHE_USERNAME" "CACHE_PASSWORD" "CACHE_PERSISTENT_ID" "CACHE_WEIGHT") ;;
+                        "redis" ) menu_items=("CACHE_DRIVER" "CACHE_DEFAULT_TTL" "CACHE_HOST" "CACHE_PORT" "CACHE_DATABASE" "CACHE_PASSWORD") ;;
                         "apc" ) menu_items=("CACHE_DRIVER" "CACHE_DEFAULT_TTL") ;;
                         "array" ) menu_items=("CACHE_DRIVER") ;;
                     esac
@@ -891,10 +901,10 @@ case $action in
                                         [[ -z "${settings[CACHE_TABLE]}" ]] && settings["CACHE_TABLE"]="cache"
                                         ;;
                                     "memcached" ) chosen_features["memcached"]="+"
-                                        menu_items=("CACHE_DRIVER" "CACHE_DEFAULT_TTL" "MEMCACHED_HOST" "MEMCACHED_PORT" "MEMCACHED_USERNAME" "MEMCACHED_PASSWORD" "MEMCACHED_PERSISTENT_ID" "MEMCACHED_WEIGHT")
+                                        menu_items=("CACHE_DRIVER" "CACHE_DEFAULT_TTL" "CACHE_HOST" "CACHE_PORT" "CACHE_USERNAME" "CACHE_PASSWORD" "CACHE_PERSISTENT_ID" "CACHE_WEIGHT")
                                         ;;
                                     "redis" ) chosen_features["redis"]="+"
-                                        menu_items=("CACHE_DRIVER" "CACHE_DEFAULT_TTL" "REDIS_HOST" "REDIS_PORT" "REDIS_DATABASE" "REDIS_PASSWORD")
+                                        menu_items=("CACHE_DRIVER" "CACHE_DEFAULT_TTL" "CACHE_HOST" "CACHE_PORT" "CACHE_DATABASE" "CACHE_PASSWORD")
                                         ;;
                                     "apc" ) chosen_features["apc"]="+"
                                         menu_items=("CACHE_DRIVER" "CACHE_DEFAULT_TTL")
@@ -918,8 +928,8 @@ case $action in
                             "database" ) menu_items=("LIMIT_CACHE_DRIVER" "LIMIT_CACHE_TABLE")
                                 [[ -z "${settings[LIMIT_CACHE_TABLE]}" ]] && settings["LIMIT_CACHE_TABLE"]="limit_cache"
                                 ;;
-                            "memcached" ) menu_items=("LIMIT_CACHE_DRIVER" "MEMCACHED_HOST" "MEMCACHED_PORT" "MEMCACHED_USERNAME" "MEMCACHED_PASSWORD" "MEMCACHED_PERSISTENT_ID" "MEMCACHED_WEIGHT") ;;
-                            "redis" ) menu_items=("LIMIT_CACHE_DRIVER" "REDIS_HOST" "REDIS_PORT" "REDIS_DATABASE" "REDIS_PASSWORD") ;;
+                            "memcached" ) menu_items=("LIMIT_CACHE_DRIVER" "LIMIT_CACHE_HOST" "LIMIT_CACHE_PORT" "LIMIT_CACHE_USERNAME" "LIMIT_CACHE_PASSWORD" "LIMIT_CACHE_PERSISTENT_ID" "LIMIT_CACHE_WEIGHT") ;;
+                            "redis" ) menu_items=("LIMIT_CACHE_DRIVER" "LIMIT_CACHE_HOST" "LIMIT_CACHE_PORT" "LIMIT_CACHE_DATABASE" "LIMIT_CACHE_PASSWORD") ;;
                             "apc" ) menu_items=("LIMIT_CACHE_DRIVER") ;;
                             "array" ) menu_items=("LIMIT_CACHE_DRIVER") ;;
                         esac
@@ -946,10 +956,10 @@ case $action in
                                             [[ -z "${settings[LIMIT_CACHE_TABLE]}" ]] && settings["LIMIT_CACHE_TABLE"]="limit_cache"
                                             ;;
                                         "memcached" ) chosen_features["memcached"]="+"
-                                            menu_items=("LIMIT_CACHE_DRIVER" "MEMCACHED_HOST" "MEMCACHED_PORT" "MEMCACHED_USERNAME" "MEMCACHED_PASSWORD" "MEMCACHED_PERSISTENT_ID" "MEMCACHED_WEIGHT")
+                                            menu_items=("LIMIT_CACHE_DRIVER" "LIMIT_CACHE_HOST" "LIMIT_CACHE_PORT" "LIMIT_CACHE_USERNAME" "LIMIT_CACHE_PASSWORD" "LIMIT_CACHE_PERSISTENT_ID" "LIMIT_CACHE_WEIGHT")
                                             ;;
                                         "redis" ) chosen_features["redis"]="+"
-                                            menu_items=("LIMIT_CACHE_DRIVER" "REDIS_HOST" "REDIS_PORT" "REDIS_DATABASE" "REDIS_PASSWORD")
+                                            menu_items=("LIMIT_CACHE_DRIVER" "LIMIT_CACHE_HOST" "LIMIT_CACHE_PORT" "LIMIT_CACHE_DATABASE" "LIMIT_CACHE_PASSWORD")
                                             ;;
                                         "apc" ) chosen_features["apc"]="+"
                                             menu_items=("LIMIT_CACHE_DRIVER")
@@ -973,8 +983,8 @@ case $action in
                         "database" ) menu_items=("QUEUE_DRIVER" "QUEUE_TABLE")
                             [[ -z "${settings[QUEUE_TABLE]}" ]] && settings["QUEUE_TABLE"]="jobs"
                             ;;
-                        "beanstalkd" ) menu_items=("QUEUE_DRIVER" "BEANSTALKD_HOST") ;;
-                        "redis" ) menu_items=("QUEUE_DRIVER" "REDIS_HOST" "REDIS_PORT" "REDIS_DATABASE" "REDIS_PASSWORD") ;;
+                        "beanstalkd" ) menu_items=("QUEUE_DRIVER" "QUEUE_HOST") ;;
+                        "redis" ) menu_items=("QUEUE_DRIVER" "QUEUE_HOST" "QUEUE_PORT" "QUEUE_DATABASE" "QUEUE_PASSWORD") ;;
                         "aws_sqs" ) menu_items=("QUEUE_DRIVER" "SQS_KEY" "SQS_SECRET" "SQS_REGION" "SQS_PREFIX") ;;
                         "null" ) menu_items=("QUEUE_DRIVER") ;;
                     esac
@@ -1001,10 +1011,10 @@ case $action in
                                         [[ -z "${settings[QUEUE_TABLE]}" ]] && settings["QUEUE_TABLE"]="jobs"
                                         ;;
                                     "beanstalkd" ) chosen_features["beanstalkd"]="+"
-                                        menu_items=("QUEUE_DRIVER" "BEANSTALKD_HOST")
+                                        menu_items=("QUEUE_DRIVER" "QUEUE_HOST")
                                         ;;
                                     "redis" ) chosen_features["redis"]="+"
-                                        menu_items=("QUEUE_DRIVER" "REDIS_HOST" "REDIS_PORT" "REDIS_DATABASE" "REDIS_PASSWORD")
+                                        menu_items=("QUEUE_DRIVER" "QUEUE_HOST" "QUEUE_PORT" "QUEUE_DATABASE" "QUEUE_PASSWORD")
                                         ;;
                                     "aws_sqs" ) chosen_features["apc"]="+"
                                         menu_items=("QUEUE_DRIVER" "SQS_KEY" "SQS_SECRET" "SQS_REGION" "SQS_PREFIX")
@@ -1020,64 +1030,7 @@ case $action in
                     done
                     ;;
 
-                5 ) case "${settings["MAIL_DRIVER"]}" in
-                        "smtp" ) menu_items=("MAIL_DRIVER" "MAIL_HOST" "MAIL_PORT" "MAIL_USERNAME" "MAIL_PASSWORD" "MAIL_ENCRYPTION" "MAIL_FROM_ADDRESS" "MAIL_FROM_NAME") ;;
-                        "sendmail" )  menu_items=("MAIL_DRIVER") ;;
-                        "mailgun" ) menu_items=("MAIL_DRIVER" "MAILGUN_DOMAIN" "MAILGUN_SECRET") ;;
-                        "mandrill" ) menu_items=("MAIL_DRIVER" "MANDRILL_SECRET") ;;
-                        "ses" ) menu_items=("MAIL_DRIVER" "SES_KEY" "SES_SECRET" "SES_REGION") ;;
-                        "sparkpost" )  menu_items=("MAIL_DRIVER" "SPARKPOST_SECRET") ;;
-                        "log" ) menu_items=("MAIL_DRIVER") ;;
-                        "array" ) menu_items=("MAIL_DRIVER") ;;
-                    esac
-                    menu_msg="Current system mail settings:"
-                    settings_error=""
-                    prompt="Select a number and ENTER to edit a setting, or just ENTER to accept all settings as displayed: "
-                    while settings_menu "System Email Settings" && read -e -p "$prompt" num && [[ "$num" ]]; do
-                        if [[ "$num" != *[![:digit:]]* ]] && (( num > 0 && num <= ${#menu_items[@]} )) ; then
-                            ((num--));
-                            name="${menu_items[num]}"
-                            [[ "${settings_msg[${name}]}" ]] && echo "${settings_msg[${name}]}"
-                            read -e -p "Change the value of ${name} to [${settings_options[${name}]}]: " -i "${settings[${name}]}" choice
-                            if [[ "${choice}" != "${settings[${name}]}" ]]; then
-                                settings["${name}"]="${choice}"
-                                chosen_settings["${name}"]="${choice}"
-                            fi
-                            if [[ 0 -eq $num ]] ; then
-                                case "${choice}" in
-                                    "smtp" )
-                                        menu_items=("MAIL_DRIVER" "MAIL_HOST" "MAIL_PORT" "MAIL_USERNAME" "MAIL_PASSWORD" "MAIL_ENCRYPTION" "MAIL_FROM_ADDRESS" "MAIL_FROM_NAME")
-                                        ;;
-                                    "sendmail" )
-                                        menu_items=("MAIL_DRIVER")
-                                        ;;
-                                    "mailgun" ) chosen_features["mailgun"]="+"
-                                        menu_items=("MAIL_DRIVER" "MAILGUN_DOMAIN" "MAILGUN_SECRET")
-                                        ;;
-                                    "mandrill" ) chosen_features["mandrill"]="+"
-                                        menu_items=("MAIL_DRIVER" "MANDRILL_SECRET")
-                                        ;;
-                                    "ses" ) chosen_features["aws_ses"]="+"
-                                        menu_items=("MAIL_DRIVER" "SES_KEY" "SES_SECRET" "SES_REGION")
-                                        ;;
-                                    "sparkpost" ) chosen_features["sparkpost"]="+"
-                                        menu_items=("MAIL_DRIVER" "SPARKPOST_SECRET")
-                                        ;;
-                                    "log" )
-                                        menu_items=("MAIL_DRIVER")
-                                        ;;
-                                    "array" )
-                                        menu_items=("MAIL_DRIVER")
-                                        ;;
-                                esac
-                            fi
-                        else
-                            settings_error="Invalid selection: $num"; continue;
-                        fi
-                    done
-                    ;;
-
-                6 ) menu_msg="The following settings the API layout and the way the system handles requests and responses:"
+                5 ) menu_msg="The following settings the API layout and the way the system handles requests and responses:"
                     menu_items=(
                     "DF_API_ROUTE_PREFIX"
                     "DF_STATUS_ROUTE_PREFIX"
@@ -1090,72 +1043,55 @@ case $action in
                     settings_menu_handle "DreamFactory API Settings"
                     ;;
 
-                7 ) menu_msg="The following settings apply to event scripting and scripting services:"
+                6 ) menu_msg="The following settings apply to event scripting and scripting services:"
                     menu_items=("DF_SCRIPTING_DISABLE")
                     [[ "${chosen_features[nodejs]}" ]] && menu_items=("${menu_items[@]}" "DF_NODEJS_PATH")
                     [[ "${chosen_features[python]}" ]] && menu_items=("${menu_items[@]}" "DF_PYTHON_PATH")
-                    settings_menu_handle
-
-                    display_title "Authentication and Authorization Settings"
-                    menu_msg="The following settings apply to the authentication and authorization services:"
-                    menu_items=(
-                    "DF_LOGIN_ATTRIBUTE"
-                    "DF_CONFIRM_CODE_LENGTH"
-                    "DF_CONFIRM_CODE_TTL"
-                    "JWT_SECRET"
-                    "DF_JWT_TTL"
-                    "DF_JWT_REFRESH_TTL"
-                    "DF_ALLOW_FOREVER_SESSIONS"
-                    "DF_CONFIRM_RESET_URL"
-                    "DF_CONFIRM_INVITE_URL"
-                    "DF_CONFIRM_ADMIN_INVITE_URL"
-                    "DF_CONFIRM_REGISTER_URL"
-                    )
                     settings_menu_handle "Server-side Scripting Settings"
                     ;;
 
-                8 ) case "${settings["BROADCAST_DRIVER"]}" in
-                        "pusher" ) menu_items=("BROADCAST_DRIVER" "PUSHER_APP_ID" "PUSHER_APP_KEY" "PUSHER_APP_SECRET") ;;
-                        "redis" ) menu_items=("BROADCAST_DRIVER" "REDIS_HOST" "REDIS_PORT" "REDIS_DATABASE" "REDIS_PASSWORD") ;;
-                        "log" ) menu_items=("BROADCAST_DRIVER") ;;
-                        "null" ) menu_items=("BROADCAST_DRIVER") ;;
-                    esac
-                    menu_msg="Current event broadcast settings:"
-                    settings_error=""
-                    prompt="Select a number and ENTER to edit a setting, or just ENTER to accept all settings as displayed: "
-                    while settings_menu "Event Broadcasting Settings" && read -e -p "$prompt" num && [[ "$num" ]]; do
-                        if [[ "$num" != *[![:digit:]]* ]] && (( num > 0 && num <= ${#menu_items[@]} )) ; then
-                            ((num--));
-                            name="${menu_items[num]}"
-                            [[ "${settings_msg[${name}]}" ]] && echo "${settings_msg[${name}]}"
-                            read -e -p "Change the value of ${name} to [${settings_options[${name}]}]: " -i "${settings[${name}]}" choice
-                            if [[ "${choice}" != "${settings[${name}]}" ]]; then
-                                settings["${name}"]="${choice}"
-                                chosen_settings["${name}"]="${choice}"
-                            fi
-                            if [[ 0 -eq $num ]] ; then
-                                case "${choice}" in
-                                    "pusher" ) chosen_features["pusher"]="+"
-                                        menu_items=("BROADCAST_DRIVER" "PUSHER_APP_ID" "PUSHER_APP_KEY" "PUSHER_APP_SECRET")
-                                        ;;
-                                    "redis" ) chosen_features["redis"]="+"
-                                        menu_items=("BROADCAST_DRIVER" "REDIS_HOST" "REDIS_PORT" "REDIS_DATABASE" "REDIS_PASSWORD")
-                                        ;;
-                                    "log" )
-                                        menu_items=("BROADCAST_DRIVER")
-                                        ;;
-                                    "null" )
-                                        menu_items=("BROADCAST_DRIVER")
-                                        ;;
-                                esac
-                            fi
-                        else
-                            settings_error="Invalid selection: $num"; continue;
-                        fi
-                    done
-                    ;;
+#                7 ) case "${settings["BROADCAST_DRIVER"]}" in
+#                        "pusher" ) menu_items=("BROADCAST_DRIVER" "PUSHER_APP_ID" "PUSHER_APP_KEY" "PUSHER_APP_SECRET") ;;
+#                        "redis" ) menu_items=("BROADCAST_DRIVER" "BROADCAST_HOST" "BROADCAST_PORT" "BROADCAST_DATABASE" "BROADCAST_PASSWORD") ;;
+#                        "log" ) menu_items=("BROADCAST_DRIVER") ;;
+#                        "null" ) menu_items=("BROADCAST_DRIVER") ;;
+#                    esac
+#                    menu_msg="Current event broadcast settings:"
+#                    settings_error=""
+#                    prompt="Select a number and ENTER to edit a setting, or just ENTER to accept all settings as displayed: "
+#                    while settings_menu "Event Broadcasting Settings" && read -e -p "$prompt" num && [[ "$num" ]]; do
+#                        if [[ "$num" != *[![:digit:]]* ]] && (( num > 0 && num <= ${#menu_items[@]} )) ; then
+#                            ((num--));
+#                            name="${menu_items[num]}"
+#                            [[ "${settings_msg[${name}]}" ]] && echo "${settings_msg[${name}]}"
+#                            read -e -p "Change the value of ${name} to [${settings_options[${name}]}]: " -i "${settings[${name}]}" choice
+#                            if [[ "${choice}" != "${settings[${name}]}" ]]; then
+#                                settings["${name}"]="${choice}"
+#                                chosen_settings["${name}"]="${choice}"
+#                            fi
+#                            if [[ 0 -eq $num ]] ; then
+#                                case "${choice}" in
+#                                    "pusher" ) chosen_features["pusher"]="+"
+#                                        menu_items=("BROADCAST_DRIVER" "PUSHER_APP_ID" "PUSHER_APP_KEY" "PUSHER_APP_SECRET")
+#                                        ;;
+#                                    "redis" ) chosen_features["redis"]="+"
+#                                        menu_items=("BROADCAST_DRIVER" "BROADCAST_HOST" "BROADCAST_PORT" "BROADCAST_DATABASE" "BROADCAST_PASSWORD")
+#                                        ;;
+#                                    "log" )
+#                                        menu_items=("BROADCAST_DRIVER")
+#                                        ;;
+#                                    "null" )
+#                                        menu_items=("BROADCAST_DRIVER")
+#                                        ;;
+#                                esac
+#                            fi
+#                        else
+#                            settings_error="Invalid selection: $num"; continue;
+#                        fi
+#                    done
+#                    ;;
 
-                9 ) menu_msg="The following settings apply to all database services, not just the system database:"
+                7 ) menu_msg="The following settings apply to all database services, not just the system database:"
                     menu_items=(
                     "DF_FILE_CHUNK_SIZE"
                     "DF_PACKAGE_PATH"
@@ -1216,15 +1152,20 @@ fi
 if [[ "${chosen_features[@]}" ]] ; then
     printf "\nFeatures selected for this install:\n"
     # build required packages and extensions
-    declare -a req_pkgs
+    declare -a req_pkgs=("dreamfactory/df-core")
     declare -a req_exts=("openssl" "PDO" "mbstring" "tokenizer" "xml")
+    declare -a denied_features
     for K in "${!chosen_features[@]}"; do [[ "${chosen_features[${K}]}" ]] && echo "${features[${K}]}"; done | sort
     for K in "${!chosen_features[@]}"; do
         if [[ "${chosen_features[${K}]}" ]]; then
             if [[ "${feature_package_map[${K}]}" ]] ; then
                 pkg="${feature_package_map[${K}]}"
-                [[ "${pkg}" == */* ]] || pkg="dreamfactory/${pkg}";
-                in_array req_pkgs "${pkg}" || req_pkgs=("${req_pkgs[@]}" "${pkg}")
+                if [[ "${composer_map[${pkg}]}" ]] ; then
+                    in_array req_pkgs "${pkg}" || req_pkgs=("${req_pkgs[@]}" "${pkg}")
+                else
+                    denied_features=("${denied_features[@]}" "${features[${K}]}")
+                    continue
+                fi
             fi
             if [[ "${feature_extension_map[${K}]}" ]] ; then
                 ext="${feature_extension_map[${K}]}"
@@ -1233,27 +1174,32 @@ if [[ "${chosen_features[@]}" ]] ; then
         fi
     done
 
+    if [[ "${denied_features[@]}" ]] ; then
+        printf "\nThe following features require a subscription and can not currently be installed, please contact DreamFactory for support:\n"
+        for V in "${denied_features[@]}"; do printf "\t${RED}${V}${NC}\n"; done | sort
+    fi
+
     printf "\nRequired composer packages for this install:\n"
-    for V in "${req_pkgs[@]}"; do printf "\t${V}\n"; done
+    for V in "${req_pkgs[@]}"; do printf "\t${V}\n"; done | sort
     while read -e -p "Would you like to apply these feature changes to your composer setup? [y/n] " -n1 action; do
         case $action in
             [yY]* )
                 if [ -f "composer.json" ] ; then
                     # backup existing composer.json
                     cp "composer.json" "composer.json-install-bkup"
-                    # if clean install, overwrite the existing composer.json
-                    [[ "install"="${install_type}" ]] && cp "composer.json-dist" "composer.json"
                 else
                     cp "composer.json-dist" "composer.json"
                 fi
 
+                req_pkgs=($(for V in "${req_pkgs[@]}"; do echo "${V}"; done | sort))
 #                if [[ jq_available ]] ; then
 #                    echo $(jq .require composer.json-dist)
 #                else
-                    mapfile -t base_requires < <(awk '/"require":/{flag=1; next} /\}/{flag=0} flag' composer.json-dist)
                     require=""
-                    for V in "${req_pkgs[@]}"; do require+="    \"${V}\": \"dev-develop as dev-master\",\n"; done
-                    for V in "${base_requires[@]}"; do require+="${V}\n"; done
+                    for V in "${req_pkgs[@]}"; do require+="    \"${V}\": \"${composer_map[${V}]}\",\n"; done
+                    # add laravel requirement
+                    require+="    \"laravel/framework\": \"${composer_map[laravel/framework]}\"\n"
+                    # write out the new require the hard way
                     awk -v out="${require}" '/"require":/{p=1;print;print out}/\}/{p=0}!p' composer.json > composer.tmp && mv composer.tmp composer.json
 #                fi
                 echo "Changes applied to composer.json file."
@@ -1271,10 +1217,11 @@ if [[ "${chosen_features[@]}" ]] ; then
         for V in "${req_exts[@]}"; do
             in_array cur_exts "${V}" && installed_exts=("${installed_exts[@]}" "${V}") || required_exts=("${required_exts[@]}" "${V}");
         done
+
         printf "\nRequired PHP extensions already installed:\n"
-        for V in "${installed_exts[@]}"; do printf "\t${V}\n"; done
+        for V in "${installed_exts[@]}"; do printf "\t${GREEN}${V}${NC}\n"; done
         printf "\nRequired PHP extensions that need to be installed:\n"
-        for V in "${required_exts[@]}"; do printf "\t${V}\n"; done
+        for V in "${required_exts[@]}"; do printf "\t${RED}${V}${NC}\n"; done
     else
         printf "\nDreamFactory requires PHP to run, but can not be detected on this system.\n"
         printf "Please check that it is installed along with all of the following required PHP extensions:\n"

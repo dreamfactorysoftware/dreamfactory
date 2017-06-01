@@ -51,29 +51,26 @@ return [
 
         'memcached'  => [
             'driver' => 'memcached',
-            'persistent_id' => env('MEMCACHED_PERSISTENT_ID'),
+            'persistent_id' => env('LIMIT_CACHE_PERSISTENT_ID', env('MEMCACHED_PERSISTENT_ID')),
             'sasl' => [
-                env('MEMCACHED_USERNAME'),
-                env('MEMCACHED_PASSWORD'),
+                env('LIMIT_CACHE_USERNAME', env('MEMCACHED_USERNAME')),
+                env('LIMIT_CACHE_PASSWORD', env('MEMCACHED_PASSWORD')),
             ],
             'options' => [
                 // Memcached::OPT_CONNECT_TIMEOUT  => 2000,
             ],
             'servers' => [
                 [
-                    'host' => env('MEMCACHED_HOST', '127.0.0.1'),
-                    'port' => env('MEMCACHED_PORT', 11211),
-                    'weight' => env('MEMCACHED_WEIGHT', 100),
+                    'host' => env('LIMIT_CACHE_HOST', env('MEMCACHED_HOST', '127.0.0.1')),
+                    'port' => env('LIMIT_CACHE_PORT', env('MEMCACHED_PORT', 11211)),
+                    'weight' => env('LIMIT_CACHE_WEIGHT', env('MEMCACHED_WEIGHT', 100)),
                 ],
             ],
         ],
 
         'redis' => [
-            'client' => 'predis',
-            'database' => env('LIMIT_CACHE_REDIS_DATABASE', 9),
-            'host' => env('LIMIT_CACHE_REDIS_HOST', '127.0.0.1'),
-            'port' => env('LIMIT_CACHE_REDIS_PORT', 6379),
-            'password' => env('LIMIT_CACHE_REDIS_PASSWORD', null), // Needed by Redis Cloud and other similar services
+            'driver' => 'redis',
+            'connection' => 'limit_cache',
         ],
 
         /** Managed instance limits cache */

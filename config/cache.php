@@ -46,24 +46,24 @@ return [
 
         'file' => [
             'driver' => 'file',
-            'path' => env('CACHE_PATH', storage_path('framework/cache/data')),
+            'path' => env('CACHE_PATH', env('DF_CACHE_PATH', storage_path('framework/cache/data'))),
         ],
 
         'memcached'  => [
             'driver' => 'memcached',
-            'persistent_id' => env('MEMCACHED_PERSISTENT_ID'),
+            'persistent_id' => env('CACHE_PERSISTENT_ID', env('MEMCACHED_PERSISTENT_ID')),
             'sasl' => [
-                env('MEMCACHED_USERNAME'),
-                env('MEMCACHED_PASSWORD'),
+                env('CACHE_USERNAME', env('MEMCACHED_USERNAME')),
+                env('CACHE_PASSWORD', env('MEMCACHED_PASSWORD')),
             ],
             'options' => [
                 // Memcached::OPT_CONNECT_TIMEOUT  => 2000,
             ],
             'servers' => [
                 [
-                    'host' => env('MEMCACHED_HOST', '127.0.0.1'),
-                    'port' => env('MEMCACHED_PORT', 11211),
-                    'weight' => env('MEMCACHED_WEIGHT', 100),
+                    'host' => env('CACHE_HOST', env('MEMCACHED_HOST', '127.0.0.1')),
+                    'port' => env('CACHE_PORT', env('MEMCACHED_PORT', 11211)),
+                    'weight' => env('CACHE_WEIGHT', env('MEMCACHED_WEIGHT', 100)),
                 ],
             ],
         ],

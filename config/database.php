@@ -115,29 +115,29 @@ return [
         'broadcast' => [
             'host'     => env('BROADCAST_HOST', env('REDIS_HOST')),
             'port'     => env('BROADCAST_PORT', env('REDIS_PORT')),
-            'database' => env('BROADCAST_DATABASE', env('REDIS_DATABASE')),
-            'password' => env('BROADCAST_PASSWORD', env('REDIS_PASSWORD')), // Needed by Redis Cloud and other similar services
+            'database' => env('BROADCAST_DATABASE', 1),
+            'password' => env('BROADCAST_PASSWORD', env('REDIS_PASSWORD')),
         ],
 
         'cache' => [
             'host'     => env('CACHE_HOST', env('REDIS_HOST')),
             'port'     => env('CACHE_PORT', env('REDIS_PORT')),
-            'database' => env('CACHE_DATABASE', env('REDIS_DATABASE')),
-            'password' => env('CACHE_PASSWORD', env('REDIS_PASSWORD')), // Needed by Redis Cloud and other similar services
+            'database' => env('CACHE_DATABASE', 2),
+            'password' => env('CACHE_PASSWORD', env('REDIS_PASSWORD')),
         ],
 
         'limit_cache' => [
-            'host'     => env('LIMIT_CACHE_HOST', env('REDIS_HOST')),
-            'port'     => env('LIMIT_CACHE_PORT', env('REDIS_PORT')),
-            'database' => env('LIMIT_CACHE_DATABASE', env('REDIS_DATABASE')),
-            'password' => env('LIMIT_CACHE_PASSWORD', env('REDIS_PASSWORD')), // Needed by Redis Cloud and other similar services
+            'host'     => env('LIMIT_CACHE_HOST', env('LIMIT_CACHE_REDIS_HOST', env('REDIS_HOST'))),
+            'port'     => env('LIMIT_CACHE_PORT', env('LIMIT_CACHE_REDIS_PORT', env('REDIS_PORT'))),
+            'database' => env('LIMIT_CACHE_DATABASE', env('LIMIT_CACHE_REDIS_DATABASE', 9)),
+            'password' => env('LIMIT_CACHE_PASSWORD', env('LIMIT_CACHE_REDIS_PASSWORD', env('REDIS_PASSWORD'))),
         ],
 
         'queue' => [
             'host'     => env('QUEUE_HOST', env('REDIS_HOST')),
             'port'     => env('QUEUE_PORT', env('REDIS_PORT')),
-            'database' => env('QUEUE_DATABASE', env('REDIS_DATABASE')),
-            'password' => env('QUEUE_PASSWORD', env('REDIS_PASSWORD')), // Needed by Redis Cloud and other similar services
+            'database' => env('QUEUE_DATABASE', 3),
+            'password' => env('QUEUE_PASSWORD', env('REDIS_PASSWORD')),
         ],
 
     ],
