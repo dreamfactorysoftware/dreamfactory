@@ -736,7 +736,7 @@ case $action in
         action_msg+="\nChoose from the following feature sections:"
         action_error=""
         while action_menu "${action_title}" "${action_msg}" "${feature_groups[@]}" && read -e -p "Select a group by number, or press enter to be done. " group && [[ "$group" ]]; do
-            if [[ "$group" != *[![:digit:]]* ]] && (( group > 0 && group <= ${#action_items[@]} )) ; then
+            if [[ "$group" != *[![:digit:]]* ]] && (( group > 0 && group <= ${#feature_groups[@]} )) ; then
                 ((group--));
                 menu_msg=${feature_group_prompts["${feature_groups[$group]}"]}
                 menu_items=( ${features_in_groups["${feature_groups[$group]}"]} )
