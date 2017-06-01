@@ -5,6 +5,9 @@ $dfProviders = [
     DreamFactory\Core\LaravelServiceProvider::class,
 ];
 
+if (class_exists('DreamFactory\Core\ADLdap\ServiceProvider')) {
+    $dfProviders[] = \DreamFactory\Core\ADLdap\ServiceProvider::class;
+}
 if (class_exists('DreamFactory\Core\ApiDoc\ServiceProvider')) {
     $dfProviders[] = DreamFactory\Core\ApiDoc\ServiceProvider::class;
 }
@@ -52,6 +55,9 @@ if (class_exists('DreamFactory\Core\Logger\ServiceProvider')) {
 }
 if (class_exists('DreamFactory\Core\MongoDb\ServiceProvider')) {
     $dfProviders[] = DreamFactory\Core\MongoDb\ServiceProvider::class;
+}
+if (class_exists('DreamFactory\Core\MQTT\ServiceProvider')) {
+    $dfProviders[] = DreamFactory\Core\MQTT\ServiceProvider::class;
 }
 if (class_exists('DreamFactory\Core\Notification\ServiceProvider')) {
     $dfProviders[] = DreamFactory\Core\Notification\ServiceProvider::class;
