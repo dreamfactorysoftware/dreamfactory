@@ -13,8 +13,8 @@ Homestead.yaml
 /public/df-admin-app
 /public/filemanager
 /public/df-swagger-ui
-/storage/cache/*
 /storage/framework/cache/*
+/storage/framework/limit_cache/*
 /workbench
 .vagrant
 composer.phar
@@ -25,7 +25,11 @@ Thumbs.db
 .dfe.cluster.json
 .env-backup-homestead
 .env-bak
+.env-local
+.env-vagrant
+.env.tmp
 hhvm.hdf
 www.pid
 afterScriptLog.txt
-composer.json-*
+composer.json.full_debug
+composer.json-install-bkup
