@@ -64,6 +64,7 @@ declare -A settings=(
 # if CACHE_DRIVER=database
 ["CACHE_TABLE"]="cache"
 # if CACHE_DRIVER=memcached or redis
+["CACHE_CLIENT"]="predis"
 ["CACHE_HOST"]="127.0.0.1"
 ["CACHE_PORT"]="6379"
 ["CACHE_WEIGHT"]="100"
@@ -78,6 +79,7 @@ declare -A settings=(
 # if CACHE_DRIVER=database
 ["LIMIT_CACHE_TABLE"]="limit_cache"
 # if LIMIT_CACHE_DRIVER=memcached or redis
+["LIMIT_CACHE_CLIENT"]="predis"
 ["LIMIT_CACHE_HOST"]="127.0.0.1"
 ["LIMIT_CACHE_PORT"]="6379"
 ["LIMIT_CACHE_WEIGHT"]="100"
@@ -173,6 +175,7 @@ declare -A settings_msg=(
 ["CACHE_PATH"]="The path to a folder where the system cache information will be stored."
 ["CACHE_DEFAULT_TTL"]="Default cache time-to-live, defaults to 300."
 ["CACHE_TABLE"]="The database table name where cached information will be stored."
+["CACHE_CLIENT"]="What type of php extension to use for Redis cache storage."
 ["CACHE_HOST"]="The hostname or IP address of the memcached or redis server."
 ["CACHE_PORT"]="The connection port for the host given, or blank if the provider default is used."
 ["CACHE_USERNAME"]="Credentials for the service if required."
@@ -184,6 +187,7 @@ declare -A settings_msg=(
 ["LIMIT_CACHE_DRIVER"]="What type of driver or connection to use for limit cache storage."
 ["LIMIT_CACHE_PATH"]="Path to a folder where limit tracking information will be stored."
 ["LIMIT_CACHE_TABLE"]="The database table name where limit tracking information will be stored."
+["LIMIT_CACHE_CLIENT"]="What type of php extension to use for Redis cache storage."
 ["LIMIT_CACHE_HOST"]="The hostname or IP address of the redis server."
 ["LIMIT_CACHE_PORT"]="The connection port for the host given, or blank if the provider default is used."
 ["LIMIT_CACHE_USERNAME"]="Credentials for the service if required."
@@ -237,6 +241,11 @@ declare -A settings_options=(
 ["DB_CONNECTION"]="sqlite, mysql, pgsql, sqlsrv"
 # Cache
 ["CACHE_DRIVER"]="apc, array, database, file, memcached, redis"
+["CACHE_CLIENT"]="predis, phpredis"
+# Limits
+#["LIMIT_CACHE_DRIVER"]="apc, array, database, file, memcached, redis"
+["LIMIT_CACHE_DRIVER"]="file, redis"
+["LIMIT_CACHE_CLIENT"]="predis, phpredis"
 # Queuing
 ["QUEUE_DRIVER"]="sync, database, beanstalkd, sqs, redis, null"
 # Event Broadcasting
@@ -246,8 +255,6 @@ declare -A settings_options=(
 ["DF_ALLOW_FOREVER_SESSIONS"]="true, false"
 ["DF_SCRIPTING_DISABLE"]="all or comma-delimited list of v8js, nodejs, python, and/or php"
 ["DF_ALWAYS_WRAP_RESOURCES"]="true, false"
-# Limits
-["LIMIT_CACHE_DRIVER"]="apc, array, database, file, memcached, redis"
 )
 
 declare -a feature_groups=(
@@ -809,8 +816,10 @@ case $action in
                             [[ -z "${settings[DB_HOST]}" ]] && settings["DB_HOST"]="127.0.0.1"
                             [[ -z "${settings[DB_PORT]}" ]] && settings["DB_PORT"]="1433"
                             ;;
+                        * ) menu_items=("DB_CONNECTION" "DB_DATABASE")
+                            [[ -z "${settings[DB_DATABASE]}" ]] && settings["DB_DATABASE"]="storage/databases/database.sqlite"
+                            ;;
                     esac
-                    menu_items=("DB_CONNECTION" "DB_HOST" "DB_PORT" "DB_DATABASE" "DB_USERNAME" "DB_PASSWORD" "DB_CHARSET" "DB_COLLATION")
                     menu_msg="Current system database settings:"
                     settings_error=""
                     prompt="Select a number and ENTER to edit a setting, or just ENTER to accept all settings as displayed: "
@@ -873,9 +882,12 @@ case $action in
                             [[ -z "${settings[CACHE_TABLE]}" ]] && settings["CACHE_TABLE"]="cache"
                             ;;
                         "memcached" ) menu_items=("CACHE_DRIVER" "CACHE_DEFAULT_TTL" "CACHE_HOST" "CACHE_PORT" "CACHE_USERNAME" "CACHE_PASSWORD" "CACHE_PERSISTENT_ID" "CACHE_WEIGHT") ;;
-                        "redis" ) menu_items=("CACHE_DRIVER" "CACHE_DEFAULT_TTL" "CACHE_HOST" "CACHE_PORT" "CACHE_DATABASE" "CACHE_PASSWORD") ;;
+                        "redis" ) menu_items=("CACHE_DRIVER" "CACHE_CLIENT" "CACHE_DEFAULT_TTL" "CACHE_HOST" "CACHE_PORT" "CACHE_DATABASE" "CACHE_PASSWORD") ;;
                         "apc" ) menu_items=("CACHE_DRIVER" "CACHE_DEFAULT_TTL") ;;
                         "array" ) menu_items=("CACHE_DRIVER") ;;
+                        * ) menu_items=("CACHE_DRIVER" "CACHE_DEFAULT_TTL" "CACHE_PATH")
+                            [[ -z "${settings[CACHE_PATH]}" ]] && settings["CACHE_PATH"]="storage/framework/cache/data"
+                            ;;
                     esac
                     menu_msg="Current system cache settings:"
                     settings_error=""
@@ -904,7 +916,7 @@ case $action in
                                         menu_items=("CACHE_DRIVER" "CACHE_DEFAULT_TTL" "CACHE_HOST" "CACHE_PORT" "CACHE_USERNAME" "CACHE_PASSWORD" "CACHE_PERSISTENT_ID" "CACHE_WEIGHT")
                                         ;;
                                     "redis" ) chosen_features["redis"]="+"
-                                        menu_items=("CACHE_DRIVER" "CACHE_DEFAULT_TTL" "CACHE_HOST" "CACHE_PORT" "CACHE_DATABASE" "CACHE_PASSWORD")
+                                        menu_items=("CACHE_DRIVER" "CACHE_CLIENT" "CACHE_DEFAULT_TTL" "CACHE_HOST" "CACHE_PORT" "CACHE_DATABASE" "CACHE_PASSWORD")
                                         ;;
                                     "apc" ) chosen_features["apc"]="+"
                                         menu_items=("CACHE_DRIVER" "CACHE_DEFAULT_TTL")
@@ -929,9 +941,12 @@ case $action in
                                 [[ -z "${settings[LIMIT_CACHE_TABLE]}" ]] && settings["LIMIT_CACHE_TABLE"]="limit_cache"
                                 ;;
                             "memcached" ) menu_items=("LIMIT_CACHE_DRIVER" "LIMIT_CACHE_HOST" "LIMIT_CACHE_PORT" "LIMIT_CACHE_USERNAME" "LIMIT_CACHE_PASSWORD" "LIMIT_CACHE_PERSISTENT_ID" "LIMIT_CACHE_WEIGHT") ;;
-                            "redis" ) menu_items=("LIMIT_CACHE_DRIVER" "LIMIT_CACHE_HOST" "LIMIT_CACHE_PORT" "LIMIT_CACHE_DATABASE" "LIMIT_CACHE_PASSWORD") ;;
+                            "redis" ) menu_items=("LIMIT_CACHE_DRIVER" "LIMIT_CACHE_CLIENT" "LIMIT_CACHE_HOST" "LIMIT_CACHE_PORT" "LIMIT_CACHE_DATABASE" "LIMIT_CACHE_PASSWORD") ;;
                             "apc" ) menu_items=("LIMIT_CACHE_DRIVER") ;;
                             "array" ) menu_items=("LIMIT_CACHE_DRIVER") ;;
+                            * ) menu_items=("LIMIT_CACHE_DRIVER" "LIMIT_CACHE_DEFAULT_TTL" "LIMIT_CACHE_PATH")
+                                [[ -z "${settings[LIMIT_CACHE_PATH]}" ]] && settings["LIMIT_CACHE_PATH"]="storage/framework/limit_cache"
+                                ;;
                         esac
                         settings_error=""
                         prompt="Select a number and ENTER to edit a setting, or just ENTER to accept all settings as displayed: "
@@ -959,7 +974,7 @@ case $action in
                                             menu_items=("LIMIT_CACHE_DRIVER" "LIMIT_CACHE_HOST" "LIMIT_CACHE_PORT" "LIMIT_CACHE_USERNAME" "LIMIT_CACHE_PASSWORD" "LIMIT_CACHE_PERSISTENT_ID" "LIMIT_CACHE_WEIGHT")
                                             ;;
                                         "redis" ) chosen_features["redis"]="+"
-                                            menu_items=("LIMIT_CACHE_DRIVER" "LIMIT_CACHE_HOST" "LIMIT_CACHE_PORT" "LIMIT_CACHE_DATABASE" "LIMIT_CACHE_PASSWORD")
+                                            menu_items=("LIMIT_CACHE_DRIVER" "LIMIT_CACHE_CLIENT" "LIMIT_CACHE_HOST" "LIMIT_CACHE_PORT" "LIMIT_CACHE_DATABASE" "LIMIT_CACHE_PASSWORD")
                                             ;;
                                         "apc" ) chosen_features["apc"]="+"
                                             menu_items=("LIMIT_CACHE_DRIVER")
