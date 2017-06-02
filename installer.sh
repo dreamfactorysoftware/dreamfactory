@@ -677,7 +677,7 @@ if [ -f ".env" ] ; then
     action_title="Install or Upgrade"
     action_msg="A previous installation has been detected."
     action_items=(
-    "Keep existing configuration"
+    "Work on existing configuration"
     "Re-install from the defaults"
     "Cancel installation"
     )
@@ -1144,9 +1144,9 @@ if [[ "${chosen_settings[@]}" ]] ; then
                 to_find="${key}="
                 to_replace="${key}=${value}"
                 if grep -q "^${to_find}" ".env"; then
-                    sed -i'.tmp' "s/^$to_find.*/$to_replace/g" ".env"
+                    sed -i'.tmp' "s|^$to_find.*|$to_replace|g" ".env"
                 elif grep -q "^#${to_find}" ".env"; then
-                    sed -i'.tmp' "s/^#$to_find.*/$to_replace/g" ".env"
+                    sed -i'.tmp' "s|^#$to_find.*|$to_replace|g" ".env"
                 else
                     # append at end of file
                     echo "{$to_replace}" >> ".env"
