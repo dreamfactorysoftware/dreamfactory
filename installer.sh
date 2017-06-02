@@ -1135,7 +1135,7 @@ if [[ "${chosen_settings[@]}" ]] ; then
                 # backup existing .env
                 cp ".env" ".env-install-bkup"
                 # if clean install, overwrite the existing .env
-                [[ "install"="${install_type}" ]] && cp ".env-dist" ".env"
+                [[ "install" == "${install_type}" ]] && cp ".env-dist" ".env"
             else
                 cp ".env-dist" ".env"
             fi
