@@ -147,7 +147,7 @@ declare -A settings=(
 
 declare -A settings_msg=(
 # Application
-["APP_CIPHER"]="If you are using an older installation of DreamFactory 2 and getting following error. 'No supported encrypter found. The cipher and / or key length are invalid' then please use rijndael-128 cipher. Using this cipher requires the php mcrypt extension to be installed. Other options are AES-128-CBC or AES-256-CBC (default)."
+["APP_CIPHER"]="Database encryption cipher, options are AES-128-CBC or AES-256-CBC (default). Only change this if you are starting from a clean database."
 ["APP_DEBUG"]="When your application is in debug mode, detailed error messages with stack traces will be shown on every error that occurs within your application. If disabled, a simple generic error page is shown."
 ["APP_ENV"]="This may determine how various services behave in your application."
 ["APP_KEY"]="This key is used by the application for encryption and should be set to a random, 32 character string, otherwise these encrypted strings will not be safe. Use 'php artisan key:generate' to generate a new key. Please do this before deploying an application!"
@@ -254,7 +254,7 @@ declare -A settings_msg=(
 
 declare -A settings_options=(
 # Application
-["APP_CIPHER"]="AES-256-CBC, AES-128-CBC, RIJNDAEL-128"
+["APP_CIPHER"]="AES-256-CBC, AES-128-CBC"
 ["APP_DEBUG"]="true, false"
 ["APP_ENV"]="local, production"
 ["APP_LOCALE"]="en"
