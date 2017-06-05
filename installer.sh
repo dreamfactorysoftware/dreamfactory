@@ -58,9 +58,10 @@ declare -A settings=(
 ["DF_FILE_CHUNK_SIZE"]="10000000"
 # Cache
 ["CACHE_DRIVER"]="file"
-["CACHE_PATH"]="storage/framework/cache/data"
 ["CACHE_PREFIX"]="dreamfactory"
 ["CACHE_DEFAULT_TTL"]="300"
+# if CACHE_DRIVER=file
+["CACHE_PATH"]="storage/framework/cache/data"
 # if CACHE_DRIVER=database
 ["CACHE_TABLE"]="cache"
 # if CACHE_DRIVER=memcached or redis
@@ -74,6 +75,7 @@ declare -A settings=(
 ["CACHE_DATABASE"]="2"
 # Limits
 ["LIMIT_CACHE_DRIVER"]="file"
+["LIMIT_CACHE_PREFIX"]="dreamfactory"
 # if LIMIT_CACHE_DRIVER=file
 ["LIMIT_CACHE_PATH"]="storage/framework/limit_cache"
 # if CACHE_DRIVER=database
@@ -145,7 +147,7 @@ declare -A settings=(
 
 declare -A settings_msg=(
 # Application
-["APP_CIPHER"]="If you are using an older installation of DreamFactory 2 and getting following error. 'No supported encrypter found. The cipher and / or key length are invalid' then please use rijndael-128 cipher. Using this cipher requires the php mcrypt extension to be installed."
+["APP_CIPHER"]="If you are using an older installation of DreamFactory 2 and getting following error. 'No supported encrypter found. The cipher and / or key length are invalid' then please use rijndael-128 cipher. Using this cipher requires the php mcrypt extension to be installed. Other options are AES-128-CBC or AES-256-CBC (default)."
 ["APP_DEBUG"]="When your application is in debug mode, detailed error messages with stack traces will be shown on every error that occurs within your application. If disabled, a simple generic error page is shown."
 ["APP_ENV"]="This may determine how various services behave in your application."
 ["APP_KEY"]="This key is used by the application for encryption and should be set to a random, 32 character string, otherwise these encrypted strings will not be safe. Use 'php artisan key:generate' to generate a new key. Please do this before deploying an application!"
@@ -172,8 +174,9 @@ declare -A settings_msg=(
 ["DF_FREETDS_DUMPCONFIG"]="Location of connection dump file, defaults to disabled"
 # Cache
 ["CACHE_DRIVER"]="What type of driver or connection to use for cache storage."
-["CACHE_PATH"]="The path to a folder where the system cache information will be stored."
 ["CACHE_DEFAULT_TTL"]="Default cache time-to-live, defaults to 300."
+["CACHE_PREFIX"]="A prefix used for all cache written out from this installation."
+["CACHE_PATH"]="The path to a folder where the system cache information will be stored."
 ["CACHE_TABLE"]="The database table name where cached information will be stored."
 ["CACHE_CLIENT"]="What type of php extension to use for Redis cache storage."
 ["CACHE_HOST"]="The hostname or IP address of the memcached or redis server."
@@ -185,20 +188,39 @@ declare -A settings_msg=(
 ["CACHE_DATABASE"]="The desired Redis database number between 0 and 16 (or the limit set in your redis.conf file."
 # Limits
 ["LIMIT_CACHE_DRIVER"]="What type of driver or connection to use for limit cache storage."
+["LIMIT_CACHE_PREFIX"]="A prefix used for all cache written out from this installation."
 ["LIMIT_CACHE_PATH"]="Path to a folder where limit tracking information will be stored."
 ["LIMIT_CACHE_TABLE"]="The database table name where limit tracking information will be stored."
 ["LIMIT_CACHE_CLIENT"]="What type of php extension to use for Redis cache storage."
 ["LIMIT_CACHE_HOST"]="The hostname or IP address of the redis server."
 ["LIMIT_CACHE_PORT"]="The connection port for the host given, or blank if the provider default is used."
 ["LIMIT_CACHE_USERNAME"]="Credentials for the service if required."
-["LIMIT_CACHE_PASSWORD"]=""
+["LIMIT_CACHE_PASSWORD"]="Credentials for the service if required."
 ["LIMIT_CACHE_PERSISTENT_ID"]="Memcached persistent ID setting."
 ["LIMIT_CACHE_WEIGHT"]="Memcached weight setting."
 ["LIMIT_CACHE_DATABASE"]="The desired Redis database number between 0 and 16 (or the limit set in your redis.conf file."
 # Queuing
 ["QUEUE_DRIVER"]="What type of driver or connection to use for queuing jobs on the server."
+["QUEUE_NAME"]="Name of the queue to use, defaults to 'default'."
+["QUEUE_RETRY_AFTER"]="Number of seconds after to retry a failed job, defaults to 90."
+["QUEUE_TABLE"]="The database table used to store the queued jobs."
+["QUEUE_HOST"]="The hostname or IP address of the beanstalkd or redis server."
+["QUEUE_PORT"]="The connection port for the host given, or blank if the provider default is used."
+["QUEUE_DATABASE"]="The desired Redis database number between 0 and 16 (or the limit set in your redis.conf file."
+["QUEUE_PASSWORD"]="Credentials for the service if required."
+["SQS_KEY"]="AWS credentials."
+["SQS_SECRET"]="AWS credentials."
+["SQS_REGION"]="AWS storage region."
+["SQS_PREFIX"]="AWS SQS specific prefix for queued jobs."
 # Event Broadcasting
 ["BROADCAST_DRIVER"]="What type of driver or connection to use for broadcasting events from the server."
+["PUSHER_APP_ID"]=
+["PUSHER_APP_KEY"]=
+["PUSHER_APP_SECRET"]=
+["BROADCAST_HOST"]="The hostname or IP address of the redis server."
+["BROADCAST_PORT"]="The connection port for the host given, or blank if the provider default is used."
+["BROADCAST_DATABASE"]="The desired Redis database number between 0 and 16 (or the limit set in your redis.conf file."
+["BROADCAST_PASSWORD"]="Credentials for the service if required."
 # User Management
 ["DF_LOGIN_ATTRIBUTE"]="By default DreamFactory uses an email address for user authentication. You can change this to use username instead by setting this to 'username'."
 ["DF_CONFIRM_CODE_LENGTH"]="New user confirmation code length. Max/Default is 32. Minimum is 5."
@@ -232,6 +254,7 @@ declare -A settings_msg=(
 
 declare -A settings_options=(
 # Application
+["APP_CIPHER"]="AES-256-CBC, AES-128-CBC, RIJNDAEL-128"
 ["APP_DEBUG"]="true, false"
 ["APP_ENV"]="local, production"
 ["APP_LOCALE"]="en"
