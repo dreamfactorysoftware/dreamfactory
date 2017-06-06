@@ -1,4 +1,4 @@
-## DreamFactory 2.6.0
+## DreamFactory 2.7.0
 
 [![License](https://poser.pugx.org/dreamfactory/dreamfactory/license.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/dreamfactorysoftware/dreamfactory?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
@@ -18,7 +18,7 @@ Learn more at our [website](https://www.dreamfactory.com).
 
 Documentation for the platform can be found on the [DreamFactory wiki](http://wiki.dreamfactory.com).
 
-## Required software and extensions
+## Required Software and Extensions
 
 Check our [wiki installation page](http://wiki.dreamfactory.com/DreamFactory/Installation) for the minimum 
 software and extensions required for your system to successfully install and run DreamFactory 2.x.
@@ -44,28 +44,29 @@ but this should also work on Windows with all the required software and extensio
     cd ~/df2
     ```
 
- * Install dependencies using composer.
+ * Install dependencies using composer. If composer is not installed, see [here](https://getcomposer.org/download/).
 
     ```sh
     composer install --no-dev
     ```
 
- * Run DreamFactory setup wizard. First time running this will create your system environment file (.env), 
-generate application key, and will prompt you to configure your Database.
+ * DreamFactory sets up a default SQLite database by default. If you would like your instance to store system 
+ information in another database, run the following command. This will create your system environment file (.env) 
+ and will prompt you to configure your database of choice.
 
     ```sh
-    php artisan dreamfactory:setup
+    php artisan df:env
     ```
 
- * Run the above command again to complete the setup process. This time it will run the database schema migration, 
-seed the default services, and will prompt you to create your admin user account.
+ * Regardless of what database you choose, run the following command to setup your database. 
+ This will create your system environment, generate your application key, run the database schema migration, 
+ seed the default services, and will prompt you to create your admin user account.
 
     ```sh
-    php artisan dreamfactory:setup
+    php artisan df:setup
     ```
 
  * Make sure your web server can read/write from/to storage/ (sub directories) and bootstrap/cache/ directories.
-
 
     ```sh
     # Example:
@@ -74,51 +75,38 @@ seed the default services, and will prompt you to create your admin user account
     sudo chmod -R 2775 storage/ bootstrap/cache/
     ```
 
- * Run the following command to try out DreamFactory 2.0 without configuring a Database and Web Server. 
+ * Run the following command to try out DreamFactory 2.0 without configuring a web server. 
+ Otherwise, configure your web server to serve the public/ directory and launch your instance from a browser.
 
     ```sh
     php artisan serve
     ```
 
-### Connecting to another Database Server after initial setup
+### Customize the Installation
 
-To connect to a different Database Server after initial setup...
+To customize any of the environment settings or feature sets included in the install, run the new installer program.
 
- * Edit the .env file at the installation root and change the following configuration.
+> _Note this requires Bash 4.0 or newer._
+
+ * Run the installer and follow the prompts. If the installer can not be run, you may edit the .env file directly.
 
     ```sh
-    DB_CONNECTION=mysql     ## Supported drivers are sqlite (default), mysql, pgsql
-    DB_HOST=localhost
-    DB_DATABASE=dreamfactory
-    DB_USERNAME=username
-    DB_PASSWORD=secret
-    DB_PORT=3306
+    ./installer.sh
     ```
-
- * Run following command to clear system cache.
+    
+ * Run following commands to clear system cache.
 
     ```sh
     php artisan cache:clear
+    php artisan config:clear
     ```
 
- * Run DreamFactory setup wizard.
+ * If the system database environment is changed to a clean database, re-run the setup command.
 
     ```sh
     php artisan df:setup
     ```
- * Make sure your web server can read/write from/to storage/ (sub directories) and bootstrap/cache/ directories.
-
-    ```sh
-    # Example:
     
-    sudo chown -R {www user}:{your user group} storage/ bootstrap/cache/
-    sudo chmod -R 2775 storage/ bootstrap/cache/
-    ```
-
- * Configure your web server to serve the public/ directory and launch your instance from a browser.
-
-> _Note: The default composer.json has the more common package additions listed. To see all available packages, 
-> see the composer.json-all-dist. Likewise to see the minimum required packages, see the composer.json-min-dist._
 
 ## Feedback and Contributions
 

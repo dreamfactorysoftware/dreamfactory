@@ -3,11 +3,25 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [2.7.0] - 2017-06-06
 ### Added
-- DF-895 Added support for username based authentication
+- New BASH installer.sh for customizing environment and packages included
 
 ### Changed
-### Fixed
+- Cleanup after removing php-utils library
+- Config and DatabaseSeeder changes for new installer
+- Documentation of env settings to config and installer
+- Cleanup gitignore
+- Remove cipher option of RIJNDAEL-128 from environment
+
+## [2.6.0] - 2017-04-21
+### Added
+- DF-895 Added support for username based authentication
+- Added support for Firebird SQL Database
+- Added support for using Redis as cache for Limits feature
+- Added support for "upsert" on database services where supported (using PUT verb)
+- Added support for Admin user email invites
 
 ## [2.5.0] - 2017-03-04
 - Restructuring to upgrade to Laravel 5.4
@@ -164,7 +178,9 @@ For older installs, see DF_CIPHER in .env or .env-dist for more details.
 ## 2.0.0 - 2015-10-27
 First official release of the new open-source DreamFactory project.
 
-[Unreleased]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.5.0...HEAD
+[Unreleased]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.7.0...HEAD
+[2.7.0]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.6.0...2.7.0
+[2.6.0]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.5.0...2.6.0
 [2.5.0]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.4.2...2.5.0
 [2.4.2]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.4.1...2.4.2
 [2.4.1]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.4.0...2.4.1
