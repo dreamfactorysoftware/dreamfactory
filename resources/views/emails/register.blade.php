@@ -6,10 +6,10 @@
  The following view data is required:
 
  $contentHeader       The callout/header of the email's body
- $firstName                The name of the recipient.
+ $firstName           The name of the recipient.
  $link                The password reset link.
  $code                The reset code.
- $instanceName        Name of the DreamFactory Instance.
+ $appName             Name of the application.
 
 --}}
 @section('contentBody')
@@ -19,7 +19,7 @@
         </p>
 
         <div>
-            You have registered an user account on the DreamFactory instance of {{ $instance_name }}. Go to the following url, enter the code below, and set your password to confirm your account.<br/>
+            You have registered a user account on {{ $app_name }}. Go to the following url, enter the code below, and set your password to confirm your account.<br/>
             <br/>
             {{ $link }}
             <br/><br/>

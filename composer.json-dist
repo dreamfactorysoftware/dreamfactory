@@ -32,18 +32,31 @@
   },
   "minimum-stability": "dev",
   "prefer-stable":     true,
+  "repositories":      [
+  ],
   "require":           {
-    "dreamfactory/df-admin-app":       "~2.7.0",
-    "dreamfactory/df-apidoc":          "~0.1.0",
-    "dreamfactory/df-core":            "~0.9.0",
-    "dreamfactory/df-email":           "~0.3.0",
-    "dreamfactory/df-file":            "~0.1.0",
+    "dreamfactory/df-admin-app":       "~2.8.0",
+    "dreamfactory/df-apidoc":          "~0.2.0",
+    "dreamfactory/df-aws":             "~0.10.0",
+    "dreamfactory/df-azure":           "~0.10.0",
+    "dreamfactory/df-cache":           "~0.7.0",
+    "dreamfactory/df-cassandra":       "~0.7.0",
+    "dreamfactory/df-core":            "~0.10.0",
+    "dreamfactory/df-couchbase":       "~0.5.0",
+    "dreamfactory/df-couchdb":         "~0.10.0",
+    "dreamfactory/df-email":           "~0.4.0",
+    "dreamfactory/df-file":            "~0.2.0",
     "dreamfactory/df-filemanager-app": "~0.1.0",
-    "dreamfactory/df-script":          "~0.3.0",
-    "dreamfactory/df-sqldb":           "~0.9.0",
+    "dreamfactory/df-firebird":        "~0.2.0",
+    "dreamfactory/df-mongodb":         "~0.10.0",
+    "dreamfactory/df-oauth":           "~0.10.0",
+    "dreamfactory/df-rackspace":       "~0.10.0",
+    "dreamfactory/df-rws":             "~0.10.0",
+    "dreamfactory/df-script":          "~0.4.0",
+    "dreamfactory/df-sqldb":           "~0.10.0",
     "dreamfactory/df-swagger-ui":      "~0.2.0",
-    "laravel/framework":               "5.4.*",
-    "tymon/jwt-auth":                  "~1.0.0"
+    "dreamfactory/df-user":            "~0.10.0",
+    "laravel/framework":               "5.4.*"
   },
   "require-dev":       {
     "barryvdh/laravel-ide-helper": "~2.1",
@@ -70,13 +83,11 @@
   "scripts":           {
     "post-install-cmd": [
       "Illuminate\\Foundation\\ComposerScripts::postInstall",
-      "php artisan clear-compiled",
       "php artisan optimize",
       "php artisan df:homestead-config"
     ],
     "post-update-cmd":  [
-      "Illuminate\\Foundation\\ComposerScripts::postInstall",
-      "php artisan clear-compiled",
+      "Illuminate\\Foundation\\ComposerScripts::postUpdate",
       "php artisan optimize",
       "php artisan df:homestead-config"
     ]
@@ -87,7 +98,7 @@
   },
   "extra":             {
     "branch-alias":    {
-      "dev-develop": "2.6.x-dev"
+      "dev-develop": "2.7.x-dev"
     },
     "installer-paths": {
       "public/{$name}/": [

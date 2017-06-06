@@ -45,7 +45,7 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root' => env('DF_MANAGED_STORAGE_PATH', storage_path()) . DIRECTORY_SEPARATOR . ltrim(env('DF_LOCAL_FILE_ROOT', 'app'), '/'),
+            'root' => storage_path('app'),
         ],
 
         'public' => [
@@ -55,35 +55,14 @@ return [
             'visibility' => 'public',
         ],
 
-        'logs' => [
-            'driver' => 'local',
-            'root' => env('DF_MANAGED_LOG_PATH', storage_path('logs')),
+        's3' => [
+            'driver' => 's3',
+            'key' => env('AWS_KEY'),
+            'secret' => env('AWS_SECRET'),
+            'region' => env('AWS_REGION'),
+            'bucket' => env('AWS_BUCKET'),
         ],
 
-//        's3'        => [
-//            'driver' => 's3',
-//            'key'    => env('AWS_KEY'),
-//            'secret' => env('AWS_SECRET'),
-//            'region' => env('AWS_REGION'),
-//            'bucket' => env('AWS_CONTAINER'),
-//        ],
-//        'rackspace' => [
-//            'driver'       => 'rackspace',
-//            'username'     => env('ROS_USERNAME'),
-//            'password'     => env('ROS_PASSWORD'),
-//            'tenant_name'  => env('ROS_TENANT_NAME'),
-//            'container'    => env('ROS_CONTAINER'),
-//            'url'          => env('ROS_URL'),
-//            'region'       => env('ROS_REGION'),
-//            'storage_type' => env('ROS_STORAGE_TYPE'),
-//        ],
-//        'azure'     => [
-//            'driver'       => 'azure',
-//            'account_name' => env('AZURE_ACCOUNT_NAME'),
-//            'account_key'  => env('AZURE_ACCOUNT_KEY'),
-//            'protocol'     => 'https',
-//            'container'    => env('AZURE_BLOB_CONTAINER'),
-//        ],
     ],
 
 ];

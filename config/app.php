@@ -1,6 +1,118 @@
 <?php
 
+// load up any providers specific to DreamFactory
+$dfProviders = [
+    DreamFactory\Core\LaravelServiceProvider::class,
+];
+
+if (class_exists('DreamFactory\Core\ADLdap\ServiceProvider')) {
+    $dfProviders[] = \DreamFactory\Core\ADLdap\ServiceProvider::class;
+}
+if (class_exists('DreamFactory\Core\ApiDoc\ServiceProvider')) {
+    $dfProviders[] = DreamFactory\Core\ApiDoc\ServiceProvider::class;
+}
+if (class_exists('DreamFactory\Core\Aws\ServiceProvider')) {
+    $dfProviders[] = DreamFactory\Core\Aws\ServiceProvider::class;
+}
+if (class_exists('DreamFactory\Core\Azure\ServiceProvider')) {
+    $dfProviders[] = DreamFactory\Core\Azure\ServiceProvider::class;
+}
+if (class_exists('DreamFactory\Core\AzureAD\ServiceProvider')) {
+    $dfProviders[] = DreamFactory\Core\AzureAD\ServiceProvider::class;
+}
+if (class_exists('DreamFactory\Core\Cache\ServiceProvider')) {
+    $dfProviders[] = DreamFactory\Core\Cache\ServiceProvider::class;
+}
+if (class_exists('DreamFactory\Core\Cassandra\ServiceProvider')) {
+    $dfProviders[] = DreamFactory\Core\Cassandra\ServiceProvider::class;
+}
+if (class_exists('DreamFactory\Core\Couchbase\ServiceProvider')) {
+    $dfProviders[] = DreamFactory\Core\Couchbase\ServiceProvider::class;
+}
+if (class_exists('DreamFactory\Core\CouchDb\ServiceProvider')) {
+    $dfProviders[] = DreamFactory\Core\CouchDb\ServiceProvider::class;
+}
+if (class_exists('DreamFactory\Core\Database\ServiceProvider')) {
+    $dfProviders[] = DreamFactory\Core\Database\ServiceProvider::class;
+}
+if (class_exists('DreamFactory\Core\Email\ServiceProvider')) {
+    $dfProviders[] = DreamFactory\Core\Email\ServiceProvider::class;
+}
+if (class_exists('DreamFactory\Core\File\ServiceProvider')) {
+    $dfProviders[] = DreamFactory\Core\File\ServiceProvider::class;
+}
+if (class_exists('DreamFactory\Core\Firebird\ServiceProvider')) {
+    $dfProviders[] = DreamFactory\Core\Firebird\ServiceProvider::class;
+}
+if (class_exists('DreamFactory\Core\IbmDb2\ServiceProvider')) {
+    $dfProviders[] = DreamFactory\Core\IbmDb2\ServiceProvider::class;
+}
+if (class_exists('DreamFactory\Core\Limit\ServiceProvider')) {
+    $dfProviders[] = DreamFactory\Core\Limit\ServiceProvider::class;
+}
+if (class_exists('DreamFactory\Core\Logger\ServiceProvider')) {
+    $dfProviders[] = DreamFactory\Core\Logger\ServiceProvider::class;
+}
+if (class_exists('DreamFactory\Core\MongoDb\ServiceProvider')) {
+    $dfProviders[] = DreamFactory\Core\MongoDb\ServiceProvider::class;
+}
+if (class_exists('DreamFactory\Core\MQTT\ServiceProvider')) {
+    $dfProviders[] = DreamFactory\Core\MQTT\ServiceProvider::class;
+}
+if (class_exists('DreamFactory\Core\Notification\ServiceProvider')) {
+    $dfProviders[] = DreamFactory\Core\Notification\ServiceProvider::class;
+}
+if (class_exists('DreamFactory\Core\OAuth\ServiceProvider')) {
+    $dfProviders[] = DreamFactory\Core\OAuth\ServiceProvider::class;
+}
+if (class_exists('DreamFactory\Core\Oidc\ServiceProvider')) {
+    $dfProviders[] = DreamFactory\Core\Oidc\ServiceProvider::class;
+}
+if (class_exists('DreamFactory\Core\Oracle\ServiceProvider')) {
+    $dfProviders[] = DreamFactory\Core\Oracle\ServiceProvider::class;
+}
+if (class_exists('DreamFactory\Core\Rackspace\ServiceProvider')) {
+    $dfProviders[] = DreamFactory\Core\Rackspace\ServiceProvider::class;
+}
+if (class_exists('DreamFactory\Core\Rws\ServiceProvider')) {
+    $dfProviders[] = DreamFactory\Core\Rws\ServiceProvider::class;
+}
+if (class_exists('DreamFactory\Core\Salesforce\ServiceProvider')) {
+    $dfProviders[] = DreamFactory\Core\Salesforce\ServiceProvider::class;
+}
+if (class_exists('DreamFactory\Core\Saml\ServiceProvider')) {
+    $dfProviders[] = DreamFactory\Core\Saml\ServiceProvider::class;
+}
+if (class_exists('DreamFactory\Core\Script\ServiceProvider')) {
+    $dfProviders[] = DreamFactory\Core\Script\ServiceProvider::class;
+}
+if (class_exists('DreamFactory\Core\Soap\ServiceProvider')) {
+    $dfProviders[] = DreamFactory\Core\Soap\ServiceProvider::class;
+}
+if (class_exists('DreamFactory\Core\SqlAnywhere\ServiceProvider')) {
+    $dfProviders[] = DreamFactory\Core\SqlAnywhere\ServiceProvider::class;
+}
+if (class_exists('DreamFactory\Core\SqlDb\ServiceProvider')) {
+    $dfProviders[] = DreamFactory\Core\SqlDb\ServiceProvider::class;
+}
+if (class_exists('DreamFactory\Core\SqlSrv\ServiceProvider')) {
+    $dfProviders[] = DreamFactory\Core\SqlSrv\ServiceProvider::class;
+}
+if (class_exists('DreamFactory\Core\User\ServiceProvider')) {
+    $dfProviders[] = DreamFactory\Core\User\ServiceProvider::class;
+}
+
 return [
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Version
+    |--------------------------------------------------------------------------
+    |
+    | This is the version of your application, not the version of the API.
+    */
+
+    'version' => '2.7.0',
 
     /*
     |--------------------------------------------------------------------------
@@ -12,7 +124,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => 'DreamFactory',
+    'name' => env('APP_NAME', 'DreamFactory'),
 
     /*
     |--------------------------------------------------------------------------
@@ -64,7 +176,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => env('APP_TIMEZONE', 'UTC'),
 
     /*
     |--------------------------------------------------------------------------
@@ -77,7 +189,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => env('APP_LOCALE', 'en'),
 
     /*
     |--------------------------------------------------------------------------
@@ -105,7 +217,7 @@ return [
 
     'key' => env('APP_KEY'),
 
-    'cipher' => env('DF_CIPHER', 'AES-256-CBC'),
+    'cipher' => env('APP_CIPHER', 'AES-256-CBC'),
 
     /*
     |--------------------------------------------------------------------------
@@ -122,7 +234,7 @@ return [
 
     'log' => env('APP_LOG', 'single'),
 
-    'log_level' => env('APP_LOG_LEVEL', 'debug'),
+    'log_level' => env('APP_LOG_LEVEL', 'warning'),
 
     /*
     |--------------------------------------------------------------------------
@@ -135,7 +247,7 @@ return [
     |
     */
 
-    'providers' => [
+    'providers' => array_merge([
 
         /*
          * Laravel Framework Service Providers...
@@ -164,17 +276,6 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 
         /*
-         * Uncomment the following line to generate IDE helper
-         * using "php artisan ide-helper:generate" command,
-         */
-        //Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
-
-        /*
-         * Package Service Providers...
-         */
-        DreamFactory\Core\LaravelServiceProvider::class,
-
-        /*
          * Application Service Providers...
          */
         DreamFactory\Providers\AppServiceProvider::class,
@@ -182,7 +283,14 @@ return [
 //        DreamFactory\Providers\BroadcastServiceProvider::class,
 //        DreamFactory\Providers\EventServiceProvider::class,
         DreamFactory\Providers\RouteServiceProvider::class,
-    ],
+
+        /*
+         * Uncomment the following line to generate IDE helper
+         * using "php artisan ide-helper:generate" command,
+         */
+        //Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+
+    ], $dfProviders),
 
     /*
     |--------------------------------------------------------------------------
@@ -231,11 +339,6 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
-        /*
-         * Package Facades...
-         */
-        'Socialize' => Laravel\Socialite\Facades\Socialite::class,
-        'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
-        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
     ],
+
 ];
