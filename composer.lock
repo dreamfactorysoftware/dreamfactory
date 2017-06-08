@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "2440ed0c7670feed2a751d2c8b59aa71",
+    "content-hash": "e5a4480b4ae9f421d6aa5a1b5b22adab",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.28.9",
+            "version": "3.29.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "983a73400bb9a922275a6750327f43eac1f96e7d"
+                "reference": "ad2206be87d722de5a52b3d1b0d6549fe2980fc7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/983a73400bb9a922275a6750327f43eac1f96e7d",
-                "reference": "983a73400bb9a922275a6750327f43eac1f96e7d",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/ad2206be87d722de5a52b3d1b0d6549fe2980fc7",
+                "reference": "ad2206be87d722de5a52b3d1b0d6549fe2980fc7",
                 "shasum": ""
             },
             "require": {
@@ -84,7 +84,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2017-06-05T20:28:39+00:00"
+            "time": "2017-06-07T22:44:10+00:00"
         },
         {
             "name": "barryvdh/laravel-cors",
@@ -934,16 +934,16 @@
         },
         {
             "name": "dreamfactory/df-cache",
-            "version": "0.7.0",
+            "version": "0.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-cache.git",
-                "reference": "5aae3cbffb8608830d695889f8ede356a0eabe38"
+                "reference": "3a5bf73354bff0911c61d9c64e1ab1cfbef2de47"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-cache/zipball/5aae3cbffb8608830d695889f8ede356a0eabe38",
-                "reference": "5aae3cbffb8608830d695889f8ede356a0eabe38",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-cache/zipball/3a5bf73354bff0911c61d9c64e1ab1cfbef2de47",
+                "reference": "3a5bf73354bff0911c61d9c64e1ab1cfbef2de47",
                 "shasum": ""
             },
             "require": {
@@ -985,7 +985,7 @@
                 "redis",
                 "rest"
             ],
-            "time": "2017-06-05T21:01:15+00:00"
+            "time": "2017-06-08T17:12:14+00:00"
         },
         {
             "name": "dreamfactory/df-cassandra",
@@ -1608,16 +1608,16 @@
         },
         {
             "name": "dreamfactory/df-rackspace",
-            "version": "0.10.0",
+            "version": "0.10.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-rackspace.git",
-                "reference": "dc3b5daac7898592c542ed7b5fe3ae9540cc0e36"
+                "reference": "7e528ef5714d0ffd38e745d578a43b5db7255368"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-rackspace/zipball/dc3b5daac7898592c542ed7b5fe3ae9540cc0e36",
-                "reference": "dc3b5daac7898592c542ed7b5fe3ae9540cc0e36",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-rackspace/zipball/7e528ef5714d0ffd38e745d578a43b5db7255368",
+                "reference": "7e528ef5714d0ffd38e745d578a43b5db7255368",
                 "shasum": ""
             },
             "require": {
@@ -1660,7 +1660,7 @@
                 "rest",
                 "storage blob"
             ],
-            "time": "2017-06-05T21:18:31+00:00"
+            "time": "2017-06-08T15:33:33+00:00"
         },
         {
             "name": "dreamfactory/df-rws",
@@ -2298,16 +2298,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.4.24",
+            "version": "v5.4.25",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "ec8548db26c1b147570f661128649e98f3ac0f29"
+                "reference": "6bcc9b1f542b3deed16d51f6aa1fe318ab407c2a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/ec8548db26c1b147570f661128649e98f3ac0f29",
-                "reference": "ec8548db26c1b147570f661128649e98f3ac0f29",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/6bcc9b1f542b3deed16d51f6aa1fe318ab407c2a",
+                "reference": "6bcc9b1f542b3deed16d51f6aa1fe318ab407c2a",
                 "shasum": ""
             },
             "require": {
@@ -2423,7 +2423,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2017-05-30T12:44:32+00:00"
+            "time": "2017-06-07T13:35:12+00:00"
         },
         {
             "name": "laravel/socialite",
@@ -3078,6 +3078,56 @@
                 "random"
             ],
             "time": "2017-03-13T16:27:32+00:00"
+        },
+        {
+            "name": "predis/predis",
+            "version": "v1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nrk/predis.git",
+                "reference": "f0210e38881631afeafb56ab43405a92cafd9fd1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nrk/predis/zipball/f0210e38881631afeafb56ab43405a92cafd9fd1",
+                "reference": "f0210e38881631afeafb56ab43405a92cafd9fd1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.9"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.8"
+            },
+            "suggest": {
+                "ext-curl": "Allows access to Webdis when paired with phpiredis",
+                "ext-phpiredis": "Allows faster serialization and deserialization of the Redis protocol"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Predis\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniele Alessandri",
+                    "email": "suppakilla@gmail.com",
+                    "homepage": "http://clorophilla.net"
+                }
+            ],
+            "description": "Flexible and feature-complete Redis client for PHP and HHVM",
+            "homepage": "http://github.com/nrk/predis",
+            "keywords": [
+                "nosql",
+                "predis",
+                "redis"
+            ],
+            "time": "2016-06-16T16:22:20+00:00"
         },
         {
             "name": "psr/http-message",
