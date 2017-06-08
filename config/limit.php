@@ -70,7 +70,7 @@ return [
 
         'redis'                                    => [
             'driver'   => 'redis',
-            'client'   => env('LIMIT_CACHE_CLIENT', 'predis'),
+            'client'   => env('REDIS_CLIENT', 'predis'),
             'host'     => env('LIMIT_CACHE_HOST', env('LIMIT_CACHE_REDIS_HOST', env('REDIS_HOST'))),
             'port'     => env('LIMIT_CACHE_PORT', env('LIMIT_CACHE_REDIS_PORT', env('REDIS_PORT'))),
             'database' => env('LIMIT_CACHE_DATABASE', env('LIMIT_CACHE_REDIS_DATABASE', 9)),
