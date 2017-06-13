@@ -87,7 +87,7 @@ sudo php artisan config:clear
 sudo php artisan clear-compiled
 cp .env .env-backup-homestead > $OUTPUT 2>&1
 rm .env > $OUTPUT 2>&1
-php artisan dreamfactory:setup --db_driver=mysql --db_host=127.0.0.1 --db_database=homestead --db_username=homestead --db_password=secret --cache_driver=file > $OUTPUT 2>&1
+php artisan df:env --db_driver=mysql --db_host=127.0.0.1 --db_database=homestead --db_username=homestead --db_password=secret > $OUTPUT 2>&1
 
 cd ../
 echo ">>> Installing 'zip' command"
