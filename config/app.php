@@ -47,6 +47,9 @@ if (class_exists('DreamFactory\Core\Firebird\ServiceProvider')) {
 if (class_exists('DreamFactory\Core\IbmDb2\ServiceProvider')) {
     $dfProviders[] = DreamFactory\Core\IbmDb2\ServiceProvider::class;
 }
+if (class_exists('DreamFactory\Core\Informix\ServiceProvider')) {
+    $dfProviders[] = DreamFactory\Core\Informix\ServiceProvider::class;
+}
 if (class_exists('DreamFactory\Core\Limit\ServiceProvider')) {
     $dfProviders[] = DreamFactory\Core\Limit\ServiceProvider::class;
 }
