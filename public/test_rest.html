@@ -267,6 +267,7 @@
                 },
                 success: function (json) {
                     $('#token').val(json.session_token);
+                    $('#out').html(JSON.stringify(json, null, '\t'));
                 },
                 error: function (err) {
                     $('#out').addClass('error');
