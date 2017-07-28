@@ -52,20 +52,18 @@ class SplashController extends Controller
                 ], $data);
 
                 return view('firstUser', $data);
-            } else {
-                if (Verbs::POST === $method) {
-                    $data = array_merge($request->all(), $data);
-                    $user = User::createFirstAdmin($data);
+            } elseif (Verbs::POST === $method) {
+                $data = array_merge($request->all(), $data);
+                $user = User::createFirstAdmin($data);
 
-                    if (!$user) {
-                        return view('firstUser', $data);
-                    }
+                if (!$user) {
+                    return view('firstUser', $data);
+                }
 
-                    $jwt = null;
-                    if (true === $login = Session::setUserInfoWithJWT($user)) {
-                        $sessionInfo = Session::getPublicInfo();
-                        $jwt = array_get($sessionInfo, 'session_token');
-                    }
+                $jwt = null;
+                if (true === $login = Session::setUserInfoWithJWT($user)) {
+                    $sessionInfo = Session::getPublicInfo();
+                    $jwt = array_get($sessionInfo, 'session_token');
                 }
             }
         }
@@ -92,46 +90,44 @@ class SplashController extends Controller
                 return view('setup', [
                     'version' => config('app.version')
                 ]);
-            } else {
-                if (Verbs::POST === $method) {
-                    try {
-                        if (\Cache::pull('setup_db', false)) {
-                            if (!file_exists(base_path('.env'))) {
-                                copy(base_path('.env-dist'), base_path('.env'));
-                            }
-
-                            if (empty(env('APP_KEY'))) {
-                                \Artisan::call('key:generate');
-                            }
-
-                            \Artisan::call('migrate', ['--force' => true]);
-                            \Artisan::call('db:seed', ['--force' => true]);
-
-                            if ($request->ajax()) {
-                                return json_encode(['success' => true, 'redirect_path' => '/setup']);
-                            } else {
-                                return redirect()->to('/setup');
-                            }
-                        } else {
-                            if ($request->ajax()) {
-                                return json_encode([
-                                    'success' => false,
-                                    'message' => 'Setup not required. System is already setup'
-                                ]);
-                            }
+            } elseif (Verbs::POST === $method) {
+                try {
+                    if (\Cache::pull('setup_db', false)) {
+                        if (!file_exists(base_path('.env'))) {
+                            copy(base_path('.env-dist'), base_path('.env'));
                         }
-                    } catch (\Exception $e) {
+
+                        if (empty(env('APP_KEY'))) {
+                            \Artisan::call('key:generate');
+                        }
+
+                        \Artisan::call('migrate', ['--force' => true]);
+                        \Artisan::call('db:seed', ['--force' => true]);
+
                         if ($request->ajax()) {
-                            return json_encode(['success' => false, 'message' => $e->getMessage()]);
+                            return json_encode(['success' => true, 'redirect_path' => '/setup']);
                         } else {
-                            return view(
-                                'errors.generic',
-                                [
-                                    'error'   => $e->getMessage(),
-                                    'version' => config('app.version')
-                                ]
-                            );
+                            return redirect()->to('/setup');
                         }
+                    } else {
+                        if ($request->ajax()) {
+                            return json_encode([
+                                'success' => false,
+                                'message' => 'Setup not required. System is already setup'
+                            ]);
+                        }
+                    }
+                } catch (\Exception $e) {
+                    if ($request->ajax()) {
+                        return json_encode(['success' => false, 'message' => $e->getMessage()]);
+                    } else {
+                        return view(
+                            'errors.generic',
+                            [
+                                'error'   => $e->getMessage(),
+                                'version' => config('app.version')
+                            ]
+                        );
                     }
                 }
             }
