@@ -1163,10 +1163,8 @@ if [[ "${chosen_settings[@]}" ]] ; then
                 value="${chosen_settings[$key]}"
                 to_find="${key}="
                 to_replace="${key}=${value}"
-                if grep -q "^${to_find}" ".env"; then
-                    sed -i'.tmp' "s|^$to_find.*|$to_replace|g" ".env"
-                elif grep -q "^#${to_find}" ".env"; then
-                    sed -i'.tmp' "s|^#$to_find.*|$to_replace|g" ".env"
+                if grep -q "^\s*#*\s*${to_find}\s*=" ".env"; then
+                    sed -i'.tmp' "s|^\s*#*\s*${to_find}\s*=.*|${to_replace}|g" ".env"
                 else
                     # append at end of file
                     echo "{$to_replace}" >> ".env"
