@@ -3,7 +3,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
-- DF-1142 Added ldap_username field to user table. Added DF_JWT_USER_CLAIM env option to include user attribute in JWT
+
+## [2.8.0] - 2017-07-28
+### Added
+- DF-1142 Added ldap_username field to user table
+- Added DF_JWT_USER_CLAIM env option to include user attribute in JWT
+- Support IBM Informix as a service
+### Fixed
+- Fixed vagrant box provisioning script for cassandra driver
 
 ## [2.7.0] - 2017-06-06
 ### Added
@@ -179,7 +186,8 @@ For older installs, see DF_CIPHER in .env or .env-dist for more details.
 ## 2.0.0 - 2015-10-27
 First official release of the new open-source DreamFactory project.
 
-[Unreleased]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.7.0...HEAD
+[Unreleased]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.8.0...HEAD
+[2.8.0]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.7.0...2.8.0
 [2.7.0]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.6.0...2.7.0
 [2.6.0]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.5.0...2.6.0
 [2.5.0]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.4.2...2.5.0
