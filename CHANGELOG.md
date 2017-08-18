@@ -4,6 +4,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.8.1] - 2017-08-18
+### Added
+- Add env setting for controlling database query logging
+- Fix grammar on app description
+- Exchanging df-swagger-ui for new df-api-docs-ui
+
 ## [2.8.0] - 2017-07-28
 ### Added
 - DF-1142 Added ldap_username field to user table
@@ -186,7 +192,8 @@ For older installs, see DF_CIPHER in .env or .env-dist for more details.
 ## 2.0.0 - 2015-10-27
 First official release of the new open-source DreamFactory project.
 
-[Unreleased]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.8.0...HEAD
+[Unreleased]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.8.1...HEAD
+[2.8.1]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.8.0...2.8.1
 [2.8.0]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.7.0...2.8.0
 [2.7.0]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.6.0...2.7.0
 [2.6.0]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.5.0...2.6.0

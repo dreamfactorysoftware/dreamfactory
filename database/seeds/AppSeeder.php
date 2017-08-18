@@ -5,6 +5,7 @@ use DreamFactory\Core\Models\App;
 class AppSeeder extends BaseModelSeeder
 {
     protected $modelClass = App::class;
+    protected $allowUpdate = true;
 
     protected function getRecords()
     {
@@ -20,10 +21,10 @@ class AppSeeder extends BaseModelSeeder
             [
                 'name'        => 'api_docs',
                 'api_key'     => '36fda24fe5588fa4285ac6c6c2fdfbdb6b6bc9834699774c9bf777f706d05a88',
-                'description' => 'A Swagger-base application allowing documentation viewing and testing of the API.',
+                'description' => 'An OpenAPI-based application allowing documentation viewing and testing of the API.',
                 'is_active'   => true,
                 'type'        => 3,
-                'path'        => 'df-swagger-ui/dist/index.html'
+                'path'        => 'df-api-docs-ui/dist/index.html'
             ],
             [
                 'name'        => 'file_manager',
