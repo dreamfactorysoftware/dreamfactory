@@ -3,6 +3,7 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+- DF-1131 Added support for AD SSO and SQLServer windows authentication
 
 ## [2.8.1] - 2017-08-18
 ### Added
