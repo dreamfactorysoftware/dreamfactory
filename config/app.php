@@ -44,6 +44,9 @@ if (class_exists('DreamFactory\Core\File\ServiceProvider')) {
 if (class_exists('DreamFactory\Core\Firebird\ServiceProvider')) {
     $dfProviders[] = DreamFactory\Core\Firebird\ServiceProvider::class;
 }
+if (class_exists('DreamFactory\Core\Git\ServiceProvider')) {
+    $dfProviders[] = DreamFactory\Core\Git\ServiceProvider::class;
+}
 if (class_exists('DreamFactory\Core\IbmDb2\ServiceProvider')) {
     $dfProviders[] = DreamFactory\Core\IbmDb2\ServiceProvider::class;
 }
