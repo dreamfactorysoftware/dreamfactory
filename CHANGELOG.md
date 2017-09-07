@@ -4,7 +4,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
-- DF-1209 Support for setting app.log_max_files in config and .env
+- Support for setting df.scripting.default_protocol in config and DF_SCRIPTING_DEFAULT_PROTOCOL in .env 
+- DF-1209 Support for setting app.log_max_files in config and APP_LOG_MAX_FILES in .env
 - DF-1131 Support for AD SSO and SQLServer windows authentication
 - DF-1177 & DF-1161 Added services for GitHub and GitLab with linking to server side scripting
 
