@@ -237,7 +237,9 @@ return [
 
     'log' => env('APP_LOG', 'single'),
 
-    'log_level' => env('APP_LOG_LEVEL', 'warning'),
+    'log_level' => env('APP_LOG_LEVEL', 'warning'), // debug, info, notice, warning, error, critical, alert, emergency
+
+    'log_max_files' => env('APP_LOG_MAX_FILES', 5), // applicable for "daily" log setting
 
     /*
     |--------------------------------------------------------------------------
