@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [2.9.0] - 2017-09-18
 ### Added
 - Support for setting df.scripting.default_protocol in config and DF_SCRIPTING_DEFAULT_PROTOCOL in .env 
 - DF-1209 Support for setting app.log_max_files in config and APP_LOG_MAX_FILES in .env
@@ -197,7 +199,8 @@ For older installs, see DF_CIPHER in .env or .env-dist for more details.
 ## 2.0.0 - 2015-10-27
 First official release of the new open-source DreamFactory project.
 
-[Unreleased]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.8.1...HEAD
+[Unreleased]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.9.0...HEAD
+[2.9.0]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.8.1...2.9.0
 [2.8.1]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.8.0...2.8.1
 [2.8.0]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.7.0...2.8.0
 [2.7.0]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.6.0...2.7.0
