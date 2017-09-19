@@ -44,6 +44,9 @@ if (class_exists('DreamFactory\Core\File\ServiceProvider')) {
 if (class_exists('DreamFactory\Core\Firebird\ServiceProvider')) {
     $dfProviders[] = DreamFactory\Core\Firebird\ServiceProvider::class;
 }
+if (class_exists('DreamFactory\Core\Git\ServiceProvider')) {
+    $dfProviders[] = DreamFactory\Core\Git\ServiceProvider::class;
+}
 if (class_exists('DreamFactory\Core\IbmDb2\ServiceProvider')) {
     $dfProviders[] = DreamFactory\Core\IbmDb2\ServiceProvider::class;
 }
@@ -115,7 +118,7 @@ return [
     | This is the version of your application, not the version of the API.
     */
 
-    'version' => '2.8.1',
+    'version' => '2.9.0',
 
     /*
     |--------------------------------------------------------------------------
@@ -237,7 +240,9 @@ return [
 
     'log' => env('APP_LOG', 'single'),
 
-    'log_level' => env('APP_LOG_LEVEL', 'warning'),
+    'log_level' => env('APP_LOG_LEVEL', 'warning'), // debug, info, notice, warning, error, critical, alert, emergency
+
+    'log_max_files' => env('APP_LOG_MAX_FILES', 5), // applicable for "daily" log setting
 
     /*
     |--------------------------------------------------------------------------
