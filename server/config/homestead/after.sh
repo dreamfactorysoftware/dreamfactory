@@ -10,23 +10,26 @@
 OUTPUT=/dev/null
 
 echo ">>> Beginning DreamFactory provisioning..."
-echo ">>> Updating apt-get"
-sudo apt-get -qq update
-
-echo ">>> Upgrading PHP 7.1 and dependencies"
-sudo DEBIAN_FRONTEND=noninteractive apt-get -qq -y upgrade php7.1-fpm php7.1-cli php7.1-common php7.1-dev > $OUTPUT 2>&1
 
 echo ">>> Installing php ldap extension"
 sudo apt-get install -qq -y php7.1-ldap > $OUTPUT 2>&1
+sudo apt-get install -qq -y php7.0-ldap > $OUTPUT 2>&1
+sudo apt-get install -qq -y php5.6-ldap > $OUTPUT 2>&1
 
 echo ">>> Installing php sybase extension"
 sudo apt-get install -qq -y php7.1-sybase > $OUTPUT 2>&1
+sudo apt-get install -qq -y php7.0-sybase > $OUTPUT 2>&1
+sudo apt-get install -qq -y php5.6-sybase > $OUTPUT 2>&1
+
+echo ">>> Installing php interbase (firebird) extension"
+sudo apt-get install -qq -y php7.1-interbase > $OUTPUT 2>&1
+sudo apt-get install -qq -y php7.0-interbase > $OUTPUT 2>&1
+sudo apt-get install -qq -y php5.6-interbase > $OUTPUT 2>&1
 
 echo ">>> Installing php mongodb extension"
-sudo apt-get install -qq -y openssl pkg-config > $OUTPUT 2>&1
-sudo pecl install mongodb > $OUTPUT 2>&1
-sudo echo "extension=mongodb.so" > /etc/php/7.1/mods-available/mongodb.ini
-sudo phpenmod mongodb
+sudo apt-get install -qq -y php7.1-mongodb > $OUTPUT 2>&1
+sudo apt-get install -qq -y php7.0-mongodb > $OUTPUT 2>&1
+sudo apt-get install -qq -y php5.6-mongodb > $OUTPUT 2>&1
 
 echo ">>> Installing V8 and php v8js extension"
 git clone https://github.com/dreamfactorysoftware/v8-compiled.git > $OUTPUT 2>&1
@@ -65,7 +68,7 @@ phpize > $OUTPUT 2>&1
 make > $OUTPUT 2>&1
 sudo make install > $OUTPUT 2>&1
 sudo echo "extension=cassandra.so" > /etc/php/7.1/mods-available/cassandra.ini
-sudo phpenmod cassandra
+sudo phpenmod cassandra > $OUTPUT 2>&1
 cd ../../../
 sudo rm -R cassandra
 
@@ -93,7 +96,7 @@ sudo php artisan config:clear
 sudo php artisan clear-compiled
 cp .env .env-backup-homestead > $OUTPUT 2>&1
 rm .env > $OUTPUT 2>&1
-php artisan df:env --db_driver=mysql --db_host=127.0.0.1 --db_database=homestead --db_username=homestead --db_password=secret > $OUTPUT 2>&1
+php artisan df:env --db_connection=mysql --db_host=127.0.0.1 --db_database=homestead --db_username=homestead --db_password=secret > $OUTPUT 2>&1
 
 cd ../
 echo ">>> Installing 'zip' command"
@@ -108,7 +111,12 @@ sudo npm install lodash > $OUTPUT 2>&1
 echo ">>> Configuring XDebug"
 printf "xdebug.remote_enable=1\nxdebug.remote_connect_back=1\nxdebug.max_nesting_level=512" | sudo tee -a /etc/php/7.0/mods-available/xdebug.ini > $OUTPUT 2>&1
 
+echo ">>> Configuring NGINX to allow editing .php file using storage services."
+sudo php -r 'file_put_contents("/etc/nginx/sites-available/homestead.app", str_replace("location ~ \.php$ {", "location ~ \.php$ {\n        try_files  "."$"."uri rewrite ^ /index.php?"."$"."query_string;", file_get_contents("/etc/nginx/sites-available/homestead.app")));'
+
 sudo service php7.1-fpm restart
+sudo service php7.0-fpm restart
+sudo service php5.6-fpm restart
 sudo service nginx restart
 
 echo ">>> Provisioning complete. Launch your instance."
