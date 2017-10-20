@@ -10,6 +10,7 @@
 OUTPUT=/dev/null
 
 echo ">>> Beginning DreamFactory provisioning..."
+sudo apt-get update -qq -y
 
 echo ">>> Installing php ldap extension"
 sudo apt-get install -qq -y php7.1-ldap > $OUTPUT 2>&1
@@ -83,12 +84,86 @@ echo ">>> Installing grunt-cli"
 sudo npm install -g grunt-cli > $OUTPUT 2>&1
 mkdir -p workbench/repos > $OUTPUT 2>&1
 cd workbench/repos
-git clone https://github.com/dreamfactorysoftware/df-admin-app.git > $OUTPUT 2>&1
-cd df-admin-app
-git checkout develop > $OUTPUT 2>&1
-cd ../../../public/dreamfactory
-ln -s ../../workbench/repos/df-admin-app . > $OUTPUT 2>&1
+git clone -b develop https://github.com/dreamfactorysoftware/df-admin-app.git > $OUTPUT 2>&1
+cd ../../public
+ln -s ../workbench/repos/dev-df-admin-app . > $OUTPUT 2>&1
+cd ../
+
+echo ">>> Setting up workbench for all packages";
+cd workbench/repos
+echo ">>> ---- Cloning df-api-docs-ui ----";
+git clone -b develop https://github.com/dreamfactorysoftware/df-api-docs-ui.git > $OUTPUT 2>&1
+cd ../../public
+ln -s ../workbench/repos/dev-df-api-docs-ui . > $OUTPUT 2>&1
+cd ../workbench/repos
+echo ">>> ---- Cloning df-apidoc ----";
+git clone -b develop https://github.com/dreamfactorysoftware/df-apidoc.git > $OUTPUT 2>&1
+echo ">>> ---- Cloning df-aws ----";
+git clone -b develop https://github.com/dreamfactorysoftware/df-aws.git > $OUTPUT 2>&1
+echo ">>> ---- Cloning df-azure ----";
+git clone -b develop https://github.com/dreamfactorysoftware/df-azure.git > $OUTPUT 2>&1
+echo ">>> ---- Cloning df-cache ----";
+git clone -b develop https://github.com/dreamfactorysoftware/df-cache.git > $OUTPUT 2>&1
+echo ">>> ---- Cloning df-cassandra ----";
+git clone -b develop https://github.com/dreamfactorysoftware/df-cassandra.git > $OUTPUT 2>&1
+echo ">>> ---- Cloning df-core ----";
+git clone -b develop https://github.com/dreamfactorysoftware/df-core.git > $OUTPUT 2>&1
+echo ">>> ---- Cloning df-couchbase ----";
+git clone -b develop https://github.com/dreamfactorysoftware/df-couchbase.git > $OUTPUT 2>&1
+echo ">>> ---- Cloning df-couchdb ----";
+git clone -b develop https://github.com/dreamfactorysoftware/df-couchdb.git > $OUTPUT 2>&1
+echo ">>> ---- Cloning df-database ----";
+git clone -b develop https://github.com/dreamfactorysoftware/df-database.git > $OUTPUT 2>&1
+echo ">>> ---- Cloning df-email ----";
+git clone -b develop https://github.com/dreamfactorysoftware/df-email.git > $OUTPUT 2>&1
+echo ">>> ---- Cloning df-file ----";
+git clone -b develop https://github.com/dreamfactorysoftware/df-file.git > $OUTPUT 2>&1
+echo ">>> ---- Cloning df-filemanager-app ----";
+git clone -b develop https://github.com/dreamfactorysoftware/df-filemanager-app.git > $OUTPUT 2>&1
+cd ../../public
+ln -s ../workbench/repos/dev-df-filemanager-app . > $OUTPUT 2>&1
+cd ../workbench/repos
+echo ">>> ---- Cloning df-firebird ----";
+git clone -b develop https://github.com/dreamfactorysoftware/df-firebird.git > $OUTPUT 2>&1
+echo ">>> ---- Cloning df-git ----";
+git clone -b develop https://github.com/dreamfactorysoftware/df-git.git > $OUTPUT 2>&1
+echo ">>> ---- Cloning df-mongodb ----";
+git clone -b develop https://github.com/dreamfactorysoftware/df-mongodb.git > $OUTPUT 2>&1
+echo ">>> ---- Cloning df-oauth ----";
+git clone -b develop https://github.com/dreamfactorysoftware/df-oauth.git > $OUTPUT 2>&1
+echo ">>> ---- Cloning df-rackspace ----";
+git clone -b develop https://github.com/dreamfactorysoftware/df-rackspace.git > $OUTPUT 2>&1
+echo ">>> ---- Cloning df-rws ----";
+git clone -b develop https://github.com/dreamfactorysoftware/df-rws.git > $OUTPUT 2>&1
+echo ">>> ---- Cloning df-script ----";
+git clone -b develop https://github.com/dreamfactorysoftware/df-script.git > $OUTPUT 2>&1
+echo ">>> ---- Cloning df-sqldb ----";
+git clone -b develop https://github.com/dreamfactorysoftware/df-sqldb.git > $OUTPUT 2>&1
+echo ">>> ---- Cloning df-user ----";
+git clone -b develop https://github.com/dreamfactorysoftware/df-user.git > $OUTPUT 2>&1
 cd ../../
+php -r 'file_put_contents("composer.json", str_replace("\"DreamFactory\\\\\": \"app/\"", "\"DreamFactory\\\\\": \"app/\",\n      \"DreamFactory\\\\Core\\\\ApiDoc\\\\\": \"workbench/repos/df-apidoc/src/\"", file_get_contents("composer.json")));'
+php -r 'file_put_contents("composer.json", str_replace("\"DreamFactory\\\\\": \"app/\",", "\"DreamFactory\\\\\": \"app/\",\n      \"DreamFactory\\\\Core\\\\Aws\\\\\": \"workbench/repos/df-aws/src/\",", file_get_contents("composer.json")));'
+php -r 'file_put_contents("composer.json", str_replace("\"DreamFactory\\\\\": \"app/\",", "\"DreamFactory\\\\\": \"app/\",\n      \"DreamFactory\\\\Core\\\\Azure\\\\\": \"workbench/repos/df-azure/src/\",", file_get_contents("composer.json")));'
+php -r 'file_put_contents("composer.json", str_replace("\"DreamFactory\\\\\": \"app/\",", "\"DreamFactory\\\\\": \"app/\",\n      \"DreamFactory\\\\Core\\\\Cache\\\\\": \"workbench/repos/df-cache/src/\",", file_get_contents("composer.json")));'
+php -r 'file_put_contents("composer.json", str_replace("\"DreamFactory\\\\\": \"app/\",", "\"DreamFactory\\\\\": \"app/\",\n      \"DreamFactory\\\\Core\\\\Cassandra\\\\\": \"workbench/repos/df-cassandra/src/\",", file_get_contents("composer.json")));'
+php -r 'file_put_contents("composer.json", str_replace("\"DreamFactory\\\\\": \"app/\",", "\"DreamFactory\\\\\": \"app/\",\n      \"DreamFactory\\\\Core\\\\\": \"workbench/repos/df-core/src/\",", file_get_contents("composer.json")));'
+php -r 'file_put_contents("composer.json", str_replace("\"DreamFactory\\\\\": \"app/\",", "\"DreamFactory\\\\\": \"app/\",\n      \"DreamFactory\\\\Core\\\\Couchbase\\\\\": \"workbench/repos/df-couchbase/src/\",", file_get_contents("composer.json")));'
+php -r 'file_put_contents("composer.json", str_replace("\"DreamFactory\\\\\": \"app/\",", "\"DreamFactory\\\\\": \"app/\",\n      \"DreamFactory\\\\Core\\\\CouchDb\\\\\": \"workbench/repos/df-couchdb/src/\",", file_get_contents("composer.json")));'
+php -r 'file_put_contents("composer.json", str_replace("\"DreamFactory\\\\\": \"app/\",", "\"DreamFactory\\\\\": \"app/\",\n      \"DreamFactory\\\\Core\\\\Database\\\\\": \"workbench/repos/df-database/src/\",", file_get_contents("composer.json")));'
+php -r 'file_put_contents("composer.json", str_replace("\"DreamFactory\\\\\": \"app/\",", "\"DreamFactory\\\\\": \"app/\",\n      \"DreamFactory\\\\Core\\\\Email\\\\\": \"workbench/repos/df-email/src/\",", file_get_contents("composer.json")));'
+php -r 'file_put_contents("composer.json", str_replace("\"DreamFactory\\\\\": \"app/\",", "\"DreamFactory\\\\\": \"app/\",\n      \"DreamFactory\\\\Core\\\\File\\\\\": \"workbench/repos/df-file/src/\",", file_get_contents("composer.json")));'
+php -r 'file_put_contents("composer.json", str_replace("\"DreamFactory\\\\\": \"app/\",", "\"DreamFactory\\\\\": \"app/\",\n      \"DreamFactory\\\\Core\\\\Firebird\\\\\": \"workbench/repos/df-firebird/src/\",", file_get_contents("composer.json")));'
+php -r 'file_put_contents("composer.json", str_replace("\"DreamFactory\\\\\": \"app/\",", "\"DreamFactory\\\\\": \"app/\",\n      \"DreamFactory\\\\Core\\\\Git\\\\\": \"workbench/repos/df-git/src/\",", file_get_contents("composer.json")));'
+php -r 'file_put_contents("composer.json", str_replace("\"DreamFactory\\\\\": \"app/\",", "\"DreamFactory\\\\\": \"app/\",\n      \"DreamFactory\\\\Core\\\\MongoDb\\\\\": \"workbench/repos/df-mongodb/src/\",", file_get_contents("composer.json")));'
+php -r 'file_put_contents("composer.json", str_replace("\"DreamFactory\\\\\": \"app/\",", "\"DreamFactory\\\\\": \"app/\",\n      \"DreamFactory\\\\Core\\\\OAuth\\\\\": \"workbench/repos/df-oauth/src/\",", file_get_contents("composer.json")));'
+php -r 'file_put_contents("composer.json", str_replace("\"DreamFactory\\\\\": \"app/\",", "\"DreamFactory\\\\\": \"app/\",\n      \"DreamFactory\\\\Core\\\\Rackspace\\\\\": \"workbench/repos/df-rackspace/src/\",", file_get_contents("composer.json")));'
+php -r 'file_put_contents("composer.json", str_replace("\"DreamFactory\\\\\": \"app/\",", "\"DreamFactory\\\\\": \"app/\",\n      \"DreamFactory\\\\Core\\\\Rws\\\\\": \"workbench/repos/df-rws/src/\",", file_get_contents("composer.json")));'
+php -r 'file_put_contents("composer.json", str_replace("\"DreamFactory\\\\\": \"app/\",", "\"DreamFactory\\\\\": \"app/\",\n      \"DreamFactory\\\\Core\\\\Script\\\\\": \"workbench/repos/df-script/src/\",", file_get_contents("composer.json")));'
+php -r 'file_put_contents("composer.json", str_replace("\"DreamFactory\\\\\": \"app/\",", "\"DreamFactory\\\\\": \"app/\",\n      \"DreamFactory\\\\Core\\\\SqlDb\\\\\": \"workbench/repos/df-sqldb/src/\",", file_get_contents("composer.json")));'
+php -r 'file_put_contents("composer.json", str_replace("\"DreamFactory\\\\\": \"app/\",", "\"DreamFactory\\\\\": \"app/\",\n      \"DreamFactory\\\\Core\\\\User\\\\\": \"workbench/repos/df-user/src/\",", file_get_contents("composer.json")));'
+composer dump-autoload > $OUTPUT 2>&1
+
 
 echo ">>> Setting up dreamfactory .env with homestead mysql database"
 sudo php artisan cache:clear
@@ -112,7 +187,7 @@ echo ">>> Configuring XDebug"
 printf "xdebug.remote_enable=1\nxdebug.remote_connect_back=1\nxdebug.max_nesting_level=512" | sudo tee -a /etc/php/7.0/mods-available/xdebug.ini > $OUTPUT 2>&1
 
 echo ">>> Configuring NGINX to allow editing .php file using storage services."
-sudo php -r 'file_put_contents("/etc/nginx/sites-available/homestead.app", str_replace("location ~ \.php$ {", "location ~ \.php$ {\n        try_files  "."$"."uri rewrite ^ /index.php?"."$"."query_string;", file_get_contents("/etc/nginx/sites-available/homestead.app")));'
+sudo php -r 'file_put_contents("/etc/nginx/sites-available/homestead.localhost", str_replace("location ~ \.php$ {", "location ~ \.php$ {\n        try_files  "."$"."uri rewrite ^ /index.php?"."$"."query_string;", file_get_contents("/etc/nginx/sites-available/homestead.localhost")));'
 
 sudo service php7.1-fpm restart
 sudo service php7.0-fpm restart
