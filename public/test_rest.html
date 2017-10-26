@@ -240,7 +240,11 @@
 
 		function postForm(form){
 			var jwt = $('#token').val();
+			var api_key = $('#app').val();
 			form.action = form.action+'?session_token='+jwt;
+			if(api_key){
+			    form.action = form.action+'&api_key='+api_key;
+			}
 		}
 
         // First, parse the query string
