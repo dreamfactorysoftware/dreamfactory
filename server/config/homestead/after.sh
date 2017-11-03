@@ -73,6 +73,18 @@ sudo phpenmod cassandra > $OUTPUT 2>&1
 cd ../../../
 sudo rm -R cassandra
 
+echo ">>> Installing php couchbase extension"
+wget http://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-3-amd64.deb > $OUTPUT 2>&1
+sudo dpkg -i couchbase-release-1.0-3-amd64.deb > $OUTPUT 2>&1
+sudo apt-get update > $OUTPUT 2>&1
+sudo apt-get -y install libcouchbase-dev build-essential php-dev zlib1g-dev > $OUTPUT 2>&1
+sudo pecl install couchbase > $OUTPUT 2>&1
+sudo mv /usr/lib/php/20160303/couchbase.so /usr/lib/php/20160303/xcouchbase.so > $OUTPUT 2>&1
+sudo echo "extension=xcouchbase.so" > /etc/php/7.1/mods-available/xcouchbase.ini
+sudo php -r 'file_put_contents("/etc/php/7.1/cli/php.ini", str_replace("extension=\"couchbase.so\"", "", file_get_contents("/etc/php/7.1/cli/php.ini")));' > $OUTPUT 2>&1
+sudo phpdismod couchbase > $OUTPUT 2>&1
+sudo phpenmod xcouchbase > $OUTPUT 2>&1
+
 echo ">>> Installing phpMyAdmin (http://host/pma)"
 cd */.
 composer create-project phpmyadmin/phpmyadmin --repository-url=https://www.phpmyadmin.net/packages.json --no-dev public/pma > $OUTPUT 2>&1
