@@ -4,6 +4,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.10.0] - 2017-11-03
+### Added
+- Adding CloudFoundry manifest/setup files to Dreamfactory.
+### Changed
+- Updated test_rest.html to support api_key when testing package import
+- Updated Homestead configs
+
 ## [2.9.0] - 2017-09-18
 ### Added
 - Support for setting df.scripting.default_protocol in config and DF_SCRIPTING_DEFAULT_PROTOCOL in .env 
@@ -199,7 +206,8 @@ For older installs, see DF_CIPHER in .env or .env-dist for more details.
 ## 2.0.0 - 2015-10-27
 First official release of the new open-source DreamFactory project.
 
-[Unreleased]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.9.0...HEAD
+[Unreleased]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.10.0...HEAD
+[2.10.0]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.9.0...2.10.0
 [2.9.0]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.8.1...2.9.0
 [2.8.1]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.8.0...2.8.1
 [2.8.0]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.7.0...2.8.0

@@ -4,21 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d8039587c8aee71820ed77a9ed663e9f",
-    "content-hash": "f976a96bd53928a7fdb309dd1d8f1980",
+    "content-hash": "555f504a05919c62caca4c0b44f02eea",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.36.31",
+            "version": "3.36.37",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "e3135c1f6bc797ca0e0fbba7b2a27faae4e09d5e"
+                "reference": "a6d7fd9f32c63d018a6603a36174b4cb971fccd9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/e3135c1f6bc797ca0e0fbba7b2a27faae4e09d5e",
-                "reference": "e3135c1f6bc797ca0e0fbba7b2a27faae4e09d5e",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/a6d7fd9f32c63d018a6603a36174b4cb971fccd9",
+                "reference": "a6d7fd9f32c63d018a6603a36174b4cb971fccd9",
                 "shasum": ""
             },
             "require": {
@@ -85,7 +84,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2017-10-20 16:43:56"
+            "time": "2017-11-03T16:39:35+00:00"
         },
         {
             "name": "barryvdh/laravel-cors",
@@ -138,7 +137,7 @@
                 "crossdomain",
                 "laravel"
             ],
-            "time": "2017-02-15 21:21:33"
+            "time": "2017-02-15T21:21:33+00:00"
         },
         {
             "name": "clue/stream-filter",
@@ -190,25 +189,25 @@
                 "stream_filter_append",
                 "stream_filter_register"
             ],
-            "time": "2017-08-18 09:54:01"
+            "time": "2017-08-18T09:54:01+00:00"
         },
         {
             "name": "doctrine/annotations",
-            "version": "v1.5.0",
+            "version": "v1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/annotations.git",
-                "reference": "5beebb01b025c94e93686b7a0ed3edae81fe3e7f"
+                "reference": "54cacc9b81758b14e3ce750f205a393d52339e97"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/annotations/zipball/5beebb01b025c94e93686b7a0ed3edae81fe3e7f",
-                "reference": "5beebb01b025c94e93686b7a0ed3edae81fe3e7f",
+                "url": "https://api.github.com/repos/doctrine/annotations/zipball/54cacc9b81758b14e3ce750f205a393d52339e97",
+                "reference": "54cacc9b81758b14e3ce750f205a393d52339e97",
                 "shasum": ""
             },
             "require": {
                 "doctrine/lexer": "1.*",
-                "php": "^7.1"
+                "php": "^5.6 || ^7.0"
             },
             "require-dev": {
                 "doctrine/cache": "1.*",
@@ -217,7 +216,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.5.x-dev"
+                    "dev-master": "1.4.x-dev"
                 }
             },
             "autoload": {
@@ -258,41 +257,37 @@
                 "docblock",
                 "parser"
             ],
-            "time": "2017-07-22 10:58:02"
+            "time": "2017-02-24T16:22:25+00:00"
         },
         {
             "name": "doctrine/cache",
-            "version": "v1.7.1",
+            "version": "v1.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/cache.git",
-                "reference": "b3217d58609e9c8e661cd41357a54d926c4a2a1a"
+                "reference": "eb152c5100571c7a45470ff2a35095ab3f3b900b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/cache/zipball/b3217d58609e9c8e661cd41357a54d926c4a2a1a",
-                "reference": "b3217d58609e9c8e661cd41357a54d926c4a2a1a",
+                "url": "https://api.github.com/repos/doctrine/cache/zipball/eb152c5100571c7a45470ff2a35095ab3f3b900b",
+                "reference": "eb152c5100571c7a45470ff2a35095ab3f3b900b",
                 "shasum": ""
             },
             "require": {
-                "php": "~7.1"
+                "php": "~5.5|~7.0"
             },
             "conflict": {
                 "doctrine/common": ">2.2,<2.4"
             },
             "require-dev": {
-                "alcaeus/mongo-php-adapter": "^1.1",
-                "mongodb/mongodb": "^1.1",
-                "phpunit/phpunit": "^5.7",
-                "predis/predis": "~1.0"
-            },
-            "suggest": {
-                "alcaeus/mongo-php-adapter": "Required to use legacy MongoDB driver"
+                "phpunit/phpunit": "~4.8|~5.0",
+                "predis/predis": "~1.0",
+                "satooshi/php-coveralls": "~0.6"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.7.x-dev"
+                    "dev-master": "1.6.x-dev"
                 }
             },
             "autoload": {
@@ -332,24 +327,24 @@
                 "cache",
                 "caching"
             ],
-            "time": "2017-08-25 07:02:50"
+            "time": "2017-07-22T12:49:21+00:00"
         },
         {
             "name": "doctrine/collections",
-            "version": "v1.5.0",
+            "version": "v1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/collections.git",
-                "reference": "a01ee38fcd999f34d9bfbcee59dbda5105449cbf"
+                "reference": "1a4fb7e902202c33cce8c55989b945612943c2ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/collections/zipball/a01ee38fcd999f34d9bfbcee59dbda5105449cbf",
-                "reference": "a01ee38fcd999f34d9bfbcee59dbda5105449cbf",
+                "url": "https://api.github.com/repos/doctrine/collections/zipball/1a4fb7e902202c33cce8c55989b945612943c2ba",
+                "reference": "1a4fb7e902202c33cce8c55989b945612943c2ba",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.1"
+                "php": "^5.6 || ^7.0"
             },
             "require-dev": {
                 "doctrine/coding-standard": "~0.1@dev",
@@ -399,7 +394,7 @@
                 "collections",
                 "iterator"
             ],
-            "time": "2017-07-22 10:37:32"
+            "time": "2017-01-03T10:49:41+00:00"
         },
         {
             "name": "doctrine/common",
@@ -472,7 +467,7 @@
                 "persistence",
                 "spl"
             ],
-            "time": "2017-07-22 08:35:12"
+            "time": "2017-07-22T08:35:12+00:00"
         },
         {
             "name": "doctrine/dbal",
@@ -543,7 +538,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2017-07-22 20:44:48"
+            "time": "2017-07-22T20:44:48+00:00"
         },
         {
             "name": "doctrine/inflector",
@@ -610,7 +605,7 @@
                 "singularize",
                 "string"
             ],
-            "time": "2017-07-22 12:18:28"
+            "time": "2017-07-22T12:18:28+00:00"
         },
         {
             "name": "doctrine/lexer",
@@ -664,7 +659,7 @@
                 "lexer",
                 "parser"
             ],
-            "time": "2014-09-09 13:34:57"
+            "time": "2014-09-09T13:34:57+00:00"
         },
         {
             "name": "dready92/php-on-couch",
@@ -711,7 +706,7 @@
                 "driver",
                 "nosql"
             ],
-            "time": "2013-04-03 09:46:52"
+            "time": "2013-04-03T09:46:52+00:00"
         },
         {
             "name": "dreamfactory/azure-documentdb-php-sdk",
@@ -765,20 +760,20 @@
                 "nosql",
                 "rest"
             ],
-            "time": "2017-07-05 19:53:15"
+            "time": "2017-07-05T19:53:15+00:00"
         },
         {
             "name": "dreamfactory/df-admin-app",
-            "version": "dev-develop",
+            "version": "2.12.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-admin-app.git",
-                "reference": "83a6cd53681cf1c3a818250a230db6fcf3e77fc5"
+                "reference": "b86d06b628d9f40899c256c3ea3071d7e1dd148e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-admin-app/zipball/83a6cd53681cf1c3a818250a230db6fcf3e77fc5",
-                "reference": "83a6cd53681cf1c3a818250a230db6fcf3e77fc5",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-admin-app/zipball/b86d06b628d9f40899c256c3ea3071d7e1dd148e",
+                "reference": "b86d06b628d9f40899c256c3ea3071d7e1dd148e",
                 "shasum": ""
             },
             "require": {
@@ -813,20 +808,20 @@
                 "remote web services",
                 "rest"
             ],
-            "time": "2017-10-19 17:10:53"
+            "time": "2017-11-06T15:12:25+00:00"
         },
         {
             "name": "dreamfactory/df-api-docs-ui",
-            "version": "dev-develop",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-api-docs-ui.git",
-                "reference": "f4ecca2ad086fd0de2e7f12d7e2f4c8fe2c65cea"
+                "reference": "49ac1bed59702a978549c4e8f63ed95a903ddefc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-api-docs-ui/zipball/f4ecca2ad086fd0de2e7f12d7e2f4c8fe2c65cea",
-                "reference": "f4ecca2ad086fd0de2e7f12d7e2f4c8fe2c65cea",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-api-docs-ui/zipball/49ac1bed59702a978549c4e8f63ed95a903ddefc",
+                "reference": "49ac1bed59702a978549c4e8f63ed95a903ddefc",
                 "shasum": ""
             },
             "require": {
@@ -858,24 +853,24 @@
                 "rest",
                 "swagger"
             ],
-            "time": "2017-10-19 20:36:45"
+            "time": "2017-11-06T14:03:15+00:00"
         },
         {
             "name": "dreamfactory/df-apidoc",
-            "version": "dev-develop",
+            "version": "0.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-apidoc.git",
-                "reference": "352b5617121dfd6ee81994829651e8cc1d9820af"
+                "reference": "01fa911c1c3a8cab538daf9361cf64758cfdeacb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-apidoc/zipball/352b5617121dfd6ee81994829651e8cc1d9820af",
-                "reference": "352b5617121dfd6ee81994829651e8cc1d9820af",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-apidoc/zipball/01fa911c1c3a8cab538daf9361cf64758cfdeacb",
+                "reference": "01fa911c1c3a8cab538daf9361cf64758cfdeacb",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "~0.12.0"
+                "dreamfactory/df-core": "~0.13.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "@stable"
@@ -883,7 +878,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "0.4.x-dev"
+                    "dev-develop": "0.5.x-dev"
                 }
             },
             "autoload": {
@@ -914,33 +909,33 @@
                 "rest",
                 "swagger"
             ],
-            "time": "2017-08-18 12:14:59"
+            "time": "2017-11-04T22:07:35+00:00"
         },
         {
             "name": "dreamfactory/df-aws",
-            "version": "dev-develop",
+            "version": "0.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-aws.git",
-                "reference": "452b94dd2f3db80cc9677cf15506454a923f90e2"
+                "reference": "36b86c2d1f2adb58bd50bbab91255187ac9046f1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-aws/zipball/452b94dd2f3db80cc9677cf15506454a923f90e2",
-                "reference": "452b94dd2f3db80cc9677cf15506454a923f90e2",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-aws/zipball/36b86c2d1f2adb58bd50bbab91255187ac9046f1",
+                "reference": "36b86c2d1f2adb58bd50bbab91255187ac9046f1",
                 "shasum": ""
             },
             "require": {
                 "aws/aws-sdk-php": "3.*",
-                "dreamfactory/df-database": "~0.7.0",
-                "dreamfactory/df-email": "~0.6.0",
-                "dreamfactory/df-file": "~0.4.0",
-                "dreamfactory/df-sqldb": "~0.13.0"
+                "dreamfactory/df-database": "~0.8.0",
+                "dreamfactory/df-email": "~0.7.0",
+                "dreamfactory/df-file": "~0.5.0",
+                "dreamfactory/df-sqldb": "~0.14.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "0.13.x-dev"
+                    "dev-develop": "0.14.x-dev"
                 }
             },
             "autoload": {
@@ -973,32 +968,32 @@
                 "rest",
                 "s3"
             ],
-            "time": "2017-09-18 14:44:05"
+            "time": "2017-11-04T22:07:06+00:00"
         },
         {
             "name": "dreamfactory/df-azure",
-            "version": "dev-develop",
+            "version": "0.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-azure.git",
-                "reference": "f91c870f0ff381791aef10a6ff62450a0fe4cb89"
+                "reference": "bedfe3f8776e1acf5b85558f9c3a5615f04d1ea9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-azure/zipball/f91c870f0ff381791aef10a6ff62450a0fe4cb89",
-                "reference": "f91c870f0ff381791aef10a6ff62450a0fe4cb89",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-azure/zipball/bedfe3f8776e1acf5b85558f9c3a5615f04d1ea9",
+                "reference": "bedfe3f8776e1acf5b85558f9c3a5615f04d1ea9",
                 "shasum": ""
             },
             "require": {
                 "dreamfactory/azure-documentdb-php-sdk": "~0.2.0",
-                "dreamfactory/df-database": "~0.7.0",
-                "dreamfactory/df-file": "~0.4.0",
+                "dreamfactory/df-database": "~0.8.0",
+                "dreamfactory/df-file": "~0.5.0",
                 "microsoft/azure-storage": "0.13.*"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "0.13.x-dev"
+                    "dev-develop": "0.14.x-dev"
                 }
             },
             "autoload": {
@@ -1030,29 +1025,29 @@
                 "laravel",
                 "rest"
             ],
-            "time": "2017-09-18 14:51:35"
+            "time": "2017-11-04T22:05:11+00:00"
         },
         {
             "name": "dreamfactory/df-cache",
-            "version": "dev-develop",
+            "version": "0.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-cache.git",
-                "reference": "d17b258e0cc529bc5e195db8b37932a865444b3f"
+                "reference": "6a98f649f006af31835df2598479060c6341d419"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-cache/zipball/d17b258e0cc529bc5e195db8b37932a865444b3f",
-                "reference": "d17b258e0cc529bc5e195db8b37932a865444b3f",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-cache/zipball/6a98f649f006af31835df2598479060c6341d419",
+                "reference": "6a98f649f006af31835df2598479060c6341d419",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "~0.12.0"
+                "dreamfactory/df-core": "~0.13.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "0.9.x-dev"
+                    "dev-develop": "0.10.x-dev"
                 }
             },
             "autoload": {
@@ -1085,29 +1080,29 @@
                 "redis",
                 "rest"
             ],
-            "time": "2017-08-18 12:25:08"
+            "time": "2017-11-04T22:03:59+00:00"
         },
         {
             "name": "dreamfactory/df-cassandra",
-            "version": "dev-develop",
+            "version": "0.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-cassandra.git",
-                "reference": "4a78e5b38a218ecc6cda8a2f424607dbbee71248"
+                "reference": "8cfe8487c6e4808110650c9eb82b07a0b07e58a5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-cassandra/zipball/4a78e5b38a218ecc6cda8a2f424607dbbee71248",
-                "reference": "4a78e5b38a218ecc6cda8a2f424607dbbee71248",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-cassandra/zipball/8cfe8487c6e4808110650c9eb82b07a0b07e58a5",
+                "reference": "8cfe8487c6e4808110650c9eb82b07a0b07e58a5",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-database": "~0.7.0"
+                "dreamfactory/df-database": "~0.8.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "0.10.x-dev"
+                    "dev-develop": "0.11.x-dev"
                 }
             },
             "autoload": {
@@ -1139,20 +1134,20 @@
                 "nosql",
                 "rest"
             ],
-            "time": "2017-09-18 15:10:39"
+            "time": "2017-11-04T22:03:16+00:00"
         },
         {
             "name": "dreamfactory/df-core",
-            "version": "dev-develop",
+            "version": "0.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-core.git",
-                "reference": "cee22c2d47f4c31d2bfa41b48a495e4be844f9c1"
+                "reference": "e04bb9b1b1593bded91a9ba8ba70420ab5dba25c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/cee22c2d47f4c31d2bfa41b48a495e4be844f9c1",
-                "reference": "cee22c2d47f4c31d2bfa41b48a495e4be844f9c1",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/e04bb9b1b1593bded91a9ba8ba70420ab5dba25c",
+                "reference": "e04bb9b1b1593bded91a9ba8ba70420ab5dba25c",
                 "shasum": ""
             },
             "require": {
@@ -1169,7 +1164,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "0.12.x-dev"
+                    "dev-develop": "0.13.x-dev"
                 }
             },
             "autoload": {
@@ -1209,29 +1204,29 @@
                 "paas",
                 "rest"
             ],
-            "time": "2017-10-20 19:27:46"
+            "time": "2017-11-04T21:35:10+00:00"
         },
         {
             "name": "dreamfactory/df-couchbase",
-            "version": "dev-develop",
+            "version": "0.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-couchbase.git",
-                "reference": "4fa3fe2b7fa79dc37eefad9d93b692629cc55ac2"
+                "reference": "973a24020f62bf4a422fb411282c9fcffdd39564"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-couchbase/zipball/4fa3fe2b7fa79dc37eefad9d93b692629cc55ac2",
-                "reference": "4fa3fe2b7fa79dc37eefad9d93b692629cc55ac2",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-couchbase/zipball/973a24020f62bf4a422fb411282c9fcffdd39564",
+                "reference": "973a24020f62bf4a422fb411282c9fcffdd39564",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-database": "~0.7.0"
+                "dreamfactory/df-database": "~0.8.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "0.8.x-dev"
+                    "dev-develop": "0.9.x-dev"
                 }
             },
             "autoload": {
@@ -1263,30 +1258,30 @@
                 "nosql",
                 "rest"
             ],
-            "time": "2017-09-18 15:28:37"
+            "time": "2017-11-04T22:02:04+00:00"
         },
         {
             "name": "dreamfactory/df-couchdb",
-            "version": "dev-develop",
+            "version": "0.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-couchdb.git",
-                "reference": "aaf1b20a07c9af80aa78a8229d1665dc3d90425a"
+                "reference": "9de763b406814042559e85fb3b3369d41ff448a3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-couchdb/zipball/aaf1b20a07c9af80aa78a8229d1665dc3d90425a",
-                "reference": "aaf1b20a07c9af80aa78a8229d1665dc3d90425a",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-couchdb/zipball/9de763b406814042559e85fb3b3369d41ff448a3",
+                "reference": "9de763b406814042559e85fb3b3369d41ff448a3",
                 "shasum": ""
             },
             "require": {
                 "dready92/php-on-couch": "*",
-                "dreamfactory/df-database": "~0.7.0"
+                "dreamfactory/df-database": "~0.8.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "0.13.x-dev"
+                    "dev-develop": "0.14.x-dev"
                 }
             },
             "autoload": {
@@ -1319,24 +1314,24 @@
                 "nosql",
                 "rest"
             ],
-            "time": "2017-09-18 15:47:05"
+            "time": "2017-11-04T22:00:36+00:00"
         },
         {
             "name": "dreamfactory/df-database",
-            "version": "dev-develop",
+            "version": "0.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-database.git",
-                "reference": "c99b7909a82e3528b81d4859b688b090c76e7505"
+                "reference": "1a7ca545881a68aae10f1bdadf1c893f72f6c14c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-database/zipball/c99b7909a82e3528b81d4859b688b090c76e7505",
-                "reference": "c99b7909a82e3528b81d4859b688b090c76e7505",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-database/zipball/1a7ca545881a68aae10f1bdadf1c893f72f6c14c",
+                "reference": "1a7ca545881a68aae10f1bdadf1c893f72f6c14c",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "~0.12.2"
+                "dreamfactory/df-core": "~0.13.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "@stable"
@@ -1344,7 +1339,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "0.7.x-dev"
+                    "dev-develop": "0.8.x-dev"
                 }
             },
             "autoload": {
@@ -1375,24 +1370,24 @@
                 "dreamfactory",
                 "rest"
             ],
-            "time": "2017-09-21 21:41:12"
+            "time": "2017-11-04T21:36:45+00:00"
         },
         {
             "name": "dreamfactory/df-email",
-            "version": "dev-develop",
+            "version": "0.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-email.git",
-                "reference": "7698558148bd417d9be282f182358c02c0057f37"
+                "reference": "a795e7f5af0d45857f905466e6ede518c9815765"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-email/zipball/7698558148bd417d9be282f182358c02c0057f37",
-                "reference": "7698558148bd417d9be282f182358c02c0057f37",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-email/zipball/a795e7f5af0d45857f905466e6ede518c9815765",
+                "reference": "a795e7f5af0d45857f905466e6ede518c9815765",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "~0.12.0",
+                "dreamfactory/df-core": "~0.13.0",
                 "guzzlehttp/guzzle": "~6.0"
             },
             "require-dev": {
@@ -1401,7 +1396,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "0.6.x-dev"
+                    "dev-develop": "0.7.x-dev"
                 }
             },
             "autoload": {
@@ -1432,24 +1427,24 @@
                 "rest",
                 "smtp"
             ],
-            "time": "2017-10-14 06:03:32"
+            "time": "2017-11-04T21:37:25+00:00"
         },
         {
             "name": "dreamfactory/df-file",
-            "version": "dev-develop",
+            "version": "0.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-file.git",
-                "reference": "5a5dfd2bd1a71ff64f8cb39018756effae9253d2"
+                "reference": "1078fc73fc74de23cdf4d97e45228dc9433e0425"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-file/zipball/5a5dfd2bd1a71ff64f8cb39018756effae9253d2",
-                "reference": "5a5dfd2bd1a71ff64f8cb39018756effae9253d2",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-file/zipball/1078fc73fc74de23cdf4d97e45228dc9433e0425",
+                "reference": "1078fc73fc74de23cdf4d97e45228dc9433e0425",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "~0.12.0",
+                "dreamfactory/df-core": "~0.13.0",
                 "league/flysystem-sftp": "^1.0",
                 "league/flysystem-webdav": "^1.0"
             },
@@ -1459,7 +1454,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "0.4.x-dev"
+                    "dev-develop": "0.5.x-dev"
                 }
             },
             "autoload": {
@@ -1491,20 +1486,20 @@
                 "rest",
                 "storage"
             ],
-            "time": "2017-09-18 13:04:04"
+            "time": "2017-11-04T21:38:00+00:00"
         },
         {
             "name": "dreamfactory/df-filemanager-app",
-            "version": "dev-develop",
+            "version": "0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-filemanager-app.git",
-                "reference": "668c210e7ef7b9772b8244fc29788f45f992aa78"
+                "reference": "499c5510c8594dc1de775c3f896e8f372be04bb8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-filemanager-app/zipball/668c210e7ef7b9772b8244fc29788f45f992aa78",
-                "reference": "668c210e7ef7b9772b8244fc29788f45f992aa78",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-filemanager-app/zipball/499c5510c8594dc1de775c3f896e8f372be04bb8",
+                "reference": "499c5510c8594dc1de775c3f896e8f372be04bb8",
                 "shasum": ""
             },
             "require": {
@@ -1536,31 +1531,31 @@
                 "file manager",
                 "rest"
             ],
-            "time": "2017-10-19 13:34:44"
+            "time": "2017-08-18T14:28:33+00:00"
         },
         {
             "name": "dreamfactory/df-firebird",
-            "version": "dev-develop",
+            "version": "0.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-firebird.git",
-                "reference": "7c139cd75afb944aad2026e826d6ca3ffb0b6b87"
+                "reference": "bb521263e6ead309e703f4dda2861ffc650c102e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-firebird/zipball/7c139cd75afb944aad2026e826d6ca3ffb0b6b87",
-                "reference": "7c139cd75afb944aad2026e826d6ca3ffb0b6b87",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-firebird/zipball/bb521263e6ead309e703f4dda2861ffc650c102e",
+                "reference": "bb521263e6ead309e703f4dda2861ffc650c102e",
                 "shasum": ""
             },
             "require": {
                 "doctrine/dbal": "2.5.*",
-                "dreamfactory/df-sqldb": "~0.13.0",
+                "dreamfactory/df-sqldb": "~0.14.0",
                 "jacquestvanzuydam/laravel-firebird": "dev-5.4-support as dev-master"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "0.5.x-dev"
+                    "dev-develop": "0.6.x-dev"
                 }
             },
             "autoload": {
@@ -1592,24 +1587,24 @@
                 "pdo_interbase",
                 "sql"
             ],
-            "time": "2017-09-18 17:36:01"
+            "time": "2017-11-04T21:59:50+00:00"
         },
         {
             "name": "dreamfactory/df-git",
-            "version": "dev-develop",
+            "version": "0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-git.git",
-                "reference": "f22406e4e8d87665aff858ecce8f4de2b0e6c9ba"
+                "reference": "01fcb334924f6dbb50b47bfda15a58cfc315e083"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-git/zipball/f22406e4e8d87665aff858ecce8f4de2b0e6c9ba",
-                "reference": "f22406e4e8d87665aff858ecce8f4de2b0e6c9ba",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-git/zipball/01fcb334924f6dbb50b47bfda15a58cfc315e083",
+                "reference": "01fcb334924f6dbb50b47bfda15a58cfc315e083",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "~0.12.2",
+                "dreamfactory/df-core": "~0.13.0",
                 "graham-campbell/github": "^5.0",
                 "php-http/guzzle6-adapter": "^1.1",
                 "vinkla/gitlab": "^2.6.0"
@@ -1617,7 +1612,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "0.1.x-dev"
+                    "dev-develop": "0.2.x-dev"
                 }
             },
             "autoload": {
@@ -1652,30 +1647,30 @@
                 "source",
                 "version"
             ],
-            "time": "2017-10-03 14:34:41"
+            "time": "2017-11-04T21:59:15+00:00"
         },
         {
             "name": "dreamfactory/df-mongodb",
-            "version": "dev-develop",
+            "version": "0.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-mongodb.git",
-                "reference": "85b1fe2cf339250dd8b5cdc8d6d8b92891a57bd3"
+                "reference": "1e9bcbd2c7d23bcbc5fc011fe50bd23860aaceb5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-mongodb/zipball/85b1fe2cf339250dd8b5cdc8d6d8b92891a57bd3",
-                "reference": "85b1fe2cf339250dd8b5cdc8d6d8b92891a57bd3",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-mongodb/zipball/1e9bcbd2c7d23bcbc5fc011fe50bd23860aaceb5",
+                "reference": "1e9bcbd2c7d23bcbc5fc011fe50bd23860aaceb5",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-database": "~0.7.0",
+                "dreamfactory/df-database": "~0.8.0",
                 "jenssegers/mongodb": "3.2.*"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "0.13.x-dev"
+                    "dev-develop": "0.14.x-dev"
                 }
             },
             "autoload": {
@@ -1708,24 +1703,24 @@
                 "nosql",
                 "rest"
             ],
-            "time": "2017-09-18 16:01:15"
+            "time": "2017-11-04T21:56:24+00:00"
         },
         {
             "name": "dreamfactory/df-oauth",
-            "version": "dev-develop",
+            "version": "0.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-oauth.git",
-                "reference": "fb91f8e17e2506a530863c6c2b3aaa0a65ef3ab1"
+                "reference": "cab7043526f15f7eb5bbc4653a535afbf71df53a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-oauth/zipball/fb91f8e17e2506a530863c6c2b3aaa0a65ef3ab1",
-                "reference": "fb91f8e17e2506a530863c6c2b3aaa0a65ef3ab1",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-oauth/zipball/cab7043526f15f7eb5bbc4653a535afbf71df53a",
+                "reference": "cab7043526f15f7eb5bbc4653a535afbf71df53a",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "~0.12.0",
+                "dreamfactory/df-core": "~0.13.0",
                 "laravel/socialite": "~2.0",
                 "socialiteproviders/microsoft-live": "^2.0",
                 "socialiteproviders/twitter": "^2.0"
@@ -1733,7 +1728,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "0.12.x-dev"
+                    "dev-develop": "0.13.x-dev"
                 }
             },
             "autoload": {
@@ -1763,30 +1758,30 @@
                 "oauth",
                 "rest"
             ],
-            "time": "2017-08-18 13:57:17"
+            "time": "2017-11-04T21:47:12+00:00"
         },
         {
             "name": "dreamfactory/df-rackspace",
-            "version": "dev-develop",
+            "version": "0.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-rackspace.git",
-                "reference": "ed34c080a34429aad0b9f8454591fda723ef7d6e"
+                "reference": "8e79eb4f8f3761d3e3ba6395840e4d96888a15e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-rackspace/zipball/ed34c080a34429aad0b9f8454591fda723ef7d6e",
-                "reference": "ed34c080a34429aad0b9f8454591fda723ef7d6e",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-rackspace/zipball/8e79eb4f8f3761d3e3ba6395840e4d96888a15e6",
+                "reference": "8e79eb4f8f3761d3e3ba6395840e4d96888a15e6",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-file": "~0.4.0",
+                "dreamfactory/df-file": "~0.5.0",
                 "rackspace/php-opencloud": "~1.5.0@stable"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "0.12.x-dev"
+                    "dev-develop": "0.13.x-dev"
                 }
             },
             "autoload": {
@@ -1818,29 +1813,29 @@
                 "rest",
                 "storage blob"
             ],
-            "time": "2017-08-18 14:03:00"
+            "time": "2017-11-04T21:45:08+00:00"
         },
         {
             "name": "dreamfactory/df-rws",
-            "version": "dev-develop",
+            "version": "0.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-rws.git",
-                "reference": "bafde1f91973674d728d3ccd7f15b3f052251d4b"
+                "reference": "e0e3ca88e5d878fd8b10e6f1594cca6cc11a3f66"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-rws/zipball/bafde1f91973674d728d3ccd7f15b3f052251d4b",
-                "reference": "bafde1f91973674d728d3ccd7f15b3f052251d4b",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-rws/zipball/e0e3ca88e5d878fd8b10e6f1594cca6cc11a3f66",
+                "reference": "e0e3ca88e5d878fd8b10e6f1594cca6cc11a3f66",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "~0.12.0"
+                "dreamfactory/df-core": "~0.13.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "0.12.x-dev"
+                    "dev-develop": "0.13.x-dev"
                 }
             },
             "autoload": {
@@ -1871,29 +1866,29 @@
                 "rest",
                 "web"
             ],
-            "time": "2017-10-04 15:56:58"
+            "time": "2017-11-04T21:44:23+00:00"
         },
         {
             "name": "dreamfactory/df-script",
-            "version": "dev-develop",
+            "version": "0.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-script.git",
-                "reference": "69a2f831371b3c5674e3a2a01393c145aaa701c5"
+                "reference": "22bb840f107671f266740c95ca1cc92a5b1eb4ad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-script/zipball/69a2f831371b3c5674e3a2a01393c145aaa701c5",
-                "reference": "69a2f831371b3c5674e3a2a01393c145aaa701c5",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-script/zipball/22bb840f107671f266740c95ca1cc92a5b1eb4ad",
+                "reference": "22bb840f107671f266740c95ca1cc92a5b1eb4ad",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "~0.12.2"
+                "dreamfactory/df-core": "~0.13.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "0.6.x-dev"
+                    "dev-develop": "0.7.x-dev"
                 }
             },
             "autoload": {
@@ -1926,29 +1921,29 @@
                 "rest",
                 "v8js"
             ],
-            "time": "2017-09-25 21:48:53"
+            "time": "2017-11-04T21:42:21+00:00"
         },
         {
             "name": "dreamfactory/df-sqldb",
-            "version": "dev-develop",
+            "version": "0.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-sqldb.git",
-                "reference": "0331cb6549b90b50b199c2a79951876423c9b0a9"
+                "reference": "2f3fe0192364a493e91096eb6f2b9db4810405d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-sqldb/zipball/0331cb6549b90b50b199c2a79951876423c9b0a9",
-                "reference": "0331cb6549b90b50b199c2a79951876423c9b0a9",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-sqldb/zipball/2f3fe0192364a493e91096eb6f2b9db4810405d4",
+                "reference": "2f3fe0192364a493e91096eb6f2b9db4810405d4",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-database": "~0.7.0"
+                "dreamfactory/df-database": "~0.8.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "0.13.x-dev"
+                    "dev-develop": "0.14.x-dev"
                 }
             },
             "autoload": {
@@ -1985,29 +1980,29 @@
                 "sql",
                 "sqlserver"
             ],
-            "time": "2017-09-21 21:58:06"
+            "time": "2017-11-04T21:38:49+00:00"
         },
         {
             "name": "dreamfactory/df-user",
-            "version": "dev-develop",
+            "version": "0.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-user.git",
-                "reference": "f9dbab520890dd12a5a1a4fdd512325e43159d04"
+                "reference": "df2505c808bfe8eb1f60fc6bcaebd421af031252"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-user/zipball/f9dbab520890dd12a5a1a4fdd512325e43159d04",
-                "reference": "f9dbab520890dd12a5a1a4fdd512325e43159d04",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-user/zipball/df2505c808bfe8eb1f60fc6bcaebd421af031252",
+                "reference": "df2505c808bfe8eb1f60fc6bcaebd421af031252",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "~0.12.0"
+                "dreamfactory/df-core": "~0.13.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "0.12.x-dev"
+                    "dev-develop": "0.13.x-dev"
                 }
             },
             "autoload": {
@@ -2037,7 +2032,7 @@
                 "dreamfactory",
                 "user"
             ],
-            "time": "2017-10-09 21:00:02"
+            "time": "2017-11-04T21:39:48+00:00"
         },
         {
             "name": "dreamfactory/installer",
@@ -2085,7 +2080,7 @@
                 "remote web services",
                 "rest"
             ],
-            "time": "2015-01-22 19:58:42"
+            "time": "2015-01-22T19:58:42+00:00"
         },
         {
             "name": "erusev/parsedown",
@@ -2127,7 +2122,7 @@
                 "markdown",
                 "parser"
             ],
-            "time": "2017-05-14 14:47:48"
+            "time": "2017-05-14T14:47:48+00:00"
         },
         {
             "name": "graham-campbell/github",
@@ -2195,7 +2190,7 @@
                 "laravel",
                 "php-github-api"
             ],
-            "time": "2017-01-01 13:32:28"
+            "time": "2017-01-01T13:32:28+00:00"
         },
         {
             "name": "graham-campbell/manager",
@@ -2254,7 +2249,7 @@
                 "laravel",
                 "manager"
             ],
-            "time": "2017-01-01 13:08:54"
+            "time": "2017-01-01T13:08:54+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -2319,7 +2314,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2017-06-22 18:50:49"
+            "time": "2017-06-22T18:50:49+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -2370,7 +2365,7 @@
             "keywords": [
                 "promise"
             ],
-            "time": "2016-12-20 10:07:11"
+            "time": "2016-12-20T10:07:11+00:00"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -2435,7 +2430,7 @@
                 "uri",
                 "url"
             ],
-            "time": "2017-03-20 17:10:46"
+            "time": "2017-03-20T17:10:46+00:00"
         },
         {
             "name": "jacquestvanzuydam/laravel-firebird",
@@ -2475,7 +2470,7 @@
                 }
             ],
             "description": "A Firebird database package for the Laravel Framework",
-            "time": "2017-02-22 09:50:44"
+            "time": "2017-02-22T09:50:44+00:00"
         },
         {
             "name": "jenssegers/mongodb",
@@ -2543,7 +2538,7 @@
                 "mongo",
                 "mongodb"
             ],
-            "time": "2017-09-05 11:17:05"
+            "time": "2017-09-05T11:17:05+00:00"
         },
         {
             "name": "knplabs/github-api",
@@ -2611,7 +2606,7 @@
                 "gist",
                 "github"
             ],
-            "time": "2017-09-30 20:00:06"
+            "time": "2017-09-30T20:00:06+00:00"
         },
         {
             "name": "kriswallsmith/buzz",
@@ -2659,7 +2654,7 @@
                 "curl",
                 "http client"
             ],
-            "time": "2017-08-19 09:43:47"
+            "time": "2017-08-19T09:43:47+00:00"
         },
         {
             "name": "laravel/framework",
@@ -2788,7 +2783,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2017-08-30 09:26:16"
+            "time": "2017-08-30T09:26:16+00:00"
         },
         {
             "name": "laravel/socialite",
@@ -2842,7 +2837,7 @@
                 "laravel",
                 "oauth"
             ],
-            "time": "2017-03-27 21:32:28"
+            "time": "2017-03-27T21:32:28+00:00"
         },
         {
             "name": "league/flysystem",
@@ -2925,7 +2920,7 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2017-08-06 17:41:04"
+            "time": "2017-08-06T17:41:04+00:00"
         },
         {
             "name": "league/flysystem-sftp",
@@ -2972,7 +2967,7 @@
                 }
             ],
             "description": "Flysystem adapter for SFTP",
-            "time": "2017-07-11 12:29:45"
+            "time": "2017-07-11T12:29:45+00:00"
         },
         {
             "name": "league/flysystem-webdav",
@@ -3019,7 +3014,7 @@
                 }
             ],
             "description": "Flysystem adapter for WebDAV",
-            "time": "2016-12-14 11:28:55"
+            "time": "2016-12-14T11:28:55+00:00"
         },
         {
             "name": "league/oauth1-client",
@@ -3082,7 +3077,7 @@
                 "tumblr",
                 "twitter"
             ],
-            "time": "2016-08-17 00:36:58"
+            "time": "2016-08-17T00:36:58+00:00"
         },
         {
             "name": "m4tthumphrey/php-gitlab-api",
@@ -3138,7 +3133,7 @@
                 "api",
                 "gitlab"
             ],
-            "time": "2016-10-03 18:13:47"
+            "time": "2016-10-03T18:13:47+00:00"
         },
         {
             "name": "microsoft/azure-storage",
@@ -3196,28 +3191,25 @@
                 "sdk",
                 "storage"
             ],
-            "time": "2017-02-23 09:55:42"
+            "time": "2017-02-23T09:55:42+00:00"
         },
         {
             "name": "mongodb/mongodb",
-            "version": "1.1.2",
+            "version": "1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mongodb/mongo-php-library.git",
-                "reference": "a307dd60e71e1291c60927ea4f3a1905146063f5"
+                "reference": "2f99156b29bc85582415d6a32bc31010d61a0a71"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mongodb/mongo-php-library/zipball/a307dd60e71e1291c60927ea4f3a1905146063f5",
-                "reference": "a307dd60e71e1291c60927ea4f3a1905146063f5",
+                "url": "https://api.github.com/repos/mongodb/mongo-php-library/zipball/2f99156b29bc85582415d6a32bc31010d61a0a71",
+                "reference": "2f99156b29bc85582415d6a32bc31010d61a0a71",
                 "shasum": ""
             },
             "require": {
-                "ext-mongodb": "^1.2.0",
+                "ext-mongodb": "^1.1.0",
                 "php": ">=5.4"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.8"
             },
             "type": "library",
             "autoload": {
@@ -3254,7 +3246,7 @@
                 "mongodb",
                 "persistence"
             ],
-            "time": "2017-02-16 18:40:32"
+            "time": "2017-02-16T18:35:09+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -3332,11 +3324,11 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2017-06-19 01:22:40"
+            "time": "2017-06-19T01:22:40+00:00"
         },
         {
             "name": "mtdowling/cron-expression",
-            "version": "v1.2.0",
+            "version": "v1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mtdowling/cron-expression.git",
@@ -3376,7 +3368,7 @@
                 "cron",
                 "schedule"
             ],
-            "time": "2017-01-23 04:29:33"
+            "time": "2017-01-23T04:29:33+00:00"
         },
         {
             "name": "mtdowling/jmespath.php",
@@ -3431,7 +3423,7 @@
                 "json",
                 "jsonpath"
             ],
-            "time": "2016-12-03 22:08:25"
+            "time": "2016-12-03T22:08:25+00:00"
         },
         {
             "name": "namshi/jose",
@@ -3494,7 +3486,7 @@
                 "jwt",
                 "token"
             ],
-            "time": "2016-12-05 07:27:31"
+            "time": "2016-12-05T07:27:31+00:00"
         },
         {
             "name": "nesbot/carbon",
@@ -3547,7 +3539,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2017-01-16 07:55:07"
+            "time": "2017-01-16T07:55:07+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -3595,7 +3587,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2017-09-27 21:40:39"
+            "time": "2017-09-27T21:40:39+00:00"
         },
         {
             "name": "php-http/cache-plugin",
@@ -3651,7 +3643,7 @@
                 "httplug",
                 "plugin"
             ],
-            "time": "2017-04-05 20:09:01"
+            "time": "2017-04-05T20:09:01+00:00"
         },
         {
             "name": "php-http/client-common",
@@ -3713,7 +3705,7 @@
                 "http",
                 "httplug"
             ],
-            "time": "2017-10-16 16:16:36"
+            "time": "2017-10-16T16:16:36+00:00"
         },
         {
             "name": "php-http/discovery",
@@ -3775,7 +3767,7 @@
                 "message",
                 "psr7"
             ],
-            "time": "2017-08-03 10:12:53"
+            "time": "2017-08-03T10:12:53+00:00"
         },
         {
             "name": "php-http/guzzle6-adapter",
@@ -3835,7 +3827,7 @@
                 "Guzzle",
                 "http"
             ],
-            "time": "2016-05-10 06:13:32"
+            "time": "2016-05-10T06:13:32+00:00"
         },
         {
             "name": "php-http/httplug",
@@ -3891,7 +3883,7 @@
                 "client",
                 "http"
             ],
-            "time": "2016-08-31 08:30:17"
+            "time": "2016-08-31T08:30:17+00:00"
         },
         {
             "name": "php-http/message",
@@ -3963,7 +3955,7 @@
                 "message",
                 "psr-7"
             ],
-            "time": "2017-07-05 06:40:53"
+            "time": "2017-07-05T06:40:53+00:00"
         },
         {
             "name": "php-http/message-factory",
@@ -4013,7 +4005,7 @@
                 "stream",
                 "uri"
             ],
-            "time": "2015-12-19 14:08:53"
+            "time": "2015-12-19T14:08:53+00:00"
         },
         {
             "name": "php-http/promise",
@@ -4063,20 +4055,20 @@
             "keywords": [
                 "promise"
             ],
-            "time": "2016-01-26 13:27:02"
+            "time": "2016-01-26T13:27:02+00:00"
         },
         {
             "name": "phpseclib/phpseclib",
-            "version": "2.0.6",
+            "version": "2.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "34a7699e6f31b1ef4035ee36444407cecf9f56aa"
+                "reference": "f4b6a522dfa1fd1e477c9cfe5909d5b31f098c0b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/34a7699e6f31b1ef4035ee36444407cecf9f56aa",
-                "reference": "34a7699e6f31b1ef4035ee36444407cecf9f56aa",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/f4b6a522dfa1fd1e477c9cfe5909d5b31f098c0b",
+                "reference": "f4b6a522dfa1fd1e477c9cfe5909d5b31f098c0b",
                 "shasum": ""
             },
             "require": {
@@ -4155,7 +4147,7 @@
                 "x.509",
                 "x509"
             ],
-            "time": "2017-06-05 06:31:10"
+            "time": "2017-10-23T05:04:54+00:00"
         },
         {
             "name": "predis/predis",
@@ -4205,7 +4197,7 @@
                 "predis",
                 "redis"
             ],
-            "time": "2016-06-16 16:22:20"
+            "time": "2016-06-16T16:22:20+00:00"
         },
         {
             "name": "psr/cache",
@@ -4251,7 +4243,7 @@
                 "psr",
                 "psr-6"
             ],
-            "time": "2016-08-06 20:24:11"
+            "time": "2016-08-06T20:24:11+00:00"
         },
         {
             "name": "psr/http-message",
@@ -4301,7 +4293,7 @@
                 "request",
                 "response"
             ],
-            "time": "2016-08-06 14:39:51"
+            "time": "2016-08-06T14:39:51+00:00"
         },
         {
             "name": "psr/log",
@@ -4348,7 +4340,7 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2016-10-10 12:19:37"
+            "time": "2016-10-10T12:19:37+00:00"
         },
         {
             "name": "rackspace/php-opencloud",
@@ -4394,7 +4386,7 @@
                 "cloudfiles",
                 "opencloud"
             ],
-            "time": "2013-08-01 16:12:19"
+            "time": "2013-08-01T16:12:19+00:00"
         },
         {
             "name": "ramsey/uuid",
@@ -4476,7 +4468,7 @@
                 "identifier",
                 "uuid"
             ],
-            "time": "2017-09-22 20:46:04"
+            "time": "2017-09-22T20:46:04+00:00"
         },
         {
             "name": "sabre/dav",
@@ -4559,7 +4551,7 @@
                 "framework",
                 "iCalendar"
             ],
-            "time": "2017-02-15 03:06:08"
+            "time": "2017-02-15T03:06:08+00:00"
         },
         {
             "name": "sabre/event",
@@ -4616,7 +4608,7 @@
                 "promise",
                 "signal"
             ],
-            "time": "2015-11-05 20:14:39"
+            "time": "2015-11-05T20:14:39+00:00"
         },
         {
             "name": "sabre/http",
@@ -4672,7 +4664,7 @@
             "keywords": [
                 "http"
             ],
-            "time": "2017-06-12 07:53:04"
+            "time": "2017-06-12T07:53:04+00:00"
         },
         {
             "name": "sabre/uri",
@@ -4723,7 +4715,7 @@
                 "uri",
                 "url"
             ],
-            "time": "2017-02-20 19:59:28"
+            "time": "2017-02-20T19:59:28+00:00"
         },
         {
             "name": "sabre/vobject",
@@ -4820,7 +4812,7 @@
                 "xCal",
                 "xCard"
             ],
-            "time": "2017-10-18 08:29:40"
+            "time": "2017-10-18T08:29:40+00:00"
         },
         {
             "name": "sabre/xml",
@@ -4883,7 +4875,7 @@
                 "dom",
                 "xml"
             ],
-            "time": "2016-10-09 22:57:52"
+            "time": "2016-10-09T22:57:52+00:00"
         },
         {
             "name": "socialiteproviders/manager",
@@ -4925,7 +4917,7 @@
                 }
             ],
             "description": "Easily add new or override built-in providers in Laravel Socialite.",
-            "time": "2016-12-04 07:11:20"
+            "time": "2016-12-04T07:11:20+00:00"
         },
         {
             "name": "socialiteproviders/microsoft-live",
@@ -4962,7 +4954,7 @@
                 }
             ],
             "description": "Microsoft Live OAuth2 Provider for Laravel Socialite",
-            "time": "2016-12-09 09:49:53"
+            "time": "2016-12-09T09:49:53+00:00"
         },
         {
             "name": "socialiteproviders/twitter",
@@ -4999,7 +4991,7 @@
                 }
             ],
             "description": "Twitter OAuth1 Provider for Laravel Socialite",
-            "time": "2016-07-22 18:43:58"
+            "time": "2016-07-22T18:43:58+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -5053,7 +5045,7 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2017-05-01 15:54:03"
+            "time": "2017-05-01T15:54:03+00:00"
         },
         {
             "name": "symfony/console",
@@ -5121,7 +5113,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2017-10-02 06:42:24"
+            "time": "2017-10-02T06:42:24+00:00"
         },
         {
             "name": "symfony/css-selector",
@@ -5174,7 +5166,7 @@
             ],
             "description": "Symfony CssSelector Component",
             "homepage": "https://symfony.com",
-            "time": "2017-10-02 06:42:24"
+            "time": "2017-10-02T06:42:24+00:00"
         },
         {
             "name": "symfony/debug",
@@ -5230,7 +5222,7 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
-            "time": "2017-10-02 06:42:24"
+            "time": "2017-10-02T06:42:24+00:00"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -5293,7 +5285,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2017-10-02 06:42:24"
+            "time": "2017-10-02T06:42:24+00:00"
         },
         {
             "name": "symfony/finder",
@@ -5342,7 +5334,7 @@
             ],
             "description": "Symfony Finder Component",
             "homepage": "https://symfony.com",
-            "time": "2017-10-02 06:42:24"
+            "time": "2017-10-02T06:42:24+00:00"
         },
         {
             "name": "symfony/http-foundation",
@@ -5395,7 +5387,7 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "https://symfony.com",
-            "time": "2017-10-05 23:10:23"
+            "time": "2017-10-05T23:10:23+00:00"
         },
         {
             "name": "symfony/http-kernel",
@@ -5481,7 +5473,7 @@
             ],
             "description": "Symfony HttpKernel Component",
             "homepage": "https://symfony.com",
-            "time": "2017-10-05 23:40:19"
+            "time": "2017-10-05T23:40:19+00:00"
         },
         {
             "name": "symfony/options-resolver",
@@ -5535,7 +5527,7 @@
                 "configuration",
                 "options"
             ],
-            "time": "2017-07-29 21:54:42"
+            "time": "2017-07-29T21:54:42+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -5594,7 +5586,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2017-10-11 12:05:26"
+            "time": "2017-10-11T12:05:26+00:00"
         },
         {
             "name": "symfony/polyfill-php56",
@@ -5650,7 +5642,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2017-10-11 12:05:26"
+            "time": "2017-10-11T12:05:26+00:00"
         },
         {
             "name": "symfony/polyfill-util",
@@ -5702,7 +5694,7 @@
                 "polyfill",
                 "shim"
             ],
-            "time": "2017-10-11 12:05:26"
+            "time": "2017-10-11T12:05:26+00:00"
         },
         {
             "name": "symfony/process",
@@ -5751,7 +5743,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
-            "time": "2017-10-02 06:42:24"
+            "time": "2017-10-02T06:42:24+00:00"
         },
         {
             "name": "symfony/routing",
@@ -5829,7 +5821,7 @@
                 "uri",
                 "url"
             ],
-            "time": "2017-10-02 07:25:00"
+            "time": "2017-10-02T07:25:00+00:00"
         },
         {
             "name": "symfony/translation",
@@ -5894,7 +5886,7 @@
             ],
             "description": "Symfony Translation Component",
             "homepage": "https://symfony.com",
-            "time": "2017-10-02 06:42:24"
+            "time": "2017-10-02T06:42:24+00:00"
         },
         {
             "name": "symfony/var-dumper",
@@ -5962,7 +5954,7 @@
                 "debug",
                 "dump"
             ],
-            "time": "2017-10-02 06:42:24"
+            "time": "2017-10-02T06:42:24+00:00"
         },
         {
             "name": "symfony/yaml",
@@ -6017,7 +6009,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2017-10-05 14:43:42"
+            "time": "2017-10-05T14:43:42+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -6064,7 +6056,7 @@
             ],
             "description": "CssToInlineStyles is a class that enables you to convert HTML-pages/files into HTML-pages/files with inline styles. This is very useful when you're sending emails.",
             "homepage": "https://github.com/tijsverkoyen/CssToInlineStyles",
-            "time": "2016-09-20 12:50:39"
+            "time": "2016-09-20T12:50:39+00:00"
         },
         {
             "name": "tymon/jwt-auth",
@@ -6138,7 +6130,7 @@
                 "jwt",
                 "laravel"
             ],
-            "time": "2017-08-30 17:57:47"
+            "time": "2017-08-30T17:57:47+00:00"
         },
         {
             "name": "vinkla/gitlab",
@@ -6195,7 +6187,7 @@
                 "gitlab",
                 "laravel"
             ],
-            "time": "2017-01-01 13:46:23"
+            "time": "2017-01-01T13:46:23+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
@@ -6245,7 +6237,7 @@
                 "env",
                 "environment"
             ],
-            "time": "2016-09-01 10:05:43"
+            "time": "2016-09-01T10:05:43+00:00"
         }
     ],
     "packages-dev": [
@@ -6320,7 +6312,7 @@
                 "phpstorm",
                 "sublime"
             ],
-            "time": "2017-07-16 00:24:12"
+            "time": "2017-07-16T00:24:12+00:00"
         },
         {
             "name": "barryvdh/reflection-docblock",
@@ -6369,36 +6361,36 @@
                     "email": "mike.vanriel@naenius.com"
                 }
             ],
-            "time": "2016-06-13 19:28:20"
+            "time": "2016-06-13T19:28:20+00:00"
         },
         {
             "name": "doctrine/instantiator",
-            "version": "1.1.0",
+            "version": "1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/instantiator.git",
-                "reference": "185b8868aa9bf7159f5f953ed5afb2d7fcdc3bda"
+                "reference": "8e884e78f9f0eb1329e445619e04456e64d8051d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/185b8868aa9bf7159f5f953ed5afb2d7fcdc3bda",
-                "reference": "185b8868aa9bf7159f5f953ed5afb2d7fcdc3bda",
+                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/8e884e78f9f0eb1329e445619e04456e64d8051d",
+                "reference": "8e884e78f9f0eb1329e445619e04456e64d8051d",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.1"
+                "php": ">=5.3,<8.0-DEV"
             },
             "require-dev": {
                 "athletic/athletic": "~0.1.8",
                 "ext-pdo": "*",
                 "ext-phar": "*",
-                "phpunit/phpunit": "^6.2.3",
-                "squizlabs/php_codesniffer": "^3.0.2"
+                "phpunit/phpunit": "~4.0",
+                "squizlabs/php_codesniffer": "~2.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.2.x-dev"
+                    "dev-master": "1.0.x-dev"
                 }
             },
             "autoload": {
@@ -6423,7 +6415,7 @@
                 "constructor",
                 "instantiate"
             ],
-            "time": "2017-07-22 11:58:36"
+            "time": "2015-06-14T21:17:01+00:00"
         },
         {
             "name": "fzaninotto/faker",
@@ -6473,7 +6465,7 @@
                 "faker",
                 "fixtures"
             ],
-            "time": "2017-08-15 16:48:10"
+            "time": "2017-08-15T16:48:10+00:00"
         },
         {
             "name": "hamcrest/hamcrest-php",
@@ -6518,7 +6510,7 @@
             "keywords": [
                 "test"
             ],
-            "time": "2015-05-11 14:41:42"
+            "time": "2015-05-11T14:41:42+00:00"
         },
         {
             "name": "laracasts/generators",
@@ -6562,7 +6554,7 @@
                 "generators",
                 "laravel"
             ],
-            "time": "2015-12-31 18:44:32"
+            "time": "2015-12-31T18:44:32+00:00"
         },
         {
             "name": "laracasts/testdummy",
@@ -6614,7 +6606,7 @@
                 "stubs",
                 "testing"
             ],
-            "time": "2015-04-27 15:56:12"
+            "time": "2015-04-27T15:56:12+00:00"
         },
         {
             "name": "laravel/homestead",
@@ -6664,7 +6656,7 @@
                 }
             ],
             "description": "A virtual machine for web artisans.",
-            "time": "2017-10-09 17:43:46"
+            "time": "2017-10-09T17:43:46+00:00"
         },
         {
             "name": "mockery/mockery",
@@ -6729,7 +6721,7 @@
                 "test double",
                 "testing"
             ],
-            "time": "2017-02-28 12:52:32"
+            "time": "2017-02-28T12:52:32+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -6774,7 +6766,7 @@
                 "object",
                 "object graph"
             ],
-            "time": "2017-10-19 19:58:43"
+            "time": "2017-10-19T19:58:43+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -6828,7 +6820,7 @@
                 "reflection",
                 "static analysis"
             ],
-            "time": "2017-09-11 18:02:19"
+            "time": "2017-09-11T18:02:19+00:00"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
@@ -6873,7 +6865,7 @@
                 }
             ],
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
-            "time": "2017-08-30 18:51:59"
+            "time": "2017-08-30T18:51:59+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
@@ -6920,7 +6912,7 @@
                     "email": "me@mikevanriel.com"
                 }
             ],
-            "time": "2017-07-14 14:27:02"
+            "time": "2017-07-14T14:27:02+00:00"
         },
         {
             "name": "phpspec/prophecy",
@@ -6983,7 +6975,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2017-09-04 11:05:03"
+            "time": "2017-09-04T11:05:03+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -7046,7 +7038,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-04-02 07:44:40"
+            "time": "2017-04-02T07:44:40+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -7093,7 +7085,7 @@
                 "filesystem",
                 "iterator"
             ],
-            "time": "2016-10-03 07:40:28"
+            "time": "2016-10-03T07:40:28+00:00"
         },
         {
             "name": "phpunit/php-text-template",
@@ -7134,7 +7126,7 @@
             "keywords": [
                 "template"
             ],
-            "time": "2015-06-21 13:50:34"
+            "time": "2015-06-21T13:50:34+00:00"
         },
         {
             "name": "phpunit/php-timer",
@@ -7183,7 +7175,7 @@
             "keywords": [
                 "timer"
             ],
-            "time": "2017-02-26 11:10:40"
+            "time": "2017-02-26T11:10:40+00:00"
         },
         {
             "name": "phpunit/php-token-stream",
@@ -7232,7 +7224,7 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2017-08-20 05:47:52"
+            "time": "2017-08-20T05:47:52+00:00"
         },
         {
             "name": "phpunit/phpunit",
@@ -7314,7 +7306,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-10-15 06:13:55"
+            "time": "2017-10-15T06:13:55+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -7373,7 +7365,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2017-06-30 09:13:00"
+            "time": "2017-06-30T09:13:00+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -7418,7 +7410,7 @@
             ],
             "description": "Looks up which function or method a line of code belongs to",
             "homepage": "https://github.com/sebastianbergmann/code-unit-reverse-lookup/",
-            "time": "2017-03-04 06:30:41"
+            "time": "2017-03-04T06:30:41+00:00"
         },
         {
             "name": "sebastian/comparator",
@@ -7482,7 +7474,7 @@
                 "compare",
                 "equality"
             ],
-            "time": "2017-01-29 09:50:25"
+            "time": "2017-01-29T09:50:25+00:00"
         },
         {
             "name": "sebastian/diff",
@@ -7534,7 +7526,7 @@
             "keywords": [
                 "diff"
             ],
-            "time": "2017-05-22 07:24:03"
+            "time": "2017-05-22T07:24:03+00:00"
         },
         {
             "name": "sebastian/environment",
@@ -7584,7 +7576,7 @@
                 "environment",
                 "hhvm"
             ],
-            "time": "2016-11-26 07:53:53"
+            "time": "2016-11-26T07:53:53+00:00"
         },
         {
             "name": "sebastian/exporter",
@@ -7651,7 +7643,7 @@
                 "export",
                 "exporter"
             ],
-            "time": "2016-11-19 08:54:04"
+            "time": "2016-11-19T08:54:04+00:00"
         },
         {
             "name": "sebastian/global-state",
@@ -7702,7 +7694,7 @@
             "keywords": [
                 "global state"
             ],
-            "time": "2015-10-12 03:26:01"
+            "time": "2015-10-12T03:26:01+00:00"
         },
         {
             "name": "sebastian/object-enumerator",
@@ -7748,7 +7740,7 @@
             ],
             "description": "Traverses array structures and object graphs to enumerate all referenced objects",
             "homepage": "https://github.com/sebastianbergmann/object-enumerator/",
-            "time": "2017-02-18 15:18:39"
+            "time": "2017-02-18T15:18:39+00:00"
         },
         {
             "name": "sebastian/recursion-context",
@@ -7801,7 +7793,7 @@
             ],
             "description": "Provides functionality to recursively process PHP variables",
             "homepage": "http://www.github.com/sebastianbergmann/recursion-context",
-            "time": "2016-11-19 07:33:16"
+            "time": "2016-11-19T07:33:16+00:00"
         },
         {
             "name": "sebastian/resource-operations",
@@ -7843,7 +7835,7 @@
             ],
             "description": "Provides a list of PHP built-in functions that operate on resources",
             "homepage": "https://www.github.com/sebastianbergmann/resource-operations",
-            "time": "2015-07-28 20:34:47"
+            "time": "2015-07-28T20:34:47+00:00"
         },
         {
             "name": "sebastian/version",
@@ -7886,7 +7878,7 @@
             ],
             "description": "Library that helps with managing the version number of Git-hosted PHP projects",
             "homepage": "https://github.com/sebastianbergmann/version",
-            "time": "2016-10-03 07:35:21"
+            "time": "2016-10-03T07:35:21+00:00"
         },
         {
             "name": "symfony/class-loader",
@@ -7942,7 +7934,7 @@
             ],
             "description": "Symfony ClassLoader Component",
             "homepage": "https://symfony.com",
-            "time": "2017-10-02 06:42:24"
+            "time": "2017-10-02T06:42:24+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -7992,175 +7984,12 @@
                 "check",
                 "validate"
             ],
-            "time": "2016-11-23 20:04:58"
+            "time": "2016-11-23T20:04:58+00:00"
         }
     ],
-    "aliases": [
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-admin-app"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-api-docs-ui"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-apidoc"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-aws"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-azure"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-cache"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-cassandra"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-core"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-couchbase"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-couchdb"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-database"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-email"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-file"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-filemanager-app"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-firebird"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-git"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-mongodb"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-oauth"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-rackspace"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-rws"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-script"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-sqldb"
-        },
-        {
-            "alias": "dev-master",
-            "alias_normalized": "9999999-dev",
-            "version": "dev-develop",
-            "package": "dreamfactory/df-user"
-        }
-    ],
+    "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "dreamfactory/df-admin-app": 20,
-        "dreamfactory/df-api-docs-ui": 20,
-        "dreamfactory/df-apidoc": 20,
-        "dreamfactory/df-aws": 20,
-        "dreamfactory/df-azure": 20,
-        "dreamfactory/df-cache": 20,
-        "dreamfactory/df-cassandra": 20,
-        "dreamfactory/df-core": 20,
-        "dreamfactory/df-couchbase": 20,
-        "dreamfactory/df-couchdb": 20,
-        "dreamfactory/df-database": 20,
-        "dreamfactory/df-email": 20,
-        "dreamfactory/df-file": 20,
-        "dreamfactory/df-filemanager-app": 20,
-        "dreamfactory/df-firebird": 20,
-        "dreamfactory/df-git": 20,
-        "dreamfactory/df-mongodb": 20,
-        "dreamfactory/df-oauth": 20,
-        "dreamfactory/df-rackspace": 20,
-        "dreamfactory/df-rws": 20,
-        "dreamfactory/df-script": 20,
-        "dreamfactory/df-sqldb": 20,
-        "dreamfactory/df-user": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": [],
