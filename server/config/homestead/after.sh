@@ -174,6 +174,7 @@ php -r 'strpos(file_get_contents("composer.json"), "Script\\\\\":") === false &&
 php -r 'strpos(file_get_contents("composer.json"), "SqlDb\\\\\":") === false && file_put_contents("composer.json", str_replace("\"DreamFactory\\\\\": \"app/\",", "\"DreamFactory\\\\\": \"app/\",\n      \"DreamFactory\\\\Core\\\\SqlDb\\\\\": \"workbench/repos/df-sqldb/src/\",", file_get_contents("composer.json")));'
 php -r 'strpos(file_get_contents("composer.json"), "User\\\\\":") === false && file_put_contents("composer.json", str_replace("\"DreamFactory\\\\\": \"app/\",", "\"DreamFactory\\\\\": \"app/\",\n      \"DreamFactory\\\\Core\\\\User\\\\\": \"workbench/repos/df-user/src/\",", file_get_contents("composer.json")));'
 composer dump-autoload > $OUTPUT 2>&1
+cp server/config/homestead/tools/*.php workbench/repos/
 
 
 echo ">>> Setting up dreamfactory .env with homestead mysql database"
