@@ -1,4 +1,4 @@
-## DreamFactory 2.9.0
+## DreamFactory 2.10.0
 
 [![License](https://poser.pugx.org/dreamfactory/dreamfactory/license.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
