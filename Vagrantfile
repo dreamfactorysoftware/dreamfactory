@@ -9,7 +9,6 @@ confDir = $confDir ||= File.expand_path("vendor/laravel/homestead", File.dirname
 
 homesteadYamlPath = File.expand_path("Homestead.yaml", File.dirname(__FILE__))
 homesteadJsonPath = File.expand_path("Homestead.json", File.dirname(__FILE__))
-afterScriptPath = "server/config/homestead/after.sh"
 aliasesPath = "server/config/homestead/aliases"
 
 require File.expand_path(confDir + '/scripts/homestead.rb')
@@ -33,6 +32,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
 
     Homestead.configure(config, settings)
+    afterScriptPath = settings['script']
 
     if File.exist? afterScriptPath then
         config.vm.provision "shell", path: afterScriptPath, privileged: true
