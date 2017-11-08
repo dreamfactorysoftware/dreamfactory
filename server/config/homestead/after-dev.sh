@@ -106,8 +106,8 @@ git clone -b develop https://github.com/dreamfactorysoftware/df-admin-app.git > 
 echo ">>> ----> Cloning df-api-docs-ui";
 git clone -b develop https://github.com/dreamfactorysoftware/df-api-docs-ui.git > $OUTPUT 2>&1
 cd ../../public
-ln -s /home/vagrant/code/workbench/repos/df-api-docs-ui dev-df-api-docs-ui > $OUTPUT 2>&1
-ln -s /home/vagrant/code/workbench/repos/df-admin-app dev-df-admin-app > $OUTPUT 2>&1
+ln -s ../workbench/repos/df-api-docs-ui dev-df-api-docs-ui > $OUTPUT 2>&1
+ln -s ../workbench/repos/df-admin-app dev-df-admin-app > $OUTPUT 2>&1
 cd ../workbench/repos
 echo ">>> ----> Cloning df-apidoc";
 git clone -b develop https://github.com/dreamfactorysoftware/df-apidoc.git > $OUTPUT 2>&1
@@ -134,7 +134,7 @@ git clone -b develop https://github.com/dreamfactorysoftware/df-file.git > $OUTP
 echo ">>> ----> Cloning df-filemanager-app";
 git clone -b develop https://github.com/dreamfactorysoftware/df-filemanager-app.git > $OUTPUT 2>&1
 cd ../../public
-ln -s /home/vagrant/code/workbench/repos/df-filemanager-app dev-df-filemanager-app > $OUTPUT 2>&1
+ln -s ../workbench/repos/df-filemanager-app dev-df-filemanager-app > $OUTPUT 2>&1
 cd ../workbench/repos
 echo ">>> ----> Cloning df-firebird";
 git clone -b develop https://github.com/dreamfactorysoftware/df-firebird.git > $OUTPUT 2>&1
