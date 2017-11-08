@@ -35,6 +35,7 @@ class Kernel extends HttpKernel
 //            \Illuminate\View\Middleware\ShareErrorsFromSession::class,
 //            \DreamFactory\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \DreamFactory\Http\Middleware\FirstUserCheck::class,
         ],
 
 //        'api' => [
