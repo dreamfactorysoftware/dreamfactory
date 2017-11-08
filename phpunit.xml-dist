@@ -19,11 +19,12 @@
     </testsuites>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./app</directory>
+            <directory suffix=".php">./workbench/repos/df-core/src/</directory>
         </whitelist>
     </filter>
     <php>
         <env name="APP_ENV" value="testing"/>
+        <env name="TEST_INSTANCE_URL" value="http://example.com"/>
         <env name="CACHE_DRIVER" value="array"/>
         <env name="SESSION_DRIVER" value="array"/>
         <env name="QUEUE_DRIVER" value="sync"/>
