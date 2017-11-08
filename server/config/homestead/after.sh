@@ -12,6 +12,11 @@ OUTPUT=/dev/null
 echo ">>> Beginning DreamFactory provisioning..."
 sudo apt-get update -qq -y
 
+echo ">>> Installing postfix for local email service"
+echo "postfix postfix/mailname string mail.example.com" | debconf-set-selections
+echo "postfix postfix/main_mailer_type string 'Internet Site'" | debconf-set-selections
+sudo apt-get install -y postfix > $OUTPUT 2>&1
+
 echo ">>> Installing php ldap extension"
 sudo apt-get install -qq -y php7.1-ldap > $OUTPUT 2>&1
 sudo apt-get install -qq -y php7.0-ldap > $OUTPUT 2>&1
@@ -88,69 +93,66 @@ echo ">>> Installing phpMyAdmin (http://host/pma)"
 cd */.
 composer create-project phpmyadmin/phpmyadmin --repository-url=https://www.phpmyadmin.net/packages.json --no-dev public/pma > $OUTPUT 2>&1
 
-echo ">>> Setting up workbench/repos/df-admin-app with bower and grunt"
 echo ">>> Installing bower"
 sudo npm install -g bower > $OUTPUT 2>&1
 echo ">>> Installing grunt-cli"
 sudo npm install -g grunt-cli > $OUTPUT 2>&1
-mkdir -p workbench/repos > $OUTPUT 2>&1
-cd workbench/repos
-git clone -b develop https://github.com/dreamfactorysoftware/df-admin-app.git > $OUTPUT 2>&1
-cd ../../public
-ln -s ../workbench/repos/df-admin-app dev-df-admin-app > $OUTPUT 2>&1
-cd ../
 
 echo ">>> Setting up workbench for all packages";
+mkdir -p workbench/repos > $OUTPUT 2>&1
 cd workbench/repos
-echo ">>> ---- Cloning df-api-docs-ui ----";
+echo ">>> ----> Cloning df-admin-app";
+git clone -b develop https://github.com/dreamfactorysoftware/df-admin-app.git > $OUTPUT 2>&1
+echo ">>> ----> Cloning df-api-docs-ui";
 git clone -b develop https://github.com/dreamfactorysoftware/df-api-docs-ui.git > $OUTPUT 2>&1
 cd ../../public
-ln -s ../workbench/repos/df-api-docs-ui dev-df-api-docs-ui > $OUTPUT 2>&1
+ln -s /home/vagrant/code/workbench/repos/df-api-docs-ui dev-df-api-docs-ui > $OUTPUT 2>&1
+ln -s /home/vagrant/code/workbench/repos/df-admin-app dev-df-admin-app > $OUTPUT 2>&1
 cd ../workbench/repos
-echo ">>> ---- Cloning df-apidoc ----";
+echo ">>> ----> Cloning df-apidoc";
 git clone -b develop https://github.com/dreamfactorysoftware/df-apidoc.git > $OUTPUT 2>&1
-echo ">>> ---- Cloning df-aws ----";
+echo ">>> ----> Cloning df-aws";
 git clone -b develop https://github.com/dreamfactorysoftware/df-aws.git > $OUTPUT 2>&1
-echo ">>> ---- Cloning df-azure ----";
+echo ">>> ----> Cloning df-azure";
 git clone -b develop https://github.com/dreamfactorysoftware/df-azure.git > $OUTPUT 2>&1
-echo ">>> ---- Cloning df-cache ----";
+echo ">>> ----> Cloning df-cache";
 git clone -b develop https://github.com/dreamfactorysoftware/df-cache.git > $OUTPUT 2>&1
-echo ">>> ---- Cloning df-cassandra ----";
+echo ">>> ----> Cloning df-cassandra";
 git clone -b develop https://github.com/dreamfactorysoftware/df-cassandra.git > $OUTPUT 2>&1
-echo ">>> ---- Cloning df-core ----";
+echo ">>> ----> Cloning df-core";
 git clone -b develop https://github.com/dreamfactorysoftware/df-core.git > $OUTPUT 2>&1
-echo ">>> ---- Cloning df-couchbase ----";
+echo ">>> ----> Cloning df-couchbase";
 git clone -b develop https://github.com/dreamfactorysoftware/df-couchbase.git > $OUTPUT 2>&1
-echo ">>> ---- Cloning df-couchdb ----";
+echo ">>> ----> Cloning df-couchdb";
 git clone -b develop https://github.com/dreamfactorysoftware/df-couchdb.git > $OUTPUT 2>&1
-echo ">>> ---- Cloning df-database ----";
+echo ">>> ----> Cloning df-database";
 git clone -b develop https://github.com/dreamfactorysoftware/df-database.git > $OUTPUT 2>&1
-echo ">>> ---- Cloning df-email ----";
+echo ">>> ----> Cloning df-email";
 git clone -b develop https://github.com/dreamfactorysoftware/df-email.git > $OUTPUT 2>&1
-echo ">>> ---- Cloning df-file ----";
+echo ">>> ----> Cloning df-file";
 git clone -b develop https://github.com/dreamfactorysoftware/df-file.git > $OUTPUT 2>&1
-echo ">>> ---- Cloning df-filemanager-app ----";
+echo ">>> ----> Cloning df-filemanager-app";
 git clone -b develop https://github.com/dreamfactorysoftware/df-filemanager-app.git > $OUTPUT 2>&1
 cd ../../public
-ln -s ../workbench/repos/df-filemanager-app dev-df-filemanager-app > $OUTPUT 2>&1
+ln -s /home/vagrant/code/workbench/repos/df-filemanager-app dev-df-filemanager-app > $OUTPUT 2>&1
 cd ../workbench/repos
-echo ">>> ---- Cloning df-firebird ----";
+echo ">>> ----> Cloning df-firebird";
 git clone -b develop https://github.com/dreamfactorysoftware/df-firebird.git > $OUTPUT 2>&1
-echo ">>> ---- Cloning df-git ----";
+echo ">>> ----> Cloning df-git";
 git clone -b develop https://github.com/dreamfactorysoftware/df-git.git > $OUTPUT 2>&1
-echo ">>> ---- Cloning df-mongodb ----";
+echo ">>> ----> Cloning df-mongodb";
 git clone -b develop https://github.com/dreamfactorysoftware/df-mongodb.git > $OUTPUT 2>&1
-echo ">>> ---- Cloning df-oauth ----";
+echo ">>> ----> Cloning df-oauth";
 git clone -b develop https://github.com/dreamfactorysoftware/df-oauth.git > $OUTPUT 2>&1
-echo ">>> ---- Cloning df-rackspace ----";
+echo ">>> ----> Cloning df-rackspace";
 git clone -b develop https://github.com/dreamfactorysoftware/df-rackspace.git > $OUTPUT 2>&1
-echo ">>> ---- Cloning df-rws ----";
+echo ">>> ----> Cloning df-rws";
 git clone -b develop https://github.com/dreamfactorysoftware/df-rws.git > $OUTPUT 2>&1
-echo ">>> ---- Cloning df-script ----";
+echo ">>> ----> Cloning df-script";
 git clone -b develop https://github.com/dreamfactorysoftware/df-script.git > $OUTPUT 2>&1
-echo ">>> ---- Cloning df-sqldb ----";
+echo ">>> ----> Cloning df-sqldb";
 git clone -b develop https://github.com/dreamfactorysoftware/df-sqldb.git > $OUTPUT 2>&1
-echo ">>> ---- Cloning df-user ----";
+echo ">>> ----> Cloning df-user";
 git clone -b develop https://github.com/dreamfactorysoftware/df-user.git > $OUTPUT 2>&1
 cd ../../
 php -r 'strpos(file_get_contents("composer.json"), "ApiDoc\\\\\":") === false && file_put_contents("composer.json", str_replace("\"DreamFactory\\\\\": \"app/\"", "\"DreamFactory\\\\\": \"app/\",\n      \"DreamFactory\\\\Core\\\\ApiDoc\\\\\": \"workbench/repos/df-apidoc/src/\"", file_get_contents("composer.json")));'
@@ -174,8 +176,11 @@ php -r 'strpos(file_get_contents("composer.json"), "Script\\\\\":") === false &&
 php -r 'strpos(file_get_contents("composer.json"), "SqlDb\\\\\":") === false && file_put_contents("composer.json", str_replace("\"DreamFactory\\\\\": \"app/\",", "\"DreamFactory\\\\\": \"app/\",\n      \"DreamFactory\\\\Core\\\\SqlDb\\\\\": \"workbench/repos/df-sqldb/src/\",", file_get_contents("composer.json")));'
 php -r 'strpos(file_get_contents("composer.json"), "User\\\\\":") === false && file_put_contents("composer.json", str_replace("\"DreamFactory\\\\\": \"app/\",", "\"DreamFactory\\\\\": \"app/\",\n      \"DreamFactory\\\\Core\\\\User\\\\\": \"workbench/repos/df-user/src/\",", file_get_contents("composer.json")));'
 composer dump-autoload > $OUTPUT 2>&1
+echo ">>> Installing workbench git tools"
 cp server/config/homestead/tools/*.php workbench/repos/
 
+echo ">>> Create database (df_unit_test) for unit test"
+mysql -e "CREATE DATABASE IF NOT EXISTS \`df_unit_test\` DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_unicode_ci";
 
 echo ">>> Setting up dreamfactory .env with homestead mysql database"
 sudo php artisan cache:clear
