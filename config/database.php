@@ -146,6 +146,6 @@ return [
     |
     */
 
-    'max_records_returned' => env('DB_MAX_RECORDS_RETURNED', env('DF_DB_MAX_RECORDS_RETURNED', 1000)),
+    'max_records_returned' => env('DB_MAX_RECORDS_RETURNED', env('DF_DB_MAX_RECORDS_RETURNED', 100000)),
 
 ];
