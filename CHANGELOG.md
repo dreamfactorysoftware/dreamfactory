@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- Add use of df-system repo pulled from df-core
 
 ## [2.10.0] - 2017-11-03
 ### Added
