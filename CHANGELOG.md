@@ -3,10 +3,18 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+## [2.11.0] - 2017-12-29
 ### Added
+- Added GraphQL API interface for database services - beta
 - Add use of df-system repo pulled from df-core
-- DF-1251 Added alternative means (external db) of authentication.
+- DF-1251 Added alternative means (external db) of authentication
 - DF-1224 Added ability to set different default limits (max_records_returned) per service
+### Changed
+- Upgraded Laravel to 5.5 - Note: Requires PHP >= 7.0
+- DF-1150 Updated copyright and support email
+- Updated homestead config to support --dev option
+- Updated for routing changes
+- DF-1249 Removed first user check middleware from DF base, moved to df-core
 
 ## [2.10.0] - 2017-11-03
 ### Added
@@ -210,7 +218,8 @@ For older installs, see DF_CIPHER in .env or .env-dist for more details.
 ## 2.0.0 - 2015-10-27
 First official release of the new open-source DreamFactory project.
 
-[Unreleased]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.10.0...HEAD
+[Unreleased]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.11.0...HEAD
+[2.11.0]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.10.0...2.11.0
 [2.10.0]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.9.0...2.10.0
 [2.9.0]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.8.1...2.9.0
 [2.8.1]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.8.0...2.8.1
