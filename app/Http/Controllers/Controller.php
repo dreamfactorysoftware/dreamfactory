@@ -1,4 +1,6 @@
-<?php namespace DreamFactory\Http\Controllers;
+<?php
+
+namespace DreamFactory\Http\Controllers;
 
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;

@@ -1,4 +1,5 @@
 <?php
+
 namespace DreamFactory\Providers;
 
 use Illuminate\Support\Facades\Event;
@@ -12,12 +13,9 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'event.name' => [
-            'EventListener',
+        'App\Events\Event' => [
+            'App\Listeners\EventListener',
         ],
-//        'App\Events\SomeEvent' => [
-//            'App\Listeners\EventListener',
-//        ],
     ];
 
     /**

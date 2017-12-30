@@ -124,7 +124,7 @@
             <p>If you need further assistance or have questions, please email <a
                         style="color:#0077B5;text-decoration:none;"
                         target="_blank"
-                        href="mailto:support@dreamfactory.com">DreamFactory Support</a>.</p>
+                        href="mailto:dspsupport@dreamfactory.com">DreamFactory Support</a>.</p>
         </td>
     </tr>
     </tbody>
