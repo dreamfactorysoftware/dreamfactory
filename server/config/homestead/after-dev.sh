@@ -9,6 +9,9 @@
 # Change OUTPUT to /dev/stdout to see shell output while provisioning.
 OUTPUT=/dev/null
 
+echo ">>> Switching php version to 7.1"
+sudo update-alternatives --set php /usr/bin/php7.1
+
 echo ">>> Beginning DreamFactory provisioning..."
 sudo apt-get update -qq -y
 
@@ -83,7 +86,7 @@ wget http://packages.couchbase.com/releases/couchbase-release/couchbase-release-
 sudo dpkg -i couchbase-release-1.0-3-amd64.deb > $OUTPUT 2>&1
 sudo apt-get update > $OUTPUT 2>&1
 sudo apt-get -y install libcouchbase-dev build-essential php-dev zlib1g-dev > $OUTPUT 2>&1
-sudo pecl install couchbase > $OUTPUT 2>&1
+sudo pecl -d php_suffix=7.1 install couchbase > $OUTPUT 2>&1
 sudo echo "extension=couchbase.so" > /etc/php/7.1/mods-available/xcouchbase.ini
 sudo php -r 'file_put_contents("/etc/php/7.1/cli/php.ini", str_replace("extension=\"couchbase.so\"", "", file_get_contents("/etc/php/7.1/cli/php.ini")));' > $OUTPUT 2>&1
 sudo phpdismod couchbase > $OUTPUT 2>&1
