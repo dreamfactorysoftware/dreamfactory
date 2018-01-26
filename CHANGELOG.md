@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+## [2.11.1] - 2018-01-25
+### Added
+- Updated vagrant configuration script
+
 ## [2.11.0] - 2017-12-29
 ### Added
 - Added GraphQL API interface for database services - beta
@@ -218,7 +222,8 @@ For older installs, see DF_CIPHER in .env or .env-dist for more details.
 ## 2.0.0 - 2015-10-27
 First official release of the new open-source DreamFactory project.
 
-[Unreleased]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.11.0...HEAD
+[Unreleased]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.11.1...HEAD
+[2.11.1]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.11.0...2.11.1
 [2.11.0]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.10.0...2.11.0
 [2.10.0]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.9.0...2.10.0
 [2.9.0]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.8.1...2.9.0
