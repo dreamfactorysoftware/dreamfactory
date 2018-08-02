@@ -11,13 +11,8 @@
     <meta name="language" content="en" />
     <link rel="shortcut icon" href="/img/df-icon-256x256.png" />
 
-    <!-- Bootstrap 3 CSS -->
-    <link rel="stylesheet"
-          href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet"
-          href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
 
     <!-- DSP UI Styles & Code -->
     <link rel="stylesheet" href="/css/df.main.css">

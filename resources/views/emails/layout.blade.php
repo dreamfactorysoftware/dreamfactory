@@ -9,7 +9,7 @@
     <meta name="HandheldFriendly" content="true" />
     <link rel="shortcut icon" href="//www.dreamfactory.com/favicon.ico" />
     <style type="text/css">
-        @import url(http://fonts.googleapis.com/css?family=Open+Sans|Roboto);
+        @import url('/css/fonts.css');
 
         body, table, p {
             font-family: Roboto, "Open Sans", Helvetica, Arial, sans-serif;
