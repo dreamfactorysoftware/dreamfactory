@@ -17,7 +17,7 @@
     <!-- DSP UI Styles & Code -->
     <link rel="stylesheet" href="/css/df.main.css">
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="/js/jquery/2.1.1/jquery.min.js"></script>
 </head>
 <body>
 
@@ -195,6 +195,6 @@
 
 
 <!-- Scripts -->
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="/js/bootstrap/3.2.0/bootstrap.min.js"></script>
 </body>
 </html>
