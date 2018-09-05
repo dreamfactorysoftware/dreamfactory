@@ -7,7 +7,7 @@
 # This script is compatible with "laravel/homestead": "^3.0"
 
 # Change OUTPUT to /dev/stdout to see shell output while provisioning.
-OUTPUT=/dev/null
+OUTPUT=/dev/stdout
 
 echo ">>> Switching php version to 7.1"
 sudo update-alternatives --set php /usr/bin/php7.1
@@ -21,24 +21,24 @@ echo "postfix postfix/main_mailer_type string 'Internet Site'" | debconf-set-sel
 sudo apt-get install -y postfix > $OUTPUT 2>&1
 
 echo ">>> Installing php ldap extension"
-sudo apt-get install -qq -y php7.1-ldap > $OUTPUT 2>&1
-sudo apt-get install -qq -y php7.0-ldap > $OUTPUT 2>&1
-sudo apt-get install -qq -y php5.6-ldap > $OUTPUT 2>&1
+#sudo apt-get install php7.1-ldap > $OUTPUT 2>&1
+#sudo apt-get install -y php7.0-ldap > $OUTPUT 2>&1
+#sudo apt-get install -qq -y php5.6-ldap > $OUTPUT 2>&1
 
 echo ">>> Installing php sybase extension"
 sudo apt-get install -qq -y php7.1-sybase > $OUTPUT 2>&1
 sudo apt-get install -qq -y php7.0-sybase > $OUTPUT 2>&1
-sudo apt-get install -qq -y php5.6-sybase > $OUTPUT 2>&1
+#sudo apt-get install -qq -y php5.6-sybase > $OUTPUT 2>&1
 
 echo ">>> Installing php interbase (firebird) extension"
 sudo apt-get install -qq -y php7.1-interbase > $OUTPUT 2>&1
 sudo apt-get install -qq -y php7.0-interbase > $OUTPUT 2>&1
-sudo apt-get install -qq -y php5.6-interbase > $OUTPUT 2>&1
+#sudo apt-get install -qq -y php5.6-interbase > $OUTPUT 2>&1
 
 echo ">>> Installing php mongodb extension"
 sudo apt-get install -qq -y php7.1-mongodb > $OUTPUT 2>&1
 sudo apt-get install -qq -y php7.0-mongodb > $OUTPUT 2>&1
-sudo apt-get install -qq -y php5.6-mongodb > $OUTPUT 2>&1
+#sudo apt-get install -qq -y php5.6-mongodb > $OUTPUT 2>&1
 
 echo ">>> Installing V8 and php v8js extension"
 git clone https://github.com/dreamfactorysoftware/v8-compiled.git > $OUTPUT 2>&1
