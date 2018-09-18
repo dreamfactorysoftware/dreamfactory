@@ -1,11 +1,11 @@
-## DreamFactory 2.13.1
+## DreamFactory 2.14.0
 
 [![License](https://poser.pugx.org/dreamfactory/dreamfactory/license.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
 ## Overview
 
 DreamFactory(™) is an open source REST API backend for mobile, web, and IoT applications. 
-It is built on top of the Laravel framework, and as such retains the requirements of the [Laravel v5.4 framework]
+It is built on top of the Laravel framework, and as such retains the requirements of the [Laravel v5.5 framework]
 
 * Generate powerful, reusable, documented APIs for SQL, NoSQL, files, email, push notifications and more in seconds.
 * Use server-side scripts to easily customize API behavior at any endpoint, for both API requests and API responses.
