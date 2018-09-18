@@ -3,6 +3,22 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [2.14.0]
+### Changed
+- Upgraded to PHP 7.1 minimum
+
+## [2.13.1] - 2018-09-05
+### Added
+- Non-interactive flags to Homestead environment script
+### Changed
+- Rebuilt lock file due to PHP conflict issue
+- Improved README
+
+## [2.13.0] - 2018-08-01
+### Added
+- Numerous improvements to AngularJS front end
+
 ## [2.12.0] - 2018-02-25
 ### Added 
 - Beta support for MemSQL
@@ -227,7 +243,10 @@ For older installs, see DF_CIPHER in .env or .env-dist for more details.
 ## 2.0.0 - 2015-10-27
 First official release of the new open-source DreamFactory project.
 
-[Unreleased]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.12.0...HEAD
+[Unreleased]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.14.0...HEAD
+[2.14.0]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.13.1...2.14.0
+[2.13.1]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.13.0...2.13.1
+[2.13.0]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.12.0...2.13.0
 [2.12.0]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.11.1...2.12.0
 [2.11.1]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.11.0...2.11.1
 [2.11.0]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.10.0...2.11.0
