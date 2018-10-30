@@ -18,27 +18,19 @@ sudo apt-get update -qq -y
 echo ">>> Installing postfix for local email service"
 echo "postfix postfix/mailname string mail.example.com" | debconf-set-selections
 echo "postfix postfix/main_mailer_type string 'Internet Site'" | debconf-set-selections
-sudo apt-get install -y postfix > $OUTPUT 2>&1
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y postfix > $OUTPUT 2>&1
 
 echo ">>> Installing php ldap extension"
-#sudo apt-get install php7.1-ldap > $OUTPUT 2>&1
-#sudo apt-get install -y php7.0-ldap > $OUTPUT 2>&1
-#sudo apt-get install -qq -y php5.6-ldap > $OUTPUT 2>&1
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y php7.1-ldap > $OUTPUT 2>&1
 
 echo ">>> Installing php sybase extension"
-sudo apt-get install -qq -y php7.1-sybase > $OUTPUT 2>&1
-sudo apt-get install -qq -y php7.0-sybase > $OUTPUT 2>&1
-#sudo apt-get install -qq -y php5.6-sybase > $OUTPUT 2>&1
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y php7.1-sybase > $OUTPUT 2>&1
 
 echo ">>> Installing php interbase (firebird) extension"
-sudo apt-get install -qq -y php7.1-interbase > $OUTPUT 2>&1
-sudo apt-get install -qq -y php7.0-interbase > $OUTPUT 2>&1
-#sudo apt-get install -qq -y php5.6-interbase > $OUTPUT 2>&1
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -qq -y php7.1-interbase > $OUTPUT 2>&1
 
 echo ">>> Installing php mongodb extension"
-sudo apt-get install -qq -y php7.1-mongodb > $OUTPUT 2>&1
-sudo apt-get install -qq -y php7.0-mongodb > $OUTPUT 2>&1
-#sudo apt-get install -qq -y php5.6-mongodb > $OUTPUT 2>&1
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -qq -y php7.1-mongodb > $OUTPUT 2>&1
 
 echo ">>> Installing V8 and php v8js extension"
 git clone https://github.com/dreamfactorysoftware/v8-compiled.git > $OUTPUT 2>&1
@@ -101,7 +93,7 @@ sudo npm install -g bower > $OUTPUT 2>&1
 echo ">>> Installing grunt-cli"
 sudo npm install -g grunt-cli > $OUTPUT 2>&1
 
-echo ">>> Setting up workbench for all packages";
+echo ">>> Setting up workbench for some packages";
 mkdir -p workbench/repos > $OUTPUT 2>&1
 cd workbench/repos
 echo ">>> ----> Cloning df-admin-app";
@@ -210,8 +202,6 @@ echo ">>> Configuring NGINX to allow editing .php file using storage services."
 sudo php -r 'file_put_contents("/etc/nginx/sites-available/homestead.localhost", str_replace("location ~ \.php$ {", "location ~ \.php$ {\n        try_files  "."$"."uri rewrite ^ /index.php?"."$"."query_string;", file_get_contents("/etc/nginx/sites-available/homestead.localhost")));'
 
 sudo service php7.1-fpm restart
-sudo service php7.0-fpm restart
-sudo service php5.6-fpm restart
 sudo service nginx restart
 
 echo ">>> Provisioning complete. Launch your instance."
