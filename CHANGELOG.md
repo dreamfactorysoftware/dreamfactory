@@ -4,6 +4,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [3.0.0-beta]
+### Added
+- Debian and Ubuntu genie installation script
+
+### Changed
+- DF-1411 df-database fix
+- DF-1421 df-azure fix
+
 ## [2.14.2]
 ### Changed
 - Bumped Composer files for df-sqldb 0.15.4 release
@@ -251,6 +259,9 @@ For older installs, see DF_CIPHER in .env or .env-dist for more details.
 ## 2.0.0 - 2015-10-27
 First official release of the new open-source DreamFactory project.
 
+[Unreleased]: https://github.com/dreamfactorysoftware/dreamfactory/compare/3.0.0-beta...HEAD
+[2.14.2]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.14.1...2.14.2
+[2.14.1]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.14.0...2.14.1
 [Unreleased]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.14.2...HEAD
 [2.14.2]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.14.1...2.14.2
 [2.14.1]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.14.0...2.14.1
