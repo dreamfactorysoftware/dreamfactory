@@ -12,54 +12,62 @@
   "type":              "project",
   "authors":           [
     {
-      "name":  "Arif Islam",
-      "email": "arifislam@dreamfactory.com"
-    },
-    {
-      "name":  "Charles Harmon",
-      "email": "charlesharmon@dreamfactory.com"
-    },
-    {
-      "name":  "Lee Hicks",
-      "email": "leehicks@dreamfactory.com"
+      "name":  "DreamFactory Team",
+      "email": "code@dreamfactory.com"
     }
   ],
   "support":           {
     "email":  "dspsupport@dreamfactory.com",
     "source": "https://github.com/dreamfactorysoftware/dreamfactory",
     "issues": "https://github.com/dreamfactorysoftware/dreamfactory/issues",
-    "wiki":   "https://wiki.dreamfactory.com"
+    "wiki":   "https://wiki.dreamfactory.com",
+    "guide":  "https://guide.dreamfactory.com"
   },
   "minimum-stability": "dev",
   "prefer-stable":     true,
   "repositories":      [
+      {
+        "type": "vcs",
+        "url":  "https://github.com/dreamfactorysoftware/df-admin-app"
+      },
+      {
+        "type": "vcs",
+        "url":  "https://github.com/dreamfactorysoftware/df-api-docs-ui"
+      },
+      {
+        "type": "vcs",
+        "url":  "https://github.com/dreamfactorysoftware/df-script"
+      },
+      {
+        "type": "vcs",
+        "url":  "https://github.com/dreamfactorysoftware/df-git"
+      }
   ],
   "require":           {
-    "dreamfactory/df-admin-app":       "dev-develop as dev-master",
-    "dreamfactory/df-api-docs-ui":     "dev-develop as dev-master",
-    "dreamfactory/df-apidoc":          "dev-develop as dev-master",
-    "dreamfactory/df-aws":             "dev-develop as dev-master",
-    "dreamfactory/df-azure":           "dev-develop as dev-master",
-    "dreamfactory/df-cache":           "dev-develop as dev-master",
-    "dreamfactory/df-cassandra":       "dev-develop as dev-master",
-    "dreamfactory/df-core":            "dev-develop as dev-master",
-    "dreamfactory/df-couchbase":       "dev-develop as dev-master",
-    "dreamfactory/df-couchdb":         "dev-develop as dev-master",
-    "dreamfactory/df-database":        "dev-develop as dev-master",
-    "dreamfactory/df-email":           "dev-develop as dev-master",
-    "dreamfactory/df-file":            "dev-develop as dev-master",
-    "dreamfactory/df-filemanager-app": "dev-develop as dev-master",
-    "dreamfactory/df-firebird":        "dev-develop as dev-master",
-    "dreamfactory/df-git":             "dev-develop as dev-master",
-    "dreamfactory/df-graphql":         "dev-develop as dev-master",
-    "dreamfactory/df-mongodb":         "dev-develop as dev-master",
-    "dreamfactory/df-oauth":           "dev-develop as dev-master",
-    "dreamfactory/df-rackspace":       "dev-develop as dev-master",
-    "dreamfactory/df-rws":             "dev-develop as dev-master",
-    "dreamfactory/df-script":          "dev-develop as dev-master",
-    "dreamfactory/df-sqldb":           "dev-develop as dev-master",
-    "dreamfactory/df-system":          "dev-develop as dev-master",
-    "dreamfactory/df-user":            "dev-develop as dev-master",
+    "dreamfactory/df-admin-app":       "dev-3.0-beta#acdfe164838b6f4304621c490737385598401845",
+    "dreamfactory/df-api-docs-ui":     "dev-3.0-beta#873ae7e55396a1149e626061bca339465670c788",
+    "dreamfactory/df-apidoc":          "~0.6.1",
+    "dreamfactory/df-aws":             "~0.15.1",
+    "dreamfactory/df-azure":           "~0.15.2",
+    "dreamfactory/df-cache":           "~0.11.0",
+    "dreamfactory/df-cassandra":       "~0.12.2",
+    "dreamfactory/df-core":            "~0.14.2",
+    "dreamfactory/df-couchbase":       "~0.10.1",
+    "dreamfactory/df-couchdb":         "~0.15.1",
+    "dreamfactory/df-email":           "~0.8.0",
+    "dreamfactory/df-file":            "~0.6.2",
+    "dreamfactory/df-filemanager-app": "~0.3.0",
+    "dreamfactory/df-firebird":        "~0.7.1",
+    "dreamfactory/df-graphql":         "~0.1.0",
+    "dreamfactory/df-git":             "dev-3.0-beta#c40c898f3c437f5203999de32669a21e5bd13064",
+    "dreamfactory/df-mongodb":         "~0.15.1",
+    "dreamfactory/df-oauth":           "~0.14.0",
+    "dreamfactory/df-rackspace":       "~0.14.1",
+    "dreamfactory/df-rws":             "~0.14.1",
+    "dreamfactory/df-script":          "dev-3.0-beta#09f1c3838dcca14eff8e706f576c27aa44bd4836",
+    "dreamfactory/df-sqldb":           "~0.15.2",
+    "dreamfactory/df-system":          "~0.1.0",
+    "dreamfactory/df-user":            "~0.14.0",
     "predis/predis":                   "~1.0",
     "fideloper/proxy":                 "~3.3",
     "laravel/framework":               "5.5.*",
@@ -91,7 +99,7 @@
   },
   "extra":             {
     "branch-alias":    {
-      "dev-develop": "2.14.x-dev"
+      "dev-develop": "3.0.x-dev"
     },
     "installer-paths": {
       "public/{$name}/": [
@@ -112,6 +120,6 @@
   "config":            {
     "preferred-install":   "dist",
     "sort-packages":       true,
-    "optimize-autoloader": false
+    "optimize-autoloader": true
   }
 }
