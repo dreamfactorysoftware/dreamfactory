@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c161904daf7d9bee4eb763f2cf7d5843",
+    "content-hash": "93bb985ae9055c27f2480ac385ad1796",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -812,16 +812,16 @@
         },
         {
             "name": "dreamfactory/df-admin-app",
-            "version": "2.16.2",
+            "version": "dev-3.0-beta",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-admin-app.git",
-                "reference": "b27d05e874f1efbe0b09e62f7963e47173a0a4b8"
+                "reference": "c709bcf3df56ccc487f6f2781b38526701def94e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-admin-app/zipball/b27d05e874f1efbe0b09e62f7963e47173a0a4b8",
-                "reference": "b27d05e874f1efbe0b09e62f7963e47173a0a4b8",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-admin-app/zipball/c709bcf3df56ccc487f6f2781b38526701def94e",
+                "reference": "c709bcf3df56ccc487f6f2781b38526701def94e",
                 "shasum": ""
             },
             "require": {
@@ -834,7 +834,6 @@
                 },
                 "installer-name": "dreamfactory"
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
@@ -848,28 +847,35 @@
             "description": "DreamFactory(tm) Admin Console",
             "homepage": "https://github.com/dreamfactorysoftware/df-admin-app/",
             "keywords": [
-                "Service Bus",
                 "admin",
+                "api",
                 "api",
                 "dreamfactory",
                 "esb",
                 "remote web services",
-                "rest"
+                "rest",
+                "service bus"
             ],
-            "time": "2018-08-23T21:22:10+00:00"
+            "support": {
+                "source": "https://github.com/dreamfactorysoftware/df-admin-app",
+                "issues": "https://github.com/dreamfactorysoftware/df-admin-app/issues",
+                "email": "dspsupport@dreamfactory.com",
+                "wiki": "https://wiki.dreamfactory.com"
+            },
+            "time": "2019-01-31T12:24:42+00:00"
         },
         {
             "name": "dreamfactory/df-api-docs-ui",
-            "version": "1.2.0",
+            "version": "dev-3.0-beta",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-api-docs-ui.git",
-                "reference": "b62636d3fc12e07cddcac7a1cc0c0399d496240c"
+                "reference": "873ae7e55396a1149e626061bca339465670c788"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-api-docs-ui/zipball/b62636d3fc12e07cddcac7a1cc0c0399d496240c",
-                "reference": "b62636d3fc12e07cddcac7a1cc0c0399d496240c",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-api-docs-ui/zipball/873ae7e55396a1149e626061bca339465670c788",
+                "reference": "873ae7e55396a1149e626061bca339465670c788",
                 "shasum": ""
             },
             "require": {
@@ -882,7 +888,6 @@
                 },
                 "installer-name": "df-api-docs-ui"
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
@@ -901,7 +906,13 @@
                 "rest",
                 "swagger"
             ],
-            "time": "2017-12-29T21:21:34+00:00"
+            "support": {
+                "source": "https://github.com/dreamfactorysoftware/df-api-docs-ui",
+                "issues": "https://github.com/dreamfactorysoftware/df-api-docs-ui/issues",
+                "email": "dspsupport@dreamfactory.com",
+                "wiki": "https://wiki.dreamfactory.com"
+            },
+            "time": "2019-01-25T15:14:32+00:00"
         },
         {
             "name": "dreamfactory/df-apidoc",
@@ -6720,7 +6731,7 @@
                 },
                 {
                     "name": "Gert de Pagter",
-                    "email": "BackEndTea@gmail.com"
+                    "email": "backendtea@gmail.com"
                 }
             ],
             "description": "Symfony polyfill for ctype functions",
@@ -10046,7 +10057,10 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "dreamfactory/df-admin-app": 20,
+        "dreamfactory/df-api-docs-ui": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": [],
