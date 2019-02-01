@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "93bb985ae9055c27f2480ac385ad1796",
+    "content-hash": "d448b4008a48f781723094e9f666cef4",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -2086,16 +2086,16 @@
         },
         {
             "name": "dreamfactory/df-script",
-            "version": "0.8.2",
+            "version": "dev-3.0-beta",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-script.git",
-                "reference": "266fd34c85b303fd5c7b4491b9e688667686e00b"
+                "reference": "09f1c3838dcca14eff8e706f576c27aa44bd4836"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-script/zipball/266fd34c85b303fd5c7b4491b9e688667686e00b",
-                "reference": "266fd34c85b303fd5c7b4491b9e688667686e00b",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-script/zipball/09f1c3838dcca14eff8e706f576c27aa44bd4836",
+                "reference": "09f1c3838dcca14eff8e706f576c27aa44bd4836",
                 "shasum": ""
             },
             "require": {
@@ -2118,18 +2118,17 @@
                     "DreamFactory\\Core\\Script\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
             "authors": [
                 {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                },
-                {
                     "name": "Arif Islam",
                     "email": "arifislam@dreamfactory.com"
+                },
+                {
+                    "name": "Lee Hicks",
+                    "email": "leehicks@dreamfactory.com"
                 }
             ],
             "description": "DreamFactory(tm) Scripting Components",
@@ -2140,10 +2139,17 @@
                 "nodejs",
                 "php",
                 "python",
+                "python3",
                 "rest",
                 "v8js"
             ],
-            "time": "2018-02-24T22:55:59+00:00"
+            "support": {
+                "email": "dspsupport@dreamfactory.com",
+                "source": "https://github.com/dreamfactorysoftware/df-script",
+                "issues": "https://github.com/dreamfactorysoftware/df-script/issues",
+                "wiki": "https://wiki.dreamfactory.com"
+            },
+            "time": "2018-12-31T09:15:21+00:00"
         },
         {
             "name": "dreamfactory/df-sqldb",
@@ -10059,7 +10065,8 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "dreamfactory/df-admin-app": 20,
-        "dreamfactory/df-api-docs-ui": 20
+        "dreamfactory/df-api-docs-ui": 20,
+        "dreamfactory/df-script": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
