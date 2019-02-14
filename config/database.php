@@ -76,6 +76,18 @@ return [
             'password' => env('DB_PASSWORD', ''),
             'prefix'   => env('DB_PREFIX', ''),
         ],
+
+        'logsdb' => [
+            'driver'   => 'mongodb',
+            'host'     => env('LOGSDB_HOST', 'localhost'),
+            'port'     => env('LOGSDB_PORT', 27017),
+            'database' => env('LOGSDB_DATABASE'),
+            'username' => env('LOGSDB_USERNAME'),
+            'password' => env('LOGSDB_PASSWORD'),
+            'options'  => [
+                'database' => 'admin' // sets the authentication database required by mongo 3
+            ]
+        ],
     ],
 
     /*

@@ -54,7 +54,8 @@
     "laravel/helpers": "^1.1",
     "laravel/tinker": "^1.0",
     "predis/predis": "~1.0",
-    "php": "^7.2"
+    "php": "^7.2",
+    "spatie/laravel-http-logger": "^1.1"
   },
   "require-dev": {
       "barryvdh/laravel-ide-helper": "~2.1",
@@ -71,7 +72,8 @@
   "autoload": {
       "classmap": [
           "database/seeds",
-          "database/factories"
+          "database/factories",
+          "utility"
       ],
       "psr-4": {
           "DreamFactory\\": "app/"
