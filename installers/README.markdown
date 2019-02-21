@@ -105,6 +105,12 @@ If you choose yes (`Y` or `y`), you'll be prompted to enter the location of your
 
 It is important that all three license files reside in the designated directory, including `composer.json`, `composer.lock`, and `composer.json-dist`. If any of the three are missing, the installer will ignore the upgrade step and continue.
 
+When upgrading you'll also need to provide your license key:
+
+    Please provide your license key:
+
+Neglecting to provide this key will cause the upgrade process to fail, so please have it on hand before starting the installer. If you've misplaced the key, contact support for assistance.
+
 ### Show help menu
 
 Passing the ```--help```,```-h``` option will result in a show to you help menu with all available key for the script.
