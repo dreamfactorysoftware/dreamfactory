@@ -78,7 +78,6 @@ Passing the ```--with-cassandra``` option will result in installation of PHP's C
     $ sudo ./ubuntu.sh --with-cassandra
     $ su -c "./debian.sh --with-cassandra"
 
-
 ### Installing Apache
 
 Passing the ```--with-apache``` option will result in the Apache 2 web server being installed instead of the default Nginx web server. You can pass the option like this:
@@ -93,7 +92,21 @@ You can supply multiple options to the installer like so:
     $ sudo ./ubuntu.sh --with-apache --with-oracle --with-mysql --with-cassandra --with-db2
     $ su -c "./debian.sh --with-apache --with-oracle --with-mysql --with-cassandra --with-db2"
 
+### Upgrading Your Instance
+
+As part of the installation process you'll be asked if you'd like to upgrade the instance using our commercial Composer files:
+
+    Would you like to upgrade your instance? [Yy/Nn]
+
+If you choose yes (`Y` or `y`), you'll be prompted to enter the location of your commercial license files:
+
+    Enter path to license files: [./]
+    /home/ubuntu/
+
+It is important that all three license files reside in the designated directory, including `composer.json`, `composer.lock`, and `composer.json-dist`. If any of the three are missing, the installer will ignore the upgrade step and continue.
+
 ### Show help menu
+
 Passing the ```--help```,```-h``` option will result in a show to you help menu with all available key for the script.
 
     $ sudo ./ubuntu.sh -h
