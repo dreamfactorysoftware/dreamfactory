@@ -858,7 +858,7 @@ ls -d /opt/dreamfactory
 if (( $? >= 1 ))
 then
 	mkdir -p /opt/dreamfactory
-	git clone https://github.com/dreamfactorysoftware/dreamfactory.git /opt/dreamfactory
+	git clone -b 3.0.0-beta https://github.com/dreamfactorysoftware/dreamfactory.git /opt/dreamfactory
 	if (( $? >= 1 ))
 	then
         	echo -e  "${RD}\nCould not clone DreamFactory repository. Exiting. ${NC}" >&5
