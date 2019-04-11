@@ -12,23 +12,16 @@
   "type":              "project",
   "authors":           [
     {
-      "name":  "Arif Islam",
-      "email": "arifislam@dreamfactory.com"
-    },
-    {
-      "name":  "Charles Harmon",
-      "email": "charlesharmon@dreamfactory.com"
-    },
-    {
-      "name":  "Lee Hicks",
-      "email": "leehicks@dreamfactory.com"
+      "name":  "DreamFactory Team",
+      "email": "code@dreamfactory.com"
     }
   ],
   "support":           {
     "email":  "dspsupport@dreamfactory.com",
     "source": "https://github.com/dreamfactorysoftware/dreamfactory",
     "issues": "https://github.com/dreamfactorysoftware/dreamfactory/issues",
-    "wiki":   "https://wiki.dreamfactory.com"
+    "wiki":   "https://wiki.dreamfactory.com",
+    "guide":  "https://guide.dreamfactory.com"
   },
   "minimum-stability": "dev",
   "prefer-stable":     true,
@@ -51,11 +44,11 @@
       }
   ],
   "require":           {
-    "dreamfactory/df-admin-app":       "dev-3.0-beta#c709bcf3df56ccc487f6f2781b38526701def94e",
+    "dreamfactory/df-admin-app":       "dev-3.0-beta#acdfe164838b6f4304621c490737385598401845",
     "dreamfactory/df-api-docs-ui":     "dev-3.0-beta#873ae7e55396a1149e626061bca339465670c788",
     "dreamfactory/df-apidoc":          "~0.6.1",
     "dreamfactory/df-aws":             "~0.15.1",
-    "dreamfactory/df-azure":           "~0.15.1",
+    "dreamfactory/df-azure":           "~0.15.2",
     "dreamfactory/df-cache":           "~0.11.0",
     "dreamfactory/df-cassandra":       "~0.12.2",
     "dreamfactory/df-core":            "~0.14.2",
@@ -106,7 +99,7 @@
   },
   "extra":             {
     "branch-alias":    {
-      "dev-develop": "2.14.x-dev"
+      "dev-develop": "3.0.x-dev"
     },
     "installer-paths": {
       "public/{$name}/": [

@@ -1,4 +1,4 @@
-## DreamFactory 2.14.0
+## DreamFactory 3.0.0-beta
 
 [![License](https://poser.pugx.org/dreamfactory/dreamfactory/license.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
@@ -25,16 +25,19 @@ Documentation for the platform can be found on the [DreamFactory wiki](http://wi
 ## Required Software and Extensions
 
 Check our [wiki installation page](http://wiki.dreamfactory.com/DreamFactory/Installation) for the minimum 
-software and extensions required for your system to successfully install and run DreamFactory 2.x.
+software and extensions required for your system to successfully install and run DreamFactory instance.
+
+## New Debian and Ubuntu Installers
+
+The 3.0.0-beta release includes beta versions of our new Debian 8/9 and Ubuntu 16/18 installers! These installers dramatically reduce the time required to install the various depdencies comprising a DreamFactory environment. Please refer to the `README` document found in the `installers` directory for more information.
 
 ## Quick Setup
 
-These instructions allow you to quickly install DreamFactory 2.x on your system and try it out. 
+These instructions allow you to quickly install DreamFactory on your system. 
 The commands shown here are primarily for a Linux based OS, 
 but this should also work on Windows with all the required software and extensions installed.
 
 > _Note: This quick setup instruction assumes that you are familiar with composer, git and the basics of how to setup a web and database server._
-
 
  * Clone this repository to a directory on your system.
 
