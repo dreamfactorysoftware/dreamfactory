@@ -18,8 +18,6 @@
 </p>
 
 <p align="center">
-    <img alt="GitHub stars" src="https://img.shields.io/github/stars/dreamfactorysoftware/dreamfactory.svg?style=social">
-    <img alt="GitHub forks" src="https://img.shields.io/github/forks/dreamfactorysoftware/dreamfactory.svg?style=social">
     <a href="https://twitter.com/dfsoftwareinc?lang=en"><img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/dfsoftwareinc.svg?style=social"></a>
 </p>
 
