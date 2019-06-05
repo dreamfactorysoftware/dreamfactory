@@ -1,5 +1,5 @@
 <h1 align="center">
-    <a href="https://dreamfactory.com/"><img src="vertical-logo-fullcolor.png" alt="DreamFactory" width="250" /></a>
+    <a href="https://dreamfactory.com/"><img src="readme/vertical-logo-fullcolor.png" alt="DreamFactory" width="250" /></a>
 </h1>
 
 <p align="center">
@@ -31,7 +31,7 @@ It is built on top of the Laravel framework, and includes an AngularJS-driven we
 * [Secure every API endpoint](http://guide.dreamfactory.com/docs/chapter03.html#creating-a-role) with user management, SSO authentication, role-based access control, OAuth and Active Directory integration.
 
 <p align="center">
-    <img alt="GitHub stars" src="ScreenRecording20190524at1.gif">
+    <img alt="GitHub stars" src="readme/ScreenRecording20190524at1.gif">
 </p>
 
 ## Installation
@@ -51,7 +51,7 @@ Our community forum can be found [here](http://community.dreamfactory.com/).
 
 ## Community 
 
-| <a href="https://stackoverflow.com/questions/tagged/dreamfactory"><img src="stackoverflow.png" height="50px"/></a> | <a href="https://community.dreamfactory.com"><img src="mark-gold.png" height="60px"/></a> | <a href="https://twitter.com/dfsoftwareinc"><img src="twitter.png" height="40px"/></a> |
+| <a href="https://stackoverflow.com/questions/tagged/dreamfactory"><img src="readme/stackoverflow.png" height="50px"/></a> | <a href="https://community.dreamfactory.com"><img src="readme/mark-gold.png" height="60px"/></a> | <a href="https://twitter.com/dfsoftwareinc"><img src="readme/twitter.png" height="40px"/></a> |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Ask and answer StackOverflow questions with the [`dreamfactory` tag](https://stackoverflow.com/questions/tagged/dreamfactory)                                                                               | Check out our [community forum](https://community.dreamfactory.com), ask questions, and discuss project direction                                                                                           | Tweet to [`@dfsoftwareinc`](https://twitter.com/dfsoftwareinc) or with the [`#dreamfactory` hashtag](https://twitter.com/search?q=%23dreamfactory&f=live)  
 
