@@ -4,6 +4,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.14.2]
+### Changed
+- Bumped Composer files for df-sqldb 0.15.4 release
+
+## [2.14.1]
+### Changed
+- Bumped config/app.php version number so no confusion
+
 ## [2.14.0]
 ### Changed
 - Upgraded to PHP 7.1 minimum
@@ -243,7 +251,9 @@ For older installs, see DF_CIPHER in .env or .env-dist for more details.
 ## 2.0.0 - 2015-10-27
 First official release of the new open-source DreamFactory project.
 
-[Unreleased]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.14.0...HEAD
+[Unreleased]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.14.2...HEAD
+[2.14.2]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.14.1...2.14.2
+[2.14.1]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.14.0...2.14.1
 [2.14.0]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.13.1...2.14.0
 [2.13.1]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.13.0...2.13.1
 [2.13.0]: https://github.com/dreamfactorysoftware/dreamfactory/compare/2.12.0...2.13.0

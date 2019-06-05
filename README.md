@@ -1,119 +1,66 @@
-## DreamFactory 2.14.0
+<h1 align="center">
+    <a href="https://dreamfactory.com/"><img src="readme/vertical-logo-fullcolor.png" alt="DreamFactory" width="250" /></a>
+</h1>
 
-[![License](https://poser.pugx.org/dreamfactory/dreamfactory/license.svg)](http://www.apache.org/licenses/LICENSE-2.0)
+<p align="center">
+    <strong>Instant APIs without code</strong>
+</p>
+
+<p align="center">
+    <a href="https://wiki.dreamfactory.com">Docs</a> ∙ <a href="https://genie.dreamfactory.com">Try Online</a> ∙ <a href="https://github.com/dreamfactorysoftware/dreamfactory/blob/master/CONTRIBUTING.md">Contribute</a> ∙ <a href="http://community.dreamfactory.com/">Community Support</a> ∙ <a href="http://guide.dreamfactory.com/">Get Started Guide</a>
+</p>
+
+<p align="center">
+    <img alt="GitHub" src="https://img.shields.io/github/license/dreamfactorysoftware/dreamfactory.svg?style=plastic">
+    <img alt="Docker Pulls" src="https://img.shields.io/docker/pulls/dreamfactorysoftware/df-docker.svg?style=plastic">
+    <img alt="Docker Build Status" src="https://img.shields.io/docker/build/dreamfactorysoftware/dreamfactory.svg?style=plastic">
+    <img alt="GitHub Release Date" src="https://img.shields.io/github/release-date/dreamfactorysoftware/dreamfactory.svg?style=plastic">
+</p>
+
+<p align="center">
+    <a href="https://twitter.com/dfsoftwareinc?lang=en"><img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/dfsoftwareinc.svg?style=social"></a>
+</p>
 
 ## Overview
 
-DreamFactory(™) is an open source REST API backend for mobile, web, and IoT applications. 
-It is built on top of the Laravel framework, and as such retains the requirements of the [Laravel v5.5 framework]
+DreamFactory™ is an open source REST API backend for mobile, web, and IoT applications. 
+It is built on top of the Laravel framework, and includes an AngularJS-driven web administration client. So what can you do with the DreamFactory Platform?
 
-* Generate powerful, reusable, documented APIs for SQL, NoSQL, files, email, push notifications and more in seconds.
-* Use server-side scripts to easily customize API behavior at any endpoint, for both API requests and API responses.
-* Secure every API endpoint with user management, SSO authentication, role-based access control, OAuth and Active Directory integration.
+* [Generate](http://guide.dreamfactory.com/docs/chapter03.html#generating-a-mysql-backed-api) powerful, reusable, documented APIs for SQL, NoSQL, files, email, push notifications and more in seconds.
+* [Use server-side scripts](http://wiki.dreamfactory.com/DreamFactory/Tutorials/Server_Side_Scripting) to easily customize API behavior at any endpoint, for both API requests and API responses.
+* [Secure every API endpoint](http://guide.dreamfactory.com/docs/chapter03.html#creating-a-role) with user management, SSO authentication, role-based access control, OAuth and Active Directory integration.
 
-Learn more at our [website](https://www.dreamfactory.com).
+<p align="center">
+    <img alt="GitHub stars" src="readme/ScreenRecording20190524at1.gif">
+</p>
+
+## Installation
+
+* Get installed in under 5 minutes with our [Jeanie Installers](https://github.com/dreamfactorysoftware/dreamfactory/tree/3.0-beta/installers) (3.0 beta) for Ubuntu and Debian. This installs all necessary dependencies and allows more customization than Bitnami.
+* [Bitnami](https://bitnami.com/stack/dreamfactory/installer) provides a point and click install process. Just download, click next-next-next and you are done!
+* [Docker](http://wiki.dreamfactory.com/DreamFactory/Installation#Docker_Image) provides a dockerhub image or you can build your own.
+* [Raspberry Pi](http://guide.dreamfactory.com/docs/raspberry-pi.html) allows you to configure DreamFactory as an open source IoT gateway.
+
+Find a full list of installation options [here](http://wiki.dreamfactory.com/DreamFactory/Installation).
+
+## Documentation
+
+Follow along with our [Get Started Guide](http://guide.dreamfactory.com/) to configure your environment in minutes.
+Documentation for the platform can be found on the [DreamFactory wiki](http://wiki.dreamfactory.com).
+Our community forum can be found [here](http://community.dreamfactory.com/).
+
+## Community 
+
+| <a href="https://stackoverflow.com/questions/tagged/dreamfactory"><img src="readme/stackoverflow.png" height="50px"/></a> | <a href="https://community.dreamfactory.com"><img src="readme/mark-gold.png" height="60px"/></a> | <a href="https://twitter.com/dfsoftwareinc"><img src="readme/twitter.png" height="40px"/></a> |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Ask and answer StackOverflow questions with the [`dreamfactory` tag](https://stackoverflow.com/questions/tagged/dreamfactory)                                                                               | Check out our [community forum](https://community.dreamfactory.com), ask questions, and discuss project direction                                                                                           | Tweet to [`@dfsoftwareinc`](https://twitter.com/dfsoftwareinc) or with the [`#dreamfactory` hashtag](https://twitter.com/search?q=%23dreamfactory&f=live)  
 
 ## Commercial Licenses
 
 In need of official technical support? Desire access to REST API generators for SQL Server, Oracle, SOAP, or mobile
-push notifications? Require API limiting and/or auditing? Schedule a demo [with our team](https://www.dreamfactory.com/contact)!
-
-## Documentation
-
-Documentation for the platform can be found on the [DreamFactory wiki](http://wiki.dreamfactory.com).
-
-## Required Software and Extensions
-
-Check our [wiki installation page](http://wiki.dreamfactory.com/DreamFactory/Installation) for the minimum 
-software and extensions required for your system to successfully install and run DreamFactory 2.x.
-
-## Quick Setup
-
-These instructions allow you to quickly install DreamFactory 2.x on your system and try it out. 
-The commands shown here are primarily for a Linux based OS, 
-but this should also work on Windows with all the required software and extensions installed.
-
-> _Note: This quick setup instruction assumes that you are familiar with composer, git and the basics of how to setup a web and database server._
-
-
- * Clone this repository to a directory on your system.
-
-    ```sh
-    git clone https://github.com/dreamfactorysoftware/dreamfactory.git ~/df2
-    ```
-
- * Change directory.
-
-    ```sh
-    cd ~/df2
-    ```
-
- * Install dependencies using composer. If composer is not installed, see [here](https://getcomposer.org/download/).
-
-    ```sh
-    composer install --no-dev
-    ```
-
- * DreamFactory sets up a default SQLite database by default. If you would like your instance to store system 
- information in another database, run the following command. This will create your system environment file (.env) 
- and will prompt you to configure your database of choice.
-
-    ```sh
-    php artisan df:env
-    ```
-
- * Regardless of what database you choose, run the following command to setup your database. 
- This will create your system environment, generate your application key, run the database schema migration, 
- seed the default services, and will prompt you to create your admin user account.
-
-    ```sh
-    php artisan df:setup
-    ```
-
- * Make sure your web server can read/write from/to storage/ (sub directories) and bootstrap/cache/ directories.
-
-    ```sh
-    # Example:
-    
-    sudo chown -R {www user}:{your user group} storage/ bootstrap/cache/
-    sudo chmod -R 2775 storage/ bootstrap/cache/
-    ```
-
- * Run the following command to try out DreamFactory 2.0 without configuring a web server. 
- Otherwise, configure your web server to serve the public/ directory and launch your instance from a browser.
-
-    ```sh
-    php artisan serve
-    ```
-
-### Customize the Installation
-
-To customize any of the environment settings or feature sets included in the install, run the new installer program.
-
-> _Note this requires Bash 4.0 or newer._
-
- * Run the installer and follow the prompts. If the installer can not be run, you may edit the .env file directly.
-
-    ```sh
-    ./installer.sh
-    ```
-    
- * Run following commands to clear system cache.
-
-    ```sh
-    php artisan cache:clear
-    php artisan config:clear
-    ```
-
- * If the system database environment is changed to a clean database, re-run the setup command.
-
-    ```sh
-    php artisan df:setup
-    ```
-    
+push notifications? Require API limiting and/or auditing? Schedule a demo [with our team](https://www.dreamfactory.com/demo/)!
 
 ## Feedback and Contributions
 
 * Feedback is welcome on our [forum](http://community.dreamfactory.com/) or in the form of pull requests and/or issues.
-* Contributions should generally follow the strategy outlined in ["Contributing to a project"](http://help.github.com/articles/fork-a-repo#contributing-to-a-project)
-* All pull requests must be in a ["git flow"](http://github.com/nvie/gitflow) feature branch to be considered.
+* Contributions should generally follow the strategy outlined in ["Contributing to a project"](http://help.github.com/articles/fork-a-repo#contributing-to-a-project).
