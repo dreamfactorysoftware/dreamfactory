@@ -1,0 +1,20 @@
+###################
+# https://docs.devwithlando.io/config/lando.html
+###################
+
+name: dreamfactory
+recipe: laravel
+env:
+  - .env
+  - .env-dist
+config:
+  php: '7.2'
+  webroot: public
+
+services:
+  appserver:
+    build_as_root:
+      - pecl install mongodb
+      - docker-php-ext-enable mongodb
+    build:
+      - composer install
