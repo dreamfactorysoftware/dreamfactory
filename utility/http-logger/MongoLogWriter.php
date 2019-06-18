@@ -24,7 +24,15 @@ class MongoLogWriter implements \Spatie\HttpLogger\LogWriter
 
         $message = "{$method} {$uri} - Body: {$bodyAsJson} - Files: ".implode(', ', $files);
 
-        \DB::connection('logsdb')->collection('access')->insert(['timestamp' => $timestamp->toDateTimeString(), 'method' => $method, 'uri' => $uri, 'body' => $bodyAsJson]);
+        \DB::connection('logsdb')->collection('access')->insert(
+            [
+                'timestamp' => $timestamp->toDateTimeString(),
+                'method' => $method,
+                'uri' => $uri,
+                'body' => $bodyAsJson,
+                'expireAt' => new \MongoDB\BSON\UTCDateTime(\Carbon\Carbon::now()->addDays(45)->getTimestamp()*1000)
+            ]
+        );
 
         Log::info($message);
     }
