@@ -14,8 +14,7 @@ class CreateAccess extends Migration
     public function up()
     {
 
-        //Schema::connection('logsdb')->create('access')->ensureIndex('expireAt', ['expireAfterSeconds' => 20]);
-
+        DB::connection('logsdb')->drop(['access']);
         Schema::connection('logsdb')->create('access', function ($collection) {
             $collection->expire('expireAt', 1);
         });
