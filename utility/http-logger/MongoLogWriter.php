@@ -14,6 +14,10 @@ class MongoLogWriter implements \Spatie\HttpLogger\LogWriter
 
         $uri = $request->getPathInfo();
 
+        if(substr($uri, -1) == '/') {
+            $uri = substr($uri, 0, -1);
+        }
+
         $bodyAsJson = json_encode($request->except(config('http-logger.except')));
 
         $files = array_map(function (UploadedFile $file) {
