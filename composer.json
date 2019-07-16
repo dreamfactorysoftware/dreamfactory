@@ -33,21 +33,16 @@
     {
       "type": "vcs",
       "url":  "https://github.com/dreamfactorysoftware/df-api-docs-ui"
-    },
-    {
-      "type": "vcs",
-      "url":  "https://github.com/dreamfactorysoftware/df-script"
-    },
-    {
+    }, {
       "type": "vcs",
       "url":  "https://github.com/dreamfactorysoftware/df-git"
     }
   ],
   "require":           {
-    "dreamfactory/df-admin-app":       "dev-3.0-beta#acdfe164838b6f4304621c490737385598401845",
-    "dreamfactory/df-api-docs-ui":     "dev-3.0-beta#873ae7e55396a1149e626061bca339465670c788",
+    "dreamfactory/df-admin-app":       "dev-3.0-beta",
+    "dreamfactory/df-api-docs-ui":     "~3.0.0",
     "dreamfactory/df-apidoc":          "~0.6.1",
-    "dreamfactory/df-aws":             "~0.15.3",
+    "dreamfactory/df-aws":             "~0.15.4",
     "dreamfactory/df-azure":           "~0.15.2",
     "dreamfactory/df-cache":           "~0.11.0",
     "dreamfactory/df-cassandra":       "~0.12.2",
@@ -57,15 +52,13 @@
     "dreamfactory/df-email":           "~0.8.2",
     "dreamfactory/df-file":            "~0.6.2",
     "dreamfactory/df-filemanager-app": "~0.3.0",
-    "dreamfactory/df-firebird":        "~0.7.1",
+    "dreamfactory/df-firebird":        "~0.7.2",
     "dreamfactory/df-graphql":         "~0.1.0",
-    "dreamfactory/df-git":             "dev-3.0-beta#c40c898f3c437f5203999de32669a21e5bd13064",
-    "dreamfactory/df-mongodb":         "~0.15.1",
+    "dreamfactory/df-git":             "~0.4.0",
     "dreamfactory/df-oauth":           "~0.14.0",
     "dreamfactory/df-rackspace":       "~0.14.1",
     "dreamfactory/df-rws":             "~0.14.1",
-    "dreamfactory/df-script":          "dev-3.0-beta#09f1c3838dcca14eff8e706f576c27aa44bd4836",
-    "dreamfactory/df-sqldb":           "~0.15.2",
+    "dreamfactory/df-sqldb":           "~0.16.0",
     "dreamfactory/df-system":          "~0.1.0",
     "dreamfactory/df-user":            "~0.14.0",
     "predis/predis":                   "~1.0",
