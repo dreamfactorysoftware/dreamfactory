@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "629a3b2570125b4f80aef2da812c66ed",
+    "content-hash": "55f0ad92279486c74d1ddacd798a1c54",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.104.0",
+            "version": "3.107.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "9feac27d183fa08f210f38c8cb6d449cf2411d29"
+                "reference": "ccd3d13ae49a45bdf6a394d701f207c276dbf05a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/9feac27d183fa08f210f38c8cb6d449cf2411d29",
-                "reference": "9feac27d183fa08f210f38c8cb6d449cf2411d29",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/ccd3d13ae49a45bdf6a394d701f207c276dbf05a",
+                "reference": "ccd3d13ae49a45bdf6a394d701f207c276dbf05a",
                 "shasum": ""
             },
             "require": {
@@ -87,7 +87,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2019-07-02T18:21:12+00:00"
+            "time": "2019-07-12T18:07:41+00:00"
         },
         {
             "name": "barryvdh/laravel-cors",
@@ -887,16 +887,16 @@
         },
         {
             "name": "dreamfactory/df-admin-app",
-            "version": "dev-move-services-to-silver-license",
+            "version": "dev-3.0-beta",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-admin-app.git",
-                "reference": "b823cb13f53247cbc58074bf87fdca0d1c3fe132"
+                "reference": "6b27c163d1f4490a2e7d9a51c3f4fca2beed015c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-admin-app/zipball/b823cb13f53247cbc58074bf87fdca0d1c3fe132",
-                "reference": "b823cb13f53247cbc58074bf87fdca0d1c3fe132",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-admin-app/zipball/6b27c163d1f4490a2e7d9a51c3f4fca2beed015c",
+                "reference": "6b27c163d1f4490a2e7d9a51c3f4fca2beed015c",
                 "shasum": ""
             },
             "require": {
@@ -937,20 +937,20 @@
                 "email": "dspsupport@dreamfactory.com",
                 "wiki": "https://wiki.dreamfactory.com"
             },
-            "time": "2019-07-02T13:24:45+00:00"
+            "time": "2019-07-16T12:32:56+00:00"
         },
         {
             "name": "dreamfactory/df-api-docs-ui",
-            "version": "dev-3.0-beta",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-api-docs-ui.git",
-                "reference": "873ae7e55396a1149e626061bca339465670c788"
+                "reference": "d68415ea489360e3034b02d99490ea78179cde2b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-api-docs-ui/zipball/873ae7e55396a1149e626061bca339465670c788",
-                "reference": "873ae7e55396a1149e626061bca339465670c788",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-api-docs-ui/zipball/d68415ea489360e3034b02d99490ea78179cde2b",
+                "reference": "d68415ea489360e3034b02d99490ea78179cde2b",
                 "shasum": ""
             },
             "require": {
@@ -987,7 +987,7 @@
                 "email": "dspsupport@dreamfactory.com",
                 "wiki": "https://wiki.dreamfactory.com"
             },
-            "time": "2019-01-25T15:14:32+00:00"
+            "time": "2019-07-15T20:38:26+00:00"
         },
         {
             "name": "dreamfactory/df-apidoc",
@@ -1052,16 +1052,16 @@
         },
         {
             "name": "dreamfactory/df-aws",
-            "version": "0.15.3",
+            "version": "0.15.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-aws.git",
-                "reference": "6b3b7fe8919cc20e046fb0879e2b8188d5a1566f"
+                "reference": "c71bd7dc530db2d0bc7c12e8dd5ab18471c34a34"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-aws/zipball/6b3b7fe8919cc20e046fb0879e2b8188d5a1566f",
-                "reference": "6b3b7fe8919cc20e046fb0879e2b8188d5a1566f",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-aws/zipball/c71bd7dc530db2d0bc7c12e8dd5ab18471c34a34",
+                "reference": "c71bd7dc530db2d0bc7c12e8dd5ab18471c34a34",
                 "shasum": ""
             },
             "require": {
@@ -1069,7 +1069,7 @@
                 "dreamfactory/df-database": "~0.9.1",
                 "dreamfactory/df-email": "~0.8.2",
                 "dreamfactory/df-file": "~0.6.0",
-                "dreamfactory/df-sqldb": "~0.15.1"
+                "dreamfactory/df-sqldb": "~0.16.0"
             },
             "type": "library",
             "extra": {
@@ -1112,7 +1112,7 @@
                 "rest",
                 "s3"
             ],
-            "time": "2019-05-16T11:55:13+00:00"
+            "time": "2019-07-16T10:58:07+00:00"
         },
         {
             "name": "dreamfactory/df-azure",
@@ -1733,20 +1733,20 @@
         },
         {
             "name": "dreamfactory/df-firebird",
-            "version": "0.7.1",
+            "version": "0.7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-firebird.git",
-                "reference": "14dff2838827f7770baebf4f1458b4a4de678db3"
+                "reference": "b4b9731f6f5adad33f2fb890cc199e4eb15578e5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-firebird/zipball/14dff2838827f7770baebf4f1458b4a4de678db3",
-                "reference": "14dff2838827f7770baebf4f1458b4a4de678db3",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-firebird/zipball/b4b9731f6f5adad33f2fb890cc199e4eb15578e5",
+                "reference": "b4b9731f6f5adad33f2fb890cc199e4eb15578e5",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-sqldb": "~0.15.1"
+                "dreamfactory/df-sqldb": "~0.16.0"
             },
             "type": "library",
             "extra": {
@@ -1788,20 +1788,20 @@
                 "pdo_interbase",
                 "sql"
             ],
-            "time": "2018-01-25T19:28:38+00:00"
+            "time": "2019-07-16T11:20:04+00:00"
         },
         {
             "name": "dreamfactory/df-git",
-            "version": "dev-3.0-beta",
+            "version": "0.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-git.git",
-                "reference": "c40c898f3c437f5203999de32669a21e5bd13064"
+                "reference": "ed4b8b04c89a263a07500988fae8a504161fe77a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-git/zipball/c40c898f3c437f5203999de32669a21e5bd13064",
-                "reference": "c40c898f3c437f5203999de32669a21e5bd13064",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-git/zipball/ed4b8b04c89a263a07500988fae8a504161fe77a",
+                "reference": "ed4b8b04c89a263a07500988fae8a504161fe77a",
                 "shasum": ""
             },
             "require": {
@@ -1860,7 +1860,7 @@
                 "issues": "https://github.com/dreamfactorysoftware/df-git/issues",
                 "wiki": "https://wiki.dreamfactory.com"
             },
-            "time": "2019-01-25T09:37:07+00:00"
+            "time": "2019-07-15T22:27:39+00:00"
         },
         {
             "name": "dreamfactory/df-graphql",
@@ -2106,16 +2106,16 @@
         },
         {
             "name": "dreamfactory/df-sqldb",
-            "version": "dev-remove-mysql",
+            "version": "0.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-sqldb.git",
-                "reference": "d4fa62318bef4d2d16c967d7ba24ac7c9c90d5a3"
+                "reference": "3e7c14c7e19102321fcd3228ea10b8fab0f0cde5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-sqldb/zipball/d4fa62318bef4d2d16c967d7ba24ac7c9c90d5a3",
-                "reference": "d4fa62318bef4d2d16c967d7ba24ac7c9c90d5a3",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-sqldb/zipball/3e7c14c7e19102321fcd3228ea10b8fab0f0cde5",
+                "reference": "3e7c14c7e19102321fcd3228ea10b8fab0f0cde5",
                 "shasum": ""
             },
             "require": {
@@ -2165,7 +2165,7 @@
                 "sql",
                 "sqlserver"
             ],
-            "time": "2019-07-03T14:21:41+00:00"
+            "time": "2019-07-16T09:25:41+00:00"
         },
         {
             "name": "dreamfactory/df-system",
@@ -3322,16 +3322,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.5.45",
+            "version": "v5.5.46",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "52c79ecf54b6168a54730ccb6c4c9f3561732a80"
+                "reference": "85b2a5218088b0f60bf6e8c3a62891ba275a7269"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/52c79ecf54b6168a54730ccb6c4c9f3561732a80",
-                "reference": "52c79ecf54b6168a54730ccb6c4c9f3561732a80",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/85b2a5218088b0f60bf6e8c3a62891ba275a7269",
+                "reference": "85b2a5218088b0f60bf6e8c3a62891ba275a7269",
                 "shasum": ""
             },
             "require": {
@@ -3452,7 +3452,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2019-01-28T20:53:19+00:00"
+            "time": "2019-07-09T14:00:53+00:00"
         },
         {
             "name": "laravel/socialite",
@@ -3754,16 +3754,16 @@
         },
         {
             "name": "league/flysystem-webdav",
-            "version": "1.0.7",
+            "version": "1.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem-webdav.git",
-                "reference": "8d2d7921a3fb5ea52feff33c5ad6856849c2be72"
+                "reference": "9c69aecba498f07da66c25f45bf3e68053fa76a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem-webdav/zipball/8d2d7921a3fb5ea52feff33c5ad6856849c2be72",
-                "reference": "8d2d7921a3fb5ea52feff33c5ad6856849c2be72",
+                "url": "https://api.github.com/repos/thephpleague/flysystem-webdav/zipball/9c69aecba498f07da66c25f45bf3e68053fa76a0",
+                "reference": "9c69aecba498f07da66c25f45bf3e68053fa76a0",
                 "shasum": ""
             },
             "require": {
@@ -3797,7 +3797,7 @@
                 }
             ],
             "description": "Flysystem adapter for WebDAV",
-            "time": "2019-06-23T18:06:46+00:00"
+            "time": "2019-07-08T20:21:03+00:00"
         },
         {
             "name": "league/oauth1-client",
@@ -4942,16 +4942,16 @@
         },
         {
             "name": "phpseclib/phpseclib",
-            "version": "2.0.20",
+            "version": "2.0.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "d6819a55b05e123db1e881d8b230d57f912126be"
+                "reference": "9f1287e68b3f283339a9f98f67515dd619e5bf9d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/d6819a55b05e123db1e881d8b230d57f912126be",
-                "reference": "d6819a55b05e123db1e881d8b230d57f912126be",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/9f1287e68b3f283339a9f98f67515dd619e5bf9d",
+                "reference": "9f1287e68b3f283339a9f98f67515dd619e5bf9d",
                 "shasum": ""
             },
             "require": {
@@ -5030,7 +5030,7 @@
                 "x.509",
                 "x509"
             ],
-            "time": "2019-06-23T16:33:11+00:00"
+            "time": "2019-07-12T12:53:49+00:00"
         },
         {
             "name": "predis/predis",
@@ -8265,16 +8265,16 @@
         },
         {
             "name": "filp/whoops",
-            "version": "2.4.0",
+            "version": "2.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filp/whoops.git",
-                "reference": "1a1a1044ad00e285bd2825fac4c3a0443d90ad33"
+                "reference": "6fb502c23885701a991b0bba974b1a8eb6673577"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filp/whoops/zipball/1a1a1044ad00e285bd2825fac4c3a0443d90ad33",
-                "reference": "1a1a1044ad00e285bd2825fac4c3a0443d90ad33",
+                "url": "https://api.github.com/repos/filp/whoops/zipball/6fb502c23885701a991b0bba974b1a8eb6673577",
+                "reference": "6fb502c23885701a991b0bba974b1a8eb6673577",
                 "shasum": ""
             },
             "require": {
@@ -8322,7 +8322,7 @@
                 "throwable",
                 "whoops"
             ],
-            "time": "2019-06-23T09:00:00+00:00"
+            "time": "2019-07-04T09:00:00+00:00"
         },
         {
             "name": "fzaninotto/faker",
@@ -10258,20 +10258,10 @@
             "time": "2018-12-25T11:19:39+00:00"
         }
     ],
-    "aliases": [
-        {
-            "alias": "0.15.2",
-            "alias_normalized": "0.15.2.0",
-            "version": "dev-remove-mysql",
-            "package": "dreamfactory/df-sqldb"
-        }
-    ],
+    "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "dreamfactory/df-admin-app": 20,
-        "dreamfactory/df-api-docs-ui": 20,
-        "dreamfactory/df-git": 20,
-        "dreamfactory/df-sqldb": 20
+        "dreamfactory/df-admin-app": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
