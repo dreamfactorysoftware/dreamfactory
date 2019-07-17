@@ -62,8 +62,8 @@
 
                         <p>
                             Your DreamFactory instance requires at least one system administrator.
-                            Complete this form to create your first admin user.
-                            More users can be easily added using the 'Admin' application.
+                            Complete this form to create your first administrator.
+                            Additional administrators can be added using the 'Admin' application.
                         </p>
 
                         <div class="form-group">
