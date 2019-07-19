@@ -26,20 +26,9 @@
   "minimum-stability": "dev",
   "prefer-stable":     true,
   "repositories":      [
-    {
-      "type": "vcs",
-      "url":  "https://github.com/dreamfactorysoftware/df-admin-app"
-    },
-    {
-      "type": "vcs",
-      "url":  "https://github.com/dreamfactorysoftware/df-api-docs-ui"
-    }, {
-      "type": "vcs",
-      "url":  "https://github.com/dreamfactorysoftware/df-git"
-    }
   ],
   "require":           {
-    "dreamfactory/df-admin-app":       "dev-3.0-beta",
+    "dreamfactory/df-admin-app":       "~3.0.0",
     "dreamfactory/df-api-docs-ui":     "~3.0.0",
     "dreamfactory/df-apidoc":          "~0.6.2",
     "dreamfactory/df-aws":             "~0.15.5",
