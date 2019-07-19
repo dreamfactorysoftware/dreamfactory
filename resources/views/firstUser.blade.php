@@ -26,20 +26,6 @@
 </head>
 <body>
 
-<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container-fluid df-navbar">
-        <div class="navbar-header">
-            <div class="pull-left df-logo"><a href="/"><img src="/img/logo-navbar-194x42.png"></a></div>
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-nav">
-                <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span
-                        class="icon-bar"></span> <span class="icon-bar"></span>
-            </button>
-        </div>
-
-        <div id="navbar-container"></div>
-    </div>
-</div>
-
 <div id="page-content">
     <div class="container-fluid container-inner">
         <div id="error-container" class="alert alert-error center">
@@ -58,12 +44,10 @@
             <div class="box-wrapper">
                 <form role="form" method="POST" action="{{ url('/setup') }}">
                     <div id="formbox" class="form-light boxed drop-shadow lifted">
-                        <h2 class="inset">Create a System Admin User</h2>
+                        <h2 class="inset">Create a System Administrator</h2>
 
                         <p>
-                            Your DreamFactory instance requires at least one system administrator.
-                            Complete this form to create your first admin user.
-                            More users can be easily added using the 'Admin' application.
+                            Complete this form to create your first administrator. Additional administrators can be added using the 'Admin' application.
                         </p>
 
                         <div class="form-group">
