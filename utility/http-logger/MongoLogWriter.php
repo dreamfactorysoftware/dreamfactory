@@ -14,6 +14,10 @@ class MongoLogWriter implements \Spatie\HttpLogger\LogWriter
 
         $uri = $request->getPathInfo();
 
+        if(substr($uri, -1) == '/') {
+            $uri = substr($uri, 0, -1);
+        }
+
         $bodyAsJson = json_encode($request->except(config('http-logger.except')));
 
         $files = array_map(function (UploadedFile $file) {
@@ -24,7 +28,15 @@ class MongoLogWriter implements \Spatie\HttpLogger\LogWriter
 
         $message = "{$method} {$uri} - Body: {$bodyAsJson} - Files: ".implode(', ', $files);
 
-        \DB::connection('logsdb')->collection('access')->insert(['timestamp' => $timestamp->toDateTimeString(), 'method' => $method, 'uri' => $uri, 'body' => $bodyAsJson]);
+        \DB::connection('logsdb')->collection('access')->insert(
+            [
+                'timestamp' => $timestamp->toDateTimeString(),
+                'method' => $method,
+                'uri' => $uri,
+                'body' => $bodyAsJson,
+                'expireAt' => new \MongoDB\BSON\UTCDateTime(\Carbon\Carbon::now()->addDays(45)->getTimestamp()*1000)
+            ]
+        );
 
         Log::info($message);
     }
