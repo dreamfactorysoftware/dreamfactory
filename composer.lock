@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6ce52810b1383a8d82c9ad60f27bc315",
+    "content-hash": "98a0df9f61ba90e95e145f7483acd659",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -814,9 +814,9 @@
             "authors": [
                 {
                     "name": "Michael Bailly",
+                    "role": "Developer",
                     "email": "mickael.bailly@free.fr",
-                    "homepage": "https://github.com/dready92/",
-                    "role": "Developer"
+                    "homepage": "https://github.com/dready92/"
                 }
             ],
             "description": "CouchDB NoSQL database access in PHP",
@@ -916,8 +916,8 @@
             "authors": [
                 {
                     "name": "DreamFactory Dev Team",
-                    "email": "dspsupport@dreamfactory.com",
-                    "role": "Development team"
+                    "role": "Development team",
+                    "email": "dspsupport@dreamfactory.com"
                 }
             ],
             "description": "DreamFactory(tm) Admin Console",
@@ -957,6 +957,7 @@
                 },
                 "installer-name": "df-api-docs-ui"
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
@@ -975,12 +976,6 @@
                 "rest",
                 "swagger"
             ],
-            "support": {
-                "source": "https://github.com/dreamfactorysoftware/df-api-docs-ui",
-                "issues": "https://github.com/dreamfactorysoftware/df-api-docs-ui/issues",
-                "email": "dspsupport@dreamfactory.com",
-                "wiki": "https://wiki.dreamfactory.com"
-            },
             "time": "2019-07-15T20:38:26+00:00"
         },
         {
@@ -1682,16 +1677,16 @@
         },
         {
             "name": "dreamfactory/df-filemanager-app",
-            "version": "0.3.0",
+            "version": "1.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-filemanager-app.git",
-                "reference": "8f51a758995f6e5e45cc6c47cdff32bff191a8a8"
+                "reference": "c7ef02dbe5f991fd0143ec1c1dd7b83c316920ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-filemanager-app/zipball/8f51a758995f6e5e45cc6c47cdff32bff191a8a8",
-                "reference": "8f51a758995f6e5e45cc6c47cdff32bff191a8a8",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-filemanager-app/zipball/c7ef02dbe5f991fd0143ec1c1dd7b83c316920ae",
+                "reference": "c7ef02dbe5f991fd0143ec1c1dd7b83c316920ae",
                 "shasum": ""
             },
             "require": {
@@ -1700,7 +1695,7 @@
             "type": "dreamfactory-app",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "0.3.x-dev"
+                    "dev-develop": "0.1.x-dev"
                 },
                 "installer-name": "filemanager"
             },
@@ -1711,8 +1706,8 @@
             "authors": [
                 {
                     "name": "DreamFactory Software, Inc.",
-                    "email": "dspsupport@dreamfactory.com",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "email": "support@dreamfactory.com"
                 }
             ],
             "description": "DreamFactory(tm) File Manager",
@@ -1723,7 +1718,7 @@
                 "file manager",
                 "rest"
             ],
-            "time": "2017-11-07T19:29:49+00:00"
+            "time": "2017-06-08T14:30:21+00:00"
         },
         {
             "name": "dreamfactory/df-firebird",
@@ -3591,8 +3586,8 @@
             "authors": [
                 {
                     "name": "Luís Otávio Cobucci Oblonczyk",
-                    "email": "lcobucci@gmail.com",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "email": "lcobucci@gmail.com"
                 }
             ],
             "description": "A simple library to work with JSON Web Token and JSON Web Signature",
@@ -3816,9 +3811,9 @@
             "authors": [
                 {
                     "name": "Ben Corlett",
+                    "role": "Developer",
                     "email": "bencorlett@me.com",
-                    "homepage": "http://www.webcomm.com.au",
-                    "role": "Developer"
+                    "homepage": "http://www.webcomm.com.au"
                 }
             ],
             "description": "OAuth 1.0 Client Library",
@@ -4961,28 +4956,28 @@
             "authors": [
                 {
                     "name": "Jim Wigginton",
-                    "email": "terrafrost@php.net",
-                    "role": "Lead Developer"
+                    "role": "Lead Developer",
+                    "email": "terrafrost@php.net"
                 },
                 {
                     "name": "Patrick Monnerat",
-                    "email": "pm@datasphere.ch",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "email": "pm@datasphere.ch"
                 },
                 {
                     "name": "Andreas Fischer",
-                    "email": "bantu@phpbb.com",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "email": "bantu@phpbb.com"
                 },
                 {
                     "name": "Hans-Jürgen Petrich",
-                    "email": "petrich@tronic-media.com",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "email": "petrich@tronic-media.com"
                 },
                 {
                     "name": "Graham Campbell",
-                    "email": "graham@alt-three.com",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "email": "graham@alt-three.com"
                 }
             ],
             "description": "PHP Secure Communications Library - Pure-PHP implementations of RSA, AES, SSH2, SFTP, X.509 etc.",
@@ -5618,9 +5613,9 @@
             "authors": [
                 {
                     "name": "Evert Pot",
+                    "role": "Developer",
                     "email": "me@evertpot.com",
-                    "homepage": "http://evertpot.com/",
-                    "role": "Developer"
+                    "homepage": "http://evertpot.com/"
                 }
             ],
             "description": "WebDAV Framework for PHP",
@@ -5673,9 +5668,9 @@
             "authors": [
                 {
                     "name": "Evert Pot",
+                    "role": "Developer",
                     "email": "me@evertpot.com",
-                    "homepage": "http://evertpot.com/",
-                    "role": "Developer"
+                    "homepage": "http://evertpot.com/"
                 }
             ],
             "description": "sabre/event is a library for lightweight event-based programming",
@@ -5735,9 +5730,9 @@
             "authors": [
                 {
                     "name": "Evert Pot",
+                    "role": "Developer",
                     "email": "me@evertpot.com",
-                    "homepage": "http://evertpot.com/",
-                    "role": "Developer"
+                    "homepage": "http://evertpot.com/"
                 }
             ],
             "description": "The sabre/http library provides utilities for dealing with http requests and responses. ",
@@ -5784,9 +5779,9 @@
             "authors": [
                 {
                     "name": "Evert Pot",
+                    "role": "Developer",
                     "email": "me@evertpot.com",
-                    "homepage": "http://evertpot.com/",
-                    "role": "Developer"
+                    "homepage": "http://evertpot.com/"
                 }
             ],
             "description": "Functions for making sense out of URIs.",
@@ -5845,21 +5840,21 @@
             "authors": [
                 {
                     "name": "Evert Pot",
+                    "role": "Developer",
                     "email": "me@evertpot.com",
-                    "homepage": "http://evertpot.com/",
-                    "role": "Developer"
+                    "homepage": "http://evertpot.com/"
                 },
                 {
                     "name": "Dominik Tobschall",
+                    "role": "Developer",
                     "email": "dominik@fruux.com",
-                    "homepage": "http://tobschall.de/",
-                    "role": "Developer"
+                    "homepage": "http://tobschall.de/"
                 },
                 {
                     "name": "Ivan Enderlin",
+                    "role": "Developer",
                     "email": "ivan.enderlin@hoa-project.net",
-                    "homepage": "http://mnt.io/",
-                    "role": "Developer"
+                    "homepage": "http://mnt.io/"
                 }
             ],
             "description": "The VObject library for PHP allows you to easily parse and manipulate iCalendar and vCard objects",
@@ -5937,14 +5932,14 @@
             "authors": [
                 {
                     "name": "Evert Pot",
+                    "role": "Developer",
                     "email": "me@evertpot.com",
-                    "homepage": "http://evertpot.com/",
-                    "role": "Developer"
+                    "homepage": "http://evertpot.com/"
                 },
                 {
                     "name": "Markus Staab",
-                    "email": "markus.staab@redaxo.de",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "email": "markus.staab@redaxo.de"
                 }
             ],
             "description": "sabre/xml is an XML library that you may not hate.",
@@ -7575,8 +7570,8 @@
             "authors": [
                 {
                     "name": "Tijs Verkoyen",
-                    "email": "css_to_inline_styles@verkoyen.eu",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "email": "css_to_inline_styles@verkoyen.eu"
                 }
             ],
             "description": "CssToInlineStyles is a class that enables you to convert HTML-pages/files into HTML-pages/files with inline styles. This is very useful when you're sending emails.",
@@ -7642,9 +7637,9 @@
             "authors": [
                 {
                     "name": "Sean Tymon",
+                    "role": "Developer",
                     "email": "tymon148@gmail.com",
-                    "homepage": "https://tymon.xyz",
-                    "role": "Developer"
+                    "homepage": "https://tymon.xyz"
                 }
             ],
             "description": "JSON Web Token Authentication for Laravel and Lumen",
@@ -8284,8 +8279,8 @@
             "authors": [
                 {
                     "name": "Filipe Dobreira",
-                    "homepage": "https://github.com/filp",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "homepage": "https://github.com/filp"
                 }
             ],
             "description": "php error handling for cool kids",
@@ -8768,18 +8763,18 @@
             "authors": [
                 {
                     "name": "Arne Blankerts",
-                    "email": "arne@blankerts.de",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "email": "arne@blankerts.de"
                 },
                 {
                     "name": "Sebastian Heuer",
-                    "email": "sebastian@phpeople.de",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "email": "sebastian@phpeople.de"
                 },
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "email": "sebastian@phpunit.de"
                 }
             ],
             "description": "Component for reading phar.io manifest information from a PHP Archive (PHAR)",
@@ -8815,18 +8810,18 @@
             "authors": [
                 {
                     "name": "Arne Blankerts",
-                    "email": "arne@blankerts.de",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "email": "arne@blankerts.de"
                 },
                 {
                     "name": "Sebastian Heuer",
-                    "email": "sebastian@phpeople.de",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "email": "sebastian@phpeople.de"
                 },
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "email": "sebastian@phpunit.de"
                 }
             ],
             "description": "Library for handling version information and constraints",
@@ -9097,8 +9092,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sebastian@phpunit.de"
                 }
             ],
             "description": "Library that provides collection, processing, and rendering functionality for PHP code coverage information.",
@@ -9145,8 +9140,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sb@sebastian-bergmann.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sb@sebastian-bergmann.de"
                 }
             ],
             "description": "FilterIterator implementation that filters files based on a list of suffixes.",
@@ -9187,8 +9182,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sebastian@phpunit.de"
                 }
             ],
             "description": "Simple template engine.",
@@ -9236,8 +9231,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sb@sebastian-bergmann.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sb@sebastian-bergmann.de"
                 }
             ],
             "description": "Utility class for timing",
@@ -9367,8 +9362,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sebastian@phpunit.de"
                 }
             ],
             "description": "The PHP Unit Testing framework.",
@@ -9991,8 +9986,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sebastian@phpunit.de"
                 }
             ],
             "description": "Library that helps with managing the version number of Git-hosted PHP projects",
@@ -10175,8 +10170,8 @@
             "authors": [
                 {
                     "name": "Arne Blankerts",
-                    "email": "arne@blankerts.de",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "email": "arne@blankerts.de"
                 }
             ],
             "description": "A small library for converting tokenized PHP source code into XML and potentially other formats",
