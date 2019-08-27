@@ -112,6 +112,14 @@ return [
             'password' => env('REDIS_PASSWORD', null), // Needed by Redis Cloud and other similar services
         ],
 
+        'session' => [
+            'host'     => env('REDIS_HOST', '127.0.0.1'),
+            'port'     => env('REDIS_PORT', 6379),
+            'prefix'   => 'laravel_session:',
+            'database' => env('REDIS_DATABASE', 4),
+            'password' => env('REDIS_PASSWORD', null),
+        ],
+
         'broadcast' => [
             'host'     => env('BROADCAST_HOST', env('REDIS_HOST')),
             'port'     => env('BROADCAST_PORT', env('REDIS_PORT')),
