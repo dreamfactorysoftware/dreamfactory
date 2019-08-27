@@ -73,6 +73,12 @@ return [
             'connection' => 'cache',
         ],
 
+        'session' => [
+            'driver' => 'redis',
+            'connection' => 'session',
+            'prefix'   => 'laravel_session',
+        ],
+
     ],
 
     /*
