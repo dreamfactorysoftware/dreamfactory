@@ -26,6 +26,22 @@
   "minimum-stability": "dev",
   "prefer-stable":     true,
   "repositories":      [
+    {
+      "type": "vcs",
+      "url":  "https://github.com/dreamfactorysoftware/df-admin-app"
+    },
+    {
+      "type": "vcs",
+      "url":  "https://github.com/dreamfactorysoftware/df-api-docs-ui"
+    },
+    {
+      "type": "vcs",
+      "url":  "https://github.com/dreamfactorysoftware/df-script"
+    },
+    {
+      "type": "vcs",
+      "url":  "https://github.com/dreamfactorysoftware/df-git"
+    }
   ],
   "require":           {
     "dreamfactory/df-admin-app":       "~3.0.0",
@@ -53,7 +69,8 @@
     "predis/predis":                   "~1.0",
     "fideloper/proxy":                 "~3.3",
     "laravel/framework":               "5.5.*",
-    "laravel/tinker":                  "~1.0"
+    "laravel/tinker":                  "~1.0",
+    "spatie/laravel-http-logger":      "^1.1",
   },
   "require-dev":       {
     "barryvdh/laravel-ide-helper": "~2.1",
@@ -68,7 +85,8 @@
   "autoload":          {
     "classmap": [
       "database/seeds",
-      "database/factories"
+      "database/factories",
+      "utility"
     ],
     "psr-4":    {
       "DreamFactory\\": "app/"
