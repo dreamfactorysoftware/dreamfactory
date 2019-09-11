@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.110.10",
+            "version": "3.111.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "705fc1ffe05747e6789b19480764ebcd06995911"
+                "reference": "08d3993286be11009809295e0ebfc7b909294dcc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/705fc1ffe05747e6789b19480764ebcd06995911",
-                "reference": "705fc1ffe05747e6789b19480764ebcd06995911",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/08d3993286be11009809295e0ebfc7b909294dcc",
+                "reference": "08d3993286be11009809295e0ebfc7b909294dcc",
                 "shasum": ""
             },
             "require": {
@@ -87,7 +87,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2019-09-05T18:11:21+00:00"
+            "time": "2019-09-10T18:12:46+00:00"
         },
         {
             "name": "barryvdh/laravel-cors",
@@ -1618,16 +1618,16 @@
         },
         {
             "name": "dreamfactory/df-file",
-            "version": "0.6.3",
+            "version": "0.6.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-file.git",
-                "reference": "2d5d2d19fcc1e35ec1d75bfd2b017997a24c4806"
+                "reference": "f1afff8c16e93bb767cb6ee7b3db27cc04f83e8c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-file/zipball/2d5d2d19fcc1e35ec1d75bfd2b017997a24c4806",
-                "reference": "2d5d2d19fcc1e35ec1d75bfd2b017997a24c4806",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-file/zipball/f1afff8c16e93bb767cb6ee7b3db27cc04f83e8c",
+                "reference": "f1afff8c16e93bb767cb6ee7b3db27cc04f83e8c",
                 "shasum": ""
             },
             "require": {
@@ -1660,12 +1660,12 @@
             ],
             "authors": [
                 {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                },
-                {
                     "name": "Arif Islam",
                     "email": "arifislam@dreamfactory.com"
+                },
+                {
+                    "name": "Lee Hicks",
+                    "email": "leehicks@dreamfactory.com"
                 }
             ],
             "description": "File service for DreamFactory Platform 2.0",
@@ -1680,7 +1680,7 @@
                 "rest",
                 "storage"
             ],
-            "time": "2019-07-18T12:06:51+00:00"
+            "time": "2019-09-11T11:41:32+00:00"
         },
         {
             "name": "dreamfactory/df-filemanager-app",
@@ -3997,16 +3997,16 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "1.24.0",
+            "version": "1.25.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "bfc9ebb28f97e7a24c45bdc3f0ff482e47bb0266"
+                "reference": "70e65a5470a42cfec1a7da00d30edb6e617e8dcf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/bfc9ebb28f97e7a24c45bdc3f0ff482e47bb0266",
-                "reference": "bfc9ebb28f97e7a24c45bdc3f0ff482e47bb0266",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/70e65a5470a42cfec1a7da00d30edb6e617e8dcf",
+                "reference": "70e65a5470a42cfec1a7da00d30edb6e617e8dcf",
                 "shasum": ""
             },
             "require": {
@@ -4071,7 +4071,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2018-11-05T09:00:11+00:00"
+            "time": "2019-09-06T13:49:17+00:00"
         },
         {
             "name": "mtdowling/cron-expression",
@@ -7816,37 +7816,34 @@
     "packages-dev": [
         {
             "name": "barryvdh/laravel-ide-helper",
-            "version": "v2.6.4",
+            "version": "v2.6.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/barryvdh/laravel-ide-helper.git",
-                "reference": "16eb4f65ee0d51b1f1182d56ae28ee00a70ce75a"
+                "reference": "8740a9a158d3dd5cfc706a9d4cc1bf7a518f99f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-ide-helper/zipball/16eb4f65ee0d51b1f1182d56ae28ee00a70ce75a",
-                "reference": "16eb4f65ee0d51b1f1182d56ae28ee00a70ce75a",
+                "url": "https://api.github.com/repos/barryvdh/laravel-ide-helper/zipball/8740a9a158d3dd5cfc706a9d4cc1bf7a518f99f3",
+                "reference": "8740a9a158d3dd5cfc706a9d4cc1bf7a518f99f3",
                 "shasum": ""
             },
             "require": {
                 "barryvdh/reflection-docblock": "^2.0.6",
                 "composer/composer": "^1.6",
+                "doctrine/dbal": "~2.3",
                 "illuminate/console": "^5.5|^6",
                 "illuminate/filesystem": "^5.5|^6",
                 "illuminate/support": "^5.5|^6",
                 "php": ">=7"
             },
             "require-dev": {
-                "doctrine/dbal": "~2.3",
                 "illuminate/config": "^5.5|^6",
                 "illuminate/view": "^5.5|^6",
                 "phpro/grumphp": "^0.14",
                 "phpunit/phpunit": "4.*",
                 "scrutinizer/ocular": "~1.1",
                 "squizlabs/php_codesniffer": "^3"
-            },
-            "suggest": {
-                "doctrine/dbal": "Load information from the database about models for phpdocs (~2.3)"
             },
             "type": "library",
             "extra": {
@@ -7886,7 +7883,7 @@
                 "phpstorm",
                 "sublime"
             ],
-            "time": "2019-09-03T17:51:13+00:00"
+            "time": "2019-09-08T09:56:38+00:00"
         },
         {
             "name": "barryvdh/reflection-docblock",
@@ -8340,8 +8337,8 @@
             "authors": [
                 {
                     "name": "Filipe Dobreira",
-                    "role": "Developer",
-                    "homepage": "https://github.com/filp"
+                    "homepage": "https://github.com/filp",
+                    "role": "Developer"
                 }
             ],
             "description": "php error handling for cool kids",
@@ -8573,25 +8570,25 @@
         },
         {
             "name": "laracasts/testdummy",
-            "version": "2.3.2",
+            "version": "2.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laracasts/TestDummy.git",
-                "reference": "ba986a66b6f4a1e149355357353af3072d5521ee"
+                "reference": "684b0bfe8835b414048ecf8eb412b99301e3786a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laracasts/TestDummy/zipball/ba986a66b6f4a1e149355357353af3072d5521ee",
-                "reference": "ba986a66b6f4a1e149355357353af3072d5521ee",
+                "url": "https://api.github.com/repos/laracasts/TestDummy/zipball/684b0bfe8835b414048ecf8eb412b99301e3786a",
+                "reference": "684b0bfe8835b414048ecf8eb412b99301e3786a",
                 "shasum": ""
             },
             "require": {
                 "fzaninotto/faker": "~1.4",
-                "illuminate/support": "~4.0|~5.0",
+                "illuminate/support": "~4.0|~5.0|~6.0",
                 "php": ">=5.4.0"
             },
             "require-dev": {
-                "illuminate/database": "~4.0|~5.0",
+                "illuminate/database": "~4.0|~5.0|~6.0",
                 "phpspec/phpspec": "~2.0",
                 "phpunit/phpunit": "~4.7@dev"
             },
@@ -8621,7 +8618,7 @@
                 "stubs",
                 "testing"
             ],
-            "time": "2015-04-27T15:56:12+00:00"
+            "time": "2019-09-07T16:13:05+00:00"
         },
         {
             "name": "laravel/homestead",
@@ -8824,18 +8821,18 @@
             "authors": [
                 {
                     "name": "Arne Blankerts",
-                    "role": "Developer",
-                    "email": "arne@blankerts.de"
+                    "email": "arne@blankerts.de",
+                    "role": "Developer"
                 },
                 {
                     "name": "Sebastian Heuer",
-                    "role": "Developer",
-                    "email": "sebastian@phpeople.de"
+                    "email": "sebastian@phpeople.de",
+                    "role": "Developer"
                 },
                 {
                     "name": "Sebastian Bergmann",
-                    "role": "Developer",
-                    "email": "sebastian@phpunit.de"
+                    "email": "sebastian@phpunit.de",
+                    "role": "Developer"
                 }
             ],
             "description": "Component for reading phar.io manifest information from a PHP Archive (PHAR)",
