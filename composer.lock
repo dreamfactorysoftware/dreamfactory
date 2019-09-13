@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c5ab3ab94b4447c065adfd83fdebb64b",
+    "content-hash": "3709ab558148dce4a11d8a7a92242f46",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -889,16 +889,16 @@
         },
         {
             "name": "dreamfactory/df-admin-app",
-            "version": "3.0.2",
+            "version": "3.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-admin-app.git",
-                "reference": "619e2b6a566a9ca915d0c721a8e26e05aa2a77a5"
+                "reference": "0ce730f762015718c75d83fb526a41d4d7f067e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-admin-app/zipball/619e2b6a566a9ca915d0c721a8e26e05aa2a77a5",
-                "reference": "619e2b6a566a9ca915d0c721a8e26e05aa2a77a5",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-admin-app/zipball/0ce730f762015718c75d83fb526a41d4d7f067e3",
+                "reference": "0ce730f762015718c75d83fb526a41d4d7f067e3",
                 "shasum": ""
             },
             "require": {
@@ -933,7 +933,7 @@
                 "remote web services",
                 "rest"
             ],
-            "time": "2019-09-05T15:46:32+00:00"
+            "time": "2019-09-13T13:27:47+00:00"
         },
         {
             "name": "dreamfactory/df-api-docs-ui",
@@ -959,14 +959,15 @@
                 },
                 "installer-name": "df-api-docs-ui"
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
             "authors": [
                 {
                     "name": "DreamFactory Software, Inc.",
-                    "email": "dspsupport@dreamfactory.com",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "email": "dspsupport@dreamfactory.com"
                 }
             ],
             "description": "DreamFactory(tm) API Docs",
@@ -977,12 +978,6 @@
                 "rest",
                 "swagger"
             ],
-            "support": {
-                "source": "https://github.com/dreamfactorysoftware/df-api-docs-ui",
-                "issues": "https://github.com/dreamfactorysoftware/df-api-docs-ui/issues",
-                "email": "dspsupport@dreamfactory.com",
-                "wiki": "https://wiki.dreamfactory.com"
-            },
             "time": "2019-07-15T20:38:26+00:00"
         },
         {
@@ -3819,9 +3814,9 @@
             "authors": [
                 {
                     "name": "Ben Corlett",
+                    "role": "Developer",
                     "email": "bencorlett@me.com",
-                    "homepage": "http://www.webcomm.com.au",
-                    "role": "Developer"
+                    "homepage": "http://www.webcomm.com.au"
                 }
             ],
             "description": "OAuth 1.0 Client Library",
@@ -5729,9 +5724,9 @@
             "authors": [
                 {
                     "name": "Evert Pot",
+                    "role": "Developer",
                     "email": "me@evertpot.com",
-                    "homepage": "http://evertpot.com/",
-                    "role": "Developer"
+                    "homepage": "http://evertpot.com/"
                 }
             ],
             "description": "sabre/event is a library for lightweight event-based programming",
@@ -5993,14 +5988,14 @@
             "authors": [
                 {
                     "name": "Evert Pot",
+                    "role": "Developer",
                     "email": "me@evertpot.com",
-                    "homepage": "http://evertpot.com/",
-                    "role": "Developer"
+                    "homepage": "http://evertpot.com/"
                 },
                 {
                     "name": "Markus Staab",
-                    "email": "markus.staab@redaxo.de",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "email": "markus.staab@redaxo.de"
                 }
             ],
             "description": "sabre/xml is an XML library that you may not hate.",
