@@ -82,7 +82,7 @@ return [
     */
 
     'interfaces' => [
-        '\Illuminate\Contracts\Auth\Authenticatable' => config('auth.model', 'DreamFactory\User'),
+        '\Illuminate\Contracts\Auth\Authenticatable' => config('auth.model', DreamFactory\User::class),
     ],
 
 ];
