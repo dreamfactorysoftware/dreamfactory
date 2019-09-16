@@ -2,10 +2,10 @@
 
 namespace DreamFactory\Http\Controllers\Auth;
 
-use DreamFactory\User;
 use DreamFactory\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
+use DreamFactory\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {

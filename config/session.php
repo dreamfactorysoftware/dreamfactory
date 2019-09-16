@@ -16,7 +16,7 @@ return [
     |
     */
 
-	'driver' => env('SESSION_DRIVER', 'array'),
+    'driver' => env('SESSION_DRIVER', 'array'),
 
     /*
     |--------------------------------------------------------------------------
@@ -57,7 +57,7 @@ return [
     |
     */
 
-    'files' => env('DF_MANAGED_SESSION_PATH', storage_path() . '/framework/sessions'),
+    'files' => env('DF_MANAGED_SESSION_PATH', storage_path().'/framework/sessions'),
 
     /*
     |--------------------------------------------------------------------------

@@ -77,7 +77,7 @@ return [
             'password' => env('LIMIT_CACHE_PASSWORD', env('LIMIT_CACHE_REDIS_PASSWORD', env('REDIS_PASSWORD'))),
         ],
 
-        /** Managed instance limits cache */
+        /* Managed instance limits cache */
         env('DF_LIMITS_CACHE_STORE', 'dfe-limits') => [
             'driver' => 'file',
             'path'   => env('DF_LIMITS_CACHE_PATH', storage_path('framework/cache')),
