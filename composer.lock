@@ -4,20 +4,72 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c5ab3ab94b4447c065adfd83fdebb64b",
+    "content-hash": "0127b1196b6bae5ef99ce0df315b9332",
     "packages": [
         {
-            "name": "aws/aws-sdk-php",
-            "version": "3.111.1",
+            "name": "asm89/stack-cors",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "08d3993286be11009809295e0ebfc7b909294dcc"
+                "url": "https://github.com/asm89/stack-cors.git",
+                "reference": "c163e2b614550aedcf71165db2473d936abbced6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/08d3993286be11009809295e0ebfc7b909294dcc",
-                "reference": "08d3993286be11009809295e0ebfc7b909294dcc",
+                "url": "https://api.github.com/repos/asm89/stack-cors/zipball/c163e2b614550aedcf71165db2473d936abbced6",
+                "reference": "c163e2b614550aedcf71165db2473d936abbced6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.9",
+                "symfony/http-foundation": "~2.7|~3.0|~4.0",
+                "symfony/http-kernel": "~2.7|~3.0|~4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.0 || ^4.8.10",
+                "squizlabs/php_codesniffer": "^2.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Asm89\\Stack\\": "src/Asm89/Stack/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alexander",
+                    "email": "iam.asm89@gmail.com"
+                }
+            ],
+            "description": "Cross-origin resource sharing library and stack middleware",
+            "homepage": "https://github.com/asm89/stack-cors",
+            "keywords": [
+                "cors",
+                "stack"
+            ],
+            "time": "2017-12-20T14:37:45+00:00"
+        },
+        {
+            "name": "aws/aws-sdk-php",
+            "version": "3.112.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/aws/aws-sdk-php.git",
+                "reference": "0d7a3ecb5dca10d1872ee5106cb154cbef52cf1c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/0d7a3ecb5dca10d1872ee5106cb154cbef52cf1c",
+                "reference": "0d7a3ecb5dca10d1872ee5106cb154cbef52cf1c",
                 "shasum": ""
             },
             "require": {
@@ -87,37 +139,39 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2019-09-10T18:12:46+00:00"
+            "time": "2019-09-17T18:07:57+00:00"
         },
         {
             "name": "barryvdh/laravel-cors",
-            "version": "v0.10.1",
+            "version": "v0.11.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/barryvdh/laravel-cors.git",
-                "reference": "b64caccbfc33b9ee2ba7dcce3307590882ede9ad"
+                "reference": "03492f1a3bc74a05de23f93b94ac7cc5c173eec9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-cors/zipball/b64caccbfc33b9ee2ba7dcce3307590882ede9ad",
-                "reference": "b64caccbfc33b9ee2ba7dcce3307590882ede9ad",
+                "url": "https://api.github.com/repos/barryvdh/laravel-cors/zipball/03492f1a3bc74a05de23f93b94ac7cc5c173eec9",
+                "reference": "03492f1a3bc74a05de23f93b94ac7cc5c173eec9",
                 "shasum": ""
             },
             "require": {
-                "illuminate/support": "5.3.x|5.4.x|5.5.x",
-                "php": ">=5.5.9",
-                "symfony/http-foundation": "~3.1",
-                "symfony/http-kernel": "~3.1"
+                "asm89/stack-cors": "^1.2",
+                "illuminate/support": "^5.5|^6",
+                "php": ">=7",
+                "symfony/http-foundation": "^3.1|^4",
+                "symfony/http-kernel": "^3.1|^4"
             },
             "require-dev": {
-                "orchestra/testbench": "3.x",
-                "phpunit/phpunit": "^4.8|^5.2",
+                "laravel/framework": "^5.5",
+                "orchestra/testbench": "3.3.x|3.4.x|3.5.x|3.6.x|3.7.x",
+                "phpunit/phpunit": "^4.8|^5.2|^7.0",
                 "squizlabs/php_codesniffer": "^2.3"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.10-dev"
+                    "dev-master": "0.11-dev"
                 },
                 "laravel": {
                     "providers": [
@@ -128,10 +182,7 @@
             "autoload": {
                 "psr-4": {
                     "Barryvdh\\Cors\\": "src/"
-                },
-                "classmap": [
-                    "tests"
-                ]
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -150,7 +201,7 @@
                 "crossdomain",
                 "laravel"
             ],
-            "time": "2017-12-19T21:08:24+00:00"
+            "time": "2019-08-28T11:27:11+00:00"
         },
         {
             "name": "bitbucket/client",
@@ -787,6 +838,60 @@
             "time": "2019-07-30T19:33:28+00:00"
         },
         {
+            "name": "dragonmantank/cron-expression",
+            "version": "v2.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dragonmantank/cron-expression.git",
+                "reference": "72b6fbf76adb3cf5bc0db68559b33d41219aba27"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dragonmantank/cron-expression/zipball/72b6fbf76adb3cf5bc0db68559b33d41219aba27",
+                "reference": "72b6fbf76adb3cf5bc0db68559b33d41219aba27",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.4|^7.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Cron\\": "src/Cron/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                },
+                {
+                    "name": "Chris Tankersley",
+                    "email": "chris@ctankersley.com",
+                    "homepage": "https://github.com/dragonmantank"
+                }
+            ],
+            "description": "CRON for PHP: Calculate the next or previous run date and determine if a CRON expression is due",
+            "keywords": [
+                "cron",
+                "schedule"
+            ],
+            "time": "2019-03-31T00:38:28+00:00"
+        },
+        {
             "name": "dready92/php-on-couch",
             "version": "1.0.1-p2",
             "source": {
@@ -889,16 +994,16 @@
         },
         {
             "name": "dreamfactory/df-admin-app",
-            "version": "3.0.2",
+            "version": "3.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-admin-app.git",
-                "reference": "619e2b6a566a9ca915d0c721a8e26e05aa2a77a5"
+                "reference": "0ce730f762015718c75d83fb526a41d4d7f067e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-admin-app/zipball/619e2b6a566a9ca915d0c721a8e26e05aa2a77a5",
-                "reference": "619e2b6a566a9ca915d0c721a8e26e05aa2a77a5",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-admin-app/zipball/0ce730f762015718c75d83fb526a41d4d7f067e3",
+                "reference": "0ce730f762015718c75d83fb526a41d4d7f067e3",
                 "shasum": ""
             },
             "require": {
@@ -933,7 +1038,7 @@
                 "remote web services",
                 "rest"
             ],
-            "time": "2019-09-05T15:46:32+00:00"
+            "time": "2019-09-13T13:27:47+00:00"
         },
         {
             "name": "dreamfactory/df-api-docs-ui",
@@ -959,6 +1064,7 @@
                 },
                 "installer-name": "df-api-docs-ui"
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
@@ -977,30 +1083,24 @@
                 "rest",
                 "swagger"
             ],
-            "support": {
-                "source": "https://github.com/dreamfactorysoftware/df-api-docs-ui",
-                "issues": "https://github.com/dreamfactorysoftware/df-api-docs-ui/issues",
-                "email": "dspsupport@dreamfactory.com",
-                "wiki": "https://wiki.dreamfactory.com"
-            },
             "time": "2019-07-15T20:38:26+00:00"
         },
         {
             "name": "dreamfactory/df-apidoc",
-            "version": "0.6.2",
+            "version": "dev-laravel-upgrade",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-apidoc.git",
-                "reference": "7d1e0fc2298f40ebefda37a818a6c14b229620d6"
+                "reference": "704706587167e92a17cb90c86ab0e834db31d73f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-apidoc/zipball/7d1e0fc2298f40ebefda37a818a6c14b229620d6",
-                "reference": "7d1e0fc2298f40ebefda37a818a6c14b229620d6",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-apidoc/zipball/704706587167e92a17cb90c86ab0e834db31d73f",
+                "reference": "704706587167e92a17cb90c86ab0e834db31d73f",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "~0.15.1"
+                "dreamfactory/df-core": "dev-laravel-upgrade"
             },
             "require-dev": {
                 "phpunit/phpunit": "@stable"
@@ -1027,12 +1127,12 @@
             ],
             "authors": [
                 {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                },
-                {
                     "name": "Arif Islam",
                     "email": "arifislam@dreamfactory.com"
+                },
+                {
+                    "name": "Lee Hicks",
+                    "email": "leehicks@dreamfactory.com"
                 }
             ],
             "description": "DreamFactory(tm) API Documentation Components",
@@ -1044,28 +1144,28 @@
                 "rest",
                 "swagger"
             ],
-            "time": "2019-07-18T12:27:32+00:00"
+            "time": "2019-09-17T12:18:16+00:00"
         },
         {
             "name": "dreamfactory/df-aws",
-            "version": "0.15.5",
+            "version": "dev-laravel-upgrade",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-aws.git",
-                "reference": "9ea425a4fe26a8388f4799a9dcda5474832b9d28"
+                "reference": "6923090fe495f66642741767cd9587cd7b72471b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-aws/zipball/9ea425a4fe26a8388f4799a9dcda5474832b9d28",
-                "reference": "9ea425a4fe26a8388f4799a9dcda5474832b9d28",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-aws/zipball/6923090fe495f66642741767cd9587cd7b72471b",
+                "reference": "6923090fe495f66642741767cd9587cd7b72471b",
                 "shasum": ""
             },
             "require": {
                 "aws/aws-sdk-php": "3.*",
-                "dreamfactory/df-database": "~0.9.4",
-                "dreamfactory/df-email": "~0.8.3",
-                "dreamfactory/df-file": "~0.6.3",
-                "dreamfactory/df-sqldb": "~0.16.0"
+                "dreamfactory/df-database": "dev-laravel-upgrade",
+                "dreamfactory/df-email": "dev-laravel-upgrade",
+                "dreamfactory/df-file": "dev-laravel-upgrade",
+                "dreamfactory/df-sqldb": "dev-laravel-upgrade"
             },
             "type": "library",
             "extra": {
@@ -1089,12 +1189,12 @@
             ],
             "authors": [
                 {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                },
-                {
                     "name": "Arif Islam",
                     "email": "arifislam@dreamfactory.com"
+                },
+                {
+                    "name": "Lee Hicks",
+                    "email": "leehicks@dreamfactory.com"
                 }
             ],
             "description": "AWS package containing services for the DreamFactory Platform 2.0.",
@@ -1108,26 +1208,26 @@
                 "rest",
                 "s3"
             ],
-            "time": "2019-07-18T13:03:04+00:00"
+            "time": "2019-09-17T11:52:45+00:00"
         },
         {
             "name": "dreamfactory/df-azure",
-            "version": "0.15.3",
+            "version": "dev-laravel-upgrade",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-azure.git",
-                "reference": "cc144df72bc990637e11efe0adb49c02c6727d6e"
+                "reference": "5816d0b88ff7e4a4f153ecda516dc7b4fae1f96f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-azure/zipball/cc144df72bc990637e11efe0adb49c02c6727d6e",
-                "reference": "cc144df72bc990637e11efe0adb49c02c6727d6e",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-azure/zipball/5816d0b88ff7e4a4f153ecda516dc7b4fae1f96f",
+                "reference": "5816d0b88ff7e4a4f153ecda516dc7b4fae1f96f",
                 "shasum": ""
             },
             "require": {
                 "dreamfactory/azure-documentdb-php-sdk": "~0.2.0",
-                "dreamfactory/df-database": "~0.9.4",
-                "dreamfactory/df-file": "~0.6.3",
+                "dreamfactory/df-database": "dev-laravel-upgrade",
+                "dreamfactory/df-file": "dev-laravel-upgrade",
                 "microsoft/azure-storage": "0.13.*"
             },
             "type": "library",
@@ -1152,12 +1252,12 @@
             ],
             "authors": [
                 {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                },
-                {
                     "name": "Arif Islam",
                     "email": "arifislam@dreamfactory.com"
+                },
+                {
+                    "name": "Lee Hicks",
+                    "email": "leehicks@dreamfactory.com"
                 }
             ],
             "description": "Microsoft Azure package containing Azure services for the DreamFactory Platform 2.0.",
@@ -1170,24 +1270,24 @@
                 "laravel",
                 "rest"
             ],
-            "time": "2019-07-18T13:19:02+00:00"
+            "time": "2019-09-17T11:54:21+00:00"
         },
         {
             "name": "dreamfactory/df-cache",
-            "version": "0.11.1",
+            "version": "dev-laravel-upgrade",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-cache.git",
-                "reference": "5a19567ee9388f7621a2b2663ee01e10f015af42"
+                "reference": "51ee5c39f0f171b6cf8eabc0b3470a02c66d53c6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-cache/zipball/5a19567ee9388f7621a2b2663ee01e10f015af42",
-                "reference": "5a19567ee9388f7621a2b2663ee01e10f015af42",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-cache/zipball/51ee5c39f0f171b6cf8eabc0b3470a02c66d53c6",
+                "reference": "51ee5c39f0f171b6cf8eabc0b3470a02c66d53c6",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "~0.15.1"
+                "dreamfactory/df-core": "dev-laravel-upgrade"
             },
             "type": "library",
             "extra": {
@@ -1211,12 +1311,12 @@
             ],
             "authors": [
                 {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                },
-                {
                     "name": "Arif Islam",
                     "email": "arifislam@dreamfactory.com"
+                },
+                {
+                    "name": "Lee Hicks",
+                    "email": "leehicks@dreamfactory.com"
                 }
             ],
             "description": "Cache service for DreamFactory Platform 2.0",
@@ -1230,24 +1330,24 @@
                 "redis",
                 "rest"
             ],
-            "time": "2019-07-18T12:32:38+00:00"
+            "time": "2019-09-17T12:16:21+00:00"
         },
         {
             "name": "dreamfactory/df-cassandra",
-            "version": "0.12.3",
+            "version": "dev-laravel-upgrade",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-cassandra.git",
-                "reference": "1348679189a5bc922bedb8f81717b34b0e98082b"
+                "reference": "a4ac3d7620b6522f35007a50a2c7e2a52e221bb1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-cassandra/zipball/1348679189a5bc922bedb8f81717b34b0e98082b",
-                "reference": "1348679189a5bc922bedb8f81717b34b0e98082b",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-cassandra/zipball/a4ac3d7620b6522f35007a50a2c7e2a52e221bb1",
+                "reference": "a4ac3d7620b6522f35007a50a2c7e2a52e221bb1",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-database": "~0.9.4"
+                "dreamfactory/df-database": "dev-laravel-upgrade"
             },
             "type": "library",
             "extra": {
@@ -1271,12 +1371,12 @@
             ],
             "authors": [
                 {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                },
-                {
                     "name": "Arif Islam",
                     "email": "arifislam@dreamfactory.com"
+                },
+                {
+                    "name": "Lee Hicks",
+                    "email": "leehicks@dreamfactory.com"
                 }
             ],
             "description": "Cassandra database service for DreamFactory Platform 2.0",
@@ -1289,24 +1389,24 @@
                 "nosql",
                 "rest"
             ],
-            "time": "2019-07-18T13:25:59+00:00"
+            "time": "2019-09-17T11:56:01+00:00"
         },
         {
             "name": "dreamfactory/df-core",
-            "version": "0.15.2",
+            "version": "dev-laravel-upgrade",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-core.git",
-                "reference": "f66e1e834175e3b4dc18ecf2c522fa0dc156a587"
+                "reference": "a4434fc4a48164165258ff902ad348400116d6a5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/f66e1e834175e3b4dc18ecf2c522fa0dc156a587",
-                "reference": "f66e1e834175e3b4dc18ecf2c522fa0dc156a587",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/a4434fc4a48164165258ff902ad348400116d6a5",
+                "reference": "a4434fc4a48164165258ff902ad348400116d6a5",
                 "shasum": ""
             },
             "require": {
-                "barryvdh/laravel-cors": "~0.10.0",
+                "barryvdh/laravel-cors": "~0.11.0",
                 "doctrine/dbal": "~2.5.0",
                 "guzzlehttp/guzzle": "~6.0",
                 "php": ">=7.0.0",
@@ -1370,24 +1470,24 @@
                 "paas",
                 "rest"
             ],
-            "time": "2019-08-15T13:56:38+00:00"
+            "time": "2019-09-17T11:43:12+00:00"
         },
         {
             "name": "dreamfactory/df-couchbase",
-            "version": "0.10.2",
+            "version": "dev-laravel-upgrade",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-couchbase.git",
-                "reference": "c7db10d718cf19ddee834fc1530372a0e89c3a2f"
+                "reference": "8f0edf731773846defebda1044014797a40fdd55"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-couchbase/zipball/c7db10d718cf19ddee834fc1530372a0e89c3a2f",
-                "reference": "c7db10d718cf19ddee834fc1530372a0e89c3a2f",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-couchbase/zipball/8f0edf731773846defebda1044014797a40fdd55",
+                "reference": "8f0edf731773846defebda1044014797a40fdd55",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-database": "~0.9.4"
+                "dreamfactory/df-database": "dev-laravel-upgrade"
             },
             "type": "library",
             "extra": {
@@ -1411,12 +1511,12 @@
             ],
             "authors": [
                 {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                },
-                {
                     "name": "Arif Islam",
                     "email": "arifislam@dreamfactory.com"
+                },
+                {
+                    "name": "Lee Hicks",
+                    "email": "leehicks@dreamfactory.com"
                 }
             ],
             "description": "Couchbase database service for DreamFactory Platform 2.0",
@@ -1429,25 +1529,25 @@
                 "nosql",
                 "rest"
             ],
-            "time": "2019-07-18T13:23:12+00:00"
+            "time": "2019-09-17T11:58:00+00:00"
         },
         {
             "name": "dreamfactory/df-couchdb",
-            "version": "0.15.2",
+            "version": "dev-laravel-upgrade",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-couchdb.git",
-                "reference": "6f7abc67cc4d016e4b6072afb7a11e566d8904aa"
+                "reference": "2b6889855a36c5109e64821c941c5ec61be63fbf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-couchdb/zipball/6f7abc67cc4d016e4b6072afb7a11e566d8904aa",
-                "reference": "6f7abc67cc4d016e4b6072afb7a11e566d8904aa",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-couchdb/zipball/2b6889855a36c5109e64821c941c5ec61be63fbf",
+                "reference": "2b6889855a36c5109e64821c941c5ec61be63fbf",
                 "shasum": ""
             },
             "require": {
                 "dready92/php-on-couch": "*",
-                "dreamfactory/df-database": "~0.9.4"
+                "dreamfactory/df-database": "dev-laravel-upgrade"
             },
             "type": "library",
             "extra": {
@@ -1471,12 +1571,12 @@
             ],
             "authors": [
                 {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                },
-                {
                     "name": "Arif Islam",
                     "email": "arifislam@dreamfactory.com"
+                },
+                {
+                    "name": "Lee Hicks",
+                    "email": "leehicks@dreamfactory.com"
                 }
             ],
             "description": "The DreamFactory(tm) CouchDB Service.",
@@ -1490,25 +1590,25 @@
                 "nosql",
                 "rest"
             ],
-            "time": "2019-07-18T14:25:54+00:00"
+            "time": "2019-09-17T11:59:36+00:00"
         },
         {
             "name": "dreamfactory/df-database",
-            "version": "0.9.5",
+            "version": "dev-laravel-upgrade",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-database.git",
-                "reference": "9395ad69a0dc7379e398715fe5b8bae80aee593a"
+                "reference": "d578d53a968102d1d9db7fd22bddfbe4b23810bc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-database/zipball/9395ad69a0dc7379e398715fe5b8bae80aee593a",
-                "reference": "9395ad69a0dc7379e398715fe5b8bae80aee593a",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-database/zipball/d578d53a968102d1d9db7fd22bddfbe4b23810bc",
+                "reference": "d578d53a968102d1d9db7fd22bddfbe4b23810bc",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "~0.15.1",
-                "dreamfactory/df-graphql": "~0.1.1"
+                "dreamfactory/df-core": "dev-laravel-upgrade",
+                "dreamfactory/df-graphql": "dev-laravel-upgrade"
             },
             "require-dev": {
                 "phpunit/phpunit": "@stable"
@@ -1552,24 +1652,24 @@
                 "dreamfactory",
                 "rest"
             ],
-            "time": "2019-08-14T10:26:11+00:00"
+            "time": "2019-09-17T11:51:09+00:00"
         },
         {
             "name": "dreamfactory/df-email",
-            "version": "0.8.3",
+            "version": "dev-laravel-upgrade",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-email.git",
-                "reference": "daba562adf256a8d0477a0d18bd5cca15eb75fb1"
+                "reference": "aeffe18a26c5b265b8fb407849ac00453e2f9609"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-email/zipball/daba562adf256a8d0477a0d18bd5cca15eb75fb1",
-                "reference": "daba562adf256a8d0477a0d18bd5cca15eb75fb1",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-email/zipball/aeffe18a26c5b265b8fb407849ac00453e2f9609",
+                "reference": "aeffe18a26c5b265b8fb407849ac00453e2f9609",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "~0.15.1",
+                "dreamfactory/df-core": "dev-laravel-upgrade",
                 "guzzlehttp/guzzle": "~6.0"
             },
             "require-dev": {
@@ -1597,12 +1697,12 @@
             ],
             "authors": [
                 {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                },
-                {
                     "name": "Arif Islam",
                     "email": "arifislam@dreamfactory.com"
+                },
+                {
+                    "name": "Lee Hicks",
+                    "email": "leehicks@dreamfactory.com"
                 }
             ],
             "description": "DreamFactory(tm) Email Services",
@@ -1614,24 +1714,24 @@
                 "rest",
                 "smtp"
             ],
-            "time": "2019-07-18T12:46:13+00:00"
+            "time": "2019-09-17T12:19:26+00:00"
         },
         {
             "name": "dreamfactory/df-file",
-            "version": "0.6.4",
+            "version": "dev-laravel-upgrade",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-file.git",
-                "reference": "f1afff8c16e93bb767cb6ee7b3db27cc04f83e8c"
+                "reference": "e75f3b9974ed9f4b8e54808b0216961b32305a9a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-file/zipball/f1afff8c16e93bb767cb6ee7b3db27cc04f83e8c",
-                "reference": "f1afff8c16e93bb767cb6ee7b3db27cc04f83e8c",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-file/zipball/e75f3b9974ed9f4b8e54808b0216961b32305a9a",
+                "reference": "e75f3b9974ed9f4b8e54808b0216961b32305a9a",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "~0.15.1",
+                "dreamfactory/df-core": "dev-laravel-upgrade",
                 "league/flysystem-sftp": "^1.0",
                 "league/flysystem-webdav": "^1.0"
             },
@@ -1680,7 +1780,7 @@
                 "rest",
                 "storage"
             ],
-            "time": "2019-09-11T11:41:32+00:00"
+            "time": "2019-09-17T12:20:59+00:00"
         },
         {
             "name": "dreamfactory/df-filemanager-app",
@@ -1729,20 +1829,20 @@
         },
         {
             "name": "dreamfactory/df-firebird",
-            "version": "0.7.2",
+            "version": "dev-laravel-upgrade",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-firebird.git",
-                "reference": "b4b9731f6f5adad33f2fb890cc199e4eb15578e5"
+                "reference": "ba08e0626a2b5271d1354c3905bfaab2b9d88316"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-firebird/zipball/b4b9731f6f5adad33f2fb890cc199e4eb15578e5",
-                "reference": "b4b9731f6f5adad33f2fb890cc199e4eb15578e5",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-firebird/zipball/ba08e0626a2b5271d1354c3905bfaab2b9d88316",
+                "reference": "ba08e0626a2b5271d1354c3905bfaab2b9d88316",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-sqldb": "~0.16.0"
+                "dreamfactory/df-sqldb": "dev-laravel-upgrade"
             },
             "type": "library",
             "extra": {
@@ -1766,12 +1866,12 @@
             ],
             "authors": [
                 {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                },
-                {
                     "name": "Arif Islam",
                     "email": "arifislam@dreamfactory.com"
+                },
+                {
+                    "name": "Lee Hicks",
+                    "email": "leehicks@dreamfactory.com"
                 }
             ],
             "description": "Firebird SQL Database support for DreamFactory",
@@ -1784,24 +1884,24 @@
                 "pdo_interbase",
                 "sql"
             ],
-            "time": "2019-07-16T11:20:04+00:00"
+            "time": "2019-09-17T12:50:30+00:00"
         },
         {
             "name": "dreamfactory/df-git",
-            "version": "0.4.3",
+            "version": "dev-laravel-upgrade",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-git.git",
-                "reference": "11166d7ad5724656c09b1c4c345b3ad3097ec245"
+                "reference": "c5d585bccb29bde934b52f792d3b1eb27d2d0fd8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-git/zipball/11166d7ad5724656c09b1c4c345b3ad3097ec245",
-                "reference": "11166d7ad5724656c09b1c4c345b3ad3097ec245",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-git/zipball/c5d585bccb29bde934b52f792d3b1eb27d2d0fd8",
+                "reference": "c5d585bccb29bde934b52f792d3b1eb27d2d0fd8",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "~0.15.1",
+                "dreamfactory/df-core": "dev-laravel-upgrade",
                 "graham-campbell/bitbucket": "^4.2",
                 "graham-campbell/github": "^7.5",
                 "graham-campbell/gitlab": "^1.7.0",
@@ -1850,33 +1950,33 @@
                 "source",
                 "version"
             ],
-            "time": "2019-09-06T11:19:32+00:00"
+            "time": "2019-09-17T12:30:15+00:00"
         },
         {
             "name": "dreamfactory/df-graphql",
-            "version": "0.1.1",
+            "version": "dev-laravel-upgrade",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-graphql.git",
-                "reference": "35017d7d0878cc634ab26a7775f1c0e4b447c819"
+                "reference": "855228297df21112c7fc04e2f645b9075691beed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-graphql/zipball/35017d7d0878cc634ab26a7775f1c0e4b447c819",
-                "reference": "35017d7d0878cc634ab26a7775f1c0e4b447c819",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-graphql/zipball/855228297df21112c7fc04e2f645b9075691beed",
+                "reference": "855228297df21112c7fc04e2f645b9075691beed",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "~0.15.1",
-                "illuminate/support": "5.1.*|5.2.*|5.3.*|5.4.*|5.5.*",
+                "dreamfactory/df-core": "dev-laravel-upgrade",
+                "illuminate/support": "5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*",
                 "php": ">=5.5.9",
                 "webonyx/graphql-php": "~0.10.2"
             },
             "require-dev": {
                 "fzaninotto/faker": "~1.4",
-                "mockery/mockery": "0.9.*",
+                "mockery/mockery": "0.9.*|^1.0",
                 "orchestra/testbench": "3.1.*|3.2.*|3.3.*|3.4.*|3.5.*",
-                "phpunit/phpunit": "~4.0|~5.0|~5.7|~6.0"
+                "phpunit/phpunit": "~4.0|~5.0|~5.7|~6.0|~7.0"
             },
             "type": "project",
             "extra": {
@@ -1914,24 +2014,24 @@
                 "laravel",
                 "react"
             ],
-            "time": "2019-07-18T12:35:06+00:00"
+            "time": "2019-09-17T11:35:56+00:00"
         },
         {
             "name": "dreamfactory/df-oauth",
-            "version": "0.14.1",
+            "version": "dev-laravel-upgrade",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-oauth.git",
-                "reference": "b3d110ce9b49b3e5cfccf6be7d73099e27deb96d"
+                "reference": "65ac99f70d8d7ee2b7489db019015b4cc001d7f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-oauth/zipball/b3d110ce9b49b3e5cfccf6be7d73099e27deb96d",
-                "reference": "b3d110ce9b49b3e5cfccf6be7d73099e27deb96d",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-oauth/zipball/65ac99f70d8d7ee2b7489db019015b4cc001d7f5",
+                "reference": "65ac99f70d8d7ee2b7489db019015b4cc001d7f5",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "~0.15.1",
+                "dreamfactory/df-core": "dev-laravel-upgrade",
                 "laravel/socialite": "~2.0",
                 "socialiteproviders/microsoft-live": "^2.0",
                 "socialiteproviders/twitter": "^2.0"
@@ -1958,12 +2058,12 @@
             ],
             "authors": [
                 {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                },
-                {
                     "name": "Arif Islam",
                     "email": "arifislam@dreamfactory.com"
+                },
+                {
+                    "name": "Lee Hicks",
+                    "email": "leehicks@dreamfactory.com"
                 }
             ],
             "description": "OAuth support for DreamFactory Platform 2.0",
@@ -1974,24 +2074,24 @@
                 "oauth",
                 "rest"
             ],
-            "time": "2019-07-18T12:42:14+00:00"
+            "time": "2019-09-17T12:31:43+00:00"
         },
         {
             "name": "dreamfactory/df-rackspace",
-            "version": "0.14.2",
+            "version": "dev-laravel-upgrade",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-rackspace.git",
-                "reference": "fed65da25d8b558f71d7094cbef32d7c89223104"
+                "reference": "530feef395cff0ffc988196d133066d6d2a3270b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-rackspace/zipball/fed65da25d8b558f71d7094cbef32d7c89223104",
-                "reference": "fed65da25d8b558f71d7094cbef32d7c89223104",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-rackspace/zipball/530feef395cff0ffc988196d133066d6d2a3270b",
+                "reference": "530feef395cff0ffc988196d133066d6d2a3270b",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-file": "~0.6.3",
+                "dreamfactory/df-file": "dev-laravel-upgrade",
                 "rackspace/php-opencloud": "^1.16"
             },
             "type": "library",
@@ -2016,12 +2116,12 @@
             ],
             "authors": [
                 {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                },
-                {
                     "name": "Arif Islam",
                     "email": "arifislam@dreamfactory.com"
+                },
+                {
+                    "name": "Lee Hicks",
+                    "email": "leehicks@dreamfactory.com"
                 }
             ],
             "description": "Rackspace package containing Rackspace/OpenStack components for the DreamFactory(tm) core.",
@@ -2034,24 +2134,24 @@
                 "rest",
                 "storage blob"
             ],
-            "time": "2019-07-18T13:15:07+00:00"
+            "time": "2019-09-17T12:27:10+00:00"
         },
         {
             "name": "dreamfactory/df-rws",
-            "version": "0.14.2",
+            "version": "dev-laravel-upgrade",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-rws.git",
-                "reference": "326608b66b50a3b85020462ac078dd1e83572dcb"
+                "reference": "60b44c3a165a508c8d45d1c57e4f02127e58da53"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-rws/zipball/326608b66b50a3b85020462ac078dd1e83572dcb",
-                "reference": "326608b66b50a3b85020462ac078dd1e83572dcb",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-rws/zipball/60b44c3a165a508c8d45d1c57e4f02127e58da53",
+                "reference": "60b44c3a165a508c8d45d1c57e4f02127e58da53",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "~0.15.1"
+                "dreamfactory/df-core": "dev-laravel-upgrade"
             },
             "type": "library",
             "extra": {
@@ -2075,12 +2175,12 @@
             ],
             "authors": [
                 {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                },
-                {
                     "name": "Arif Islam",
                     "email": "arifislam@dreamfactory.com"
+                },
+                {
+                    "name": "Lee Hicks",
+                    "email": "leehicks@dreamfactory.com"
                 }
             ],
             "description": "Remote Web Service for the DreamFactory Platform 2.0.",
@@ -2092,24 +2192,24 @@
                 "rest",
                 "web"
             ],
-            "time": "2019-07-18T12:53:20+00:00"
+            "time": "2019-09-17T12:33:20+00:00"
         },
         {
             "name": "dreamfactory/df-sqldb",
-            "version": "0.16.0",
+            "version": "dev-laravel-upgrade",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-sqldb.git",
-                "reference": "5dcbf93468f4093813cb264b8e4a639eda351687"
+                "reference": "7d0954541230b039c7d087eae22e3254ab7e6e75"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-sqldb/zipball/5dcbf93468f4093813cb264b8e4a639eda351687",
-                "reference": "5dcbf93468f4093813cb264b8e4a639eda351687",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-sqldb/zipball/7d0954541230b039c7d087eae22e3254ab7e6e75",
+                "reference": "7d0954541230b039c7d087eae22e3254ab7e6e75",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-database": "~0.9.4"
+                "dreamfactory/df-database": "dev-laravel-upgrade"
             },
             "type": "library",
             "extra": {
@@ -2133,12 +2233,12 @@
             ],
             "authors": [
                 {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                },
-                {
                     "name": "Arif Islam",
                     "email": "arifislam@dreamfactory.com"
+                },
+                {
+                    "name": "Lee Hicks",
+                    "email": "leehicks@dreamfactory.com"
                 }
             ],
             "description": "The DreamFactory(tm) SQL DB Service.",
@@ -2155,24 +2255,24 @@
                 "sql",
                 "sqlserver"
             ],
-            "time": "2019-07-18T13:06:59+00:00"
+            "time": "2019-09-17T12:09:58+00:00"
         },
         {
             "name": "dreamfactory/df-system",
-            "version": "0.2.1",
+            "version": "dev-laravel-upgrade",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-system.git",
-                "reference": "d0043281e972cf674e3fe6b8172534ac40334c45"
+                "reference": "c55a97d91bb877e1dc2fdca65f6f6e75631915c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-system/zipball/d0043281e972cf674e3fe6b8172534ac40334c45",
-                "reference": "d0043281e972cf674e3fe6b8172534ac40334c45",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-system/zipball/c55a97d91bb877e1dc2fdca65f6f6e75631915c0",
+                "reference": "c55a97d91bb877e1dc2fdca65f6f6e75631915c0",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "~0.15.1"
+                "dreamfactory/df-core": "dev-laravel-upgrade"
             },
             "require-dev": {
                 "phpunit/phpunit": "@stable"
@@ -2214,25 +2314,25 @@
                 "paas",
                 "rest"
             ],
-            "time": "2019-07-18T17:21:05+00:00"
+            "time": "2019-09-17T12:35:16+00:00"
         },
         {
             "name": "dreamfactory/df-user",
-            "version": "0.14.2",
+            "version": "dev-laravel-upgrade",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-user.git",
-                "reference": "cfa36ba4b086e116644fdafdd72a97adea47d598"
+                "reference": "54e1592811ec4b9df1db13b72b3fcacda1b71a55"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-user/zipball/cfa36ba4b086e116644fdafdd72a97adea47d598",
-                "reference": "cfa36ba4b086e116644fdafdd72a97adea47d598",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-user/zipball/54e1592811ec4b9df1db13b72b3fcacda1b71a55",
+                "reference": "54e1592811ec4b9df1db13b72b3fcacda1b71a55",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "~0.15.1",
-                "dreamfactory/df-system": "~0.2.1"
+                "dreamfactory/df-core": "dev-laravel-upgrade",
+                "dreamfactory/df-system": "dev-laravel-upgrade"
             },
             "type": "library",
             "extra": {
@@ -2268,7 +2368,7 @@
                 "dreamfactory",
                 "user"
             ],
-            "time": "2019-07-18T18:05:00+00:00"
+            "time": "2019-09-17T12:36:23+00:00"
         },
         {
             "name": "dreamfactory/installer",
@@ -2424,32 +2524,29 @@
         },
         {
             "name": "fideloper/proxy",
-            "version": "3.3.4",
+            "version": "4.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fideloper/TrustedProxy.git",
-                "reference": "9cdf6f118af58d89764249bbcc7bb260c132924f"
+                "reference": "03085e58ec7bee24773fa5a8850751a6e61a7e8a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fideloper/TrustedProxy/zipball/9cdf6f118af58d89764249bbcc7bb260c132924f",
-                "reference": "9cdf6f118af58d89764249bbcc7bb260c132924f",
+                "url": "https://api.github.com/repos/fideloper/TrustedProxy/zipball/03085e58ec7bee24773fa5a8850751a6e61a7e8a",
+                "reference": "03085e58ec7bee24773fa5a8850751a6e61a7e8a",
                 "shasum": ""
             },
             "require": {
-                "illuminate/contracts": "~5.0",
+                "illuminate/contracts": "^5.0|^6.0|^7.0",
                 "php": ">=5.4.0"
             },
             "require-dev": {
-                "illuminate/http": "~5.0",
-                "mockery/mockery": "~0.9.3",
-                "phpunit/phpunit": "^5.7"
+                "illuminate/http": "^5.0|^6.0|^7.0",
+                "mockery/mockery": "^1.0",
+                "phpunit/phpunit": "^6.0"
             },
             "type": "library",
             "extra": {
-                "branch-alias": {
-                    "dev-master": "3.3-dev"
-                },
                 "laravel": {
                     "providers": [
                         "Fideloper\\Proxy\\TrustedProxyServiceProvider"
@@ -2477,7 +2574,7 @@
                 "proxy",
                 "trusted proxy"
             ],
-            "time": "2017-06-15T17:19:42+00:00"
+            "time": "2019-09-03T16:45:42+00:00"
         },
         {
             "name": "graham-campbell/bitbucket",
@@ -3301,42 +3398,45 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.5.48",
+            "version": "v5.6.39",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "e3e8d585dcfab5abe6261b060f4df0d48f9924bf"
+                "reference": "37bb306f516669ab4f888c16003f694313ab299e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/e3e8d585dcfab5abe6261b060f4df0d48f9924bf",
-                "reference": "e3e8d585dcfab5abe6261b060f4df0d48f9924bf",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/37bb306f516669ab4f888c16003f694313ab299e",
+                "reference": "37bb306f516669ab4f888c16003f694313ab299e",
                 "shasum": ""
             },
             "require": {
                 "doctrine/inflector": "~1.1",
+                "dragonmantank/cron-expression": "~2.0",
                 "erusev/parsedown": "~1.7",
                 "ext-mbstring": "*",
                 "ext-openssl": "*",
                 "league/flysystem": "^1.0.8",
                 "monolog/monolog": "~1.12",
-                "mtdowling/cron-expression": "~1.0",
-                "nesbot/carbon": "^1.26.0",
-                "php": ">=7.0",
+                "nesbot/carbon": "1.25.*",
+                "php": "^7.1.3",
                 "psr/container": "~1.0",
                 "psr/simple-cache": "^1.0",
-                "ramsey/uuid": "~3.0",
+                "ramsey/uuid": "^3.7",
                 "swiftmailer/swiftmailer": "~6.0",
-                "symfony/console": "~3.3",
-                "symfony/debug": "~3.3",
-                "symfony/finder": "~3.3",
-                "symfony/http-foundation": "~3.3",
-                "symfony/http-kernel": "~3.3",
-                "symfony/process": "~3.3",
-                "symfony/routing": "~3.3",
-                "symfony/var-dumper": "~3.3",
-                "tijsverkoyen/css-to-inline-styles": "~2.2",
+                "symfony/console": "~4.0",
+                "symfony/debug": "~4.0",
+                "symfony/finder": "~4.0",
+                "symfony/http-foundation": "~4.0",
+                "symfony/http-kernel": "~4.0",
+                "symfony/process": "~4.0",
+                "symfony/routing": "~4.0",
+                "symfony/var-dumper": "~4.0",
+                "tijsverkoyen/css-to-inline-styles": "^2.2.1",
                 "vlucas/phpdotenv": "~2.2"
+            },
+            "conflict": {
+                "tightenco/collect": "<5.5.33"
             },
             "replace": {
                 "illuminate/auth": "self.version",
@@ -3366,44 +3466,46 @@
                 "illuminate/support": "self.version",
                 "illuminate/translation": "self.version",
                 "illuminate/validation": "self.version",
-                "illuminate/view": "self.version",
-                "tightenco/collect": "<5.5.33"
+                "illuminate/view": "self.version"
             },
             "require-dev": {
                 "aws/aws-sdk-php": "~3.0",
-                "doctrine/dbal": "~2.5",
+                "doctrine/dbal": "~2.6",
                 "filp/whoops": "^2.1.4",
+                "league/flysystem-cached-adapter": "~1.0",
                 "mockery/mockery": "~1.0",
-                "orchestra/testbench-core": "3.5.*",
+                "moontoast/math": "^1.1",
+                "orchestra/testbench-core": "3.6.*",
                 "pda/pheanstalk": "~3.0",
-                "phpunit/phpunit": "~6.0",
+                "phpunit/phpunit": "~7.0",
                 "predis/predis": "^1.1.1",
-                "symfony/css-selector": "~3.3",
-                "symfony/dom-crawler": "~3.3"
+                "symfony/css-selector": "~4.0",
+                "symfony/dom-crawler": "~4.0"
             },
             "suggest": {
                 "aws/aws-sdk-php": "Required to use the SQS queue driver and SES mail driver (~3.0).",
-                "doctrine/dbal": "Required to rename columns and drop SQLite columns (~2.5).",
+                "doctrine/dbal": "Required to rename columns and drop SQLite columns (~2.6).",
                 "ext-pcntl": "Required to use all features of the queue worker.",
                 "ext-posix": "Required to use all features of the queue worker.",
                 "fzaninotto/faker": "Required to use the eloquent factory builder (~1.4).",
                 "guzzlehttp/guzzle": "Required to use the Mailgun and Mandrill mail drivers and the ping methods on schedules (~6.0).",
                 "laravel/tinker": "Required to use the tinker console command (~1.0).",
                 "league/flysystem-aws-s3-v3": "Required to use the Flysystem S3 driver (~1.0).",
-                "league/flysystem-cached-adapter": "Required to use Flysystem caching (~1.0).",
+                "league/flysystem-cached-adapter": "Required to use the Flysystem cache (~1.0).",
                 "league/flysystem-rackspace": "Required to use the Flysystem Rackspace driver (~1.0).",
+                "league/flysystem-sftp": "Required to use the Flysystem SFTP driver (~1.0).",
                 "nexmo/client": "Required to use the Nexmo transport (~1.0).",
                 "pda/pheanstalk": "Required to use the beanstalk queue driver (~3.0).",
                 "predis/predis": "Required to use the redis cache and queue drivers (~1.0).",
                 "pusher/pusher-php-server": "Required to use the Pusher broadcast driver (~3.0).",
-                "symfony/css-selector": "Required to use some of the crawler integration testing tools (~3.3).",
-                "symfony/dom-crawler": "Required to use most of the crawler integration testing tools (~3.3).",
+                "symfony/css-selector": "Required to use some of the crawler integration testing tools (~4.0).",
+                "symfony/dom-crawler": "Required to use most of the crawler integration testing tools (~4.0).",
                 "symfony/psr-http-message-bridge": "Required to psr7 bridging features (~1.0)."
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "5.5-dev"
+                    "dev-master": "5.6-dev"
                 }
             },
             "autoload": {
@@ -3431,7 +3533,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2019-08-20T15:46:40+00:00"
+            "time": "2018-10-04T14:50:41+00:00"
         },
         {
             "name": "laravel/socialite",
@@ -3819,9 +3921,9 @@
             "authors": [
                 {
                     "name": "Ben Corlett",
+                    "role": "Developer",
                     "email": "bencorlett@me.com",
-                    "homepage": "http://www.webcomm.com.au",
-                    "role": "Developer"
+                    "homepage": "http://www.webcomm.com.au"
                 }
             ],
             "description": "OAuth 1.0 Client Library",
@@ -4074,50 +4176,6 @@
             "time": "2019-09-06T13:49:17+00:00"
         },
         {
-            "name": "mtdowling/cron-expression",
-            "version": "v1.2.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/mtdowling/cron-expression.git",
-                "reference": "9504fa9ea681b586028adaaa0877db4aecf32bad"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/mtdowling/cron-expression/zipball/9504fa9ea681b586028adaaa0877db4aecf32bad",
-                "reference": "9504fa9ea681b586028adaaa0877db4aecf32bad",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.2"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.0|~5.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Cron\\": "src/Cron/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Michael Dowling",
-                    "email": "mtdowling@gmail.com",
-                    "homepage": "https://github.com/mtdowling"
-                }
-            ],
-            "description": "CRON for PHP: Calculate the next or previous run date and determine if a CRON expression is due",
-            "keywords": [
-                "cron",
-                "schedule"
-            ],
-            "time": "2017-01-23T04:29:33+00:00"
-        },
-        {
             "name": "mtdowling/jmespath.php",
             "version": "2.4.0",
             "source": {
@@ -4237,16 +4295,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "1.39.0",
+            "version": "1.25.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "dd62a58af4e0775a45ea5f99d0363d81b7d9a1e0"
+                "reference": "ad6afecd38ce2d7f7bd1b5d47ffd8e93ebbd3ed8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/dd62a58af4e0775a45ea5f99d0363d81b7d9a1e0",
-                "reference": "dd62a58af4e0775a45ea5f99d0363d81b7d9a1e0",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/ad6afecd38ce2d7f7bd1b5d47ffd8e93ebbd3ed8",
+                "reference": "ad6afecd38ce2d7f7bd1b5d47ffd8e93ebbd3ed8",
                 "shasum": ""
             },
             "require": {
@@ -4264,16 +4322,11 @@
             ],
             "type": "library",
             "extra": {
-                "update-helper": "Carbon\\Upgrade",
-                "laravel": {
-                    "providers": [
-                        "Carbon\\Laravel\\ServiceProvider"
-                    ]
-                }
+                "update-helper": "Carbon\\Upgrade"
             },
             "autoload": {
                 "psr-4": {
-                    "": "src/"
+                    "Carbon\\": "src/Carbon/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -4294,7 +4347,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2019-06-11T09:07:59+00:00"
+            "time": "2019-06-03T17:56:44+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -4922,16 +4975,16 @@
         },
         {
             "name": "phpseclib/phpseclib",
-            "version": "2.0.21",
+            "version": "2.0.23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "9f1287e68b3f283339a9f98f67515dd619e5bf9d"
+                "reference": "c78eb5058d5bb1a183133c36d4ba5b6675dfa099"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/9f1287e68b3f283339a9f98f67515dd619e5bf9d",
-                "reference": "9f1287e68b3f283339a9f98f67515dd619e5bf9d",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/c78eb5058d5bb1a183133c36d4ba5b6675dfa099",
+                "reference": "c78eb5058d5bb1a183133c36d4ba5b6675dfa099",
                 "shasum": ""
             },
             "require": {
@@ -5010,7 +5063,7 @@
                 "x.509",
                 "x509"
             ],
-            "time": "2019-07-12T12:53:49+00:00"
+            "time": "2019-09-17T03:41:22+00:00"
         },
         {
             "name": "predis/predis",
@@ -5729,9 +5782,9 @@
             "authors": [
                 {
                     "name": "Evert Pot",
+                    "role": "Developer",
                     "email": "me@evertpot.com",
-                    "homepage": "http://evertpot.com/",
-                    "role": "Developer"
+                    "homepage": "http://evertpot.com/"
                 }
             ],
             "description": "sabre/event is a library for lightweight event-based programming",
@@ -6193,25 +6246,27 @@
         },
         {
             "name": "symfony/console",
-            "version": "v3.4.31",
+            "version": "v4.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "4510f04e70344d70952566e4262a0b11df39cb10"
+                "reference": "de63799239b3881b8a08f8481b22348f77ed7b36"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/4510f04e70344d70952566e4262a0b11df39cb10",
-                "reference": "4510f04e70344d70952566e4262a0b11df39cb10",
+                "url": "https://api.github.com/repos/symfony/console/zipball/de63799239b3881b8a08f8481b22348f77ed7b36",
+                "reference": "de63799239b3881b8a08f8481b22348f77ed7b36",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.5.9|>=7.0.8",
-                "symfony/debug": "~2.8|~3.0|~4.0",
-                "symfony/polyfill-mbstring": "~1.0"
+                "php": "^7.1.3",
+                "symfony/polyfill-mbstring": "~1.0",
+                "symfony/polyfill-php73": "^1.8",
+                "symfony/service-contracts": "^1.1"
             },
             "conflict": {
                 "symfony/dependency-injection": "<3.4",
+                "symfony/event-dispatcher": "<4.3",
                 "symfony/process": "<3.3"
             },
             "provide": {
@@ -6219,11 +6274,12 @@
             },
             "require-dev": {
                 "psr/log": "~1.0",
-                "symfony/config": "~3.3|~4.0",
+                "symfony/config": "~3.4|~4.0",
                 "symfony/dependency-injection": "~3.4|~4.0",
-                "symfony/event-dispatcher": "~2.8|~3.0|~4.0",
+                "symfony/event-dispatcher": "^4.3",
                 "symfony/lock": "~3.4|~4.0",
-                "symfony/process": "~3.3|~4.0"
+                "symfony/process": "~3.4|~4.0",
+                "symfony/var-dumper": "^4.3"
             },
             "suggest": {
                 "psr/log": "For using the console logger",
@@ -6234,7 +6290,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.4-dev"
+                    "dev-master": "4.3-dev"
                 }
             },
             "autoload": {
@@ -6261,7 +6317,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2019-08-26T07:52:58+00:00"
+            "time": "2019-08-26T08:26:39+00:00"
         },
         {
             "name": "symfony/css-selector",
@@ -6318,32 +6374,32 @@
         },
         {
             "name": "symfony/debug",
-            "version": "v3.4.31",
+            "version": "v4.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/debug.git",
-                "reference": "0b600300918780001e2821db77bc28b677794486"
+                "reference": "afcdea44a2e399c1e4b52246ec8d54c715393ced"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/debug/zipball/0b600300918780001e2821db77bc28b677794486",
-                "reference": "0b600300918780001e2821db77bc28b677794486",
+                "url": "https://api.github.com/repos/symfony/debug/zipball/afcdea44a2e399c1e4b52246ec8d54c715393ced",
+                "reference": "afcdea44a2e399c1e4b52246ec8d54c715393ced",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.5.9|>=7.0.8",
+                "php": "^7.1.3",
                 "psr/log": "~1.0"
             },
             "conflict": {
-                "symfony/http-kernel": ">=2.3,<2.3.24|~2.4.0|>=2.5,<2.5.9|>=2.6,<2.6.2"
+                "symfony/http-kernel": "<3.4"
             },
             "require-dev": {
-                "symfony/http-kernel": "~2.8|~3.0|~4.0"
+                "symfony/http-kernel": "~3.4|~4.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.4-dev"
+                    "dev-master": "4.3-dev"
                 }
             },
             "autoload": {
@@ -6370,7 +6426,7 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
-            "time": "2019-08-20T13:31:17+00:00"
+            "time": "2019-08-20T14:27:59+00:00"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -6502,25 +6558,25 @@
         },
         {
             "name": "symfony/finder",
-            "version": "v3.4.31",
+            "version": "v4.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/finder.git",
-                "reference": "1fcad80b440abcd1451767349906b6f9d3961d37"
+                "reference": "86c1c929f0a4b24812e1eb109262fc3372c8e9f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/finder/zipball/1fcad80b440abcd1451767349906b6f9d3961d37",
-                "reference": "1fcad80b440abcd1451767349906b6f9d3961d37",
+                "url": "https://api.github.com/repos/symfony/finder/zipball/86c1c929f0a4b24812e1eb109262fc3372c8e9f2",
+                "reference": "86c1c929f0a4b24812e1eb109262fc3372c8e9f2",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.5.9|>=7.0.8"
+                "php": "^7.1.3"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.4-dev"
+                    "dev-master": "4.3-dev"
                 }
             },
             "autoload": {
@@ -6547,34 +6603,35 @@
             ],
             "description": "Symfony Finder Component",
             "homepage": "https://symfony.com",
-            "time": "2019-08-14T09:39:58+00:00"
+            "time": "2019-08-14T12:26:46+00:00"
         },
         {
             "name": "symfony/http-foundation",
-            "version": "v3.4.31",
+            "version": "v4.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-foundation.git",
-                "reference": "b3d57a1c325f39f703b249bed7998ce8c64236b4"
+                "reference": "d804bea118ff340a12e22a79f9c7e7eb56b35adc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/b3d57a1c325f39f703b249bed7998ce8c64236b4",
-                "reference": "b3d57a1c325f39f703b249bed7998ce8c64236b4",
+                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/d804bea118ff340a12e22a79f9c7e7eb56b35adc",
+                "reference": "d804bea118ff340a12e22a79f9c7e7eb56b35adc",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.5.9|>=7.0.8",
-                "symfony/polyfill-mbstring": "~1.1",
-                "symfony/polyfill-php70": "~1.6"
+                "php": "^7.1.3",
+                "symfony/mime": "^4.3",
+                "symfony/polyfill-mbstring": "~1.1"
             },
             "require-dev": {
-                "symfony/expression-language": "~2.8|~3.0|~4.0"
+                "predis/predis": "~1.0",
+                "symfony/expression-language": "~3.4|~4.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.4-dev"
+                    "dev-master": "4.3-dev"
                 }
             },
             "autoload": {
@@ -6601,34 +6658,37 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "https://symfony.com",
-            "time": "2019-08-26T07:50:50+00:00"
+            "time": "2019-08-26T08:55:16+00:00"
         },
         {
             "name": "symfony/http-kernel",
-            "version": "v3.4.31",
+            "version": "v4.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-kernel.git",
-                "reference": "f6d35bb306b26812df007525f5757a8b0e95857e"
+                "reference": "5e0fc71be03d52cd00c423061cfd300bd6f92a52"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-kernel/zipball/f6d35bb306b26812df007525f5757a8b0e95857e",
-                "reference": "f6d35bb306b26812df007525f5757a8b0e95857e",
+                "url": "https://api.github.com/repos/symfony/http-kernel/zipball/5e0fc71be03d52cd00c423061cfd300bd6f92a52",
+                "reference": "5e0fc71be03d52cd00c423061cfd300bd6f92a52",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.5.9|>=7.0.8",
+                "php": "^7.1.3",
                 "psr/log": "~1.0",
-                "symfony/debug": "^3.3.3|~4.0",
-                "symfony/event-dispatcher": "~2.8|~3.0|~4.0",
-                "symfony/http-foundation": "~3.4.12|~4.0.12|^4.1.1",
-                "symfony/polyfill-ctype": "~1.8"
+                "symfony/debug": "~3.4|~4.0",
+                "symfony/event-dispatcher": "^4.3",
+                "symfony/http-foundation": "^4.1.1",
+                "symfony/polyfill-ctype": "~1.8",
+                "symfony/polyfill-php73": "^1.9"
             },
             "conflict": {
-                "symfony/config": "<2.8",
-                "symfony/dependency-injection": "<3.4.10|<4.0.10,>=4",
-                "symfony/var-dumper": "<3.3",
+                "symfony/browser-kit": "<4.3",
+                "symfony/config": "<3.4",
+                "symfony/dependency-injection": "<4.3",
+                "symfony/translation": "<4.2",
+                "symfony/var-dumper": "<4.1.1",
                 "twig/twig": "<1.34|<2.4,>=2"
             },
             "provide": {
@@ -6636,34 +6696,34 @@
             },
             "require-dev": {
                 "psr/cache": "~1.0",
-                "symfony/browser-kit": "~2.8|~3.0|~4.0",
-                "symfony/class-loader": "~2.8|~3.0",
-                "symfony/config": "~2.8|~3.0|~4.0",
-                "symfony/console": "~2.8|~3.0|~4.0",
-                "symfony/css-selector": "~2.8|~3.0|~4.0",
-                "symfony/dependency-injection": "^3.4.10|^4.0.10",
-                "symfony/dom-crawler": "~2.8|~3.0|~4.0",
-                "symfony/expression-language": "~2.8|~3.0|~4.0",
-                "symfony/finder": "~2.8|~3.0|~4.0",
-                "symfony/process": "~2.8|~3.0|~4.0",
+                "symfony/browser-kit": "^4.3",
+                "symfony/config": "~3.4|~4.0",
+                "symfony/console": "~3.4|~4.0",
+                "symfony/css-selector": "~3.4|~4.0",
+                "symfony/dependency-injection": "^4.3",
+                "symfony/dom-crawler": "~3.4|~4.0",
+                "symfony/expression-language": "~3.4|~4.0",
+                "symfony/finder": "~3.4|~4.0",
+                "symfony/process": "~3.4|~4.0",
                 "symfony/routing": "~3.4|~4.0",
-                "symfony/stopwatch": "~2.8|~3.0|~4.0",
-                "symfony/templating": "~2.8|~3.0|~4.0",
-                "symfony/translation": "~2.8|~3.0|~4.0",
-                "symfony/var-dumper": "~3.3|~4.0"
+                "symfony/stopwatch": "~3.4|~4.0",
+                "symfony/templating": "~3.4|~4.0",
+                "symfony/translation": "~4.2",
+                "symfony/translation-contracts": "^1.1",
+                "symfony/var-dumper": "^4.1.1",
+                "twig/twig": "^1.34|^2.4"
             },
             "suggest": {
                 "symfony/browser-kit": "",
                 "symfony/config": "",
                 "symfony/console": "",
                 "symfony/dependency-injection": "",
-                "symfony/finder": "",
                 "symfony/var-dumper": ""
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.4-dev"
+                    "dev-master": "4.3-dev"
                 }
             },
             "autoload": {
@@ -6690,7 +6750,66 @@
             ],
             "description": "Symfony HttpKernel Component",
             "homepage": "https://symfony.com",
-            "time": "2019-08-26T16:36:29+00:00"
+            "time": "2019-08-26T16:47:42+00:00"
+        },
+        {
+            "name": "symfony/mime",
+            "version": "v4.3.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/mime.git",
+                "reference": "987a05df1c6ac259b34008b932551353f4f408df"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/mime/zipball/987a05df1c6ac259b34008b932551353f4f408df",
+                "reference": "987a05df1c6ac259b34008b932551353f4f408df",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1.3",
+                "symfony/polyfill-intl-idn": "^1.10",
+                "symfony/polyfill-mbstring": "^1.0"
+            },
+            "require-dev": {
+                "egulias/email-validator": "^2.1.10",
+                "symfony/dependency-injection": "~3.4|^4.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Mime\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "A library to manipulate MIME messages",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "mime",
+                "mime-type"
+            ],
+            "time": "2019-08-22T08:16:11+00:00"
         },
         {
             "name": "symfony/options-resolver",
@@ -7041,65 +7160,6 @@
             "time": "2019-08-06T08:03:45+00:00"
         },
         {
-            "name": "symfony/polyfill-php70",
-            "version": "v1.12.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/polyfill-php70.git",
-                "reference": "54b4c428a0054e254223797d2713c31e08610831"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php70/zipball/54b4c428a0054e254223797d2713c31e08610831",
-                "reference": "54b4c428a0054e254223797d2713c31e08610831",
-                "shasum": ""
-            },
-            "require": {
-                "paragonie/random_compat": "~1.0|~2.0|~9.99",
-                "php": ">=5.3.3"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.12-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Polyfill\\Php70\\": ""
-                },
-                "files": [
-                    "bootstrap.php"
-                ],
-                "classmap": [
-                    "Resources/stubs"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Nicolas Grekas",
-                    "email": "p@tchwork.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony polyfill backporting some PHP 7.0+ features to lower PHP versions",
-            "homepage": "https://symfony.com",
-            "keywords": [
-                "compatibility",
-                "polyfill",
-                "portable",
-                "shim"
-            ],
-            "time": "2019-08-06T08:03:45+00:00"
-        },
-        {
             "name": "symfony/polyfill-php72",
             "version": "v1.12.0",
             "source": {
@@ -7145,6 +7205,64 @@
                 }
             ],
             "description": "Symfony polyfill backporting some PHP 7.2+ features to lower PHP versions",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "compatibility",
+                "polyfill",
+                "portable",
+                "shim"
+            ],
+            "time": "2019-08-06T08:03:45+00:00"
+        },
+        {
+            "name": "symfony/polyfill-php73",
+            "version": "v1.12.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-php73.git",
+                "reference": "2ceb49eaccb9352bff54d22570276bb75ba4a188"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-php73/zipball/2ceb49eaccb9352bff54d22570276bb75ba4a188",
+                "reference": "2ceb49eaccb9352bff54d22570276bb75ba4a188",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.12-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Polyfill\\Php73\\": ""
+                },
+                "files": [
+                    "bootstrap.php"
+                ],
+                "classmap": [
+                    "Resources/stubs"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony polyfill backporting some PHP 7.3+ features to lower PHP versions",
             "homepage": "https://symfony.com",
             "keywords": [
                 "compatibility",
@@ -7208,25 +7326,25 @@
         },
         {
             "name": "symfony/process",
-            "version": "v3.4.31",
+            "version": "v4.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "d822cb654000a95b7855362c0d5b127f6a6d8baa"
+                "reference": "e89969c00d762349f078db1128506f7f3dcc0d4a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/d822cb654000a95b7855362c0d5b127f6a6d8baa",
-                "reference": "d822cb654000a95b7855362c0d5b127f6a6d8baa",
+                "url": "https://api.github.com/repos/symfony/process/zipball/e89969c00d762349f078db1128506f7f3dcc0d4a",
+                "reference": "e89969c00d762349f078db1128506f7f3dcc0d4a",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.5.9|>=7.0.8"
+                "php": "^7.1.3"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.4-dev"
+                    "dev-master": "4.3-dev"
                 }
             },
             "autoload": {
@@ -7253,37 +7371,37 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
-            "time": "2019-08-26T07:52:58+00:00"
+            "time": "2019-08-26T08:26:39+00:00"
         },
         {
             "name": "symfony/routing",
-            "version": "v3.4.31",
+            "version": "v4.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/routing.git",
-                "reference": "8b0faa681c4ee14701e76a7056fef15ac5384163"
+                "reference": "ff1049f6232dc5b6023b1ff1c6de56f82bcd264f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/routing/zipball/8b0faa681c4ee14701e76a7056fef15ac5384163",
-                "reference": "8b0faa681c4ee14701e76a7056fef15ac5384163",
+                "url": "https://api.github.com/repos/symfony/routing/zipball/ff1049f6232dc5b6023b1ff1c6de56f82bcd264f",
+                "reference": "ff1049f6232dc5b6023b1ff1c6de56f82bcd264f",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.5.9|>=7.0.8"
+                "php": "^7.1.3"
             },
             "conflict": {
-                "symfony/config": "<3.3.1",
-                "symfony/dependency-injection": "<3.3",
+                "symfony/config": "<4.2",
+                "symfony/dependency-injection": "<3.4",
                 "symfony/yaml": "<3.4"
             },
             "require-dev": {
-                "doctrine/annotations": "~1.0",
+                "doctrine/annotations": "~1.2",
                 "psr/log": "~1.0",
-                "symfony/config": "^3.3.1|~4.0",
-                "symfony/dependency-injection": "~3.3|~4.0",
-                "symfony/expression-language": "~2.8|~3.0|~4.0",
-                "symfony/http-foundation": "~2.8|~3.0|~4.0",
+                "symfony/config": "~4.2",
+                "symfony/dependency-injection": "~3.4|~4.0",
+                "symfony/expression-language": "~3.4|~4.0",
+                "symfony/http-foundation": "~3.4|~4.0",
                 "symfony/yaml": "~3.4|~4.0"
             },
             "suggest": {
@@ -7296,7 +7414,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.4-dev"
+                    "dev-master": "4.3-dev"
                 }
             },
             "autoload": {
@@ -7329,7 +7447,65 @@
                 "uri",
                 "url"
             ],
-            "time": "2019-08-26T07:50:50+00:00"
+            "time": "2019-08-26T08:26:39+00:00"
+        },
+        {
+            "name": "symfony/service-contracts",
+            "version": "v1.1.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/service-contracts.git",
+                "reference": "ea7263d6b6d5f798b56a45a5b8d686725f2719a3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/service-contracts/zipball/ea7263d6b6d5f798b56a45a5b8d686725f2719a3",
+                "reference": "ea7263d6b6d5f798b56a45a5b8d686725f2719a3",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1.3",
+                "psr/container": "^1.0"
+            },
+            "suggest": {
+                "symfony/service-implementation": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Contracts\\Service\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Generic abstractions related to writing services",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "abstractions",
+                "contracts",
+                "decoupling",
+                "interfaces",
+                "interoperability",
+                "standards"
+            ],
+            "time": "2019-08-20T14:44:19+00:00"
         },
         {
             "name": "symfony/translation",
@@ -7466,38 +7642,45 @@
         },
         {
             "name": "symfony/var-dumper",
-            "version": "v3.4.31",
+            "version": "v4.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
-                "reference": "5408ad7194737ee1bc5ab7a9683fb6925f92c3e4"
+                "reference": "641043e0f3e615990a0f29479f9c117e8a6698c6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/5408ad7194737ee1bc5ab7a9683fb6925f92c3e4",
-                "reference": "5408ad7194737ee1bc5ab7a9683fb6925f92c3e4",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/641043e0f3e615990a0f29479f9c117e8a6698c6",
+                "reference": "641043e0f3e615990a0f29479f9c117e8a6698c6",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.5.9|>=7.0.8",
-                "symfony/polyfill-mbstring": "~1.0"
+                "php": "^7.1.3",
+                "symfony/polyfill-mbstring": "~1.0",
+                "symfony/polyfill-php72": "~1.5"
             },
             "conflict": {
-                "phpunit/phpunit": "<4.8.35|<5.4.3,>=5.0"
+                "phpunit/phpunit": "<4.8.35|<5.4.3,>=5.0",
+                "symfony/console": "<3.4"
             },
             "require-dev": {
                 "ext-iconv": "*",
+                "symfony/console": "~3.4|~4.0",
+                "symfony/process": "~3.4|~4.0",
                 "twig/twig": "~1.34|~2.4"
             },
             "suggest": {
                 "ext-iconv": "To convert non-UTF-8 strings to UTF-8 (or symfony/polyfill-iconv in case ext-iconv cannot be used).",
                 "ext-intl": "To show region name in time zone dump",
-                "ext-symfony_debug": ""
+                "symfony/console": "To use the ServerDumpCommand and/or the bin/var-dump-server script"
             },
+            "bin": [
+                "Resources/bin/var-dump-server"
+            ],
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.4-dev"
+                    "dev-master": "4.3-dev"
                 }
             },
             "autoload": {
@@ -7531,7 +7714,7 @@
                 "debug",
                 "dump"
             ],
-            "time": "2019-08-26T07:50:50+00:00"
+            "time": "2019-08-26T08:26:39+00:00"
         },
         {
             "name": "symfony/yaml",
@@ -7641,35 +7824,35 @@
         },
         {
             "name": "tymon/jwt-auth",
-            "version": "1.0.0-rc.4.1",
+            "version": "1.0.0-rc.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tymondesigns/jwt-auth.git",
-                "reference": "63698d304554e5d0bc3eb481cc260a9fc900e151"
+                "reference": "103739700dc0358039a33b5bc91247570bb83529"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tymondesigns/jwt-auth/zipball/63698d304554e5d0bc3eb481cc260a9fc900e151",
-                "reference": "63698d304554e5d0bc3eb481cc260a9fc900e151",
+                "url": "https://api.github.com/repos/tymondesigns/jwt-auth/zipball/103739700dc0358039a33b5bc91247570bb83529",
+                "reference": "103739700dc0358039a33b5bc91247570bb83529",
                 "shasum": ""
             },
             "require": {
-                "illuminate/auth": "^5.1",
-                "illuminate/contracts": "^5.1",
-                "illuminate/http": "^5.1",
-                "illuminate/support": "^5.1",
+                "illuminate/auth": "^5.1|^6",
+                "illuminate/contracts": "^5.1|^6",
+                "illuminate/http": "^5.1|^6",
+                "illuminate/support": "^5.1|^6",
                 "lcobucci/jwt": "^3.2",
                 "namshi/jose": "^7.0",
-                "nesbot/carbon": "^1.0 || ^2.0",
-                "php": "^5.5.9 || ^7.0"
+                "nesbot/carbon": "^1.0|^2.0",
+                "php": "^5.5.9|^7.0"
             },
             "require-dev": {
-                "cartalyst/sentinel": "2.0.*",
-                "illuminate/console": "^5.1",
-                "illuminate/database": "^5.1",
-                "illuminate/routing": "^5.1",
+                "cartalyst/sentinel": "^2|^3",
+                "illuminate/console": "^5.1|^6",
+                "illuminate/database": "^5.1|^6",
+                "illuminate/routing": "^5.1|^6",
                 "mockery/mockery": ">=0.9.9",
-                "phpunit/phpunit": "~4.8 || ~6.0"
+                "phpunit/phpunit": "~4.8|~6.0"
             },
             "type": "library",
             "extra": {
@@ -7712,7 +7895,7 @@
                 "jwt",
                 "laravel"
             ],
-            "time": "2019-03-14T20:29:20+00:00"
+            "time": "2019-09-09T03:33:47+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
@@ -8622,23 +8805,23 @@
         },
         {
             "name": "laravel/homestead",
-            "version": "v6.3.0",
+            "version": "v6.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/homestead.git",
-                "reference": "588bff42937c1392838af58b122a568508b55567"
+                "reference": "9d87aea3d61fb07be31acf63e20c787de46b6df6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/homestead/zipball/588bff42937c1392838af58b122a568508b55567",
-                "reference": "588bff42937c1392838af58b122a568508b55567",
+                "url": "https://api.github.com/repos/laravel/homestead/zipball/9d87aea3d61fb07be31acf63e20c787de46b6df6",
+                "reference": "9d87aea3d61fb07be31acf63e20c787de46b6df6",
                 "shasum": ""
             },
             "require": {
                 "php": "^5.6 || ^7.0",
-                "symfony/console": "~2.3|~3.0",
-                "symfony/process": "~2.3|~3.0",
-                "symfony/yaml": "~2.3|~3.0"
+                "symfony/console": "~2.3|~3.0|~4.0",
+                "symfony/process": "~2.3|~3.0|~4.0",
+                "symfony/yaml": "~2.3|~3.0|~4.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "^5.7 || ^6.0"
@@ -8668,7 +8851,7 @@
                 }
             ],
             "description": "A virtual machine for web artisans.",
-            "time": "2017-10-09T17:43:46+00:00"
+            "time": "2017-11-26T15:57:24+00:00"
         },
         {
             "name": "mockery/mockery",
@@ -8784,23 +8967,87 @@
             "time": "2019-08-09T12:45:53+00:00"
         },
         {
-            "name": "phar-io/manifest",
-            "version": "1.0.1",
+            "name": "nunomaduro/collision",
+            "version": "v2.1.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/phar-io/manifest.git",
-                "reference": "2df402786ab5368a0169091f61a7c1e0eb6852d0"
+                "url": "https://github.com/nunomaduro/collision.git",
+                "reference": "b5feb0c0d92978ec7169232ce5d70d6da6b29f63"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phar-io/manifest/zipball/2df402786ab5368a0169091f61a7c1e0eb6852d0",
-                "reference": "2df402786ab5368a0169091f61a7c1e0eb6852d0",
+                "url": "https://api.github.com/repos/nunomaduro/collision/zipball/b5feb0c0d92978ec7169232ce5d70d6da6b29f63",
+                "reference": "b5feb0c0d92978ec7169232ce5d70d6da6b29f63",
+                "shasum": ""
+            },
+            "require": {
+                "filp/whoops": "^2.1.4",
+                "jakub-onderka/php-console-highlighter": "0.3.*|0.4.*",
+                "php": "^7.1",
+                "symfony/console": "~2.8|~3.3|~4.0"
+            },
+            "require-dev": {
+                "laravel/framework": "5.7.*",
+                "nunomaduro/larastan": "^0.3.0",
+                "phpstan/phpstan": "^0.10",
+                "phpunit/phpunit": "~7.3"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "NunoMaduro\\Collision\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nuno Maduro",
+                    "email": "enunomaduro@gmail.com"
+                }
+            ],
+            "description": "Cli error handling for console/command-line PHP applications.",
+            "keywords": [
+                "artisan",
+                "cli",
+                "command-line",
+                "console",
+                "error",
+                "handling",
+                "laravel",
+                "laravel-zero",
+                "php",
+                "symfony"
+            ],
+            "time": "2018-11-21T21:40:54+00:00"
+        },
+        {
+            "name": "phar-io/manifest",
+            "version": "1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phar-io/manifest.git",
+                "reference": "7761fcacf03b4d4f16e7ccb606d4879ca431fcf4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phar-io/manifest/zipball/7761fcacf03b4d4f16e7ccb606d4879ca431fcf4",
+                "reference": "7761fcacf03b4d4f16e7ccb606d4879ca431fcf4",
                 "shasum": ""
             },
             "require": {
                 "ext-dom": "*",
                 "ext-phar": "*",
-                "phar-io/version": "^1.0.1",
+                "phar-io/version": "^2.0",
                 "php": "^5.6 || ^7.0"
             },
             "type": "library",
@@ -8836,20 +9083,20 @@
                 }
             ],
             "description": "Component for reading phar.io manifest information from a PHP Archive (PHAR)",
-            "time": "2017-03-05T18:14:27+00:00"
+            "time": "2018-07-08T19:23:20+00:00"
         },
         {
             "name": "phar-io/version",
-            "version": "1.0.1",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phar-io/version.git",
-                "reference": "a70c0ced4be299a63d32fa96d9281d03e94041df"
+                "reference": "45a2ec53a73c70ce41d55cedef9063630abaf1b6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phar-io/version/zipball/a70c0ced4be299a63d32fa96d9281d03e94041df",
-                "reference": "a70c0ced4be299a63d32fa96d9281d03e94041df",
+                "url": "https://api.github.com/repos/phar-io/version/zipball/45a2ec53a73c70ce41d55cedef9063630abaf1b6",
+                "reference": "45a2ec53a73c70ce41d55cedef9063630abaf1b6",
                 "shasum": ""
             },
             "require": {
@@ -8883,39 +9130,37 @@
                 }
             ],
             "description": "Library for handling version information and constraints",
-            "time": "2017-03-05T17:38:23+00:00"
+            "time": "2018-07-08T19:19:57+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
-            "version": "1.0.1",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionCommon.git",
-                "reference": "21bdeb5f65d7ebf9f43b1b25d404f87deab5bfb6"
+                "reference": "63a995caa1ca9e5590304cd845c15ad6d482a62a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionCommon/zipball/21bdeb5f65d7ebf9f43b1b25d404f87deab5bfb6",
-                "reference": "21bdeb5f65d7ebf9f43b1b25d404f87deab5bfb6",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionCommon/zipball/63a995caa1ca9e5590304cd845c15ad6d482a62a",
+                "reference": "63a995caa1ca9e5590304cd845c15ad6d482a62a",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.5"
+                "php": ">=7.1"
             },
             "require-dev": {
-                "phpunit/phpunit": "^4.6"
+                "phpunit/phpunit": "~6"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev"
+                    "dev-master": "2.x-dev"
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "phpDocumentor\\Reflection\\": [
-                        "src"
-                    ]
+                    "phpDocumentor\\Reflection\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -8937,30 +9182,30 @@
                 "reflection",
                 "static analysis"
             ],
-            "time": "2017-09-11T18:02:19+00:00"
+            "time": "2018-08-07T13:53:10+00:00"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
-            "version": "4.3.1",
+            "version": "4.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "bdd9f737ebc2a01c06ea7ff4308ec6697db9b53c"
+                "reference": "b83ff7cfcfee7827e1e78b637a5904fe6a96698e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/bdd9f737ebc2a01c06ea7ff4308ec6697db9b53c",
-                "reference": "bdd9f737ebc2a01c06ea7ff4308ec6697db9b53c",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/b83ff7cfcfee7827e1e78b637a5904fe6a96698e",
+                "reference": "b83ff7cfcfee7827e1e78b637a5904fe6a96698e",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.0",
-                "phpdocumentor/reflection-common": "^1.0.0",
-                "phpdocumentor/type-resolver": "^0.4.0",
+                "phpdocumentor/reflection-common": "^1.0.0 || ^2.0.0",
+                "phpdocumentor/type-resolver": "~0.4 || ^1.0.0",
                 "webmozart/assert": "^1.0"
             },
             "require-dev": {
-                "doctrine/instantiator": "~1.0.5",
+                "doctrine/instantiator": "^1.0.5",
                 "mockery/mockery": "^1.0",
                 "phpunit/phpunit": "^6.4"
             },
@@ -8988,41 +9233,40 @@
                 }
             ],
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
-            "time": "2019-04-30T17:48:53+00:00"
+            "time": "2019-09-12T14:27:41+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
-            "version": "0.4.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/TypeResolver.git",
-                "reference": "9c977708995954784726e25d0cd1dddf4e65b0f7"
+                "reference": "2e32a6d48972b2c1976ed5d8967145b6cec4a4a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/9c977708995954784726e25d0cd1dddf4e65b0f7",
-                "reference": "9c977708995954784726e25d0cd1dddf4e65b0f7",
+                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/2e32a6d48972b2c1976ed5d8967145b6cec4a4a9",
+                "reference": "2e32a6d48972b2c1976ed5d8967145b6cec4a4a9",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.5 || ^7.0",
-                "phpdocumentor/reflection-common": "^1.0"
+                "php": "^7.1",
+                "phpdocumentor/reflection-common": "^2.0"
             },
             "require-dev": {
-                "mockery/mockery": "^0.9.4",
-                "phpunit/phpunit": "^5.2||^4.8.24"
+                "ext-tokenizer": "^7.1",
+                "mockery/mockery": "~1",
+                "phpunit/phpunit": "^7.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev"
+                    "dev-master": "1.x-dev"
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "phpDocumentor\\Reflection\\": [
-                        "src/"
-                    ]
+                    "phpDocumentor\\Reflection\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -9035,7 +9279,8 @@
                     "email": "me@mikevanriel.com"
                 }
             ],
-            "time": "2017-07-14T14:27:02+00:00"
+            "description": "A PSR-5 based resolver of Class names, Types and Structural Element Names",
+            "time": "2019-08-22T18:11:29+00:00"
         },
         {
             "name": "phpspec/prophecy",
@@ -9102,40 +9347,40 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "5.3.2",
+            "version": "6.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "c89677919c5dd6d3b3852f230a663118762218ac"
+                "reference": "807e6013b00af69b6c5d9ceb4282d0393dbb9d8d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/c89677919c5dd6d3b3852f230a663118762218ac",
-                "reference": "c89677919c5dd6d3b3852f230a663118762218ac",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/807e6013b00af69b6c5d9ceb4282d0393dbb9d8d",
+                "reference": "807e6013b00af69b6c5d9ceb4282d0393dbb9d8d",
                 "shasum": ""
             },
             "require": {
                 "ext-dom": "*",
                 "ext-xmlwriter": "*",
-                "php": "^7.0",
-                "phpunit/php-file-iterator": "^1.4.2",
+                "php": "^7.1",
+                "phpunit/php-file-iterator": "^2.0",
                 "phpunit/php-text-template": "^1.2.1",
-                "phpunit/php-token-stream": "^2.0.1",
+                "phpunit/php-token-stream": "^3.0",
                 "sebastian/code-unit-reverse-lookup": "^1.0.1",
-                "sebastian/environment": "^3.0",
+                "sebastian/environment": "^3.1 || ^4.0",
                 "sebastian/version": "^2.0.1",
                 "theseer/tokenizer": "^1.1"
             },
             "require-dev": {
-                "phpunit/phpunit": "^6.0"
+                "phpunit/phpunit": "^7.0"
             },
             "suggest": {
-                "ext-xdebug": "^2.5.5"
+                "ext-xdebug": "^2.6.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "5.3.x-dev"
+                    "dev-master": "6.1-dev"
                 }
             },
             "autoload": {
@@ -9161,29 +9406,32 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-04-06T15:36:58+00:00"
+            "time": "2018-10-31T16:06:48+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
-            "version": "1.4.5",
+            "version": "2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-file-iterator.git",
-                "reference": "730b01bc3e867237eaac355e06a36b85dd93a8b4"
+                "reference": "050bedf145a257b1ff02746c31894800e5122946"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-file-iterator/zipball/730b01bc3e867237eaac355e06a36b85dd93a8b4",
-                "reference": "730b01bc3e867237eaac355e06a36b85dd93a8b4",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-file-iterator/zipball/050bedf145a257b1ff02746c31894800e5122946",
+                "reference": "050bedf145a257b1ff02746c31894800e5122946",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3"
+                "php": "^7.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.1"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.4.x-dev"
+                    "dev-master": "2.0.x-dev"
                 }
             },
             "autoload": {
@@ -9198,7 +9446,7 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sb@sebastian-bergmann.de",
+                    "email": "sebastian@phpunit.de",
                     "role": "lead"
                 }
             ],
@@ -9208,7 +9456,7 @@
                 "filesystem",
                 "iterator"
             ],
-            "time": "2017-11-27T13:52:08+00:00"
+            "time": "2018-09-13T20:33:42+00:00"
         },
         {
             "name": "phpunit/php-text-template",
@@ -9253,28 +9501,28 @@
         },
         {
             "name": "phpunit/php-timer",
-            "version": "1.0.9",
+            "version": "2.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-timer.git",
-                "reference": "3dcf38ca72b158baf0bc245e9184d3fdffa9c46f"
+                "reference": "1038454804406b0b5f5f520358e78c1c2f71501e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-timer/zipball/3dcf38ca72b158baf0bc245e9184d3fdffa9c46f",
-                "reference": "3dcf38ca72b158baf0bc245e9184d3fdffa9c46f",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-timer/zipball/1038454804406b0b5f5f520358e78c1c2f71501e",
+                "reference": "1038454804406b0b5f5f520358e78c1c2f71501e",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.3.3 || ^7.0"
+                "php": "^7.1"
             },
             "require-dev": {
-                "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.0"
+                "phpunit/phpunit": "^7.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0-dev"
+                    "dev-master": "2.1-dev"
                 }
             },
             "autoload": {
@@ -9289,7 +9537,7 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sb@sebastian-bergmann.de",
+                    "email": "sebastian@phpunit.de",
                     "role": "lead"
                 }
             ],
@@ -9298,33 +9546,33 @@
             "keywords": [
                 "timer"
             ],
-            "time": "2017-02-26T11:10:40+00:00"
+            "time": "2019-06-07T04:22:29+00:00"
         },
         {
             "name": "phpunit/php-token-stream",
-            "version": "2.0.2",
+            "version": "3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-token-stream.git",
-                "reference": "791198a2c6254db10131eecfe8c06670700904db"
+                "reference": "995192df77f63a59e47f025390d2d1fdf8f425ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/791198a2c6254db10131eecfe8c06670700904db",
-                "reference": "791198a2c6254db10131eecfe8c06670700904db",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/995192df77f63a59e47f025390d2d1fdf8f425ff",
+                "reference": "995192df77f63a59e47f025390d2d1fdf8f425ff",
                 "shasum": ""
             },
             "require": {
                 "ext-tokenizer": "*",
-                "php": "^7.0"
+                "php": "^7.1"
             },
             "require-dev": {
-                "phpunit/phpunit": "^6.2.4"
+                "phpunit/phpunit": "^7.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.0-dev"
+                    "dev-master": "3.1-dev"
                 }
             },
             "autoload": {
@@ -9347,57 +9595,57 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2017-11-27T05:48:46+00:00"
+            "time": "2019-09-17T06:23:10+00:00"
         },
         {
             "name": "phpunit/phpunit",
-            "version": "6.5.14",
+            "version": "7.5.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "bac23fe7ff13dbdb461481f706f0e9fe746334b7"
+                "reference": "316afa6888d2562e04aeb67ea7f2017a0eb41661"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/bac23fe7ff13dbdb461481f706f0e9fe746334b7",
-                "reference": "bac23fe7ff13dbdb461481f706f0e9fe746334b7",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/316afa6888d2562e04aeb67ea7f2017a0eb41661",
+                "reference": "316afa6888d2562e04aeb67ea7f2017a0eb41661",
                 "shasum": ""
             },
             "require": {
+                "doctrine/instantiator": "^1.1",
                 "ext-dom": "*",
                 "ext-json": "*",
                 "ext-libxml": "*",
                 "ext-mbstring": "*",
                 "ext-xml": "*",
-                "myclabs/deep-copy": "^1.6.1",
-                "phar-io/manifest": "^1.0.1",
-                "phar-io/version": "^1.0",
-                "php": "^7.0",
+                "myclabs/deep-copy": "^1.7",
+                "phar-io/manifest": "^1.0.2",
+                "phar-io/version": "^2.0",
+                "php": "^7.1",
                 "phpspec/prophecy": "^1.7",
-                "phpunit/php-code-coverage": "^5.3",
-                "phpunit/php-file-iterator": "^1.4.3",
+                "phpunit/php-code-coverage": "^6.0.7",
+                "phpunit/php-file-iterator": "^2.0.1",
                 "phpunit/php-text-template": "^1.2.1",
-                "phpunit/php-timer": "^1.0.9",
-                "phpunit/phpunit-mock-objects": "^5.0.9",
-                "sebastian/comparator": "^2.1",
-                "sebastian/diff": "^2.0",
-                "sebastian/environment": "^3.1",
+                "phpunit/php-timer": "^2.1",
+                "sebastian/comparator": "^3.0",
+                "sebastian/diff": "^3.0",
+                "sebastian/environment": "^4.0",
                 "sebastian/exporter": "^3.1",
                 "sebastian/global-state": "^2.0",
                 "sebastian/object-enumerator": "^3.0.3",
-                "sebastian/resource-operations": "^1.0",
+                "sebastian/resource-operations": "^2.0",
                 "sebastian/version": "^2.0.1"
             },
             "conflict": {
-                "phpdocumentor/reflection-docblock": "3.0.2",
-                "phpunit/dbunit": "<3.0"
+                "phpunit/phpunit-mock-objects": "*"
             },
             "require-dev": {
                 "ext-pdo": "*"
             },
             "suggest": {
+                "ext-soap": "*",
                 "ext-xdebug": "*",
-                "phpunit/php-invoker": "^1.1"
+                "phpunit/php-invoker": "^2.0"
             },
             "bin": [
                 "phpunit"
@@ -9405,7 +9653,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "6.5.x-dev"
+                    "dev-master": "7.5-dev"
                 }
             },
             "autoload": {
@@ -9431,67 +9679,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2019-02-01T05:22:47+00:00"
-        },
-        {
-            "name": "phpunit/phpunit-mock-objects",
-            "version": "5.0.10",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sebastianbergmann/phpunit-mock-objects.git",
-                "reference": "cd1cf05c553ecfec36b170070573e540b67d3f1f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/cd1cf05c553ecfec36b170070573e540b67d3f1f",
-                "reference": "cd1cf05c553ecfec36b170070573e540b67d3f1f",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/instantiator": "^1.0.5",
-                "php": "^7.0",
-                "phpunit/php-text-template": "^1.2.1",
-                "sebastian/exporter": "^3.1"
-            },
-            "conflict": {
-                "phpunit/phpunit": "<6.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^6.5.11"
-            },
-            "suggest": {
-                "ext-soap": "*"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "5.0.x-dev"
-                }
-            },
-            "autoload": {
-                "classmap": [
-                    "src/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "lead"
-                }
-            ],
-            "description": "Mock Object library for PHPUnit",
-            "homepage": "https://github.com/sebastianbergmann/phpunit-mock-objects/",
-            "keywords": [
-                "mock",
-                "xunit"
-            ],
-            "abandoned": true,
-            "time": "2018-08-09T05:50:03+00:00"
+            "time": "2019-09-14T09:08:39+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -9540,30 +9728,30 @@
         },
         {
             "name": "sebastian/comparator",
-            "version": "2.1.3",
+            "version": "3.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/comparator.git",
-                "reference": "34369daee48eafb2651bea869b4b15d75ccc35f9"
+                "reference": "5de4fc177adf9bce8df98d8d141a7559d7ccf6da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/34369daee48eafb2651bea869b4b15d75ccc35f9",
-                "reference": "34369daee48eafb2651bea869b4b15d75ccc35f9",
+                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/5de4fc177adf9bce8df98d8d141a7559d7ccf6da",
+                "reference": "5de4fc177adf9bce8df98d8d141a7559d7ccf6da",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.0",
-                "sebastian/diff": "^2.0 || ^3.0",
+                "php": "^7.1",
+                "sebastian/diff": "^3.0",
                 "sebastian/exporter": "^3.1"
             },
             "require-dev": {
-                "phpunit/phpunit": "^6.4"
+                "phpunit/phpunit": "^7.1"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.1.x-dev"
+                    "dev-master": "3.0-dev"
                 }
             },
             "autoload": {
@@ -9600,32 +9788,33 @@
                 "compare",
                 "equality"
             ],
-            "time": "2018-02-01T13:46:46+00:00"
+            "time": "2018-07-12T15:12:46+00:00"
         },
         {
             "name": "sebastian/diff",
-            "version": "2.0.1",
+            "version": "3.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/diff.git",
-                "reference": "347c1d8b49c5c3ee30c7040ea6fc446790e6bddd"
+                "reference": "720fcc7e9b5cf384ea68d9d930d480907a0c1a29"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/diff/zipball/347c1d8b49c5c3ee30c7040ea6fc446790e6bddd",
-                "reference": "347c1d8b49c5c3ee30c7040ea6fc446790e6bddd",
+                "url": "https://api.github.com/repos/sebastianbergmann/diff/zipball/720fcc7e9b5cf384ea68d9d930d480907a0c1a29",
+                "reference": "720fcc7e9b5cf384ea68d9d930d480907a0c1a29",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.0"
+                "php": "^7.1"
             },
             "require-dev": {
-                "phpunit/phpunit": "^6.2"
+                "phpunit/phpunit": "^7.5 || ^8.0",
+                "symfony/process": "^2 || ^3.3 || ^4"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.0-dev"
+                    "dev-master": "3.0-dev"
                 }
             },
             "autoload": {
@@ -9650,34 +9839,40 @@
             "description": "Diff implementation",
             "homepage": "https://github.com/sebastianbergmann/diff",
             "keywords": [
-                "diff"
+                "diff",
+                "udiff",
+                "unidiff",
+                "unified diff"
             ],
-            "time": "2017-08-03T08:09:46+00:00"
+            "time": "2019-02-04T06:01:07+00:00"
         },
         {
             "name": "sebastian/environment",
-            "version": "3.1.0",
+            "version": "4.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/environment.git",
-                "reference": "cd0871b3975fb7fc44d11314fd1ee20925fce4f5"
+                "reference": "f2a2c8e1c97c11ace607a7a667d73d47c19fe404"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/cd0871b3975fb7fc44d11314fd1ee20925fce4f5",
-                "reference": "cd0871b3975fb7fc44d11314fd1ee20925fce4f5",
+                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/f2a2c8e1c97c11ace607a7a667d73d47c19fe404",
+                "reference": "f2a2c8e1c97c11ace607a7a667d73d47c19fe404",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.0"
+                "php": "^7.1"
             },
             "require-dev": {
-                "phpunit/phpunit": "^6.1"
+                "phpunit/phpunit": "^7.5"
+            },
+            "suggest": {
+                "ext-posix": "*"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.1.x-dev"
+                    "dev-master": "4.2-dev"
                 }
             },
             "autoload": {
@@ -9702,20 +9897,20 @@
                 "environment",
                 "hhvm"
             ],
-            "time": "2017-07-01T08:51:00+00:00"
+            "time": "2019-05-05T09:05:15+00:00"
         },
         {
             "name": "sebastian/exporter",
-            "version": "3.1.1",
+            "version": "3.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/exporter.git",
-                "reference": "06a9a5947f47b3029d76118eb5c22802e5869687"
+                "reference": "68609e1261d215ea5b21b7987539cbfbe156ec3e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/exporter/zipball/06a9a5947f47b3029d76118eb5c22802e5869687",
-                "reference": "06a9a5947f47b3029d76118eb5c22802e5869687",
+                "url": "https://api.github.com/repos/sebastianbergmann/exporter/zipball/68609e1261d215ea5b21b7987539cbfbe156ec3e",
+                "reference": "68609e1261d215ea5b21b7987539cbfbe156ec3e",
                 "shasum": ""
             },
             "require": {
@@ -9769,7 +9964,7 @@
                 "export",
                 "exporter"
             ],
-            "time": "2019-08-11T12:43:14+00:00"
+            "time": "2019-09-14T09:02:43+00:00"
         },
         {
             "name": "sebastian/global-state",
@@ -9969,25 +10164,25 @@
         },
         {
             "name": "sebastian/resource-operations",
-            "version": "1.0.0",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/resource-operations.git",
-                "reference": "ce990bb21759f94aeafd30209e8cfcdfa8bc3f52"
+                "reference": "4d7a795d35b889bf80a0cc04e08d77cedfa917a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/resource-operations/zipball/ce990bb21759f94aeafd30209e8cfcdfa8bc3f52",
-                "reference": "ce990bb21759f94aeafd30209e8cfcdfa8bc3f52",
+                "url": "https://api.github.com/repos/sebastianbergmann/resource-operations/zipball/4d7a795d35b889bf80a0cc04e08d77cedfa917a9",
+                "reference": "4d7a795d35b889bf80a0cc04e08d77cedfa917a9",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.6.0"
+                "php": "^7.1"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev"
+                    "dev-master": "2.0-dev"
                 }
             },
             "autoload": {
@@ -10007,7 +10202,7 @@
             ],
             "description": "Provides a list of PHP built-in functions that operate on resources",
             "homepage": "https://www.github.com/sebastianbergmann/resource-operations",
-            "time": "2015-07-28T20:34:47+00:00"
+            "time": "2018-10-04T04:07:39+00:00"
         },
         {
             "name": "sebastian/version",
@@ -10228,8 +10423,8 @@
             "authors": [
                 {
                     "name": "Arne Blankerts",
-                    "role": "Developer",
-                    "email": "arne@blankerts.de"
+                    "email": "arne@blankerts.de",
+                    "role": "Developer"
                 }
             ],
             "description": "A small library for converting tokenized PHP source code into XML and potentially other formats",
@@ -10288,9 +10483,31 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "dreamfactory/df-apidoc": 20,
+        "dreamfactory/df-aws": 20,
+        "dreamfactory/df-azure": 20,
+        "dreamfactory/df-cache": 20,
+        "dreamfactory/df-cassandra": 20,
+        "dreamfactory/df-core": 20,
+        "dreamfactory/df-couchbase": 20,
+        "dreamfactory/df-couchdb": 20,
+        "dreamfactory/df-email": 20,
+        "dreamfactory/df-file": 20,
+        "dreamfactory/df-firebird": 20,
+        "dreamfactory/df-git": 20,
+        "dreamfactory/df-graphql": 20,
+        "dreamfactory/df-oauth": 20,
+        "dreamfactory/df-rackspace": 20,
+        "dreamfactory/df-rws": 20,
+        "dreamfactory/df-sqldb": 20,
+        "dreamfactory/df-system": 20,
+        "dreamfactory/df-user": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": "^7.1.3"
+    },
     "platform-dev": []
 }
