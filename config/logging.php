@@ -15,7 +15,9 @@ return [
     |
     */
 
-    'default' => env('LOG_CHANNEL', 'stack'),
+    'default'   => env('LOG_CHANNEL', env('APP_LOG', 'stack')),
+    'log'       => env('LOG_CHANNEL', env('APP_LOG', 'stack')),
+    'log_level' => env('APP_LOG_LEVEL', 'warning'),
 
     /*
     |--------------------------------------------------------------------------
@@ -41,7 +43,7 @@ return [
         'single' => [
             'driver' => 'single',
             'path' => storage_path('logs/dreamfactory.log'),
-            'level' => 'warning',
+            'level' => env('APP_LOG_LEVEL', 'warning'),
             'formatter' => Monolog\Formatter\LineFormatter::class,
             'formatter_with' => [
                 'format' => null,
@@ -54,7 +56,7 @@ return [
         'daily' => [
             'driver' => 'daily',
             'path' => storage_path('logs/dreamfactory.log'),
-            'level' => 'warning',
+            'level' => env('APP_LOG_LEVEL', 'warning'),
             'days' => 7,
             'formatter' => Monolog\Formatter\LineFormatter::class,
             'formatter_with' => [
@@ -97,7 +99,7 @@ return [
 
         'syslog' => [
             'driver' => 'syslog',
-            'level' => 'warning',
+            'level' => env('APP_LOG_LEVEL', 'warning'),
             'formatter' => Monolog\Formatter\LineFormatter::class,
             'formatter_with' => [
                 'format' => null,
@@ -109,7 +111,7 @@ return [
 
         'errorlog' => [
             'driver' => 'errorlog',
-            'level' => 'warning',
+            'level' => env('APP_LOG_LEVEL', 'warning'),
             'formatter' => Monolog\Formatter\LineFormatter::class,
             'formatter_with' => [
                 'format' => null,
