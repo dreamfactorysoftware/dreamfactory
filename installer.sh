@@ -119,6 +119,7 @@ declare -A settings=(
 ["DF_SCRIPTING_DISABLE"]=""
 ["DF_NODEJS_PATH"]="/usr/local/bin/node"
 ["DF_PYTHON_PATH"]="/usr/local/bin/python"
+["DF_PYTHON3_PATH"]="/usr/local/bin/python3"
 # API
 ["DF_API_ROUTE_PREFIX"]="api"
 ["DF_STATUS_ROUTE_PREFIX"]=""
@@ -234,6 +235,7 @@ declare -A settings_msg=(
 ["DF_SCRIPTING_DISABLE"]="To disable all server-side scripting set this to 'all', or comma-delimited list of v8js, nodejs, python, and/or php to disable individually."
 ["DF_NODEJS_PATH"]="The system will try to detect the executable path, but in some environments it is best to set the path to the installed Node.js executable."
 ["DF_PYTHON_PATH"]="The system will try to detect the executable path, but in some environments it is best to set the path to the installed Python executable"
+["DF_PYTHON3_PATH"]="The system will try to detect the executable path, but in some environments it is best to set the path to the installed Python3 executable"
 # API
 ["DF_API_ROUTE_PREFIX"]="By default, API calls take the form of http://<server_name>/<api_route_prefix>/v<version_number>"
 ["DF_STATUS_ROUTE_PREFIX"]="By default, API calls take the form of http://<server_name>/[<status_route_prefix>/]status"
@@ -1082,6 +1084,7 @@ case $action in
                     menu_items=("DF_SCRIPTING_DISABLE")
                     [[ "${chosen_features[nodejs]}" ]] && menu_items=("${menu_items[@]}" "DF_NODEJS_PATH")
                     [[ "${chosen_features[python]}" ]] && menu_items=("${menu_items[@]}" "DF_PYTHON_PATH")
+                    [[ "${chosen_features[python3]}" ]] && menu_items=("${menu_items[@]}" "DF_PYTHON_PATH3")
                     settings_menu_handle "Server-side Scripting Settings"
                     ;;
 
