@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Hash;
 |
 */
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+/* @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(DreamFactory\User::class, function (Faker\Generator $faker) {
     static $password;
 
