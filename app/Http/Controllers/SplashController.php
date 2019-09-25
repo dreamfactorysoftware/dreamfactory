@@ -2,10 +2,10 @@
 
 namespace DreamFactory\Http\Controllers;
 
-use Illuminate\Support\Arr;
 use DreamFactory\Core\Enums\Verbs;
 use DreamFactory\Core\Models\User;
 use DreamFactory\Core\Utility\Session;
+use Illuminate\Support\Arr;
 use Response;
 
 class SplashController extends Controller

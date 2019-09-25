@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Arr;
 use DreamFactory\Core\Models\BaseModel;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Arr;
 
 class BaseModelSeeder extends Seeder
 {

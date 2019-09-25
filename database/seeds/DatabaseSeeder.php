@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Support\Arr;
 use DreamFactory\Core\Models\EmailTemplate;
 use DreamFactory\Core\Models\Service;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Arr;
 
 class DatabaseSeeder extends Seeder
 {
