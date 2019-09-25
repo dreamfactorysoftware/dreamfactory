@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Arr;
 use DreamFactory\Core\Models\BaseModel;
 use Illuminate\Database\Seeder;
 
@@ -33,14 +34,14 @@ class BaseModelSeeder extends Seeder
             $builder = null;
             $name = '';
             if (! is_array($this->recordIdentifier)) {
-                $name = array_get($record, $this->recordIdentifier);
+                $name = Arr::get($record, $this->recordIdentifier);
                 if (empty($name)) {
                     throw new \Exception("Invalid seeder record. No value for {$this->recordIdentifier}.");
                 }
                 $builder = $modelName::where($this->recordIdentifier, $name);
             } else {
                 foreach ($this->recordIdentifier as $identifier) {
-                    $id = array_get($record, $identifier);
+                    $id = Arr::get($record, $identifier);
                     if (empty($id)) {
                         throw new \Exception("Invalid seeder record. No value for $identifier.");
                     }
