@@ -5,6 +5,7 @@ namespace DreamFactory\Http\Controllers;
 use DreamFactory\Core\Enums\Verbs;
 use DreamFactory\Core\Models\User;
 use DreamFactory\Core\Utility\Session;
+use Illuminate\Support\Arr;
 use Response;
 
 class SplashController extends Controller
@@ -63,7 +64,7 @@ class SplashController extends Controller
                 $jwt = null;
                 if (true === $login = Session::setUserInfoWithJWT($user)) {
                     $sessionInfo = Session::getPublicInfo();
-                    $jwt = array_get($sessionInfo, 'session_token');
+                    $jwt = Arr::get($sessionInfo, 'session_token');
                 }
             }
         }

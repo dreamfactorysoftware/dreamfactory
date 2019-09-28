@@ -4,6 +4,7 @@ use DreamFactory\Core\Models\EmailTemplate;
 use DreamFactory\Core\Models\Service;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Arr;
 
 class DatabaseSeeder extends Seeder
 {
@@ -98,7 +99,7 @@ class DatabaseSeeder extends Seeder
         $emailTemplateOpenReg = EmailTemplate::whereName('User Registration Default')->first();
         $emailTemplateOpenRegId = (! empty($emailTemplateOpenReg)) ? $emailTemplateOpenReg->id : null;
         if ($system = Service::whereName('system')->first()) {
-            if (null == array_get($system->config, 'invite_email_service_id')) {
+            if (null == Arr::get($system->config, 'invite_email_service_id')) {
                 $record = [
                     'config' => [
                         'invite_email_service_id'    => $emailServiceId,
@@ -160,14 +161,14 @@ class DatabaseSeeder extends Seeder
             $builder = null;
             $name = '';
             if (! is_array($identifier)) {
-                $name = array_get($record, $identifier);
+                $name = Arr::get($record, $identifier);
                 if (empty($name)) {
                     throw new \Exception("Invalid seeder record. No value for $identifier.");
                 }
                 $builder = $class_name::where($identifier, $name);
             } else {
                 foreach ($identifier as $each) {
-                    $id = array_get($record, $each);
+                    $id = Arr::get($record, $each);
                     if (empty($id)) {
                         throw new \Exception("Invalid seeder record. No value for $each.");
                     }
