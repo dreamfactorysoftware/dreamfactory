@@ -43,30 +43,30 @@ return [
 
         'database' => [
             'driver' => 'database',
-            'table' => env('CACHE_TABLE', 'cache'),
-            'connection' => env('DB_CONNECTION', 'sqlite'),
+            'table' => 'cache',
+            'connection' => null,
         ],
 
         'file' => [
             'driver' => 'file',
-            'path' => env('CACHE_PATH', env('DF_CACHE_PATH', storage_path('framework/cache/data'))),
+            'path' => storage_path('framework/cache/data'),
         ],
 
-        'memcached'  => [
+        'memcached' => [
             'driver' => 'memcached',
-            'persistent_id' => env('CACHE_PERSISTENT_ID', env('MEMCACHED_PERSISTENT_ID')),
+            'persistent_id' => env('MEMCACHED_PERSISTENT_ID'),
             'sasl' => [
-                env('CACHE_USERNAME', env('MEMCACHED_USERNAME')),
-                env('CACHE_PASSWORD', env('MEMCACHED_PASSWORD')),
+                env('MEMCACHED_USERNAME'),
+                env('MEMCACHED_PASSWORD'),
             ],
             'options' => [
-                // Memcached::OPT_CONNECT_TIMEOUT  => 2000,
+                // Memcached::OPT_CONNECT_TIMEOUT => 2000,
             ],
             'servers' => [
                 [
-                    'host' => env('CACHE_HOST', env('MEMCACHED_HOST', '127.0.0.1')),
-                    'port' => env('CACHE_PORT', env('MEMCACHED_PORT', 11211)),
-                    'weight' => env('CACHE_WEIGHT', env('MEMCACHED_WEIGHT', 100)),
+                    'host' => env('MEMCACHED_HOST', '127.0.0.1'),
+                    'port' => env('MEMCACHED_PORT', 11211),
+                    'weight' => 100,
                 ],
             ],
         ],
@@ -82,6 +82,7 @@ return [
             'secret' => env('AWS_SECRET_ACCESS_KEY'),
             'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
             'table' => env('DYNAMODB_CACHE_TABLE', 'cache'),
+            'endpoint' => env('DYNAMODB_ENDPOINT'),
         ],
 
     ],
@@ -98,16 +99,5 @@ return [
     */
 
     'prefix' => env('CACHE_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_cache'),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Cache Default Time To Live
-    |--------------------------------------------------------------------------
-    |
-    | When the application does not specify a TTL, use this instead.
-    |
-    */
-
-    'default_ttl' => env('CACHE_DEFAULT_TTL', env('DF_CACHE_TTL', 18000)), // old env for upgrades
 
 ];

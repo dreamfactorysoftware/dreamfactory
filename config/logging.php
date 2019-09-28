@@ -1,6 +1,8 @@
 <?php
 
+use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
+use Monolog\Handler\SyslogUdpHandler;
 
 return [
 
@@ -15,9 +17,7 @@ return [
     |
     */
 
-    'default'   => env('LOG_CHANNEL', env('APP_LOG', 'stack')),
-    'log'       => env('LOG_CHANNEL', env('APP_LOG', 'stack')),
-    'log_level' => env('APP_LOG_LEVEL', 'warning'),
+    'default' => env('LOG_CHANNEL', 'stack'),
 
     /*
     |--------------------------------------------------------------------------
@@ -37,34 +37,21 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single'],
+            'channels' => ['daily'],
+            'ignore_exceptions' => false,
         ],
 
         'single' => [
             'driver' => 'single',
-            'path' => storage_path('logs/dreamfactory.log'),
-            'level' => env('APP_LOG_LEVEL', 'warning'),
-            'formatter' => Monolog\Formatter\LineFormatter::class,
-            'formatter_with' => [
-                'format' => null,
-                'dateFormat' => null,
-                'allowInlineLineBreaks' => true,
-                'ignoreEmptyContextAndExtra' => true,
-            ],
+            'path' => storage_path('logs/laravel.log'),
+            'level' => 'debug',
         ],
 
         'daily' => [
             'driver' => 'daily',
-            'path' => storage_path('logs/dreamfactory.log'),
-            'level' => env('APP_LOG_LEVEL', 'warning'),
-            'days' => 7,
-            'formatter' => Monolog\Formatter\LineFormatter::class,
-            'formatter_with' => [
-                'format' => null,
-                'dateFormat' => null,
-                'allowInlineLineBreaks' => true,
-                'ignoreEmptyContextAndExtra' => true,
-            ],
+            'path' => storage_path('logs/laravel.log'),
+            'level' => 'debug',
+            'days' => 14,
         ],
 
         'slack' => [
@@ -73,52 +60,40 @@ return [
             'username' => 'Laravel Log',
             'emoji' => ':boom:',
             'level' => 'critical',
-            'formatter' => Monolog\Formatter\LineFormatter::class,
-            'formatter_with' => [
-                'format' => null,
-                'dateFormat' => null,
-                'allowInlineLineBreaks' => true,
-                'ignoreEmptyContextAndExtra' => true,
+        ],
+
+        'papertrail' => [
+            'driver' => 'monolog',
+            'level' => 'debug',
+            'handler' => SyslogUdpHandler::class,
+            'handler_with' => [
+                'host' => env('PAPERTRAIL_URL'),
+                'port' => env('PAPERTRAIL_PORT'),
             ],
         ],
 
         'stderr' => [
             'driver' => 'monolog',
             'handler' => StreamHandler::class,
+            'formatter' => env('LOG_STDERR_FORMATTER'),
             'with' => [
                 'stream' => 'php://stderr',
-            ],
-            'formatter' => Monolog\Formatter\LineFormatter::class,
-            'formatter_with' => [
-                'format' => null,
-                'dateFormat' => null,
-                'allowInlineLineBreaks' => true,
-                'ignoreEmptyContextAndExtra' => true,
             ],
         ],
 
         'syslog' => [
             'driver' => 'syslog',
-            'level' => env('APP_LOG_LEVEL', 'warning'),
-            'formatter' => Monolog\Formatter\LineFormatter::class,
-            'formatter_with' => [
-                'format' => null,
-                'dateFormat' => null,
-                'allowInlineLineBreaks' => true,
-                'ignoreEmptyContextAndExtra' => true,
-            ],
+            'level' => 'debug',
         ],
 
         'errorlog' => [
             'driver' => 'errorlog',
-            'level' => env('APP_LOG_LEVEL', 'warning'),
-            'formatter' => Monolog\Formatter\LineFormatter::class,
-            'formatter_with' => [
-                'format' => null,
-                'dateFormat' => null,
-                'allowInlineLineBreaks' => true,
-                'ignoreEmptyContextAndExtra' => true,
-            ],
+            'level' => 'debug',
+        ],
+
+        'null' => [
+            'driver' => 'monolog',
+            'handler' => NullHandler::class,
         ],
     ],
 
