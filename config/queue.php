@@ -4,12 +4,14 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Default Queue Connection Name
+    | Default Queue Driver
     |--------------------------------------------------------------------------
     |
     | Laravel's queue API supports an assortment of back-ends via a single
     | API, giving you convenient access to each back-end using the same
-    | syntax for every one. Here you may define a default connection.
+    | syntax for each one. Here you may set the default queue driver.
+    |
+    | Supported: "sync", "database", "beanstalkd", "sqs", "redis", "null"
     |
     */
 
@@ -24,8 +26,6 @@ return [
     | is used by your application. A default configuration has been added
     | for each back-end shipped with Laravel. You are free to add more.
     |
-    | Drivers: "sync", "database", "beanstalkd", "sqs", "redis", "null"
-    |
     */
 
     'connections' => [
@@ -36,34 +36,33 @@ return [
 
         'database' => [
             'driver' => 'database',
-            'table' => 'jobs',
-            'queue' => 'default',
-            'retry_after' => 90,
+            'database' => env('DB_CONNECTION', 'sqlite'),
+            'table' => env('QUEUE_TABLE', 'jobs'),
+            'queue' => env('QUEUE_NAME', 'default'),
+            'retry_after' => env('QUEUE_RETRY_AFTER', 90),
         ],
 
         'beanstalkd' => [
             'driver' => 'beanstalkd',
-            'host' => 'localhost',
-            'queue' => 'default',
-            'retry_after' => 90,
-            'block_for' => 0,
+            'host' => env('QUEUE_HOST', 'localhost'),
+            'queue' => env('QUEUE_NAME', 'default'),
+            'retry_after' => env('QUEUE_RETRY_AFTER', 90),
         ],
 
         'sqs' => [
             'driver' => 'sqs',
-            'key' => env('AWS_ACCESS_KEY_ID'),
-            'secret' => env('AWS_SECRET_ACCESS_KEY'),
+            'key' => env('AWS_ACCESS_KEY_ID', env('SQS_KEY', env('AWS_KEY'))),
+            'secret' => env('AWS_SECRET_ACCESS_KEY', env('SQS_SECRET', env('AWS_SECRET'))),
+            'region' => env('AWS_DEFAULT_REGION', env('SQS_REGION', env('AWS_REGION', 'us-east-1'))),
             'prefix' => env('SQS_PREFIX', 'https://sqs.us-east-1.amazonaws.com/your-account-id'),
-            'queue' => env('SQS_QUEUE', 'your-queue-name'),
-            'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
+            'queue' => env('SQS_QUEUE', env('QUEUE_NAME', 'default')),
         ],
 
         'redis' => [
             'driver' => 'redis',
-            'connection' => 'default',
-            'queue' => env('REDIS_QUEUE', 'default'),
-            'retry_after' => 90,
-            'block_for' => null,
+            'connection' => 'queue',
+            'queue' => env('QUEUE_NAME', 'default'),
+            'retry_after' => env('QUEUE_RETRY_AFTER', 90),
         ],
 
     ],
@@ -80,8 +79,7 @@ return [
     */
 
     'failed' => [
-        'driver' => env('QUEUE_FAILED_DRIVER', 'database'),
-        'database' => env('DB_CONNECTION', 'mysql'),
+        'database' => env('DB_CONNECTION', 'sqlite'),
         'table' => 'failed_jobs',
     ],
 
