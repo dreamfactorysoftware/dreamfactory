@@ -73,6 +73,12 @@ return [
             'connection' => 'cache',
         ],
 
+        'session' => [
+            'driver' => env('SESSION_DRIVER', 'array'),
+            'connection' => 'session',
+            'prefix'   => 'laravel_session',
+        ],
+
     ],
 
     /*
