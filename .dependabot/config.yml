@@ -1,0 +1,16 @@
+version: 1
+
+update_configs:
+  - package_manager: "php:composer"
+    directory: "/"
+    update_schedule: "live"
+    target_branch: "master"
+    default_labels:
+      - "dependencies"
+      - "dependabot"
+    allowed_updates:
+      - match:
+          update_type: "all"
+          dependency_name: "dreamfactory/df*"
+    version_requirement_updates:
+      "increase_versions"
