@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c5ab3ab94b4447c065adfd83fdebb64b",
+    "content-hash": "cdccf19634a5153b796d4473bc4b3593",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -959,6 +959,7 @@
                 },
                 "installer-name": "df-api-docs-ui"
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
@@ -977,12 +978,6 @@
                 "rest",
                 "swagger"
             ],
-            "support": {
-                "source": "https://github.com/dreamfactorysoftware/df-api-docs-ui",
-                "issues": "https://github.com/dreamfactorysoftware/df-api-docs-ui/issues",
-                "email": "dspsupport@dreamfactory.com",
-                "wiki": "https://wiki.dreamfactory.com"
-            },
             "time": "2019-07-15T20:38:26+00:00"
         },
         {
@@ -1684,16 +1679,16 @@
         },
         {
             "name": "dreamfactory/df-filemanager-app",
-            "version": "0.3.0",
+            "version": "1.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-filemanager-app.git",
-                "reference": "8f51a758995f6e5e45cc6c47cdff32bff191a8a8"
+                "reference": "c7ef02dbe5f991fd0143ec1c1dd7b83c316920ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-filemanager-app/zipball/8f51a758995f6e5e45cc6c47cdff32bff191a8a8",
-                "reference": "8f51a758995f6e5e45cc6c47cdff32bff191a8a8",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-filemanager-app/zipball/c7ef02dbe5f991fd0143ec1c1dd7b83c316920ae",
+                "reference": "c7ef02dbe5f991fd0143ec1c1dd7b83c316920ae",
                 "shasum": ""
             },
             "require": {
@@ -1702,7 +1697,7 @@
             "type": "dreamfactory-app",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "0.3.x-dev"
+                    "dev-develop": "0.1.x-dev"
                 },
                 "installer-name": "filemanager"
             },
@@ -1713,7 +1708,7 @@
             "authors": [
                 {
                     "name": "DreamFactory Software, Inc.",
-                    "email": "dspsupport@dreamfactory.com",
+                    "email": "support@dreamfactory.com",
                     "role": "Developer"
                 }
             ],
@@ -1725,7 +1720,7 @@
                 "file manager",
                 "rest"
             ],
-            "time": "2017-11-07T19:29:49+00:00"
+            "time": "2017-06-08T14:30:21+00:00"
         },
         {
             "name": "dreamfactory/df-firebird",
@@ -10228,8 +10223,8 @@
             "authors": [
                 {
                     "name": "Arne Blankerts",
-                    "role": "Developer",
-                    "email": "arne@blankerts.de"
+                    "email": "arne@blankerts.de",
+                    "role": "Developer"
                 }
             ],
             "description": "A small library for converting tokenized PHP source code into XML and potentially other formats",
