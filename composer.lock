@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c5ab3ab94b4447c065adfd83fdebb64b",
+    "content-hash": "ddb39edf2b64ae4dfce2092975d6d0d9",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -889,16 +889,16 @@
         },
         {
             "name": "dreamfactory/df-admin-app",
-            "version": "3.0.2",
+            "version": "3.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-admin-app.git",
-                "reference": "619e2b6a566a9ca915d0c721a8e26e05aa2a77a5"
+                "reference": "0ce730f762015718c75d83fb526a41d4d7f067e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-admin-app/zipball/619e2b6a566a9ca915d0c721a8e26e05aa2a77a5",
-                "reference": "619e2b6a566a9ca915d0c721a8e26e05aa2a77a5",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-admin-app/zipball/0ce730f762015718c75d83fb526a41d4d7f067e3",
+                "reference": "0ce730f762015718c75d83fb526a41d4d7f067e3",
                 "shasum": ""
             },
             "require": {
@@ -933,7 +933,7 @@
                 "remote web services",
                 "rest"
             ],
-            "time": "2019-09-05T15:46:32+00:00"
+            "time": "2019-09-13T13:27:47+00:00"
         },
         {
             "name": "dreamfactory/df-api-docs-ui",
@@ -959,6 +959,7 @@
                 },
                 "installer-name": "df-api-docs-ui"
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
@@ -977,12 +978,6 @@
                 "rest",
                 "swagger"
             ],
-            "support": {
-                "source": "https://github.com/dreamfactorysoftware/df-api-docs-ui",
-                "issues": "https://github.com/dreamfactorysoftware/df-api-docs-ui/issues",
-                "email": "dspsupport@dreamfactory.com",
-                "wiki": "https://wiki.dreamfactory.com"
-            },
             "time": "2019-07-15T20:38:26+00:00"
         },
         {
@@ -10228,8 +10223,8 @@
             "authors": [
                 {
                     "name": "Arne Blankerts",
-                    "role": "Developer",
-                    "email": "arne@blankerts.de"
+                    "email": "arne@blankerts.de",
+                    "role": "Developer"
                 }
             ],
             "description": "A small library for converting tokenized PHP source code into XML and potentially other formats",
