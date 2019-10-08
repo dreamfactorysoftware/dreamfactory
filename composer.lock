@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4db8adebd58d0910897982e1e65ef9e0",
+    "content-hash": "0e51f5346642de0f79634194a33a2eca",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -1107,22 +1107,22 @@
         },
         {
             "name": "dreamfactory/df-azure",
-            "version": "0.15.3",
+            "version": "0.15.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-azure.git",
-                "reference": "cc144df72bc990637e11efe0adb49c02c6727d6e"
+                "reference": "3746e7aa7ce6f2a7144cf7da81da9861868a853a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-azure/zipball/cc144df72bc990637e11efe0adb49c02c6727d6e",
-                "reference": "cc144df72bc990637e11efe0adb49c02c6727d6e",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-azure/zipball/3746e7aa7ce6f2a7144cf7da81da9861868a853a",
+                "reference": "3746e7aa7ce6f2a7144cf7da81da9861868a853a",
                 "shasum": ""
             },
             "require": {
                 "dreamfactory/azure-documentdb-php-sdk": "~0.2.0",
-                "dreamfactory/df-database": "~0.9.4",
-                "dreamfactory/df-file": "~0.6.3",
+                "dreamfactory/df-database": "~0.9.5",
+                "dreamfactory/df-file": "~0.6.4",
                 "microsoft/azure-storage": "0.13.*"
             },
             "type": "library",
@@ -1147,12 +1147,12 @@
             ],
             "authors": [
                 {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                },
-                {
                     "name": "Arif Islam",
                     "email": "arifislam@dreamfactory.com"
+                },
+                {
+                    "name": "Lee Hicks",
+                    "email": "leehicks@dreamfactory.com"
                 }
             ],
             "description": "Microsoft Azure package containing Azure services for the DreamFactory Platform 2.0.",
@@ -1165,7 +1165,7 @@
                 "laravel",
                 "rest"
             ],
-            "time": "2019-07-18T13:19:02+00:00"
+            "time": "2019-10-07T13:54:07+00:00"
         },
         {
             "name": "dreamfactory/df-cache",
