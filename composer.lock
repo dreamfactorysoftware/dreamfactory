@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "512e3ff49d0376e2ba2abf36da11f390",
+    "content-hash": "440c67c889b93fdb300c2213b6e0dc9b",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -1551,20 +1551,20 @@
         },
         {
             "name": "dreamfactory/df-email",
-            "version": "0.8.3",
+            "version": "0.8.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-email.git",
-                "reference": "daba562adf256a8d0477a0d18bd5cca15eb75fb1"
+                "reference": "29cf80c4812783b982f4abfeeaea652e6f99b698"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-email/zipball/daba562adf256a8d0477a0d18bd5cca15eb75fb1",
-                "reference": "daba562adf256a8d0477a0d18bd5cca15eb75fb1",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-email/zipball/29cf80c4812783b982f4abfeeaea652e6f99b698",
+                "reference": "29cf80c4812783b982f4abfeeaea652e6f99b698",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "~0.15.1",
+                "dreamfactory/df-core": "~0.15.2",
                 "guzzlehttp/guzzle": "~6.0"
             },
             "require-dev": {
@@ -1592,12 +1592,12 @@
             ],
             "authors": [
                 {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                },
-                {
                     "name": "Arif Islam",
                     "email": "arifislam@dreamfactory.com"
+                },
+                {
+                    "name": "Lee Hicks",
+                    "email": "leehicks@dreamfactory.com"
                 }
             ],
             "description": "DreamFactory(tm) Email Services",
@@ -1609,7 +1609,7 @@
                 "rest",
                 "smtp"
             ],
-            "time": "2019-07-18T12:46:13+00:00"
+            "time": "2019-10-07T13:45:42+00:00"
         },
         {
             "name": "dreamfactory/df-file",
