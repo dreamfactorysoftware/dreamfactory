@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a7e2f9d36c9c450b603ac77197b7b3d3",
+    "content-hash": "b84144251abe5db0efed6eaccd2a0f1a",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -1428,21 +1428,21 @@
         },
         {
             "name": "dreamfactory/df-couchdb",
-            "version": "0.15.2",
+            "version": "0.15.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-couchdb.git",
-                "reference": "6f7abc67cc4d016e4b6072afb7a11e566d8904aa"
+                "reference": "57902851986210f6d0c89605e7dc0185d160db3a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-couchdb/zipball/6f7abc67cc4d016e4b6072afb7a11e566d8904aa",
-                "reference": "6f7abc67cc4d016e4b6072afb7a11e566d8904aa",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-couchdb/zipball/57902851986210f6d0c89605e7dc0185d160db3a",
+                "reference": "57902851986210f6d0c89605e7dc0185d160db3a",
                 "shasum": ""
             },
             "require": {
                 "dready92/php-on-couch": "*",
-                "dreamfactory/df-database": "~0.9.4"
+                "dreamfactory/df-database": "~0.9.5"
             },
             "type": "library",
             "extra": {
@@ -1466,12 +1466,12 @@
             ],
             "authors": [
                 {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                },
-                {
                     "name": "Arif Islam",
                     "email": "arifislam@dreamfactory.com"
+                },
+                {
+                    "name": "Lee Hicks",
+                    "email": "leehicks@dreamfactory.com"
                 }
             ],
             "description": "The DreamFactory(tm) CouchDB Service.",
@@ -1485,24 +1485,24 @@
                 "nosql",
                 "rest"
             ],
-            "time": "2019-07-18T14:25:54+00:00"
+            "time": "2019-10-07T13:52:05+00:00"
         },
         {
             "name": "dreamfactory/df-database",
-            "version": "0.9.5",
+            "version": "0.9.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-database.git",
-                "reference": "9395ad69a0dc7379e398715fe5b8bae80aee593a"
+                "reference": "49a9235b576727fc90bf95f4025074e73b40263d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-database/zipball/9395ad69a0dc7379e398715fe5b8bae80aee593a",
-                "reference": "9395ad69a0dc7379e398715fe5b8bae80aee593a",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-database/zipball/49a9235b576727fc90bf95f4025074e73b40263d",
+                "reference": "49a9235b576727fc90bf95f4025074e73b40263d",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "~0.15.1",
+                "dreamfactory/df-core": "~0.15.2",
                 "dreamfactory/df-graphql": "~0.1.1"
             },
             "require-dev": {
@@ -1547,7 +1547,7 @@
                 "dreamfactory",
                 "rest"
             ],
-            "time": "2019-08-14T10:26:11+00:00"
+            "time": "2019-10-07T13:57:22+00:00"
         },
         {
             "name": "dreamfactory/df-email",
