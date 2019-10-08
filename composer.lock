@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b140e658baab5c8b30da2a52e7197c0d",
+    "content-hash": "4d18b1e88dffee5d5e5fc11ad0c8183b",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -1973,20 +1973,20 @@
         },
         {
             "name": "dreamfactory/df-rackspace",
-            "version": "0.14.2",
+            "version": "0.14.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-rackspace.git",
-                "reference": "fed65da25d8b558f71d7094cbef32d7c89223104"
+                "reference": "31cc06062cb0533b88daab823a9ef5ab89e011a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-rackspace/zipball/fed65da25d8b558f71d7094cbef32d7c89223104",
-                "reference": "fed65da25d8b558f71d7094cbef32d7c89223104",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-rackspace/zipball/31cc06062cb0533b88daab823a9ef5ab89e011a1",
+                "reference": "31cc06062cb0533b88daab823a9ef5ab89e011a1",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-file": "~0.6.3",
+                "dreamfactory/df-file": "~0.6.4",
                 "rackspace/php-opencloud": "^1.16"
             },
             "type": "library",
@@ -2011,12 +2011,12 @@
             ],
             "authors": [
                 {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                },
-                {
                     "name": "Arif Islam",
                     "email": "arifislam@dreamfactory.com"
+                },
+                {
+                    "name": "Lee Hicks",
+                    "email": "leehicks@dreamfactory.com"
                 }
             ],
             "description": "Rackspace package containing Rackspace/OpenStack components for the DreamFactory(tm) core.",
@@ -2029,7 +2029,7 @@
                 "rest",
                 "storage blob"
             ],
-            "time": "2019-07-18T13:15:07+00:00"
+            "time": "2019-10-07T13:58:12+00:00"
         },
         {
             "name": "dreamfactory/df-rws",
