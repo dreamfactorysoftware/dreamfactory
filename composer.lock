@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b1505ea2aca123944cbb13ae23d04914",
+    "content-hash": "ad6de2db6de23bc1e22a90f90a129bb7",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -1229,20 +1229,20 @@
         },
         {
             "name": "dreamfactory/df-cassandra",
-            "version": "0.12.3",
+            "version": "0.12.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-cassandra.git",
-                "reference": "1348679189a5bc922bedb8f81717b34b0e98082b"
+                "reference": "d1a0c9453f4a53192e616c34c1a91aab7acfbda5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-cassandra/zipball/1348679189a5bc922bedb8f81717b34b0e98082b",
-                "reference": "1348679189a5bc922bedb8f81717b34b0e98082b",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-cassandra/zipball/d1a0c9453f4a53192e616c34c1a91aab7acfbda5",
+                "reference": "d1a0c9453f4a53192e616c34c1a91aab7acfbda5",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-database": "~0.9.4"
+                "dreamfactory/df-database": "~0.9.5"
             },
             "type": "library",
             "extra": {
@@ -1266,12 +1266,12 @@
             ],
             "authors": [
                 {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                },
-                {
                     "name": "Arif Islam",
                     "email": "arifislam@dreamfactory.com"
+                },
+                {
+                    "name": "Lee Hicks",
+                    "email": "leehicks@dreamfactory.com"
                 }
             ],
             "description": "Cassandra database service for DreamFactory Platform 2.0",
@@ -1284,7 +1284,7 @@
                 "nosql",
                 "rest"
             ],
-            "time": "2019-07-18T13:25:59+00:00"
+            "time": "2019-10-07T13:50:53+00:00"
         },
         {
             "name": "dreamfactory/df-core",
