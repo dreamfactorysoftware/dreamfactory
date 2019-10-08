@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "10ba5c5e8724abe21d1ad29a37b5215a",
+    "content-hash": "390b152bca162b146919cc2a5b44d18d",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -1169,20 +1169,20 @@
         },
         {
             "name": "dreamfactory/df-cache",
-            "version": "0.11.1",
+            "version": "0.11.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-cache.git",
-                "reference": "5a19567ee9388f7621a2b2663ee01e10f015af42"
+                "reference": "1191e028af4baffd387d25db4475c2419be4839e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-cache/zipball/5a19567ee9388f7621a2b2663ee01e10f015af42",
-                "reference": "5a19567ee9388f7621a2b2663ee01e10f015af42",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-cache/zipball/1191e028af4baffd387d25db4475c2419be4839e",
+                "reference": "1191e028af4baffd387d25db4475c2419be4839e",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "~0.15.1"
+                "dreamfactory/df-core": "~0.15.2"
             },
             "type": "library",
             "extra": {
@@ -1206,12 +1206,12 @@
             ],
             "authors": [
                 {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                },
-                {
                     "name": "Arif Islam",
                     "email": "arifislam@dreamfactory.com"
+                },
+                {
+                    "name": "Lee Hicks",
+                    "email": "leehicks@dreamfactory.com"
                 }
             ],
             "description": "Cache service for DreamFactory Platform 2.0",
@@ -1225,7 +1225,7 @@
                 "redis",
                 "rest"
             ],
-            "time": "2019-07-18T12:32:38+00:00"
+            "time": "2019-10-07T13:59:48+00:00"
         },
         {
             "name": "dreamfactory/df-cassandra",
