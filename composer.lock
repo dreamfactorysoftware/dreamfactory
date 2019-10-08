@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "48d30eec20b37068560af43dc1461326",
+    "content-hash": "2076317f02e7958d5b09bdb6056eb391",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -1369,20 +1369,20 @@
         },
         {
             "name": "dreamfactory/df-couchbase",
-            "version": "0.10.2",
+            "version": "0.10.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-couchbase.git",
-                "reference": "c7db10d718cf19ddee834fc1530372a0e89c3a2f"
+                "reference": "70fadce03e1cb0008be185baf796eefec6095d75"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-couchbase/zipball/c7db10d718cf19ddee834fc1530372a0e89c3a2f",
-                "reference": "c7db10d718cf19ddee834fc1530372a0e89c3a2f",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-couchbase/zipball/70fadce03e1cb0008be185baf796eefec6095d75",
+                "reference": "70fadce03e1cb0008be185baf796eefec6095d75",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-database": "~0.9.4"
+                "dreamfactory/df-database": "~0.9.5"
             },
             "type": "library",
             "extra": {
@@ -1406,12 +1406,12 @@
             ],
             "authors": [
                 {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                },
-                {
                     "name": "Arif Islam",
                     "email": "arifislam@dreamfactory.com"
+                },
+                {
+                    "name": "Lee Hicks",
+                    "email": "leehicks@dreamfactory.com"
                 }
             ],
             "description": "Couchbase database service for DreamFactory Platform 2.0",
@@ -1424,7 +1424,7 @@
                 "nosql",
                 "rest"
             ],
-            "time": "2019-07-18T13:23:12+00:00"
+            "time": "2019-10-07T13:59:24+00:00"
         },
         {
             "name": "dreamfactory/df-couchdb",
