@@ -101,9 +101,9 @@ declare -A settings=(
 ["QUEUE_DATABASE"]=""
 ["QUEUE_PASSWORD"]=""
 # if QUEUE_CONNECTION=sqs
-["SQS_KEY"]=""
-["SQS_SECRET"]=""
-["SQS_REGION"]="us-east-1"
+["AWS_ACCESS_KEY_ID"]=""
+["AWS_SECRET_ACCESS_KEY"]=""
+["AWS_DEFAULT_REGION"]="us-east-1"
 ["SQS_PREFIX"]="https://sqs.us-east-1.amazonaws.com/your-account-id"
 # Event Broadcasting
 ["BROADCAST_DRIVER"]="null"
@@ -206,9 +206,9 @@ declare -A settings_msg=(
 ["QUEUE_PORT"]="The connection port for the host given, or blank if the provider default is used."
 ["QUEUE_DATABASE"]="The desired Redis database number between 0 and 16 (or the limit set in your redis.conf file."
 ["QUEUE_PASSWORD"]="Credentials for the service if required."
-["SQS_KEY"]="AWS credentials."
-["SQS_SECRET"]="AWS credentials."
-["SQS_REGION"]="AWS storage region."
+["AWS_ACCESS_KEY_ID"]="AWS credentials."
+["AWS_SECRET_ACCESS_KEY"]="AWS credentials."
+["AWS_DEFAULT_REGION"]="AWS storage region."
 ["SQS_PREFIX"]="AWS SQS specific prefix for queued jobs."
 # Event Broadcasting
 ["BROADCAST_DRIVER"]="What type of driver or connection to use for broadcasting events from the server."
@@ -1020,7 +1020,7 @@ case $action in
                             ;;
                         "beanstalkd" ) menu_items=("QUEUE_CONNECTION" "QUEUE_HOST") ;;
                         "redis" ) menu_items=("QUEUE_CONNECTION" "QUEUE_HOST" "QUEUE_PORT" "QUEUE_DATABASE" "QUEUE_PASSWORD") ;;
-                        "aws_sqs" ) menu_items=("QUEUE_CONNECTION" "SQS_KEY" "SQS_SECRET" "SQS_REGION" "SQS_PREFIX") ;;
+                        "aws_sqs" ) menu_items=("QUEUE_CONNECTION" "AWS_ACCESS_KEY_ID" "AWS_SECRET_ACCESS_KEY" "AWS_DEFAULT_REGION" "SQS_PREFIX") ;;
                         "null" ) menu_items=("QUEUE_CONNECTION") ;;
                     esac
                     menu_msg="Current system queuing settings:"
@@ -1052,7 +1052,7 @@ case $action in
                                         menu_items=("QUEUE_CONNECTION" "QUEUE_HOST" "QUEUE_PORT" "QUEUE_DATABASE" "QUEUE_PASSWORD")
                                         ;;
                                     "aws_sqs" ) chosen_features["apc"]="+"
-                                        menu_items=("QUEUE_CONNECTION" "SQS_KEY" "SQS_SECRET" "SQS_REGION" "SQS_PREFIX")
+                                        menu_items=("QUEUE_CONNECTION" "AWS_ACCESS_KEY_ID" "AWS_SECRET_ACCESS_KEY" "AWS_DEFAULT_REGION" "SQS_PREFIX")
                                         ;;
                                     "null" )
                                         menu_items=("QUEUE_CONNECTION")
