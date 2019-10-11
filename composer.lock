@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6b4421553d49a7bab1afe50db42f367f",
+    "content-hash": "f50bde6881fd108d492f0a35a4008c3c",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.112.16",
+            "version": "3.112.19",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "782f304ef4dc2fa73f5ecfbb49fcba46238ed541"
+                "reference": "8e69a518ff058612b94d328c2cde644621a4c0cc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/782f304ef4dc2fa73f5ecfbb49fcba46238ed541",
-                "reference": "782f304ef4dc2fa73f5ecfbb49fcba46238ed541",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/8e69a518ff058612b94d328c2cde644621a4c0cc",
+                "reference": "8e69a518ff058612b94d328c2cde644621a4c0cc",
                 "shasum": ""
             },
             "require": {
@@ -87,7 +87,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2019-10-07T18:13:37+00:00"
+            "time": "2019-10-10T18:23:11+00:00"
         },
         {
             "name": "barryvdh/laravel-cors",
@@ -1043,24 +1043,24 @@
         },
         {
             "name": "dreamfactory/df-aws",
-            "version": "0.15.6",
+            "version": "0.15.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-aws.git",
-                "reference": "bedd6020a52efde9b6137040503cfd571bf7c4f4"
+                "reference": "7942a4ccc000d9feeeb53a1c3b68d3cd2f015d6b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-aws/zipball/bedd6020a52efde9b6137040503cfd571bf7c4f4",
-                "reference": "bedd6020a52efde9b6137040503cfd571bf7c4f4",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-aws/zipball/7942a4ccc000d9feeeb53a1c3b68d3cd2f015d6b",
+                "reference": "7942a4ccc000d9feeeb53a1c3b68d3cd2f015d6b",
                 "shasum": ""
             },
             "require": {
                 "aws/aws-sdk-php": "3.*",
-                "dreamfactory/df-database": "~0.9.5",
-                "dreamfactory/df-email": "~0.8.3",
-                "dreamfactory/df-file": "~0.6.4",
-                "dreamfactory/df-sqldb": "~0.16.0"
+                "dreamfactory/df-database": "~0.9.6",
+                "dreamfactory/df-email": "~0.8.4",
+                "dreamfactory/df-file": "~0.6.5",
+                "dreamfactory/df-sqldb": "~0.16.2"
             },
             "type": "library",
             "extra": {
@@ -1103,7 +1103,7 @@
                 "rest",
                 "s3"
             ],
-            "time": "2019-10-07T13:49:10+00:00"
+            "time": "2019-10-11T13:52:27+00:00"
         },
         {
             "name": "dreamfactory/df-azure",
