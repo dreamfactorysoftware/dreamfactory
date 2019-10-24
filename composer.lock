@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1f7cc9ce782859f872746cb6b6925abe",
+    "content-hash": "aee2957abf375e7c995c87570b91fbb6",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -60,16 +60,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.112.25",
+            "version": "3.112.27",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "f91e264e3cbf8ced5c93f5f786c9e0f079926749"
+                "reference": "fab980dbc5dc57e9c14a9ce26f55b6ad88b5b979"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/f91e264e3cbf8ced5c93f5f786c9e0f079926749",
-                "reference": "f91e264e3cbf8ced5c93f5f786c9e0f079926749",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/fab980dbc5dc57e9c14a9ce26f55b6ad88b5b979",
+                "reference": "fab980dbc5dc57e9c14a9ce26f55b6ad88b5b979",
                 "shasum": ""
             },
             "require": {
@@ -139,7 +139,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2019-10-18T18:08:55+00:00"
+            "time": "2019-10-23T18:13:05+00:00"
         },
         {
             "name": "barryvdh/laravel-cors",
@@ -1087,20 +1087,20 @@
         },
         {
             "name": "dreamfactory/df-apidoc",
-            "version": "dev-laravel-upgrade",
+            "version": "0.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-apidoc.git",
-                "reference": "704706587167e92a17cb90c86ab0e834db31d73f"
+                "reference": "62cb32f2ee3283b04c684c9fa50a51a45026a72e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-apidoc/zipball/704706587167e92a17cb90c86ab0e834db31d73f",
-                "reference": "704706587167e92a17cb90c86ab0e834db31d73f",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-apidoc/zipball/62cb32f2ee3283b04c684c9fa50a51a45026a72e",
+                "reference": "62cb32f2ee3283b04c684c9fa50a51a45026a72e",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "dev-laravel-upgrade"
+                "dreamfactory/df-core": "~0.16.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "@stable"
@@ -1144,28 +1144,28 @@
                 "rest",
                 "swagger"
             ],
-            "time": "2019-09-17T12:18:16+00:00"
+            "time": "2019-10-23T12:03:16+00:00"
         },
         {
             "name": "dreamfactory/df-aws",
-            "version": "dev-laravel-upgrade",
+            "version": "0.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-aws.git",
-                "reference": "e4f84bbe930c6776a5ad9acba1612eee9f84cba2"
+                "reference": "160f04dda70009fda86a269faee6c7fc5e1b3202"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-aws/zipball/e4f84bbe930c6776a5ad9acba1612eee9f84cba2",
-                "reference": "e4f84bbe930c6776a5ad9acba1612eee9f84cba2",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-aws/zipball/160f04dda70009fda86a269faee6c7fc5e1b3202",
+                "reference": "160f04dda70009fda86a269faee6c7fc5e1b3202",
                 "shasum": ""
             },
             "require": {
                 "aws/aws-sdk-php": "3.*",
-                "dreamfactory/df-database": "dev-laravel-upgrade",
-                "dreamfactory/df-email": "dev-laravel-upgrade",
-                "dreamfactory/df-file": "dev-laravel-upgrade",
-                "dreamfactory/df-sqldb": "dev-laravel-upgrade"
+                "dreamfactory/df-database": "~0.10.0",
+                "dreamfactory/df-email": "~0.9.0",
+                "dreamfactory/df-file": "~0.7.0",
+                "dreamfactory/df-sqldb": "~0.17.0"
             },
             "type": "library",
             "extra": {
@@ -1208,26 +1208,26 @@
                 "rest",
                 "s3"
             ],
-            "time": "2019-10-10T10:36:56+00:00"
+            "time": "2019-10-23T14:21:27+00:00"
         },
         {
             "name": "dreamfactory/df-azure",
-            "version": "dev-laravel-upgrade",
+            "version": "0.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-azure.git",
-                "reference": "5816d0b88ff7e4a4f153ecda516dc7b4fae1f96f"
+                "reference": "61b8fd746aac6af7663886559f548b417a812dcd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-azure/zipball/5816d0b88ff7e4a4f153ecda516dc7b4fae1f96f",
-                "reference": "5816d0b88ff7e4a4f153ecda516dc7b4fae1f96f",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-azure/zipball/61b8fd746aac6af7663886559f548b417a812dcd",
+                "reference": "61b8fd746aac6af7663886559f548b417a812dcd",
                 "shasum": ""
             },
             "require": {
                 "dreamfactory/azure-documentdb-php-sdk": "~0.2.0",
-                "dreamfactory/df-database": "dev-laravel-upgrade",
-                "dreamfactory/df-file": "dev-laravel-upgrade",
+                "dreamfactory/df-database": "~0.10.0",
+                "dreamfactory/df-file": "~0.7.0",
                 "microsoft/azure-storage": "0.13.*"
             },
             "type": "library",
@@ -1270,24 +1270,24 @@
                 "laravel",
                 "rest"
             ],
-            "time": "2019-09-17T11:54:21+00:00"
+            "time": "2019-10-23T14:26:57+00:00"
         },
         {
             "name": "dreamfactory/df-cache",
-            "version": "dev-laravel-upgrade",
+            "version": "0.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-cache.git",
-                "reference": "cf18e0a93e9c30a9889940837bc0590b65268a21"
+                "reference": "8b8b564468bfa1c2190a6d2f8b1696885d1654b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-cache/zipball/cf18e0a93e9c30a9889940837bc0590b65268a21",
-                "reference": "cf18e0a93e9c30a9889940837bc0590b65268a21",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-cache/zipball/8b8b564468bfa1c2190a6d2f8b1696885d1654b7",
+                "reference": "8b8b564468bfa1c2190a6d2f8b1696885d1654b7",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "dev-laravel-upgrade"
+                "dreamfactory/df-core": "~0.16.0"
             },
             "type": "library",
             "extra": {
@@ -1330,24 +1330,24 @@
                 "redis",
                 "rest"
             ],
-            "time": "2019-10-21T17:16:26+00:00"
+            "time": "2019-10-23T12:25:59+00:00"
         },
         {
             "name": "dreamfactory/df-cassandra",
-            "version": "dev-laravel-upgrade",
+            "version": "0.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-cassandra.git",
-                "reference": "a4ac3d7620b6522f35007a50a2c7e2a52e221bb1"
+                "reference": "cdf5266ac2d54614eb0ae628d3577f35c0d4af2b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-cassandra/zipball/a4ac3d7620b6522f35007a50a2c7e2a52e221bb1",
-                "reference": "a4ac3d7620b6522f35007a50a2c7e2a52e221bb1",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-cassandra/zipball/cdf5266ac2d54614eb0ae628d3577f35c0d4af2b",
+                "reference": "cdf5266ac2d54614eb0ae628d3577f35c0d4af2b",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-database": "dev-laravel-upgrade"
+                "dreamfactory/df-database": "~0.10.0"
             },
             "type": "library",
             "extra": {
@@ -1389,20 +1389,20 @@
                 "nosql",
                 "rest"
             ],
-            "time": "2019-09-17T11:56:01+00:00"
+            "time": "2019-10-23T12:50:51+00:00"
         },
         {
             "name": "dreamfactory/df-core",
-            "version": "dev-laravel-upgrade",
+            "version": "0.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-core.git",
-                "reference": "a7eb6a50369edc631a31abada5390c420fca6a2d"
+                "reference": "cf553a1c11ad0ea455b2546b4674225df88e6996"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/a7eb6a50369edc631a31abada5390c420fca6a2d",
-                "reference": "a7eb6a50369edc631a31abada5390c420fca6a2d",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/cf553a1c11ad0ea455b2546b4674225df88e6996",
+                "reference": "cf553a1c11ad0ea455b2546b4674225df88e6996",
                 "shasum": ""
             },
             "require": {
@@ -1411,7 +1411,7 @@
                 "guzzlehttp/guzzle": "~6.0",
                 "php": ">=7.0.0",
                 "symfony/yaml": "~2.8|~3.0",
-                "tymon/jwt-auth": "~1.0.0-rc.4.1"
+                "tymon/jwt-auth": "~1.0.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "@stable"
@@ -1470,24 +1470,24 @@
                 "paas",
                 "rest"
             ],
-            "time": "2019-10-17T13:02:31+00:00"
+            "time": "2019-10-23T11:10:16+00:00"
         },
         {
             "name": "dreamfactory/df-couchbase",
-            "version": "dev-laravel-upgrade",
+            "version": "0.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-couchbase.git",
-                "reference": "8f0edf731773846defebda1044014797a40fdd55"
+                "reference": "5fd6c7c78ed32f51be95a273336bb809805f210e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-couchbase/zipball/8f0edf731773846defebda1044014797a40fdd55",
-                "reference": "8f0edf731773846defebda1044014797a40fdd55",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-couchbase/zipball/5fd6c7c78ed32f51be95a273336bb809805f210e",
+                "reference": "5fd6c7c78ed32f51be95a273336bb809805f210e",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-database": "dev-laravel-upgrade"
+                "dreamfactory/df-database": "~0.10.0"
             },
             "type": "library",
             "extra": {
@@ -1529,25 +1529,25 @@
                 "nosql",
                 "rest"
             ],
-            "time": "2019-09-17T11:58:00+00:00"
+            "time": "2019-10-23T13:29:44+00:00"
         },
         {
             "name": "dreamfactory/df-couchdb",
-            "version": "dev-laravel-upgrade",
+            "version": "0.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-couchdb.git",
-                "reference": "2b6889855a36c5109e64821c941c5ec61be63fbf"
+                "reference": "24312e36cee6df39651a24fb1ad26f0f6ce693b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-couchdb/zipball/2b6889855a36c5109e64821c941c5ec61be63fbf",
-                "reference": "2b6889855a36c5109e64821c941c5ec61be63fbf",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-couchdb/zipball/24312e36cee6df39651a24fb1ad26f0f6ce693b4",
+                "reference": "24312e36cee6df39651a24fb1ad26f0f6ce693b4",
                 "shasum": ""
             },
             "require": {
                 "dready92/php-on-couch": "*",
-                "dreamfactory/df-database": "dev-laravel-upgrade"
+                "dreamfactory/df-database": "~0.10.0"
             },
             "type": "library",
             "extra": {
@@ -1590,25 +1590,25 @@
                 "nosql",
                 "rest"
             ],
-            "time": "2019-09-17T11:59:36+00:00"
+            "time": "2019-10-23T13:38:52+00:00"
         },
         {
             "name": "dreamfactory/df-database",
-            "version": "dev-laravel-upgrade",
+            "version": "0.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-database.git",
-                "reference": "d578d53a968102d1d9db7fd22bddfbe4b23810bc"
+                "reference": "0e26d77258b3a358530a445274b5ee14f9564954"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-database/zipball/d578d53a968102d1d9db7fd22bddfbe4b23810bc",
-                "reference": "d578d53a968102d1d9db7fd22bddfbe4b23810bc",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-database/zipball/0e26d77258b3a358530a445274b5ee14f9564954",
+                "reference": "0e26d77258b3a358530a445274b5ee14f9564954",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "dev-laravel-upgrade",
-                "dreamfactory/df-graphql": "dev-laravel-upgrade"
+                "dreamfactory/df-core": "~0.16.0",
+                "dreamfactory/df-graphql": "~0.2.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "@stable"
@@ -1652,24 +1652,24 @@
                 "dreamfactory",
                 "rest"
             ],
-            "time": "2019-09-17T11:51:09+00:00"
+            "time": "2019-10-23T12:46:07+00:00"
         },
         {
             "name": "dreamfactory/df-email",
-            "version": "dev-laravel-upgrade",
+            "version": "0.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-email.git",
-                "reference": "aeffe18a26c5b265b8fb407849ac00453e2f9609"
+                "reference": "67a33463e4e115668ae257a44a926a4ec480aca5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-email/zipball/aeffe18a26c5b265b8fb407849ac00453e2f9609",
-                "reference": "aeffe18a26c5b265b8fb407849ac00453e2f9609",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-email/zipball/67a33463e4e115668ae257a44a926a4ec480aca5",
+                "reference": "67a33463e4e115668ae257a44a926a4ec480aca5",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "dev-laravel-upgrade",
+                "dreamfactory/df-core": "~0.16.0",
                 "guzzlehttp/guzzle": "~6.0"
             },
             "require-dev": {
@@ -1714,24 +1714,24 @@
                 "rest",
                 "smtp"
             ],
-            "time": "2019-09-17T12:19:26+00:00"
+            "time": "2019-10-23T13:42:34+00:00"
         },
         {
             "name": "dreamfactory/df-file",
-            "version": "dev-laravel-upgrade",
+            "version": "0.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-file.git",
-                "reference": "e75f3b9974ed9f4b8e54808b0216961b32305a9a"
+                "reference": "6f759ed1a55c0e8f90bf5b39ec0da9c3a006ffb2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-file/zipball/e75f3b9974ed9f4b8e54808b0216961b32305a9a",
-                "reference": "e75f3b9974ed9f4b8e54808b0216961b32305a9a",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-file/zipball/6f759ed1a55c0e8f90bf5b39ec0da9c3a006ffb2",
+                "reference": "6f759ed1a55c0e8f90bf5b39ec0da9c3a006ffb2",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "dev-laravel-upgrade",
+                "dreamfactory/df-core": "~0.16.0",
                 "league/flysystem-sftp": "^1.0",
                 "league/flysystem-webdav": "^1.0"
             },
@@ -1780,7 +1780,7 @@
                 "rest",
                 "storage"
             ],
-            "time": "2019-09-17T12:20:59+00:00"
+            "time": "2019-10-23T13:46:42+00:00"
         },
         {
             "name": "dreamfactory/df-filemanager-app",
@@ -1829,20 +1829,20 @@
         },
         {
             "name": "dreamfactory/df-firebird",
-            "version": "dev-laravel-upgrade",
+            "version": "0.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-firebird.git",
-                "reference": "ba08e0626a2b5271d1354c3905bfaab2b9d88316"
+                "reference": "2432badd9669c253a02c1c0d269e0e6802231a26"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-firebird/zipball/ba08e0626a2b5271d1354c3905bfaab2b9d88316",
-                "reference": "ba08e0626a2b5271d1354c3905bfaab2b9d88316",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-firebird/zipball/2432badd9669c253a02c1c0d269e0e6802231a26",
+                "reference": "2432badd9669c253a02c1c0d269e0e6802231a26",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-sqldb": "dev-laravel-upgrade"
+                "dreamfactory/df-sqldb": "~0.17.0"
             },
             "type": "library",
             "extra": {
@@ -1884,24 +1884,24 @@
                 "pdo_interbase",
                 "sql"
             ],
-            "time": "2019-09-17T12:50:30+00:00"
+            "time": "2019-10-23T13:58:32+00:00"
         },
         {
             "name": "dreamfactory/df-git",
-            "version": "dev-laravel-upgrade",
+            "version": "0.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-git.git",
-                "reference": "b6667c2df152250aa9b87b09560ec7982e7e49ac"
+                "reference": "266899e735566c9281240e032380c16a5af0314d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-git/zipball/b6667c2df152250aa9b87b09560ec7982e7e49ac",
-                "reference": "b6667c2df152250aa9b87b09560ec7982e7e49ac",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-git/zipball/266899e735566c9281240e032380c16a5af0314d",
+                "reference": "266899e735566c9281240e032380c16a5af0314d",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "dev-laravel-upgrade",
+                "dreamfactory/df-core": "~0.16.0",
                 "graham-campbell/bitbucket": "^4.2|^5.2",
                 "graham-campbell/github": "^7.5|^8.2",
                 "graham-campbell/gitlab": "^1.7.0|^2.2",
@@ -1950,24 +1950,24 @@
                 "source",
                 "version"
             ],
-            "time": "2019-09-28T13:24:08+00:00"
+            "time": "2019-10-24T07:45:56+00:00"
         },
         {
             "name": "dreamfactory/df-graphql",
-            "version": "dev-laravel-upgrade",
+            "version": "0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-graphql.git",
-                "reference": "3eb79efaaf0e4b47da513bd31c853472913c311a"
+                "reference": "58d1d7ab80e4c725e1fb03abfad5d7ebcea20f23"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-graphql/zipball/3eb79efaaf0e4b47da513bd31c853472913c311a",
-                "reference": "3eb79efaaf0e4b47da513bd31c853472913c311a",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-graphql/zipball/58d1d7ab80e4c725e1fb03abfad5d7ebcea20f23",
+                "reference": "58d1d7ab80e4c725e1fb03abfad5d7ebcea20f23",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "dev-laravel-upgrade",
+                "dreamfactory/df-core": "~0.16.0",
                 "illuminate/support": "5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*|5.7.*|5.8.*|6.0.*",
                 "php": ">=5.5.9",
                 "webonyx/graphql-php": "~0.10.2"
@@ -2014,24 +2014,24 @@
                 "laravel",
                 "react"
             ],
-            "time": "2019-09-28T13:01:06+00:00"
+            "time": "2019-10-23T12:41:29+00:00"
         },
         {
             "name": "dreamfactory/df-oauth",
-            "version": "dev-laravel-upgrade",
+            "version": "0.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-oauth.git",
-                "reference": "cad7c918605801f225cbe31987c099786298b392"
+                "reference": "ef97f82dcf20dee6a8974720d1b85ea5772cff9f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-oauth/zipball/cad7c918605801f225cbe31987c099786298b392",
-                "reference": "cad7c918605801f225cbe31987c099786298b392",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-oauth/zipball/ef97f82dcf20dee6a8974720d1b85ea5772cff9f",
+                "reference": "ef97f82dcf20dee6a8974720d1b85ea5772cff9f",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "dev-laravel-upgrade",
+                "dreamfactory/df-core": "~0.16.0",
                 "laravel/socialite": "~2.0|~4.2",
                 "socialiteproviders/microsoft-live": "^2.0|^3.0",
                 "socialiteproviders/twitter": "^2.0|^3.0"
@@ -2074,24 +2074,24 @@
                 "oauth",
                 "rest"
             ],
-            "time": "2019-09-28T13:59:21+00:00"
+            "time": "2019-10-24T09:00:33+00:00"
         },
         {
             "name": "dreamfactory/df-rackspace",
-            "version": "dev-laravel-upgrade",
+            "version": "0.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-rackspace.git",
-                "reference": "530feef395cff0ffc988196d133066d6d2a3270b"
+                "reference": "336404baa8922dba8cc42f10886bd7489fcbf17c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-rackspace/zipball/530feef395cff0ffc988196d133066d6d2a3270b",
-                "reference": "530feef395cff0ffc988196d133066d6d2a3270b",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-rackspace/zipball/336404baa8922dba8cc42f10886bd7489fcbf17c",
+                "reference": "336404baa8922dba8cc42f10886bd7489fcbf17c",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-file": "dev-laravel-upgrade",
+                "dreamfactory/df-file": "~0.7.0",
                 "rackspace/php-opencloud": "^1.16"
             },
             "type": "library",
@@ -2134,24 +2134,24 @@
                 "rest",
                 "storage blob"
             ],
-            "time": "2019-09-17T12:27:10+00:00"
+            "time": "2019-10-24T09:19:23+00:00"
         },
         {
             "name": "dreamfactory/df-rws",
-            "version": "dev-laravel-upgrade",
+            "version": "0.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-rws.git",
-                "reference": "60b44c3a165a508c8d45d1c57e4f02127e58da53"
+                "reference": "2d282329234a70f7ad0c6c8cc0a45766390ef221"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-rws/zipball/60b44c3a165a508c8d45d1c57e4f02127e58da53",
-                "reference": "60b44c3a165a508c8d45d1c57e4f02127e58da53",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-rws/zipball/2d282329234a70f7ad0c6c8cc0a45766390ef221",
+                "reference": "2d282329234a70f7ad0c6c8cc0a45766390ef221",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "dev-laravel-upgrade"
+                "dreamfactory/df-core": "~0.16.0"
             },
             "type": "library",
             "extra": {
@@ -2192,24 +2192,24 @@
                 "rest",
                 "web"
             ],
-            "time": "2019-09-17T12:33:20+00:00"
+            "time": "2019-10-24T09:20:31+00:00"
         },
         {
             "name": "dreamfactory/df-sqldb",
-            "version": "dev-laravel-upgrade",
+            "version": "0.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-sqldb.git",
-                "reference": "7d0954541230b039c7d087eae22e3254ab7e6e75"
+                "reference": "e96ceb6c7c6dd03355c34b51a7cb91834bee3b50"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-sqldb/zipball/7d0954541230b039c7d087eae22e3254ab7e6e75",
-                "reference": "7d0954541230b039c7d087eae22e3254ab7e6e75",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-sqldb/zipball/e96ceb6c7c6dd03355c34b51a7cb91834bee3b50",
+                "reference": "e96ceb6c7c6dd03355c34b51a7cb91834bee3b50",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-database": "dev-laravel-upgrade"
+                "dreamfactory/df-database": "~0.10.0"
             },
             "type": "library",
             "extra": {
@@ -2255,24 +2255,24 @@
                 "sql",
                 "sqlserver"
             ],
-            "time": "2019-09-17T12:09:58+00:00"
+            "time": "2019-10-23T13:53:36+00:00"
         },
         {
             "name": "dreamfactory/df-system",
-            "version": "dev-laravel-upgrade",
+            "version": "0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-system.git",
-                "reference": "43049db5f42a37091eda55eac7382854416d79bf"
+                "reference": "8cb6c26be1b423d3389c29b5bf785f965bd6488e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-system/zipball/43049db5f42a37091eda55eac7382854416d79bf",
-                "reference": "43049db5f42a37091eda55eac7382854416d79bf",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-system/zipball/8cb6c26be1b423d3389c29b5bf785f965bd6488e",
+                "reference": "8cb6c26be1b423d3389c29b5bf785f965bd6488e",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "dev-laravel-upgrade"
+                "dreamfactory/df-core": "~0.16.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "@stable"
@@ -2314,25 +2314,25 @@
                 "paas",
                 "rest"
             ],
-            "time": "2019-09-19T13:37:08+00:00"
+            "time": "2019-10-23T11:37:38+00:00"
         },
         {
             "name": "dreamfactory/df-user",
-            "version": "dev-laravel-upgrade",
+            "version": "0.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-user.git",
-                "reference": "54e1592811ec4b9df1db13b72b3fcacda1b71a55"
+                "reference": "98eed638bf0aef094da4c04cfc594f9bed79601f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-user/zipball/54e1592811ec4b9df1db13b72b3fcacda1b71a55",
-                "reference": "54e1592811ec4b9df1db13b72b3fcacda1b71a55",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-user/zipball/98eed638bf0aef094da4c04cfc594f9bed79601f",
+                "reference": "98eed638bf0aef094da4c04cfc594f9bed79601f",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "dev-laravel-upgrade",
-                "dreamfactory/df-system": "dev-laravel-upgrade"
+                "dreamfactory/df-core": "~0.16.0",
+                "dreamfactory/df-system": "~0.3.0"
             },
             "type": "library",
             "extra": {
@@ -2368,7 +2368,7 @@
                 "dreamfactory",
                 "user"
             ],
-            "time": "2019-09-17T12:36:23+00:00"
+            "time": "2019-10-24T09:47:24+00:00"
         },
         {
             "name": "dreamfactory/installer",
@@ -2952,27 +2952,28 @@
         },
         {
             "name": "guzzlehttp/guzzle",
-            "version": "6.3.3",
+            "version": "6.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "407b0cb880ace85c9b63c5f9551db498cb2d50ba"
+                "reference": "0895c932405407fd3a7368b6910c09a24d26db11"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/407b0cb880ace85c9b63c5f9551db498cb2d50ba",
-                "reference": "407b0cb880ace85c9b63c5f9551db498cb2d50ba",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/0895c932405407fd3a7368b6910c09a24d26db11",
+                "reference": "0895c932405407fd3a7368b6910c09a24d26db11",
                 "shasum": ""
             },
             "require": {
+                "ext-json": "*",
                 "guzzlehttp/promises": "^1.0",
-                "guzzlehttp/psr7": "^1.4",
+                "guzzlehttp/psr7": "^1.6.1",
                 "php": ">=5.5"
             },
             "require-dev": {
                 "ext-curl": "*",
                 "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.4 || ^7.0",
-                "psr/log": "^1.0"
+                "psr/log": "^1.1"
             },
             "suggest": {
                 "psr/log": "Required for using the Log middleware"
@@ -2984,12 +2985,12 @@
                 }
             },
             "autoload": {
-                "files": [
-                    "src/functions_include.php"
-                ],
                 "psr-4": {
                     "GuzzleHttp\\": "src/"
-                }
+                },
+                "files": [
+                    "src/functions_include.php"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -3013,7 +3014,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2018-04-22T15:46:56+00:00"
+            "time": "2019-10-23T15:58:00+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -8078,21 +8079,23 @@
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
-            "version": "2.2.1",
+            "version": "2.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tijsverkoyen/CssToInlineStyles.git",
-                "reference": "0ed4a2ea4e0902dac0489e6436ebcd5bbcae9757"
+                "reference": "dda2ee426acd6d801d5b7fd1001cde9b5f790e15"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tijsverkoyen/CssToInlineStyles/zipball/0ed4a2ea4e0902dac0489e6436ebcd5bbcae9757",
-                "reference": "0ed4a2ea4e0902dac0489e6436ebcd5bbcae9757",
+                "url": "https://api.github.com/repos/tijsverkoyen/CssToInlineStyles/zipball/dda2ee426acd6d801d5b7fd1001cde9b5f790e15",
+                "reference": "dda2ee426acd6d801d5b7fd1001cde9b5f790e15",
                 "shasum": ""
             },
             "require": {
+                "ext-dom": "*",
+                "ext-libxml": "*",
                 "php": "^5.5 || ^7.0",
-                "symfony/css-selector": "^2.7 || ^3.0 || ^4.0"
+                "symfony/css-selector": "^2.7 || ^3.0 || ^4.0 || ^5.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.0"
@@ -8121,7 +8124,7 @@
             ],
             "description": "CssToInlineStyles is a class that enables you to convert HTML-pages/files into HTML-pages/files with inline styles. This is very useful when you're sending emails.",
             "homepage": "https://github.com/tijsverkoyen/CssToInlineStyles",
-            "time": "2017-11-27T11:13:29+00:00"
+            "time": "2019-10-24T08:53:34+00:00"
         },
         {
             "name": "tymon/jwt-auth",
@@ -11075,27 +11078,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "dreamfactory/df-apidoc": 20,
-        "dreamfactory/df-aws": 20,
-        "dreamfactory/df-azure": 20,
-        "dreamfactory/df-cache": 20,
-        "dreamfactory/df-cassandra": 20,
-        "dreamfactory/df-core": 20,
-        "dreamfactory/df-couchbase": 20,
-        "dreamfactory/df-couchdb": 20,
-        "dreamfactory/df-email": 20,
-        "dreamfactory/df-file": 20,
-        "dreamfactory/df-firebird": 20,
-        "dreamfactory/df-git": 20,
-        "dreamfactory/df-graphql": 20,
-        "dreamfactory/df-oauth": 20,
-        "dreamfactory/df-rackspace": 20,
-        "dreamfactory/df-rws": 20,
-        "dreamfactory/df-sqldb": 20,
-        "dreamfactory/df-system": 20,
-        "dreamfactory/df-user": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
