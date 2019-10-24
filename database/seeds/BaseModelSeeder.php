@@ -2,6 +2,7 @@
 
 use DreamFactory\Core\Models\BaseModel;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Arr;
 
 class BaseModelSeeder extends Seeder
 {
@@ -32,24 +33,24 @@ class BaseModelSeeder extends Seeder
             /** @type \Illuminate\Database\Eloquent\Builder $builder */
             $builder = null;
             $name = '';
-            if (!is_array($this->recordIdentifier)) {
-                $name = array_get($record, $this->recordIdentifier);
+            if (! is_array($this->recordIdentifier)) {
+                $name = Arr::get($record, $this->recordIdentifier);
                 if (empty($name)) {
                     throw new \Exception("Invalid seeder record. No value for {$this->recordIdentifier}.");
                 }
                 $builder = $modelName::where($this->recordIdentifier, $name);
             } else {
                 foreach ($this->recordIdentifier as $identifier) {
-                    $id = array_get($record, $identifier);
+                    $id = Arr::get($record, $identifier);
                     if (empty($id)) {
                         throw new \Exception("Invalid seeder record. No value for $identifier.");
                     }
                     $builder =
-                        (!$builder) ? $modelName::where($identifier, $id) : $builder->where($identifier, $id);
-                    $name .= (empty($name)) ? $id : ':' . $id;
+                        (! $builder) ? $modelName::where($identifier, $id) : $builder->where($identifier, $id);
+                    $name .= (empty($name)) ? $id : ':'.$id;
                 }
             }
-            if (!$builder->exists()) {
+            if (! $builder->exists()) {
                 // seed the record
                 $modelName::create($record);
                 $created[] = $name;
@@ -65,13 +66,13 @@ class BaseModelSeeder extends Seeder
 
     protected function outputMessage(array $created = [], array $updated = [])
     {
-        $msg = static::separateWords(static::getModelBaseName($this->modelClass)) . ' resources';
+        $msg = static::separateWords(static::getModelBaseName($this->modelClass)).' resources';
 
-        if (!empty($created)) {
-            $this->command->info($msg . ' created: ' . implode(', ', $created));
+        if (! empty($created)) {
+            $this->command->info($msg.' created: '.implode(', ', $created));
         }
-        if (!empty($updated)) {
-            $this->command->info($msg . ' updated: ' . implode(', ', $updated));
+        if (! empty($updated)) {
+            $this->command->info($msg.' updated: '.implode(', ', $updated));
         }
     }
 
@@ -91,6 +92,6 @@ class BaseModelSeeder extends Seeder
 
     public static function separateWords($string)
     {
-        return preg_replace("/([a-z])([A-Z])/", "\\1 \\2", $string);
+        return preg_replace('/([a-z])([A-Z])/', '\\1 \\2', $string);
     }
 }

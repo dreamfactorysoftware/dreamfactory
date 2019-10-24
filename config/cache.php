@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Str;
+
 return [
 
     /*
@@ -86,8 +88,7 @@ return [
     |
     */
 
-    'prefix' => env('CACHE_PREFIX', str_slug(env('APP_NAME', 'laravel'), '_').'_cache'),
-
+    'prefix' => env('CACHE_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_cache'),
 
     /*
     |--------------------------------------------------------------------------
@@ -98,6 +99,6 @@ return [
     |
     */
 
-    'default_ttl' => env('CACHE_DEFAULT_TTL', env('DF_CACHE_TTL', 300)), // old env for upgrades
+    'default_ttl' => env('CACHE_DEFAULT_TTL', env('DF_CACHE_TTL', 18000)), // old env for upgrades
 
 ];

@@ -32,7 +32,7 @@ class EmailTemplateSeeder extends BaseModelSeeder
                                 </p>
                               </div>',
                 'from_name'   => 'DO NOT REPLY',
-                'from_email'  => 'no-reply@dreamfactory.com'
+                'from_email'  => 'no-reply@dreamfactory.com',
             ],
             [
                 'name'        => 'User Registration Default',
@@ -58,7 +58,7 @@ class EmailTemplateSeeder extends BaseModelSeeder
                                 </p>
                             </div>',
                 'from_name'   => 'DO NOT REPLY',
-                'from_email'  => 'no-reply@dreamfactory.com'
+                'from_email'  => 'no-reply@dreamfactory.com',
             ],
             [
                 'name'        => 'Password Reset Default',
@@ -82,8 +82,8 @@ class EmailTemplateSeeder extends BaseModelSeeder
                                 </p>
                             </div>',
                 'from_name'   => 'DO NOT REPLY',
-                'from_email'  => 'no-reply@dreamfactory.com'
-            ]
+                'from_email'  => 'no-reply@dreamfactory.com',
+            ],
         ];
     }
 }

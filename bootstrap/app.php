@@ -11,11 +11,6 @@
 |
 */
 
-use DreamFactory\Core\LogHandlers\StreamHandler;
-use DreamFactory\Core\LogHandlers\SyslogHandler;
-use DreamFactory\Core\LogHandlers\ErrorLogHandler;
-use DreamFactory\Core\LogHandlers\RotatingFileHandler;
-use Monolog\Formatter\LineFormatter;
 use Monolog\Logger;
 
 $app = new Illuminate\Foundation\Application(
@@ -47,30 +42,6 @@ $app->singleton(
     Illuminate\Contracts\Debug\ExceptionHandler::class,
     DreamFactory\Exceptions\Handler::class
 );
-
-$app->configureMonologUsing(function (Logger $monolog){
-    $logFile =
-        env('DF_MANAGED_LOG_PATH', storage_path('logs')) .
-        DIRECTORY_SEPARATOR .
-        env('DF_MANAGED_LOG_FILE', 'dreamfactory.log');
-
-    $mode = config('app.log');
-
-    if ($mode === 'syslog') {
-        $monolog->pushHandler(new SyslogHandler('dreamfactory'));
-    } else {
-        if ($mode === 'single') {
-            $handler = new StreamHandler($logFile);
-        } else if ($mode === 'errorlog') {
-            $handler = new ErrorLogHandler();
-        } else {
-            $handler = new RotatingFileHandler($logFile, 5);
-        }
-
-        $monolog->pushHandler($handler);
-        $handler->setFormatter(new LineFormatter(null, null, true, true));
-    }
-});
 
 /*
 |--------------------------------------------------------------------------

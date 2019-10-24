@@ -89,21 +89,21 @@ declare -A settings=(
 ["LIMIT_CACHE_PASSWORD"]=""
 ["LIMIT_CACHE_DATABASE"]="9"
 # Queuing
-["QUEUE_DRIVER"]="sync"
+["QUEUE_CONNECTION"]="sync"
 ["QUEUE_NAME"]="default"
 ["QUEUE_RETRY_AFTER"]="90"
-# if QUEUE_DRIVER=database
+# if QUEUE_CONNECTION=database
 ["QUEUE_TABLE"]="jobs"
-# if QUEUE_DRIVER=beanstalkd
+# if QUEUE_CONNECTION=beanstalkd
 ["QUEUE_HOST"]="localhost"
-# if QUEUE_DRIVER=redis
+# if QUEUE_CONNECTION=redis
 ["QUEUE_PORT"]=""
 ["QUEUE_DATABASE"]=""
 ["QUEUE_PASSWORD"]=""
-# if QUEUE_DRIVER=sqs
-["SQS_KEY"]=""
-["SQS_SECRET"]=""
-["SQS_REGION"]="us-east-1"
+# if QUEUE_CONNECTION=sqs
+["AWS_ACCESS_KEY_ID"]=""
+["AWS_SECRET_ACCESS_KEY"]=""
+["AWS_DEFAULT_REGION"]="us-east-1"
 ["SQS_PREFIX"]="https://sqs.us-east-1.amazonaws.com/your-account-id"
 # Event Broadcasting
 ["BROADCAST_DRIVER"]="null"
@@ -199,7 +199,7 @@ declare -A settings_msg=(
 ["LIMIT_CACHE_WEIGHT"]="Memcached weight setting."
 ["LIMIT_CACHE_DATABASE"]="The desired Redis database number between 0 and 16 (or the limit set in your redis.conf file."
 # Queuing
-["QUEUE_DRIVER"]="What type of driver or connection to use for queuing jobs on the server."
+["QUEUE_CONNECTION"]="What type of driver or connection to use for queuing jobs on the server."
 ["QUEUE_NAME"]="Name of the queue to use, defaults to 'default'."
 ["QUEUE_RETRY_AFTER"]="Number of seconds after to retry a failed job, defaults to 90."
 ["QUEUE_TABLE"]="The database table used to store the queued jobs."
@@ -207,9 +207,9 @@ declare -A settings_msg=(
 ["QUEUE_PORT"]="The connection port for the host given, or blank if the provider default is used."
 ["QUEUE_DATABASE"]="The desired Redis database number between 0 and 16 (or the limit set in your redis.conf file."
 ["QUEUE_PASSWORD"]="Credentials for the service if required."
-["SQS_KEY"]="AWS credentials."
-["SQS_SECRET"]="AWS credentials."
-["SQS_REGION"]="AWS storage region."
+["AWS_ACCESS_KEY_ID"]="AWS credentials."
+["AWS_SECRET_ACCESS_KEY"]="AWS credentials."
+["AWS_DEFAULT_REGION"]="AWS storage region."
 ["SQS_PREFIX"]="AWS SQS specific prefix for queued jobs."
 # Event Broadcasting
 ["BROADCAST_DRIVER"]="What type of driver or connection to use for broadcasting events from the server."
@@ -269,7 +269,7 @@ declare -A settings_options=(
 #["LIMIT_CACHE_DRIVER"]="apc, array, database, file, memcached, redis"
 ["LIMIT_CACHE_DRIVER"]="file, redis"
 # Queuing
-["QUEUE_DRIVER"]="sync, database, beanstalkd, sqs, redis, null"
+["QUEUE_CONNECTION"]="sync, database, beanstalkd, sqs, redis, null"
 # Event Broadcasting
 ["BROADCAST_DRIVER"]="pusher, redis, log, null"
 # DreamFactory
@@ -1015,15 +1015,15 @@ case $action in
 
                 4 ) echo "Note: Using the driver 'sync' will execute queued jobs immediately and doesn't really use queuing.
                           Also using driver'null' discards jobs immediately, not executing them at all, useful for testing only."
-                    case "${settings["QUEUE_DRIVER"]}" in
-                        "sync" ) menu_items=("QUEUE_DRIVER") ;;
-                        "database" ) menu_items=("QUEUE_DRIVER" "QUEUE_TABLE")
+                    case "${settings["QUEUE_CONNECTION"]}" in
+                        "sync" ) menu_items=("QUEUE_CONNECTION") ;;
+                        "database" ) menu_items=("QUEUE_CONNECTION" "QUEUE_TABLE")
                             [[ -z "${settings[QUEUE_TABLE]}" ]] && settings["QUEUE_TABLE"]="jobs"
                             ;;
-                        "beanstalkd" ) menu_items=("QUEUE_DRIVER" "QUEUE_HOST") ;;
-                        "redis" ) menu_items=("QUEUE_DRIVER" "QUEUE_HOST" "QUEUE_PORT" "QUEUE_DATABASE" "QUEUE_PASSWORD") ;;
-                        "aws_sqs" ) menu_items=("QUEUE_DRIVER" "SQS_KEY" "SQS_SECRET" "SQS_REGION" "SQS_PREFIX") ;;
-                        "null" ) menu_items=("QUEUE_DRIVER") ;;
+                        "beanstalkd" ) menu_items=("QUEUE_CONNECTION" "QUEUE_HOST") ;;
+                        "redis" ) menu_items=("QUEUE_CONNECTION" "QUEUE_HOST" "QUEUE_PORT" "QUEUE_DATABASE" "QUEUE_PASSWORD") ;;
+                        "aws_sqs" ) menu_items=("QUEUE_CONNECTION" "AWS_ACCESS_KEY_ID" "AWS_SECRET_ACCESS_KEY" "AWS_DEFAULT_REGION" "SQS_PREFIX") ;;
+                        "null" ) menu_items=("QUEUE_CONNECTION") ;;
                     esac
                     menu_msg="Current system queuing settings:"
                     settings_error=""
@@ -1041,23 +1041,23 @@ case $action in
                             if [[ 0 -eq $num ]] ; then
                                 case "${choice}" in
                                     "sync" )
-                                        menu_items=("QUEUE_DRIVER")
+                                        menu_items=("QUEUE_CONNECTION")
                                         ;;
                                     "database" )
-                                        menu_items=("QUEUE_DRIVER" "QUEUE_TABLE")
+                                        menu_items=("QUEUE_CONNECTION" "QUEUE_TABLE")
                                         [[ -z "${settings[QUEUE_TABLE]}" ]] && settings["QUEUE_TABLE"]="jobs"
                                         ;;
                                     "beanstalkd" ) chosen_features["beanstalkd"]="+"
-                                        menu_items=("QUEUE_DRIVER" "QUEUE_HOST")
+                                        menu_items=("QUEUE_CONNECTION" "QUEUE_HOST")
                                         ;;
                                     "redis" ) chosen_features["redis"]="+"
-                                        menu_items=("QUEUE_DRIVER" "QUEUE_HOST" "QUEUE_PORT" "QUEUE_DATABASE" "QUEUE_PASSWORD")
+                                        menu_items=("QUEUE_CONNECTION" "QUEUE_HOST" "QUEUE_PORT" "QUEUE_DATABASE" "QUEUE_PASSWORD")
                                         ;;
                                     "aws_sqs" ) chosen_features["apc"]="+"
-                                        menu_items=("QUEUE_DRIVER" "SQS_KEY" "SQS_SECRET" "SQS_REGION" "SQS_PREFIX")
+                                        menu_items=("QUEUE_CONNECTION" "AWS_ACCESS_KEY_ID" "AWS_SECRET_ACCESS_KEY" "AWS_DEFAULT_REGION" "SQS_PREFIX")
                                         ;;
                                     "null" )
-                                        menu_items=("QUEUE_DRIVER")
+                                        menu_items=("QUEUE_CONNECTION")
                                         ;;
                                 esac
                             fi

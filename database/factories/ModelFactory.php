@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+
 /*
 |--------------------------------------------------------------------------
 | Model Factories
@@ -11,14 +14,14 @@
 |
 */
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+/* @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(DreamFactory\User::class, function (Faker\Generator $faker) {
     static $password;
 
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
-        'password' => $password ?: $password = bcrypt('secret'),
-        'remember_token' => str_random(10),
+        'password' => $password ?: $password = Hash::make('secret'),
+        'remember_token' => Str::random(10),
     ];
 });

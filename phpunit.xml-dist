@@ -27,7 +27,7 @@
         <env name="TEST_INSTANCE_URL" value="http://example.com"/>
         <env name="CACHE_DRIVER" value="array"/>
         <env name="SESSION_DRIVER" value="array"/>
-        <env name="QUEUE_DRIVER" value="sync"/>
+        <env name="QUEUE_CONNECTION" value="sync"/>
         <env name="DB_HOST" value="127.0.0.1"/>
         <env name="DB_DATABASE" value="df_unit_test"/>
         <env name="DB_USER" value="username"/>

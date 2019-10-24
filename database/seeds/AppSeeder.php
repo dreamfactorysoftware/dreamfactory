@@ -5,6 +5,7 @@ use DreamFactory\Core\Models\App;
 class AppSeeder extends BaseModelSeeder
 {
     protected $modelClass = App::class;
+
     protected $allowUpdate = true;
 
     protected function getRecords()
@@ -16,7 +17,7 @@ class AppSeeder extends BaseModelSeeder
                 'description' => 'An application for administering this instance.',
                 'is_active'   => true,
                 'type'        => 3,
-                'path'        => 'dreamfactory/dist/index.html'
+                'path'        => 'dreamfactory/dist/index.html',
             ],
             [
                 'name'        => 'api_docs',
@@ -24,7 +25,7 @@ class AppSeeder extends BaseModelSeeder
                 'description' => 'An OpenAPI-based application allowing documentation viewing and testing of the API.',
                 'is_active'   => true,
                 'type'        => 3,
-                'path'        => 'df-api-docs-ui/dist/index.html'
+                'path'        => 'df-api-docs-ui/dist/index.html',
             ],
             [
                 'name'        => 'file_manager',
@@ -32,7 +33,7 @@ class AppSeeder extends BaseModelSeeder
                 'description' => 'An application for managing file services.',
                 'is_active'   => true,
                 'type'        => 3,
-                'path'        => 'filemanager/index.html'
+                'path'        => 'filemanager/index.html',
             ],
         ];
     }

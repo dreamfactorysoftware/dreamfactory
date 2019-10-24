@@ -2,9 +2,10 @@
 
 namespace DreamFactory\Http\Controllers;
 
+use DreamFactory\Core\Enums\Verbs;
 use DreamFactory\Core\Models\User;
 use DreamFactory\Core\Utility\Session;
-use DreamFactory\Core\Enums\Verbs;
+use Illuminate\Support\Arr;
 use Response;
 
 class SplashController extends Controller
@@ -18,21 +19,21 @@ class SplashController extends Controller
     {
         $token = \Request::input('session_token');
         $param = '';
-        if (!empty($token)) {
-            $param = '?session_token=' . $token;
+        if (! empty($token)) {
+            $param = '?session_token='.$token;
         }
 
-        return redirect(config('df.landing_page', '/test_rest.html') . $param);
+        return redirect(config('df.landing_page', '/test_rest.html').$param);
     }
 
     public function createFirstUser()
     {
-        if (!User::adminExists()) {
+        if (! User::adminExists()) {
             $request = \Request::instance();
             $method = $request->method();
             $data = [
                 'username_placeholder' => 'Username (Optional, defaults to email address)',
-                'email_placeholder'    => 'Email Address (Required for login)'
+                'email_placeholder'    => 'Email Address (Required for login)',
             ];
             $loginAttribute = strtolower(config('df.login_attribute', 'email'));
             if ($loginAttribute === 'username') {
@@ -48,7 +49,7 @@ class SplashController extends Controller
                     'first_name' => '',
                     'last_name'  => '',
                     'username'   => '',
-                    'errors'     => []
+                    'errors'     => [],
                 ], $data);
 
                 return view('firstUser', $data);
@@ -56,20 +57,20 @@ class SplashController extends Controller
                 $data = array_merge($request->all(), $data);
                 $user = User::createFirstAdmin($data);
 
-                if (!$user) {
+                if (! $user) {
                     return view('firstUser', $data);
                 }
 
                 $jwt = null;
                 if (true === $login = Session::setUserInfoWithJWT($user)) {
                     $sessionInfo = Session::getPublicInfo();
-                    $jwt = array_get($sessionInfo, 'session_token');
+                    $jwt = Arr::get($sessionInfo, 'session_token');
                 }
             }
         }
 
-        if (!empty($jwt)) {
-            return redirect()->to('/?session_token=' . $jwt);
+        if (! empty($jwt)) {
+            return redirect()->to('/?session_token='.$jwt);
         } else {
             return redirect()->to('/');
         }
@@ -88,12 +89,12 @@ class SplashController extends Controller
 
             if (Verbs::GET === $method) {
                 return view('setup', [
-                    'version' => config('app.version')
+                    'version' => config('app.version'),
                 ]);
             } elseif (Verbs::POST === $method) {
                 try {
                     if (\Cache::pull('setup_db', false)) {
-                        if (!file_exists(base_path('.env'))) {
+                        if (! file_exists(base_path('.env'))) {
                             copy(base_path('.env-dist'), base_path('.env'));
                         }
 
@@ -113,7 +114,7 @@ class SplashController extends Controller
                         if ($request->ajax()) {
                             return json_encode([
                                 'success' => false,
-                                'message' => 'Setup not required. System is already setup'
+                                'message' => 'Setup not required. System is already setup',
                             ]);
                         }
                     }
@@ -125,7 +126,7 @@ class SplashController extends Controller
                             'errors.generic',
                             [
                                 'error'   => $e->getMessage(),
-                                'version' => config('app.version')
+                                'version' => config('app.version'),
                             ]
                         );
                     }

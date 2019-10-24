@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Str;
+
 return [
 
     /*
@@ -16,7 +18,7 @@ return [
     |
     */
 
-	'driver' => env('SESSION_DRIVER', 'array'),
+    'driver' => env('SESSION_DRIVER', 'array'),
 
     /*
     |--------------------------------------------------------------------------
@@ -57,7 +59,7 @@ return [
     |
     */
 
-    'files' => env('DF_MANAGED_SESSION_PATH', storage_path() . '/framework/sessions'),
+    'files' => env('DF_MANAGED_SESSION_PATH', storage_path().'/framework/sessions'),
 
     /*
     |--------------------------------------------------------------------------
@@ -124,7 +126,7 @@ return [
 
     'cookie' => env(
         'SESSION_COOKIE',
-        str_slug(env('APP_NAME', 'laravel'), '_').'_session'
+        Str::slug(env('APP_NAME', 'laravel'), '_').'_session'
     ),
 
     /*
