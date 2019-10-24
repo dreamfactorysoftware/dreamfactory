@@ -1,0 +1,20 @@
+#!/bin/sh
+#
+# An hook script to verify what is about to be committed.
+# Called by "git commit" with no arguments.
+# It will replase __APP_VERSION__ in config/app.php with
+# the latest release tag of dreamfactorysoftware/dreamfactory app. 
+
+RELEASE=$(git describe --tags $(git rev-list --tags --max-count=1))
+CURRENT=$(cat ./config/app.php | sed -n -E "s/'version' => '(.*)',/\1/p")
+
+# Trim spaces
+RELEASE=$(echo $RELEASE | xargs)
+CURRENT=$(echo $CURRENT | xargs)
+
+if [ "$RELEASE" != "$CURRENT" ]
+then
+   sed -i -E "s/'version' => '(.*)',/'version' => '$RELEASE',/" ./config/app.php
+   echo "Release has changed: " $CURRENT " -> " $RELEASE
+   git add ./config/app.php
+fi
