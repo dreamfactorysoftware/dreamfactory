@@ -57,7 +57,7 @@ return [
             'driver' => 'daily',
             'path' => storage_path('logs/dreamfactory.log'),
             'level' => env('APP_LOG_LEVEL', 'warning'),
-            'days' => 7,
+            'days' => env('APP_LOG_MAX_FILES', 5),
             'formatter' => Monolog\Formatter\LineFormatter::class,
             'formatter_with' => [
                 'format' => null,
