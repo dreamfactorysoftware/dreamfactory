@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => env('QUEUE_DRIVER', 'sync'),
+    'default' => env('QUEUE_CONNECTION', 'sync'),
 
     /*
     |--------------------------------------------------------------------------
@@ -44,16 +44,16 @@ return [
 
         'beanstalkd' => [
             'driver' => 'beanstalkd',
-            'host' => env('QUEUE_HOST','localhost'),
+            'host' => env('QUEUE_HOST', 'localhost'),
             'queue' => env('QUEUE_NAME', 'default'),
             'retry_after' => env('QUEUE_RETRY_AFTER', 90),
         ],
 
         'sqs' => [
             'driver' => 'sqs',
-            'key' => env('SQS_KEY', env('AWS_KEY')),
-            'secret' => env('SQS_SECRET', env('AWS_SECRET')),
-            'region' => env('SQS_REGION', env('AWS_REGION', 'us-east-1')),
+            'key' => env('AWS_ACCESS_KEY_ID'),
+            'secret' => env('AWS_SECRET_ACCESS_KEY'),
+            'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
             'prefix' => env('SQS_PREFIX', 'https://sqs.us-east-1.amazonaws.com/your-account-id'),
             'queue' => env('QUEUE_NAME', 'default'),
         ],

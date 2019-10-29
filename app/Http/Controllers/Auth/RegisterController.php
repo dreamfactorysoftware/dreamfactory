@@ -2,10 +2,11 @@
 
 namespace DreamFactory\Http\Controllers\Auth;
 
-use DreamFactory\User;
 use DreamFactory\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
+use DreamFactory\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
@@ -65,7 +66,7 @@ class RegisterController extends Controller
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'password' => Hash::make($data['password']),
         ]);
     }
 }

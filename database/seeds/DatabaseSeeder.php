@@ -2,8 +2,9 @@
 
 use DreamFactory\Core\Models\EmailTemplate;
 use DreamFactory\Core\Models\Service;
-use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Arr;
 
 class DatabaseSeeder extends Seeder
 {
@@ -27,7 +28,7 @@ class DatabaseSeeder extends Seeder
                 'is_active'   => true,
                 'type'        => 'system',
                 'mutable'     => false,
-                'deletable'   => false
+                'deletable'   => false,
             ],
         ];
 
@@ -39,7 +40,7 @@ class DatabaseSeeder extends Seeder
                 'is_active'   => true,
                 'type'        => 'swagger',
                 'mutable'     => false,
-                'deletable'   => false
+                'deletable'   => false,
             ];
         }
         if (class_exists('DreamFactory\Core\File\ServiceProvider')) {
@@ -51,7 +52,7 @@ class DatabaseSeeder extends Seeder
                 'type'        => 'local_file',
                 'mutable'     => true,
                 'deletable'   => true,
-                'config'      => ['container' => 'app']
+                'config'      => ['container' => 'app'],
             ];
             $records[] = [
                 'name'        => 'logs',
@@ -61,7 +62,7 @@ class DatabaseSeeder extends Seeder
                 'type'        => 'local_file',
                 'mutable'     => true,
                 'deletable'   => true,
-                'config'      => ['container' => 'logs']
+                'config'      => ['container' => 'logs'],
             ];
         }
         if (class_exists('DreamFactory\Core\SqlDb\ServiceProvider')) {
@@ -73,7 +74,7 @@ class DatabaseSeeder extends Seeder
                 'type'        => 'sqlite',
                 'mutable'     => true,
                 'deletable'   => true,
-                'config'      => ['database' => 'db.sqlite']
+                'config'      => ['database' => 'db.sqlite'],
             ];
         }
         if (class_exists('DreamFactory\Core\Email\ServiceProvider')) {
@@ -84,28 +85,28 @@ class DatabaseSeeder extends Seeder
                 'is_active'   => true,
                 'type'        => 'local_email',
                 'mutable'     => true,
-                'deletable'   => true
+                'deletable'   => true,
             ];
         }
         $this->seedModel($class, $records);
 
         $emailService = Service::whereName('email')->first();
-        $emailServiceId = (!empty($emailService)) ? $emailService->id : null;
+        $emailServiceId = (! empty($emailService)) ? $emailService->id : null;
         $emailTemplateInvite = EmailTemplate::whereName('User Invite Default')->first();
-        $emailTemplateInviteId = (!empty($emailTemplateInvite)) ? $emailTemplateInvite->id : null;
+        $emailTemplateInviteId = (! empty($emailTemplateInvite)) ? $emailTemplateInvite->id : null;
         $emailTemplatePassword = EmailTemplate::whereName('Password Reset Default')->first();
-        $emailTemplatePasswordId = (!empty($emailTemplatePassword)) ? $emailTemplatePassword->id : null;
+        $emailTemplatePasswordId = (! empty($emailTemplatePassword)) ? $emailTemplatePassword->id : null;
         $emailTemplateOpenReg = EmailTemplate::whereName('User Registration Default')->first();
-        $emailTemplateOpenRegId = (!empty($emailTemplateOpenReg)) ? $emailTemplateOpenReg->id : null;
+        $emailTemplateOpenRegId = (! empty($emailTemplateOpenReg)) ? $emailTemplateOpenReg->id : null;
         if ($system = Service::whereName('system')->first()) {
-            if (null == array_get($system->config, 'invite_email_service_id')) {
+            if (null == Arr::get($system->config, 'invite_email_service_id')) {
                 $record = [
                     'config' => [
                         'invite_email_service_id'    => $emailServiceId,
                         'invite_email_template_id'   => $emailTemplateInviteId,
                         'password_email_service_id'  => $emailServiceId,
                         'password_email_template_id' => $emailTemplatePasswordId,
-                    ]
+                    ],
                 ];
                 $system->update($record);
                 $this->command->info('System service updated.');
@@ -129,8 +130,8 @@ class DatabaseSeeder extends Seeder
                         'invite_email_template_id'   => $emailTemplateInviteId,
                         'password_email_service_id'  => $emailServiceId,
                         'password_email_template_id' => $emailTemplatePasswordId,
-                    ]
-                ]
+                    ],
+                ],
             ];
             $this->seedModel($class, $records);
         }
@@ -148,8 +149,8 @@ class DatabaseSeeder extends Seeder
     public function seedModel($class_name, array $records, $identifier = 'name', $allow_update = false)
     {
         if (empty($class_name)) {
-            throw new \Exception("Invalid seeder model.");
-        } elseif (!class_exists($class_name)) {
+            throw new \Exception('Invalid seeder model.');
+        } elseif (! class_exists($class_name)) {
             return;
         }
 
@@ -159,24 +160,24 @@ class DatabaseSeeder extends Seeder
             /** @type \Illuminate\Database\Eloquent\Builder $builder */
             $builder = null;
             $name = '';
-            if (!is_array($identifier)) {
-                $name = array_get($record, $identifier);
+            if (! is_array($identifier)) {
+                $name = Arr::get($record, $identifier);
                 if (empty($name)) {
                     throw new \Exception("Invalid seeder record. No value for $identifier.");
                 }
                 $builder = $class_name::where($identifier, $name);
             } else {
                 foreach ($identifier as $each) {
-                    $id = array_get($record, $each);
+                    $id = Arr::get($record, $each);
                     if (empty($id)) {
                         throw new \Exception("Invalid seeder record. No value for $each.");
                     }
                     $builder =
-                        (!$builder) ? $class_name::where($each, $id) : $builder->where($each, $id);
-                    $name .= (empty($name)) ? $id : ':' . $id;
+                        (! $builder) ? $class_name::where($each, $id) : $builder->where($each, $id);
+                    $name .= (empty($name)) ? $id : ':'.$id;
                 }
             }
-            if (!$builder->exists()) {
+            if (! $builder->exists()) {
                 // seed the record
                 $class_name::create($record);
                 $created[] = $name;
@@ -187,13 +188,13 @@ class DatabaseSeeder extends Seeder
             }
         }
 
-        $msg = static::separateWords(static::getModelBaseName($class_name)) . ' resources';
+        $msg = static::separateWords(static::getModelBaseName($class_name)).' resources';
 
-        if (!empty($created)) {
-            $this->command->info($msg . ' created: ' . implode(', ', $created));
+        if (! empty($created)) {
+            $this->command->info($msg.' created: '.implode(', ', $created));
         }
-        if (!empty($updated)) {
-            $this->command->info($msg . ' updated: ' . implode(', ', $updated));
+        if (! empty($updated)) {
+            $this->command->info($msg.' updated: '.implode(', ', $updated));
         }
     }
 
@@ -208,6 +209,6 @@ class DatabaseSeeder extends Seeder
 
     public static function separateWords($string)
     {
-        return preg_replace("/([a-z])([A-Z])/", "\\1 \\2", $string);
+        return preg_replace('/([a-z])([A-Z])/', '\\1 \\2', $string);
     }
 }
