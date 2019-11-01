@@ -11,8 +11,6 @@
     "LOG_CHANNEL": "heroku"
   },
   "scripts": {
-    "postdeploy": [
-        "php artisan migrate --seed --force && export APP_KEY=$(php artisan --no-ansi key:generate --show)"
-    ]
+    "postdeploy": "./bin/heroku.sh"
   }
 }
