@@ -8,8 +8,7 @@
   "env": {
     "APP_ENV": "local",
     "DB_CONNECTION": "pgsql",
-    "LOG_CHANNEL": "heroku",
-    "APP_KEY": ""
+    "LOG_CHANNEL": "heroku"
   },
   "scripts": {
     "postdeploy": "heroku config:set APP_KEY=$(php artisan --no-ansi key:generate --show) && php artisan migrate --seed --force"
