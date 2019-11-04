@@ -5,6 +5,11 @@
   "logo": "https://github.com/dreamfactorysoftware/dreamfactory/raw/master/readme/vertical-logo-fullcolor.png",
   "keywords": ["test"],
   "addons": ["heroku-postgresql:hobby-dev"],
+  "buildpacks": [
+      {
+          "url": "https://github.com/heroku/heroku-buildpack-cli"
+      }
+  ],
   "env": {
     "APP_ENV": "local",
     "DB_CONNECTION": "pgsql",
