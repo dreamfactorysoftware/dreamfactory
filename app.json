@@ -13,7 +13,9 @@
   "addons": ["heroku-postgresql:hobby-dev"],
   "buildpacks": [
     {
-        "url": "https://github.com/heroku-community/cli",
+        "url": "https://github.com/heroku-community/cli"
+    },
+    {
         "url": "https://github.com/heroku/heroku-buildpack-php"
     }
   ],
