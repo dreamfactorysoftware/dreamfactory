@@ -22,7 +22,7 @@
 </p>
 
 <p align="center">
-<a href="https://heroku.com/deploy?template=https://github.com/heroku/node-js-getting-started">
+<a href="https://heroku.com/deploy?template=https://github.com/dreamfactorysoftware/dreamfactory">
   <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy">
 </a>
 </p>
@@ -68,7 +68,7 @@ Find a full list of installation options [here](http://wiki.dreamfactory.com/Dre
 Heroku users can easily install DreamFactory by clicking on the below button. Keep in mind like many Heroku add-ons DreamFactory comes with some limitations such as the inability to deploy a local file system-based REST API due to Heroku's file system write limitations. Additionally, DreamFactory lacks support for multiple dynos. Regardless of these limitations, it's a breeze to get started using DreamFactory on Heroku so give it a whirl!
 
 <p align="center">
-<a href="https://heroku.com/deploy?template=https://github.com/heroku/node-js-getting-started">
+<a href="https://heroku.com/deploy?template=https://github.com/dreamfactorysoftware/dreamfactory">
   <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy">
 </a>
 </p>
