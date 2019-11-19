@@ -20,6 +20,10 @@
     }
   ],
   "env": {
+    "APP_NAME": {
+      "description": "This must exactly match the App name you specified above",
+      "required": "true"
+    },
     "APP_ENV": "local",
     "DB_CONNECTION": "pgsql",
     "LOG_CHANNEL": "heroku",
