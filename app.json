@@ -11,10 +11,19 @@
       "dreamfactory"
   ],
   "addons": ["heroku-postgresql:hobby-dev"],
+  "buildpacks": [
+    {
+        "url": "https://github.com/heroku/heroku-buildpack-cli"
+    }
+  ],
   "env": {
     "APP_ENV": "local",
     "DB_CONNECTION": "pgsql",
-    "LOG_CHANNEL": "heroku"
+    "LOG_CHANNEL": "heroku",
+    "HEROKU_API_KEY": {
+      "description": "Please enter your Heroku API Key: https://dashboard.heroku.com/account",
+      "required": "true"
+    }
   },
   "scripts": {
     "postdeploy": "./bin/heroku.sh"
