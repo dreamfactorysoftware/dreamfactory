@@ -67,6 +67,18 @@ return [
             ],
         ],
 
+        'heroku' => [
+            'driver' => 'errorlog',
+            'level' => env('APP_LOG_LEVEL', 'debug'),
+            'formatter' => Monolog\Formatter\LineFormatter::class,
+            'formatter_with' => [
+                'format' => null,
+                'dateFormat' => null,
+                'allowInlineLineBreaks' => true,
+                'ignoreEmptyContextAndExtra' => true,
+            ]
+        ],
+
         'slack' => [
             'driver' => 'slack',
             'url' => env('LOG_SLACK_WEBHOOK_URL'),

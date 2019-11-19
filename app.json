@@ -1,0 +1,38 @@
+{
+  "name": "DreamFactory API Management Platform",
+  "description": "DreamFactory is a popular iPaaS solution used by thousands of companies around the globe.",
+  "repository": "https://github.com/dreamfactorysoftware/dreamfactory",
+  "logo": "https://github.com/dreamfactorysoftware/dreamfactory/raw/master/readme/vertical-logo-fullcolor.png",
+  "keywords": [
+      "ipaas",
+      "api",
+      "api-gateway",
+      "api-management",
+      "dreamfactory"
+  ],
+  "addons": ["heroku-postgresql:hobby-dev"],
+  "buildpacks": [
+    {
+        "url": "https://github.com/heroku/heroku-buildpack-cli"
+    },
+    {
+        "url": "https://github.com/heroku/heroku-buildpack-php"
+    }
+  ],
+  "env": {
+    "APP_NAME": {
+      "description": "This must exactly match the App name you specified above",
+      "required": "true"
+    },
+    "APP_ENV": "local",
+    "DB_CONNECTION": "pgsql",
+    "LOG_CHANNEL": "heroku",
+    "HEROKU_API_KEY": {
+      "description": "Please enter your Heroku API Key: https://dashboard.heroku.com/account",
+      "required": "true"
+    }
+  },
+  "scripts": {
+    "postdeploy": "./bin/heroku.sh"
+  }
+}
