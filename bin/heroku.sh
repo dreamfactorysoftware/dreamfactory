@@ -2,4 +2,4 @@
 
 php artisan migrate --seed --force
 
-heroku config:set -a $HEROKU_APP_NAME APP_KEY=$(php artisan --no-ansi key:generate --show)
+heroku config:set APP_KEY=$(php artisan --no-ansi key:generate --show) -a $HEROKU_APP_NAME 
