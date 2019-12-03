@@ -1,5 +1,5 @@
 <h1 align="center">
-    <a href="https://dreamfactory.com/"><img src="https://github.com/dreamfactorysoftware/dreamfactory/raw/master/readme/vertical-logo-fullcolor.png" alt="DreamFactory" width="250" /></a>
+    <a href="https://dreamfactory.com/"><img src="https://raw.githubusercontent.com/dreamfactorysoftware/dreamfactory/master/readme/vertical-logo-fullcolor.png" alt="DreamFactory" width="250" /></a>
 </h1>
 
 <p align="center">
@@ -48,7 +48,7 @@ DreamFactory™ is an iPaaS for mobile, web, and IoT applications. It is built o
 * [Secure every API endpoint](http://guide.dreamfactory.com/docs/chapter03.html#creating-a-role) with user management, SSO authentication, role-based access control, OAuth and Active Directory integration.
 
 <p align="center">
-    <img alt="GitHub stars" src="https://github.com/dreamfactorysoftware/dreamfactory/raw/master/readme/ScreenRecording20190524at1.gif">
+    <img alt="GitHub stars" src="https://raw.githubusercontent.com/dreamfactorysoftware/dreamfactory/master/readme/ScreenRecording20190524at1.gif">
 </p>
 
 <a name="installation"></a>
@@ -89,7 +89,7 @@ Additional platform documentation can be found on the [DreamFactory wiki](http:/
 <a name="community"></a>
 ## Community 
 
-| <a href="https://stackoverflow.com/questions/tagged/dreamfactory"><img src="https://github.com/dreamfactorysoftware/dreamfactory/raw/master/readme/stackoverflow.png" height="50px"/></a> | <a href="https://community.dreamfactory.com"><img src="https://github.com/dreamfactorysoftware/dreamfactory/raw/master/readme/mark-gold.png" height="60px"/></a> | <a href="https://twitter.com/dfsoftwareinc"><img src="https://github.com/dreamfactorysoftware/dreamfactory/raw/master/readme/twitter.png" height="40px"/></a> |
+| <a href="https://stackoverflow.com/questions/tagged/dreamfactory"><img src="https://raw.githubusercontent.com/dreamfactorysoftware/dreamfactory/master/readme/stackoverflow.png" height="50px"/></a> | <a href="https://community.dreamfactory.com"><img src="https://raw.githubusercontent.com/dreamfactorysoftware/dreamfactory/master/readme/mark-gold.png" height="60px"/></a> | <a href="https://twitter.com/dfsoftwareinc"><img src="https://raw.githubusercontent.com/dreamfactorysoftware/dreamfactory/master/readme/twitter.png" height="40px"/></a> |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Ask and answer StackOverflow questions with the [`dreamfactory` tag](https://stackoverflow.com/questions/tagged/dreamfactory)                                                                               | Check out our [community forum](https://community.dreamfactory.com), ask questions, and discuss project direction                                                                                           | Tweet to [`@dfsoftwareinc`](https://twitter.com/dfsoftwareinc) or with the [`#dreamfactory` hashtag](https://twitter.com/search?q=%23dreamfactory&f=live)  
 
