@@ -232,7 +232,7 @@ declare -A settings_msg=(
 ["DF_CONFIRM_INVITE_URL"]="Application path to where invited users are to be handled."
 ["DF_CONFIRM_REGISTER_URL"]="Application path to where user registrations are to be handled."
 # Server-side Scripting
-["DF_SCRIPTING_DISABLE"]="To disable all server-side scripting set this to 'all', or comma-delimited list of v8js, nodejs, python, and/or php to disable individually."
+["DF_SCRIPTING_DISABLE"]="To disable all server-side scripting set this to 'all', or comma-delimited list of nodejs, python, and/or php to disable individually."
 ["DF_NODEJS_PATH"]="The system will try to detect the executable path, but in some environments it is best to set the path to the installed Node.js executable."
 ["DF_PYTHON_PATH"]="The system will try to detect the executable path, but in some environments it is best to set the path to the installed Python executable"
 ["DF_PYTHON3_PATH"]="The system will try to detect the executable path, but in some environments it is best to set the path to the installed Python3 executable"
@@ -275,7 +275,7 @@ declare -A settings_options=(
 # DreamFactory
 ["DF_LOGIN_ATTRIBUTE"]="email, username"
 ["DF_ALLOW_FOREVER_SESSIONS"]="true, false"
-["DF_SCRIPTING_DISABLE"]="all or comma-delimited list of v8js, nodejs, python, and/or php"
+["DF_SCRIPTING_DISABLE"]="all or comma-delimited list of nodejs, python, and/or php"
 ["DF_ALWAYS_WRAP_RESOURCES"]="true, false"
 )
 
@@ -298,7 +298,7 @@ declare -A features_in_groups=(
 ["Email Services"]="command_email smtp_email mailgun_email mandrill_email sparkpost_email aws_ses"
 ["File Storage Services"]="local_file aws_s3 azure_blob openstack_object_storage rackspace_cloud_files"
 ["Notification Services"]="aws_sns apn gcm"
-["Server-side Scripting"]="v8js nodejs php python"
+["Server-side Scripting"]="nodejs php python"
 ["UI Applications"]="launchpad admin schema_mgr data_mgr file_mgr api_doc_ui"
 ["Other Features and Services"]="api_doc limits logger rws soap"
 )
@@ -363,7 +363,6 @@ declare -A features=(
 ["sparkpost_email"]="SparkPost Email"
 ["aws_ses"]="AWS SES (Simple Email Service)"
 # Script features
-["v8js"]="V8 Javascript Scripting"
 ["nodejs"]="Node.js Scripting"
 ["php"]="PHP Scripting"
 ["python"]="Python Scripting"
@@ -440,7 +439,6 @@ declare -A feature_package_map=(
 ["sparkpost_email"]="dreamfactory/df-email"
 ["aws_ses"]="dreamfactory/df-aws"
 # Script
-["v8js"]="dreamfactory/df-script"
 ["nodejs"]="dreamfactory/df-script"
 ["php"]="dreamfactory/df-script"
 ["python"]="dreamfactory/df-script"
@@ -487,8 +485,6 @@ declare -A feature_extension_map=(
 ["oracle"]="oci8"
 ["sqlanywhere"]="pdo_dblib"
 ["sqlite"]="pdo_sqlite"
-# Script
-["v8js"]="v8js"
 # Cache
 ["cache_apc"]="apc"
 ["cache_memcached"]="memcached"
@@ -748,7 +744,7 @@ else
     action_menu_handle "${action_title}" "${action_msg}" "${action_items[@]}"
     case $action in
         1 ) starters=() ;;
-        2 ) starters=("user" "mysql" "pgsql" "sqlite" "local_file" "smtp_email" "php" "v8js" "api_doc" "rws" "admin" "file_mgr" "api_doc_ui") ;;
+        2 ) starters=("user" "mysql" "pgsql" "sqlite" "local_file" "smtp_email" "php" "api_doc" "rws" "admin" "file_mgr" "api_doc_ui") ;;
         3 ) starters=("${!features[@]}") ;;
         4 ) exit ;;
     esac
