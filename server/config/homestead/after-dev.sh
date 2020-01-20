@@ -40,22 +40,6 @@ sudo apt-get install -qq -y php7.1-mongodb > $OUTPUT 2>&1
 sudo apt-get install -qq -y php7.0-mongodb > $OUTPUT 2>&1
 #sudo apt-get install -qq -y php5.6-mongodb > $OUTPUT 2>&1
 
-echo ">>> Installing V8 and php v8js extension"
-git clone https://github.com/dreamfactorysoftware/v8-compiled.git > $OUTPUT 2>&1
-cd v8-compiled
-sudo mkdir /opt/v8 > $OUTPUT 2>&1
-sudo cp -R ubuntu_16.04/PHP7.1/* /opt/v8 > $OUTPUT 2>&1
-git clone https://github.com/phpv8/v8js.git > $OUTPUT 2>&1
-cd v8js
-phpize > $OUTPUT 2>&1
-./configure --with-v8js=/opt/v8 > $OUTPUT 2>&1
-make > $OUTPUT 2>&1
-sudo make install > $OUTPUT 2>&1
-sudo echo "extension=v8js.so" > /etc/php/7.1/mods-available/v8js.ini
-sudo phpenmod v8js > $OUTPUT 2>&1
-cd ../../
-sudo rm -Rf v8-compiled
-
 echo ">>> Installing php cassandra extension"
 mkdir cassandra
 cd cassandra
