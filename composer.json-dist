@@ -2,107 +2,107 @@
   "name": "dreamfactory/dreamfactory",
   "description": "The DreamFactory(tm) Platform.",
   "keywords": [
-      "api",
-      "dreamfactory",
-      "laravel",
-      "rest"
+    "api",
+    "dreamfactory",
+    "laravel",
+    "rest"
   ],
   "homepage": "https://www.dreamfactory.com/",
   "license": "Apache-2.0",
   "type": "project",
   "authors": [
-      {
-          "name": "DreamFactory Team",
-          "email": "code@dreamfactory.com"
-      }
+    {
+      "name": "DreamFactory Team",
+      "email": "code@dreamfactory.com"
+    }
   ],
   "support": {
-      "email": "dspsupport@dreamfactory.com",
-      "source": "https://github.com/dreamfactorysoftware/dreamfactory",
-      "issues": "https://github.com/dreamfactorysoftware/dreamfactory/issues",
-      "wiki": "https://wiki.dreamfactory.com",
-      "guide": "https://guide.dreamfactory.com"
+    "email": "dspsupport@dreamfactory.com",
+    "source": "https://github.com/dreamfactorysoftware/dreamfactory",
+    "issues": "https://github.com/dreamfactorysoftware/dreamfactory/issues",
+    "wiki": "https://wiki.dreamfactory.com",
+    "guide": "https://guide.dreamfactory.com"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "repositories": [],
   "require": {
-      "dreamfactory/df-admin-app": "~3.1.2",
-      "dreamfactory/df-api-docs-ui": "~3.0.0",
-      "dreamfactory/df-apidoc": "~0.7.0",
-      "dreamfactory/df-aws": "~0.16.0",
-      "dreamfactory/df-azure": "~0.16.0",
-      "dreamfactory/df-cache": "~0.12.0",
-      "dreamfactory/df-cassandra": "~0.13.0",
-      "dreamfactory/df-core": "~0.16.3",
-      "dreamfactory/df-couchbase": "~0.11.0",
-      "dreamfactory/df-couchdb": "~0.16.0",
-      "dreamfactory/df-email": "~0.9.1",
-      "dreamfactory/df-file": "~0.7.0",
-      "dreamfactory/df-filemanager-app": "~0.3.0",
-      "dreamfactory/df-firebird": "~0.8.0",
-      "dreamfactory/df-git": "~0.5.0",
-      "dreamfactory/df-graphql": "~0.2.0",
-      "dreamfactory/df-oauth": "~0.15.0",
-      "dreamfactory/df-rackspace": "~0.15.0",
-      "dreamfactory/df-rws": "~0.15.0",
-      "dreamfactory/df-sqldb": "~0.17.0",
-      "dreamfactory/df-system": "~0.3.0",
-      "dreamfactory/df-user": "~0.15.0",
-      "fideloper/proxy": "^4.0",
-      "laravel/framework": "^6.0",
-      "laravel/helpers": "^1.1",
-      "laravel/tinker": "^1.0",
-      "predis/predis": "~1.0",
-      "php": "^7.2"
+    "dreamfactory/df-admin-app": "~4.0.0",
+    "dreamfactory/df-api-docs-ui": "~3.0.0",
+    "dreamfactory/df-apidoc": "~0.7.0",
+    "dreamfactory/df-aws": "~0.16.0",
+    "dreamfactory/df-azure": "~0.16.0",
+    "dreamfactory/df-cache": "~0.12.0",
+    "dreamfactory/df-cassandra": "~0.13.0",
+    "dreamfactory/df-core": "~0.16.3",
+    "dreamfactory/df-couchbase": "~0.11.0",
+    "dreamfactory/df-couchdb": "~0.16.0",
+    "dreamfactory/df-email": "~0.9.1",
+    "dreamfactory/df-file": "~0.7.0",
+    "dreamfactory/df-filemanager-app": "~0.3.0",
+    "dreamfactory/df-firebird": "~0.8.0",
+    "dreamfactory/df-git": "~0.5.0",
+    "dreamfactory/df-graphql": "~0.2.0",
+    "dreamfactory/df-oauth": "~0.15.0",
+    "dreamfactory/df-rackspace": "~0.15.0",
+    "dreamfactory/df-rws": "~0.15.0",
+    "dreamfactory/df-sqldb": "~0.17.1",
+    "dreamfactory/df-system": "~0.3.0",
+    "dreamfactory/df-user": "~0.15.0",
+    "fideloper/proxy": "^4.0",
+    "laravel/framework": "^6.0",
+    "laravel/helpers": "^1.1",
+    "laravel/tinker": "^1.0",
+    "predis/predis": "~1.0",
+    "php": "^7.2"
   },
   "require-dev": {
-      "barryvdh/laravel-ide-helper": "~2.1",
-      "fzaninotto/faker": "^1.4",
-      "laracasts/generators": "~1.0",
-      "laracasts/testdummy": "~2.0",
-      "laravel/homestead": "6.6.0",
-      "mockery/mockery": "^1.0",
-      "nunomaduro/collision": "^3.0",
-      "phpunit/phpunit": "~7.0",
-      "facade/ignition": "^1.4"
+    "barryvdh/laravel-ide-helper": "~2.1",
+    "fzaninotto/faker": "^1.4",
+    "laracasts/generators": "~1.0",
+    "laracasts/testdummy": "~2.0",
+    "laravel/homestead": "6.6.0",
+    "mockery/mockery": "^1.0",
+    "nunomaduro/collision": "^3.0",
+    "phpunit/phpunit": "~7.0",
+    "facade/ignition": "^1.4"
   },
   "autoload": {
-      "classmap": [
-          "database/seeds",
-          "database/factories"
-      ],
-      "psr-4": {
-          "DreamFactory\\": "app/"
-      }
+    "classmap": [
+      "database/seeds",
+      "database/factories"
+    ],
+    "psr-4": {
+      "DreamFactory\\": "app/"
+    }
   },
   "autoload-dev": {
-      "psr-4": {
-          "Tests\\": "tests/"
-      }
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
   },
   "extra": {
-      "branch-alias": {
-          "dev-develop": "3.0.x-dev"
-      },
-      "installer-paths": {
-          "public/{$name}/": [
-              "type:dreamfactory-app"
-          ]
-      },
-      "laravel": {
-          "dont-discover": []
-      }
+    "branch-alias": {
+      "dev-develop": "3.0.x-dev"
+    },
+    "installer-paths": {
+      "public/{$name}/": [
+        "type:dreamfactory-app"
+      ]
+    },
+    "laravel": {
+      "dont-discover": []
+    }
   },
   "scripts": {
-      "post-autoload-dump": [
-          "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-          "@php artisan package:discover --ansi"
-      ]
+    "post-autoload-dump": [
+      "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+      "@php artisan package:discover --ansi"
+    ]
   },
   "config": {
-      "preferred-install": "dist",
-      "sort-packages": true,
-      "optimize-autoloader": true
+    "preferred-install": "dist",
+    "sort-packages": true,
+    "optimize-autoloader": true
   }
 }
