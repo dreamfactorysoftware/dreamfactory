@@ -41,127 +41,141 @@
             @endif
         </div>
 
-            <div class="box-wrapper">
-                <form role="form" method="POST" action="{{ url('/setup') }}">
-                    <div id="formbox" class="form-light boxed drop-shadow lifted">
-                        <h2 class="inset">Create a System Administrator</h2>
+        <div class="box-wrapper">
+            <form role="form" method="POST" action="{{ url('/setup') }}">
+                <div id="formbox" class="form-light boxed drop-shadow lifted">
+                    <h2 class="inset">Create a System Administrator</h2>
 
-                        <p>
-                            Complete this form to create your first administrator. Additional administrators can be added using the 'Admin' application.
-                        </p>
+                    <p>
+                        Complete this form to create your first administrator. Additional administrators can be added using the 'Admin' application.
+                    </p>
 
-                        <div class="form-group">
-                            <label for="username" class="sr-only">Username</label>
+                    <div class="form-group">
+                        <label for="username" class="sr-only">Username</label>
 
-                            <div class="input-group">
-                                <span class="input-group-addon bg_dg"><i class="fa fa-user fa-fw"></i></span>
+                        <div class="input-group">
+                            <span class="input-group-addon bg_dg"><i class="fa fa-user fa-fw"></i></span>
 
-                                <input tabindex="1"
-                                       class="form-control username"
-                                       autofocus
-                                       type="text"
-                                       id="username"
-                                       name="username" placeholder="{{ $username_placeholder }}"
-                                       value="{{ $username }}" />
-                            </div>
+                            <input tabindex="1"
+                                   class="form-control username"
+                                   autofocus
+                                   type="text"
+                                   id="username"
+                                   name="username" placeholder="{{ $username_placeholder }}"
+                                   value="{{ $username }}" />
                         </div>
-                        <div class="form-group">
-                            <label for="email" class="sr-only">Email Address</label>
-
-                            <div class="input-group">
-                                <span class="input-group-addon bg_dg"><i class="fa fa-envelope fa-fw"></i></span>
-
-                                <input tabindex="1"
-                                       class="form-control email required"
-                                       autofocus
-                                       type="email"
-                                       id="email"
-                                       name="email" placeholder="{{ $email_placeholder }}"
-                                       value="{{ $email }}" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="password" class="sr-only">Password</label>
-
-                            <div class="input-group">
-                                <span class="input-group-addon bg_ly"><i class="fa fa-lock fa-fw"></i></span>
-
-                                <input tabindex="2"
-                                       class="form-control password required"
-                                       type="password"
-                                       id="password"
-                                       name="password"
-                                       placeholder="Password" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="passwordRepeat" class="sr-only">Verify Password</label>
-
-                            <div class="input-group">
-                                <span class="input-group-addon bg_ly"><i class="fa fa-check fa-fw"></i></span>
-
-                                <input tabindex="3"
-                                       class="form-control password required"
-                                       type="password"
-                                       id="passwordRepeat"
-                                       name="password_confirmation"
-                                       placeholder="Verify Password" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="firstName" class="sr-only">First Name</label>
-
-                            <div class="input-group">
-                                <span class="input-group-addon bg_dg"><i class="fa fa-user fa-fw"></i></span>
-
-                                <input tabindex="4"
-                                       class="form-control required"
-                                       type="text" id="firstName"
-                                       name="first_name"
-                                       placeholder="First Name"
-                                       value="{{ $first_name }}" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="lastName" class="sr-only">Last Name</label>
-
-                            <div class="input-group">
-                                <span class="input-group-addon bg_dg"><i class="fa fa-user fa-fw"></i></span>
-
-                                <input tabindex="5"
-                                       class="form-control required"
-                                       type="text"
-                                       id="lastName"
-                                       name="last_name"
-                                       placeholder="Last Name"
-                                       value="{{ $last_name }}" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="displayName" class="sr-only">Display Name</label>
-
-                            <div class="input-group">
-                                <span class="input-group-addon bg_dg"><i class="fa fa-eye fa-fw"></i></span>
-
-                                <input tabindex="6"
-                                       class="form-control"
-                                       type="text"
-                                       id="displayName"
-                                       name="name"
-                                       placeholder="Display Name"
-                                       value="{{ $name }}" />
-                            </div>
-                        </div>
-
-
-
-                        <div class="form-buttons">
-                            <button type="submit" tabindex="7" class="btn btn-success pull-right">Create</button>
-                        </div>
-
                     </div>
-                </form>
-            </div>
+                    <div class="form-group">
+                        <label for="email" class="sr-only">Email Address</label>
+
+                        <div class="input-group">
+                            <span class="input-group-addon bg_dg"><i class="fa fa-envelope fa-fw"></i></span>
+
+                            <input tabindex="1"
+                                   class="form-control email required"
+                                   autofocus
+                                   type="email"
+                                   id="email"
+                                   name="email" placeholder="{{ $email_placeholder }}"
+                                   value="{{ $email }}" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone" class="sr-only">Company Name</label>
+
+                        <div class="input-group">
+                            <span class="input-group-addon bg_dg"><i class="fa fa-phone fa-fw"></i></span>
+
+                            <input tabindex=1"
+                                   class="form-control phone required"
+                                   autofocus
+                                   type="tel"
+                                   id="phone"
+                                   name="phone"
+                                   placeholder="Phone"
+                                   value="{{ $phone  }}" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="sr-only">Password</label>
+
+                        <div class="input-group">
+                            <span class="input-group-addon bg_ly"><i class="fa fa-lock fa-fw"></i></span>
+
+                            <input tabindex="2"
+                                   class="form-control password required"
+                                   type="password"
+                                   id="password"
+                                   name="password"
+                                   placeholder="Password" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="passwordRepeat" class="sr-only">Verify Password</label>
+
+                        <div class="input-group">
+                            <span class="input-group-addon bg_ly"><i class="fa fa-check fa-fw"></i></span>
+
+                            <input tabindex="3"
+                                   class="form-control password required"
+                                   type="password"
+                                   id="passwordRepeat"
+                                   name="password_confirmation"
+                                   placeholder="Verify Password" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="firstName" class="sr-only">First Name</label>
+
+                        <div class="input-group">
+                            <span class="input-group-addon bg_dg"><i class="fa fa-user fa-fw"></i></span>
+
+                            <input tabindex="4"
+                                   class="form-control required"
+                                   type="text" id="firstName"
+                                   name="first_name"
+                                   placeholder="First Name"
+                                   value="{{ $first_name }}" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName" class="sr-only">Last Name</label>
+
+                        <div class="input-group">
+                            <span class="input-group-addon bg_dg"><i class="fa fa-user fa-fw"></i></span>
+
+                            <input tabindex="5"
+                                   class="form-control required"
+                                   type="text"
+                                   id="lastName"
+                                   name="last_name"
+                                   placeholder="Last Name"
+                                   value="{{ $last_name }}" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="displayName" class="sr-only">Display Name</label>
+
+                        <div class="input-group">
+                            <span class="input-group-addon bg_dg"><i class="fa fa-eye fa-fw"></i></span>
+
+                            <input tabindex="6"
+                                   class="form-control"
+                                   type="text"
+                                   id="displayName"
+                                   name="name"
+                                   placeholder="Display Name"
+                                   value="{{ $name }}" />
+                        </div>
+                    </div>
+
+
+                    <div class="form-buttons">
+                        <button type="submit" tabindex="7" class="btn btn-success pull-right">Create</button>
+                    </div>
+
+                </div>
+            </form>
         </div>
     </div>
 </div>

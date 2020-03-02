@@ -50,6 +50,7 @@ class SplashController extends Controller
                     'last_name'  => '',
                     'username'   => '',
                     'errors'     => [],
+                    'phone'      => '',
                 ], $data);
 
                 return view('firstUser', $data);
