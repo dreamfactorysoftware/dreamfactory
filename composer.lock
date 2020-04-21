@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6ecd9062b3156b96fc95964c3212ed0b",
+    "content-hash": "709b9680b48c0ddd7fe47017ddd5160f",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -60,16 +60,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.134.8",
+            "version": "3.135.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "8a9b598a0ede2165be5988899dcebead6fcc4d41"
+                "reference": "254f168f90b1846ffb3f70594280e66b9f10a85e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/8a9b598a0ede2165be5988899dcebead6fcc4d41",
-                "reference": "8a9b598a0ede2165be5988899dcebead6fcc4d41",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/254f168f90b1846ffb3f70594280e66b9f10a85e",
+                "reference": "254f168f90b1846ffb3f70594280e66b9f10a85e",
                 "shasum": ""
             },
             "require": {
@@ -140,7 +140,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2020-04-17T18:11:57+00:00"
+            "time": "2020-04-20T18:16:34+00:00"
         },
         {
             "name": "barryvdh/laravel-cors",
@@ -1003,16 +1003,16 @@
         },
         {
             "name": "dreamfactory/df-admin-app",
-            "version": "4.2.0",
+            "version": "4.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-admin-app.git",
-                "reference": "41beba4272906ddd7a6349360aa0371d96a1b1dc"
+                "reference": "d0e8867ae2530a14497ca2fc11652949f55e57d2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-admin-app/zipball/41beba4272906ddd7a6349360aa0371d96a1b1dc",
-                "reference": "41beba4272906ddd7a6349360aa0371d96a1b1dc",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-admin-app/zipball/d0e8867ae2530a14497ca2fc11652949f55e57d2",
+                "reference": "d0e8867ae2530a14497ca2fc11652949f55e57d2",
                 "shasum": ""
             },
             "require": {
@@ -1047,7 +1047,7 @@
                 "remote web services",
                 "rest"
             ],
-            "time": "2020-04-20T14:30:23+00:00"
+            "time": "2020-04-21T08:15:49+00:00"
         },
         {
             "name": "dreamfactory/df-api-docs-ui",
@@ -1171,9 +1171,9 @@
             },
             "require": {
                 "aws/aws-sdk-php": "3.*",
-                "dreamfactory/df-database": "~0.11.2",
-                "dreamfactory/df-email": "~0.10.1",
-                "dreamfactory/df-file": "~0.7.1",
+                "dreamfactory/df-database": "~0.11.0",
+                "dreamfactory/df-email": "~0.10.0",
+                "dreamfactory/df-file": "~0.7.0",
                 "dreamfactory/df-sqldb": "~0.17.1"
             },
             "type": "library",
@@ -1217,7 +1217,7 @@
                 "rest",
                 "s3"
             ],
-            "time": "2020-04-10T12:11:00+00:00"
+            "time": "2020-02-27T10:00:49+00:00"
         },
         {
             "name": "dreamfactory/df-azure",
@@ -1235,8 +1235,8 @@
             },
             "require": {
                 "dreamfactory/azure-documentdb-php-sdk": "~0.2.0",
-                "dreamfactory/df-database": "~0.11.2",
-                "dreamfactory/df-file": "~0.7.1",
+                "dreamfactory/df-database": "~0.11.0",
+                "dreamfactory/df-file": "~0.7.0",
                 "microsoft/azure-storage": "0.13.*"
             },
             "type": "library",
@@ -1279,7 +1279,7 @@
                 "laravel",
                 "rest"
             ],
-            "time": "2020-04-10T12:07:41+00:00"
+            "time": "2020-02-20T14:58:24+00:00"
         },
         {
             "name": "dreamfactory/df-cache",
@@ -1356,7 +1356,7 @@
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-database": "~0.11.2"
+                "dreamfactory/df-database": "~0.11.0"
             },
             "type": "library",
             "extra": {
@@ -1398,7 +1398,7 @@
                 "nosql",
                 "rest"
             ],
-            "time": "2020-04-10T12:27:15+00:00"
+            "time": "2020-02-20T14:58:26+00:00"
         },
         {
             "name": "dreamfactory/df-core",
@@ -1496,7 +1496,7 @@
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-database": "~0.11.2"
+                "dreamfactory/df-database": "~0.11.0"
             },
             "type": "library",
             "extra": {
@@ -1538,7 +1538,7 @@
                 "nosql",
                 "rest"
             ],
-            "time": "2020-04-10T12:27:06+00:00"
+            "time": "2020-02-20T14:58:29+00:00"
         },
         {
             "name": "dreamfactory/df-couchdb",
@@ -1556,7 +1556,7 @@
             },
             "require": {
                 "dready92/php-on-couch": "*",
-                "dreamfactory/df-database": "~0.11.2"
+                "dreamfactory/df-database": "~0.11.0"
             },
             "type": "library",
             "extra": {
@@ -1599,7 +1599,7 @@
                 "nosql",
                 "rest"
             ],
-            "time": "2020-04-10T12:14:48+00:00"
+            "time": "2020-02-20T14:58:22+00:00"
         },
         {
             "name": "dreamfactory/df-database",
@@ -1851,7 +1851,7 @@
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-sqldb": "~0.17.1"
+                "dreamfactory/df-sqldb": "~0.17.0"
             },
             "type": "library",
             "extra": {
@@ -1893,7 +1893,7 @@
                 "pdo_interbase",
                 "sql"
             ],
-            "time": "2020-01-21T09:41:26+00:00"
+            "time": "2019-10-23T13:58:32+00:00"
         },
         {
             "name": "dreamfactory/df-git",
@@ -2163,7 +2163,7 @@
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-file": "~0.7.1",
+                "dreamfactory/df-file": "~0.7.0",
                 "rackspace/php-opencloud": "^1.16"
             },
             "type": "library",
@@ -2206,7 +2206,7 @@
                 "rest",
                 "storage blob"
             ],
-            "time": "2020-04-01T09:35:33+00:00"
+            "time": "2019-10-24T09:19:23+00:00"
         },
         {
             "name": "dreamfactory/df-rws",
@@ -2281,7 +2281,7 @@
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-database": "~0.11.2"
+                "dreamfactory/df-database": "~0.11.0"
             },
             "type": "library",
             "extra": {
@@ -2327,7 +2327,7 @@
                 "sql",
                 "sqlserver"
             ],
-            "time": "2020-04-10T12:28:27+00:00"
+            "time": "2020-02-20T14:58:20+00:00"
         },
         {
             "name": "dreamfactory/df-system",
@@ -3323,16 +3323,6 @@
                 "mongo",
                 "mongodb"
             ],
-            "funding": [
-                {
-                    "url": "https://github.com/jenssegers",
-                    "type": "github"
-                },
-                {
-                    "url": "https://opencollective.com/laravel-mongodb",
-                    "type": "open_collective"
-                }
-            ],
             "time": "2020-03-04T07:57:00+00:00"
         },
         {
@@ -3399,12 +3389,6 @@
                 "gh",
                 "gist",
                 "github"
-            ],
-            "funding": [
-                {
-                    "url": "https://github.com/acrobat",
-                    "type": "github"
-                }
             ],
             "time": "2020-03-16T19:57:05+00:00"
         },
@@ -5424,20 +5408,6 @@
                 "x.509",
                 "x509"
             ],
-            "funding": [
-                {
-                    "url": "https://github.com/terrafrost",
-                    "type": "github"
-                },
-                {
-                    "url": "https://www.patreon.com/phpseclib",
-                    "type": "patreon"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/phpseclib/phpseclib",
-                    "type": "tidelift"
-                }
-            ],
             "time": "2020-04-04T23:17:33+00:00"
         },
         {
@@ -6774,20 +6744,6 @@
                 "caching",
                 "psr6"
             ],
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
             "time": "2020-03-27T16:56:45+00:00"
         },
         {
@@ -6922,20 +6878,6 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
             "time": "2020-03-30T11:41:10+00:00"
         },
         {
@@ -7129,20 +7071,6 @@
             ],
             "description": "Symfony ErrorHandler Component",
             "homepage": "https://symfony.com",
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
             "time": "2020-03-30T14:07:33+00:00"
         },
         {
@@ -7403,20 +7331,6 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "https://symfony.com",
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
             "time": "2020-03-30T14:07:33+00:00"
         },
         {
@@ -7507,20 +7421,6 @@
             ],
             "description": "Symfony HttpKernel Component",
             "homepage": "https://symfony.com",
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
             "time": "2020-03-30T14:59:15+00:00"
         },
         {
@@ -7582,20 +7482,6 @@
             "keywords": [
                 "mime",
                 "mime-type"
-            ],
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
             ],
             "time": "2020-03-27T16:56:45+00:00"
         },
@@ -8285,20 +8171,6 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
             "time": "2020-03-27T16:54:36+00:00"
         },
         {
@@ -8374,20 +8246,6 @@
                 "routing",
                 "uri",
                 "url"
-            ],
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
             ],
             "time": "2020-03-30T11:41:10+00:00"
         },
@@ -8523,20 +8381,6 @@
             ],
             "description": "Symfony Translation Component",
             "homepage": "https://symfony.com",
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
             "time": "2020-03-27T16:54:36+00:00"
         },
         {
@@ -8670,20 +8514,6 @@
                 "debug",
                 "dump"
             ],
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
             "time": "2020-03-27T16:54:36+00:00"
         },
         {
@@ -8744,20 +8574,6 @@
                 "instantiate",
                 "serialize"
             ],
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
             "time": "2020-03-27T16:56:45+00:00"
         },
         {
@@ -8817,20 +8633,6 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
             "time": "2020-03-25T12:02:26+00:00"
         },
         {
@@ -8953,12 +8755,6 @@
                 "auth",
                 "jwt",
                 "laravel"
-            ],
-            "funding": [
-                {
-                    "url": "https://www.patreon.com/seantymon",
-                    "type": "patreon"
-                }
             ],
             "time": "2020-03-04T11:21:28+00:00"
         },
