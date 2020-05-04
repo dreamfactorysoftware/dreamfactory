@@ -1412,16 +1412,16 @@
         },
         {
             "name": "dreamfactory/df-core",
-            "version": "0.21.0",
+            "version": "0.21.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-core.git",
-                "reference": "2d5f1abb04049e607dd3512418740537e3683cd2"
+                "reference": "30433e8741e3f0062f53e1b8756415bef5daafea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/2d5f1abb04049e607dd3512418740537e3683cd2",
-                "reference": "2d5f1abb04049e607dd3512418740537e3683cd2",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/30433e8741e3f0062f53e1b8756415bef5daafea",
+                "reference": "30433e8741e3f0062f53e1b8756415bef5daafea",
                 "shasum": ""
             },
             "require": {
@@ -1489,7 +1489,7 @@
                 "paas",
                 "rest"
             ],
-            "time": "2020-04-30T14:18:20+00:00"
+            "time": "2020-05-04T15:37:55+00:00"
         },
         {
             "name": "dreamfactory/df-couchbase",
@@ -2173,7 +2173,7 @@
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-file": "~0.7.1",
+                "dreamfactory/df-file": "~0.7.2",
                 "rackspace/php-opencloud": "^1.16"
             },
             "type": "library",
@@ -2216,7 +2216,7 @@
                 "rest",
                 "storage blob"
             ],
-            "time": "2020-04-01T09:35:33+00:00"
+            "time": "2020-04-30T15:45:15+00:00"
         },
         {
             "name": "dreamfactory/df-rws",
@@ -9072,20 +9072,20 @@
         },
         {
             "name": "vlucas/phpdotenv",
-            "version": "v3.6.3",
+            "version": "v3.6.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vlucas/phpdotenv.git",
-                "reference": "1b3103013797f04521c6cae5560f604649484066"
+                "reference": "10d3f853fdf1f3a6b3c7ea0c4620d2f699713db5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/1b3103013797f04521c6cae5560f604649484066",
-                "reference": "1b3103013797f04521c6cae5560f604649484066",
+                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/10d3f853fdf1f3a6b3c7ea0c4620d2f699713db5",
+                "reference": "10d3f853fdf1f3a6b3c7ea0c4620d2f699713db5",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.4 || ^7.0",
+                "php": "^5.4 || ^7.0 || ^8.0",
                 "phpoption/phpoption": "^1.5",
                 "symfony/polyfill-ctype": "^1.9"
             },
@@ -9133,11 +9133,15 @@
             ],
             "funding": [
                 {
+                    "url": "https://github.com/GrahamCampbell",
+                    "type": "github"
+                },
+                {
                     "url": "https://tidelift.com/funding/github/packagist/vlucas/phpdotenv",
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-04-12T15:18:03+00:00"
+            "time": "2020-05-02T13:46:13+00:00"
         },
         {
             "name": "webonyx/graphql-php",
