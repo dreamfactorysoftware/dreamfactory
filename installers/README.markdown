@@ -84,6 +84,14 @@ Passing the ```--with-apache``` option will result in the Apache 2 web server be
 
     $ sudo ./ubuntu.sh --with-apache
     $ su -c "./debian.sh --with-apache"
+    
+### Installing specific DreamFactory version
+
+Passing the ```--with-tag=<version tag>``` option will result in installation of DreamFactory. 
+If not specified, the latest available version of DreamFactory will be installed. You can pass the option like this:
+
+    $ sudo ./ubuntu,sh --with-tag=4.2.0
+    $ su -c "./ubuntu,sh --with-tag=4.2.0"
 
 ### Supplying Multiple Options
 
