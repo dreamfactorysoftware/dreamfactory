@@ -184,6 +184,13 @@ sudo apt-get install -qq -y zip > $OUTPUT 2>&1
 echo ">>> Installing Python bunch"
 sudo pip install bunch > $OUTPUT 2>&1
 
+echo ">>> Installing Python3 munch"
+if command -v pip; then
+  sudo pip3 install munch > $OUTPUT 2>&1
+else
+  sudo pip install munch > $OUTPUT 2>&1
+fi
+
 echo ">>> Installing Node.js lodash"
 sudo npm install lodash > $OUTPUT 2>&1
 
