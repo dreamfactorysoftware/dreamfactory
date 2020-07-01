@@ -60,16 +60,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.143.2",
+            "version": "3.144.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "d44eac162f8ed1869d20c076adca9869c70a8ad9"
+                "reference": "3c6cc59be6a01f228fb53b2b5f43c1fd7d44a88c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/d44eac162f8ed1869d20c076adca9869c70a8ad9",
-                "reference": "d44eac162f8ed1869d20c076adca9869c70a8ad9",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/3c6cc59be6a01f228fb53b2b5f43c1fd7d44a88c",
+                "reference": "3c6cc59be6a01f228fb53b2b5f43c1fd7d44a88c",
                 "shasum": ""
             },
             "require": {
@@ -141,7 +141,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2020-06-26T18:21:03+00:00"
+            "time": "2020-06-30T18:14:11+00:00"
         },
         {
             "name": "barryvdh/laravel-cors",
@@ -207,16 +207,16 @@
         },
         {
             "name": "bitbucket/client",
-            "version": "v2.1.4",
+            "version": "v2.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/BitbucketAPI/Client.git",
-                "reference": "5730a3198904cb9a1ec573200d6d417947d80ebe"
+                "reference": "93b00424ed886a06497cb164db774208b0c5a4c2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BitbucketAPI/Client/zipball/5730a3198904cb9a1ec573200d6d417947d80ebe",
-                "reference": "5730a3198904cb9a1ec573200d6d417947d80ebe",
+                "url": "https://api.github.com/repos/BitbucketAPI/Client/zipball/93b00424ed886a06497cb164db774208b0c5a4c2",
+                "reference": "93b00424ed886a06497cb164db774208b0c5a4c2",
                 "shasum": ""
             },
             "require": {
@@ -261,7 +261,7 @@
                 "GrahamCampbell",
                 "bitbucket"
             ],
-            "time": "2020-06-28T13:56:29+00:00"
+            "time": "2020-06-29T18:54:45+00:00"
         },
         {
             "name": "clue/stream-filter",
@@ -1404,16 +1404,16 @@
         },
         {
             "name": "dreamfactory/df-core",
-            "version": "0.22.0",
+            "version": "0.22.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-core.git",
-                "reference": "e4390ac00f723cc5a75c28ebe73ffb64817ea46d"
+                "reference": "f8f39022bd44ee499c24fc795b72731ea3be0740"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/e4390ac00f723cc5a75c28ebe73ffb64817ea46d",
-                "reference": "e4390ac00f723cc5a75c28ebe73ffb64817ea46d",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/f8f39022bd44ee499c24fc795b72731ea3be0740",
+                "reference": "f8f39022bd44ee499c24fc795b72731ea3be0740",
                 "shasum": ""
             },
             "require": {
@@ -1473,7 +1473,7 @@
                 "paas",
                 "rest"
             ],
-            "time": "2020-06-10T15:01:58+00:00"
+            "time": "2020-07-01T16:23:47+00:00"
         },
         {
             "name": "dreamfactory/df-couchbase",
@@ -2669,23 +2669,23 @@
         },
         {
             "name": "graham-campbell/github",
-            "version": "v8.7.1",
+            "version": "v8.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/GrahamCampbell/Laravel-GitHub.git",
-                "reference": "27330268bd063b87a264571d1b39f9f7b9cf02df"
+                "reference": "83f2981255bea18d8368b0c23418327b449f71c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/GrahamCampbell/Laravel-GitHub/zipball/27330268bd063b87a264571d1b39f9f7b9cf02df",
-                "reference": "27330268bd063b87a264571d1b39f9f7b9cf02df",
+                "url": "https://api.github.com/repos/GrahamCampbell/Laravel-GitHub/zipball/83f2981255bea18d8368b0c23418327b449f71c0",
+                "reference": "83f2981255bea18d8368b0c23418327b449f71c0",
                 "shasum": ""
             },
             "require": {
                 "graham-campbell/manager": "^4.4",
                 "illuminate/contracts": "^5.5|^6.0|^7.0",
                 "illuminate/support": "^5.5|^6.0|^7.0",
-                "knplabs/github-api": "2.13.*",
+                "knplabs/github-api": "2.14.*",
                 "php": "^7.1.3",
                 "php-http/cache-plugin": "^1.6",
                 "php-http/client-common": "^1.9|^2.0",
@@ -2705,7 +2705,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "8.7-dev"
+                    "dev-master": "8.8-dev"
                 },
                 "laravel": {
                     "providers": [
@@ -2742,7 +2742,7 @@
                 "laravel",
                 "php-github-api"
             ],
-            "time": "2020-04-14T17:19:39+00:00"
+            "time": "2020-06-25T09:41:02+00:00"
         },
         {
             "name": "graham-campbell/gitlab",
@@ -3321,16 +3321,16 @@
         },
         {
             "name": "knplabs/github-api",
-            "version": "2.13.0",
+            "version": "v2.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/php-github-api.git",
-                "reference": "d493c8f4aa84e04629b38d1487407e1c6c9d90d1"
+                "reference": "953c9b453d3258a97755ec3557d112f271176f74"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/php-github-api/zipball/d493c8f4aa84e04629b38d1487407e1c6c9d90d1",
-                "reference": "d493c8f4aa84e04629b38d1487407e1c6c9d90d1",
+                "url": "https://api.github.com/repos/KnpLabs/php-github-api/zipball/953c9b453d3258a97755ec3557d112f271176f74",
+                "reference": "953c9b453d3258a97755ec3557d112f271176f74",
                 "shasum": ""
             },
             "require": {
@@ -3353,7 +3353,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.13.x-dev"
+                    "dev-master": "2.14.x-dev"
                 }
             },
             "autoload": {
@@ -3384,20 +3384,20 @@
                 "gist",
                 "github"
             ],
-            "time": "2020-03-16T19:57:05+00:00"
+            "time": "2020-04-25T20:36:03+00:00"
         },
         {
             "name": "laravel/framework",
-            "version": "v6.18.22",
+            "version": "v6.18.23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "95f33151375bb2e4747b871854c8becc23502901"
+                "reference": "c914a3ec0706c6973a39183f8bc45f3d9a099d90"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/95f33151375bb2e4747b871854c8becc23502901",
-                "reference": "95f33151375bb2e4747b871854c8becc23502901",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/c914a3ec0706c6973a39183f8bc45f3d9a099d90",
+                "reference": "c914a3ec0706c6973a39183f8bc45f3d9a099d90",
                 "shasum": ""
             },
             "require": {
@@ -3532,7 +3532,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2020-06-24T13:08:51+00:00"
+            "time": "2020-06-30T13:52:04+00:00"
         },
         {
             "name": "laravel/helpers",
@@ -4500,16 +4500,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.35.0",
+            "version": "2.36.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "4b9bd835261ef23d36397a46a76b496a458305e5"
+                "reference": "d0b65958d9942fd1b501fdb0800c67e8323aa08d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/4b9bd835261ef23d36397a46a76b496a458305e5",
-                "reference": "4b9bd835261ef23d36397a46a76b496a458305e5",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/d0b65958d9942fd1b501fdb0800c67e8323aa08d",
+                "reference": "d0b65958d9942fd1b501fdb0800c67e8323aa08d",
                 "shasum": ""
             },
             "require": {
@@ -4521,9 +4521,10 @@
             "require-dev": {
                 "doctrine/orm": "^2.7",
                 "friendsofphp/php-cs-fixer": "^2.14 || ^3.0",
-                "kylekatarnls/multi-tester": "^1.1",
+                "kylekatarnls/multi-tester": "^2.0",
                 "phpmd/phpmd": "^2.8",
-                "phpstan/phpstan": "^0.11",
+                "phpstan/extension-installer": "^1.0",
+                "phpstan/phpstan": "^0.12.30",
                 "phpunit/phpunit": "^7.5 || ^8.0",
                 "squizlabs/php_codesniffer": "^3.4"
             },
@@ -4539,6 +4540,11 @@
                 "laravel": {
                     "providers": [
                         "Carbon\\Laravel\\ServiceProvider"
+                    ]
+                },
+                "phpstan": {
+                    "includes": [
+                        "extension.neon"
                     ]
                 }
             },
@@ -4569,7 +4575,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2020-05-24T18:27:52+00:00"
+            "time": "2020-06-25T20:20:01+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -9925,16 +9931,16 @@
         },
         {
             "name": "myclabs/deep-copy",
-            "version": "1.10.0",
+            "version": "1.10.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "5796d127b0c4ff505b77455148ea9d5269d99758"
+                "reference": "969b211f9a51aa1f6c01d1d2aef56d3bd91598e5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/5796d127b0c4ff505b77455148ea9d5269d99758",
-                "reference": "5796d127b0c4ff505b77455148ea9d5269d99758",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/969b211f9a51aa1f6c01d1d2aef56d3bd91598e5",
+                "reference": "969b211f9a51aa1f6c01d1d2aef56d3bd91598e5",
                 "shasum": ""
             },
             "require": {
@@ -9969,7 +9975,7 @@
                 "object",
                 "object graph"
             ],
-            "time": "2020-06-28T07:02:41+00:00"
+            "time": "2020-06-29T13:22:24+00:00"
         },
         {
             "name": "nunomaduro/collision",
