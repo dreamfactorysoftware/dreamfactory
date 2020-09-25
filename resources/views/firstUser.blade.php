@@ -1,203 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <title>DreamFactory&trade;</title>
-    <meta name="page-route" content="web/index" />
+  <title>DreamFactory&trade;</title>
+  <meta name="page-route" content="web/index" />
 
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1.0">
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="author" content="DreamFactory Software, Inc.">
-    <meta name="language" content="en" />
-    <link rel="shortcut icon" href="/img/df-icon-256x256.png" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="author" content="DreamFactory Software, Inc.">
+  <meta name="language" content="en" />
+  <link rel="shortcut icon" href="/img/favicon.png" />
 
-    <!-- Bootstrap 3 CSS -->
-    <link rel="stylesheet"
-          href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <!-- Bootstrap 3 CSS -->
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet"
-          href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 
-    <!-- DSP UI Styles & Code -->
-    <link rel="stylesheet" href="/css/df.main.css">
+  <!-- DSP UI Styles & Code -->
+  <link rel="stylesheet" href="/css/df-create-first-user.css">
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 </head>
+
 <body>
 
-<div id="page-content">
+  <div id="page-content" class="firstUser">
     <div class="container-fluid container-inner">
-        <div id="error-container" class="alert alert-error center">
-            @if (count($errors) > 0)
-                <div class="alert alert-danger" style="margin-top:40px">
-                    <strong>Whoops!</strong> There were some problems with your input.<br><br>
-                    <ul>
-                        @foreach ($errors as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+      <div id="error-container" class="alert alert-error center">
+        @if (count($errors) > 0)
+        <div class="alert alert-danger" style="margin-top:40px">
+          <strong>Whoops!</strong> There were some problems with your input.<br><br>
+          <ul>
+            @foreach ($errors as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+          </ul>
         </div>
+        @endif
+      </div>
 
-        <div class="box-wrapper">
-            <form role="form" method="POST" action="{{ url('/setup') }}">
-                <div id="formbox" class="form-light boxed drop-shadow lifted">
-                    <h2 class="inset">Create a System Administrator</h2>
+      <div class="box-wrapper">
+        <form role="form" method="POST" action="{{ url('/setup') }}">
+          <div id="formbox" class="form-light boxed drop-shadow lifted">
+            <h2 class="inset">Create a System Administrator</h2>
 
-                    <p>
-                        Complete this form to create your first administrator. Additional administrators can be added using the 'Admin' application.
-                    </p>
+            <p>
+              Complete this form to create your first administrator. Additional administrators can be added using the
+              'Admin' application.
+            </p>
 
-                    <div class="form-group">
-                        <label for="username" class="sr-only">Username</label>
+            <p class="required-fields-info"><span>*</span> required fields</p>
 
-                        <div class="input-group">
-                            <span class="input-group-addon bg_dg"><i class="fa fa-user fa-fw"></i></span>
+            <div class="form-group">
+              <label for="username">Username</label>
+              <input tabindex="1" class="form-control username" autofocus type="text" id="username" name="username"
+                placeholder="{{ $username_placeholder }}" value="{{ $username }}" />
+            </div>
+            <div class="form-group required">
+              <label for="email">Email Address</label>
+              <input tabindex="1" class="form-control email" autofocus type="email" id="email" name="email"
+                placeholder="{{ $email_placeholder }}" value="{{ $email }}" required />
+            </div>
+            <div class="form-group required">
+              <label for="phone">Company Name</label>
+              <input tabindex=1" class="form-control phone" autofocus type="tel" id="phone" name="phone"
+                placeholder="Phone" value="{{ $phone  }}" required />
+            </div>
+            <div class="form-group required">
+              <label for="password">Password</label>
+              <input tabindex="2" class="form-control password" type="password" id="password" name="password"
+                placeholder="Password" required />
+            </div>
+            <div class="form-group required">
+              <label for="passwordRepeat">Verify Password</label>
+              <input tabindex="3" class="form-control password" type="password" id="passwordRepeat"
+                name="password_confirmation" placeholder="Verify Password" required />
+            </div>
+            <div class="form-group required">
+              <label for="firstName">First Name</label>
+              <input tabindex="4" class="form-control" type="text" id="firstName" name="first_name"
+                placeholder="First Name" value="{{ $first_name }}" required />
+            </div>
+            <div class="form-group required">
+              <label for="lastName">Last Name</label>
+              <input tabindex="5" class="form-control" type="text" id="lastName" name="last_name"
+                placeholder="Last Name" value="{{ $last_name }}" required />
+            </div>
+            <div class="form-group">
+              <label for="displayName">Display Name</label>
+              <input tabindex="6" class="form-control" type="text" id="displayName" name="name"
+                placeholder="Display Name" value="{{ $name }}" />
+            </div>
+            <div class="custom-control custom-checkbox">
+              <input tabindex="7" class="custom-control-input" type="checkbox" id="gdpr" name="gdpr" />
 
-                            <input tabindex="1"
-                                   class="form-control username"
-                                   autofocus
-                                   type="text"
-                                   id="username"
-                                   name="username" placeholder="{{ $username_placeholder }}"
-                                   value="{{ $username }}" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="email" class="sr-only">Email Address</label>
+              <label for="gdpr" class="custom-control-label">I consent to receiving occasional marketing messages from
+                DreamFactory</label>
+            </div>
 
-                        <div class="input-group">
-                            <span class="input-group-addon bg_dg"><i class="fa fa-envelope fa-fw"></i></span>
+            <div class="form-buttons">
+              <button type="submit" tabindex="7" class="btn btn-success">Create</button>
+            </div>
 
-                            <input tabindex="1"
-                                   class="form-control email required"
-                                   autofocus
-                                   type="email"
-                                   id="email"
-                                   name="email" placeholder="{{ $email_placeholder }}"
-                                   value="{{ $email }}" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="phone" class="sr-only">Company Name</label>
-
-                        <div class="input-group">
-                            <span class="input-group-addon bg_dg"><i class="fa fa-phone fa-fw"></i></span>
-
-                            <input tabindex=1"
-                                   class="form-control phone required"
-                                   autofocus
-                                   type="tel"
-                                   id="phone"
-                                   name="phone"
-                                   placeholder="Phone"
-                                   value="{{ $phone  }}" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="password" class="sr-only">Password</label>
-
-                        <div class="input-group">
-                            <span class="input-group-addon bg_ly"><i class="fa fa-lock fa-fw"></i></span>
-
-                            <input tabindex="2"
-                                   class="form-control password required"
-                                   type="password"
-                                   id="password"
-                                   name="password"
-                                   placeholder="Password" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="passwordRepeat" class="sr-only">Verify Password</label>
-
-                        <div class="input-group">
-                            <span class="input-group-addon bg_ly"><i class="fa fa-check fa-fw"></i></span>
-
-                            <input tabindex="3"
-                                   class="form-control password required"
-                                   type="password"
-                                   id="passwordRepeat"
-                                   name="password_confirmation"
-                                   placeholder="Verify Password" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="firstName" class="sr-only">First Name</label>
-
-                        <div class="input-group">
-                            <span class="input-group-addon bg_dg"><i class="fa fa-user fa-fw"></i></span>
-
-                            <input tabindex="4"
-                                   class="form-control required"
-                                   type="text" id="firstName"
-                                   name="first_name"
-                                   placeholder="First Name"
-                                   value="{{ $first_name }}" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="lastName" class="sr-only">Last Name</label>
-
-                        <div class="input-group">
-                            <span class="input-group-addon bg_dg"><i class="fa fa-user fa-fw"></i></span>
-
-                            <input tabindex="5"
-                                   class="form-control required"
-                                   type="text"
-                                   id="lastName"
-                                   name="last_name"
-                                   placeholder="Last Name"
-                                   value="{{ $last_name }}" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="displayName" class="sr-only">Display Name</label>
-
-                        <div class="input-group">
-                            <span class="input-group-addon bg_dg"><i class="fa fa-eye fa-fw"></i></span>
-
-                            <input tabindex="6"
-                                   class="form-control"
-                                   type="text"
-                                   id="displayName"
-                                   name="name"
-                                   placeholder="Display Name"
-                                   value="{{ $name }}" />
-                        </div>
-                    </div>
-
-
-                    <div class="form-buttons">
-                        <button type="submit" tabindex="7" class="btn btn-success pull-right">Create</button>
-                    </div>
-
-                </div>
-            </form>
-        </div>
+          </div>
+        </form>
+      </div>
     </div>
-</div>
+  </div>
 
-<div id="footer">
+  <div id="footer">
     <div class="container-fluid">
-        <span class="pull-left dsp-footer-copyright">
-            <p class="footer-text">&copy; <a target="_blank" href="https://www.dreamfactory.com">DreamFactory Software, Inc.</a> 2015-<?php echo date(
+      <span class="pull-left dsp-footer-copyright">
+        <p class="footer-text">&copy; <a target="_blank" href="https://www.dreamfactory.com">DreamFactory Software,
+            Inc.</a> 2015-<?php echo date(
                         'Y'
                 ); ?>. All Rights Reserved.
-            </p>
-        </span> <span class="pull-right dsp-footer-version"><p class="footer-text">
-                <a href="https://github.com/dreamfactorysoftware/dreamfactory/"
-                   target="_blank">v{{$version}}</a>
-            </p></span>
+        </p>
+      </span> <span class="pull-right dsp-footer-version">
+        <p class="footer-text">
+          <a href="https://github.com/dreamfactorysoftware/dreamfactory/" target="_blank">v{{$version}}</a>
+        </p>
+      </span>
     </div>
-</div>
+  </div>
 
 
 
 
-<!-- Scripts -->
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <!-- Scripts -->
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </body>
+
 </html>
