@@ -28,7 +28,7 @@
 
   <div id="page-content" class="firstUser">
     <div class="container-fluid container-inner">
-      <div id="error-container" class="alert alert-error center">
+      <div id="error-container">
         @if (count($errors) > 0)
         <div class="alert alert-danger" style="margin-top:40px">
           <strong>Whoops!</strong> There were some problems with your input.<br><br>
