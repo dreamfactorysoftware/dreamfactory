@@ -28,7 +28,7 @@ a:hover {
   color: #0a0a75;
 }
 
-h2 {
+h2, h3 {
   margin: 0 0 30px;
   text-align: center;
 }
@@ -100,8 +100,8 @@ label {
 	right:            0;
 	left:             0;
 	/* Set the fixed height of the footer here */
-  height:           50px;
-  width:            500px;
+  height:           38px;
+  width:            100%;
   margin: 0 auto;
 }
 
@@ -112,6 +112,10 @@ label {
 .form-control:focus {
   box-shadow: 0 0 0 1px #5a6aff;
   border-color: #5a6aff;
+}
+
+.df-logo {
+  margin: 40px auto 60px;
 }
 
 /* ----------------- */
