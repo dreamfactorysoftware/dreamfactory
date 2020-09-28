@@ -31,7 +31,7 @@
 <div id="page-content">
     <div class="container-fluid container-inner">
         <div id="error-container">
-            <div id="loadingFrame" class="alert center alert-warning">
+            <div id="loadingFrame" class="box-wrapper">
                 <h3>Hello and Welcome to DreamFactory v{{$version}}!</h3>
                 <div id="loadingMsg" style="display: none;">
                     You will be up and ready in just few seconds.
