@@ -41,6 +41,12 @@ return [
 
         'mysql' => [
             'driver'    => 'mysql',
+            'read'      => env('DB_WRITE_HOST') || env('DB_READ_HOST') ? [
+                'host' => [ env('DB_READ_HOST'), ],
+            ] : null,
+            'write'     => env('DB_WRITE_HOST') || env('DB_READ_HOST') ? [
+                'host' => [ env('DB_WRITE_HOST'), ],
+            ] : null,
             'host'      => env('DB_HOST', '127.0.0.1'),
             'port'      => env('DB_PORT', '3306'),
             'database'  => env('DB_DATABASE', 'dreamfactory'),
