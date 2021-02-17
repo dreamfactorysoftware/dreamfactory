@@ -8,7 +8,7 @@ NC='\033[0m'    # No Color
 ERROR_STRING="Installation error. Exiting"
 CURRENT_PATH=$(pwd)
 
-DEFAULT_PHP_VERSION="php7.2"
+DEFAULT_PHP_VERSION="php7.4"
 
 CURRENT_OS=$(grep -e VERSION_ID /etc/os-release |
   sed -e 's/VERSION_ID="//g' |
@@ -321,7 +321,7 @@ pecl channel-update pecl.php.net
 ### Install MCrypt
 php -m | grep -E "^mcrypt"
 if (($? >= 1)); then
-  printf "\n" | pecl install mcrypt-1.0.1
+  printf "\n" | pecl install mcrypt-1.0.4
   if (($? >= 1)); then
     echo_with_color red "\nMcrypt extension installation error." >&5
     exit 1
@@ -597,7 +597,7 @@ fi
 ### INSTALL PCS
 php -m | grep -E "^pcs"
 if (($? >= 1)); then
-  pecl install pcs-1.3.3
+  pecl install pcs-1.3.7
   if (($? >= 1)); then
     echo_with_color red "\npcs extension installation error.." >&5
     exit 1
@@ -618,12 +618,12 @@ if (($? >= 1)); then
     dpkg -i /tmp/couchbase-release-1.0-4-amd64.deb
 
   elif ((CURRENT_OS == 9 || CURRENT_OS == 10)); then
-    wget -O - http://packages.couchbase.com/ubuntu/couchbase.key | apt-key add -
-    echo "deb http://packages.couchbase.com/ubuntu bionic bionic/main" >/etc/apt/sources.list.d/couchbase.list
+    wget -O - https://packages.couchbase.com/clients/c/repos/deb/couchbase.key | apt-key add -
+    echo "deb https://packages.couchbase.com/clients/c/repos/deb/ubuntu1804 bionic bionic/main" >/etc/apt/sources.list.d/couchbase.list
   fi
 
   apt-get update
-  apt install -y libcouchbase-dev build-essential zlib1g-dev
+  apt install -y libcouchbase3 libcouchbase-dev libcouchbase3-tools libcouchbase-dbg libcouchbase3-libev libcouchbase3-libevent zlib1g-dev
   pecl install couchbase
   if (($? >= 1)); then
     echo_with_color red "\ncouchbase extension installation error." >&5
@@ -636,6 +636,50 @@ if (($? >= 1)); then
     echo_with_color red "\nCould not install couchbase extension." >&5
   fi
   rm /etc/apt/sources.list.d/couchbase.list
+fi
+
+### INSTALL Snowlake
+ls /etc/php/${PHP_VERSION_INDEX}/fpm/conf.d | grep "snowflake"
+if (($? >= 1)); then
+  apt-get update
+  apt-get install -y --no-install-recommends --allow-unauthenticated gcc cmake ${PHP_VERSION}-pdo ${PHP_VERSION}-json ${PHP_VERSION}-dev
+  git clone https://github.com/snowflakedb/pdo_snowflake.git /src/snowflake
+  cd /src/snowflake
+  export PHP_HOME=/usr
+  /src/snowflake/scripts/build_pdo_snowflake.sh
+  SNOWFLAKE_BUILD=$($PHP_HOME/bin/php -dextension=modules/pdo_snowflake.so -m | grep pdo_snowflake)
+  if ((SNOWFLAKE_BUILD == 'pdo_snowflake')); then
+    export PHP_HOME=/usr
+    PHP_EXTENSION_DIR=$($PHP_HOME/bin/php -i | grep '^extension_dir' | sed 's/.*=>\(.*\).*/\1/')
+    cp /src/snowflake/modules/pdo_snowflake.so $PHP_EXTENSION_DIR
+    cp /src/snowflake/libsnowflakeclient/cacert.pem /etc/php/${PHP_VERSION_INDEX}/fpm/conf.d
+    if (($? >= 1)); then
+      echo_with_color red "\npdo_snowflake driver installation error." >&5
+      exit 1
+    fi
+    echo -e "extension=pdo_snowflake.so\n\npdo_snowflake.cacert=/etc/php/${PHP_VERSION_INDEX}/fpm/conf.d/cacert.pem" > /etc/php/${PHP_VERSION_INDEX}/fpm/conf.d/20-pdo_snowflake.ini
+  else
+    echo_with_color red "\nCould not build pdo_snowflake driver." >&5
+    exit 1
+  fi
+fi
+
+### INSTALL Hive ODBC Driver
+php -m | grep -E "^odbc"
+if (($? >= 1)); then
+  apt-get update
+  apt-get install -y --no-install-recommends --allow-unauthenticated ${PHP_VERSION}-odbc
+  mkdir /opt/hive
+  cd /opt/hive
+  curl --fail -O https://odbc-drivers.s3.amazonaws.com/apache-hive/maprhiveodbc_2.6.1.1001-2_amd64.deb
+  dpkg -i maprhiveodbc_2.6.1.1001-2_amd64.deb
+  test -f /opt/mapr/hiveodbc/lib/64/libmaprhiveodbc64.so
+  rm maprhiveodbc_2.6.1.1001-2_amd64.deb
+  export HIVE_SERVER_ODBC_DRIVER_PATH=/opt/mapr/hiveodbc/lib/64/libmaprhiveodbc64.so
+  HIVE_ODBC_INSTALLED = $(php -m | grep -E "^odbc")
+  if ((HIVE_ODBC_INSTALLED != "odbc")); then
+    echo_with_color red "\nCould not build hive odbc driver." >&5
+  fi
 fi
 
 if [[ $APACHE == TRUE ]]; then
