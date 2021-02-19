@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "501c205029d9d50d9dc9807cd6093744",
+    "content-hash": "281a2edd4f80467ac415368dbbdaf79d",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2472,20 +2472,21 @@
         },
         {
             "name": "dreamfactory/df-oauth",
-            "version": "0.15.2",
+            "version": "0.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-oauth.git",
-                "reference": "bf7e35fbaae5d6185bf5ab7fd34e5207d78cdab5"
+                "reference": "b402d854c99e3bb535b7870a9a3bfdd70ac50251"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-oauth/zipball/bf7e35fbaae5d6185bf5ab7fd34e5207d78cdab5",
-                "reference": "bf7e35fbaae5d6185bf5ab7fd34e5207d78cdab5",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-oauth/zipball/b402d854c99e3bb535b7870a9a3bfdd70ac50251",
+                "reference": "b402d854c99e3bb535b7870a9a3bfdd70ac50251",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "~0.21",
+                "dreamfactory/df-core": "~0.22",
+                "ext-json": "*",
                 "laravel/socialite": "~2.0|~4.2",
                 "socialiteproviders/microsoft-live": "^2.0|^3.0",
                 "socialiteproviders/twitter": "^2.0|^3.0"
@@ -2534,7 +2535,7 @@
                 "source": "https://github.com/dreamfactorysoftware/df-oauth",
                 "wiki": "https://wiki.dreamfactory.com"
             },
-            "time": "2020-05-15T13:18:52+00:00"
+            "time": "2021-01-26T15:53:15+00:00"
         },
         {
             "name": "dreamfactory/df-rackspace",
