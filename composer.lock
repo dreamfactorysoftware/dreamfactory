@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "501c205029d9d50d9dc9807cd6093744",
+    "content-hash": "51356387f528c529a36c89f37c62e017",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -468,16 +468,16 @@
         },
         {
             "name": "doctrine/annotations",
-            "version": "1.11.1",
+            "version": "1.12.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/annotations.git",
-                "reference": "ce77a7ba1770462cd705a91a151b6c3746f9c6ad"
+                "reference": "b17c5014ef81d212ac539f07a1001832df1b6d3b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/annotations/zipball/ce77a7ba1770462cd705a91a151b6c3746f9c6ad",
-                "reference": "ce77a7ba1770462cd705a91a151b6c3746f9c6ad",
+                "url": "https://api.github.com/repos/doctrine/annotations/zipball/b17c5014ef81d212ac539f07a1001832df1b6d3b",
+                "reference": "b17c5014ef81d212ac539f07a1001832df1b6d3b",
                 "shasum": ""
             },
             "require": {
@@ -492,11 +492,6 @@
                 "phpunit/phpunit": "^7.5 || ^9.1.5"
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.11.x-dev"
-                }
-            },
             "autoload": {
                 "psr-4": {
                     "Doctrine\\Common\\Annotations\\": "lib/Doctrine/Common/Annotations"
@@ -537,9 +532,9 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/annotations/issues",
-                "source": "https://github.com/doctrine/annotations/tree/1.11.1"
+                "source": "https://github.com/doctrine/annotations/tree/1.12.1"
             },
-            "time": "2020-10-26T10:28:16+00:00"
+            "time": "2021-02-21T21:00:45+00:00"
         },
         {
             "name": "doctrine/cache",
@@ -1656,16 +1651,16 @@
         },
         {
             "name": "dreamfactory/df-core",
-            "version": "0.22.2",
+            "version": "0.22.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-core.git",
-                "reference": "04146c5ff5cec54e84bc743b94e66b3b962e6420"
+                "reference": "eff264147c29f25a53f34c3e113544a4f36208e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/04146c5ff5cec54e84bc743b94e66b3b962e6420",
-                "reference": "04146c5ff5cec54e84bc743b94e66b3b962e6420",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/eff264147c29f25a53f34c3e113544a4f36208e9",
+                "reference": "eff264147c29f25a53f34c3e113544a4f36208e9",
                 "shasum": ""
             },
             "require": {
@@ -1731,7 +1726,7 @@
                 "source": "https://github.com/dreamfactorysoftware/df-core",
                 "wiki": "https://wiki.dreamfactory.com"
             },
-            "time": "2021-02-19T09:22:41+00:00"
+            "time": "2021-03-01T14:57:02+00:00"
         },
         {
             "name": "dreamfactory/df-couchbase",
