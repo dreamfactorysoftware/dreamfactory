@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "501c205029d9d50d9dc9807cd6093744",
+    "content-hash": "b55b7aa3684fd335f598ab29f6dd3320",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -64,16 +64,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.173.12",
+            "version": "3.173.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "4913ae66a988ffb3313bc138e8bd16273b68c8eb"
+                "reference": "0ac9f1d2778034a2ef0a2bb8e098818d7b1a76e8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/4913ae66a988ffb3313bc138e8bd16273b68c8eb",
-                "reference": "4913ae66a988ffb3313bc138e8bd16273b68c8eb",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/0ac9f1d2778034a2ef0a2bb8e098818d7b1a76e8",
+                "reference": "0ac9f1d2778034a2ef0a2bb8e098818d7b1a76e8",
                 "shasum": ""
             },
             "require": {
@@ -148,9 +148,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.173.12"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.173.18"
             },
-            "time": "2021-02-18T19:20:31+00:00"
+            "time": "2021-02-26T19:12:35+00:00"
         },
         {
             "name": "barryvdh/laravel-cors",
@@ -468,16 +468,16 @@
         },
         {
             "name": "doctrine/annotations",
-            "version": "1.11.1",
+            "version": "1.12.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/annotations.git",
-                "reference": "ce77a7ba1770462cd705a91a151b6c3746f9c6ad"
+                "reference": "b17c5014ef81d212ac539f07a1001832df1b6d3b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/annotations/zipball/ce77a7ba1770462cd705a91a151b6c3746f9c6ad",
-                "reference": "ce77a7ba1770462cd705a91a151b6c3746f9c6ad",
+                "url": "https://api.github.com/repos/doctrine/annotations/zipball/b17c5014ef81d212ac539f07a1001832df1b6d3b",
+                "reference": "b17c5014ef81d212ac539f07a1001832df1b6d3b",
                 "shasum": ""
             },
             "require": {
@@ -492,11 +492,6 @@
                 "phpunit/phpunit": "^7.5 || ^9.1.5"
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.11.x-dev"
-                }
-            },
             "autoload": {
                 "psr-4": {
                     "Doctrine\\Common\\Annotations\\": "lib/Doctrine/Common/Annotations"
@@ -537,9 +532,9 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/annotations/issues",
-                "source": "https://github.com/doctrine/annotations/tree/1.11.1"
+                "source": "https://github.com/doctrine/annotations/tree/1.12.1"
             },
-            "time": "2020-10-26T10:28:16+00:00"
+            "time": "2021-02-21T21:00:45+00:00"
         },
         {
             "name": "doctrine/cache",
@@ -1656,16 +1651,16 @@
         },
         {
             "name": "dreamfactory/df-core",
-            "version": "0.22.2",
+            "version": "0.22.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-core.git",
-                "reference": "04146c5ff5cec54e84bc743b94e66b3b962e6420"
+                "reference": "eff264147c29f25a53f34c3e113544a4f36208e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/04146c5ff5cec54e84bc743b94e66b3b962e6420",
-                "reference": "04146c5ff5cec54e84bc743b94e66b3b962e6420",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/eff264147c29f25a53f34c3e113544a4f36208e9",
+                "reference": "eff264147c29f25a53f34c3e113544a4f36208e9",
                 "shasum": ""
             },
             "require": {
@@ -1731,7 +1726,7 @@
                 "source": "https://github.com/dreamfactorysoftware/df-core",
                 "wiki": "https://wiki.dreamfactory.com"
             },
-            "time": "2021-02-19T09:22:41+00:00"
+            "time": "2021-03-01T14:57:02+00:00"
         },
         {
             "name": "dreamfactory/df-couchbase",
@@ -2472,20 +2467,21 @@
         },
         {
             "name": "dreamfactory/df-oauth",
-            "version": "0.15.2",
+            "version": "0.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-oauth.git",
-                "reference": "bf7e35fbaae5d6185bf5ab7fd34e5207d78cdab5"
+                "reference": "b402d854c99e3bb535b7870a9a3bfdd70ac50251"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-oauth/zipball/bf7e35fbaae5d6185bf5ab7fd34e5207d78cdab5",
-                "reference": "bf7e35fbaae5d6185bf5ab7fd34e5207d78cdab5",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-oauth/zipball/b402d854c99e3bb535b7870a9a3bfdd70ac50251",
+                "reference": "b402d854c99e3bb535b7870a9a3bfdd70ac50251",
                 "shasum": ""
             },
             "require": {
-                "dreamfactory/df-core": "~0.21",
+                "dreamfactory/df-core": "~0.22",
+                "ext-json": "*",
                 "laravel/socialite": "~2.0|~4.2",
                 "socialiteproviders/microsoft-live": "^2.0|^3.0",
                 "socialiteproviders/twitter": "^2.0|^3.0"
@@ -2534,7 +2530,7 @@
                 "source": "https://github.com/dreamfactorysoftware/df-oauth",
                 "wiki": "https://wiki.dreamfactory.com"
             },
-            "time": "2020-05-15T13:18:52+00:00"
+            "time": "2021-01-26T15:53:15+00:00"
         },
         {
             "name": "dreamfactory/df-rackspace",
@@ -2737,16 +2733,16 @@
         },
         {
             "name": "dreamfactory/df-system",
-            "version": "0.4.3",
+            "version": "0.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-system.git",
-                "reference": "1e3fd928b8de5b85b14855052c6e017aa3bdc878"
+                "reference": "8edc9d45b6172b75f9028aeeb98f3f56f677a6e1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-system/zipball/1e3fd928b8de5b85b14855052c6e017aa3bdc878",
-                "reference": "1e3fd928b8de5b85b14855052c6e017aa3bdc878",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-system/zipball/8edc9d45b6172b75f9028aeeb98f3f56f677a6e1",
+                "reference": "8edc9d45b6172b75f9028aeeb98f3f56f677a6e1",
                 "shasum": ""
             },
             "require": {
@@ -2798,7 +2794,7 @@
                 "source": "https://github.com/dreamfactorysoftware/df-system",
                 "wiki": "https://wiki.dreamfactory.com"
             },
-            "time": "2020-06-16T13:27:52+00:00"
+            "time": "2021-03-01T14:46:19+00:00"
         },
         {
             "name": "dreamfactory/df-user",
@@ -3723,16 +3719,16 @@
         },
         {
             "name": "jenssegers/mongodb",
-            "version": "v3.6.7",
+            "version": "v3.6.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jenssegers/laravel-mongodb.git",
-                "reference": "61302caffb864e356d7998ff1af1ae0e5b5f6a8f"
+                "reference": "07c03110ed208720028f87c83e8c1fafca5d82d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jenssegers/laravel-mongodb/zipball/61302caffb864e356d7998ff1af1ae0e5b5f6a8f",
-                "reference": "61302caffb864e356d7998ff1af1ae0e5b5f6a8f",
+                "url": "https://api.github.com/repos/jenssegers/laravel-mongodb/zipball/07c03110ed208720028f87c83e8c1fafca5d82d9",
+                "reference": "07c03110ed208720028f87c83e8c1fafca5d82d9",
                 "shasum": ""
             },
             "require": {
@@ -3791,7 +3787,7 @@
             ],
             "support": {
                 "issues": "https://github.com/jenssegers/laravel-mongodb/issues",
-                "source": "https://github.com/jenssegers/laravel-mongodb/tree/v3.6.7"
+                "source": "https://github.com/jenssegers/laravel-mongodb/tree/v3.6.8"
             },
             "funding": [
                 {
@@ -3803,7 +3799,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-12-18T00:06:27+00:00"
+            "time": "2021-02-20T00:11:23+00:00"
         },
         {
             "name": "knplabs/github-api",
@@ -10823,16 +10819,16 @@
         },
         {
             "name": "composer/composer",
-            "version": "2.0.9",
+            "version": "2.0.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "591c2c155cac0d2d7f34af41d3b1e29bcbfc685e"
+                "reference": "a5a5632da0b1c2d6fa9a3b65f1f4e90d1f04abb9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/591c2c155cac0d2d7f34af41d3b1e29bcbfc685e",
-                "reference": "591c2c155cac0d2d7f34af41d3b1e29bcbfc685e",
+                "url": "https://api.github.com/repos/composer/composer/zipball/a5a5632da0b1c2d6fa9a3b65f1f4e90d1f04abb9",
+                "reference": "a5a5632da0b1c2d6fa9a3b65f1f4e90d1f04abb9",
                 "shasum": ""
             },
             "require": {
@@ -10900,7 +10896,7 @@
             "support": {
                 "irc": "irc://irc.freenode.org/composer",
                 "issues": "https://github.com/composer/composer/issues",
-                "source": "https://github.com/composer/composer/tree/2.0.9"
+                "source": "https://github.com/composer/composer/tree/2.0.11"
             },
             "funding": [
                 {
@@ -10916,7 +10912,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-01-27T15:09:27+00:00"
+            "time": "2021-02-24T13:57:23+00:00"
         },
         {
             "name": "composer/semver",
@@ -11277,16 +11273,16 @@
         },
         {
             "name": "facade/ignition",
-            "version": "1.16.4",
+            "version": "1.16.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/facade/ignition.git",
-                "reference": "1da1705e7f6b24ed45af05461463228da424e14f"
+                "reference": "b6aea4a99303d9d32afd486a285162a89af8a8a3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/facade/ignition/zipball/1da1705e7f6b24ed45af05461463228da424e14f",
-                "reference": "1da1705e7f6b24ed45af05461463228da424e14f",
+                "url": "https://api.github.com/repos/facade/ignition/zipball/b6aea4a99303d9d32afd486a285162a89af8a8a3",
+                "reference": "b6aea4a99303d9d32afd486a285162a89af8a8a3",
                 "shasum": ""
             },
             "require": {
@@ -11349,7 +11345,7 @@
                 "issues": "https://github.com/facade/ignition/issues",
                 "source": "https://github.com/facade/ignition"
             },
-            "time": "2020-10-30T13:40:01+00:00"
+            "time": "2021-02-15T10:21:49+00:00"
         },
         {
             "name": "facade/ignition-contracts",
@@ -11818,16 +11814,16 @@
         },
         {
             "name": "mockery/mockery",
-            "version": "1.3.3",
+            "version": "1.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mockery/mockery.git",
-                "reference": "60fa2f67f6e4d3634bb4a45ff3171fa52215800d"
+                "reference": "31467aeb3ca3188158613322d66df81cedd86626"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mockery/mockery/zipball/60fa2f67f6e4d3634bb4a45ff3171fa52215800d",
-                "reference": "60fa2f67f6e4d3634bb4a45ff3171fa52215800d",
+                "url": "https://api.github.com/repos/mockery/mockery/zipball/31467aeb3ca3188158613322d66df81cedd86626",
+                "reference": "31467aeb3ca3188158613322d66df81cedd86626",
                 "shasum": ""
             },
             "require": {
@@ -11881,9 +11877,9 @@
             ],
             "support": {
                 "issues": "https://github.com/mockery/mockery/issues",
-                "source": "https://github.com/mockery/mockery/tree/1.3.3"
+                "source": "https://github.com/mockery/mockery/tree/1.3.4"
             },
-            "time": "2020-08-11T18:10:21+00:00"
+            "time": "2021-02-24T09:51:00+00:00"
         },
         {
             "name": "myclabs/deep-copy",
