@@ -28,7 +28,7 @@ while [[ -n $1 ]]; do
     ;;
   --with-tag)
     DREAMFACTORY_VERSION_TAG="$2"
-    shift;
+    shift
     ;;
   --debug) DEBUG=TRUE ;;
   --help) HELP=TRUE ;;
@@ -618,28 +618,55 @@ if (($? >= 1)); then
 fi
 
 ### INSTALL Snowlake
-ls /etc/php/${PHP_VERSION_INDEX}/fpm/conf.d | grep "snowflake"
-if (($? >= 1)); then
-  apt-get update
-  apt-get install -y --no-install-recommends --allow-unauthenticated gcc cmake ${PHP_VERSION}-pdo ${PHP_VERSION}-json ${PHP_VERSION}-dev
-  git clone https://github.com/snowflakedb/pdo_snowflake.git /src/snowflake
-  cd /src/snowflake
-  export PHP_HOME=/usr
-  /src/snowflake/scripts/build_pdo_snowflake.sh
-  SNOWFLAKE_BUILD=$($PHP_HOME/bin/php -dextension=modules/pdo_snowflake.so -m | grep pdo_snowflake)
-  if ((SNOWFLAKE_BUILD == 'pdo_snowflake')); then
+if [[ $APACHE == TRUE ]]; then ### Only with key --apache
+  ls /etc/php/${PHP_VERSION_INDEX}/apache2/conf.d | grep "snowflake"
+  if (($? >= 1)); then
+    apt-get update
+    apt-get install -y --no-install-recommends --allow-unauthenticated gcc cmake ${PHP_VERSION}-pdo ${PHP_VERSION}-json ${PHP_VERSION}-dev
+    git clone https://github.com/snowflakedb/pdo_snowflake.git /src/snowflake
+    cd /src/snowflake
     export PHP_HOME=/usr
-    PHP_EXTENSION_DIR=$($PHP_HOME/bin/php -i | grep '^extension_dir' | sed 's/.*=>\(.*\).*/\1/')
-    cp /src/snowflake/modules/pdo_snowflake.so $PHP_EXTENSION_DIR
-    cp /src/snowflake/libsnowflakeclient/cacert.pem /etc/php/${PHP_VERSION_INDEX}/fpm/conf.d
-    if (($? >= 1)); then
-      echo_with_color red "\npdo_snowflake driver installation error." >&5
+    /src/snowflake/scripts/build_pdo_snowflake.sh
+    SNOWFLAKE_BUILD=$($PHP_HOME/bin/php -dextension=modules/pdo_snowflake.so -m | grep pdo_snowflake)
+    if ((SNOWFLAKE_BUILD == 'pdo_snowflake')); then
+      export PHP_HOME=/usr
+      PHP_EXTENSION_DIR=$($PHP_HOME/bin/php -i | grep '^extension_dir' | sed 's/.*=>\(.*\).*/\1/')
+      cp /src/snowflake/modules/pdo_snowflake.so $PHP_EXTENSION_DIR
+      cp /src/snowflake/libsnowflakeclient/cacert.pem /etc/php/${PHP_VERSION_INDEX}/apache2/conf.d
+      if (($? >= 1)); then
+        echo_with_color red "\npdo_snowflake driver installation error." >&5
+        exit 1
+      fi
+      echo -e "extension=pdo_snowflake.so\n\npdo_snowflake.cacert=/etc/php/${PHP_VERSION_INDEX}/apache2/conf.d/cacert.pem" >/etc/php/${PHP_VERSION_INDEX}/apache2/conf.d/20-pdo_snowflake.ini
+    else
+      echo_with_color red "\nCould not build pdo_snowflake driver." >&5
       exit 1
     fi
-    echo -e "extension=pdo_snowflake.so\n\npdo_snowflake.cacert=/etc/php/${PHP_VERSION_INDEX}/fpm/conf.d/cacert.pem" > /etc/php/${PHP_VERSION_INDEX}/fpm/conf.d/20-pdo_snowflake.ini
-  else
-    echo_with_color red "\nCould not build pdo_snowflake driver." >&5
-    exit 1
+  fi
+else
+  ls /etc/php/${PHP_VERSION_INDEX}/fpm/conf.d | grep "snowflake"
+  if (($? >= 1)); then
+    apt-get update
+    apt-get install -y --no-install-recommends --allow-unauthenticated gcc cmake ${PHP_VERSION}-pdo ${PHP_VERSION}-json ${PHP_VERSION}-dev
+    git clone https://github.com/snowflakedb/pdo_snowflake.git /src/snowflake
+    cd /src/snowflake
+    export PHP_HOME=/usr
+    /src/snowflake/scripts/build_pdo_snowflake.sh
+    SNOWFLAKE_BUILD=$($PHP_HOME/bin/php -dextension=modules/pdo_snowflake.so -m | grep pdo_snowflake)
+    if ((SNOWFLAKE_BUILD == 'pdo_snowflake')); then
+      export PHP_HOME=/usr
+      PHP_EXTENSION_DIR=$($PHP_HOME/bin/php -i | grep '^extension_dir' | sed 's/.*=>\(.*\).*/\1/')
+      cp /src/snowflake/modules/pdo_snowflake.so $PHP_EXTENSION_DIR
+      cp /src/snowflake/libsnowflakeclient/cacert.pem /etc/php/${PHP_VERSION_INDEX}/fpm/conf.d
+      if (($? >= 1)); then
+        echo_with_color red "\npdo_snowflake driver installation error." >&5
+        exit 1
+      fi
+      echo -e "extension=pdo_snowflake.so\n\npdo_snowflake.cacert=/etc/php/${PHP_VERSION_INDEX}/fpm/conf.d/cacert.pem" >/etc/php/${PHP_VERSION_INDEX}/fpm/conf.d/20-pdo_snowflake.ini
+    else
+      echo_with_color red "\nCould not build pdo_snowflake driver." >&5
+      exit 1
+    fi
   fi
 fi
 
