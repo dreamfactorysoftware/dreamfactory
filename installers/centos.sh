@@ -26,7 +26,7 @@ while [[ -n $1 ]]; do
     ;;
   --with-tag)
     DREAMFACTORY_VERSION_TAG="$2"
-    shift;
+    shift
     ;;
   --debug) DEBUG=TRUE ;;
   --help) HELP=TRUE ;;
@@ -580,7 +580,7 @@ if (($? >= 1)); then
 fi
 
 ### INSTALL Snowlake
-ls /etc/php/7.4/fpm/conf.d | grep "snowflake"
+ls /etc/php.d | grep "snowflake"
 if (($? >= 1)); then
   yum update
   yum install -y gcc cmake php-pdo php-json php-dev
@@ -598,7 +598,7 @@ if (($? >= 1)); then
       echo_with_color red "\npdo_snowflake driver installation error." >&5
       exit 1
     fi
-    echo -e "extension=pdo_snowflake.so\n\npdo_snowflake.cacert=/etc/php.d/cacert.pem" > /etc/php.d/20-pdo_snowflake.ini
+    echo -e "extension=pdo_snowflake.so\n\npdo_snowflake.cacert=/etc/php.d/cacert.pem" >/etc/php.d/20-pdo_snowflake.ini
   else
     echo_with_color red "\nCould not build pdo_snowflake driver." >&5
     exit 1
@@ -653,8 +653,8 @@ if [[ $MYSQL == TRUE ]]; then ### Only with key --with-mysql
   ps aux | grep -v grep | grep -E "^mysql"
   CHECK_MYSQL_PROCESS=$?
 
-	lsof -i :3306 | grep LISTEN
-	CHECK_MYSQL_PORT=$?
+  lsof -i :3306 | grep LISTEN
+  CHECK_MYSQL_PORT=$?
 
   if ((CHECK_MYSQL_PROCESS == 0)) || ((CHECK_MYSQL_INSTALLATION == 0)) || ((CHECK_MYSQL_PORT == 0)); then
     echo_with_color red "MySQL Database detected in the system. Skipping installation. \n" >&5
