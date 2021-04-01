@@ -11,6 +11,10 @@
   <meta name="author" content="DreamFactory Software, Inc.">
   <meta name="language" content="en" />
   <link rel="shortcut icon" href="/img/favicon.png" />
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Open+Sans:wght@300;400;700&display=swap" rel="stylesheet">
 
   <!-- Bootstrap 3 CSS -->
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
@@ -26,7 +30,7 @@
 
 <body>
 
-  <div id="page-content" class="firstUser">
+  <div id="page-content" class="first-user">
     <div class="container-fluid container-inner">
       <div id="error-container">
         @if (count($errors) > 0)
@@ -64,7 +68,7 @@
                 placeholder="{{ $email_placeholder }}" value="{{ $email }}" required />
             </div>
             <div class="form-group required">
-              <label for="phone">Company Name</label>
+              <label for="phone">Phone Number</label>
               <input tabindex=1" class="form-control phone" autofocus type="tel" id="phone" name="phone"
                 placeholder="Phone" value="{{ $phone  }}" required />
             </div>
@@ -92,12 +96,6 @@
               <label for="displayName">Display Name</label>
               <input tabindex="6" class="form-control" type="text" id="displayName" name="name"
                 placeholder="Display Name" value="{{ $name }}" />
-            </div>
-            <div class="custom-control custom-checkbox">
-              <input tabindex="7" class="custom-control-input" type="checkbox" id="gdpr" name="gdpr" />
-
-              <label for="gdpr" class="custom-control-label">I consent to receiving occasional marketing messages from
-                DreamFactory</label>
             </div>
 
             <div class="form-buttons">

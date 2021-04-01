@@ -1,18 +1,16 @@
-@import url(//fonts.googleapis.com/css?family=Lato:300,400,700,900|Open+Sans|Roboto|Droid+Sans);
-
 html, body {
-	height: 100%;
+  height: 100%;
 }
 
 body {
-	min-height:       100%;
-	height:           auto;
-	font-family:      'Lato', 'Open Sans', 'Helvetica Neue Light', 'Arial', sans-serif;
+  min-height:       100%;
+  height:           auto;
+  font-family:      'Lato', 'Open Sans', 'Helvetica Neue Light', 'Arial', sans-serif;
   font-weight:      300;
   font-size:        16px;
-	color:            #1d3d56;
-	padding:          0;
-	margin:           0;
+  color:            #1d3d56;
+  padding:          0;
+  margin:           0;
   background-color: #fff;
   background-image: linear-gradient(119deg, #f1f2ff, #f0f4ff);
   display: flex;
@@ -81,7 +79,6 @@ label {
   border: none;
   border-radius: 10px;
   padding: 30px 40px;
-
 }
 
 #error-container > .alert strong {
@@ -96,10 +93,10 @@ label {
 #footer {
   flex-shrink: 0;
   font-size:        14px;
-	bottom:           0;
-	right:            0;
-	left:             0;
-	/* Set the fixed height of the footer here */
+  bottom:           0;
+  right:            0;
+  left:             0;
+  /* Set the fixed height of the footer here */
   height:           38px;
   width:            100%;
   margin: 0 auto;
@@ -129,8 +126,6 @@ input.form-control {
   float: right;
   width: 340px;
   margin-bottom: 16px;
-  /* background: #f0f4ff; */
-  /* border: none; */
   box-shadow: none;
   height: 42px;
   padding: 10px 16px;
@@ -158,8 +153,8 @@ input.form-control {
 }
 
 input[type=file]:focus, input[type=radio]:focus, input[type=checkbox]:focus {
-    outline-offset: 0;
-    outline: 5px auto #5a6aff;
+  outline-offset: 0;
+  outline: 5px auto #5a6aff;
 }
 
 .btn:focus, .btn:active:focus, .btn.active:focus {
