@@ -93,12 +93,6 @@
               <input tabindex="6" class="form-control" type="text" id="displayName" name="name"
                 placeholder="Display Name" value="{{ $name }}" />
             </div>
-            <div class="custom-control custom-checkbox">
-              <input tabindex="7" class="custom-control-input" type="checkbox" id="gdpr" name="gdpr" />
-
-              <label for="gdpr" class="custom-control-label">I consent to receiving occasional marketing messages from
-                DreamFactory</label>
-            </div>
 
             <div class="form-buttons">
               <button type="submit" tabindex="7" class="btn btn-success">Create</button>
