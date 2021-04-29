@@ -1,0 +1,30 @@
+version: 2
+updates:
+- package-ecosystem: composer
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "11:00"
+  open-pull-requests-limit: 99
+  target-branch: master
+  labels:
+  - dependencies
+  - dependabot
+  versioning-strategy: increase
+  allow:
+  - dependency-name: dreamfactory/df*
+  ignore:
+  - dependency-name: dreamfactory/df-aws
+    versions:
+    - 0.16.2
+  - dependency-name: dreamfactory/df-core
+    versions:
+    - 0.22.2
+    - 0.22.3
+    - 0.23.0
+  - dependency-name: dreamfactory/df-admin-app
+    versions:
+    - 4.7.0
+  - dependency-name: dreamfactory/df-oauth
+    versions:
+    - 0.16.0
