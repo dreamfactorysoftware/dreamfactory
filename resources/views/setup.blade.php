@@ -11,6 +11,10 @@
     <meta name="language" content="en" />
     <link rel="shortcut icon" href="/img/favicon.png" />
 
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Open+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+
     <!-- Bootstrap 3 CSS -->
     <link rel="stylesheet"
           href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
