@@ -68,7 +68,7 @@
                 placeholder="{{ $email_placeholder }}" value="{{ $email }}" required />
             </div>
             <div class="form-group required">
-              <label for="phone">Company Name</label>
+              <label for="phone">Phone Number</label>
               <input tabindex=1" class="form-control phone" autofocus type="tel" id="phone" name="phone"
                 placeholder="Phone" value="{{ $phone  }}" required />
             </div>
