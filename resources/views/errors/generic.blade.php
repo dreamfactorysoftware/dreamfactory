@@ -22,7 +22,7 @@
     <!-- DSP UI Styles & Code -->
     <link rel="stylesheet" href="/css/df.main.css">
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 
