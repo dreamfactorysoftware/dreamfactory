@@ -11,7 +11,7 @@
   <meta name="author" content="DreamFactory Software, Inc.">
   <meta name="language" content="en" />
   <link rel="shortcut icon" href="/img/favicon.png" />
-  
+
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Open+Sans:wght@300;400;700&display=swap" rel="stylesheet">
@@ -25,7 +25,7 @@
   <!-- DSP UI Styles & Code -->
   <link rel="stylesheet" href="/css/df-create-first-user.css">
 
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body>
