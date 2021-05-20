@@ -9,7 +9,11 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="author" content="DreamFactory Software, Inc.">
     <meta name="language" content="en" />
-    <link rel="shortcut icon" href="/img/df-icon-256x256.png" />
+    <link rel="shortcut icon" href="/img/favicon.png" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Open+Sans:wght@300;400;700&display=swap" rel="stylesheet">
 
     <!-- Bootstrap 3 CSS -->
     <link rel="stylesheet"
@@ -20,41 +24,29 @@
           href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 
     <!-- DSP UI Styles & Code -->
-    <link rel="stylesheet" href="/css/df.main.css">
+    <link rel="stylesheet" href="/css/df-create-first-user.css">
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 </head>
 <body>
 
-<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container-fluid df-navbar">
-        <div class="navbar-header">
-            <div class="pull-left df-logo"><img src="/img/logo-navbar-194x42.png"></div>
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-nav">
-                <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span
-                        class="icon-bar"></span> <span class="icon-bar"></span>
-            </button>
-        </div>
-
-        <div id="navbar-container"></div>
-    </div>
-</div>
+<div class="df-logo"><img src="/img/df-logo.png" height="40px" width="263" alt="DreamFactory"></div>
 
 <div id="page-content">
     <div class="container-fluid container-inner">
-        <div class="alert center">
-            <div id="loadingFrame" class="alert center alert-warning" style="margin-top:40px; width: 500px">
-                <span style="font-size: 18pt;: center">Hello and Welcome to DreamFactory v{{$version}}!</span><br><br>
+        <div id="error-container">
+            <div id="loadingFrame" class="box-wrapper">
+                <h3>Hello and Welcome to DreamFactory v{{$version}}!</h3>
                 <div id="loadingMsg" style="display: none;">
                     You will be up and ready in just few seconds.
                     Please wait while we setup and configure your DreamFactory instance.
                     <br>
                     <br>
-                    <i>Please do not hit the back or refresh button while you wait here!</i>
+                    <b>Please do not hit the back or refresh button while you wait here!</b>
                     <br><hr>
                 </div>
             </div>
-            <div id="errorFrame" class="alert center alert-danger" style="margin-top:40px; width: 800px; display: none">
+            <div id="errorFrame" class="alert center alert-danger" style="display: none">
                 <span style="font-size: 14pt;">Installation failed. Please run the migration and seeder manually.</span><hr>
                 <div id="errorMsg"></div>
             </div>

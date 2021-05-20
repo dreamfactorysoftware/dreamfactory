@@ -1,0 +1,191 @@
+html, body {
+  height: 100%;
+}
+
+body {
+  min-height:       100%;
+  height:           auto;
+  font-family:      'Lato', 'Open Sans', 'Helvetica Neue Light', 'Arial', sans-serif;
+  font-weight:      300;
+  font-size:        16px;
+  color:            #1d3d56;
+  padding:          0;
+  margin:           0;
+  background-color: #fff;
+  background-image: linear-gradient(119deg, #f1f2ff, #f0f4ff);
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+}
+
+a {
+  color: #5b5bd9;
+}
+
+a:hover {
+  color: #0a0a75;
+}
+
+h2, h3 {
+  margin: 0 0 30px;
+  text-align: center;
+}
+
+label {
+  font-weight: normal;
+}
+
+.btn, .btn-success {
+  display: block;
+  font-size: 14px;
+  font-weight: 400;
+  color: #fff;
+  line-height: 1.14;
+  text-transform: uppercase;
+  padding: 12px 23px;
+  background-image: linear-gradient(102deg, #5a6aff, #789dff);
+  border-radius: 20px;
+  border: none;
+  width: 100%;
+}
+
+.btn-success:active {
+  background: #5a6aff;
+  background-image: none;
+}
+
+.box-wrapper {
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 40px;
+  margin-top: 40px;
+  margin-bottom: 80px;
+  box-shadow: 0 50px 30px -30px rgba(90, 106, 255, 0.15);
+}
+
+#error-container,
+.box-wrapper {
+  margin-left: auto;
+  margin-right: auto;
+  width: 620px;
+}
+
+#error-container {
+  padding: 0;
+  margin-bottom: 0;
+}
+
+#error-container > .alert {
+  border: none;
+  border-radius: 10px;
+  padding: 30px 40px;
+}
+
+#error-container > .alert strong {
+  display: block;
+  font-size: 18px;
+}
+
+#page-content {
+  flex: 1 0 auto;
+}
+
+#footer {
+  flex-shrink: 0;
+  font-size:        14px;
+  bottom:           0;
+  right:            0;
+  left:             0;
+  /* Set the fixed height of the footer here */
+  height:           38px;
+  width:            100%;
+  margin: 0 auto;
+}
+
+#footer p {
+  margin: 5px 0 0;
+}
+
+.form-control:focus {
+  box-shadow: 0 0 0 1px #5a6aff;
+  border-color: #5a6aff;
+}
+
+.df-logo {
+  margin: 40px auto 20px;
+}
+
+/* ----------------- */
+
+.form-group label {
+  float: left;
+  padding: 10px 0;
+}
+
+input.form-control {
+  float: right;
+  width: 340px;
+  margin-bottom: 16px;
+  box-shadow: none;
+  height: 42px;
+  padding: 10px 16px;
+}
+
+.form-group, .form-buttons, .custom-control {
+  clear: both;
+  margin: 0;
+}
+
+#formbox p {
+  margin-bottom: 30px;
+}
+
+.custom-checkbox {
+  padding: 20px 0 40px;
+}
+
+.custom-checkbox label {
+  font-weight: lighter;
+}
+
+.custom-checkbox input {
+  margin: 4px 10px 0 0;
+}
+
+input[type=file]:focus, input[type=radio]:focus, input[type=checkbox]:focus {
+  outline-offset: 0;
+  outline: 5px auto #5a6aff;
+}
+
+.btn:focus, .btn:active:focus, .btn.active:focus {
+  outline: none;
+  box-shadow: inset 0 0 3px rgba(10, 10, 117, 0.6), 0 0 0 1px #5a6aff;
+}
+
+.required {
+  position: relative;
+}
+
+.required::after {
+  content: "*";
+  color: #5a6aff;
+  font-weight: bold;
+  font-size: 20px;
+  display:inline;
+  position: absolute;
+  top: 2px;
+  right: 6px;
+}
+
+.required-fields-info {
+  float: right;
+  font-size: 14px;
+}
+
+.required-fields-info span{
+  color: #5a6aff;
+  font-weight: bold;
+  font-size: 20px;
+  float: left;
+  margin: 0 5px 0 0;
+}
