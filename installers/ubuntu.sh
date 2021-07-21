@@ -364,6 +364,8 @@ if (($? >= 1)); then
     curl https://packages.microsoft.com/config/ubuntu/16.04/prod.list >/etc/apt/sources.list.d/mssql-release.list
   elif ((CURRENT_OS == 18)); then
     curl https://packages.microsoft.com/config/ubuntu/18.04/prod.list >/etc/apt/sources.list.d/mssql-release.list
+  elif ((CURRENT_OS == 20)); then
+    curl https://packages.microsoft.com/config/ubuntu/20.04/prod.list >/etc/apt/sources.list.d/mssql-release.list
   else
     echo_with_color red " The script support only Ubuntu 16 and 18 versions. Exit.\n " >&5
     exit 1
@@ -602,6 +604,11 @@ if (($? >= 1)); then
     echo "deb https://packages.couchbase.com/clients/c/repos/deb/ubuntu1804 bionic bionic/main" >/etc/apt/sources.list.d/couchbase.list
   fi
 
+  elif ((CURRENT_OS == 20)); then
+    wget -O - https://packages.couchbase.com/clients/c/repos/deb/couchbase.key | apt-key add -
+    echo "deb https://packages.couchbase.com/clients/c/repos/deb/ubuntu2004 focal focal/main" >/etc/apt/sources.list.d/couchbase.list
+  fi
+
   apt-get update
   apt install -y libcouchbase3 libcouchbase-dev libcouchbase3-tools libcouchbase-dbg libcouchbase3-libev libcouchbase3-libevent zlib1g-dev
   pecl install couchbase
@@ -729,10 +736,12 @@ if [[ $MYSQL == TRUE ]]; then ### Only with key --with-mysql
     if ((CURRENT_OS == 16)); then
       apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
       add-apt-repository 'deb [arch=amd64,arm64,i386,ppc64el] http://mariadb.petarmaric.com/repo/10.3/ubuntu xenial main'
-
     elif ((CURRENT_OS == 18)); then
       apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
       add-apt-repository 'deb [arch=amd64,arm64,ppc64el] http://mariadb.petarmaric.com/repo/10.3/ubuntu bionic main'
+    elif ((CURRENT_OS == 20)); then
+      apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
+      add-apt-repository 'deb [arch=amd64] http://mariadb.petarmaric.com/repo/10.3/ubuntu bionic main'
     else
       echo_with_color red " The script support only Ubuntu 16 and 18 versions. Exit.\n " >&5
       exit 1
