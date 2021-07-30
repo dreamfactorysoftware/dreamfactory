@@ -2,7 +2,7 @@
 
 This directory contains automated installer scripts for the following operating systems:
 
-* CentOS
+* CentOS / RHEL 7/8 (8 is currently in Beta)
 * Debian 8/9
 * Fedora
 * Ubuntu 16/18
@@ -134,4 +134,3 @@ For more detailed information about the installation process and errors, you can
 
     $ sudo ./ubuntu.sh --debug
     $ su -c "./debian.sh --debug"
-

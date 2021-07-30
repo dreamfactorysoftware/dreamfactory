@@ -100,16 +100,32 @@ fi
 
 ### STEP 1. Install system dependencies
 echo_with_color green "Step 1: Installing system dependencies...\n" >&5
-yum update -y
-yum install -y git \
-  curl \
-  zip \
-  unzip \
-  ca-certificates \
-  lsof \
-  readline-devel \
-  libzip-devel \
-  wget
+if ((CURRENT_OS == 7)); then
+  yum update -y
+  yum install -y git \
+    curl \
+    zip \
+    unzip \
+    ca-certificates \
+    lsof \
+    readline-devel \
+    libzip-devel \
+    wget
+elif ((CURRENT_OS == 8)); then
+  dnf update -y
+  dnf install -y git \
+    curl \
+    zip \
+    unzip \
+    ca-certificates \
+    lsof \
+    readline-devel \
+    libzip-devel \
+    wget
+else
+  echo_with_color red "The script support only CentOS(RedHat) versions 7 and 8. Exit.\n " >&5
+  exit 1
+fi
 
 # Check installation status
 if (($? >= 1)); then
@@ -126,31 +142,55 @@ echo_with_color green "Step 2: Installing PHP...\n" >&5
 if ((CURRENT_OS == 7)); then
   rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
   rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
+
+  yum-config-manager --enable remi-php74
+
+  #Install PHP
+  yum --enablerepo=remi-php74 install -y php-common \
+    php-xml \
+    php-cli \
+    php-curl \
+    php-json \
+    php-mysqlnd \
+    php-sqlite3 \
+    php-soap \
+    php-mbstring \
+    php-bcmath \
+    php-devel \
+    php-ldap \
+    php-pgsql \
+    php-interbase \
+    php-pdo-dblib \
+    php-gd \
+    php-zip
 else
-  echo_with_color red "The script support only CentOS(RedHat) 7 versions. Exit.\n " >&5
-  exit 1
+  # RHEL 8
+  rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+  rpm -Uvh http://rpms.remirepo.net/enterprise/remi-release-8.rpm
+
+  dnf module list -y
+  dnf module reset php -y
+  dnf module enable php:remi-7.4 -y
+
+  #Install PHP
+  dnf install -y php-common \
+    php-xml \
+    php-cli \
+    php-curl \
+    php-json \
+    php-mysqlnd \
+    php-sqlite3 \
+    php-soap \
+    php-mbstring \
+    php-bcmath \
+    php-devel \
+    php-ldap \
+    php-pgsql \
+    php-pdo-firebird \
+    php-pdo-dblib \
+    php-gd \
+    php-zip
 fi
-
-yum-config-manager --enable remi-php74
-
-#Install PHP
-yum --enablerepo=remi-php74 install -y php-common \
-  php-xml \
-  php-cli \
-  php-curl \
-  php-json \
-  php-mysqlnd \
-  php-sqlite3 \
-  php-soap \
-  php-mbstring \
-  php-bcmath \
-  php-devel \
-  php-ldap \
-  php-pgsql \
-  php-interbase \
-  php-pdo-dblib \
-  php-gd \
-  php-zip
 
 if (($? >= 1)); then
   echo_with_color red "\n${ERROR_STRING}" >&5
@@ -234,7 +274,12 @@ else
       echo_with_color red "Port 80 taken.\n " >&5
       echo_with_color red "Skipping Nginx installation. Install Nginx manually.\n " >&5
     else
-      yum --enablerepo=remi-php74 install -y php-fpm nginx
+      if ((CURRENT_OS == 7)); then
+        yum --enablerepo=remi-php74 install -y php-fpm nginx
+      else
+        dnf install -y php-fpm nginx
+      fi
+
       if (($? >= 1)); then
         echo_with_color red "\nCould not install Nginx. Exiting." >&5
         exit 1
@@ -242,43 +287,50 @@ else
       # Change php fpm configuration file
       sed -i 's/\;cgi\.fix\_pathinfo\=1/cgi\.fix\_pathinfo\=0/' $(php -i | sed -n '/^Loaded Configuration File => /{s:^.*> ::;p;}')
       # Create nginx site entry
-      echo "
-server {
 
-  listen 80 default_server;
-  listen [::]:80 default_server ipv6only=on;
-  root /opt/dreamfactory/public;
-  index index.php index.html index.htm;
-  gzip on;
-  gzip_disable \"msie6\";
-  gzip_vary on;
-  gzip_proxied any;
-  gzip_comp_level 6;
-  gzip_buffers 16 8k;
-  gzip_http_version 1.1;
-  gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
-  location / {
+        echo "
+  server {
 
-    try_files \$uri \$uri/ /index.php?\$args;
-  }
+    listen 80 default_server;
+    listen [::]:80 default_server ipv6only=on;
+    root /opt/dreamfactory/public;
+    index index.php index.html index.htm;
+    gzip on;
+    gzip_disable \"msie6\";
+    gzip_vary on;
+    gzip_proxied any;
+    gzip_comp_level 6;
+    gzip_buffers 16 8k;
+    gzip_http_version 1.1;
+    gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+    location / {
 
-  error_page 404 /404.html;
-  error_page 500 502 503 504 /50x.html;
+      try_files \$uri \$uri/ /index.php?\$args;
+    }
 
-  location = /50x.html {
+    error_page 404 /404.html;
+    error_page 500 502 503 504 /50x.html;
 
-    root /usr/share/nginx/html;
-  }
-  location ~ \.php$ {
+    location = /50x.html {
 
-    try_files \$uri =404;
-    fastcgi_split_path_info ^(.+\.php)(/.+)$;
-    fastcgi_pass 127.0.0.1:9000;
-    fastcgi_index index.php;
-    fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
-    include fastcgi_params;
-  }
-}" >/etc/nginx/conf.d/dreamfactory.conf
+      root /usr/share/nginx/html;
+    }
+    location ~ \.php$ {
+
+      try_files \$uri rewrite ^ /index.php?\$query_string;
+      fastcgi_split_path_info ^(.+\.php)(/.+)$;
+      fastcgi_pass 127.0.0.1:9000;
+      fastcgi_index index.php;
+      fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
+      include fastcgi_params;
+    }
+  }" >/etc/nginx/conf.d/dreamfactory.conf
+
+      # RHEL8 php-fpm seems to default to a unix socket, rather than an ip (in RHEL7). As a result
+      # fastcgi_pass has been changed from 127.0.0.1 to unix:/var/run/php-fpm/www.sock for RHEL / CENTOS 8 installation.
+      if ((CURRENT_OS == 8)); then
+      sed -i "s,127.0.0.1:9000;,unix:/var/run/php-fpm/www.sock;," /etc/nginx/conf.d/dreamfactory.conf
+      fi
 
       #Need to remove default entry in nginx.conf
       grep default_server /etc/nginx/nginx.conf
@@ -296,8 +348,12 @@ fi
 
 ### Step 4. Configure PHP development tools
 echo_with_color green "Step 4: Configuring PHP Extensions...\n" >&5
+if ((CURRENT_OS == 7)); then
+  yum --enablerepo=remi-php74 install -y php-pear
+else
+  dnf install -y php-pear
+fi
 
-yum --enablerepo=remi-php74 install -y php-pear
 if (($? >= 1)); then
   echo_with_color red "\n${ERROR_STRING}" >&5
   exit 1
@@ -308,7 +364,12 @@ pecl channel-update pecl.php.net
 ### Install MCrypt
 php -m | grep -E "^mcrypt"
 if (($? >= 1)); then
-  yum --enablerepo=remi-php74 install -y libmcrypt-devel
+  if ((CURRENT_OS == 7)); then
+    yum --enablerepo=remi-php74 install -y libmcrypt-devel
+  else
+    dnf install -y libmcrypt-devel
+  fi
+
   printf "\n" | pecl install mcrypt-1.0.4
   if (($? >= 1)); then
     echo_with_color red "\nMcrypt extension installation error." >&5
@@ -515,12 +576,23 @@ if (($? >= 1)); then
 fi
 
 ### INSTALL PYTHON BUNCH
-yum install -y python python-pip
-pip list | grep bunch
-if (($? >= 1)); then
-  pip install bunch
+if ((CURRENT_OS == 7)); then
+  yum install -y python python-pip
+  pip list | grep bunch
   if (($? >= 1)); then
-    echo_with_color red "\nCould not install python bunch extension." >&5
+    pip install bunch
+    if (($? >= 1)); then
+      echo_with_color red "\nCould not install python bunch extension." >&5
+    fi
+  fi
+else
+  yum install -y python2 python2-pip
+  pip2 list | grep bunch
+  if (($? >= 1)); then
+    pip2 install bunch
+    if (($? >= 1)); then
+      echo_with_color red "\nCould not install python bunch extension." >&5
+    fi
   fi
 fi
 
@@ -564,10 +636,19 @@ fi
 ### INSTALL COUCHBASE
 php -m | grep -E "^couchbase"
 if (($? >= 1)); then
-  wget -P /tmp http://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-4-x86_64.rpm
-  rpm -i /tmp/couchbase-release-1.0-4-x86_64.rpm
-  yum install -y libcouchbase-devel
-  pecl install couchbase-3.1.2
+  if ((CURRENT_OS == 7)); then
+    wget -P /tmp http://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-4-x86_64.rpm
+    rpm -i /tmp/couchbase-release-1.0-4-x86_64.rpm
+    yum install -y libcouchbase-devel
+    pecl install couchbase-3.1.2
+  else
+    dnf update -y
+    wget -P /tmp http://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-x86_64.rpm
+    rpm -i /tmp/couchbase-release-1.0-x86_64.rpm
+    dnf install -y libcouchbase-devel
+    pecl install couchbase 
+  fi
+
   if (($? >= 1)); then
     echo_with_color red "\ncouchbase extension installation error." >&5
     exit 1
@@ -583,7 +664,7 @@ fi
 ls /etc/php.d | grep "snowflake"
 if (($? >= 1)); then
   yum update
-  yum install -y gcc cmake php-pdo php-json php-dev
+  yum install -y gcc cmake php-pdo php-json php-devel
   git clone https://github.com/snowflakedb/pdo_snowflake.git /src/snowflake
   cd /src/snowflake
   export PHP_HOME=/usr
@@ -921,7 +1002,7 @@ if [[ $LICENSE_INSTALLED == TRUE || $DF_CLEAN_INSTALLATION == FALSE ]]; then
   if [[ $LICENSE_INSTALLED == TRUE ]]; then
     grep DF_LICENSE_KEY .env >/dev/null 2>&1 # Check for existing key.
     if (($? == 0)); then
-      echo_with_color red "\nThe license key already installed. Are you want to install a new key? [Yy/Nn]"
+      echo_with_color red "\nThe license key already installed. Do you want to install a new key? [Yy/Nn]"
       read -r KEY_ANSWER
       if [[ -z $KEY_ANSWER ]]; then
         KEY_ANSWER=N
@@ -985,6 +1066,9 @@ grep -E "^#DF_NODEJS_PATH" .env >/dev/null
 if (($? == 0)); then
   sed -i "s,\#DF_NODEJS_PATH=/usr/local/bin/node,DF_NODEJS_PATH=$NODE_PATH," .env
 fi
+
+### Centos8 uses the python2 command instead of python. So we need to update our .env
+sed -i "s,\#DF_PYTHON_PATH=/usr/local/bin/python,DF_PYTHON_PATH=$(which python2)," .env
 
 sudo -u "$CURRENT_USER" bash -c "php artisan cache:clear -q"
 
