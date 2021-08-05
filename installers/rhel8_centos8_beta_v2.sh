@@ -685,6 +685,10 @@ if [[ $MYSQL == TRUE ]]; then ### Only with key --with-mysql
       echo_with_color red "\nCould not start MariaDB.. Exit " >&5
       exit 1
     fi
+    systemctl enable mariadb
+    if (($? >= 1)); then
+      echo_with_color red "\nWarning: Could not enable MariaDB to restart on boot" >&5
+    fi
     mysqladmin -u root -h localhost password "${DB_PASS}"
 
   fi
