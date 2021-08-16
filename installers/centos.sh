@@ -567,7 +567,7 @@ if (($? >= 1)); then
   wget -P /tmp http://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-4-x86_64.rpm
   rpm -i /tmp/couchbase-release-1.0-4-x86_64.rpm
   yum install -y libcouchbase-devel
-  pecl install couchbase
+  pecl install couchbase-3.1.2
   if (($? >= 1)); then
     echo_with_color red "\ncouchbase extension installation error." >&5
     exit 1
@@ -682,6 +682,7 @@ if [[ $MYSQL == TRUE ]]; then ### Only with key --with-mysql
       echo_with_color red "\nCould not start MariaDB.. Exit " >&5
       exit 1
     fi
+    systemctl enable mariadb
     mysqladmin -u root -h localhost password "${DB_PASS}"
 
   fi
