@@ -100,16 +100,32 @@ fi
 
 ### STEP 1. Install system dependencies
 echo_with_color green "Step 1: Installing system dependencies...\n" >&5
-dnf update -y
-dnf install -y git \
-  curl \
-  zip \
-  unzip \
-  ca-certificates \
-  lsof \
-  readline-devel \
-  libzip-devel \
-  wget
+if ((CURRENT_OS == 7)); then
+  yum update -y
+  yum install -y git \
+    curl \
+    zip \
+    unzip \
+    ca-certificates \
+    lsof \
+    readline-devel \
+    libzip-devel \
+    wget
+elif ((CURRENT_OS == 8)); then
+  dnf update -y
+  dnf install -y git \
+    curl \
+    zip \
+    unzip \
+    ca-certificates \
+    lsof \
+    readline-devel \
+    libzip-devel \
+    wget
+else
+  echo_with_color red "The script support only CentOS(RedHat) versions 7 and 8. Exit.\n " >&5
+  exit 1
+fi
 
 # Check installation status
 if (($? >= 1)); then
@@ -123,36 +139,58 @@ echo_with_color green "The system dependencies have been successfully installed.
 echo_with_color green "Step 2: Installing PHP...\n" >&5
 
 # Install the php repository
-if ((CURRENT_OS == 8)); then
+if ((CURRENT_OS == 7)); then
+  rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+  rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
+
+  yum-config-manager --enable remi-php74
+
+  #Install PHP
+  yum --enablerepo=remi-php74 install -y php-common \
+    php-xml \
+    php-cli \
+    php-curl \
+    php-json \
+    php-mysqlnd \
+    php-sqlite3 \
+    php-soap \
+    php-mbstring \
+    php-bcmath \
+    php-devel \
+    php-ldap \
+    php-pgsql \
+    php-interbase \
+    php-pdo-dblib \
+    php-gd \
+    php-zip
+else
+  # RHEL 8
   rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
   rpm -Uvh http://rpms.remirepo.net/enterprise/remi-release-8.rpm
-else
-  echo_with_color red "The script supports only CentOS(RedHat) version 8. Exit.\n " >&5
-  exit 1
+
+  dnf module list -y
+  dnf module reset php -y
+  dnf module enable php:remi-7.4 -y
+
+  #Install PHP
+  dnf install -y php-common \
+    php-xml \
+    php-cli \
+    php-curl \
+    php-json \
+    php-mysqlnd \
+    php-sqlite3 \
+    php-soap \
+    php-mbstring \
+    php-bcmath \
+    php-devel \
+    php-ldap \
+    php-pgsql \
+    php-pdo-firebird \
+    php-pdo-dblib \
+    php-gd \
+    php-zip
 fi
-
-dnf module list -y
-dnf module reset php -y
-dnf module enable php:remi-7.4 -y
-
-#Install PHP
-dnf install -y php-common \
-  php-xml \
-  php-cli \
-  php-curl \
-  php-json \
-  php-mysqlnd \
-  php-sqlite3 \
-  php-soap \
-  php-mbstring \
-  php-bcmath \
-  php-devel \
-  php-ldap \
-  php-pgsql \
-  php-pdo-firebird \
-  php-pdo-dblib \
-  php-gd \
-  php-zip
 
 if (($? >= 1)); then
   echo_with_color red "\n${ERROR_STRING}" >&5
@@ -236,7 +274,12 @@ else
       echo_with_color red "Port 80 taken.\n " >&5
       echo_with_color red "Skipping Nginx installation. Install Nginx manually.\n " >&5
     else
-      yum install -y php-fpm nginx
+      if ((CURRENT_OS == 7)); then
+        yum --enablerepo=remi-php74 install -y php-fpm nginx
+      else
+        dnf install -y php-fpm nginx
+      fi
+
       if (($? >= 1)); then
         echo_with_color red "\nCould not install Nginx. Exiting." >&5
         exit 1
@@ -298,8 +341,12 @@ fi
 
 ### Step 4. Configure PHP development tools
 echo_with_color green "Step 4: Configuring PHP Extensions...\n" >&5
+if ((CURRENT_OS == 7)); then
+  yum --enablerepo=remi-php74 install -y php-pear
+else
+  dnf install -y php-pear
+fi
 
-yum install -y php-pear
 if (($? >= 1)); then
   echo_with_color red "\n${ERROR_STRING}" >&5
   exit 1
@@ -310,7 +357,12 @@ pecl channel-update pecl.php.net
 ### Install MCrypt
 php -m | grep -E "^mcrypt"
 if (($? >= 1)); then
-  yum install -y libmcrypt-devel
+  if ((CURRENT_OS == 7)); then
+    yum --enablerepo=remi-php74 install -y libmcrypt-devel
+  else
+    dnf install -y libmcrypt-devel
+  fi
+
   printf "\n" | pecl install mcrypt-1.0.4
   if (($? >= 1)); then
     echo_with_color red "\nMcrypt extension installation error." >&5
@@ -410,7 +462,7 @@ if (($? >= 1)); then
     if [[ -z $DRIVERS_PATH ]]; then
       DRIVERS_PATH="."
     fi
-    tar xzf $DRIVERS_PATH/ibm_data_server_driver_package_linuxx64_v11.1.tar.gz -C /opt/
+    tar xzf $DRIVERS_PATH/ibm_data_server_driver_package_linuxx64_v11.5.tar.gz -C /opt/
     if (($? == 0)); then
       echo_with_color green "Drivers found.\n" >&5
       yum install -y ksh
@@ -517,12 +569,23 @@ if (($? >= 1)); then
 fi
 
 ### INSTALL PYTHON BUNCH
-yum install -y python2 python2-pip
-pip2 list | grep bunch
-if (($? >= 1)); then
-  pip2 install bunch
+if ((CURRENT_OS == 7)); then
+  yum install -y python python-pip
+  pip list | grep bunch
   if (($? >= 1)); then
-    echo_with_color red "\nCould not install python bunch extension." >&5
+    pip install bunch
+    if (($? >= 1)); then
+      echo_with_color red "\nCould not install python bunch extension." >&5
+    fi
+  fi
+else
+  yum install -y python2 python-pip2
+  pip2 list | grep bunch
+  if (($? >= 1)); then
+    pip2 install bunch
+    if (($? >= 1)); then
+      echo_with_color red "\nCould not install python bunch extension." >&5
+    fi
   fi
 fi
 
@@ -566,11 +629,19 @@ fi
 ### INSTALL COUCHBASE
 php -m | grep -E "^couchbase"
 if (($? >= 1)); then
-  dnf update -y
-  wget -P /tmp http://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-x86_64.rpm
-  rpm -i /tmp/couchbase-release-1.0-x86_64.rpm
-  dnf install -y libcouchbase-devel
-  pecl install couchbase
+  if ((CURRENT_OS == 7)); then
+    wget -P /tmp http://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-4-x86_64.rpm
+    rpm -i /tmp/couchbase-release-1.0-4-x86_64.rpm
+    yum install -y libcouchbase-devel
+    pecl install couchbase-3.1.2
+  else
+    dnf update -y
+    wget -P /tmp http://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-x86_64.rpm
+    rpm -i /tmp/couchbase-release-1.0-x86_64.rpm
+    dnf install -y libcouchbase-devel
+    pecl install couchbase 
+  fi
+
   if (($? >= 1)); then
     echo_with_color red "\ncouchbase extension installation error." >&5
     exit 1
@@ -582,11 +653,15 @@ if (($? >= 1)); then
   fi
 fi
 
-## INSTALL Snowflake
+### INSTALL Snowlake
 ls /etc/php.d | grep "snowflake"
 if (($? >= 1)); then
   yum update
-  yum install -y gcc cmake php-pdo php-json
+  if ((CURRENT_OS == 7)); then
+    yum install -y gcc cmake php-pdo php-json php-dev
+  else
+    yum install -y gcc cmake php-pdo php-json
+  fi
   git clone https://github.com/snowflakedb/pdo_snowflake.git /src/snowflake
   cd /src/snowflake
   export PHP_HOME=/usr
@@ -686,9 +761,6 @@ if [[ $MYSQL == TRUE ]]; then ### Only with key --with-mysql
       exit 1
     fi
     systemctl enable mariadb
-    if (($? >= 1)); then
-      echo_with_color red "\nWarning: Could not enable MariaDB to restart on boot" >&5
-    fi
     mysqladmin -u root -h localhost password "${DB_PASS}"
 
   fi
@@ -927,7 +999,7 @@ if [[ $LICENSE_INSTALLED == TRUE || $DF_CLEAN_INSTALLATION == FALSE ]]; then
   if [[ $LICENSE_INSTALLED == TRUE ]]; then
     grep DF_LICENSE_KEY .env >/dev/null 2>&1 # Check for existing key.
     if (($? == 0)); then
-      echo_with_color red "\nThe license key already installed. Are you want to install a new key? [Yy/Nn]"
+      echo_with_color red "\nThe license key already installed. Do you want to install a new key? [Yy/Nn]"
       read -r KEY_ANSWER
       if [[ -z $KEY_ANSWER ]]; then
         KEY_ANSWER=N
