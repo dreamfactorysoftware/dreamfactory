@@ -50,8 +50,8 @@ Passing the `--with-oracle` option will result in installation of PHP's Oracle (
 
 After navigating to the Oracle website you'll want to download the basic and sdk instant client files:
 
-* instantclient-basic-linux.x64-18.5.0.0.0dbru.zip
-* instantclient-sdk-linux.x64-18.5.0.0.0dbru.zip
+* instantclient-basic-linux.x64-19.12.0.0.0dbru.zip
+* instantclient-sdk-linux.x64-19.12.0.0.0dbru.zip
 
 For RPM based systems you'll want to download next files:
 
@@ -60,19 +60,19 @@ For RPM based systems you'll want to download next files:
 
 You should not unzip these files. Just upload them to your server and write down the absolute path to their location as you'll need to supply this path during the installation process.
 
-The script only supports the latest version of Oracle drivers (18.5).
+The script only supports the Oracle driver version 19.12.
 
 ### Enabling IBM DB2
 
 Passing the `--with-db2` option will result in installation of PHP's IBM DB2 (ibm_db2/pdo_ibm) extension.
-Due to licensing restrictions we are unable to include these files with the installer, however you can download these files from [here](https://www-01.ibm.com/marketing/iwm/iwm/web/preLogin.do?source=swg-idsdpds). This download requires you to register for a free account with IBM. You can pass the option like this:
+Due to licensing restrictions we are unable to include these files with the installer, however you can download these files from [here](https://www.ibm.com/support/pages/download-initial-version-115-clients-and-drivers). This download requires you to register for a free account with IBM. You can pass the option like this:
 
     $ sudo ./ubuntu.sh --with-db2
     $ su -c "./debian.sh --with-db2"
 
 After navigating to the IBM website you'll want to download the "IBM Data Server Driver Package (Linux AMD64 and Intel EM64T)" file:
 
-* ibm_data_server_driver_package_linuxx64_v11.1.tar.gz
+* ibm_data_server_driver_package_linuxx64_v11.5.tar.gz
 
 You should not unzip these files. Just upload them to your server and write down the absolute path to their location as you'll need to supply this path during the installation process.
 

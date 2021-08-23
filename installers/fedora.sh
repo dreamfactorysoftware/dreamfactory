@@ -281,7 +281,7 @@ server {
   }
   location ~ \.php$ {
 
-    try_files \$uri =404;
+    try_files  \$uri rewrite ^ /index.php?\$query_string;
     fastcgi_split_path_info ^(.+\.php)(/.+)$;
     fastcgi_pass unix:/var/run/php-fpm/www.sock;
     fastcgi_index index.php;
@@ -448,7 +448,7 @@ if (($? >= 1)); then
     if [[ -z $DRIVERS_PATH ]]; then
       DRIVERS_PATH="."
     fi
-    tar xzf $DRIVERS_PATH/ibm_data_server_driver_package_linuxx64_v11.1.tar.gz -C /opt/
+    tar xzf $DRIVERS_PATH/ibm_data_server_driver_package_linuxx64_v11.5.tar.gz -C /opt/
     if (($? == 0)); then
       echo_with_color green "Drivers found.\n" >&5
       dnf install -y ksh
