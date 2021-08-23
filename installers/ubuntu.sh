@@ -292,7 +292,7 @@ server {
   }
   location ~ \.php$ {
 
-    try_files \$uri =404;
+    try_files  \$uri rewrite ^ /index.php?\$query_string;
     fastcgi_split_path_info ^(.+\.php)(/.+)$;
     fastcgi_pass unix:/var/run/php/${PHP_VERSION}-fpm.sock;
     fastcgi_index index.php;
@@ -367,7 +367,7 @@ if (($? >= 1)); then
   elif ((CURRENT_OS == 20)); then
     curl https://packages.microsoft.com/config/ubuntu/20.04/prod.list >/etc/apt/sources.list.d/mssql-release.list
   else
-    echo_with_color red " The script support only Ubuntu 16 and 18 versions. Exit.\n " >&5
+    echo_with_color red " The script supports only versions 16, 18, and 20 of ubuntu. Exit.\n " >&5
     exit 1
   fi
   apt-get update
@@ -415,9 +415,9 @@ if (($? >= 1)); then
     if (($? == 0)); then
       echo_with_color green "Drivers found.\n" >&5
       apt install -y libaio1
-      echo "/opt/oracle/instantclient_19_5" >/etc/ld.so.conf.d/oracle-instantclient.conf
+      echo "/opt/oracle/instantclient_19_12" >/etc/ld.so.conf.d/oracle-instantclient.conf
+      printf "instantclient,/opt/oracle/instantclient_19_12\n" | pecl install oci8-2.2.0
       ldconfig
-      printf "instantclient,/opt/oracle/instantclient_19_5\n" | pecl install oci8
       if (($? >= 1)); then
         echo_with_color red "\nOracle instant client installation error" >&5
         exit 1
@@ -444,7 +444,7 @@ if (($? >= 1)); then
     if [[ -z $DRIVERS_PATH ]]; then
       DRIVERS_PATH="."
     fi
-    tar xzf $DRIVERS_PATH/ibm_data_server_driver_package_linuxx64_v11.1.tar.gz -C /opt/
+    tar xzf $DRIVERS_PATH/ibm_data_server_driver_package_linuxx64_v11.5.tar.gz -C /opt/
     if (($? == 0)); then
       echo_with_color green "Drivers found.\n" >&5
       apt install -y ksh
@@ -545,10 +545,23 @@ if (($? >= 1)); then
 fi
 
 ### INSTALL PYTHON BUNCH
-apt install -y python python-pip
-pip list | grep bunch
+if ((CURRENT_OS == 20)); then
+  apt install -y python2
+  # Pip2 is not supported on ubuntu anymore. We have to get a script from the python package
+  # authority as below
+  wget https://bootstrap.pypa.io/pip/2.7/get-pip.py
+  python2 get-pip.py
+  pip2 list | grep bunch
+else
+  apt install -y python python-pip
+  pip list | grep bunch
+fi
 if (($? >= 1)); then
-  pip install bunch
+  if ((CURRENT_OS == 20)); then
+    pip2 install bunch
+  else
+    pip install bunch
+  fi
   if (($? >= 1)); then
     echo_with_color red "\nCould not install python bunch extension." >&5
   fi
@@ -556,9 +569,9 @@ fi
 
 ### INSTALL PYTHON3 MUNCH
 apt install -y python3 python3-pip
-pip3 list | grep munch
+python3 -m pip list | grep munch
 if (($? >= 1)); then
-  pip3 install munch
+  python3 -m pip install munch
   if (($? >= 1)); then
     echo_with_color red "\nCould not install python3 munch extension." >&5
   fi
@@ -598,12 +611,9 @@ if (($? >= 1)); then
   if ((CURRENT_OS == 16)); then
     wget -O - https://packages.couchbase.com/clients/c/repos/deb/couchbase.key | apt-key add -
     echo "deb https://packages.couchbase.com/clients/c/repos/deb/ubuntu1604 xenial xenial/main" >/etc/apt/sources.list.d/couchbase.list
-
   elif ((CURRENT_OS == 18)); then
     wget -O - https://packages.couchbase.com/clients/c/repos/deb/couchbase.key | apt-key add -
     echo "deb https://packages.couchbase.com/clients/c/repos/deb/ubuntu1804 bionic bionic/main" >/etc/apt/sources.list.d/couchbase.list
-  fi
-
   elif ((CURRENT_OS == 20)); then
     wget -O - https://packages.couchbase.com/clients/c/repos/deb/couchbase.key | apt-key add -
     echo "deb https://packages.couchbase.com/clients/c/repos/deb/ubuntu2004 focal focal/main" >/etc/apt/sources.list.d/couchbase.list
@@ -720,7 +730,7 @@ echo_with_color green "Composer installed.\n" >&5
 if [[ $MYSQL == TRUE ]]; then ### Only with key --with-mysql
   echo_with_color green "Step 6: Installing System Database for DreamFactory...\n" >&5
 
-  dpkg -l | grep mysql | cut -d " " -f 3 | grep -E "^mysql" | grep -E -v "^mysql-client"
+  dpkg -l | grep mysql | cut -d " " -f 3 | grep -E "^mysql" | grep -E -v "^mysql-client" | grep -v "mysql-common"
   CHECK_MYSQL_INSTALLATION=$?
 
   ps aux | grep -v grep | grep -E "^mysql"
@@ -735,15 +745,15 @@ if [[ $MYSQL == TRUE ]]; then ### Only with key --with-mysql
   else
     if ((CURRENT_OS == 16)); then
       apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
-      add-apt-repository 'deb [arch=amd64,arm64,i386,ppc64el] http://mariadb.petarmaric.com/repo/10.3/ubuntu xenial main'
+      add-apt-repository 'deb [arch=amd64,arm64,i386,ppc64el] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.3/ubuntu xenial main'
     elif ((CURRENT_OS == 18)); then
       apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
-      add-apt-repository 'deb [arch=amd64,arm64,ppc64el] http://mariadb.petarmaric.com/repo/10.3/ubuntu bionic main'
+      add-apt-repository 'deb [arch=amd64,arm64,ppc64el] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.3/ubuntu bionic main'
     elif ((CURRENT_OS == 20)); then
       apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
-      add-apt-repository 'deb [arch=amd64] http://mariadb.petarmaric.com/repo/10.3/ubuntu bionic main'
+      add-apt-repository 'deb [arch=amd64,arm64,ppc64el] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.3/ubuntu focal main'
     else
-      echo_with_color red " The script support only Ubuntu 16 and 18 versions. Exit.\n " >&5
+      echo_with_color red " The script supports only versions 16, 18, and 20 of ubuntu. Exit.\n " >&5
       exit 1
     fi
 
@@ -1081,6 +1091,9 @@ grep -E "^#DF_NODEJS_PATH" .env >/dev/null
 if (($? == 0)); then
   sed -i "s,\#DF_NODEJS_PATH=/usr/local/bin/node,DF_NODEJS_PATH=$NODE_PATH," .env
 fi
+
+### Ubuntu 20 uses the python2 command instead of python. So we need to update our .env
+sed -i "s,\#DF_PYTHON_PATH=/usr/local/bin/python,DF_PYTHON_PATH=$(which python2)," .env
 
 sudo -u "$CURRENT_USER" bash -c "php artisan cache:clear -q"
 
