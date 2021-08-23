@@ -367,7 +367,7 @@ if (($? >= 1)); then
   elif ((CURRENT_OS == 20)); then
     curl https://packages.microsoft.com/config/ubuntu/20.04/prod.list >/etc/apt/sources.list.d/mssql-release.list
   else
-    echo_with_color red " The script support only Ubuntu 16 and 18 versions. Exit.\n " >&5
+    echo_with_color red " The script supports only versions 16, 18, and 20 of ubuntu. Exit.\n " >&5
     exit 1
   fi
   apt-get update
@@ -415,9 +415,14 @@ if (($? >= 1)); then
     if (($? == 0)); then
       echo_with_color green "Drivers found.\n" >&5
       apt install -y libaio1
-      echo "/opt/oracle/instantclient_19_5" >/etc/ld.so.conf.d/oracle-instantclient.conf
+      if ((CURRENT_OS === 20)); then
+        echo "/opt/oracle/instantclient_19_12" >/etc/ld.so.conf.d/oracle-instantclient.conf
+        printf "instantclient,/opt/oracle/instantclient_19_12\n" | pecl install oci8-2.2.0
+      else
+        echo "/opt/oracle/instantclient_19_5" >/etc/ld.so.conf.d/oracle-instantclient.conf
+        printf "instantclient,/opt/oracle/instantclient_19_5\n" | pecl install oci8
+      fi
       ldconfig
-      printf "instantclient,/opt/oracle/instantclient_19_5\n" | pecl install oci8
       if (($? >= 1)); then
         echo_with_color red "\nOracle instant client installation error" >&5
         exit 1
@@ -545,10 +550,23 @@ if (($? >= 1)); then
 fi
 
 ### INSTALL PYTHON BUNCH
-apt install -y python python-pip
-pip list | grep bunch
+if ((CURRENT_OS == 20)); then
+  apt install -y python2
+  # Pip2 is not supported on ubuntu anymore. We have to get a script from the python package
+  # authority as below
+  wget https://bootstrap.pypa.io/pip/2.7/get-pip.py
+  python2 get-pip.py
+  pip2 list | grep bunch
+else
+  apt install -y python python-pip
+  pip list | grep bunch
+fi
 if (($? >= 1)); then
-  pip install bunch
+  if ((CURRENT_OS == 20)); then
+    pip2 install bunch
+  else
+    pip install bunch
+  fi
   if (($? >= 1)); then
     echo_with_color red "\nCould not install python bunch extension." >&5
   fi
@@ -598,12 +616,9 @@ if (($? >= 1)); then
   if ((CURRENT_OS == 16)); then
     wget -O - https://packages.couchbase.com/clients/c/repos/deb/couchbase.key | apt-key add -
     echo "deb https://packages.couchbase.com/clients/c/repos/deb/ubuntu1604 xenial xenial/main" >/etc/apt/sources.list.d/couchbase.list
-
   elif ((CURRENT_OS == 18)); then
     wget -O - https://packages.couchbase.com/clients/c/repos/deb/couchbase.key | apt-key add -
     echo "deb https://packages.couchbase.com/clients/c/repos/deb/ubuntu1804 bionic bionic/main" >/etc/apt/sources.list.d/couchbase.list
-  fi
-
   elif ((CURRENT_OS == 20)); then
     wget -O - https://packages.couchbase.com/clients/c/repos/deb/couchbase.key | apt-key add -
     echo "deb https://packages.couchbase.com/clients/c/repos/deb/ubuntu2004 focal focal/main" >/etc/apt/sources.list.d/couchbase.list
@@ -741,9 +756,9 @@ if [[ $MYSQL == TRUE ]]; then ### Only with key --with-mysql
       add-apt-repository 'deb [arch=amd64,arm64,ppc64el] http://mariadb.petarmaric.com/repo/10.3/ubuntu bionic main'
     elif ((CURRENT_OS == 20)); then
       apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
-      add-apt-repository 'deb [arch=amd64] http://mariadb.petarmaric.com/repo/10.3/ubuntu bionic main'
+      add-apt-repository 'deb [arch=amd64,arm64,ppc64el] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.3/ubuntu focal main'
     else
-      echo_with_color red " The script support only Ubuntu 16 and 18 versions. Exit.\n " >&5
+      echo_with_color red " The script supports only versions 16, 18, and 20 of ubuntu. Exit.\n " >&5
       exit 1
     fi
 
