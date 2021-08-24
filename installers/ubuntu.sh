@@ -415,13 +415,8 @@ if (($? >= 1)); then
     if (($? == 0)); then
       echo_with_color green "Drivers found.\n" >&5
       apt install -y libaio1
-      if ((CURRENT_OS === 20)); then
-        echo "/opt/oracle/instantclient_19_12" >/etc/ld.so.conf.d/oracle-instantclient.conf
-        printf "instantclient,/opt/oracle/instantclient_19_12\n" | pecl install oci8-2.2.0
-      else
-        echo "/opt/oracle/instantclient_19_5" >/etc/ld.so.conf.d/oracle-instantclient.conf
-        printf "instantclient,/opt/oracle/instantclient_19_5\n" | pecl install oci8
-      fi
+      echo "/opt/oracle/instantclient_19_12" >/etc/ld.so.conf.d/oracle-instantclient.conf
+      printf "instantclient,/opt/oracle/instantclient_19_12\n" | pecl install oci8-2.2.0
       ldconfig
       if (($? >= 1)); then
         echo_with_color red "\nOracle instant client installation error" >&5
@@ -449,7 +444,7 @@ if (($? >= 1)); then
     if [[ -z $DRIVERS_PATH ]]; then
       DRIVERS_PATH="."
     fi
-    tar xzf $DRIVERS_PATH/ibm_data_server_driver_package_linuxx64_v11.1.tar.gz -C /opt/
+    tar xzf $DRIVERS_PATH/ibm_data_server_driver_package_linuxx64_v11.5.tar.gz -C /opt/
     if (($? == 0)); then
       echo_with_color green "Drivers found.\n" >&5
       apt install -y ksh
