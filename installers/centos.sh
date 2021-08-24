@@ -579,7 +579,7 @@ if ((CURRENT_OS == 7)); then
     fi
   fi
 else
-  yum install -y python2 python-pip2
+  yum install -y python2 python2-pip
   pip2 list | grep bunch
   if (($? >= 1)); then
     pip2 install bunch
