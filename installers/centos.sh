@@ -287,43 +287,85 @@ else
       # Change php fpm configuration file
       sed -i 's/\;cgi\.fix\_pathinfo\=1/cgi\.fix\_pathinfo\=0/' $(php -i | sed -n '/^Loaded Configuration File => /{s:^.*> ::;p;}')
       # Create nginx site entry
-      echo "
-server {
+      if ((CURRENT_OS == 7)); then
+        echo "
+  server {
 
-  listen 80 default_server;
-  listen [::]:80 default_server ipv6only=on;
-  root /opt/dreamfactory/public;
-  index index.php index.html index.htm;
-  gzip on;
-  gzip_disable \"msie6\";
-  gzip_vary on;
-  gzip_proxied any;
-  gzip_comp_level 6;
-  gzip_buffers 16 8k;
-  gzip_http_version 1.1;
-  gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
-  location / {
+    listen 80 default_server;
+    listen [::]:80 default_server ipv6only=on;
+    root /opt/dreamfactory/public;
+    index index.php index.html index.htm;
+    gzip on;
+    gzip_disable \"msie6\";
+    gzip_vary on;
+    gzip_proxied any;
+    gzip_comp_level 6;
+    gzip_buffers 16 8k;
+    gzip_http_version 1.1;
+    gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+    location / {
 
-    try_files \$uri \$uri/ /index.php?\$args;
-  }
+      try_files \$uri \$uri/ /index.php?\$args;
+    }
 
-  error_page 404 /404.html;
-  error_page 500 502 503 504 /50x.html;
+    error_page 404 /404.html;
+    error_page 500 502 503 504 /50x.html;
 
-  location = /50x.html {
+    location = /50x.html {
 
-    root /usr/share/nginx/html;
-  }
-  location ~ \.php$ {
+      root /usr/share/nginx/html;
+    }
+    location ~ \.php$ {
 
-    try_files \$uri =404;
-    fastcgi_split_path_info ^(.+\.php)(/.+)$;
-    fastcgi_pass 127.0.0.1:9000;
-    fastcgi_index index.php;
-    fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
-    include fastcgi_params;
-  }
-}" >/etc/nginx/conf.d/dreamfactory.conf
+      try_files \$uri =404;
+      fastcgi_split_path_info ^(.+\.php)(/.+)$;
+      fastcgi_pass 127.0.0.1:9000;
+      fastcgi_index index.php;
+      fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
+      include fastcgi_params;
+    }
+  }" >/etc/nginx/conf.d/dreamfactory.conf
+      else
+      # RHEL8 php-fpm seems to default to a unix socket, rather than an ip (in RHEL7). As a result
+      # fastcgi_pass has been changed from 127.0.0.1 to unix:/var/run/php-fpm/www.sock for RHEL / CENTOS 8 installation.
+        echo "
+    server {
+
+      listen 80 default_server;
+      listen [::]:80 default_server ipv6only=on;
+      root /opt/dreamfactory/public;
+      index index.php index.html index.htm;
+      gzip on;
+      gzip_disable \"msie6\";
+      gzip_vary on;
+      gzip_proxied any;
+      gzip_comp_level 6;
+      gzip_buffers 16 8k;
+      gzip_http_version 1.1;
+      gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+      location / {
+
+        try_files \$uri \$uri/ /index.php?\$args;
+      }
+
+      error_page 404 /404.html;
+      error_page 500 502 503 504 /50x.html;
+
+      location = /50x.html {
+
+        root /usr/share/nginx/html;
+      }
+      location ~ \.php$ {
+
+        try_files \$uri =404;
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_pass unix:/var/run/php-fpm/www.sock;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
+        include fastcgi_params;
+      }
+    }" >/etc/nginx/conf.d/dreamfactory.conf
+      fi
 
       #Need to remove default entry in nginx.conf
       grep default_server /etc/nginx/nginx.conf
