@@ -751,11 +751,11 @@ if [[ $MYSQL == TRUE ]]; then ### Only with key --with-mysql
   else
     if ((CURRENT_OS == 8)); then
       apt-key adv --no-tty --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db
-      add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://mariadb.petarmaric.com/repo/10.3/debian jessie main'
+      add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.3/debian jessie main'
 
     elif ((CURRENT_OS == 9 || CURRENT_OS == 10)); then
       apt-key adv --no-tty --recv-keys --keyserver keyserver.ubuntu.com 0xF1656F24C74CD1D8
-      add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://mariadb.petarmaric.com/repo/10.3/debian stretch main'
+      add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.3/debian stretch main'
 
     else
       echo_with_color red "The script support only Debian 8, 9, and 10 versions. Exit.\n" >&5
