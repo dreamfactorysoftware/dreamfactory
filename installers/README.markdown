@@ -2,8 +2,7 @@
 
 This directory contains automated installer scripts for the following operating systems:
 
-* CentOS / RHEL 7
-* CentOS / RHEL 8 (Beta)
+* CentOS / RHEL 7/8 (8 is currently in Beta)
 * Debian 8/9
 * Fedora
 * Ubuntu 16/18
@@ -135,14 +134,3 @@ For more detailed information about the installation process and errors, you can
 
     $ sudo ./ubuntu.sh --debug
     $ su -c "./debian.sh --debug"
-
-## Installing on RHEL / CentOS 8
-
-Please note that the RHEL/CentOS 8 installer is currently in beta and there may be some issues with functionality.
-If trying to view the DreamFactory UI in the browser after installation leads to a bad gateway error / an nginx error page, please try the following:
-
-1. Go to `/etc/php-fpm.d` and on / around line 38 check (and change if necessary) the `listen` to `listen = 127.0.0.1:9000` and save.
-2. Run `sudo setsebool -P httpd_can_network_relay 1`
-3. Run `sudo systemctl restart php-fpm`
-
-You should now be able to get to the DF login screen.
