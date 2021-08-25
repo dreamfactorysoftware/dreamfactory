@@ -305,7 +305,6 @@ else
       # Change php fpm configuration file
       sed -i 's/\;cgi\.fix\_pathinfo\=1/cgi\.fix\_pathinfo\=0/' $(php -i | sed -n '/^Loaded Configuration File => /{s:^.*> ::;p;}')
       # Create nginx site entry
-
         echo "
   server {
 
