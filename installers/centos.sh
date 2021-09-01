@@ -317,7 +317,7 @@ else
     }
     location ~ \.php$ {
 
-      try_files \$uri =404;
+      try_files \$uri rewrite ^ /index.php?\$query_string;
       fastcgi_split_path_info ^(.+\.php)(/.+)$;
       fastcgi_pass 127.0.0.1:9000;
       fastcgi_index index.php;
@@ -357,7 +357,7 @@ else
       }
       location ~ \.php$ {
 
-        try_files \$uri =404;
+        try_files \$uri rewrite ^ /index.php?\$query_string;
         fastcgi_split_path_info ^(.+\.php)(/.+)$;
         fastcgi_pass unix:/var/run/php-fpm/www.sock;
         fastcgi_index index.php;
