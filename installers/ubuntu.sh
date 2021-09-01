@@ -569,9 +569,9 @@ fi
 
 ### INSTALL PYTHON3 MUNCH
 apt install -y python3 python3-pip
-pip3 list | grep munch
+python3 -m pip list | grep munch
 if (($? >= 1)); then
-  pip3 install munch
+  python3 -m pip install munch
   if (($? >= 1)); then
     echo_with_color red "\nCould not install python3 munch extension." >&5
   fi
@@ -730,7 +730,7 @@ echo_with_color green "Composer installed.\n" >&5
 if [[ $MYSQL == TRUE ]]; then ### Only with key --with-mysql
   echo_with_color green "Step 6: Installing System Database for DreamFactory...\n" >&5
 
-  dpkg -l | grep mysql | cut -d " " -f 3 | grep -E "^mysql" | grep -E -v "^mysql-client"
+  dpkg -l | grep mysql | cut -d " " -f 3 | grep -E "^mysql" | grep -E -v "^mysql-client" | grep -v "mysql-common"
   CHECK_MYSQL_INSTALLATION=$?
 
   ps aux | grep -v grep | grep -E "^mysql"
