@@ -1106,7 +1106,7 @@ if (($? == 0)); then
   sed -i "s,\#DF_NODEJS_PATH=/usr/local/bin/node,DF_NODEJS_PATH=$NODE_PATH," .env
 fi
 
-### Ubuntu 20 uses the python2 command instead of python. So we need to update our .env
+### Centos8 uses the python2 command instead of python. So we need to update our .env
 sed -i "s,\#DF_PYTHON_PATH=/usr/local/bin/python,DF_PYTHON_PATH=$(which python2)," .env
 
 sudo -u "$CURRENT_USER" bash -c "php artisan cache:clear -q"
