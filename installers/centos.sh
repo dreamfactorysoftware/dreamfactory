@@ -664,11 +664,7 @@ fi
 ls /etc/php.d | grep "snowflake"
 if (($? >= 1)); then
   yum update
-  if ((CURRENT_OS == 7)); then
-    yum install -y gcc cmake php-pdo php-json php-dev
-  else
-    yum install -y gcc cmake php-pdo php-json
-  fi
+  yum install -y gcc cmake php-pdo php-json php-devel
   git clone https://github.com/snowflakedb/pdo_snowflake.git /src/snowflake
   cd /src/snowflake
   export PHP_HOME=/usr
