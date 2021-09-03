@@ -129,18 +129,12 @@ echo_with_color green "The system dependencies have been successfully installed.
 echo_with_color green "Step 2: Installing PHP...\n" >&5
 
 # Install the php repository
-if ((CURRENT_OS == 29)); then
-  dnf install -y http://rpms.remirepo.net/fedora/remi-release-29.rpm
-elif ((CURRENT_OS == 30)); then
-  dnf install -y http://rpms.remirepo.net/fedora/remi-release-30.rpm
-elif ((CURRENT_OS == 31)); then
-  dnf install -y http://rpms.remirepo.net/fedora/remi-release-31.rpm
-elif ((CURRENT_OS == 32)); then
+if ((CURRENT_OS == 32)); then
   dnf install -y http://rpms.remirepo.net/fedora/remi-release-32.rpm
 elif ((CURRENT_OS == 33)); then
   dnf install -y http://rpms.remirepo.net/fedora/remi-release-33.rpm
 else
-  echo_with_color red " The script support only Fedora 29/30/31/32/33 versions. Exit.\n " >&5
+  echo_with_color red "The script support only Fedora 32/33 versions. Exit.\n " >&5
   exit 1
 fi
 
@@ -158,9 +152,20 @@ dnf install -y php-common \
   php-devel \
   php-ldap \
   php-pgsql \
-  php-interbase \
   php-gd \
   php-pdo-dblib
+
+if (($? >= 1)); then
+  echo_with_color red "\n${ERROR_STRING}" >&5
+  exit 1
+fi
+
+if ((CURRENT_OS == 33)); then
+  dnf install -y php-pdo-firebird
+else 
+  dnf install -y php-interbase
+fi
+
 if (($? >= 1)); then
   echo_with_color red "\n${ERROR_STRING}" >&5
   exit 1
@@ -604,6 +609,7 @@ if (($? >= 1)); then
 fi
 
 ### INSTALL COUCHBASE
+# We are in the process of upgrading this to SDK 3, therefor is currently not working and commented out
 # php -m | grep -E "^couchbase"
 # if (($? >= 1)); then
 #   echo -e "[couchbase]\nenabled = 1\nname = libcouchbase package\nbaseurl = https://packages.couchbase.com/clients/c/repos/rpm/el8/x86_64\ngpgcheck = 1\ngpgkey = https://packages.couchbase.com/clients/c/repos/rpm/couchbase.key" >/etc/yum.repos.d/couchbase.repo
