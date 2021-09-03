@@ -611,6 +611,7 @@ if (($? >= 1)); then
 fi
 
 ### INSTALL COUCHBASE
+# We are in the process of upgrading this to SDK 3, therefor is currently not working and commented out
 # php -m | grep -E "^couchbase"
 # if (($? >= 1)); then
 #   if ((CURRENT_OS == 8)); then
