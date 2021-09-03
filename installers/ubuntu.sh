@@ -360,14 +360,12 @@ fi
 php -m | grep -E "^sqlsrv"
 if (($? >= 1)); then
   curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
-  if ((CURRENT_OS == 16)); then
-    curl https://packages.microsoft.com/config/ubuntu/16.04/prod.list >/etc/apt/sources.list.d/mssql-release.list
-  elif ((CURRENT_OS == 18)); then
+  if ((CURRENT_OS == 18)); then
     curl https://packages.microsoft.com/config/ubuntu/18.04/prod.list >/etc/apt/sources.list.d/mssql-release.list
   elif ((CURRENT_OS == 20)); then
     curl https://packages.microsoft.com/config/ubuntu/20.04/prod.list >/etc/apt/sources.list.d/mssql-release.list
   else
-    echo_with_color red " The script supports only versions 16, 18, and 20 of ubuntu. Exit.\n " >&5
+    echo_with_color red " The script supports only versions 18, and 20 of ubuntu. Exit.\n " >&5
     exit 1
   fi
   apt-get update
@@ -744,17 +742,14 @@ if [[ $MYSQL == TRUE ]]; then ### Only with key --with-mysql
     echo_with_color red "MySQL Database detected in the system. Skipping installation. \n" >&5
     DB_FOUND=TRUE
   else
-    if ((CURRENT_OS == 16)); then
-      apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
-      add-apt-repository 'deb [arch=amd64,arm64,i386,ppc64el] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.3/ubuntu xenial main'
-    elif ((CURRENT_OS == 18)); then
+    if ((CURRENT_OS == 18)); then
       apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
       add-apt-repository 'deb [arch=amd64,arm64,ppc64el] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.3/ubuntu bionic main'
     elif ((CURRENT_OS == 20)); then
       apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
       add-apt-repository 'deb [arch=amd64,arm64,ppc64el] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.3/ubuntu focal main'
     else
-      echo_with_color red " The script supports only versions 16, 18, and 20 of ubuntu. Exit.\n " >&5
+      echo_with_color red " The script supports only versions 18 and 20 of ubuntu. Exit.\n " >&5
       exit 1
     fi
 
