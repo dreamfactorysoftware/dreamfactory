@@ -611,32 +611,32 @@ if (($? >= 1)); then
 fi
 
 ### INSTALL COUCHBASE
-php -m | grep -E "^couchbase"
-if (($? >= 1)); then
-  if ((CURRENT_OS == 8)); then
-    wget -P /tmp http://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-4-amd64.deb
-    dpkg -i /tmp/couchbase-release-1.0-4-amd64.deb
+# php -m | grep -E "^couchbase"
+# if (($? >= 1)); then
+#   if ((CURRENT_OS == 8)); then
+#     wget -P /tmp http://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-4-amd64.deb
+#     dpkg -i /tmp/couchbase-release-1.0-4-amd64.deb
 
-  elif ((CURRENT_OS == 9 || CURRENT_OS == 10)); then
-    wget -O - https://packages.couchbase.com/clients/c/repos/deb/couchbase.key | apt-key add -
-    echo "deb https://packages.couchbase.com/clients/c/repos/deb/ubuntu1804 bionic bionic/main" >/etc/apt/sources.list.d/couchbase.list
-  fi
+#   elif ((CURRENT_OS == 9 || CURRENT_OS == 10)); then
+#     wget -O - https://packages.couchbase.com/clients/c/repos/deb/couchbase.key | apt-key add -
+#     echo "deb https://packages.couchbase.com/clients/c/repos/deb/ubuntu1804 bionic bionic/main" >/etc/apt/sources.list.d/couchbase.list
+#   fi
 
-  apt-get update
-  apt install -y libcouchbase3 libcouchbase-dev libcouchbase3-tools libcouchbase-dbg libcouchbase3-libev libcouchbase3-libevent zlib1g-dev
-  pecl install couchbase
-  if (($? >= 1)); then
-    echo_with_color red "\ncouchbase extension installation error." >&5
-    exit 1
-  fi
-  echo "extension=couchbase.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/xcouchbase.ini"
-  phpenmod -s ALL xcouchbase
-  php -m | grep couchbase
-  if (($? >= 1)); then
-    echo_with_color red "\nCould not install couchbase extension." >&5
-  fi
-  rm /etc/apt/sources.list.d/couchbase.list
-fi
+#   apt-get update
+#   apt install -y libcouchbase3 libcouchbase-dev libcouchbase3-tools libcouchbase-dbg libcouchbase3-libev libcouchbase3-libevent zlib1g-dev
+#   pecl install couchbase-3.1.2
+#   if (($? >= 1)); then
+#     echo_with_color red "\ncouchbase extension installation error." >&5
+#     exit 1
+#   fi
+#   echo "extension=couchbase.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/xcouchbase.ini"
+#   phpenmod -s ALL xcouchbase
+#   php -m | grep couchbase
+#   if (($? >= 1)); then
+#     echo_with_color red "\nCould not install couchbase extension." >&5
+#   fi
+#   rm /etc/apt/sources.list.d/couchbase.list
+# fi
 
 ### INSTALL Snowlake
 
