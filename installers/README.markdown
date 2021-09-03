@@ -3,15 +3,15 @@
 This directory contains automated installer scripts for the following operating systems:
 
 * CentOS / RHEL 7/8 (8 is currently in Beta)
-* Debian 8/9
-* Fedora
-* Ubuntu 16/18
+* Debian 9/10
+* Fedora 32/33
+* Ubuntu 18/20
 
 ### Installation Requirements
 
 For this wizard to work properly several conditions must be met:
 
-* The wizard will be run on a fresh operating system installation. If you use these installers in conjunction with an existing Linux environment, the installer may skip some installation steps and you may need to manually perform additional configration.
+* The wizard will be run on a fresh operating system installation. If you use these installers in conjunction with an existing Linux environment, the installer may skip some installation steps and you may need to manually perform additional configuration.
 * DreamFactory will be the only web application running on this server. If you intend to run other sites using virtual hosts you will need to adjust the configuration to suit this requirement.
 * The executing user must be able to use sudo(su) to run the installer.
 * You'll need to make the script executable by changing its permissions (`sudo chmod +x ubuntu.sh`)/(`su -c "chmod +x debian.sh"`)
