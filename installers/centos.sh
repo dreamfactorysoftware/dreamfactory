@@ -634,31 +634,32 @@ if (($? >= 1)); then
 fi
 
 ### INSTALL COUCHBASE
-php -m | grep -E "^couchbase"
-if (($? >= 1)); then
-  if ((CURRENT_OS == 7)); then
-    wget -P /tmp http://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-4-x86_64.rpm
-    rpm -i /tmp/couchbase-release-1.0-4-x86_64.rpm
-    yum install -y libcouchbase-devel
-    pecl install couchbase-3.1.2
-  else
-    dnf update -y
-    wget -P /tmp http://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-x86_64.rpm
-    rpm -i /tmp/couchbase-release-1.0-x86_64.rpm
-    dnf install -y libcouchbase-devel
-    pecl install couchbase 
-  fi
+# We are in the process of upgrading this to SDK 3, therefor is currently not working and commented out
+# php -m | grep -E "^couchbase"
+# if (($? >= 1)); then
+#   if ((CURRENT_OS == 7)); then
+#     wget -P /tmp http://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-4-x86_64.rpm
+#     rpm -i /tmp/couchbase-release-1.0-4-x86_64.rpm
+#     yum install -y libcouchbase-devel
+#     pecl install couchbase-3.1.2
+#   else
+#     dnf update -y
+#     wget -P /tmp http://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-x86_64.rpm
+#     rpm -i /tmp/couchbase-release-1.0-x86_64.rpm
+#     dnf install -y libcouchbase-devel
+#     pecl install couchbase 
+#   fi
 
-  if (($? >= 1)); then
-    echo_with_color red "\ncouchbase extension installation error." >&5
-    exit 1
-  fi
-  echo "extension=couchbase.so" >/etc/php.d/xcouchbase.ini
-  php -m | grep couchbase
-  if (($? >= 1)); then
-    echo_with_color red "\nCould not install couchbase extension." >&5
-  fi
-fi
+#   if (($? >= 1)); then
+#     echo_with_color red "\ncouchbase extension installation error." >&5
+#     exit 1
+#   fi
+#   echo "extension=couchbase.so" >/etc/php.d/xcouchbase.ini
+#   php -m | grep couchbase
+#   if (($? >= 1)); then
+#     echo_with_color red "\nCould not install couchbase extension." >&5
+#   fi
+# fi
 
 ### INSTALL Snowlake
 ls /etc/php.d | grep "snowflake"
