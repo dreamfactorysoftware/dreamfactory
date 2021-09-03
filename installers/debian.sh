@@ -356,10 +356,6 @@ if (($? >= 1)); then
   curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
   case $CURRENT_OS in
 
-  8)
-    curl https://packages.microsoft.com/config/debian/8/prod.list >/etc/apt/sources.list.d/mssql-release.list
-    ;;
-
   9)
     curl https://packages.microsoft.com/config/debian/9/prod.list >/etc/apt/sources.list.d/mssql-release.list
     ;;
@@ -369,7 +365,7 @@ if (($? >= 1)); then
     ;;
 
   *)
-    echo_with_color red "The script support only Debian 8, 9, and 10 versions. Exit.\n " >&5
+    echo_with_color red "The script support only Debian 9 and 10 versions. Exit.\n " >&5
     exit 1
     ;;
   esac
@@ -503,31 +499,18 @@ if (($? >= 1)); then
     git clone https://github.com/datastax/php-driver.git /opt/cassandra
     cd /opt/cassandra/ || exit 1
     git checkout v1.3.2 && git pull origin v1.3.2
-    if ((CURRENT_OS == 8)); then
-      wget http://downloads.datastax.com/cpp-driver/ubuntu/14.04/cassandra/v2.10.0/cassandra-cpp-driver_2.10.0-1_amd64.deb
-      wget http://downloads.datastax.com/cpp-driver/ubuntu/14.04/cassandra/v2.10.0/cassandra-cpp-driver-dbg_2.10.0-1_amd64.deb
-      wget http://downloads.datastax.com/cpp-driver/ubuntu/14.04/cassandra/v2.10.0/cassandra-cpp-driver-dev_2.10.0-1_amd64.deb
-      wget http://downloads.datastax.com/cpp-driver/ubuntu/14.04/dependencies/libuv/v1.23.0/libuv1-dbg_1.23.0-1_amd64.deb
-      wget http://downloads.datastax.com/cpp-driver/ubuntu/14.04/dependencies/libuv/v1.23.0/libuv1-dev_1.23.0-1_amd64.deb
-      wget http://downloads.datastax.com/cpp-driver/ubuntu/14.04/dependencies/libuv/v1.23.0/libuv1_1.23.0-1_amd64.deb
-      dpkg -i *.deb
-      if (($? >= 1)); then
-        echo_with_color red "\ncassandra extension installation error." >&5
-        exit 1
-      fi
-    else
-      wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/cassandra/v2.10.0/cassandra-cpp-driver-dbg_2.10.0-1_amd64.deb
-      wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/cassandra/v2.10.0/cassandra-cpp-driver-dev_2.10.0-1_amd64.deb
-      wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/cassandra/v2.10.0/cassandra-cpp-driver_2.10.0-1_amd64.deb
-      wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/dependencies/libuv/v1.23.0/libuv1-dbg_1.23.0-1_amd64.deb
-      wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/dependencies/libuv/v1.23.0/libuv1-dev_1.23.0-1_amd64.deb
-      wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/dependencies/libuv/v1.23.0/libuv1_1.23.0-1_amd64.deb
-      dpkg -i *.deb
-      if (($? >= 1)); then
-        echo_with_color red "\ncassandra extension installation error." >&5
-        exit 1
-      fi
+    wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/cassandra/v2.10.0/cassandra-cpp-driver-dbg_2.10.0-1_amd64.deb
+    wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/cassandra/v2.10.0/cassandra-cpp-driver-dev_2.10.0-1_amd64.deb
+    wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/cassandra/v2.10.0/cassandra-cpp-driver_2.10.0-1_amd64.deb
+    wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/dependencies/libuv/v1.23.0/libuv1-dbg_1.23.0-1_amd64.deb
+    wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/dependencies/libuv/v1.23.0/libuv1-dev_1.23.0-1_amd64.deb
+    wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/dependencies/libuv/v1.23.0/libuv1_1.23.0-1_amd64.deb
+    dpkg -i *.deb
+    if (($? >= 1)); then
+      echo_with_color red "\ncassandra extension installation error." >&5
+      exit 1
     fi
+
     sed -i "s/7.1.99/7.2.99/" ./ext/package.xml
     pecl install ./ext/package.xml
     if (($? >= 1)); then
@@ -750,16 +733,11 @@ if [[ $MYSQL == TRUE ]]; then ### Only with key --with-mysql
     echo_with_color red "MySQL Database detected in the system. Skipping installation. \n" >&5
     DB_FOUND=TRUE
   else
-    if ((CURRENT_OS == 8)); then
-      apt-key adv --no-tty --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db
-      add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.3/debian jessie main'
-
-    elif ((CURRENT_OS == 9 || CURRENT_OS == 10)); then
+    if ((CURRENT_OS == 9 || CURRENT_OS == 10)); then
       apt-key adv --no-tty --recv-keys --keyserver keyserver.ubuntu.com 0xF1656F24C74CD1D8
       add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.3/debian stretch main'
-
     else
-      echo_with_color red "The script support only Debian 8, 9, and 10 versions. Exit.\n" >&5
+      echo_with_color red "The script support only Debian 9, and 10 versions. Exit.\n" >&5
       exit 1
     fi
 
