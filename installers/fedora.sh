@@ -604,21 +604,21 @@ if (($? >= 1)); then
 fi
 
 ### INSTALL COUCHBASE
-php -m | grep -E "^couchbase"
-if (($? >= 1)); then
-  echo -e "[couchbase]\nenabled = 1\nname = libcouchbase package\nbaseurl = https://packages.couchbase.com/clients/c/repos/rpm/el8/x86_64\ngpgcheck = 1\ngpgkey = https://packages.couchbase.com/clients/c/repos/rpm/couchbase.key" >/etc/yum.repos.d/couchbase.repo
-  dnf install -y libcouchbase3 libcouchbase-devel libcouchbase3-tools libcouchbase3-libevent
-  pecl install couchbase
-  if (($? >= 1)); then
-    echo_with_color red "\ncouchbase extension installation error." >&5
-    exit 1
-  fi
-  echo "extension=couchbase.so" >/etc/php.d/xcouchbase.ini
-  php -m | grep couchbase
-  if (($? >= 1)); then
-    echo_with_color red "\nCould not install couchbase extension." >&5
-  fi
-fi
+# php -m | grep -E "^couchbase"
+# if (($? >= 1)); then
+#   echo -e "[couchbase]\nenabled = 1\nname = libcouchbase package\nbaseurl = https://packages.couchbase.com/clients/c/repos/rpm/el8/x86_64\ngpgcheck = 1\ngpgkey = https://packages.couchbase.com/clients/c/repos/rpm/couchbase.key" >/etc/yum.repos.d/couchbase.repo
+#   dnf install -y libcouchbase3 libcouchbase-devel libcouchbase3-tools libcouchbase3-libevent
+#   pecl install couchbase
+#   if (($? >= 1)); then
+#     echo_with_color red "\ncouchbase extension installation error." >&5
+#     exit 1
+#   fi
+#   echo "extension=couchbase.so" >/etc/php.d/xcouchbase.ini
+#   php -m | grep couchbase
+#   if (($? >= 1)); then
+#     echo_with_color red "\nCould not install couchbase extension." >&5
+#   fi
+# fi
 
 ### INSTALL Snowlake
 ls /etc/php.d | grep "snowflake"
