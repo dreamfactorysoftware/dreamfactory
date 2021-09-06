@@ -664,7 +664,7 @@ fi
 ### INSTALL Snowlake
 ls /etc/php.d | grep "snowflake"
 if (($? >= 1)); then
-  yum update
+  yum update -y
   yum install -y gcc cmake php-pdo php-json php-devel
   git clone https://github.com/snowflakedb/pdo_snowflake.git /src/snowflake
   cd /src/snowflake
