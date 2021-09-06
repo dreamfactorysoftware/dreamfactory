@@ -364,6 +364,12 @@ if (($? >= 1)); then
     curl https://packages.microsoft.com/config/debian/10/prod.list >/etc/apt/sources.list.d/mssql-release.list
     ;;
 
+  # We need to wait for Microsoft to get their act together and update the drivers, but this will be the link once they
+  # sort it out
+  # 11)
+  #   curl https://packages.microsoft.com/config/debian/11/prod.list >/etc/apt/sources.list.d/mssql-release.list
+  #   ;;
+
   *)
     echo_with_color red "The script support only Debian 9 and 10 versions. Exit.\n " >&5
     exit 1
@@ -414,9 +420,9 @@ if (($? >= 1)); then
     if (($? == 0)); then
       echo_with_color green "Drivers found.\n" >&5
       apt install -y libaio1
-      echo "/opt/oracle/instantclient_19_5" >/etc/ld.so.conf.d/oracle-instantclient.conf
+      echo "/opt/oracle/instantclient_19_12" >/etc/ld.so.conf.d/oracle-instantclient.conf
       ldconfig
-      printf "instantclient,/opt/oracle/instantclient_19_5\n" | pecl install oci8
+      printf "instantclient,/opt/oracle/instantclient_19_12\n" | pecl install oci8-2.2.0
       if (($? >= 1)); then
         echo_with_color red "\nOracle instant client installation error" >&5
         exit 1
@@ -733,9 +739,16 @@ if [[ $MYSQL == TRUE ]]; then ### Only with key --with-mysql
     echo_with_color red "MySQL Database detected in the system. Skipping installation. \n" >&5
     DB_FOUND=TRUE
   else
-    if ((CURRENT_OS == 9 || CURRENT_OS == 10)); then
+    if ((CURRENT_OS == 9)); then
       apt-key adv --no-tty --recv-keys --keyserver keyserver.ubuntu.com 0xF1656F24C74CD1D8
       add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.3/debian stretch main'
+    elif ((CURRENT_OS == 10)); then
+      apt-key adv --no-tty --recv-keys --keyserver keyserver.ubuntu.com 0xF1656F24C74CD1D8
+      add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.3/debian buster main'
+    # Once Microsoft updates their drivers, this will be the link (its working but not all the necessary packages are there)
+    # elif ((CURRENT_OS == 11)); then
+    #   apt-key adv --no-tty --recv-keys --keyserver keyserver.ubuntu.com 0xF1656F24C74CD1D8
+    #   add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.3/debian bullseye main'
     else
       echo_with_color red "The script support only Debian 9, and 10 versions. Exit.\n" >&5
       exit 1
