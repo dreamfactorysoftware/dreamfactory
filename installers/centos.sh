@@ -439,11 +439,11 @@ if (($? >= 1)); then
         echo_with_color red "\nOracle instant client installation error" >&5
         exit 1
       fi
-      echo "/usr/lib/oracle/19.5/client64/lib" >/etc/ld.so.conf.d/oracle-instantclient.conf
+      echo "/usr/lib/oracle/19.12/client64/lib" >/etc/ld.so.conf.d/oracle-instantclient.conf
       ldconfig
       export PHP_DTRACE=yes
 
-      printf "\n" | pecl install oci8
+      printf "\n" | pecl install oci8-2.2.0
       if (($? >= 1)); then
         echo_with_color red "\nOracle instant client installation error" >&5
         exit 1
@@ -551,7 +551,7 @@ if (($? >= 1)); then
 
     php -m | grep cassandra
     if (($? >= 1)); then
-      echo_with_color red "\nCould not install ibm_db2 extension." >&5
+      echo_with_color red "\nCould not install cassandra extension." >&5
     fi
     cd "${CURRENT_PATH}" || exit
     rm -rf /opt/cassandra

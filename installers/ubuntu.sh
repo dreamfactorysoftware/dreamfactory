@@ -518,7 +518,7 @@ if (($? >= 1)); then
     phpenmod -s ALL cassandra
     php -m | grep cassandra
     if (($? >= 1)); then
-      echo_with_color red "\nCould not install ibm_db2 extension." >&5
+      echo_with_color red "\nCould not install cassandra extension." >&5
     fi
     cd "$CURRENT_PATH" || exit 1
     rm -rf /opt/cassandra
