@@ -153,18 +153,8 @@ dnf install -y php-common \
   php-ldap \
   php-pgsql \
   php-gd \
-  php-pdo-dblib
-
-if (($? >= 1)); then
-  echo_with_color red "\n${ERROR_STRING}" >&5
-  exit 1
-fi
-
-if ((CURRENT_OS == 33)); then
-  dnf install -y php-pdo-firebird
-else 
-  dnf install -y php-interbase
-fi
+  php-pdo-dblib \
+  php-pdo-firebird
 
 if (($? >= 1)); then
   echo_with_color red "\n${ERROR_STRING}" >&5
@@ -421,11 +411,11 @@ if (($? >= 1)); then
         echo_with_color red "\nOracle instant client installation error" >&5
         exit 1
       fi
-      echo "/usr/lib/oracle/19.5/client64/lib" >/etc/ld.so.conf.d/oracle-instantclient.conf
+      echo "/usr/lib/oracle/19.12/client64/lib" >/etc/ld.so.conf.d/oracle-instantclient.conf
       ldconfig
       export PHP_DTRACE=yes
 
-      printf "\n" | pecl install oci8
+      printf "\n" | pecl install oci8-2.2.0
       if (($? >= 1)); then
         echo_with_color red "\nOracle instant client installation error" >&5
         exit 1
@@ -536,7 +526,7 @@ if (($? >= 1)); then
 
     php -m | grep cassandra
     if (($? >= 1)); then
-      echo_with_color red "\nCould not install ibm_db2 extension." >&5
+      echo_with_color red "\nCould not install cassandra extension." >&5
     fi
     cd "$CURRENT_PATH" || exit 1
     rm -rf /opt/cassandra
@@ -561,14 +551,14 @@ if (($? >= 1)); then
 fi
 
 ### INSTALL PYTHON BUNCH
-dnf install -y python python-pip
-pip list | grep bunch
-if (($? >= 1)); then
-  pip install bunch
-  if (($? >= 1)); then
-    echo_with_color red "\nCould not install python bunch extension." >&5
-  fi
-fi
+# dnf install -y python python-pip
+# pip list | grep bunch
+# if (($? >= 1)); then
+#   pip install bunch
+#   if (($? >= 1)); then
+#     echo_with_color red "\nCould not install python bunch extension." >&5
+#   fi
+# fi
 
 ### INSTALL PYTHON3 MUNCH
 dnf install -y python3 python3-pip
