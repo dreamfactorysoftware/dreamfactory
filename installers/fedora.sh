@@ -553,14 +553,16 @@ if (($? >= 1)); then
 fi
 
 ### INSTALL PYTHON BUNCH
-# dnf install -y python python-pip
-# pip list | grep bunch
-# if (($? >= 1)); then
-#   pip install bunch
-#   if (($? >= 1)); then
-#     echo_with_color red "\nCould not install python bunch extension." >&5
-#   fi
-# fi
+dnf install -y python2
+wget https://bootstrap.pypa.io/pip/2.7/get-pip.py
+python2 get-pip.py
+pip2 list | grep bunch
+if (($? >= 1)); then
+  pip2 install bunch
+  if (($? >= 1)); then
+    echo_with_color red "\nCould not install python bunch extension." >&5
+  fi
+fi
 
 ### INSTALL PYTHON3 MUNCH
 dnf install -y python3 python3-pip
@@ -1024,6 +1026,9 @@ fi
 
 chmod -R 2775 /opt/dreamfactory/
 chown -R "apache:$CURRENT_USER" /opt/dreamfactory/
+
+### Ubuntu 20 uses the python2 command instead of python. So we need to update our .env
+sed -i "s,\#DF_PYTHON_PATH=/usr/local/bin/python,DF_PYTHON_PATH=$(which python2)," .env
 
 ### Uncomment nodejs in .env file
 grep -E "^#DF_NODEJS_PATH" .env >/dev/null
