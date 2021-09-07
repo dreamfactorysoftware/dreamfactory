@@ -565,10 +565,10 @@ if (($? >= 1)); then
 fi
 
 ### INSTALL PYTHON3 MUNCH
-dnf install -y python3 python3-pip
-pip3 list | grep munch
+dnf install -y python python-pip
+pip list | grep munch
 if (($? >= 1)); then
-  pip3 install munch
+  pip install munch
   if (($? >= 1)); then
     echo_with_color red "\nCould not install python3 munch extension." >&5
   fi
