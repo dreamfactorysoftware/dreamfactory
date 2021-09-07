@@ -1102,6 +1102,9 @@ fi
 ### Fedora uses the python2 command instead of python. So we need to update our .env
 sed -i "s,\#DF_PYTHON_PATH=/usr/local/bin/python,DF_PYTHON_PATH=$(which python2)," .env
 
+### Ubuntu 20 uses the python2 command instead of python. So we need to update our .env
+sed -i "s,\#DF_PYTHON_PATH=/usr/local/bin/python,DF_PYTHON_PATH=$(which python2)," .env
+
 ### Uncomment nodejs in .env file
 grep -E "^#DF_NODEJS_PATH" .env >/dev/null
 if (($? == 0)); then
