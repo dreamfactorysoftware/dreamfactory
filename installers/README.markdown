@@ -2,9 +2,9 @@
 
 This directory contains automated installer scripts for the following operating systems:
 
-* CentOS / RHEL 7/8 (8 is currently in Beta)
+* CentOS / RHEL 7/8
 * Debian 9/10
-* Fedora 32/33
+* Fedora 32/33/34
 * Ubuntu 18/20
 
 ### Installation Requirements

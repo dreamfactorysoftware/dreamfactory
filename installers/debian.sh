@@ -639,8 +639,8 @@ if [[ $APACHE == TRUE ]]; then ### Only with key --apache
     cd /src/snowflake
     export PHP_HOME=/usr
     /src/snowflake/scripts/build_pdo_snowflake.sh
-    SNOWFLAKE_BUILD=$($PHP_HOME/bin/php -dextension=modules/pdo_snowflake.so -m | grep pdo_snowflake)
-    if ((SNOWFLAKE_BUILD == 'pdo_snowflake')); then
+    $PHP_HOME/bin/php -dextension=modules/pdo_snowflake.so -m | grep pdo_snowflake
+    if (($? == 0)); then
       export PHP_HOME=/usr
       PHP_EXTENSION_DIR=$($PHP_HOME/bin/php -i | grep '^extension_dir' | sed 's/.*=>\(.*\).*/\1/')
       cp /src/snowflake/modules/pdo_snowflake.so $PHP_EXTENSION_DIR
@@ -665,8 +665,8 @@ else
     cd /src/snowflake
     export PHP_HOME=/usr
     /src/snowflake/scripts/build_pdo_snowflake.sh
-    SNOWFLAKE_BUILD=$($PHP_HOME/bin/php -dextension=modules/pdo_snowflake.so -m | grep pdo_snowflake)
-    if ((SNOWFLAKE_BUILD == 'pdo_snowflake')); then
+    $PHP_HOME/bin/php -dextension=modules/pdo_snowflake.so -m | grep pdo_snowflake
+    if (($? == 0)); then
       export PHP_HOME=/usr
       PHP_EXTENSION_DIR=$($PHP_HOME/bin/php -i | grep '^extension_dir' | sed 's/.*=>\(.*\).*/\1/')
       cp /src/snowflake/modules/pdo_snowflake.so $PHP_EXTENSION_DIR
