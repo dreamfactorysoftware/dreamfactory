@@ -1,7 +1,9 @@
 #!/bin/bash
 # Colors schemes for echo:
 RD='\033[0;31m' # Red
+BL='\033[1;34m' # Blue
 GN='\033[0;32m' # Green
+# YL='\033[1;33m' # Yellow
 MG='\033[0;95m' # Magenta
 NC='\033[0m'    # No Color
 
@@ -74,6 +76,12 @@ echo_with_color() {
   Magenta | MAGENTA | magenta)
     echo -e "${NC}${MG} $2 ${NC}"
     ;;
+  Blue | BLUE | blue)
+    echo -e "${NC}${BL} $2 ${NC}"
+    ;;
+  # Yellow | YELLOW | yellow)
+  #   echo -e "${NC}${YL} $2 ${NC}"
+  #   ;;
   *)
     echo -e "${NC} $2 ${NC}"
     ;;
@@ -99,7 +107,7 @@ if [[ -n $SUDO_USER ]]; then
 fi
 
 ### STEP 1. Install system dependencies
-echo_with_color green "Step 1: Installing system dependencies...\n" >&5
+echo_with_color blue "Step 1: Installing system dependencies...\n" >&5
 dnf install -y git \
   curl \
   zip \
@@ -126,7 +134,7 @@ fi
 echo_with_color green "The system dependencies have been successfully installed.\n" >&5
 
 ### Step 2. Install PHP
-echo_with_color green "Step 2: Installing PHP...\n" >&5
+echo_with_color blue "Step 2: Installing PHP...\n" >&5
 
 # Install the php repository
 if ((CURRENT_OS == 32)); then
@@ -136,7 +144,7 @@ elif ((CURRENT_OS == 33)); then
 elif ((CURRENT_OS ==34)); then
   dnf install -y http://rpms.remirepo.net/fedora/remi-release-34.rpm
 else
-  echo_with_color red "The script support only Fedora 32/33 versions. Exit.\n " >&5
+  echo_with_color red "The script supports only Fedora 32/33/34 versions. Exit.\n " >&5
   exit 1
 fi
 
@@ -167,7 +175,7 @@ echo_with_color green "PHP installed.\n" >&5
 
 ### Step 3. Install Apache
 if [[ $APACHE == TRUE ]]; then ### Only with key --apache
-  echo_with_color green "Step 3: Installing Apache...\n" >&5
+  echo_with_color blue "Step 3: Installing Apache...\n" >&5
   # Check Apache installation status
   ps aux | grep -v grep | grep httpd
   CHECK_APACHE_PROCESS=$?
@@ -221,7 +229,7 @@ if [[ $APACHE == TRUE ]]; then ### Only with key --apache
   fi
 
 else
-  echo_with_color green "Step 3: Installing Nginx...\n" >&5 ### Default choice
+  echo_with_color blue "Step 3: Installing Nginx...\n" >&5 ### Default choice
 
   # Check nginx installation in the system
   ps aux | grep -v grep | grep nginx
@@ -302,8 +310,9 @@ server {
 fi
 
 ### Step 4. Configure PHP development tools
-echo_with_color green "Step 4: Configuring PHP Extensions...\n" >&5
+echo_with_color blue "Step 4: Configuring PHP Extensions...\n" >&5
 
+echo_with_color blue "   Installing PHP PEAR...\n" >&5
 dnf install -y php-pear
 if (($? >= 1)); then
   echo_with_color red "\n${ERROR_STRING}" >&5
@@ -311,11 +320,12 @@ if (($? >= 1)); then
 fi
 
 pecl channel-update pecl.php.net
+echo_with_color green "   PHP PEAR installed\n" >&5
 
-### Instal ZIP
-
+### Install ZIP
 php -m | grep -E "^zip"
 if (($? >= 1)); then
+  echo_with_color blue "   Installing zip...\n" >&5
   pecl install zip
   if (($? >= 1)); then
     echo_with_color red "\nZIP extension installation error." >&5
@@ -325,12 +335,15 @@ if (($? >= 1)); then
   php -m | grep -E "^zip"
   if (($? >= 1)); then
     echo_with_color red "\nExtension Zip have errors..." >&5
+  else
+    echo_with_color green "   Zip installed\n" >&5
   fi
 fi
 
 ### Install MCrypt
 php -m | grep -E "^mcrypt"
 if (($? >= 1)); then
+  echo_with_color blue "   Installing Mcrypt...\n" >&5
   printf "\n" | pecl install mcrypt-1.0.4
   if (($? >= 1)); then
     echo_with_color red "\nMcrypt extension installation error." >&5
@@ -340,12 +353,15 @@ if (($? >= 1)); then
   php -m | grep -E "^mcrypt"
   if (($? >= 1)); then
     echo_with_color red "\nMcrypt installation error." >&5
+  else
+    echo_with_color green "   Mcrypt installed\n" >&5
   fi
 fi
 
 ### Install MongoDB drivers
 php -m | grep -E "^mongodb"
 if (($? >= 1)); then
+  echo_with_color blue "   Installing MongoDB...\n" >&5
   pecl install mongodb
   if (($? >= 1)); then
     echo_with_color red "\nMongo DB extension installation error." >&5
@@ -355,12 +371,15 @@ if (($? >= 1)); then
   php -m | grep -E "^mongodb"
   if (($? >= 1)); then
     echo_with_color red "\nMongoDB installation error." >&5
+  else
+    echo_with_color green "   MongoDB installed\n" >&5
   fi
 fi
 
 ### Install MS SQL Drivers
 php -m | grep -E "^sqlsrv"
 if (($? >= 1)); then
+  echo_with_color blue "   Installing MS Sql Server extension...\n" >&5
   curl https://packages.microsoft.com/config/rhel/8/prod.repo >/etc/yum.repos.d/mssql-release.repo
   yum remove unixODBC-utf16 unixODBC-utf16-devel
   ACCEPT_EULA=Y yum install -y msodbcsql17 mssql-tools unixODBC-devel
@@ -378,12 +397,15 @@ if (($? >= 1)); then
   php -m | grep -E "^sqlsrv"
   if (($? >= 1)); then
     echo_with_color red "\nMS SQL Server extension installation error." >&5
+  else
+    echo_with_color green "   MS SQL Server extension installed\n" >&5
   fi
 fi
 
 ### DRIVERS FOR MSSQL (pdo_sqlsrv)
 php -m | grep -E "^pdo_sqlsrv"
 if (($? >= 1)); then
+  echo_with_color blue "   Installing pdo_sqlsrv...\n" >&5
   pecl install pdo_sqlsrv
   if (($? >= 1)); then
     echo_with_color red "\npdo_sqlsrv extension installation error." >&5
@@ -393,6 +415,8 @@ if (($? >= 1)); then
   php -m | grep -E "^pdo_sqlsrv"
   if (($? >= 1)); then
     echo_with_color red "\nCould not install pdo_sqlsrv extension" >&5
+  else
+    echo_with_color green "   pdo_sqlsrv installed\n" >&5  
   fi
 fi
 
@@ -407,7 +431,7 @@ if (($? >= 1)); then
     fi
     ls -f $DRIVERS_PATH/oracle-instantclient19.*.rpm
     if (($? == 0)); then
-      echo_with_color green "Drivers found.\n" >&5
+      echo_with_color blue "   Drivers found. Installing...\n" >&5
       dnf install -y libaio systemtap-sdt-devel $DRIVERS_PATH/oracle-instantclient19.*.rpm
       if (($? >= 1)); then
         echo_with_color red "\nOracle instant client installation error" >&5
@@ -416,7 +440,7 @@ if (($? >= 1)); then
       echo "/usr/lib/oracle/19.12/client64/lib" >/etc/ld.so.conf.d/oracle-instantclient.conf
       ldconfig
       export PHP_DTRACE=yes
-
+      echo_with_color blue "   Installing oci8...\n" >&5
       printf "\n" | pecl install oci8-2.2.0
       if (($? >= 1)); then
         echo_with_color red "\nOracle instant client installation error" >&5
@@ -428,6 +452,8 @@ if (($? >= 1)); then
       php -m | grep -E "^oci8"
       if (($? >= 1)); then
         echo_with_color red "\nCould not install oci8 extension." >&5
+      else
+        echo_with_color green "   Oracle drivers and oci8 extension installed\n" >&5
       fi
     else
       echo_with_color red "Drivers not found. Skipping...\n" >&5
@@ -447,7 +473,7 @@ if (($? >= 1)); then
     fi
     tar xzf $DRIVERS_PATH/ibm_data_server_driver_package_linuxx64_v11.5.tar.gz -C /opt/
     if (($? == 0)); then
-      echo_with_color green "Drivers found.\n" >&5
+      echo_with_color blue "   Drivers found. Installing...\n" >&5
       dnf install -y ksh
       chmod +x /opt/dsdriver/installDSDriver
       /usr/bin/ksh /opt/dsdriver/installDSDriver
@@ -485,6 +511,8 @@ if (($? >= 1)); then
           php -m | grep ibm_db2
           if (($? >= 1)); then
             echo_with_color red "\nCould not install ibm_db2 extension." >&5
+          else
+            echo_with_color green "   IBM DB2 Installed\n" >&5
           fi
         fi
       fi
@@ -502,6 +530,7 @@ fi
 php -m | grep -E "^cassandra"
 if (($? >= 1)); then
   if [[ $CASSANDRA == TRUE ]]; then
+    echo_with_color blue "   Installing Cassandra...\n" >&5
     dnf install -y lcgdm gmp-devel openssl-devel #boost cmake
     git clone https://github.com/datastax/php-driver.git /opt/cassandra
     cd /opt/cassandra/ || exit 1
@@ -529,6 +558,8 @@ if (($? >= 1)); then
     php -m | grep cassandra
     if (($? >= 1)); then
       echo_with_color red "\nCould not install cassandra extension." >&5
+    else
+      echo_with_color green "   Cassandra installed\n" >&5
     fi
     cd "$CURRENT_PATH" || exit 1
     rm -rf /opt/cassandra
@@ -538,6 +569,7 @@ fi
 ### INSTALL IGBINARY EXT.
 php -m | grep -E "^igbinary"
 if (($? >= 1)); then
+  echo_with_color blue "   Installing igbinary...\n" >&5
   pecl install igbinary
   if (($? >= 1)); then
     echo_with_color red "\nigbinary extension installation error." >&5
@@ -548,11 +580,14 @@ if (($? >= 1)); then
 
   php -m | grep igbinary
   if (($? >= 1)); then
-    echo_with_color red "\nCould not install ibm_db2 extension." >&5
+    echo_with_color red "\nCould not install igbinary." >&5
+  else
+    echo_with_color green "   igbinary installed...\n" >&5
   fi
 fi
 
 ### INSTALL PYTHON BUNCH
+echo_with_color blue "   Installing python2...\n" >&5
 dnf install -y python2
 wget https://bootstrap.pypa.io/pip/2.7/get-pip.py
 python2 get-pip.py
@@ -561,22 +596,28 @@ if (($? >= 1)); then
   pip2 install bunch
   if (($? >= 1)); then
     echo_with_color red "\nCould not install python bunch extension." >&5
+  else
+    echo_with_color green "   python2 installed\n" >&5
   fi
 fi
 
 ### INSTALL PYTHON3 MUNCH
+echo_with_color blue "   Installing python3...\n" >&5
 dnf install -y python python-pip
 pip list | grep munch
 if (($? >= 1)); then
   pip install munch
   if (($? >= 1)); then
     echo_with_color red "\nCould not install python3 munch extension." >&5
+  else
+  echo_with_color green "   python3 installed\n" >&5
   fi
 fi
 
 ### Install Node.js
 node -v
 if (($? >= 1)); then
+  echo_with_color blue "   Installing node...\n" >&5
   curl -sL https://rpm.nodesource.com/setup_10.x | bash -
   dnf install -y nodejs
   if (($? >= 1)); then
@@ -584,11 +625,13 @@ if (($? >= 1)); then
     exit 1
   fi
   NODE_PATH=$(whereis node | cut -d" " -f2)
+  echo_with_color green "   node installed\n" >&5
 fi
 
 ### INSTALL PCS
 php -m | grep -E "^pcs"
 if (($? >= 1)); then
+  echo_with_color blue "   Installing pcs...\n" >&5
   pecl install pcs-1.3.7
   if (($? >= 1)); then
     echo_with_color red "\npcs extension installation error.." >&5
@@ -599,6 +642,8 @@ if (($? >= 1)); then
   php -m | grep pcs
   if (($? >= 1)); then
     echo_with_color red "\nCould not install pcs extension." >&5
+  else
+    echo_with_color green "   pcs installed...\n" >&5
   fi
 fi
 
@@ -623,6 +668,7 @@ fi
 ### INSTALL Snowlake
 ls /etc/php.d | grep "snowflake"
 if (($? >= 1)); then
+  echo_with_color blue "   Installing snowflake...\n" >&5
   dnf update -y
   dnf install -y gcc cmake php-pdo php-json
   git clone https://github.com/snowflakedb/pdo_snowflake.git /src/snowflake
@@ -644,11 +690,13 @@ if (($? >= 1)); then
     echo_with_color red "\nCould not build pdo_snowflake driver." >&5
     exit 1
   fi
+  echo_with_color green "   snowflake installed\n" >&5
 fi
 
 ### INSTALL Hive ODBC Driver
 php -m | grep -E "^odbc"
 if (($? >= 1)); then
+  echo_with_color blue "   Installing hive odbc...\n" >&5
   dnf update -y
   dnf install -y php-odbc
   mkdir /opt/hive
@@ -661,6 +709,8 @@ if (($? >= 1)); then
   HIVE_ODBC_INSTALLED = $(php -m | grep -E "^odbc")
   if ((HIVE_ODBC_INSTALLED != "odbc")); then
     echo_with_color red "\nCould not build hive odbc driver." >&5
+  else
+    echo_with_color green "   hive odbc installed\n" >&5
   fi
 fi
 
@@ -674,7 +724,7 @@ fi
 echo_with_color green "PHP Extensions configured.\n" >&5
 
 ### Step 5. Installing Composer
-echo_with_color green "Step 5: Installing Composer...\n" >&5
+echo_with_color blue "Step 5: Installing Composer...\n" >&5
 
 curl -sS https://getcomposer.org/installer -o /tmp/composer-setup.php
 
@@ -688,7 +738,7 @@ echo_with_color green "Composer installed.\n" >&5
 
 ### Step 6. Installing MySQL
 if [[ $MYSQL == TRUE ]]; then ### Only with key --with-mysql
-  echo_with_color green "Step 6: Installing System Database for DreamFactory...\n" >&5
+  echo_with_color blue "Step 6: Installing System Database for DreamFactory...\n" >&5
 
   yum list installed | grep -E "mariadb-server.x86_64"
   CHECK_MYSQL_INSTALLATION=$?
@@ -733,7 +783,7 @@ if [[ $MYSQL == TRUE ]]; then ### Only with key --with-mysql
   echo_with_color green "Database for DreamFactory installed.\n" >&5
 
   ### Step 7. Configuring DreamFactory system database
-  echo_with_color green "Step 7: Configure DreamFactory system database.\n" >&5
+  echo_with_color blue "Step 7: Configure DreamFactory system database.\n" >&5
 
   DB_INSTALLED=FALSE
 
@@ -839,7 +889,7 @@ else
 fi
 
 ### Step 8. Install DreamFactory
-echo_with_color green "Step 8: Installing DreamFactory...\n " >&5
+echo_with_color blue "Step 8: Installing DreamFactory...\n " >&5
 
 ls -d /opt/dreamfactory
 if (($? >= 1)); then
@@ -887,7 +937,7 @@ if [[ $LICENSE_FILE_EXIST == TRUE ]]; then
       cp $LICENSE_PATH/composer.{json,lock,json-dist} /opt/dreamfactory/
       LICENSE_INSTALLED=TRUE
       echo_with_color green "Licenses file installed. \n" >&5
-      echo_with_color green "Installing DreamFactory...\n" >&5
+      echo_with_color blue "Installing DreamFactory...\n" >&5
     fi
   else
     echo_with_color red "\nSkipping...\n" >&5
@@ -912,7 +962,7 @@ else
       cp $LICENSE_PATH/composer.{json,lock,json-dist} /opt/dreamfactory/
       LICENSE_INSTALLED=TRUE
       echo_with_color green "Licenses file installed. \n" >&5
-      echo_with_color green "Installing DreamFactory...\n" >&5
+      echo_with_color blue "Installing DreamFactory...\n" >&5
     fi
   else
     echo_with_color red "\nInstalling DreamFactory OSS version.\n" >&5
@@ -1027,7 +1077,7 @@ fi
 chmod -R 2775 /opt/dreamfactory/
 chown -R "apache:$CURRENT_USER" /opt/dreamfactory/
 
-### Ubuntu 20 uses the python2 command instead of python. So we need to update our .env
+### Fedora uses the python2 command instead of python. So we need to update our .env
 sed -i "s,\#DF_PYTHON_PATH=/usr/local/bin/python,DF_PYTHON_PATH=$(which python2)," .env
 
 ### Uncomment nodejs in .env file
@@ -1048,7 +1098,7 @@ if (($? == 0)); then
   chcon -t httpd_sys_rw_content_t bootstrap/cache/ -R
 fi
 
-echo_with_color green "Installation finished! "
+echo_with_color green "Installation finished! DreamFactory has been installed in /opt/dreamfactory "
 
 if [[ $DEBUG == TRUE ]]; then
   echo_with_color red "\nThe log file saved in: /tmp/dreamfactory_installer.log "
