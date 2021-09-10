@@ -729,10 +729,10 @@ if (($? >= 1)); then
       exit 1
     fi
     echo_with_color green "    snowflake installed\n" >&5
-  fi
   else
     # pdo_snowflake requires gcc 5.2 to install, centos7 only has 4.8 available
-    echo_with_color red "Snowflake only supported on CentOS / RHEL 8. Skipping..."
+    echo_with_color red "Snowflake only supported on CentOS / RHEL 8. Skipping...\n" >&5
+  fi
 fi
 
 ### INSTALL Hive ODBC Driver
