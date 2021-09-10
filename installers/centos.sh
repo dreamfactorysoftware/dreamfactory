@@ -705,29 +705,34 @@ fi
 ### INSTALL Snowlake
 ls /etc/php.d | grep "snowflake"
 if (($? >= 1)); then
-echo_with_color blue "    Installing snowflake...\n" >&5
-  yum update -y
-  yum install -y gcc cmake php-pdo php-json php-devel
-  git clone https://github.com/snowflakedb/pdo_snowflake.git /src/snowflake
-  cd /src/snowflake
-  export PHP_HOME=/usr
-  /src/snowflake/scripts/build_pdo_snowflake.sh
-  $PHP_HOME/bin/php -dextension=modules/pdo_snowflake.so -m | grep pdo_snowflake
-  if (($? == 0)); then
+  if ((CURRENT_OS == 8)); then
+    echo_with_color blue "    Installing snowflake...\n" >&5
+    yum update -y
+    yum install -y gcc cmake php-pdo php-json php-devel
+    git clone https://github.com/snowflakedb/pdo_snowflake.git /src/snowflake
+    cd /src/snowflake
     export PHP_HOME=/usr
-    PHP_EXTENSION_DIR=$($PHP_HOME/bin/php -i | grep '^extension_dir' | sed 's/.*=>\(.*\).*/\1/')
-    cp /src/snowflake/modules/pdo_snowflake.so $PHP_EXTENSION_DIR
-    cp /src/snowflake/libsnowflakeclient/cacert.pem /etc/php.d
-    if (($? >= 1)); then
-      echo_with_color red "\npdo_snowflake driver installation error." >&5
+    /src/snowflake/scripts/build_pdo_snowflake.sh
+    $PHP_HOME/bin/php -dextension=modules/pdo_snowflake.so -m | grep pdo_snowflake
+    if (($? == 0)); then
+      export PHP_HOME=/usr
+      PHP_EXTENSION_DIR=$($PHP_HOME/bin/php -i | grep '^extension_dir' | sed 's/.*=>\(.*\).*/\1/')
+      cp /src/snowflake/modules/pdo_snowflake.so $PHP_EXTENSION_DIR
+      cp /src/snowflake/libsnowflakeclient/cacert.pem /etc/php.d
+      if (($? >= 1)); then
+        echo_with_color red "\npdo_snowflake driver installation error." >&5
+        exit 1
+      fi
+      echo -e "extension=pdo_snowflake.so\n\npdo_snowflake.cacert=/etc/php.d/cacert.pem" >/etc/php.d/20-pdo_snowflake.ini
+    else
+      echo_with_color red "\nCould not build pdo_snowflake driver." >&5
       exit 1
     fi
-    echo -e "extension=pdo_snowflake.so\n\npdo_snowflake.cacert=/etc/php.d/cacert.pem" >/etc/php.d/20-pdo_snowflake.ini
-  else
-    echo_with_color red "\nCould not build pdo_snowflake driver." >&5
-    exit 1
+    echo_with_color green "    snowflake installed\n" >&5
   fi
-  echo_with_color green "    snowflake installed\n" >&5
+  else
+    # pdo_snowflake requires gcc 5.2 to install, centos7 only has 4.8 available
+    echo_with_color red "Snowflake only supported on CentOS / RHEL 8. Skipping..."
 fi
 
 ### INSTALL Hive ODBC Driver
