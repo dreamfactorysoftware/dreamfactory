@@ -1,6 +1,7 @@
 #!/bin/bash
 # Colors schemes for echo:
 RD='\033[0;31m' # Red
+BL='\033[1;34m' # Blue
 GN='\033[0;32m' # Green
 MG='\033[0;95m' # Magenta
 NC='\033[0m'    # No Color
@@ -76,6 +77,9 @@ echo_with_color() {
   Magenta | MAGENTA | magenta)
     echo -e "${NC}${MG} $2 ${NC}"
     ;;
+  Blue | BLUE | blue)
+    echo -e "${NC}${BL} $2 ${NC}"
+    ;;
   *)
     echo -e "${NC} $2 ${NC}"
     ;;
@@ -101,7 +105,7 @@ if [[ -n $SUDO_USER ]]; then
 fi
 
 ### STEP 1. Install system dependencies
-echo_with_color green "Step 1: Installing system dependencies...\n" >&5
+echo_with_color blue "Step 1: Installing system dependencies...\n" >&5
 apt-get update
 
 if [[ ! -f "/etc/localtime" ]]; then
@@ -130,7 +134,7 @@ fi
 echo_with_color green "The system dependencies have been successfully installed.\n" >&5
 
 ### Step 2. Install PHP
-echo_with_color green "Step 2: Installing PHP...\n" >&5
+echo_with_color blue "Step 2: Installing PHP...\n" >&5
 
 PHP_VERSION=$(php --version 2>/dev/null | head -n 1 | cut -d " " -f 2 | cut -c 1,3)
 MCRYPT=0
@@ -181,7 +185,7 @@ echo_with_color green "${PHP_VERSION} installed.\n" >&5
 
 ### Step 3. Install Apache
 if [[ $APACHE == TRUE ]]; then ### Only with key --apache
-  echo_with_color green "Step 3: Installing Apache...\n" >&5
+  echo_with_color blue "Step 3: Installing Apache...\n" >&5
   # Check Apache installation status
   ps aux | grep -v grep | grep apache2
   CHECK_APACHE_PROCESS=$?
@@ -235,7 +239,7 @@ if [[ $APACHE == TRUE ]]; then ### Only with key --apache
   fi
 
 else
-  echo_with_color green "Step 3: Installing Nginx...\n" >&5 ### Default choice
+  echo_with_color blue "Step 3: Installing Nginx...\n" >&5 ### Default choice
 
   # Check nginx installation in the system
   ps aux | grep -v grep | grep nginx
@@ -309,8 +313,8 @@ server {
 fi
 
 ### Step 4. Configure PHP development tools
-echo_with_color green "Step 4: Configuring PHP Extensions...\n" >&5
-
+echo_with_color blue "Step 4: Configuring PHP Extensions...\n" >&5
+echo_with_color blue "    Installing PHP PEAR...\n" >&5
 apt-get install -y php-pear
 
 if (($? >= 1)); then
@@ -319,10 +323,11 @@ if (($? >= 1)); then
 fi
 
 pecl channel-update pecl.php.net
-
+echo_with_color green "    PHP PEAR installed\n" >&5
 ### Install MCrypt
 php -m | grep -E "^mcrypt"
 if (($? >= 1)); then
+  echo_with_color blue "    Installing Mcrypt...\n" >&5
   if [[ $MCRYPT == 0 ]]; then
     printf "\n" | pecl install mcrypt-1.0.4
     if (($? >= 1)); then
@@ -337,12 +342,15 @@ if (($? >= 1)); then
   php -m | grep -E "^mcrypt"
   if (($? >= 1)); then
     echo_with_color red "\nMcrypt installation error." >&5
+  else
+    echo_with_color green "    Mcrypt installed\n" >&5
   fi
 fi
 
 ### Install MongoDB drivers
 php -m | grep -E "^mongodb"
 if (($? >= 1)); then
+  echo_with_color blue "    Installing MongoDB...\n" >&5
   pecl install mongodb
   if (($? >= 1)); then
     echo_with_color red "\nMongo DB extension installation error." >&5
@@ -353,12 +361,15 @@ if (($? >= 1)); then
   php -m | grep -E "^mongodb"
   if (($? >= 1)); then
     echo_with_color red "\nMongoDB installation error." >&5
+  else
+    echo_with_color green "    MongoDB installed\n" >&5
   fi
 fi
 
 ### Install MS SQL Drivers
 php -m | grep -E "^sqlsrv"
 if (($? >= 1)); then
+echo_with_color blue "    Installing MS SQL Server...\n" >&5
   curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
   if ((CURRENT_OS == 18)); then
     curl https://packages.microsoft.com/config/ubuntu/18.04/prod.list >/etc/apt/sources.list.d/mssql-release.list
@@ -370,7 +381,6 @@ if (($? >= 1)); then
   fi
   apt-get update
   ACCEPT_EULA=Y apt-get install -y msodbcsql17 mssql-tools unixodbc-dev
-
   pecl install sqlsrv
   if (($? >= 1)); then
     echo_with_color red "\nMS SQL Server extension installation error." >&5
@@ -381,12 +391,15 @@ if (($? >= 1)); then
   php -m | grep -E "^sqlsrv"
   if (($? >= 1)); then
     echo_with_color red "\nMS SQL Server extension installation error." >&5
+  else
+    echo_with_color green "    MS SQL Server installed\n" >&5
   fi
 fi
 
 ### DRIVERS FOR MSSQL (pdo_sqlsrv)
 php -m | grep -E "^pdo_sqlsrv"
 if (($? >= 1)); then
+  echo_with_color blue "    Installing pdo_sqlsrv...\n" >&5
   pecl install pdo_sqlsrv
   if (($? >= 1)); then
     echo_with_color red "\npdo_sqlsrv extension installation error." >&5
@@ -397,6 +410,8 @@ if (($? >= 1)); then
   php -m | grep -E "^pdo_sqlsrv"
   if (($? >= 1)); then
     echo_with_color red "\nCould not install pdo_sqlsrv extension" >&5
+  else
+    echo_with_color green "    pdo_sqlsrv installed\n" >&5
   fi
 fi
 
@@ -411,9 +426,10 @@ if (($? >= 1)); then
     fi
     unzip "$DRIVERS_PATH/instantclient-*.zip" -d /opt/oracle
     if (($? == 0)); then
-      echo_with_color green "Drivers found.\n" >&5
+      echo_with_color blue "Drivers found. Installing...\n" >&5
       apt install -y libaio1
       echo "/opt/oracle/instantclient_19_12" >/etc/ld.so.conf.d/oracle-instantclient.conf
+      echo_with_color blue "    Installing oci8...\n" >&5
       printf "instantclient,/opt/oracle/instantclient_19_12\n" | pecl install oci8-2.2.0
       ldconfig
       if (($? >= 1)); then
@@ -425,6 +441,8 @@ if (($? >= 1)); then
       php -m | grep oci8
       if (($? >= 1)); then
         echo_with_color red "\nCould not install oci8 extension." >&5
+      else
+        echo_with_color green "    Oracle Drivers and oci8 installed\n" >&5
       fi
     else
       echo_with_color red "Drivers not found. Skipping...\n" >&5
@@ -444,7 +462,7 @@ if (($? >= 1)); then
     fi
     tar xzf $DRIVERS_PATH/ibm_data_server_driver_package_linuxx64_v11.5.tar.gz -C /opt/
     if (($? == 0)); then
-      echo_with_color green "Drivers found.\n" >&5
+      echo_with_color blue "Drivers found. Installing...\n" >&5
       apt install -y ksh
       chmod +x /opt/dsdriver/installDSDriver
       /usr/bin/ksh /opt/dsdriver/installDSDriver
@@ -477,6 +495,8 @@ if (($? >= 1)); then
           php -m | grep ibm_db2
           if (($? >= 1)); then
             echo_with_color red "\nCould not install ibm_db2 extension." >&5
+          else
+            echo_with_color green "    ibm db2 drivers installed...\n" >&5
           fi
         fi
       fi
@@ -493,6 +513,7 @@ fi
 php -m | grep -E "^cassandra"
 if (($? >= 1)); then
   if [[ $CASSANDRA == TRUE ]]; then
+    echo_with_color blue "    Installing cassandra...\n" >&5
     apt install -y cmake libgmp-dev
     git clone https://github.com/datastax/php-driver.git /opt/cassandra
     cd /opt/cassandra/ || exit 1
@@ -519,6 +540,8 @@ if (($? >= 1)); then
     php -m | grep cassandra
     if (($? >= 1)); then
       echo_with_color red "\nCould not install cassandra extension." >&5
+    else
+      echo_with_color green "    cassandra installed...\n" >&5
     fi
     cd "$CURRENT_PATH" || exit 1
     rm -rf /opt/cassandra
@@ -528,6 +551,7 @@ fi
 ### INSTALL IGBINARY EXT.
 php -m | grep -E "^igbinary"
 if (($? >= 1)); then
+  echo_with_color blue "    Installing igbinary...\n" >&5
   pecl install igbinary
   if (($? >= 1)); then
     echo_with_color red "\nigbinary extension installation error." >&5
@@ -538,11 +562,14 @@ if (($? >= 1)); then
   phpenmod -s ALL igbinary
   php -m | grep igbinary
   if (($? >= 1)); then
-    echo_with_color red "\nCould not install ibm_db2 extension." >&5
+    echo_with_color red "\nCould not install igbinary extension." >&5
+  else
+    echo_with_color green "    igbinary installed\n" >&5
   fi
 fi
 
 ### INSTALL PYTHON BUNCH
+echo_with_color blue "    Installing python2...\n" >&5
 if ((CURRENT_OS == 20)); then
   apt install -y python2
   # Pip2 is not supported on ubuntu anymore. We have to get a script from the python package
@@ -562,22 +589,28 @@ if (($? >= 1)); then
   fi
   if (($? >= 1)); then
     echo_with_color red "\nCould not install python bunch extension." >&5
+  else 
+    echo_with_color green "    python2 installed\n" >&5
   fi
 fi
 
 ### INSTALL PYTHON3 MUNCH
+echo_with_color blue "    Installing python3...\n" >&5
 apt install -y python3 python3-pip
 python3 -m pip list | grep munch
 if (($? >= 1)); then
   python3 -m pip install munch
   if (($? >= 1)); then
     echo_with_color red "\nCould not install python3 munch extension." >&5
+  else
+    echo_with_color green "    python3 installed\n" >&5
   fi
 fi
 
 ### Install Node.js
 node -v
 if (($? >= 1)); then
+  echo_with_color blue "    Installing node...\n" >&5
   curl -sL https://deb.nodesource.com/setup_10.x | bash -
   apt-get install -y nodejs
   if (($? >= 1)); then
@@ -585,11 +618,13 @@ if (($? >= 1)); then
     exit 1
   fi
   NODE_PATH=$(whereis node | cut -d" " -f2)
+  echo_with_color green "    node installed\n" >&5
 fi
 
 ### INSTALL PCS
 php -m | grep -E "^pcs"
 if (($? >= 1)); then
+  echo_with_color blue "    Installing pcs...\n" >&5
   pecl install pcs-1.3.7
   if (($? >= 1)); then
     echo_with_color red "\npcs extension installation error.." >&5
@@ -600,6 +635,8 @@ if (($? >= 1)); then
   php -m | grep pcs
   if (($? >= 1)); then
     echo_with_color red "\nCould not install pcs extension." >&5
+  else
+    echo_with_color green "    pcs installed\n" >&5
   fi
 fi
 
@@ -637,6 +674,7 @@ fi
 if [[ $APACHE == TRUE ]]; then ### Only with key --apache
   ls /etc/php/${PHP_VERSION_INDEX}/apache2/conf.d | grep "snowflake"
   if (($? >= 1)); then
+    echo_with_color blue "    Installing snowflake...\n" >&5
     apt-get update
     apt-get install -y --no-install-recommends --allow-unauthenticated gcc cmake ${PHP_VERSION}-pdo ${PHP_VERSION}-json ${PHP_VERSION}-dev
     git clone https://github.com/snowflakedb/pdo_snowflake.git /src/snowflake
@@ -658,10 +696,12 @@ if [[ $APACHE == TRUE ]]; then ### Only with key --apache
       echo_with_color red "\nCould not build pdo_snowflake driver." >&5
       exit 1
     fi
+    echo_with_color green "    snowflake installed\n" >&5
   fi
 else
   ls /etc/php/${PHP_VERSION_INDEX}/fpm/conf.d | grep "snowflake"
   if (($? >= 1)); then
+    echo_with_color blue "    Installing snowflake...\n" >&5
     apt-get update
     apt-get install -y --no-install-recommends --allow-unauthenticated gcc cmake ${PHP_VERSION}-pdo ${PHP_VERSION}-json ${PHP_VERSION}-dev
     git clone https://github.com/snowflakedb/pdo_snowflake.git /src/snowflake
@@ -683,12 +723,14 @@ else
       echo_with_color red "\nCould not build pdo_snowflake driver." >&5
       exit 1
     fi
+    echo_with_color green "    snowflake installed...\n" >&5 
   fi
 fi
 
 ### INSTALL Hive ODBC Driver
 php -m | grep -E "^odbc"
 if (($? >= 1)); then
+  echo_with_color blue "    Installing hive odbc...\n" >&5
   apt-get update
   apt-get install -y --no-install-recommends --allow-unauthenticated ${PHP_VERSION}-odbc
   mkdir /opt/hive
@@ -701,6 +743,8 @@ if (($? >= 1)); then
   HIVE_ODBC_INSTALLED = $(php -m | grep -E "^odbc")
   if ((HIVE_ODBC_INSTALLED != "odbc")); then
     echo_with_color red "\nCould not build hive odbc driver." >&5
+  else
+    echo_with_color green "    hive odbc installed\n" >&5
   fi
 fi
 
@@ -713,7 +757,7 @@ fi
 echo_with_color green "PHP Extensions configured.\n" >&5
 
 ### Step 5. Installing Composer
-echo_with_color green "Step 5: Installing Composer...\n" >&5
+echo_with_color blue "Step 5: Installing Composer...\n" >&5
 
 curl -sS https://getcomposer.org/installer -o /tmp/composer-setup.php
 
@@ -727,7 +771,7 @@ echo_with_color green "Composer installed.\n" >&5
 
 ### Step 6. Installing MySQL
 if [[ $MYSQL == TRUE ]]; then ### Only with key --with-mysql
-  echo_with_color green "Step 6: Installing System Database for DreamFactory...\n" >&5
+  echo_with_color blue "Step 6: Installing System Database for DreamFactory...\n" >&5
 
   dpkg -l | grep mysql | cut -d " " -f 3 | grep -E "^mysql" | grep -E -v "^mysql-client" | grep -v "mysql-common"
   CHECK_MYSQL_INSTALLATION=$?
@@ -790,7 +834,7 @@ if [[ $MYSQL == TRUE ]]; then ### Only with key --with-mysql
   echo_with_color green "Database for DreamFactory installed.\n" >&5
 
   ### Step 7. Configuring DreamFactory system database
-  echo_with_color green "Step 7: Configure DreamFactory system database.\n" >&5
+  echo_with_color blue "Step 7: Configure DreamFactory system database.\n" >&5
 
   DB_INSTALLED=FALSE
 
@@ -895,7 +939,7 @@ else
 fi
 
 ### Step 8. Install DreamFactory
-echo_with_color green "Step 8: Installing DreamFactory...\n " >&5
+echo_with_color blue "Step 8: Installing DreamFactory...\n " >&5
 
 ls -d /opt/dreamfactory
 if (($? >= 1)); then
@@ -943,7 +987,7 @@ if [[ $LICENSE_FILE_EXIST == TRUE ]]; then
       cp $LICENSE_PATH/composer.{json,lock,json-dist} /opt/dreamfactory/
       LICENSE_INSTALLED=TRUE
       echo_with_color green "\nLicenses file installed. \n" >&5
-      echo_with_color green "Installing DreamFactory...\n" >&5
+      echo_with_color blue "Installing DreamFactory...\n" >&5
     fi
   else
     echo_with_color red "\nSkipping...\n" >&5
@@ -968,7 +1012,7 @@ else
       cp $LICENSE_PATH/composer.{json,lock,json-dist} /opt/dreamfactory/
       LICENSE_INSTALLED=TRUE
       echo_with_color green "\nLicenses file installed. \n" >&5
-      echo_with_color green "Installing DreamFactory...\n" >&5
+      echo_with_color blue "Installing DreamFactory...\n" >&5
     fi
   else
     echo_with_color red "\nInstalling DreamFactory OSS version.\n" >&5
@@ -1093,7 +1137,7 @@ sed -i "s,\#DF_PYTHON_PATH=/usr/local/bin/python,DF_PYTHON_PATH=$(which python2)
 
 sudo -u "$CURRENT_USER" bash -c "php artisan cache:clear -q"
 
-echo_with_color green "\nInstallation finished! "
+echo_with_color green "Installation finished! DreamFactory has been installed in /opt/dreamfactory "
 
 if [[ $DEBUG == TRUE ]]; then
   echo_with_color red "\nThe log file saved in: /tmp/dreamfactory_installer.log "
