@@ -1074,6 +1074,11 @@ if [[ $LICENSE_INSTALLED == TRUE || $DF_CLEAN_INSTALLATION == FALSE ]]; then
   fi
 fi
 
+if [[ ! $APACHE == TRUE ]]; then
+  chmod -R 2775 /opt/dreamfactory/
+  chown -R "apache:$CURRENT_USER" /opt/dreamfactory/
+fi
+
 ### Fedora uses the python2 command instead of python. So we need to update our .env
 sed -i "s,\#DF_PYTHON_PATH=/usr/local/bin/python,DF_PYTHON_PATH=$(which python2)," .env
 

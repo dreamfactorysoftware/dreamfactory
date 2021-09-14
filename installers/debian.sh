@@ -1125,6 +1125,11 @@ if [[ $LICENSE_INSTALLED == TRUE || $DF_CLEAN_INSTALLATION == FALSE ]]; then
   fi
 fi
 
+if [[ $APACHE == TRUE ]]; then
+  chmod -R 2775 /opt/dreamfactory/
+  chown -R "www-data:$CURRENT_USER" /opt/dreamfactory/
+fi
+
 ### Uncomment nodejs in .env file
 grep -E "^#DF_NODEJS_PATH" .env >/dev/null
 if (($? == 0)); then
