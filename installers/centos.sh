@@ -1110,8 +1110,10 @@ if [[ $LICENSE_INSTALLED == TRUE || $DF_CLEAN_INSTALLATION == FALSE ]]; then
   fi
 fi
 
-chmod -R 2775 /opt/dreamfactory/
-chown -R "apache:$CURRENT_USER" /opt/dreamfactory/
+if [[ $APACHE == TRUE ]]; then
+  chmod -R 2775 /opt/dreamfactory/
+  chown -R "apache:$CURRENT_USER" /opt/dreamfactory/
+fi
 
 ### Uncomment nodejs in .env file
 grep -E "^#DF_NODEJS_PATH" .env >/dev/null
@@ -1156,7 +1158,7 @@ if [[ ! $APACHE == TRUE ]]; then
       echo_with_color red "nginx failed to restart\n"
       exit 1
     else
-      service php$PHP_VERSION_NUMBER-fpm restart
+      service php-fpm restart
       if (($? >= 1)); then
         echo_with_color red "php-fpm failed to restart\n"
         exit 1
