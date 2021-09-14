@@ -1074,9 +1074,6 @@ if [[ $LICENSE_INSTALLED == TRUE || $DF_CLEAN_INSTALLATION == FALSE ]]; then
   fi
 fi
 
-chmod -R 2775 /opt/dreamfactory/
-chown -R "apache:$CURRENT_USER" /opt/dreamfactory/
-
 ### Fedora uses the python2 command instead of python. So we need to update our .env
 sed -i "s,\#DF_PYTHON_PATH=/usr/local/bin/python,DF_PYTHON_PATH=$(which python2)," .env
 
@@ -1087,6 +1084,40 @@ if (($? == 0)); then
 fi
 
 sudo -u "$CURRENT_USER" bash -c "php artisan cache:clear -q"
+
+## Add Permissions and Ownerships
+if [[ ! $APACHE == TRUE ]]; then
+  echo_with_color blue "Adding Permissions and Ownerships...\n"
+  echo_with_color blue "    Creating user 'dreamfactory'"
+  useradd dreamfactory
+  echo_with_color blue "    Updating php-fpm user, group, and owner"
+  sed -i "s,;listen.owner = nobody,listen.owner = dreamfactory," /etc/php-fpm.d/www.conf
+  sed -i "s,;listen.group = nobody,listen.group = dreamfactory," /etc/php-fpm.d/www.conf
+  sed -i "s,;listen.mode = 0660,listen.mode = 0660\nuser = dreamfactory\ngroup = dreamfactory," /etc/php-fpm.d/www.conf
+  sed -i "s,listen.acl_users,;listen.acl_users," /etc/php-fpm.d/www.conf
+
+  if (($? == 0)); then
+    usermod -a -G dreamfactory nginx
+    echo_with_color blue "    Changing ownership and permission of /opt/dreamfactory to 'dreamfactory' user"
+    chown -R dreamfactory:dreamfactory /opt/dreamfactory
+    chmod -R u=rwX,g=rX,o= /opt/dreamfactory
+    echo_with_color blue "    Restarting nginx and php-fpm"
+    service nginx restart
+    if (($? >= 1)); then
+      echo_with_color red "nginx failed to restart\n"
+      exit 1
+    else
+      service php-fpm restart
+      if (($? >= 1)); then
+        echo_with_color red "php-fpm failed to restart\n"
+        exit 1
+      fi
+      echo_with_color green "Done! Ownership and Permissions changed to user 'dreamfactory'\n"
+    fi
+  else
+    echo_with_color red "Unable to update php-fpm www.conf file. Please check the file location of www.conf"
+  fi
+fi
 
 #Add rules if SELinux enabled
 sestatus | grep SELinux | grep enabled >/dev/null

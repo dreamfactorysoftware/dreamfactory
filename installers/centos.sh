@@ -1153,7 +1153,7 @@ if [[ ! $APACHE == TRUE ]]; then
       echo_with_color red "nginx failed to restart\n"
       exit 1
     else
-      service php$PHP_VERSION_NUMBER-fpm restart
+      service php-fpm restart
       if (($? >= 1)); then
         echo_with_color red "php-fpm failed to restart\n"
         exit 1
