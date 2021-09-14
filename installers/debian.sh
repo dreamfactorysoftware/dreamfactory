@@ -1125,9 +1125,6 @@ if [[ $LICENSE_INSTALLED == TRUE || $DF_CLEAN_INSTALLATION == FALSE ]]; then
   fi
 fi
 
-chmod -R 2775 /opt/dreamfactory/
-chown -R "www-data:$CURRENT_USER" /opt/dreamfactory/
-
 ### Uncomment nodejs in .env file
 grep -E "^#DF_NODEJS_PATH" .env >/dev/null
 if (($? == 0)); then
@@ -1135,6 +1132,38 @@ if (($? == 0)); then
 fi
 
 su "$CURRENT_USER" -c "php artisan cache:clear -q"
+
+### Add Permissions and Ownerships
+if [[ ! $APACHE == TRUE ]]; then
+  echo_with_color blue "Adding Permissions and Ownerships...\n"
+  echo_with_color blue "    Creating user 'dreamfactory'"
+  useradd dreamfactory
+  PHP_VERSION_NUMBER=$(php --version 2>/dev/null | head -n 1 | cut -d " " -f 2 | cut -c 1,2,3)
+  echo_with_color blue "    Updating php-fpm user, group, and owner"
+  sed -i "s,www-data,dreamfactory," /etc/php/$PHP_VERSION_NUMBER/fpm/pool.d/www.conf
+  if (($? == 0)); then
+    usermod -a -G dreamfactory www-data
+    echo_with_color blue "    Changing ownership and permission of /opt/dreamfactory to 'dreamfactory' user"
+    chown -R dreamfactory:dreamfactory /opt/dreamfactory
+    chmod -R u=rwX,g=rX,o= /opt/dreamfactory
+    echo_with_color blue "    Restarting nginx and php-fpm"
+    service nginx restart
+    if (($? >= 1)); then
+      echo_with_color red "nginx failed to restart\n"
+      exit 1
+    else
+      service php$PHP_VERSION_NUMBER-fpm restart
+      if (($? >= 1)); then
+        echo_with_color red "php-fpm failed to restart\n"
+        exit 1
+      fi
+      echo_with_color green "Done! Ownership and Permissions changed to user 'dreamfactory'\n"
+    fi
+  else
+    echo_with_color red "Unable to update php-fpm www.conf file. Please check the file location of www.conf"
+  fi
+fi
+
 echo_with_color green "Installation finished! DreamFactory has been installed in /opt/dreamfactory "
 
 if [[ $DEBUG == TRUE ]]; then
