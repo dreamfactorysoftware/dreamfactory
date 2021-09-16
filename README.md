@@ -13,7 +13,6 @@
 <p align="center">
     <img alt="GitHub" src="https://img.shields.io/github/license/dreamfactorysoftware/dreamfactory.svg?style=plastic">
     <img alt="Docker Pulls" src="https://img.shields.io/docker/pulls/dreamfactorysoftware/df-docker.svg?style=plastic">
-    <img alt="Docker Build Status" src="https://img.shields.io/docker/build/dreamfactorysoftware/dreamfactory.svg?style=plastic">
     <img alt="GitHub Release Date" src="https://img.shields.io/github/release-date/dreamfactorysoftware/dreamfactory.svg?style=plastic">
 </p>
 
@@ -41,10 +40,10 @@
 <a name="overview"></a>
 ## Overview
 
-DreamFactory™ is an iPaaS for mobile, web, and IoT applications. It is built on top of the Laravel framework, and includes an AngularJS-driven web administration client. So what can you do with the DreamFactory Platform?
+DreamFactory is an API management solution best known for its ability to automatically generate secure and documented APIs for databases like Microsoft SQL Server, MySQL, Snowflake, PostgreSQL, Oracle, and MongoDB. It is built on top of the [Laravel framework](https://laravel.com/), and includes a convenient web-based administration client. So what can you do with DreamFactory?
 
-* [Generate](http://guide.dreamfactory.com/docs/chapter03.html#generating-a-mysql-backed-api) powerful, reusable, documented APIs for SQL, NoSQL, files, email, push notifications and more in seconds.
-* [Use server-side scripts](http://wiki.dreamfactory.com/DreamFactory/Tutorials/Server_Side_Scripting) to easily customize API behavior at any endpoint, for both API requests and API responses.
+* [Generate](http://guide.dreamfactory.com/docs/chapter03.html#generating-a-mysql-backed-api) powerful, reusable, documented APIs for SQL and NoSQL databases, files, email, push notifications and more in seconds.
+* [Use the PHP, Python, and NodeJS scripting languages](http://wiki.dreamfactory.com/DreamFactory/Tutorials/Server_Side_Scripting) to easily customize API behavior at any endpoint, for both API requests and API responses.
 * [Secure every API endpoint](http://guide.dreamfactory.com/docs/chapter03.html#creating-a-role) with user management, SSO authentication, role-based access control, OAuth and Active Directory integration.
 
 <p align="center">
@@ -54,12 +53,11 @@ DreamFactory™ is an iPaaS for mobile, web, and IoT applications. It is built o
 <a name="installation"></a>
 ## Installation
 
-* Install DreamFactory and all of the required dependencies in less than 5 minutes using our [Jeanie Installers](https://github.com/dreamfactorysoftware/dreamfactory/tree/master/installers) for Ubuntu and Debian.
-* [Bitnami](https://bitnami.com/stack/dreamfactory/installer) provides a point and click install process. Just download, walk through the installation steps and you are done!
+* Install DreamFactory and all of the required dependencies in less than 5 minutes using our [installers](https://github.com/dreamfactorysoftware/dreamfactory/tree/master/installers) for CentOS/RHEL, Debian, Fedora, and Ubuntu.
 * [Docker](http://wiki.dreamfactory.com/DreamFactory/Installation#Docker_Image) provides a DockerHub image or you can build your own.
+* Our [Helm chart](https://github.com/dreamfactorysoftware/df-helm) provides a convenient way to install DreamFactory within your Kubernetes cluster.
 * [Raspberry Pi](http://guide.dreamfactory.com/docs/raspberry-pi.html) allows you to configure DreamFactory on everybody's favorite tiny computer.
 
-Find a full list of installation options [here](http://wiki.dreamfactory.com/DreamFactory/Installation).
 
 <a name="heroku"></a>
 
