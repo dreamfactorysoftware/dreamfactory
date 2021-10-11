@@ -84,6 +84,521 @@ echo_with_color() {
   esac
 }
 
+### INSTALLER FUNCTIONS
+
+# We will use these to run each step of the installer inside run_process which will provide us with a
+# progress bar while things are going.
+run_process () {
+  while true; do echo -n . >&5; sleep 1; done &
+  trap 'kill $BGPID; exit' INT
+  BGPID=$!
+  echo -n "$1" >&5
+  $2
+  echo done >&5
+  kill $!
+}
+
+system_update () {
+  if ((CURRENT_OS == 7)); then
+    yum update -y
+  elif ((CURRENT_OS == 8)); then
+    dnf update -y
+  else
+    echo_with_color red "The script support only CentOS(RedHat) versions 7 and 8. Exit.\n " >&5
+    kill $!
+    exit 1
+  fi
+}
+
+install_system_dependencies () {
+  if ((CURRENT_OS == 7)); then
+    yum install -y git \
+      curl \
+      zip \
+      unzip \
+      ca-certificates \
+      lsof \
+      readline-devel \
+      libzip-devel \
+      wget
+  elif ((CURRENT_OS == 8)); then
+    dnf install -y git \
+      curl \
+      zip \
+      unzip \
+      ca-certificates \
+      lsof \
+      readline-devel \
+      libzip-devel \
+      wget
+  fi
+  # Check installation status
+  if (($? >= 1)); then
+    echo_with_color red "\n${ERROR_STRING}" >&5
+    kill $!
+    exit 1
+  fi
+}
+
+install_php () {
+  # Install the php repository
+  if ((CURRENT_OS == 7)); then
+    rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+    rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
+
+    yum-config-manager --enable remi-php74
+
+    #Install PHP
+    yum --enablerepo=remi-php74 install -y php-common \
+      php-xml \
+      php-cli \
+      php-curl \
+      php-json \
+      php-mysqlnd \
+      php-sqlite3 \
+      php-soap \
+      php-mbstring \
+      php-bcmath \
+      php-devel \
+      php-ldap \
+      php-pgsql \
+      php-interbase \
+      php-pdo-dblib \
+      php-gd \
+      php-zip
+  else
+    # RHEL 8
+    rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+    rpm -Uvh http://rpms.remirepo.net/enterprise/remi-release-8.rpm
+
+    dnf module list -y
+    dnf module reset php -y
+    dnf module enable php:remi-7.4 -y
+
+    #Install PHP
+    dnf install -y php-common \
+      php-xml \
+      php-cli \
+      php-curl \
+      php-json \
+      php-mysqlnd \
+      php-sqlite3 \
+      php-soap \
+      php-mbstring \
+      php-bcmath \
+      php-devel \
+      php-ldap \
+      php-pgsql \
+      php-pdo-firebird \
+      php-pdo-dblib \
+      php-gd \
+      php-zip
+  fi
+
+  if (($? >= 1)); then
+    echo_with_color red "\n${ERROR_STRING}" >&5
+    kill $!
+    exit 1
+  fi
+}
+
+install_apache () {
+  yum install -y httpd php
+  if (($? >= 1)); then
+    echo_with_color red "\nCould not install Apache. Exiting." >&5
+    kill $!
+    exit 1
+  fi
+  # Create apache2 site entry
+  echo "
+<VirtualHost *:80>
+    DocumentRoot /opt/dreamfactory/public
+    <Directory /opt/dreamfactory/public>
+        AddOutputFilterByType DEFLATE text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript
+        Options -Indexes +FollowSymLinks -MultiViews
+        AllowOverride All
+        AllowOverride None
+        Require all granted
+        RewriteEngine on
+        RewriteBase /
+        RewriteCond %{REQUEST_FILENAME} !-f
+        RewriteCond %{REQUEST_FILENAME} !-d
+        RewriteRule ^.*$ /index.php [L]
+        <LimitExcept GET HEAD PUT DELETE PATCH POST>
+            Allow from all
+        </LimitExcept>
+    </Directory>
+</VirtualHost>" >/etc/httpd/conf.d/dreamfactory.conf
+}
+
+restart_apache () {
+  service httpd restart
+  systemctl enable httpd.service
+  firewall-cmd --add-service=http
+}
+
+install_nginx () {
+  if ((CURRENT_OS == 7)); then
+    yum --enablerepo=remi-php74 install -y php-fpm nginx
+  else
+    dnf install -y php-fpm nginx
+  fi
+
+  if (($? >= 1)); then
+    echo_with_color red "\nCould not install Nginx. Exiting." >&5
+    kill $!
+    exit 1
+  fi
+  # Change php fpm configuration file
+  sed -i 's/\;cgi\.fix\_pathinfo\=1/cgi\.fix\_pathinfo\=0/' $(php -i | sed -n '/^Loaded Configuration File => /{s:^.*> ::;p;}')
+  # Create nginx site entry
+  echo "
+server {
+
+  listen 80 default_server;
+  listen [::]:80 default_server ipv6only=on;
+  root /opt/dreamfactory/public;
+  index index.php index.html index.htm;
+  gzip on;
+  gzip_disable \"msie6\";
+  gzip_vary on;
+  gzip_proxied any;
+  gzip_comp_level 6;
+  gzip_buffers 16 8k;
+  gzip_http_version 1.1;
+  gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+  location / {
+
+    try_files \$uri \$uri/ /index.php?\$args;
+  }
+
+  error_page 404 /404.html;
+  error_page 500 502 503 504 /50x.html;
+
+  location = /50x.html {
+
+    root /usr/share/nginx/html;
+  }
+  location ~ \.php$ {
+
+    try_files \$uri rewrite ^ /index.php?\$query_string;
+    fastcgi_split_path_info ^(.+\.php)(/.+)$;
+    fastcgi_pass 127.0.0.1:9000;
+    fastcgi_index index.php;
+    fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
+    include fastcgi_params;
+  }
+}" >/etc/nginx/conf.d/dreamfactory.conf
+
+  # RHEL8 php-fpm seems to default to a unix socket, rather than an ip (in RHEL7). As a result
+  # fastcgi_pass has been changed from 127.0.0.1 to unix:/var/run/php-fpm/www.sock for RHEL / CENTOS 8 installation.
+  if ((CURRENT_OS == 8)); then
+  sed -i "s,127.0.0.1:9000;,unix:/var/run/php-fpm/www.sock;," /etc/nginx/conf.d/dreamfactory.conf
+  fi
+
+  #Need to remove default entry in nginx.conf
+  grep default_server /etc/nginx/nginx.conf
+  if (($? == 0)); then
+    sed -i "s/default_server//g" /etc/nginx/nginx.conf
+  fi
+}
+
+restart_nginx () {
+  service php-fpm restart && service nginx restart
+  systemctl enable nginx.service && systemctl enable php-fpm.service
+  firewall-cmd --add-service=http
+}
+
+install_php_pear () {
+  if ((CURRENT_OS == 7)); then
+    yum --enablerepo=remi-php74 install -y php-pear
+  else
+    dnf install -y php-pear
+  fi
+
+  if (($? >= 1)); then
+    echo_with_color red "\n${ERROR_STRING}" >&5
+    kill $!
+    exit 1
+  fi
+
+  pecl channel-update pecl.php.net
+}
+
+install_mcrypt () {
+  if ((CURRENT_OS == 7)); then
+    yum --enablerepo=remi-php74 install -y libmcrypt-devel
+  else
+    dnf install -y libmcrypt-devel
+  fi
+
+  printf "\n" | pecl install mcrypt-1.0.4
+  if (($? >= 1)); then
+    echo_with_color red "\nMcrypt extension installation error." >&5
+    kill $!
+    exit 1
+  fi
+  echo "extension=mcrypt.so" >/etc/php.d/20-mcrypt.ini
+}
+
+install_mongodb () {
+  pecl install mongodb
+  if (($? >= 1)); then
+    echo_with_color red "\nMongo DB extension installation error." >&5
+    kill $!
+    exit 1
+  fi
+  echo "extension=mongodb.so" >/etc/php.d/20-mongodb.ini
+}
+
+install_sql_server () {
+  curl https://packages.microsoft.com/config/rhel/7/prod.repo >/etc/yum.repos.d/mssql-release.repo
+  ACCEPT_EULA=Y yum install -y msodbcsql17 mssql-tools unixODBC-devel
+  if (($? >= 1)); then
+    echo_with_color red "\nMS SQL Server extension installation error." >&5
+    kill $!
+    exit 1
+  fi
+}
+
+install_pdo_sqlsrv () {
+  ACCEPT_EULA=Y yum install -y php-sqlsrv php-pdo_sqlsrv
+  if (($? >= 1)); then
+    echo_with_color red "\nMS SQL Server extension installation error." >&5
+    kill $!
+    exit 1
+  fi
+}
+
+install_oracle () {
+  yum install -y libaio systemtap-sdt-devel $DRIVERS_PATH/oracle-instantclient19.*.rpm
+  if (($? >= 1)); then
+    echo_with_color red "\nOracle instant client installation error" >&5
+    kill $!
+    exit 1
+  fi
+  echo "/usr/lib/oracle/19.12/client64/lib" >/etc/ld.so.conf.d/oracle-instantclient.conf
+  ldconfig
+  export PHP_DTRACE=yes
+  printf "\n" | pecl install oci8-2.2.0
+  if (($? >= 1)); then
+    echo_with_color red "\nOracle instant client installation error" >&5
+    kill $!
+    exit 1
+  fi
+  echo "extension=oci8.so" >/etc/php.d/20-oci8.ini
+}
+
+install_db2 () {
+  yum install -y ksh
+  chmod +x /opt/dsdriver/installDSDriver
+  /usr/bin/ksh /opt/dsdriver/installDSDriver
+  ln -s /opt/dsdriver/include /include
+  git clone https://github.com/dreamfactorysoftware/PDO_IBM-1.3.4-patched.git /opt/PDO_IBM-1.3.4-patched
+  cd /opt/PDO_IBM-1.3.4-patched/ || exit 1
+  sed -i 's/option_str = Z_STRVAL_PP(data);//' ibm_driver.c
+  sed -i '985i\#if PHP_MAJOR_VERSION >= 7\' ibm_driver.c
+  sed -i '986i\option_str = Z_STRVAL_P(data);\' ibm_driver.c
+  sed -i '987i\#else\' ibm_driver.c
+  sed -i '988i\option_str = Z_STRVAL_PP(data);\' ibm_driver.c
+  sed -i '989i\#endif' ibm_driver.c
+  phpize
+  ./configure --with-pdo-ibm=/opt/dsdriver/lib
+  make && make install
+  if (($? >= 1)); then
+    echo_with_color red "\nCould not make pdo_ibm extension." >&5
+    kill $!
+    exit 1
+  fi
+  echo "extension=pdo_ibm.so" >/etc/php.d/20-pdo_ibm.ini
+}
+
+install_db2_extension () {
+  printf "/opt/dsdriver/ \n" | pecl install ibm_db2
+  if (($? >= 1)); then
+    echo_with_color red "\nibm_db2 extension installation error." >&5
+    kill $!
+    exit 1
+  fi
+  echo "extension=ibm_db2.so" >/etc/php.d/20-ibm_db2.ini
+}
+
+install_cassandra () {
+  yum install -y lcgdm gmp-devel openssl-devel #boost cmake
+  git clone https://github.com/datastax/php-driver.git /opt/cassandra
+  cd /opt/cassandra/ || exit 1
+  git checkout v1.3.2 && git pull origin v1.3.2
+  wget http://downloads.datastax.com/cpp-driver/centos/7/cassandra/v2.10.0/cassandra-cpp-driver-2.10.0-1.el7.x86_64.rpm
+  wget http://downloads.datastax.com/cpp-driver/centos/7/cassandra/v2.10.0/cassandra-cpp-driver-debuginfo-2.10.0-1.el7.x86_64.rpm
+  wget http://downloads.datastax.com/cpp-driver/centos/7/cassandra/v2.10.0/cassandra-cpp-driver-devel-2.10.0-1.el7.x86_64.rpm
+  wget http://downloads.datastax.com/cpp-driver/centos/7/dependencies/libuv/v1.23.0/libuv-1.23.0-1.el7.centos.x86_64.rpm
+  wget http://downloads.datastax.com/cpp-driver/centos/7/dependencies/libuv/v1.23.0/libuv-debuginfo-1.23.0-1.el7.centos.x86_64.rpm
+  wget http://downloads.datastax.com/cpp-driver/centos/7/dependencies/libuv/v1.23.0/libuv-devel-1.23.0-1.el7.centos.x86_64.rpm
+  yum install -y *.rpm
+  if (($? >= 1)); then
+    echo_with_color red "\ncassandra extension installation error." >&5
+    kill $!
+    exit 1
+  fi
+  sed -i "s/7.1.99/7.2.99/" ./ext/package.xml
+  ln -s /usr/lib64/libnsl.so.1 /usr/lib64/libnsl.so
+  pecl install ./ext/package.xml
+  if (($? >= 1)); then
+    echo_with_color red "\ncassandra extension installation error." >&5
+    kill $!
+    exit 1
+  fi
+  echo "extension=cassandra.so" >/etc/php.d/20-cassandra.ini
+}
+
+install_igbinary () {
+  pecl install igbinary
+  if (($? >= 1)); then
+    echo_with_color red "\nigbinary extension installation error." >&5
+    kill $!
+    exit 1
+  fi
+  echo "extension=igbinary.so" >/etc/php.d/20-igbinary.ini
+}
+
+install_python2 () {
+  if ((CURRENT_OS == 7)); then
+    yum install -y python python-pip
+  else
+    yum install -y python2 python2-pip
+  fi
+}
+
+install_bunch () {
+  if ((CURRENT_OS == 7)); then
+    pip install bunch
+  else
+    pip2 install bunch
+  fi
+}
+
+install_python3 () {
+  yum install -y python3 python3-pip
+}
+
+install_munch () {
+  pip3 install munch
+}
+
+install_node () {
+  curl -sL https://rpm.nodesource.com/setup_10.x | bash -
+  yum install -y nodejs
+  if (($? >= 1)); then
+    echo_with_color red "\n${ERROR_STRING}" >&5
+    kill $!
+    exit 1
+  fi
+  NODE_PATH=$(whereis node | cut -d" " -f2)
+}
+
+install_pcs () {
+  pecl install pcs-1.3.7
+  if (($? >= 1)); then
+    echo_with_color red "\npcs extension installation error.." >&5
+    kill $!
+    exit 1
+  fi
+  echo "extension=pcs.so" >/etc/php.d/20-pcs.ini
+}
+
+install_snowflake () {
+  yum update -y
+  yum install -y gcc cmake php-pdo php-json php-devel
+  git clone https://github.com/snowflakedb/pdo_snowflake.git /src/snowflake
+  cd /src/snowflake
+  export PHP_HOME=/usr
+  /src/snowflake/scripts/build_pdo_snowflake.sh
+  $PHP_HOME/bin/php -dextension=modules/pdo_snowflake.so -m | grep pdo_snowflake
+  if (($? == 0)); then
+    export PHP_HOME=/usr
+    PHP_EXTENSION_DIR=$($PHP_HOME/bin/php -i | grep '^extension_dir' | sed 's/.*=>\(.*\).*/\1/')
+    cp /src/snowflake/modules/pdo_snowflake.so $PHP_EXTENSION_DIR
+    cp /src/snowflake/libsnowflakeclient/cacert.pem /etc/php.d
+    if (($? >= 1)); then
+      echo_with_color red "\npdo_snowflake driver installation error." >&5
+      kill $!
+      exit 1
+    fi
+    echo -e "extension=pdo_snowflake.so\n\npdo_snowflake.cacert=/etc/php.d/cacert.pem" >/etc/php.d/20-pdo_snowflake.ini
+  else
+    echo_with_color red "\nCould not build pdo_snowflake driver." >&5
+    kill $!
+    exit 1
+  fi
+}
+
+install_hive_odbc () {
+  yum update
+  yum install -y php-odbc
+  mkdir /opt/hive
+  cd /opt/hive
+  wget http://archive.mapr.com/tools/MapR-ODBC/MapR_Hive/MapRHive_odbc_2.6.1.1001/MapRHiveODBC-2.6.1.1001-1.x86_64.rpm
+  rpm -ivh MapRHiveODBC-2.6.1.1001-1.x86_64.rpm
+  test -f /opt/mapr/hiveodbc/lib/64/libmaprhiveodbc64.so
+  rm MapRHiveODBC-2.6.1.1001-1.x86_64.rpm
+  export HIVE_SERVER_ODBC_DRIVER_PATH=/opt/mapr/hiveodbc/lib/64/libmaprhiveodbc64.so
+  HIVE_ODBC_INSTALLED = $(php -m | grep -E "^odbc")
+}
+
+install_composer () {
+  curl -sS https://getcomposer.org/installer -o /tmp/composer-setup.php
+  php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer
+  if (($? >= 1)); then
+    echo_with_color red "\n${ERROR_STRING}" >&5
+    kill $!
+    exit 1
+  fi
+}
+
+install_mariadb () {
+  yum install -y mariadb-server
+  if (($? >= 1)); then
+    echo_with_color red "\n${ERROR_STRING}" >&5
+    kill $!
+    exit 1
+  fi
+
+  service mariadb start
+  if (($? >= 1)); then
+    echo_with_color red "\nCould not start MariaDB.. Exit " >&5
+    kill $!
+    exit 1
+  fi
+  systemctl enable mariadb
+  mysqladmin -u root -h localhost password "${DB_PASS}"
+}
+
+clone_dreamfactory_repository () {
+  mkdir -p /opt/dreamfactory
+  if [[ -z "${DREAMFACTORY_VERSION_TAG}" ]]; then
+    git clone -b master --single-branch https://github.com/dreamfactorysoftware/dreamfactory.git /opt/dreamfactory
+  else
+    git clone -b "${DREAMFACTORY_VERSION_TAG}" --single-branch https://github.com/dreamfactorysoftware/dreamfactory.git /opt/dreamfactory
+  fi
+  if (($? >= 1)); then
+    echo_with_color red "\nCould not clone DreamFactory repository. Exiting. " >&5
+    kill $!
+    exit 1
+  fi
+  DF_CLEAN_INSTALLATION=TRUE
+}
+
+run_composer_install () {
+  # If Oracle is not installed, add the --ignore-platform-reqs option
+  # to composer command
+  if [[ $ORACLE == TRUE ]]; then
+    sudo -u "$CURRENT_USER" bash -c "/usr/local/bin/composer install --no-dev"
+  else
+    sudo -u "$CURRENT_USER" bash -c "/usr/local/bin/composer install --no-dev --ignore-platform-reqs"
+  fi
+}
+#### INSTALLER ####
+
 # Make sure script run as sudo
 if ((EUID != 0)); then
   echo -e "${RD}\nPlease run script with root privileges: sudo bash $0 \n${NC}" >&5
@@ -102,120 +617,17 @@ if [[ -n $SUDO_USER ]]; then
   CURRENT_USER=${SUDO_USER}
 fi
 
-# Sudo should be used to run the script, but CURRENT_USER themselves should not be root (i.e should be another user running with sudo),
-# otherwise composer will get annoyed. If the user wishes to continue as root, then an environment variable will be set when 'composer install' is run later on in the script.
-if [[ $CURRENT_USER == "root" ]]; then
-  echo -e "WARNING: Although this script must be run with sudo, it is not recommended to install DreamFactory as root (specifically 'composer' commands) Would you like to:\n [1] Continue as root\n [2] Provide username for installing DreamFactory" >&5
-  read -r INSTALL_AS_ROOT
-  if [[ $INSTALL_AS_ROOT == 1 ]]; then
-    echo -e "Continuing installation as root" >&5
-  else
-    echo -e "Enter username for installing DreamFactory" >&5
-    read -r CURRENT_USER
-    echo -e "User: ${CURRENT_USER} selected. Continuing" >&5
-  fi
-fi
 
 ### STEP 1. Install system dependencies
 echo_with_color blue "Step 1: Installing system dependencies...\n" >&5
-if ((CURRENT_OS == 7)); then
-  yum update -y
-  yum install -y git \
-    curl \
-    zip \
-    unzip \
-    ca-certificates \
-    lsof \
-    readline-devel \
-    libzip-devel \
-    wget
-elif ((CURRENT_OS == 8)); then
-  dnf update -y
-  dnf install -y git \
-    curl \
-    zip \
-    unzip \
-    ca-certificates \
-    lsof \
-    readline-devel \
-    libzip-devel \
-    wget
-else
-  echo_with_color red "The script support only CentOS(RedHat) versions 7 and 8. Exit.\n " >&5
-  exit 1
-fi
-
-# Check installation status
-if (($? >= 1)); then
-  echo_with_color red "\n${ERROR_STRING}" >&5
-  exit 1
-fi
-
-echo_with_color green "The system dependencies have been successfully installed.\n" >&5
+run_process "   Updating System" system_update
+run_process "   Installing System Dependencies" install_system_dependencies
+echo_with_color green "\nThe system dependencies have been successfully installed.\n" >&5
 
 ### Step 2. Install PHP
 echo_with_color blue "Step 2: Installing PHP...\n" >&5
-
-# Install the php repository
-if ((CURRENT_OS == 7)); then
-  rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-  rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
-
-  yum-config-manager --enable remi-php74
-
-  #Install PHP
-  yum --enablerepo=remi-php74 install -y php-common \
-    php-xml \
-    php-cli \
-    php-curl \
-    php-json \
-    php-mysqlnd \
-    php-sqlite3 \
-    php-soap \
-    php-mbstring \
-    php-bcmath \
-    php-devel \
-    php-ldap \
-    php-pgsql \
-    php-interbase \
-    php-pdo-dblib \
-    php-gd \
-    php-zip
-else
-  # RHEL 8
-  rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
-  rpm -Uvh http://rpms.remirepo.net/enterprise/remi-release-8.rpm
-
-  dnf module list -y
-  dnf module reset php -y
-  dnf module enable php:remi-7.4 -y
-
-  #Install PHP
-  dnf install -y php-common \
-    php-xml \
-    php-cli \
-    php-curl \
-    php-json \
-    php-mysqlnd \
-    php-sqlite3 \
-    php-soap \
-    php-mbstring \
-    php-bcmath \
-    php-devel \
-    php-ldap \
-    php-pgsql \
-    php-pdo-firebird \
-    php-pdo-dblib \
-    php-gd \
-    php-zip
-fi
-
-if (($? >= 1)); then
-  echo_with_color red "\n${ERROR_STRING}" >&5
-  exit 1
-fi
-
-echo_with_color green "PHP installed.\n" >&5
+run_process "   Installing PHP" install_php
+echo_with_color green "\nPHP installed.\n" >&5
 
 ### Step 3. Install Apache
 if [[ $APACHE == TRUE ]]; then ### Only with key --apache
@@ -237,38 +649,9 @@ if [[ $APACHE == TRUE ]]; then ### Only with key --apache
       echo_with_color red "Port 80 taken.\n " >&5
       echo_with_color red "Skipping installation Apache2. Install Apache2 manually.\n " >&5
     else
-      yum install -y httpd php
-      if (($? >= 1)); then
-        echo_with_color red "\nCould not install Apache. Exiting." >&5
-        exit 1
-      fi
-      # Create apache2 site entry
-      echo "
-<VirtualHost *:80>
-    DocumentRoot /opt/dreamfactory/public
-    <Directory /opt/dreamfactory/public>
-        AddOutputFilterByType DEFLATE text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript
-        Options -Indexes +FollowSymLinks -MultiViews
-        AllowOverride All
-        AllowOverride None
-        Require all granted
-        RewriteEngine on
-        RewriteBase /
-        RewriteCond %{REQUEST_FILENAME} !-f
-        RewriteCond %{REQUEST_FILENAME} !-d
-        RewriteRule ^.*$ /index.php [L]
-        <LimitExcept GET HEAD PUT DELETE PATCH POST>
-            Allow from all
-        </LimitExcept>
-    </Directory>
-</VirtualHost>" >/etc/httpd/conf.d/dreamfactory.conf
-
-      service httpd restart
-      systemctl enable httpd.service
-
-      firewall-cmd --add-service=http
-
-      echo_with_color green "Apache2 installed.\n" >&5
+      run_process "   Installing Apache" install_apache
+      run_process "   Restarting Apache" restart_apache
+      echo_with_color green "\nApache2 installed.\n" >&5
     fi
   fi
 
@@ -292,110 +675,22 @@ else
       echo_with_color red "Port 80 taken.\n " >&5
       echo_with_color red "Skipping Nginx installation. Install Nginx manually.\n " >&5
     else
-      if ((CURRENT_OS == 7)); then
-        yum --enablerepo=remi-php74 install -y php-fpm nginx
-      else
-        dnf install -y php-fpm nginx
-      fi
-
-      if (($? >= 1)); then
-        echo_with_color red "\nCould not install Nginx. Exiting." >&5
-        exit 1
-      fi
-      # Change php fpm configuration file
-      sed -i 's/\;cgi\.fix\_pathinfo\=1/cgi\.fix\_pathinfo\=0/' $(php -i | sed -n '/^Loaded Configuration File => /{s:^.*> ::;p;}')
-      # Create nginx site entry
-        echo "
-  server {
-
-    listen 80 default_server;
-    listen [::]:80 default_server ipv6only=on;
-    root /opt/dreamfactory/public;
-    index index.php index.html index.htm;
-    gzip on;
-    gzip_disable \"msie6\";
-    gzip_vary on;
-    gzip_proxied any;
-    gzip_comp_level 6;
-    gzip_buffers 16 8k;
-    gzip_http_version 1.1;
-    gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
-    location / {
-
-      try_files \$uri \$uri/ /index.php?\$args;
-    }
-
-    error_page 404 /404.html;
-    error_page 500 502 503 504 /50x.html;
-
-    location = /50x.html {
-
-      root /usr/share/nginx/html;
-    }
-    location ~ \.php$ {
-
-      try_files \$uri rewrite ^ /index.php?\$query_string;
-      fastcgi_split_path_info ^(.+\.php)(/.+)$;
-      fastcgi_pass 127.0.0.1:9000;
-      fastcgi_index index.php;
-      fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
-      include fastcgi_params;
-    }
-  }" >/etc/nginx/conf.d/dreamfactory.conf
-
-      # RHEL8 php-fpm seems to default to a unix socket, rather than an ip (in RHEL7). As a result
-      # fastcgi_pass has been changed from 127.0.0.1 to unix:/var/run/php-fpm/www.sock for RHEL / CENTOS 8 installation.
-      if ((CURRENT_OS == 8)); then
-      sed -i "s,127.0.0.1:9000;,unix:/var/run/php-fpm/www.sock;," /etc/nginx/conf.d/dreamfactory.conf
-      fi
-
-      #Need to remove default entry in nginx.conf
-      grep default_server /etc/nginx/nginx.conf
-      if (($? == 0)); then
-        sed -i "s/default_server//g" /etc/nginx/nginx.conf
-      fi
-      service php-fpm restart && service nginx restart
-      systemctl enable nginx.service && systemctl enable php-fpm.service
-      firewall-cmd --add-service=http
-
-      echo_with_color green "Nginx installed.\n" >&5
+      run_process "   Installing Nginx" install_nginx
+      run_process "   Restarting Nginx" restart_nginx
+      echo_with_color green "\nNginx installed.\n" >&5
     fi
   fi
 fi
 
 ### Step 4. Configure PHP development tools
 echo_with_color blue "Step 4: Configuring PHP Extensions...\n" >&5
-echo_with_color blue "    Installing PHP PEAR...\n" >&5
-if ((CURRENT_OS == 7)); then
-  yum --enablerepo=remi-php74 install -y php-pear
-else
-  dnf install -y php-pear
-fi
-
-if (($? >= 1)); then
-  echo_with_color red "\n${ERROR_STRING}" >&5
-  exit 1
-fi
-
-pecl channel-update pecl.php.net
+run_process "   Installing PHP PEAR" install_php_pear
 echo_with_color green "    PHP PEAR installed\n" >&5
 
 ### Install MCrypt
 php -m | grep -E "^mcrypt"
 if (($? >= 1)); then
-  echo_with_color blue "    Installing Mcrypt...\n" >&5
-  if ((CURRENT_OS == 7)); then
-    yum --enablerepo=remi-php74 install -y libmcrypt-devel
-  else
-    dnf install -y libmcrypt-devel
-  fi
-
-  printf "\n" | pecl install mcrypt-1.0.4
-  if (($? >= 1)); then
-    echo_with_color red "\nMcrypt extension installation error." >&5
-    exit 1
-  fi
-  echo "extension=mcrypt.so" >/etc/php.d/20-mcrypt.ini
+  run_process "   Installing Mcrypt" install_mcrypt
   php -m | grep -E "^mcrypt"
   if (($? >= 1)); then
     echo_with_color red "\nMcrypt installation error." >&5
@@ -407,13 +702,7 @@ fi
 ### Install MongoDB drivers
 php -m | grep -E "^mongodb"
 if (($? >= 1)); then
-  echo_with_color blue "    Installing MongoDB...\n" >&5
-  pecl install mongodb
-  if (($? >= 1)); then
-    echo_with_color red "\nMongo DB extension installation error." >&5
-    exit 1
-  fi
-  echo "extension=mongodb.so" >/etc/php.d/20-mongodb.ini
+  run_process "   Installing Mongodb" install_mongodb
   php -m | grep -E "^mongodb"
   if (($? >= 1)); then
     echo_with_color red "\nMongoDB installation error." >&5
@@ -425,19 +714,8 @@ fi
 ### Install MS SQL Drivers
 php -m | grep -E "^sqlsrv"
 if (($? >= 1)); then
-  echo_with_color blue "    Installing MS SQL Server extension...\n" >&5
-  curl https://packages.microsoft.com/config/rhel/7/prod.repo >/etc/yum.repos.d/mssql-release.repo
-  ACCEPT_EULA=Y yum install -y msodbcsql17 mssql-tools unixODBC-devel
-  if (($? >= 1)); then
-    echo_with_color red "\nMS SQL Server extension installation error." >&5
-    exit 1
-  fi
-  echo_with_color blue "    Installing pdo_sqlsrv...\n" >&5
-  ACCEPT_EULA=Y yum install -y php-sqlsrv php-pdo_sqlsrv
-  if (($? >= 1)); then
-    echo_with_color red "\nMS SQL Server extension installation error." >&5
-    exit 1
-  fi
+  run_process "   Installing MS SQL Server" install_sql_server
+  run_process "   Installing pdo_sqlsrv" install_pdo_sqlsrv
   php -m | grep -E "^sqlsrv"
   if (($? >= 1)); then
     echo_with_color red "\nMS SQL Server extension installation error." >&5
@@ -463,23 +741,7 @@ if (($? >= 1)); then
     fi
     ls -f $DRIVERS_PATH/oracle-instantclient19.*.rpm
     if (($? == 0)); then
-      echo_with_color blue "Drivers found. Installing...\n" >&5
-      yum install -y libaio systemtap-sdt-devel $DRIVERS_PATH/oracle-instantclient19.*.rpm
-      if (($? >= 1)); then
-        echo_with_color red "\nOracle instant client installation error" >&5
-        exit 1
-      fi
-      echo "/usr/lib/oracle/19.13/client64/lib" >/etc/ld.so.conf.d/oracle-instantclient.conf
-      ldconfig
-      export PHP_DTRACE=yes
-      echo_with_color blue "    Installing oci8...\n" >&5
-      printf "\n" | pecl install oci8-2.2.0
-      if (($? >= 1)); then
-        echo_with_color red "\nOracle instant client installation error" >&5
-        exit 1
-      fi
-      echo "extension=oci8.so" >/etc/php.d/20-oci8.ini
-
+      run_process "   Drivers Found. Installing Oracle Drivers" install_oracle
       php -m | grep -E "^oci8"
       if (($? >= 1)); then
         echo_with_color red "\nCould not install oci8 extension." >&5
@@ -503,28 +765,7 @@ if (($? >= 1)); then
     fi
     tar xzf $DRIVERS_PATH/ibm_data_server_driver_package_linuxx64_v11.5.tar.gz -C /opt/
     if (($? == 0)); then
-      echo_with_color blue "Drivers found. Installing...\n" >&5
-      yum install -y ksh
-      chmod +x /opt/dsdriver/installDSDriver
-      /usr/bin/ksh /opt/dsdriver/installDSDriver
-      ln -s /opt/dsdriver/include /include
-      git clone https://github.com/dreamfactorysoftware/PDO_IBM-1.3.4-patched.git /opt/PDO_IBM-1.3.4-patched
-      cd /opt/PDO_IBM-1.3.4-patched/ || exit 1
-      sed -i 's/option_str = Z_STRVAL_PP(data);//' ibm_driver.c
-      sed -i '985i\#if PHP_MAJOR_VERSION >= 7\' ibm_driver.c
-      sed -i '986i\option_str = Z_STRVAL_P(data);\' ibm_driver.c
-      sed -i '987i\#else\' ibm_driver.c
-      sed -i '988i\option_str = Z_STRVAL_PP(data);\' ibm_driver.c
-      sed -i '989i\#endif' ibm_driver.c
-      phpize
-      ./configure --with-pdo-ibm=/opt/dsdriver/lib
-      make && make install
-      if (($? >= 1)); then
-        echo_with_color red "\nCould not make pdo_ibm extension." >&5
-        exit 1
-      fi
-      echo "extension=pdo_ibm.so" >/etc/php.d/20-pdo_ibm.ini
-
+      run_process "   Drivers Found. Installing DB2" install_db2
       php -m | grep pdo_ibm
       if (($? >= 1)); then
         echo_with_color red "\nCould not install pdo_ibm extension." >&5
@@ -532,12 +773,7 @@ if (($? >= 1)); then
         ### DRIVERS FOR IBM DB2 ( ONLY WITH KEY --with-db2 )
         php -m | grep -E "^ibm_db2"
         if (($? >= 1)); then
-          printf "/opt/dsdriver/ \n" | pecl install ibm_db2
-          if (($? >= 1)); then
-            echo_with_color red "\nibm_db2 extension installation error." >&5
-            exit 1
-          fi
-          echo "extension=ibm_db2.so" >/etc/php.d/20-ibm_db2.ini
+          run_process "   Install ibm_db2 extension" install_db2_extension
           php -m | grep ibm_db2
           if (($? >= 1)); then
             echo_with_color red "\nCould not install ibm_db2 extension." >&5
@@ -559,38 +795,7 @@ fi
 php -m | grep -E "^cassandra"
 if (($? >= 1)); then
   if [[ $CASSANDRA == TRUE ]]; then
-  echo_with_color blue "    Installing Cassandra...\n" >&5
-    yum install -y gmp-devel openssl-devel #boost cmake
-    git clone https://github.com/datastax/php-driver.git /opt/cassandra
-    cd /opt/cassandra/ || exit 1
-    if ((CURRENT_OS == 7)); then
-      wget http://downloads.datastax.com/cpp-driver/centos/7/cassandra/v2.10.0/cassandra-cpp-driver-2.10.0-1.el7.x86_64.rpm
-      wget http://downloads.datastax.com/cpp-driver/centos/7/cassandra/v2.10.0/cassandra-cpp-driver-debuginfo-2.10.0-1.el7.x86_64.rpm
-      wget http://downloads.datastax.com/cpp-driver/centos/7/cassandra/v2.10.0/cassandra-cpp-driver-devel-2.10.0-1.el7.x86_64.rpm
-      wget http://downloads.datastax.com/cpp-driver/centos/7/dependencies/libuv/v1.23.0/libuv-1.23.0-1.el7.centos.x86_64.rpm
-      wget http://downloads.datastax.com/cpp-driver/centos/7/dependencies/libuv/v1.23.0/libuv-debuginfo-1.23.0-1.el7.centos.x86_64.rpm
-      wget http://downloads.datastax.com/cpp-driver/centos/7/dependencies/libuv/v1.23.0/libuv-devel-1.23.0-1.el7.centos.x86_64.rpm
-    else
-      wget https://downloads.datastax.com/cpp-driver/centos/8/cassandra/v2.16.0/cassandra-cpp-driver-2.16.0-1.el8.x86_64.rpm
-      wget https://downloads.datastax.com/cpp-driver/centos/8/cassandra/v2.16.0/cassandra-cpp-driver-debuginfo-2.16.0-1.el8.x86_64.rpm
-      wget https://downloads.datastax.com/cpp-driver/centos/8/cassandra/v2.16.0/cassandra-cpp-driver-devel-2.16.0-1.el8.x86_64.rpm
-      wget https://downloads.datastax.com/cpp-driver/centos/8/dependencies/libuv/v1.35.0/libuv-1.35.0-1.el8.x86_64.rpm
-      wget https://downloads.datastax.com/cpp-driver/centos/8/dependencies/libuv/v1.35.0/libuv-debuginfo-1.35.0-1.el8.x86_64.rpm
-      wget https://downloads.datastax.com/cpp-driver/centos/8/dependencies/libuv/v1.35.0/libuv-devel-1.35.0-1.el8.x86_64.rpm
-    fi
-    yum install -y *.rpm
-    if (($? >= 1)); then
-      echo_with_color red "\ncassandra extension installation error." >&5
-      exit 1
-    fi
-    ln -s /usr/lib64/libnsl.so.1 /usr/lib64/libnsl.so
-    pecl install ./ext/package.xml
-    if (($? >= 1)); then
-      echo_with_color red "\ncassandra extension installation error." >&5
-      exit 1
-    fi
-    echo "extension=cassandra.so" >/etc/php.d/20-cassandra.ini
-
+    run_process "   Installing Cassandra" install_cassandra
     php -m | grep cassandra
     if (($? >= 1)); then
       echo_with_color red "\nCould not install cassandra extension." >&5
@@ -605,15 +810,7 @@ fi
 ### INSTALL IGBINARY EXT.
 php -m | grep -E "^igbinary"
 if (($? >= 1)); then
-  echo_with_color blue "    Installing igbinary...\n" >&5
-  pecl install igbinary
-  if (($? >= 1)); then
-    echo_with_color red "\nigbinary extension installation error." >&5
-    exit 1
-  fi
-
-  echo "extension=igbinary.so" >/etc/php.d/20-igbinary.ini
-
+  run_process "   Installing igbinary" install_igbinary
   php -m | grep igbinary
   if (($? >= 1)); then
     echo_with_color red "\nCould not install igbinary extension." >&5
@@ -623,38 +820,32 @@ if (($? >= 1)); then
 fi
 
 ### INSTALL PYTHON BUNCH
+run_process "   Installing python2" install_python2
 if ((CURRENT_OS == 7)); then
-  echo_with_color blue "    Installing python2...\n" >&5
-  yum install -y python python-pip
   pip list | grep bunch
-  if (($? >= 1)); then
-    pip install bunch
-    if (($? >= 1)); then
-      echo_with_color red "\nCould not install python bunch extension." >&5
-    else
-      echo_with_color green "    python2 installed\n" >&5
-    fi
-  fi
 else
-  echo_with_color blue "    Installing python2...\n" >&5
-  yum install -y python2 python2-pip
   pip2 list | grep bunch
+fi
+if (($? >= 1)); then
+  run_process "   Installing bunch" install_bunch
+  if ((CURRENT_OS == 7)); then
+    pip list | grep bunch
+  else
+    pip2 list | grep bunch
+  fi
   if (($? >= 1)); then
-    pip2 install bunch
-    if (($? >= 1)); then
-      echo_with_color red "\nCould not install python bunch extension." >&5
-    else
-      echo_with_color green "    python2 installed\n" >&5
-    fi
+    echo_with_color red "\nCould not install python bunch extension." >&5
+  else
+    echo_with_color green "    python2 installed\n" >&5
   fi
 fi
 
 ### INSTALL PYTHON3 MUNCH
-echo_with_color blue "    Installing python3...\n" >&5
-yum install -y python3 python3-pip
+run_process "   Installing python3" install_python3
 pip3 list --format=legacy | grep munch
 if (($? >= 1)); then
-  pip3 install munch
+  run_process "   Installing munch" install_munch
+  pip3 list --format=legacy | grep munch
   if (($? >= 1)); then
     echo_with_color red "\nCould not install python3 munch extension." >&5
   else
@@ -665,27 +856,14 @@ fi
 ### Install Node.js
 node -v
 if (($? >= 1)); then
-echo_with_color blue "    Installing node...\n" >&5
-  curl -sL https://rpm.nodesource.com/setup_10.x | bash -
-  yum install -y nodejs
-  if (($? >= 1)); then
-    echo_with_color red "\n${ERROR_STRING}" >&5
-    exit 1
-  fi
-  NODE_PATH=$(whereis node | cut -d" " -f2)
+  run_process "   Installing node" install_node
   echo_with_color green "    node installed\n" >&5
 fi
+
 ### INSTALL PCS
 php -m | grep -E "^pcs"
 if (($? >= 1)); then
-echo_with_color blue "    Installing pcs...\n" >&5
-  pecl install pcs-1.3.7
-  if (($? >= 1)); then
-    echo_with_color red "\npcs extension installation error.." >&5
-    exit 1
-  fi
-  echo "extension=pcs.so" >/etc/php.d/20-pcs.ini
-
+  run_process "   Installing pcs" install_pcs
   php -m | grep pcs
   if (($? >= 1)); then
     echo_with_color red "\nCould not install pcs extension." >&5
@@ -726,28 +904,7 @@ fi
 ls /etc/php.d | grep "snowflake"
 if (($? >= 1)); then
   if ((CURRENT_OS == 8)); then
-    echo_with_color blue "    Installing snowflake...\n" >&5
-    yum update -y
-    yum install -y gcc cmake php-pdo php-json php-devel
-    git clone https://github.com/snowflakedb/pdo_snowflake.git /src/snowflake
-    cd /src/snowflake
-    export PHP_HOME=/usr
-    /src/snowflake/scripts/build_pdo_snowflake.sh
-    $PHP_HOME/bin/php -dextension=modules/pdo_snowflake.so -m | grep pdo_snowflake
-    if (($? == 0)); then
-      export PHP_HOME=/usr
-      PHP_EXTENSION_DIR=$($PHP_HOME/bin/php -i | grep '^extension_dir' | sed 's/.*=>\(.*\).*/\1/')
-      cp /src/snowflake/modules/pdo_snowflake.so $PHP_EXTENSION_DIR
-      cp /src/snowflake/libsnowflakeclient/cacert.pem /etc/php.d
-      if (($? >= 1)); then
-        echo_with_color red "\npdo_snowflake driver installation error." >&5
-        exit 1
-      fi
-      echo -e "extension=pdo_snowflake.so\n\npdo_snowflake.cacert=/etc/php.d/cacert.pem" >/etc/php.d/20-pdo_snowflake.ini
-    else
-      echo_with_color red "\nCould not build pdo_snowflake driver." >&5
-      exit 1
-    fi
+    run_process "   Installing Snowflake" install_snowflake
     echo_with_color green "    snowflake installed\n" >&5
   else
     # pdo_snowflake requires gcc 5.2 to install, centos7 only has 4.8 available
@@ -785,15 +942,7 @@ echo_with_color green "PHP Extensions configured.\n" >&5
 
 ### Step 5. Installing Composer
 echo_with_color blue "Step 5: Installing Composer...\n" >&5
-
-curl -sS https://getcomposer.org/installer -o /tmp/composer-setup.php
-
-php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer
-
-if (($? >= 1)); then
-  echo_with_color red "\n${ERROR_STRING}" >&5
-  exit 1
-fi
+run_process "   Installing Composer" install_composer
 echo_with_color green "Composer installed.\n" >&5
 
 ### Step 6. Installing MySQL
@@ -823,21 +972,7 @@ if [[ $MYSQL == TRUE ]]; then ### Only with key --with-mysql
     fi
 
     echo_with_color green "\nPassword accepted.\n" >&5
-
-    yum install -y mariadb-server
-    if (($? >= 1)); then
-      echo_with_color red "\n${ERROR_STRING}" >&5
-      exit 1
-    fi
-
-    service mariadb start
-    if (($? >= 1)); then
-      echo_with_color red "\nCould not start MariaDB.. Exit " >&5
-      exit 1
-    fi
-    systemctl enable mariadb
-    mysqladmin -u root -h localhost password "${DB_PASS}"
-
+    run_process "   Installing MariaDB" install_mariadb
   fi
 
   echo_with_color green "Database for DreamFactory installed.\n" >&5
@@ -952,17 +1087,7 @@ echo_with_color blue "Step 8: Installing DreamFactory...\n " >&5
 
 ls -d /opt/dreamfactory
 if (($? >= 1)); then
-  mkdir -p /opt/dreamfactory
-  if [[ -z "${DREAMFACTORY_VERSION_TAG}" ]]; then
-    git clone -b master --single-branch https://github.com/dreamfactorysoftware/dreamfactory.git /opt/dreamfactory
-  else
-    git clone -b "${DREAMFACTORY_VERSION_TAG}" --single-branch https://github.com/dreamfactorysoftware/dreamfactory.git /opt/dreamfactory
-  fi
-  if (($? >= 1)); then
-    echo_with_color red "\nCould not clone DreamFactory repository. Exiting. " >&5
-    exit 1
-  fi
-  DF_CLEAN_INSTALLATION=TRUE
+  run_process "   Cloning DreamFactory Repository" clone_dreamfactory_repository
 else
   echo_with_color red "DreamFactory detected.\n" >&5
   DF_CLEAN_INSTALLATION=FALSE
