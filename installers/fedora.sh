@@ -1074,7 +1074,7 @@ if [[ $LICENSE_INSTALLED == TRUE || $DF_CLEAN_INSTALLATION == FALSE ]]; then
   fi
 fi
 
-if [[ ! $APACHE == TRUE ]]; then
+if [[ $APACHE == TRUE ]]; then
   chmod -R 2775 /opt/dreamfactory/
   chown -R "apache:$CURRENT_USER" /opt/dreamfactory/
 fi
