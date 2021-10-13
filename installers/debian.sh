@@ -109,6 +109,20 @@ if [[ -n $SUDO_USER ]]; then
   CURRENT_USER=${SUDO_USER}
 fi
 
+# Sudo should be used to run the script, but CURRENT_USER themselves should not be root (i.e should be another user running with sudo),
+# otherwise composer will get annoyed. If the user wishes to continue as root, then an environment variable will be set when 'composer install' is run later on in the script.
+if [[ $CURRENT_USER == "root" ]]; then
+  echo -e "WARNING: Although this script must be run with sudo, it is not recommended to install DreamFactory as root (specifically 'composer' commands) Would you like to:\n [1] Continue as root\n [2] Provide username for installing DreamFactory" >&5
+  read -r INSTALL_AS_ROOT
+  if [[ $INSTALL_AS_ROOT == 1 ]]; then
+    echo -e "Continuing installation as root" >&5
+  else
+    echo -e "Enter username for installing DreamFactory" >&5
+    read -r CURRENT_USER
+    echo -e "User: ${CURRENT_USER} selected. Continuing" >&5
+  fi
+fi
+
 ### STEP 1. Install system dependencies
 echo_with_color blue "Step 1: Installing system dependencies...\n" >&5
 apt-get update
@@ -1027,9 +1041,17 @@ chown -R "$CURRENT_USER" /opt/dreamfactory && cd /opt/dreamfactory || exit 1
 # If Oracle is not installed, add the --ignore-platform-reqs option
 # to composer command
 if [[ $ORACLE == TRUE ]]; then
-  su "$CURRENT_USER" -c "/usr/local/bin/composer install --no-dev"
+  if [[ $CURRENT_USER == "root" ]]; then
+    sudo -u "$CURRENT_USER" COMPOSER_ALLOW_SUPERUSER=1 bash -c "/usr/local/bin/composer install --no-dev"
+  else
+    sudo -u "$CURRENT_USER" bash -c "/usr/local/bin/composer install --no-dev"
+  fi
 else
-  su "$CURRENT_USER" -c "/usr/local/bin/composer install --no-dev --ignore-platform-reqs"
+  if [[ $CURRENT_USER == "root" ]]; then
+    sudo -u "$CURRENT_USER" COMPOSER_ALLOW_SUPERUSER=1 bash -c "/usr/local/bin/composer install --no-dev --ignore-platform-reqs"
+  else
+    sudo -u "$CURRENT_USER" bash -c "/usr/local/bin/composer install --no-dev --ignore-platform-reqs"
+  fi
 fi
 
 ### Shutdown silent mode because php artisan df:setup and df:env will get troubles with prompts.
