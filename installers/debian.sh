@@ -540,7 +540,6 @@ if (($? >= 1)); then
     apt install -y cmake libgmp-dev
     git clone https://github.com/datastax/php-driver.git /opt/cassandra
     cd /opt/cassandra/ || exit 1
-    git checkout v1.3.2 && git pull origin v1.3.2
     wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/cassandra/v2.10.0/cassandra-cpp-driver-dbg_2.10.0-1_amd64.deb
     wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/cassandra/v2.10.0/cassandra-cpp-driver-dev_2.10.0-1_amd64.deb
     wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/cassandra/v2.10.0/cassandra-cpp-driver_2.10.0-1_amd64.deb
@@ -552,8 +551,6 @@ if (($? >= 1)); then
       echo_with_color red "\ncassandra extension installation error." >&5
       exit 1
     fi
-
-    sed -i "s/7.1.99/7.2.99/" ./ext/package.xml
     pecl install ./ext/package.xml
     if (($? >= 1)); then
       echo_with_color red "\ncassandra extension installation error." >&5
