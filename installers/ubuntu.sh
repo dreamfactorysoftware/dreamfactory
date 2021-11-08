@@ -442,9 +442,9 @@ if (($? >= 1)); then
     if (($? == 0)); then
       echo_with_color blue "Drivers found. Installing...\n" >&5
       apt install -y libaio1
-      echo "/opt/oracle/instantclient_19_12" >/etc/ld.so.conf.d/oracle-instantclient.conf
+      echo "/opt/oracle/instantclient_19_13" >/etc/ld.so.conf.d/oracle-instantclient.conf
       echo_with_color blue "    Installing oci8...\n" >&5
-      printf "instantclient,/opt/oracle/instantclient_19_12\n" | pecl install oci8-2.2.0
+      printf "instantclient,/opt/oracle/instantclient_19_13\n" | pecl install oci8-2.2.0
       ldconfig
       if (($? >= 1)); then
         echo_with_color red "\nOracle instant client installation error" >&5
