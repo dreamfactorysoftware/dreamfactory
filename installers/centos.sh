@@ -470,7 +470,7 @@ if (($? >= 1)); then
         echo_with_color red "\nOracle instant client installation error" >&5
         exit 1
       fi
-      echo "/usr/lib/oracle/19.12/client64/lib" >/etc/ld.so.conf.d/oracle-instantclient.conf
+      echo "/usr/lib/oracle/19.13/client64/lib" >/etc/ld.so.conf.d/oracle-instantclient.conf
       ldconfig
       export PHP_DTRACE=yes
       echo_with_color blue "    Installing oci8...\n" >&5
