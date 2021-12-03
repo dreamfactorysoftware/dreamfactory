@@ -377,7 +377,7 @@ install_oracle () {
     kill $!
     exit 1
   fi
-  echo "/usr/lib/oracle/19.12/client64/lib" >/etc/ld.so.conf.d/oracle-instantclient.conf
+  echo "/usr/lib/oracle/19.13/client64/lib" >/etc/ld.so.conf.d/oracle-instantclient.conf
   ldconfig
   export PHP_DTRACE=yes
   printf "\n" | pecl install oci8-2.2.0
@@ -424,23 +424,30 @@ install_db2_extension () {
 }
 
 install_cassandra () {
-  yum install -y lcgdm gmp-devel openssl-devel #boost cmake
+  yum install -y gmp-devel openssl-devel #boost cmake
   git clone https://github.com/datastax/php-driver.git /opt/cassandra
   cd /opt/cassandra/ || exit 1
-  git checkout v1.3.2 && git pull origin v1.3.2
-  wget http://downloads.datastax.com/cpp-driver/centos/7/cassandra/v2.10.0/cassandra-cpp-driver-2.10.0-1.el7.x86_64.rpm
-  wget http://downloads.datastax.com/cpp-driver/centos/7/cassandra/v2.10.0/cassandra-cpp-driver-debuginfo-2.10.0-1.el7.x86_64.rpm
-  wget http://downloads.datastax.com/cpp-driver/centos/7/cassandra/v2.10.0/cassandra-cpp-driver-devel-2.10.0-1.el7.x86_64.rpm
-  wget http://downloads.datastax.com/cpp-driver/centos/7/dependencies/libuv/v1.23.0/libuv-1.23.0-1.el7.centos.x86_64.rpm
-  wget http://downloads.datastax.com/cpp-driver/centos/7/dependencies/libuv/v1.23.0/libuv-debuginfo-1.23.0-1.el7.centos.x86_64.rpm
-  wget http://downloads.datastax.com/cpp-driver/centos/7/dependencies/libuv/v1.23.0/libuv-devel-1.23.0-1.el7.centos.x86_64.rpm
+  if ((CURRENT_OS == 7)); then
+    wget http://downloads.datastax.com/cpp-driver/centos/7/cassandra/v2.10.0/cassandra-cpp-driver-2.10.0-1.el7.x86_64.rpm
+    wget http://downloads.datastax.com/cpp-driver/centos/7/cassandra/v2.10.0/cassandra-cpp-driver-debuginfo-2.10.0-1.el7.x86_64.rpm
+    wget http://downloads.datastax.com/cpp-driver/centos/7/cassandra/v2.10.0/cassandra-cpp-driver-devel-2.10.0-1.el7.x86_64.rpm
+    wget http://downloads.datastax.com/cpp-driver/centos/7/dependencies/libuv/v1.23.0/libuv-1.23.0-1.el7.centos.x86_64.rpm
+    wget http://downloads.datastax.com/cpp-driver/centos/7/dependencies/libuv/v1.23.0/libuv-debuginfo-1.23.0-1.el7.centos.x86_64.rpm
+    wget http://downloads.datastax.com/cpp-driver/centos/7/dependencies/libuv/v1.23.0/libuv-devel-1.23.0-1.el7.centos.x86_64.rpm
+  else
+    wget https://downloads.datastax.com/cpp-driver/centos/8/cassandra/v2.16.0/cassandra-cpp-driver-2.16.0-1.el8.x86_64.rpm
+    wget https://downloads.datastax.com/cpp-driver/centos/8/cassandra/v2.16.0/cassandra-cpp-driver-debuginfo-2.16.0-1.el8.x86_64.rpm
+    wget https://downloads.datastax.com/cpp-driver/centos/8/cassandra/v2.16.0/cassandra-cpp-driver-devel-2.16.0-1.el8.x86_64.rpm
+    wget https://downloads.datastax.com/cpp-driver/centos/8/dependencies/libuv/v1.35.0/libuv-1.35.0-1.el8.x86_64.rpm
+    wget https://downloads.datastax.com/cpp-driver/centos/8/dependencies/libuv/v1.35.0/libuv-debuginfo-1.35.0-1.el8.x86_64.rpm
+    wget https://downloads.datastax.com/cpp-driver/centos/8/dependencies/libuv/v1.35.0/libuv-devel-1.35.0-1.el8.x86_64.rpm
+  fi
   yum install -y *.rpm
   if (($? >= 1)); then
     echo_with_color red "\ncassandra extension installation error." >&5
     kill $!
     exit 1
   fi
-  sed -i "s/7.1.99/7.2.99/" ./ext/package.xml
   ln -s /usr/lib64/libnsl.so.1 /usr/lib64/libnsl.so
   pecl install ./ext/package.xml
   if (($? >= 1)); then
@@ -533,7 +540,7 @@ install_snowflake () {
 }
 
 install_hive_odbc () {
-  yum update
+  yum update -y
   yum install -y php-odbc
   mkdir /opt/hive
   cd /opt/hive
@@ -592,9 +599,17 @@ run_composer_install () {
   # If Oracle is not installed, add the --ignore-platform-reqs option
   # to composer command
   if [[ $ORACLE == TRUE ]]; then
-    sudo -u "$CURRENT_USER" bash -c "/usr/local/bin/composer install --no-dev"
+    if [[ $CURRENT_USER == "root" ]]; then
+      sudo -u "$CURRENT_USER" COMPOSER_ALLOW_SUPERUSER=1 bash -c "/usr/local/bin/composer install --no-dev"
+    else
+      sudo -u "$CURRENT_USER" bash -c "/usr/local/bin/composer install --no-dev"
+    fi
   else
-    sudo -u "$CURRENT_USER" bash -c "/usr/local/bin/composer install --no-dev --ignore-platform-reqs"
+    if [[ $CURRENT_USER == "root" ]]; then
+      sudo -u "$CURRENT_USER" COMPOSER_ALLOW_SUPERUSER=1 bash -c "/usr/local/bin/composer install --no-dev --ignore-platform-reqs"
+    else
+      sudo -u "$CURRENT_USER" bash -c "/usr/local/bin/composer install --no-dev --ignore-platform-reqs"
+    fi
   fi
 }
 #### INSTALLER ####
@@ -617,6 +632,19 @@ if [[ -n $SUDO_USER ]]; then
   CURRENT_USER=${SUDO_USER}
 fi
 
+# Sudo should be used to run the script, but CURRENT_USER themselves should not be root (i.e should be another user running with sudo),
+# otherwise composer will get annoyed. If the user wishes to continue as root, then an environment variable will be set when 'composer install' is run later on in the script.
+if [[ $CURRENT_USER == "root" ]]; then
+  echo -e "WARNING: Although this script must be run with sudo, it is not recommended to install DreamFactory as root (specifically 'composer' commands) Would you like to:\n [1] Continue as root\n [2] Provide username for installing DreamFactory" >&5
+  read -r INSTALL_AS_ROOT
+  if [[ $INSTALL_AS_ROOT == 1 ]]; then
+    echo -e "Continuing installation as root" >&5
+  else
+    echo -e "Enter username for installing DreamFactory" >&5
+    read -r CURRENT_USER
+    echo -e "User: ${CURRENT_USER} selected. Continuing" >&5
+  fi
+fi
 
 ### STEP 1. Install system dependencies
 echo_with_color blue "Step 1: Installing system dependencies...\n" >&5
