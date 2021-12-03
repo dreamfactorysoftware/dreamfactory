@@ -55,8 +55,8 @@ After navigating to the Oracle website you'll want to download the basic and sdk
 
 For RPM based systems you'll want to download next files:
 
-* oracle-instantclient19.12-basic-19.13.0.0.0-1.x86_64.rpm
-* oracle-instantclient19.12-devel-19.130.0.0-1.x86_64.rpm
+* oracle-instantclient19.13-basic-19.13.0.0.0-1.x86_64.rpm
+* oracle-instantclient19.13-devel-19.13.0.0.0-1.x86_64.rpm
 
 You should not unzip these files. Just upload them to your server and write down the absolute path to their location as you'll need to supply this path during the installation process.
 
