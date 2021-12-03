@@ -395,9 +395,9 @@ install_pdo_sqlsrv () {
 
 install_oracle () {
   apt install -y libaio1
-  echo "/opt/oracle/instantclient_19_12" >/etc/ld.so.conf.d/oracle-instantclient.conf
+  echo "/opt/oracle/instantclient_19_13" >/etc/ld.so.conf.d/oracle-instantclient.conf
   ldconfig
-  printf "instantclient,/opt/oracle/instantclient_19_12\n" | pecl install oci8-2.2.0
+  printf "instantclient,/opt/oracle/instantclient_19_13\n" | pecl install oci8-2.2.0
   if (($? >= 1)); then
     echo_with_color red "\nOracle instant client installation error" >&5
     kill $!
@@ -441,7 +441,6 @@ install_cassandra () {
   apt install -y cmake libgmp-dev
   git clone https://github.com/datastax/php-driver.git /opt/cassandra
   cd /opt/cassandra/ || exit 1
-  git checkout v1.3.2 && git pull origin v1.3.2
   wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/cassandra/v2.10.0/cassandra-cpp-driver-dbg_2.10.0-1_amd64.deb
   wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/cassandra/v2.10.0/cassandra-cpp-driver-dev_2.10.0-1_amd64.deb
   wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/cassandra/v2.10.0/cassandra-cpp-driver_2.10.0-1_amd64.deb
@@ -454,8 +453,6 @@ install_cassandra () {
     kill $!
     exit 1
   fi
-
-  sed -i "s/7.1.99/7.2.99/" ./ext/package.xml
   pecl install ./ext/package.xml
   if (($? >= 1)); then
     echo_with_color red "\ncassandra extension installation error." >&5
@@ -647,9 +644,17 @@ run_composer_install () {
   # If Oracle is not installed, add the --ignore-platform-reqs option
   # to composer command
   if [[ $ORACLE == TRUE ]]; then
-    su "$CURRENT_USER" -c "/usr/local/bin/composer install --no-dev"
+    if [[ $CURRENT_USER == "root" ]]; then
+      sudo -u "$CURRENT_USER" COMPOSER_ALLOW_SUPERUSER=1 bash -c "/usr/local/bin/composer install --no-dev"
+    else
+      sudo -u "$CURRENT_USER" bash -c "/usr/local/bin/composer install --no-dev"
+    fi
   else
-    su "$CURRENT_USER" -c "/usr/local/bin/composer install --no-dev --ignore-platform-reqs"
+    if [[ $CURRENT_USER == "root" ]]; then
+      sudo -u "$CURRENT_USER" COMPOSER_ALLOW_SUPERUSER=1 bash -c "/usr/local/bin/composer install --no-dev --ignore-platform-reqs"
+    else
+      sudo -u "$CURRENT_USER" bash -c "/usr/local/bin/composer install --no-dev --ignore-platform-reqs"
+    fi
   fi
 }
 #### INSTALLER ####
@@ -675,6 +680,20 @@ fi
 
 if [[ -n $SUDO_USER ]]; then
   CURRENT_USER=${SUDO_USER}
+fi
+
+# Sudo should be used to run the script, but CURRENT_USER themselves should not be root (i.e should be another user running with sudo),
+# otherwise composer will get annoyed. If the user wishes to continue as root, then an environment variable will be set when 'composer install' is run later on in the script.
+if [[ $CURRENT_USER == "root" ]]; then
+  echo -e "WARNING: Although this script must be run with sudo, it is not recommended to install DreamFactory as root (specifically 'composer' commands) Would you like to:\n [1] Continue as root\n [2] Provide username for installing DreamFactory" >&5
+  read -r INSTALL_AS_ROOT
+  if [[ $INSTALL_AS_ROOT == 1 ]]; then
+    echo -e "Continuing installation as root" >&5
+  else
+    echo -e "Enter username for installing DreamFactory" >&5
+    read -r CURRENT_USER
+    echo -e "User: ${CURRENT_USER} selected. Continuing" >&5
+  fi
 fi
 
 ### STEP 1. Install system dependencies
