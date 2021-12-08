@@ -1,90 +1,5 @@
 #!/bin/bash
-# Colors schemes for echo:
-RD='\033[0;31m' # Red
-BL='\033[1;34m' # Blue
-GN='\033[0;32m' # Green
-MG='\033[0;95m' # Magenta
-NC='\033[0m'    # No Color
 
-ERROR_STRING="Installation error. Exiting"
-CURRENT_PATH=$(pwd)
-
-DEFAULT_PHP_VERSION="php7.4"
-
-CURRENT_OS=$(grep -e VERSION_ID /etc/os-release |
-  sed -e 's/VERSION_ID="//g' |
-  sed -e 's/\.[0-9]*"$//g' |
-  sed -e 's/"$//g')
-
-# CHECK FOR KEYS
-while [[ -n $1 ]]; do
-  case "$1" in
-  --with-oracle) ORACLE=TRUE ;;
-  --with-mysql) MYSQL=TRUE ;;
-  --with-apache) APACHE=TRUE ;;
-  --with-db2) DB2=TRUE ;;
-  --with-cassandra) CASSANDRA=TRUE ;;
-  --with-tag=*)
-    DREAMFACTORY_VERSION_TAG="${1/--with-tag=/}"
-    ;;
-  --with-tag)
-    DREAMFACTORY_VERSION_TAG="$2"
-    shift
-    ;;
-  --debug) DEBUG=TRUE ;;
-  --help) HELP=TRUE ;;
-  -h) HELP=TRUE ;;
-  *)
-    echo -e "\n${RD}Invalid flag detected… aborting.${NC}"
-    HELP=TRUE
-    break
-    ;;
-  esac
-  shift
-done
-
-if [[ $HELP == TRUE ]]; then
-  echo -e "\nList of available keys:\n"
-  echo "   --with-oracle                  Install driver and PHP extensions for work with Oracle DB"
-  echo "   --with-mysql                   Install MariaDB as default system database for DreamFactory"
-  echo "   --with-apache                  Install Apache2 web server for DreamFactory"
-  echo "   --with-db2                     Install driver and PHP extensions for work with IBM DB2"
-  echo "   --with-cassandra               Install driver and PHP extensions for work with Cassandra DB"
-  echo "   --with-tag=<tag name>          Install DreamFactory with specific version.  "
-  echo "   --debug                        Enable installation process logging to file in /tmp folder."
-  echo -e "   -h, --help                     Show this help\n"
-  exit 1
-fi
-
-if [[ ! $DEBUG == TRUE ]]; then
-  exec 5>&1            # Save a copy of STDOUT
-  exec >/dev/null 2>&1 # Redirect STDOUT to Null
-else
-  exec 5>&1 # Save a copy of STDOUT. Used because all echo redirects output to 5.
-  exec >/tmp/dreamfactory_installer.log 2>&1
-fi
-
-clear >&5
-
-echo_with_color() {
-  case $1 in
-  Red | RED | red)
-    echo -e "${NC}${RD} $2 ${NC}"
-    ;;
-  Green | GREEN | green)
-    echo -e "${NC}${GN} $2 ${NC}"
-    ;;
-  Magenta | MAGENTA | magenta)
-    echo -e "${NC}${MG} $2 ${NC}"
-    ;;
-  Blue | BLUE | blue)
-    echo -e "${NC}${BL} $2 ${NC}"
-    ;;
-  *)
-    echo -e "${NC} $2 ${NC}"
-    ;;
-  esac
-}
 ### INSTALLER FUNCTIONS ###
 
 # We will use these to run each step of the installer inside run_process which will provide us with a
@@ -129,59 +44,7 @@ install_system_dependencies () {
     kill $!
     exit 1
   fi
-fi
-
-if [[ -n $SUDO_USER ]]; then
-  CURRENT_USER=${SUDO_USER}
-fi
-
-# Sudo should be used to run the script, but CURRENT_USER themselves should not be root (i.e should be another user running with sudo),
-# otherwise composer will get annoyed. If the user wishes to continue as root, then an environment variable will be set when 'composer install' is run later on in the script.
-if [[ $CURRENT_USER == "root" ]]; then
-  echo -e "WARNING: Although this script must be run with sudo, it is not recommended to install DreamFactory as root (specifically 'composer' commands) Would you like to:\n [1] Continue as root\n [2] Provide username for installing DreamFactory" >&5
-  read -r INSTALL_AS_ROOT
-  if [[ $INSTALL_AS_ROOT == 1 ]]; then
-    echo -e "Continuing installation as root" >&5
-  else
-    echo -e "Enter username for installing DreamFactory" >&5
-    read -r CURRENT_USER
-    echo -e "User: ${CURRENT_USER} selected. Continuing" >&5
-  fi
-fi
-
-### STEP 1. Install system dependencies
-echo_with_color blue "Step 1: Installing system dependencies...\n" >&5
-apt-get update
-
-if [[ ! -f "/etc/localtime" ]]; then
-  echo -e "13\n33" | apt-get install -y tzdata
-fi
-
-apt-get install -y git \
-  curl \
-  wget \
-  zip \
-  unzip \
-  ca-certificates \
-  apt-transport-https \
-  software-properties-common \
-  lsof \
-  libmcrypt-dev \
-  libreadline-dev \
-  dirmngr \
-  wget \
-  sudo
-
-# Check installation status
-if (($? >= 1)); then
-  echo_with_color red "\n${ERROR_STRING}" >&5
-  exit 1
-fi
-
-echo_with_color green "The system dependencies have been successfully installed.\n" >&5
-
-### Step 2. Install PHP
-echo_with_color blue "Step 2: Installing PHP...\n" >&5
+}
 
 install_php () {
   PHP_VERSION=${DEFAULT_PHP_VERSION}
@@ -362,12 +225,6 @@ install_sql_server () {
   # 11)
   #   curl https://packages.microsoft.com/config/debian/11/prod.list >/etc/apt/sources.list.d/mssql-release.list
   #   ;;
-
-  *)
-    echo_with_color red "The script support only Debian 9 and 10 versions. Exit.\n " >&5
-    kill $!
-    exit 1
-    ;;
   esac
   apt-get update
   ACCEPT_EULA=Y apt-get install -y msodbcsql17 mssql-tools unixodbc-dev
@@ -598,10 +455,6 @@ add_mariadb_repo () {
   # elif ((CURRENT_OS == 11)); then
   #   apt-key adv --no-tty --recv-keys --keyserver keyserver.ubuntu.com 0xF1656F24C74CD1D8
   #   add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.3/debian bullseye main'
-  else
-    echo_with_color red "The script support only Debian 9, and 10 versions. Exit.\n" >&5
-    kill $!
-    exit 1
   fi
 }
 
@@ -826,19 +679,7 @@ if (($? >= 1)); then
     fi
     unzip "$DRIVERS_PATH/instantclient-*.zip" -d /opt/oracle
     if (($? == 0)); then
-      echo_with_color blue "Drivers found. Installing....\n" >&5
-      apt install -y libaio1
-      echo "/opt/oracle/instantclient_19_13" >/etc/ld.so.conf.d/oracle-instantclient.conf
-      ldconfig
-      echo_with_color blue "    Installing oci8...\n" >&5
-      printf "instantclient,/opt/oracle/instantclient_19_13\n" | pecl install oci8-2.2.0
-      if (($? >= 1)); then
-        echo_with_color red "\nOracle instant client installation error" >&5
-        exit 1
-      fi
-      echo "extension=oci8.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/oci8.ini"
-      phpenmod -s ALL oci8
-
+      run_process "  Drivers found. Installing Oracle Drivers" install_oracle
       php -m | grep oci8
       if (($? >= 1)); then
         echo_with_color red "\nCould not install oci8 extension." >&5
@@ -893,28 +734,7 @@ fi
 php -m | grep -E "^cassandra"
 if (($? >= 1)); then
   if [[ $CASSANDRA == TRUE ]]; then
-  echo_with_color blue "    Installing Cassandra...\n" >&5
-    apt install -y cmake libgmp-dev
-    git clone https://github.com/datastax/php-driver.git /opt/cassandra
-    cd /opt/cassandra/ || exit 1
-    wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/cassandra/v2.10.0/cassandra-cpp-driver-dbg_2.10.0-1_amd64.deb
-    wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/cassandra/v2.10.0/cassandra-cpp-driver-dev_2.10.0-1_amd64.deb
-    wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/cassandra/v2.10.0/cassandra-cpp-driver_2.10.0-1_amd64.deb
-    wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/dependencies/libuv/v1.23.0/libuv1-dbg_1.23.0-1_amd64.deb
-    wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/dependencies/libuv/v1.23.0/libuv1-dev_1.23.0-1_amd64.deb
-    wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/dependencies/libuv/v1.23.0/libuv1_1.23.0-1_amd64.deb
-    dpkg -i *.deb
-    if (($? >= 1)); then
-      echo_with_color red "\ncassandra extension installation error." >&5
-      exit 1
-    fi
-    pecl install ./ext/package.xml
-    if (($? >= 1)); then
-      echo_with_color red "\ncassandra extension installation error." >&5
-      exit 1
-    fi
-    echo "extension=cassandra.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/cassandra.ini"
-    phpenmod -s ALL cassandra
+    run_process "   Installing Cassandra" install_cassandra
     php -m | grep cassandra
     if (($? >= 1)); then
       echo_with_color red "\nCould not install cassandra extension." >&5
@@ -1270,21 +1090,7 @@ fi
 
 chown -R "$CURRENT_USER" /opt/dreamfactory && cd /opt/dreamfactory || exit 1
 
-# If Oracle is not installed, add the --ignore-platform-reqs option
-# to composer command
-if [[ $ORACLE == TRUE ]]; then
-  if [[ $CURRENT_USER == "root" ]]; then
-    sudo -u "$CURRENT_USER" COMPOSER_ALLOW_SUPERUSER=1 bash -c "/usr/local/bin/composer install --no-dev"
-  else
-    sudo -u "$CURRENT_USER" bash -c "/usr/local/bin/composer install --no-dev"
-  fi
-else
-  if [[ $CURRENT_USER == "root" ]]; then
-    sudo -u "$CURRENT_USER" COMPOSER_ALLOW_SUPERUSER=1 bash -c "/usr/local/bin/composer install --no-dev --ignore-platform-reqs"
-  else
-    sudo -u "$CURRENT_USER" bash -c "/usr/local/bin/composer install --no-dev --ignore-platform-reqs"
-  fi
-fi
+run_process "   Installing DreamFactory" run_composer_install
 
 ### Shutdown silent mode because php artisan df:setup and df:env will get troubles with prompts.
 exec 1>&5 5>&-
@@ -1444,5 +1250,3 @@ if [[ $MYSQL_INSTALLED == TRUE ]]; then
   echo -e " DB password: $DF_SYSTEM_DB_PASSWORD"
   echo -e "******************************\n${NC}"
 fi
-
-exit 0
