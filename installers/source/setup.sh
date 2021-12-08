@@ -6,6 +6,7 @@ GN='\033[0;32m' # Green
 MG='\033[0;95m' # Magenta
 NC='\033[0m'    # No Color
 
+TERM_COLS="$(tput cols)"
 ERROR_STRING="Installation error. Exiting"
 CURRENT_PATH=$(pwd)
 
@@ -16,7 +17,6 @@ CURRENT_OS=$(grep -e VERSION_ID /etc/os-release | cut -d "=" -f 2 | cut -d "." -
 
 ERROR_STRING="Installation error. Exiting"
 
-CURRENT_PATH=$(pwd)
 # CHECK FOR KEYS
 while [[ -n $1 ]]; do
   case "$1" in
@@ -87,6 +87,30 @@ echo_with_color() {
   esac
 }
 
+print_centered() {
+  [[ $# == 0 ]] && return 1
+
+  declare -i TERM_COLS="$(tput cols)"
+  declare -i str_len="${#1}"
+  [[ $str_len -ge $TERM_COLS ]] && {
+      echo "$1";
+      return 0;
+  }
+
+  declare -i filler_len="$(( (TERM_COLS - str_len) / 2 ))"
+  [[ $# -ge 2 ]] && ch="${2:0:1}" || ch=" "
+  filler=""
+  for (( i = 0; i < filler_len; i++ )); do
+      filler="${filler}${ch}"
+  done
+
+  printf "%s%s%s" "$filler" "$1" "$filler" >&5
+  [[ $(( (TERM_COLS - str_len) % 2 )) -ne 0 ]] && printf "%s" "${ch}" >&5
+  printf "\n" >&5
+
+  return 0
+}
+
 #### INSTALLER ####
 
 ### Check installers will run in current environment.
@@ -98,19 +122,19 @@ case $CURRENT_KERNEL in
     fi 
     ;;
   debian)
-    if ((CURRENT_OS == 9)) && ((CURRENT_OS == 10)); then
+    if ((CURRENT_OS != 9)) && ((CURRENT_OS != 10)); then
       echo_with_color red "The installer only supports Debian 9 and 10. Exiting...\n" >&5
       exit 1
     fi
     ;;
   centos | rhel)
-    if ((CURRENT_OS == 7)) && ((CURRENT_OS == 8)); then
+    if ((CURRENT_OS != 7)) && ((CURRENT_OS != 8)); then
       echo_with_color red "The installer only supports Rhel (Centos) 7 and 8. Exiting...\n" >&5
       exit 1
     fi
     ;;
   fedora)
-    if ((CURRENT_OS == 32)) && ((CURRENT_OS == 33)) && ((CURRENT_OS == 34)); then
+    if ((CURRENT_OS != 32)) && ((CURRENT_OS != 33)) && ((CURRENT_OS != 34)); then
       echo_with_color red "The installer only supports Fedora 32, 33, and 34. Exiting...\n" >&5
       exit 1
     fi
@@ -161,6 +185,13 @@ if [[ $CURRENT_USER == "root" ]]; then
   fi
 fi
 
+print_centered "-" "-"
+print_centered "-" "-"
+print_centered "Welcome to DreamFactory!"
+print_centered "-" "-"
+print_centered "-" "-"
+
+echo -e "${CURRENT_KERNEL^} ${CURRENT_OS} detected. Installing DreamFactory...\n" >&5
 #Go into the individual scripts here
 case $CURRENT_KERNEL in
 
