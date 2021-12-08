@@ -1,91 +1,4 @@
 #!/bin/bash
-# Colors schemes for echo:
-RD='\033[0;31m' # Red
-BL='\033[1;34m' # Blue
-GN='\033[0;32m' # Green
-MG='\033[0;95m' # Magenta
-NC='\033[0m'    # No Color
-
-ERROR_STRING="Installation error. Exiting"
-CURRENT_PATH=$(pwd)
-
-DEFAULT_PHP_VERSION="php7.4"
-
-CURRENT_OS=$(grep -e VERSION_ID /etc/os-release | cut -d "=" -f 2 | cut -c 2-3)
-
-ERROR_STRING="Installation error. Exiting"
-
-CURRENT_PATH=$(pwd)
-
-# CHECK FOR KEYS
-while [[ -n $1 ]]; do
-  case "$1" in
-  --with-oracle) ORACLE=TRUE ;;
-  --with-mysql) MYSQL=TRUE ;;
-  --with-apache) APACHE=TRUE ;;
-  --with-db2) DB2=TRUE ;;
-  --with-cassandra) CASSANDRA=TRUE ;;
-  --with-tag=*)
-    DREAMFACTORY_VERSION_TAG="${1/--with-tag=/}"
-    ;;
-  --with-tag)
-    DREAMFACTORY_VERSION_TAG="$2"
-    shift
-    ;;
-  --debug) DEBUG=TRUE ;;
-  --help) HELP=TRUE ;;
-  -h) HELP=TRUE ;;
-  *)
-    echo -e "\n${RD}Invalid flag detected… aborting.${NC}"
-    HELP=TRUE
-    break
-    ;;
-  esac
-  shift
-done
-
-if [[ $HELP == TRUE ]]; then
-  echo -e "\nList of available keys:\n"
-  echo "   --with-oracle                  Install driver and PHP extensions for work with Oracle DB"
-  echo "   --with-mysql                   Install MariaDB as default system database for DreamFactory"
-  echo "   --with-apache                  Install Apache2 web server for DreamFactory"
-  echo "   --with-db2                     Install driver and PHP extensions for work with IBM DB2"
-  echo "   --with-cassandra               Install driver and PHP extensions for work with Cassandra DB"
-  echo "   --with-tag=<tag name>          Install DreamFactory with specific version.  "
-  echo "   --debug                        Enable installation process logging to file in /tmp folder."
-  echo -e "   -h, --help                     Show this help\n"
-  exit 1
-fi
-
-if [[ ! $DEBUG == TRUE ]]; then
-  exec 5>&1            # Save a copy of STDOUT
-  exec >/dev/null 2>&1 # Redirect STDOUT to Null
-else
-  exec 5>&1 # Save a copy of STDOUT. Used because all echo redirects output to 5.
-  exec >/tmp/dreamfactory_installer.log 2>&1
-fi
-
-clear >&5
-
-echo_with_color() {
-  case $1 in
-  Red | RED | red)
-    echo -e "${NC}${RD} $2 ${NC}"
-    ;;
-  Green | GREEN | green)
-    echo -e "${NC}${GN} $2 ${NC}"
-    ;;
-  Magenta | MAGENTA | magenta)
-    echo -e "${NC}${MG} $2 ${NC}"
-    ;;
-  Blue | BLUE | blue)
-    echo -e "${NC}${BL} $2 ${NC}"
-    ;;
-  *)
-    echo -e "${NC} $2 ${NC}"
-    ;;
-  esac
-}
 
 ### INSTALLER FUNCTIONS
 
@@ -101,42 +14,38 @@ run_process () {
   kill $!
 }
 
-# Sudo should be used to run the script, but CURRENT_USER themselves should not be root (i.e should be another user running with sudo),
-# otherwise composer will get annoyed. If the user wishes to continue as root, then an environment variable will be set when 'composer install' is run later on in the script.
-if [[ $CURRENT_USER == "root" ]]; then
-  echo -e "WARNING: Although this script must be run with sudo, it is not recommended to install DreamFactory as root (specifically 'composer' commands) Would you like to:\n [1] Continue as root\n [2] Provide username for installing DreamFactory" >&5
-  read -r INSTALL_AS_ROOT
-  if [[ $INSTALL_AS_ROOT == 1 ]]; then
-    echo -e "Continuing installation as root" >&5
+system_update () {
+  if ((CURRENT_OS == 7)); then
+    yum update -y
   else
-    echo -e "Enter username for installing DreamFactory" >&5
-    read -r CURRENT_USER
-    echo -e "User: ${CURRENT_USER} selected. Continuing" >&5
+    # centos 8
+    dnf update -y
   fi
-fi
-
-### STEP 1. Install system dependencies
-echo_with_color blue "Step 1: Installing system dependencies...\n" >&5
-apt-get update
+}
 
 install_system_dependencies () {
-  if [[ ! -f "/etc/localtime" ]]; then
-  echo -e "13\n33" | apt-get install -y tzdata
+  if ((CURRENT_OS == 7)); then
+    yum install -y git \
+      curl \
+      zip \
+      unzip \
+      ca-certificates \
+      lsof \
+      readline-devel \
+      libzip-devel \
+      wget
+  else
+    #centos 8
+    dnf install -y git \
+      curl \
+      zip \
+      unzip \
+      ca-certificates \
+      lsof \
+      readline-devel \
+      libzip-devel \
+      wget
   fi
-
-  apt-get install -y git \
-    curl \
-    zip \
-    unzip \
-    ca-certificates \
-    apt-transport-https \
-    software-properties-common \
-    lsof \
-    libmcrypt-dev \
-    libreadline-dev \
-    wget \
-    sudo
-
   # Check installation status
   if (($? >= 1)); then
     echo_with_color red "\n${ERROR_STRING}" >&5
@@ -146,45 +55,59 @@ install_system_dependencies () {
 }
 
 install_php () {
-  PHP_VERSION=$(php --version 2>/dev/null | head -n 1 | cut -d " " -f 2 | cut -c 1,3)
-  CRYPT=0
-
-  if [[ $PHP_VERSION =~ ^-?[0-9]+$ ]]; then
-    if ((PHP_VERSION == 71)); then
-      PHP_VERSION=php7.1
-      MCRYPT=1
-    else
-      PHP_VERSION=${DEFAULT_PHP_VERSION}
-    fi
-  else
-    PHP_VERSION=${DEFAULT_PHP_VERSION}
-  fi
-
-  PHP_VERSION_INDEX=$(echo $PHP_VERSION | cut -c 4-6)
-
   # Install the php repository
-  add-apt-repository ppa:ondrej/php -y
+  if ((CURRENT_OS == 7)); then
+    rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+    rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
 
-  # Update the system
-  apt-get update
+    yum-config-manager --enable remi-php74
 
-  apt-get install -y ${PHP_VERSION}-common \
-    ${PHP_VERSION}-xml \
-    ${PHP_VERSION}-cli \
-    ${PHP_VERSION}-curl \
-    ${PHP_VERSION}-json \
-    ${PHP_VERSION}-mysqlnd \
-    ${PHP_VERSION}-sqlite \
-    ${PHP_VERSION}-soap \
-    ${PHP_VERSION}-mbstring \
-    ${PHP_VERSION}-zip \
-    ${PHP_VERSION}-bcmath \
-    ${PHP_VERSION}-dev \
-    ${PHP_VERSION}-ldap \
-    ${PHP_VERSION}-pgsql \
-    ${PHP_VERSION}-interbase \
-    ${PHP_VERSION}-gd \
-    ${PHP_VERSION}-sybase
+    #Install PHP
+    yum --enablerepo=remi-php74 install -y php-common \
+      php-xml \
+      php-cli \
+      php-curl \
+      php-json \
+      php-mysqlnd \
+      php-sqlite3 \
+      php-soap \
+      php-mbstring \
+      php-bcmath \
+      php-devel \
+      php-ldap \
+      php-pgsql \
+      php-interbase \
+      php-pdo-dblib \
+      php-gd \
+      php-zip
+  else
+    # RHEL 8
+    rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+    rpm -Uvh http://rpms.remirepo.net/enterprise/remi-release-8.rpm
+
+    dnf module list -y
+    dnf module reset php -y
+    dnf module enable php:remi-7.4 -y
+
+    #Install PHP
+    dnf install -y php-common \
+      php-xml \
+      php-cli \
+      php-curl \
+      php-json \
+      php-mysqlnd \
+      php-sqlite3 \
+      php-soap \
+      php-mbstring \
+      php-bcmath \
+      php-devel \
+      php-ldap \
+      php-pgsql \
+      php-pdo-firebird \
+      php-pdo-dblib \
+      php-gd \
+      php-zip
+  fi
 
   if (($? >= 1)); then
     echo_with_color red "\n${ERROR_STRING}" >&5
@@ -194,15 +117,12 @@ install_php () {
 }
 
 install_apache () {
-  apt-get -qq install -y apache2 libapache2-mod-${PHP_VERSION}
+  yum install -y httpd php
   if (($? >= 1)); then
     echo_with_color red "\nCould not install Apache. Exiting." >&5
     kill $!
     exit 1
   fi
-  a2enmod rewrite
-  echo "extension=pdo_sqlsrv.so" >>"/etc/php/${PHP_VERSION_INDEX}/apache2/conf.d/30-pdo_sqlsrv.ini"
-  echo "extension=sqlsrv.so" >>"/etc/php/${PHP_VERSION_INDEX}/apache2/conf.d/20-sqlsrv.ini"
   # Create apache2 site entry
   echo "
 <VirtualHost *:80>
@@ -222,23 +142,29 @@ install_apache () {
             Allow from all
         </LimitExcept>
     </Directory>
-</VirtualHost>" >/etc/apache2/sites-available/000-default.conf
+</VirtualHost>" >/etc/httpd/conf.d/dreamfactory.conf
 }
 
 restart_apache () {
-  service apache2 restart
+  service httpd restart
+  systemctl enable httpd.service
+  firewall-cmd --add-service=http
 }
 
 install_nginx () {
-  apt-get install -y nginx ${PHP_VERSION}-fpm
+  if ((CURRENT_OS == 7)); then
+    yum --enablerepo=remi-php74 install -y php-fpm nginx
+  else
+    dnf install -y php-fpm nginx
+  fi
+
   if (($? >= 1)); then
     echo_with_color red "\nCould not install Nginx. Exiting." >&5
     kill $!
     exit 1
   fi
-   # Change php fpm configuration file
-  sed -i 's/\;cgi\.fix\_pathinfo\=1/cgi\.fix\_pathinfo\=0/' "$(php -i | sed -n '/^Loaded Configuration File => /{s:^.*> ::;p;}' | sed 's/cli/fpm/')"
-
+  # Change php fpm configuration file
+  sed -i 's/\;cgi\.fix\_pathinfo\=1/cgi\.fix\_pathinfo\=0/' $(php -i | sed -n '/^Loaded Configuration File => /{s:^.*> ::;p;}')
   # Create nginx site entry
   echo "
 server {
@@ -269,25 +195,44 @@ server {
   }
   location ~ \.php$ {
 
-    try_files  \$uri rewrite ^ /index.php?\$query_string;
+    try_files \$uri rewrite ^ /index.php?\$query_string;
     fastcgi_split_path_info ^(.+\.php)(/.+)$;
-    fastcgi_pass unix:/var/run/php/${PHP_VERSION}-fpm.sock;
+    fastcgi_pass 127.0.0.1:9000;
     fastcgi_index index.php;
     fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
     include fastcgi_params;
   }
-}" >/etc/nginx/sites-available/default
+}" >/etc/nginx/conf.d/dreamfactory.conf
+
+  # RHEL8 php-fpm seems to default to a unix socket, rather than an ip (in RHEL7). As a result
+  # fastcgi_pass has been changed from 127.0.0.1 to unix:/var/run/php-fpm/www.sock for RHEL / CENTOS 8 installation.
+  if ((CURRENT_OS == 8)); then
+  sed -i "s,127.0.0.1:9000;,unix:/var/run/php-fpm/www.sock;," /etc/nginx/conf.d/dreamfactory.conf
+  fi
+
+  #Need to remove default entry in nginx.conf
+  grep default_server /etc/nginx/nginx.conf
+  if (($? == 0)); then
+    sed -i "s/default_server//g" /etc/nginx/nginx.conf
+  fi
 }
 
 restart_nginx () {
-  service ${PHP_VERSION}-fpm restart && service nginx restart
+  service php-fpm restart && service nginx restart
+  systemctl enable nginx.service && systemctl enable php-fpm.service
+  firewall-cmd --add-service=http
 }
 
 install_php_pear () {
-  apt-get install -y php-pear
+  if ((CURRENT_OS == 7)); then
+    yum --enablerepo=remi-php74 install -y php-pear
+  else
+    dnf install -y php-pear
+  fi
 
   if (($? >= 1)); then
     echo_with_color red "\n${ERROR_STRING}" >&5
+    kill $!
     exit 1
   fi
 
@@ -295,18 +240,19 @@ install_php_pear () {
 }
 
 install_mcrypt () {
-  if [[ $MCRYPT == 0 ]]; then
-    printf "\n" | pecl install mcrypt-1.0.4
-    if (($? >= 1)); then
-      echo_with_color red "\nMcrypt extension installation error." >&5
-      kill $!
-      exit 1
-    fi
-    echo "extension=mcrypt.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/mcrypt.ini"
-    phpenmod -s ALL mcrypt
+  if ((CURRENT_OS == 7)); then
+    yum --enablerepo=remi-php74 install -y libmcrypt-devel
   else
-    apt-get install ${PHP_VERSION}-mcrypt
+    dnf install -y libmcrypt-devel
   fi
+
+  printf "\n" | pecl install mcrypt-1.0.4
+  if (($? >= 1)); then
+    echo_with_color red "\nMcrypt extension installation error." >&5
+    kill $!
+    exit 1
+  fi
+  echo "extension=mcrypt.so" >/etc/php.d/20-mcrypt.ini
 }
 
 install_mongodb () {
@@ -316,65 +262,60 @@ install_mongodb () {
     kill $!
     exit 1
   fi
-  echo "extension=mongodb.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/mongodb.ini"
-  phpenmod -s ALL mongodb
+  echo "extension=mongodb.so" >/etc/php.d/20-mongodb.ini
 }
 
 install_sql_server () {
-  curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
-  if ((CURRENT_OS == 18)); then
-    curl https://packages.microsoft.com/config/ubuntu/18.04/prod.list >/etc/apt/sources.list.d/mssql-release.list
-  elif ((CURRENT_OS == 20)); then
-    curl https://packages.microsoft.com/config/ubuntu/20.04/prod.list >/etc/apt/sources.list.d/mssql-release.list
-  else
-    echo_with_color red " The script supports only versions 18, and 20 of ubuntu. Exit.\n " >&5
-    kill $!
-    exit 1
-  fi
-  apt-get update
-  ACCEPT_EULA=Y apt-get install -y msodbcsql17 mssql-tools unixodbc-dev
-  pecl install sqlsrv
+  curl https://packages.microsoft.com/config/rhel/7/prod.repo >/etc/yum.repos.d/mssql-release.repo
+  ACCEPT_EULA=Y yum install -y msodbcsql17 mssql-tools unixODBC-devel
   if (($? >= 1)); then
     echo_with_color red "\nMS SQL Server extension installation error." >&5
     kill $!
     exit 1
   fi
-  echo "extension=sqlsrv.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/sqlsrv.ini"
-  phpenmod -s ALL sqlsrv
 }
 
 install_pdo_sqlsrv () {
-  pecl install pdo_sqlsrv
+  ACCEPT_EULA=Y yum install -y php-sqlsrv php-pdo_sqlsrv
   if (($? >= 1)); then
-    echo_with_color red "\npdo_sqlsrv extension installation error." >&5
+    echo_with_color red "\nMS SQL Server extension installation error." >&5
     kill $!
     exit 1
   fi
-  echo "extension=pdo_sqlsrv.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/pdo_sqlsrv.ini"
-  phpenmod -s ALL pdo_sqlsrv
 }
 
 install_oracle () {
-  apt install -y libaio1
-  echo "/opt/oracle/instantclient_19_13" >/etc/ld.so.conf.d/oracle-instantclient.conf
-  printf "instantclient,/opt/oracle/instantclient_19_13\n" | pecl install oci8-2.2.0
-  ldconfig
+  yum install -y libaio systemtap-sdt-devel $DRIVERS_PATH/oracle-instantclient19.*.rpm
   if (($? >= 1)); then
     echo_with_color red "\nOracle instant client installation error" >&5
     kill $!
     exit 1
   fi
-  echo "extension=oci8.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/oci8.ini"
-  phpenmod -s ALL oci8
+  echo "/usr/lib/oracle/19.13/client64/lib" >/etc/ld.so.conf.d/oracle-instantclient.conf
+  ldconfig
+  export PHP_DTRACE=yes
+  printf "\n" | pecl install oci8-2.2.0
+  if (($? >= 1)); then
+    echo_with_color red "\nOracle instant client installation error" >&5
+    kill $!
+    exit 1
+  fi
+  echo "extension=oci8.so" >/etc/php.d/20-oci8.ini
 }
 
 install_db2 () {
-  apt install -y ksh
+  yum install -y ksh
   chmod +x /opt/dsdriver/installDSDriver
   /usr/bin/ksh /opt/dsdriver/installDSDriver
   ln -s /opt/dsdriver/include /include
   git clone https://github.com/dreamfactorysoftware/PDO_IBM-1.3.4-patched.git /opt/PDO_IBM-1.3.4-patched
   cd /opt/PDO_IBM-1.3.4-patched/ || exit 1
+  sed -i 's/option_str = Z_STRVAL_PP(data);//' ibm_driver.c
+  sed -i '985i\#if PHP_MAJOR_VERSION >= 7\' ibm_driver.c
+  sed -i '986i\option_str = Z_STRVAL_P(data);\' ibm_driver.c
+  sed -i '987i\#else\' ibm_driver.c
+  sed -i '988i\option_str = Z_STRVAL_PP(data);\' ibm_driver.c
+  sed -i '989i\#endif' ibm_driver.c
   phpize
   ./configure --with-pdo-ibm=/opt/dsdriver/lib
   make && make install
@@ -383,8 +324,7 @@ install_db2 () {
     kill $!
     exit 1
   fi
-  echo "extension=pdo_ibm.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/pdo_ibm.ini"
-  phpenmod -s ALL pdo_ibm
+  echo "extension=pdo_ibm.so" >/etc/php.d/20-pdo_ibm.ini
 }
 
 install_db2_extension () {
@@ -394,39 +334,42 @@ install_db2_extension () {
     kill $!
     exit 1
   fi
-  echo "extension=ibm_db2.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/ibm_db2.ini"
-  phpenmod -s ALL ibm_db2
+  echo "extension=ibm_db2.so" >/etc/php.d/20-ibm_db2.ini
 }
 
 install_cassandra () {
-  if ((CURRENT_OS == 20)); then
-    # multiarch-support is unavailable in ubuntu20, we need to get it from the 18 archive
-    wget http://archive.ubuntu.com/ubuntu/pool/main/g/glibc/multiarch-support_2.27-3ubuntu1_amd64.deb
-    apt install -y ./multiarch-support_2.27-3ubuntu1_amd64.deb
-  fi
-  apt install -y cmake libgmp-dev
+  yum install -y gmp-devel openssl-devel #boost cmake
   git clone https://github.com/datastax/php-driver.git /opt/cassandra
   cd /opt/cassandra/ || exit 1
-  wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/cassandra/v2.10.0/cassandra-cpp-driver-dbg_2.10.0-1_amd64.deb
-  wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/cassandra/v2.10.0/cassandra-cpp-driver-dev_2.10.0-1_amd64.deb
-  wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/cassandra/v2.10.0/cassandra-cpp-driver_2.10.0-1_amd64.deb
-  wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/dependencies/libuv/v1.23.0/libuv1-dbg_1.23.0-1_amd64.deb
-  wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/dependencies/libuv/v1.23.0/libuv1-dev_1.23.0-1_amd64.deb
-  wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/dependencies/libuv/v1.23.0/libuv1_1.23.0-1_amd64.deb
-  dpkg -i *.deb
+  if ((CURRENT_OS == 7)); then
+    wget http://downloads.datastax.com/cpp-driver/centos/7/cassandra/v2.10.0/cassandra-cpp-driver-2.10.0-1.el7.x86_64.rpm
+    wget http://downloads.datastax.com/cpp-driver/centos/7/cassandra/v2.10.0/cassandra-cpp-driver-debuginfo-2.10.0-1.el7.x86_64.rpm
+    wget http://downloads.datastax.com/cpp-driver/centos/7/cassandra/v2.10.0/cassandra-cpp-driver-devel-2.10.0-1.el7.x86_64.rpm
+    wget http://downloads.datastax.com/cpp-driver/centos/7/dependencies/libuv/v1.23.0/libuv-1.23.0-1.el7.centos.x86_64.rpm
+    wget http://downloads.datastax.com/cpp-driver/centos/7/dependencies/libuv/v1.23.0/libuv-debuginfo-1.23.0-1.el7.centos.x86_64.rpm
+    wget http://downloads.datastax.com/cpp-driver/centos/7/dependencies/libuv/v1.23.0/libuv-devel-1.23.0-1.el7.centos.x86_64.rpm
+  else
+    wget https://downloads.datastax.com/cpp-driver/centos/8/cassandra/v2.16.0/cassandra-cpp-driver-2.16.0-1.el8.x86_64.rpm
+    wget https://downloads.datastax.com/cpp-driver/centos/8/cassandra/v2.16.0/cassandra-cpp-driver-debuginfo-2.16.0-1.el8.x86_64.rpm
+    wget https://downloads.datastax.com/cpp-driver/centos/8/cassandra/v2.16.0/cassandra-cpp-driver-devel-2.16.0-1.el8.x86_64.rpm
+    wget https://downloads.datastax.com/cpp-driver/centos/8/dependencies/libuv/v1.35.0/libuv-1.35.0-1.el8.x86_64.rpm
+    wget https://downloads.datastax.com/cpp-driver/centos/8/dependencies/libuv/v1.35.0/libuv-debuginfo-1.35.0-1.el8.x86_64.rpm
+    wget https://downloads.datastax.com/cpp-driver/centos/8/dependencies/libuv/v1.35.0/libuv-devel-1.35.0-1.el8.x86_64.rpm
+  fi
+  yum install -y *.rpm
   if (($? >= 1)); then
     echo_with_color red "\ncassandra extension installation error." >&5
     kill $!
     exit 1
   fi
+  ln -s /usr/lib64/libnsl.so.1 /usr/lib64/libnsl.so
   pecl install ./ext/package.xml
   if (($? >= 1)); then
     echo_with_color red "\ncassandra extension installation error." >&5
     kill $!
     exit 1
   fi
-  echo "extension=cassandra.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/cassandra.ini"
-  phpenmod -s ALL cassandra
+  echo "extension=cassandra.so" >/etc/php.d/20-cassandra.ini
 }
 
 install_igbinary () {
@@ -436,42 +379,36 @@ install_igbinary () {
     kill $!
     exit 1
   fi
-
-  echo "extension=igbinary.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/igbinary.ini"
-  phpenmod -s ALL igbinary
+  echo "extension=igbinary.so" >/etc/php.d/20-igbinary.ini
 }
 
 install_python2 () {
-  if ((CURRENT_OS == 20)); then
-    apt install -y python2
-    # Pip2 is not supported on ubuntu anymore. We have to get a script from the python package
-    # authority as below
-    wget https://bootstrap.pypa.io/pip/2.7/get-pip.py
-    python2 get-pip.py
+  if ((CURRENT_OS == 7)); then
+    yum install -y python python-pip
   else
-    apt install -y python python-pip
+    yum install -y python2 python2-pip
   fi
 }
 
 install_bunch () {
-  if ((CURRENT_OS == 20)); then
-    pip2 install bunch
-  else
+  if ((CURRENT_OS == 7)); then
     pip install bunch
+  else
+    pip2 install bunch
   fi
 }
 
 install_python3 () {
-  apt install -y python3 python3-pip
+  yum install -y python3 python3-pip
 }
 
 install_munch () {
-  python3 -m pip install munch
+  pip3 install munch
 }
 
 install_node () {
-  curl -sL https://deb.nodesource.com/setup_10.x | bash -
-  apt-get install -y nodejs
+  curl -sL https://rpm.nodesource.com/setup_10.x | bash -
+  yum install -y nodejs
   if (($? >= 1)); then
     echo_with_color red "\n${ERROR_STRING}" >&5
     kill $!
@@ -487,13 +424,12 @@ install_pcs () {
     kill $!
     exit 1
   fi
-  echo "extension=pcs.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/pcs.ini"
-  phpenmod -s ALL pcs
+  echo "extension=pcs.so" >/etc/php.d/20-pcs.ini
 }
 
-install_snowflake_apache () {
-  apt-get update
-  apt-get install -y --no-install-recommends --allow-unauthenticated gcc cmake ${PHP_VERSION}-pdo ${PHP_VERSION}-json ${PHP_VERSION}-dev
+install_snowflake () {
+  yum update -y
+  yum install -y gcc cmake php-pdo php-json php-devel
   git clone https://github.com/snowflakedb/pdo_snowflake.git /src/snowflake
   cd /src/snowflake
   export PHP_HOME=/usr
@@ -503,39 +439,13 @@ install_snowflake_apache () {
     export PHP_HOME=/usr
     PHP_EXTENSION_DIR=$($PHP_HOME/bin/php -i | grep '^extension_dir' | sed 's/.*=>\(.*\).*/\1/')
     cp /src/snowflake/modules/pdo_snowflake.so $PHP_EXTENSION_DIR
-    cp /src/snowflake/libsnowflakeclient/cacert.pem /etc/php/${PHP_VERSION_INDEX}/apache2/conf.d
+    cp /src/snowflake/libsnowflakeclient/cacert.pem /etc/php.d
     if (($? >= 1)); then
       echo_with_color red "\npdo_snowflake driver installation error." >&5
       kill $!
       exit 1
     fi
-    echo -e "extension=pdo_snowflake.so\n\npdo_snowflake.cacert=/etc/php/${PHP_VERSION_INDEX}/apache2/conf.d/cacert.pem" >/etc/php/${PHP_VERSION_INDEX}/apache2/conf.d/20-pdo_snowflake.ini
-  else
-    echo_with_color red "\nCould not build pdo_snowflake driver." >&5
-    kill $!
-    exit 1
-  fi
-}
-
-install_snowflake_nginx () {
-  apt-get update
-  apt-get install -y --no-install-recommends --allow-unauthenticated gcc cmake ${PHP_VERSION}-pdo ${PHP_VERSION}-json ${PHP_VERSION}-dev
-  git clone https://github.com/snowflakedb/pdo_snowflake.git /src/snowflake
-  cd /src/snowflake
-  export PHP_HOME=/usr
-  /src/snowflake/scripts/build_pdo_snowflake.sh
-  $PHP_HOME/bin/php -dextension=modules/pdo_snowflake.so -m | grep pdo_snowflake
-  if (($? == 0)); then
-    export PHP_HOME=/usr
-    PHP_EXTENSION_DIR=$($PHP_HOME/bin/php -i | grep '^extension_dir' | sed 's/.*=>\(.*\).*/\1/')
-    cp /src/snowflake/modules/pdo_snowflake.so $PHP_EXTENSION_DIR
-    cp /src/snowflake/libsnowflakeclient/cacert.pem /etc/php/${PHP_VERSION_INDEX}/fpm/conf.d
-    if (($? >= 1)); then
-      echo_with_color red "\npdo_snowflake driver installation error." >&5
-      kill $!
-      exit 1
-    fi
-    echo -e "extension=pdo_snowflake.so\n\npdo_snowflake.cacert=/etc/php/${PHP_VERSION_INDEX}/fpm/conf.d/cacert.pem" >/etc/php/${PHP_VERSION_INDEX}/fpm/conf.d/20-pdo_snowflake.ini
+    echo -e "extension=pdo_snowflake.so\n\npdo_snowflake.cacert=/etc/php.d/cacert.pem" >/etc/php.d/20-pdo_snowflake.ini
   else
     echo_with_color red "\nCould not build pdo_snowflake driver." >&5
     kill $!
@@ -544,14 +454,14 @@ install_snowflake_nginx () {
 }
 
 install_hive_odbc () {
-  apt-get update
-  apt-get install -y --no-install-recommends --allow-unauthenticated ${PHP_VERSION}-odbc
+  yum update -y
+  yum install -y php-odbc
   mkdir /opt/hive
   cd /opt/hive
-  curl --fail -O https://odbc-drivers.s3.amazonaws.com/apache-hive/maprhiveodbc_2.6.1.1001-2_amd64.deb
-  dpkg -i maprhiveodbc_2.6.1.1001-2_amd64.deb
+  wget http://archive.mapr.com/tools/MapR-ODBC/MapR_Hive/MapRHive_odbc_2.6.1.1001/MapRHiveODBC-2.6.1.1001-1.x86_64.rpm
+  rpm -ivh MapRHiveODBC-2.6.1.1001-1.x86_64.rpm
   test -f /opt/mapr/hiveodbc/lib/64/libmaprhiveodbc64.so
-  rm maprhiveodbc_2.6.1.1001-2_amd64.deb
+  rm MapRHiveODBC-2.6.1.1001-1.x86_64.rpm
   export HIVE_SERVER_ODBC_DRIVER_PATH=/opt/mapr/hiveodbc/lib/64/libmaprhiveodbc64.so
   HIVE_ODBC_INSTALLED = $(php -m | grep -E "^odbc")
 }
@@ -567,7 +477,7 @@ install_composer () {
 }
 
 install_mariadb () {
-  apt-get install -y mariadb-server
+  yum install -y mariadb-server
   if (($? >= 1)); then
     echo_with_color red "\n${ERROR_STRING}" >&5
     kill $!
@@ -576,28 +486,12 @@ install_mariadb () {
 
   service mariadb start
   if (($? >= 1)); then
-    service mysql start
-    if (($? >= 1)); then
-      echo_with_color red "\nCould not start MariaDB.. Exit " >&5
-      kill $!
-      exit 1
-    fi
-  fi
-}
-
-
-add_mariadb_repo () {
-  if ((CURRENT_OS == 18)); then
-    apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
-    add-apt-repository 'deb [arch=amd64,arm64,ppc64el] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.3/ubuntu bionic main'
-  elif ((CURRENT_OS == 20)); then
-    apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
-    add-apt-repository 'deb [arch=amd64,arm64,ppc64el] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.3/ubuntu focal main'
-  else
-    echo_with_color red " The script supports only versions 18 and 20 of ubuntu. Exit.\n " >&5
+    echo_with_color red "\nCould not start MariaDB.. Exit " >&5
     kill $!
     exit 1
   fi
+  systemctl enable mariadb
+  mysqladmin -u root -h localhost password "${DB_PASS}"
 }
 
 clone_dreamfactory_repository () {
@@ -636,7 +530,7 @@ run_composer_install () {
 
 # Make sure script run as sudo
 if ((EUID != 0)); then
-  echo -e "${RD}\nPlease run script with sudo: sudo bash $0 \n${NC}" >&5
+  echo -e "${RD}\nPlease run script with root privileges: sudo bash $0 \n${NC}" >&5
   exit 1
 fi
 
@@ -644,7 +538,7 @@ fi
 CURRENT_USER=$(logname)
 
 if [[ -z $SUDO_USER ]] && [[ -z $CURRENT_USER ]]; then
-  echo_with_color red " Enter username for installation DreamFactory:" >&5
+  echo_with_color red "Enter username for installation DreamFactory:" >&5
   read -r CURRENT_USER
 fi
 
@@ -669,22 +563,22 @@ fi
 ### STEP 1. Install system dependencies
 echo_with_color blue "Step 1: Installing system dependencies...\n" >&5
 run_process "   Updating System" system_update
-run_process "   Installing Dependencies" install_system_dependencies
+run_process "   Installing System Dependencies" install_system_dependencies
 echo_with_color green "\nThe system dependencies have been successfully installed.\n" >&5
 
 ### Step 2. Install PHP
 echo_with_color blue "Step 2: Installing PHP...\n" >&5
 run_process "   Installing PHP" install_php
-echo_with_color green "\n${PHP_VERSION} installed.\n" >&5
+echo_with_color green "\nPHP installed.\n" >&5
 
 ### Step 3. Install Apache
 if [[ $APACHE == TRUE ]]; then ### Only with key --apache
   echo_with_color blue "Step 3: Installing Apache...\n" >&5
   # Check Apache installation status
-  ps aux | grep -v grep | grep apache2
+  ps aux | grep -v grep | grep httpd
   CHECK_APACHE_PROCESS=$?
 
-  dpkg -l | grep apache2 | cut -d " " -f 3 | grep -E "apache2$"
+  yum list installed | grep -E "^httpd.x86_64"
   CHECK_APACHE_INSTALLATION=$?
 
   if ((CHECK_APACHE_PROCESS == 0)) || ((CHECK_APACHE_INSTALLATION == 0)); then
@@ -697,8 +591,8 @@ if [[ $APACHE == TRUE ]]; then ### Only with key --apache
       echo_with_color red "Port 80 taken.\n " >&5
       echo_with_color red "Skipping installation Apache2. Install Apache2 manually.\n " >&5
     else
-      run_process "  Installing Apache" install_apache
-      run_process "  Restarting Apache" restart_apache
+      run_process "   Installing Apache" install_apache
+      run_process "   Restarting Apache" restart_apache
       echo_with_color green "\nApache2 installed.\n" >&5
     fi
   fi
@@ -710,7 +604,7 @@ else
   ps aux | grep -v grep | grep nginx
   CHECK_NGINX_PROCESS=$?
 
-  dpkg -l | grep nginx | cut -d " " -f 3 | grep -E "nginx$"
+  yum list installed | grep -E "^nginx.x86_64"
   CHECK_NGINX_INSTALLATION=$?
 
   if ((CHECK_NGINX_PROCESS == 0)) || ((CHECK_NGINX_INSTALLATION == 0)); then
@@ -732,32 +626,30 @@ fi
 
 ### Step 4. Configure PHP development tools
 echo_with_color blue "Step 4: Configuring PHP Extensions...\n" >&5
-
-## Install PHP PEAR
-run_process "   Installing PHP PEAR" install php_pear
-echo_with_color green "   PHP PEAR installed\n" >&5
+run_process "   Installing PHP PEAR" install_php_pear
+echo_with_color green "    PHP PEAR installed\n" >&5
 
 ### Install MCrypt
 php -m | grep -E "^mcrypt"
 if (($? >= 1)); then
   run_process "   Installing Mcrypt" install_mcrypt
   php -m | grep -E "^mcrypt"
-    if (($? >= 1)); then
-      echo_with_color red "\nMcrypt installation error." >&5
-    else
-      echo_with_color green "   Mcrypt installed\n" >&5
-    fi
+  if (($? >= 1)); then
+    echo_with_color red "\nMcrypt installation error." >&5
+  else
+    echo_with_color green "    Mcrypt installed\n" >&5
+  fi
 fi
 
 ### Install MongoDB drivers
 php -m | grep -E "^mongodb"
 if (($? >= 1)); then
-  run_process "   Installing MongoDB" install_mongodb
+  run_process "   Installing Mongodb" install_mongodb
   php -m | grep -E "^mongodb"
   if (($? >= 1)); then
     echo_with_color red "\nMongoDB installation error." >&5
   else
-    echo_with_color green "   MongoDB installed\n" >&5
+    echo_with_color green "    MongoDB installed\n" >&5
   fi
 fi
 
@@ -765,23 +657,18 @@ fi
 php -m | grep -E "^sqlsrv"
 if (($? >= 1)); then
   run_process "   Installing MS SQL Server" install_sql_server
+  run_process "   Installing pdo_sqlsrv" install_pdo_sqlsrv
   php -m | grep -E "^sqlsrv"
   if (($? >= 1)); then
     echo_with_color red "\nMS SQL Server extension installation error." >&5
   else
-    echo_with_color green "   MS SQL Server installed\n" >&5
+    echo_with_color green "    MS SQL Server extension installed\n" >&5
   fi
-fi
-
-### DRIVERS FOR MSSQL (pdo_sqlsrv)
-php -m | grep -E "^pdo_sqlsrv"
-if (($? >= 1)); then
-  run_process "   Installing pdo_sqlsrv" install_pdo_sqlsrv
   php -m | grep -E "^pdo_sqlsrv"
   if (($? >= 1)); then
     echo_with_color red "\nCould not install pdo_sqlsrv extension" >&5
   else
-    echo_with_color green "   pdo_sqlsrv installed\n" >&5
+    echo_with_color green "    pdo_sqlsrv installed\n" >&5
   fi
 fi
 
@@ -794,25 +681,14 @@ if (($? >= 1)); then
     if [[ -z $DRIVERS_PATH ]]; then
       DRIVERS_PATH="."
     fi
-    unzip "$DRIVERS_PATH/instantclient-*.zip" -d /opt/oracle
+    ls -f $DRIVERS_PATH/oracle-instantclient19.*.rpm
     if (($? == 0)); then
-      echo_with_color blue "Drivers found. Installing...\n" >&5
-      apt install -y libaio1
-      echo "/opt/oracle/instantclient_19_13" >/etc/ld.so.conf.d/oracle-instantclient.conf
-      echo_with_color blue "    Installing oci8...\n" >&5
-      printf "instantclient,/opt/oracle/instantclient_19_13\n" | pecl install oci8-2.2.0
-      ldconfig
-      if (($? >= 1)); then
-        echo_with_color red "\nOracle instant client installation error" >&5
-        exit 1
-      fi
-      echo "extension=oci8.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/oci8.ini"
-      phpenmod -s ALL oci8
-      php -m | grep oci8
+      run_process "   Drivers Found. Installing Oracle Drivers" install_oracle
+      php -m | grep -E "^oci8"
       if (($? >= 1)); then
         echo_with_color red "\nCould not install oci8 extension." >&5
       else
-        echo_with_color green "   Oracle Drivers and oci8 installed\n" >&5
+        echo_with_color green "    Oracle drivers and oci8 extension installed\n" >&5
       fi
     else
       echo_with_color red "Drivers not found. Skipping...\n" >&5
@@ -820,7 +696,6 @@ if (($? >= 1)); then
     unset DRIVERS_PATH
   fi
 fi
-
 ### DRIVERS FOR IBM DB2 PDO ( ONLY WITH KEY --with-db2 )
 php -m | grep -E "^pdo_ibm"
 if (($? >= 1)); then
@@ -832,7 +707,7 @@ if (($? >= 1)); then
     fi
     tar xzf $DRIVERS_PATH/ibm_data_server_driver_package_linuxx64_v11.5.tar.gz -C /opt/
     if (($? == 0)); then
-      run_process "   Drivers found. Installing DB2" install_db2
+      run_process "   Drivers Found. Installing DB2" install_db2
       php -m | grep pdo_ibm
       if (($? >= 1)); then
         echo_with_color red "\nCould not install pdo_ibm extension." >&5
@@ -840,12 +715,12 @@ if (($? >= 1)); then
         ### DRIVERS FOR IBM DB2 ( ONLY WITH KEY --with-db2 )
         php -m | grep -E "^ibm_db2"
         if (($? >= 1)); then
-          run_process "   Installing ibm_db2 extension" install_db2_extension 
+          run_process "   Install ibm_db2 extension" install_db2_extension
           php -m | grep ibm_db2
           if (($? >= 1)); then
             echo_with_color red "\nCould not install ibm_db2 extension." >&5
           else
-            echo_with_color green "    ibm db2 drivers installed...\n" >&5
+            echo_with_color green "    IBM DB2 installed\n" >&5
           fi
         fi
       fi
@@ -853,7 +728,7 @@ if (($? >= 1)); then
       echo_with_color red "Drivers not found. Skipping...\n" >&5
     fi
     unset DRIVERS_PATH
-    cd "$CURRENT_PATH" || exit 1
+    cd "${CURRENT_PATH}" || exit 1
     rm -rf /opt/PDO_IBM-1.3.4-patched
   fi
 fi
@@ -862,40 +737,14 @@ fi
 php -m | grep -E "^cassandra"
 if (($? >= 1)); then
   if [[ $CASSANDRA == TRUE ]]; then
-    echo_with_color blue "    Installing cassandra...\n" >&5
-    if ((CURRENT_OS == 20)); then
-      # multiarch-support is unavailable in ubuntu20, we need to get it from the 18 archive
-      wget http://archive.ubuntu.com/ubuntu/pool/main/g/glibc/multiarch-support_2.27-3ubuntu1_amd64.deb
-      apt install -y ./multiarch-support_2.27-3ubuntu1_amd64.deb
-    fi
-    apt install -y cmake libgmp-dev
-    git clone https://github.com/datastax/php-driver.git /opt/cassandra
-    cd /opt/cassandra/ || exit 1
-    wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/cassandra/v2.10.0/cassandra-cpp-driver-dbg_2.10.0-1_amd64.deb
-    wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/cassandra/v2.10.0/cassandra-cpp-driver-dev_2.10.0-1_amd64.deb
-    wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/cassandra/v2.10.0/cassandra-cpp-driver_2.10.0-1_amd64.deb
-    wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/dependencies/libuv/v1.23.0/libuv1-dbg_1.23.0-1_amd64.deb
-    wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/dependencies/libuv/v1.23.0/libuv1-dev_1.23.0-1_amd64.deb
-    wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/dependencies/libuv/v1.23.0/libuv1_1.23.0-1_amd64.deb
-    dpkg -i *.deb
-    if (($? >= 1)); then
-      echo_with_color red "\ncassandra extension installation error." >&5
-      exit 1
-    fi
-    pecl install ./ext/package.xml
-    if (($? >= 1)); then
-      echo_with_color red "\ncassandra extension installation error." >&5
-      exit 1
-    fi
-    echo "extension=cassandra.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/cassandra.ini"
-    phpenmod -s ALL cassandra
+    run_process "   Installing Cassandra" install_cassandra
     php -m | grep cassandra
     if (($? >= 1)); then
       echo_with_color red "\nCould not install cassandra extension." >&5
     else
-      echo_with_color green "    Cassandra installed...\n" >&5
+      echo_with_color green "    Cassandra installed\n" >&5
     fi
-    cd "$CURRENT_PATH" || exit 1
+    cd "${CURRENT_PATH}" || exit
     rm -rf /opt/cassandra
   fi
 fi
@@ -914,35 +763,35 @@ fi
 
 ### INSTALL PYTHON BUNCH
 run_process "   Installing python2" install_python2
-if ((CURRENT_OS == 20)); then
-  pip2 list | grep bunch
-else
+if ((CURRENT_OS == 7)); then
   pip list | grep bunch
+else
+  pip2 list | grep bunch
 fi
 if (($? >= 1)); then
   run_process "   Installing bunch" install_bunch
-  if ((CURRENT_OS == 20)); then
-    pip2 list | grep bunch
-  else
+  if ((CURRENT_OS == 7)); then
     pip list | grep bunch
+  else
+    pip2 list | grep bunch
   fi
   if (($? >= 1)); then
     echo_with_color red "\nCould not install python bunch extension." >&5
-  else 
-    echo_with_color green "   python2 installed\n" >&5
+  else
+    echo_with_color green "    python2 installed\n" >&5
   fi
 fi
 
 ### INSTALL PYTHON3 MUNCH
 run_process "   Installing python3" install_python3
-python3 -m pip list | grep munch
+pip3 list --format=legacy | grep munch
 if (($? >= 1)); then
   run_process "   Installing munch" install_munch
-  python3 -m pip list | grep munch
+  pip3 list --format=legacy | grep munch
   if (($? >= 1)); then
     echo_with_color red "\nCould not install python3 munch extension." >&5
   else
-    echo_with_color green "   python3 installed\n" >&5
+    echo_with_color green "    python3 installed\n" >&5
   fi
 fi
 
@@ -969,26 +818,24 @@ fi
 # We are in the process of upgrading this to SDK 3, therefor is currently not working and commented out
 # php -m | grep -E "^couchbase"
 # if (($? >= 1)); then
-#   if ((CURRENT_OS == 16)); then
-#     wget -O - https://packages.couchbase.com/clients/c/repos/deb/couchbase.key | apt-key add -
-#     echo "deb https://packages.couchbase.com/clients/c/repos/deb/ubuntu1604 xenial xenial/main" >/etc/apt/sources.list.d/couchbase.list
-#   elif ((CURRENT_OS == 18)); then
-#     wget -O - https://packages.couchbase.com/clients/c/repos/deb/couchbase.key | apt-key add -
-#     echo "deb https://packages.couchbase.com/clients/c/repos/deb/ubuntu1804 bionic bionic/main" >/etc/apt/sources.list.d/couchbase.list
-#   elif ((CURRENT_OS == 20)); then
-#     wget -O - https://packages.couchbase.com/clients/c/repos/deb/couchbase.key | apt-key add -
-#     echo "deb https://packages.couchbase.com/clients/c/repos/deb/ubuntu2004 focal focal/main" >/etc/apt/sources.list.d/couchbase.list
+#   if ((CURRENT_OS == 7)); then
+#     wget -P /tmp http://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-4-x86_64.rpm
+#     rpm -i /tmp/couchbase-release-1.0-4-x86_64.rpm
+#     yum install -y libcouchbase-devel
+#     pecl install couchbase-3.1.2
+#   else
+#     dnf update -y
+#     wget -P /tmp http://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-x86_64.rpm
+#     rpm -i /tmp/couchbase-release-1.0-x86_64.rpm
+#     dnf install -y libcouchbase-devel
+#     pecl install couchbase 
 #   fi
 
-#   apt-get update
-#   apt install -y libcouchbase3 libcouchbase-dev libcouchbase3-tools libcouchbase-dbg libcouchbase3-libev libcouchbase3-libevent zlib1g-dev
-#   pecl install couchbase
 #   if (($? >= 1)); then
 #     echo_with_color red "\ncouchbase extension installation error." >&5
 #     exit 1
 #   fi
-#   echo "extension=couchbase.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/xcouchbase.ini"
-#   phpenmod -s ALL xcouchbase
+#   echo "extension=couchbase.so" >/etc/php.d/xcouchbase.ini
 #   php -m | grep couchbase
 #   if (($? >= 1)); then
 #     echo_with_color red "\nCould not install couchbase extension." >&5
@@ -996,17 +843,14 @@ fi
 # fi
 
 ### INSTALL Snowlake
-if [[ $APACHE == TRUE ]]; then ### Only with key --apache
-  ls /etc/php/${PHP_VERSION_INDEX}/apache2/conf.d | grep "snowflake"
-  if (($? >= 1)); then
-    run_process "   Installing snowflake" install_snowflake_apache
+ls /etc/php.d | grep "snowflake"
+if (($? >= 1)); then
+  if ((CURRENT_OS == 8)); then
+    run_process "   Installing Snowflake" install_snowflake
     echo_with_color green "    snowflake installed\n" >&5
-  fi
-else
-  ls /etc/php/${PHP_VERSION_INDEX}/fpm/conf.d | grep "snowflake"
-  if (($? >= 1)); then
-    run_process "   Installing snowflake" install_snowflake_nginx
-    echo_with_color green "    snowflake installed\n" >&5
+  else
+    # pdo_snowflake requires gcc 5.2 to install, centos7 only has 4.8 available
+    echo_with_color red "Snowflake only supported on CentOS / RHEL 8. Skipping...\n" >&5
   fi
 fi
 
@@ -1022,11 +866,10 @@ if (($? >= 1)); then
 fi
 
 if [[ $APACHE == TRUE ]]; then
-  service apache2 reload
+  service httpd restart
 else
-  service ${PHP_VERSION}-fpm reload
+  service php-fpm restart
 fi
-
 echo_with_color green "PHP Extensions configured.\n" >&5
 
 ### Step 5. Installing Composer
@@ -1038,7 +881,7 @@ echo_with_color green "Composer installed.\n" >&5
 if [[ $MYSQL == TRUE ]]; then ### Only with key --with-mysql
   echo_with_color blue "Step 6: Installing System Database for DreamFactory...\n" >&5
 
-  dpkg -l | grep mysql | cut -d " " -f 3 | grep -E "^mysql" | grep -E -v "^mysql-client" | grep -v "mysql-common"
+  yum list installed | grep -E "mariadb-server.x86_64"
   CHECK_MYSQL_INSTALLATION=$?
 
   ps aux | grep -v grep | grep -E "^mysql"
@@ -1051,9 +894,6 @@ if [[ $MYSQL == TRUE ]]; then ### Only with key --with-mysql
     echo_with_color red "MySQL Database detected in the system. Skipping installation. \n" >&5
     DB_FOUND=TRUE
   else
-    run_process "   Adding mariadb repo" add_mariadb_repo
-    run_process "   Updating System" system_update
-
     echo_with_color magenta "Please choose a strong MySQL root user password: " >&5
     read -r DB_PASS
     if [[ -z $DB_PASS ]]; then
@@ -1064,11 +904,6 @@ if [[ $MYSQL == TRUE ]]; then ### Only with key --with-mysql
     fi
 
     echo_with_color green "\nPassword accepted.\n" >&5
-    # Disable interactive mode in installation mariadb. Set generated above password.
-    export DEBIAN_FRONTEND="noninteractive"
-    debconf-set-selections <<<"mariadb-server mysql-server/root_password password $DB_PASS"
-    debconf-set-selections <<<"mariadb-server mysql-server/root_password_again password $DB_PASS"
-
     run_process "   Installing MariaDB" install_mariadb
   fi
 
@@ -1093,7 +928,7 @@ if [[ $MYSQL == TRUE ]]; then ### Only with key --with-mysql
     # MySQL system database is not installed, but MySQL is, so let's
     # prompt the user for the root password.
     else
-      echo_with_color magenta "\nEnter MySQL root password:  " >&5
+      echo_with_color magenta "\n Enter MySQL root password:  " >&5
       read -r DB_PASS
 
       # Test DB access
@@ -1130,7 +965,7 @@ if [[ $MYSQL == TRUE ]]; then ### Only with key --with-mysql
       echo_with_color red "Connection to Database failed. Exit \n" >&5
       exit 1
     fi
-    echo_with_color magenta "\nWhat would you like to name your system database? (e.g. dreamfactory) " >&5
+    echo_with_color magenta "\n What would you like to name your system database? (e.g. dreamfactory) " >&5
     read -r DF_SYSTEM_DB
     if [[ -z $DF_SYSTEM_DB ]]; then
       until [[ -n $DF_SYSTEM_DB ]]; do
@@ -1139,12 +974,12 @@ if [[ $MYSQL == TRUE ]]; then ### Only with key --with-mysql
       done
     fi
 
-    echo "CREATE DATABASE ${DF_SYSTEM_DB};" | mysql -u root "-p${DB_PASS}" 2>&5
+    echo "CREATE DATABASE ${DF_SYSTEM_DB};" | mysql -u root "-p${DB_PASS}"
     if (($? >= 1)); then
       echo_with_color red "\nCreating database error. Exit" >&5
       exit 1
     fi
-    echo_with_color magenta "\nPlease create a MySQL DreamFactory system database user name (e.g. dfadmin): " >&5
+    echo_with_color magenta "\n Please create a MySQL DreamFactory system database user name (e.g. dfadmin): " >&5
     read -r DF_SYSTEM_DB_USER
     if [[ -z $DF_SYSTEM_DB_USER ]]; then
       until [[ -n $DF_SYSTEM_DB_USER ]]; do
@@ -1153,7 +988,7 @@ if [[ $MYSQL == TRUE ]]; then ### Only with key --with-mysql
       done
     fi
 
-    echo_with_color magenta "\nPlease create a secure MySQL DreamFactory system database user password: " >&5
+    echo_with_color magenta "\n Please create a secure MySQL DreamFactory system database user password: " >&5
     read -r DF_SYSTEM_DB_PASSWORD
     if [[ -z $DF_SYSTEM_DB_PASSWORD ]]; then
       until [[ -n $DF_SYSTEM_DB_PASSWORD ]]; do
@@ -1162,7 +997,7 @@ if [[ $MYSQL == TRUE ]]; then ### Only with key --with-mysql
       done
     fi
     # Generate password for user in DB
-    echo "GRANT ALL PRIVILEGES ON ${DF_SYSTEM_DB}.* to \"${DF_SYSTEM_DB_USER}\"@\"localhost\" IDENTIFIED BY \"${DF_SYSTEM_DB_PASSWORD}\";" | mysql -u root "-p${DB_PASS}" 2>&5
+    echo "GRANT ALL PRIVILEGES ON ${DF_SYSTEM_DB}.* to \"${DF_SYSTEM_DB_USER}\"@\"localhost\" IDENTIFIED BY \"${DF_SYSTEM_DB_PASSWORD}\";" | mysql -u root "-p${DB_PASS}"
     if (($? >= 1)); then
       echo_with_color red "\nCreating new user error. Exit" >&5
       exit 1
@@ -1170,7 +1005,7 @@ if [[ $MYSQL == TRUE ]]; then ### Only with key --with-mysql
 
     echo "FLUSH PRIVILEGES;" | mysql -u root "-p${DB_PASS}"
 
-    echo_with_color green "\nDatabase configuration finished.\n" >&5
+    echo -e "\nDatabase configuration finished.\n" >&5
   else
     echo_with_color green "Skipping...\n" >&5
   fi
@@ -1184,7 +1019,7 @@ echo_with_color blue "Step 8: Installing DreamFactory...\n " >&5
 
 ls -d /opt/dreamfactory
 if (($? >= 1)); then
-  run_process "   Cloning DreamFactory repository"  clone_dreamfactory_repository
+  run_process "   Cloning DreamFactory Repository" clone_dreamfactory_repository
 else
   echo_with_color red "DreamFactory detected.\n" >&5
   DF_CLEAN_INSTALLATION=FALSE
@@ -1199,7 +1034,9 @@ if [[ $DF_CLEAN_INSTALLATION == FALSE ]]; then
       LICENSE_FILE_ANSWER=N
     fi
     LICENSE_FILE_EXIST=TRUE
+
   fi
+
 fi
 
 if [[ $LICENSE_FILE_EXIST == TRUE ]]; then
@@ -1251,21 +1088,7 @@ fi
 
 chown -R "$CURRENT_USER" /opt/dreamfactory && cd /opt/dreamfactory || exit 1
 
-# If Oracle is not installed, add the --ignore-platform-reqs option
-# to composer command
-if [[ $ORACLE == TRUE ]]; then
-  if [[ $CURRENT_USER == "root" ]]; then
-    sudo -u "$CURRENT_USER" COMPOSER_ALLOW_SUPERUSER=1 bash -c "/usr/local/bin/composer install --no-dev"
-  else
-    sudo -u "$CURRENT_USER" bash -c "/usr/local/bin/composer install --no-dev"
-  fi
-else
-  if [[ $CURRENT_USER == "root" ]]; then
-    sudo -u "$CURRENT_USER" COMPOSER_ALLOW_SUPERUSER=1 bash -c "/usr/local/bin/composer install --no-dev --ignore-platform-reqs"
-  else
-    sudo -u "$CURRENT_USER" bash -c "/usr/local/bin/composer install --no-dev --ignore-platform-reqs"
-  fi
-fi
+run_process "   Installing DreamFactory" run_composer_install
 
 ### Shutdown silent mode because php artisan df:setup and df:env will get troubles with prompts.
 exec 1>&5 5>&-
@@ -1302,14 +1125,13 @@ if [[ $LICENSE_INSTALLED == TRUE || $DF_CLEAN_INSTALLATION == FALSE ]]; then
   if [[ $LICENSE_INSTALLED == TRUE ]]; then
     grep DF_LICENSE_KEY .env >/dev/null 2>&1 # Check for existing key.
     if (($? == 0)); then
-      echo_with_color red "\nThe license key is already installed. Do you want to install a new key? [Yy/Nn]"
+      echo_with_color red "\nThe license key already installed. Do you want to install a new key? [Yy/Nn]"
       read -r KEY_ANSWER
       if [[ -z $KEY_ANSWER ]]; then
         KEY_ANSWER=N
       fi
       NEW_KEY=TRUE
     fi
-
     if [[ $NEW_KEY == TRUE ]]; then
       if [[ $KEY_ANSWER =~ ^[Yy]$ ]]; then #Install new key
         CURRENT_KEY=$(grep DF_LICENSE_KEY .env)
@@ -1355,14 +1177,13 @@ if [[ $LICENSE_INSTALLED == TRUE || $DF_CLEAN_INSTALLATION == FALSE ]]; then
       fi
       ###Add license key to .env file
       echo -e "\nDF_LICENSE_KEY=${LICENSE_KEY}" >>.env
-
     fi
   fi
 fi
 
 if [[ $APACHE == TRUE ]]; then
   chmod -R 2775 /opt/dreamfactory/
-  chown -R "www-data:$CURRENT_USER" /opt/dreamfactory/
+  chown -R "apache:$CURRENT_USER" /opt/dreamfactory/
 fi
 
 ### Uncomment nodejs in .env file
@@ -1371,21 +1192,34 @@ if (($? == 0)); then
   sed -i "s,\#DF_NODEJS_PATH=/usr/local/bin/node,DF_NODEJS_PATH=$NODE_PATH," .env
 fi
 
-### Ubuntu 20 uses the python2 command instead of python. So we need to update our .env
+### Centos8 uses the python2 command instead of python. So we need to update our .env
 sed -i "s,\#DF_PYTHON_PATH=/usr/local/bin/python,DF_PYTHON_PATH=$(which python2)," .env
 
 sudo -u "$CURRENT_USER" bash -c "php artisan cache:clear -q"
 
-### Add Permissions and Ownerships
+#Add rules if SELinux enabled
+sestatus | grep SELinux | grep enabled >/dev/null
+if (($? == 0)); then
+  setsebool -P httpd_can_network_connect_db 1
+  chcon -t httpd_sys_content_t storage -R
+  chcon -t httpd_sys_content_t bootstrap/cache/ -R
+  chcon -t httpd_sys_rw_content_t storage -R
+  chcon -t httpd_sys_rw_content_t bootstrap/cache/ -R
+fi
+
+## Add Permissions and Ownerships
 if [[ ! $APACHE == TRUE ]]; then
   echo_with_color blue "Adding Permissions and Ownerships...\n"
   echo_with_color blue "    Creating user 'dreamfactory'"
   useradd dreamfactory
-  PHP_VERSION_NUMBER=$(php --version 2>/dev/null | head -n 1 | cut -d " " -f 2 | cut -c 1,2,3)
   echo_with_color blue "    Updating php-fpm user, group, and owner"
-  sed -i "s,www-data,dreamfactory," /etc/php/$PHP_VERSION_NUMBER/fpm/pool.d/www.conf
+  sed -i "s,;listen.owner = nobody,listen.owner = dreamfactory," /etc/php-fpm.d/www.conf
+  sed -i "s,;listen.group = nobody,listen.group = dreamfactory," /etc/php-fpm.d/www.conf
+  sed -i "s,;listen.mode = 0660,listen.mode = 0660\nuser = dreamfactory\ngroup = dreamfactory," /etc/php-fpm.d/www.conf
+  sed -i "s,listen.acl_users,;listen.acl_users," /etc/php-fpm.d/www.conf
+
   if (($? == 0)); then
-    usermod -a -G dreamfactory www-data
+    usermod -a -G dreamfactory nginx
     echo_with_color blue "    Changing ownership and permission of /opt/dreamfactory to 'dreamfactory' user"
     chown -R dreamfactory:dreamfactory /opt/dreamfactory
     chmod -R u=rwX,g=rX,o= /opt/dreamfactory
@@ -1395,7 +1229,7 @@ if [[ ! $APACHE == TRUE ]]; then
       echo_with_color red "nginx failed to restart\n"
       exit 1
     else
-      service php$PHP_VERSION_NUMBER-fpm restart
+      service php-fpm restart
       if (($? >= 1)); then
         echo_with_color red "php-fpm failed to restart\n"
         exit 1
@@ -1407,7 +1241,7 @@ if [[ ! $APACHE == TRUE ]]; then
   fi
 fi
 
-echo_with_color green "Installation finished! DreamFactory has been installed in /opt/dreamfactory "
+echo_with_color green "\nInstallation finished! DreamFactory has been installed in /opt/dreamfactory"
 
 if [[ $DEBUG == TRUE ]]; then
   echo_with_color red "\nThe log file saved in: /tmp/dreamfactory_installer.log "
@@ -1423,10 +1257,8 @@ if [[ $MYSQL_INSTALLED == TRUE ]]; then
   if [[ ! $DB_FOUND == TRUE ]]; then
     echo -e " DB root password: $DB_PASS"
   fi
-  echo -e " DB name: ${DF_SYSTEM_DB}"
-  echo -e " DB user: ${DF_SYSTEM_DB_USER}"
-  echo -e " DB password: ${DF_SYSTEM_DB_PASSWORD}"
-  echo -e "******************************\n"
+  echo -e " DB name: $DF_SYSTEM_DB"
+  echo -e " DB user: $DF_SYSTEM_DB_USER"
+  echo -e " DB password: $DF_SYSTEM_DB_PASSWORD"
+  echo -e "******************************${NC}\n"
 fi
-
-exit 0
