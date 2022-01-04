@@ -778,7 +778,7 @@ echo_with_color blue "Step 5: Installing Composer...\n" >&5
 
 curl -sS https://getcomposer.org/installer -o /tmp/composer-setup.php
 
-php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer
+php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer --version=2.1.14
 
 if (($? >= 1)); then
   echo_with_color red "\n${ERROR_STRING}" >&5
