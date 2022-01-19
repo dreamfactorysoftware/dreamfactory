@@ -114,6 +114,7 @@
         },
         {
             "name": "aws/aws-sdk-php",
+<<<<<<< HEAD
             "version": "3.209.7",
             "source": {
                 "type": "git",
@@ -124,6 +125,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/22bbcc0b25578d4c496756d9f46fcd4c27cffd5d",
                 "reference": "22bbcc0b25578d4c496756d9f46fcd4c27cffd5d",
+=======
+            "version": "3.208.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/aws/aws-sdk-php.git",
+                "reference": "58fa9d8b522b0afa260299179ff950c783ff0ee1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/58fa9d8b522b0afa260299179ff950c783ff0ee1",
+                "reference": "58fa9d8b522b0afa260299179ff950c783ff0ee1",
+>>>>>>> ecfc923 (Release 4.10.0)
                 "shasum": ""
             },
             "require": {
@@ -199,9 +212,15 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
+<<<<<<< HEAD
                 "source": "https://github.com/aws/aws-sdk-php/tree/3.209.7"
             },
             "time": "2022-01-18T19:16:05+00:00"
+=======
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.208.5"
+            },
+            "time": "2021-12-13T20:17:56+00:00"
+>>>>>>> ecfc923 (Release 4.10.0)
         },
         {
             "name": "barryvdh/laravel-cors",
@@ -1189,12 +1208,21 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-admin-app.git",
+<<<<<<< HEAD
                 "reference": "7c24e60975e2cd94f7e528d8432ffbae0980fc38"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/dreamfactorysoftware/df-admin-app/zipball/7c24e60975e2cd94f7e528d8432ffbae0980fc38",
                 "reference": "7c24e60975e2cd94f7e528d8432ffbae0980fc38",
+=======
+                "reference": "65866fd3d2bb7f721f23f6a58c744413d1cd35e9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-admin-app/zipball/65866fd3d2bb7f721f23f6a58c744413d1cd35e9",
+                "reference": "65866fd3d2bb7f721f23f6a58c744413d1cd35e9",
+>>>>>>> ecfc923 (Release 4.10.0)
                 "shasum": ""
             },
             "require": {
@@ -1235,7 +1263,11 @@
                 "source": "https://github.com/dreamfactorysoftware/df-admin-app",
                 "wiki": "https://wiki.dreamfactory.com"
             },
+<<<<<<< HEAD
             "time": "2022-01-19T10:53:31+00:00"
+=======
+            "time": "2021-12-15T10:05:05+00:00"
+>>>>>>> ecfc923 (Release 4.10.0)
         },
         {
             "name": "dreamfactory/df-api-docs-ui",
@@ -3926,6 +3958,7 @@
         },
         {
             "name": "laravel/framework",
+<<<<<<< HEAD
             "version": "v6.20.44",
             "source": {
                 "type": "git",
@@ -3936,6 +3969,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/laravel/framework/zipball/505ebcdeaa9ca56d6d7dbf38ed4f53998c973ed0",
                 "reference": "505ebcdeaa9ca56d6d7dbf38ed4f53998c973ed0",
+=======
+            "version": "v6.20.43",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/framework.git",
+                "reference": "103df9fafbeeac620305874d54a01288c6f1586b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/103df9fafbeeac620305874d54a01288c6f1586b",
+                "reference": "103df9fafbeeac620305874d54a01288c6f1586b",
+>>>>>>> ecfc923 (Release 4.10.0)
                 "shasum": ""
             },
             "require": {
@@ -4075,7 +4120,11 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
+<<<<<<< HEAD
             "time": "2022-01-12T16:12:12+00:00"
+=======
+            "time": "2021-12-14T14:39:18+00:00"
+>>>>>>> ecfc923 (Release 4.10.0)
         },
         {
             "name": "laravel/helpers",
@@ -8077,6 +8126,7 @@
         },
         {
             "name": "symfony/css-selector",
+<<<<<<< HEAD
             "version": "v5.4.2",
             "source": {
                 "type": "git",
@@ -8087,11 +8137,22 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/css-selector/zipball/cfcbee910e159df402603502fe387e8b677c22fd",
                 "reference": "cfcbee910e159df402603502fe387e8b677c22fd",
+=======
+            "version": "v6.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/css-selector.git",
+                "reference": "ede53cafe1784b9131a48774b54f281d5d003f65"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/css-selector/zipball/ede53cafe1784b9131a48774b54f281d5d003f65",
+                "reference": "ede53cafe1784b9131a48774b54f281d5d003f65",
+>>>>>>> ecfc923 (Release 4.10.0)
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.2.5",
-                "symfony/polyfill-php80": "^1.16"
+                "php": ">=8.0.2"
             },
             "type": "library",
             "autoload": {
@@ -8123,7 +8184,11 @@
             "description": "Converts CSS selectors to XPath expressions",
             "homepage": "https://symfony.com",
             "support": {
+<<<<<<< HEAD
                 "source": "https://github.com/symfony/css-selector/tree/v5.4.2"
+=======
+                "source": "https://github.com/symfony/css-selector/tree/v6.0.1"
+>>>>>>> ecfc923 (Release 4.10.0)
             },
             "funding": [
                 {
@@ -8139,7 +8204,11 @@
                     "type": "tidelift"
                 }
             ],
+<<<<<<< HEAD
             "time": "2021-12-16T21:58:21+00:00"
+=======
+            "time": "2021-12-08T15:13:44+00:00"
+>>>>>>> ecfc923 (Release 4.10.0)
         },
         {
             "name": "symfony/debug",
@@ -11057,6 +11126,80 @@
         {
             "name": "composer/pcre",
             "version": "1.0.0",
+<<<<<<< HEAD
+=======
+            "source": {
+                "type": "git",
+                "url": "https://github.com/composer/pcre.git",
+                "reference": "3d322d715c43a1ac36c7fe215fa59336265500f2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/composer/pcre/zipball/3d322d715c43a1ac36c7fe215fa59336265500f2",
+                "reference": "3d322d715c43a1ac36c7fe215fa59336265500f2",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.3.2 || ^7.0 || ^8.0"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^1",
+                "phpstan/phpstan-strict-rules": "^1.1",
+                "symfony/phpunit-bridge": "^4.2 || ^5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Composer\\Pcre\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jordi Boggiano",
+                    "email": "j.boggiano@seld.be",
+                    "homepage": "http://seld.be"
+                }
+            ],
+            "description": "PCRE wrapping library that offers type-safe preg_* replacements.",
+            "keywords": [
+                "PCRE",
+                "preg",
+                "regex",
+                "regular expression"
+            ],
+            "support": {
+                "issues": "https://github.com/composer/pcre/issues",
+                "source": "https://github.com/composer/pcre/tree/1.0.0"
+            },
+            "funding": [
+                {
+                    "url": "https://packagist.com",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/composer",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/composer/composer",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2021-12-06T15:17:27+00:00"
+        },
+        {
+            "name": "composer/semver",
+            "version": "3.2.6",
+>>>>>>> ecfc923 (Release 4.10.0)
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/pcre.git",
@@ -11288,6 +11431,7 @@
         },
         {
             "name": "composer/xdebug-handler",
+<<<<<<< HEAD
             "version": "2.0.4",
             "source": {
                 "type": "git",
@@ -11298,6 +11442,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/composer/xdebug-handler/zipball/0c1a3925ec58a4ec98e992b9c7d171e9e184be0a",
                 "reference": "0c1a3925ec58a4ec98e992b9c7d171e9e184be0a",
+=======
+            "version": "2.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/composer/xdebug-handler.git",
+                "reference": "6555461e76962fd0379c444c46fd558a0fcfb65e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/composer/xdebug-handler/zipball/6555461e76962fd0379c444c46fd558a0fcfb65e",
+                "reference": "6555461e76962fd0379c444c46fd558a0fcfb65e",
+>>>>>>> ecfc923 (Release 4.10.0)
                 "shasum": ""
             },
             "require": {
@@ -11334,7 +11490,11 @@
             "support": {
                 "irc": "irc://irc.freenode.org/composer",
                 "issues": "https://github.com/composer/xdebug-handler/issues",
+<<<<<<< HEAD
                 "source": "https://github.com/composer/xdebug-handler/tree/2.0.4"
+=======
+                "source": "https://github.com/composer/xdebug-handler/tree/2.0.3"
+>>>>>>> ecfc923 (Release 4.10.0)
             },
             "funding": [
                 {
@@ -11350,7 +11510,11 @@
                     "type": "tidelift"
                 }
             ],
+<<<<<<< HEAD
             "time": "2022-01-04T17:06:45+00:00"
+=======
+            "time": "2021-12-08T13:07:32+00:00"
+>>>>>>> ecfc923 (Release 4.10.0)
         },
         {
             "name": "doctrine/instantiator",
