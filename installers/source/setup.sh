@@ -17,56 +17,6 @@ CURRENT_OS=$(grep -e VERSION_ID /etc/os-release | cut -d "=" -f 2 | cut -d "." -
 
 ERROR_STRING="Installation error. Exiting"
 
-# CHECK FOR KEYS
-while [[ -n $1 ]]; do
-  case "$1" in
-  --with-oracle) ORACLE=TRUE ;;
-  --with-mysql) MYSQL=TRUE ;;
-  --with-apache) APACHE=TRUE ;;
-  --with-db2) DB2=TRUE ;;
-  --with-cassandra) CASSANDRA=TRUE ;;
-  --with-tag=*)
-    DREAMFACTORY_VERSION_TAG="${1/--with-tag=/}"
-    ;;
-  --with-tag)
-    DREAMFACTORY_VERSION_TAG="$2"
-    shift
-    ;;
-  --debug) DEBUG=TRUE ;;
-  --help) HELP=TRUE ;;
-  -h) HELP=TRUE ;;
-  *)
-    echo -e "\n${RD}Invalid flag detected… aborting.${NC}"
-    HELP=TRUE
-    break
-    ;;
-  esac
-  shift
-done
-
-if [[ $HELP == TRUE ]]; then
-  echo -e "\nList of available keys:\n"
-  echo "   --with-oracle                  Install driver and PHP extensions for work with Oracle DB"
-  echo "   --with-mysql                   Install MariaDB as default system database for DreamFactory"
-  echo "   --with-apache                  Install Apache2 web server for DreamFactory"
-  echo "   --with-db2                     Install driver and PHP extensions for work with IBM DB2"
-  echo "   --with-cassandra               Install driver and PHP extensions for work with Cassandra DB"
-  echo "   --with-tag=<tag name>          Install DreamFactory with specific version.  "
-  echo "   --debug                        Enable installation process logging to file in /tmp folder."
-  echo -e "   -h, --help                     Show this help\n"
-  exit 1
-fi
-
-if [[ ! $DEBUG == TRUE ]]; then
-  exec 5>&1            # Save a copy of STDOUT
-  exec >/dev/null 2>&1 # Redirect STDOUT to Null
-else
-  exec 5>&1 # Save a copy of STDOUT. Used because all echo redirects output to 5.
-  exec >/tmp/dreamfactory_installer.log 2>&1
-fi
-
-clear >&5
-
 echo_with_color() {
   case $1 in
   Red | RED | red)
@@ -105,9 +55,9 @@ print_centered() {
       filler="${filler}${ch}"
   done
 
-  printf "%s%s%s" "$filler" "$1" "$filler" >&5
-  [[ $(( (TERM_COLS - str_len) % 2 )) -ne 0 ]] && printf "%s" "${ch}" >&5
-  printf "\n" >&5
+  printf "%s%s%s" "$filler" "$1" "$filler"
+  [[ $(( (TERM_COLS - str_len) % 2 )) -ne 0 ]] && printf "%s" "${ch}"
+  printf "\n"
 
   return 0
 }
@@ -123,50 +73,81 @@ run_process () {
   kill $!
 }
 
-check_bunch_installation () {
-  case $CURRENT_KERNEL in
-    ubuntu)
-      if ((CURRENT_OS == 20)); then
-        pip2 list | grep bunch
-      else
-        pip list | grep bunch
-      fi
-      ;;
-    debian)
-      pip list | grep bunch
-      ;;
-    centos | rhel)
-      if ((CURRENT_OS == 7)); then
-        pip list | grep bunch
-      else
-        pip2 list | grep bunch
-      fi
-      ;;
-    fedora)
-      pip2 list | grep bunch
-      ;;
-  esac
-}
+clear
 
-check_munch_installation () {
-  case $CURRENT_KERNEL in
-    ubuntu)
-      python3 -m pip list | grep munch
-      ;;   
-    debian)
-      pip3 list | grep munch
-      ;;
-    centos | rhel)
-      pip3 list --format=legacy | grep munch
-      ;;    
-    fedora)
-      pip list | grep munch
-      ;;
-  esac
-}
+# Make sure script run as sudo
+if ((EUID != 0)); then
+  echo -e "${RD}\nPlease run script with root privileges: sudo ./dfsetup.run \n"
+  exit 1
+fi
+
+print_centered "-" "-"
+print_centered "-" "-"
+print_centered "Welcome to DreamFactory!"
+print_centered "-" "-"
+print_centered "-" "-"
+print_centered "Thank you for choosing DreamFactory. Please select any additional installation options from the menu choices below (you may select more than one), or simply press enter to continue with the default installation (Nginx Webserver, latest version of DreamFactory).\n" 
+print_centered "-" "-"
+echo -e ""
+echo -e "[1] Install driver and PHP extensions for Oracle DB" 
+echo -e "[2] Install driver and PHP extensions for IBM DB2" 
+echo -e "[3] Install driver and PHP extensions for Cassandra DB" 
+echo -e "[4] Install Apache2 web server for DreamFactory (Instead of Nginx)" 
+echo -e "[5] Install MariaDB as the default system database for DreamFactory" 
+echo -e "[6] Install a specfic version of DreamFactory" 
+echo -e "[7] Run Installation in debug mode (logs will output to /tmp/dreamfactory_installer.log)\n"
+print_centered "-" "-"
+echo -e "E.g input 1,4 and press Enter to additionaly install Oracle Drivers and use Apache2 instead of Nginx" 
+print_centered "-" "-"
+echo_with_color magenta "Input additional installation options or leave blank for default installation and press Enter to continue"
+read -r INSTALLATION_OPTIONS
+
+if [[ $INSTALLATION_OPTIONS == *"1"* ]]; then
+  ORACLE=TRUE
+  echo_with_color green "Oracle selected."
+fi
+
+if [[ $INSTALLATION_OPTIONS == *"2"* ]]; then
+  DB2=TRUE
+  echo_with_color green "DB2 selected."
+fi
+
+if [[ $INSTALLATION_OPTIONS == *"3"* ]]; then
+  CASSANDRA=TRUE
+  echo_with_color green "Cassandra selected."
+fi
+
+if [[ $INSTALLATION_OPTIONS == *"4"* ]]; then
+  APACHE=TRUE
+  echo_with_color green "Apache selected."
+fi
+
+if [[ $INSTALLATION_OPTIONS == *"5"* ]]; then  
+  MYSQL=TRUE
+  echo_with_color green "MariaDB System Database selected."
+fi
+
+if [[ $INSTALLATION_OPTIONS == *"6"* ]]; then 
+  echo_with_color magenta "What version of DreamFactory would you like to install? (E.g. 4.9.0)"
+  read -r DREAMFACTORY_VERSION_TAG
+  echo_with_color green "DreamFactory Version ${DREAMFACTORY_VERSION_TAG} selected."
+fi
+
+if [[ $INSTALLATION_OPTIONS == *"7"* ]]; then 
+  DEBUG=TRUE
+  echo_with_color green "Running in debug mode. Run this command: tail -f /tmp/dreamfactory_installer.log in a new terminal session to follow logs during installation"
+fi
+
+if [[ ! $DEBUG == TRUE ]]; then
+  exec 5>&1            # Save a copy of STDOUT
+  exec >/dev/null 2>&1 # Redirect STDOUT to Null
+else
+  exec 5>&1 # Save a copy of STDOUT. Used because all echo redirects output to 5.
+  exec >/tmp/dreamfactory_installer.log 2>&1
+fi
 
 #### INSTALLER ####
-
+echo -e "Checking system and user configurations" >&5
 ### Check installers will run in current environment.
 case $CURRENT_KERNEL in
   ubuntu)
@@ -199,12 +180,6 @@ case $CURRENT_KERNEL in
     ;;
 
 esac
-
-# Make sure script run as sudo
-if ((EUID != 0)); then
-  echo -e "${RD}\nPlease run script with root privileges: sudo $0 \n" >&5
-  exit 1
-fi
 
 # Retrieve executing user's username
 CURRENT_USER=$(logname)
@@ -239,11 +214,7 @@ if [[ $CURRENT_USER == "root" ]]; then
   fi
 fi
 
-print_centered "-" "-"
-print_centered "-" "-"
-print_centered "Welcome to DreamFactory!"
-print_centered "-" "-"
-print_centered "-" "-"
+echo -e "System and User settings OK" >&5
 
 echo -e "${CURRENT_KERNEL^} ${CURRENT_OS} detected. Installing DreamFactory...\n" >&5
 #Go into the individual scripts here

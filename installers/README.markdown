@@ -1,11 +1,13 @@
 # DreamFactory installation scripts.
 
-This directory contains automated installer scripts for the following operating systems:
+This directory contains an automated installer package `dfsetup.run` which will run on the following operating systems:
 
 * CentOS / RHEL 7/8
 * Debian 9/10
 * Fedora 32/33/34
 * Ubuntu 18/20
+
+Simply run the installer with `sudo ./dfsetup.run`.
 
 ### Installation Requirements
 
@@ -14,25 +16,15 @@ For this wizard to work properly several conditions must be met:
 * The wizard will be run on a fresh operating system installation. If you use these installers in conjunction with an existing Linux environment, the installer may skip some installation steps and you may need to manually perform additional configuration.
 * DreamFactory will be the only web application running on this server. If you intend to run other sites using virtual hosts you will need to adjust the configuration to suit this requirement.
 * The executing user must be able to use sudo(su) to run the installer.
-* You'll need to make the script executable by changing its permissions (`sudo chmod +x ubuntu.sh`)/(`su -c "chmod +x debian.sh"`)
 * If you want to use MySQL, PostgreSQL, or MS SQL Server for the system database, you'll be prompted to provide an **existing** database name, database username, and database password. DreamFactory cannot automatically create the database and user because it lacks administrative access to your database. Therefore before running the installer, create a database (you can name it anything), and then create a user with privileges allowing for the creation and modification of tables, as well as the usual CRUD (create, retrieve, update, delete) operations.
 
 ## Installation Options
 
-You may pass several options into the script to alter its behavior. If you do not use these options, the script will install the Nginx web server, DreamFactory, and the required system and PHP extensions, but will **not install a database server**. During the script's execution you have the option to choose the SQLite database for your DreamFactory system database, which does not require any additional installation or configuration steps.
-
-### Displaying the Help Menu
-
-Passing the `--help` or `-h` option will present a list of all available installer options:
-
-    $ sudo ./ubuntu.sh -h
-    $ su -c "./debian.sh --help"
+You will be greeted with a menu asking you if you would like to add any additional installation options (For example, Oracle db drivers, or using an Apache web server). You may choose as many as you wish by simply typing them in at the prompt (e.g `1,4` will install the necessary Oracle extensions and Apache). If you do not use these options, the script will install the Nginx web server, DreamFactory, and the required system and PHP extensions, but will **not install a database server**. During the script's execution you have the option to choose the SQLite database for your DreamFactory system database, which does not require any additional installation or configuration steps.
 
 ### Installing MySQL
 
-Passing the `--with-mysql` option will result in installation of the MariaDB database. It will be used to house the system database. You can pass the option like this:
-
-    $ sudo ./ubuntu.sh --with-mysql
+Selecting option 5 at the prompt will result in installation of the MariaDB database. It will be used to house the system database. You can pass the option like this:
 
 If you do not provide this option then the script assumes you've already installed a database server and have root access to it. You'll be prompted to choose one of the following supported system databases:
 
@@ -43,10 +35,7 @@ If you do not provide this option then the script assumes you've already install
 
 ### Enabling Oracle
 
-Passing the `--with-oracle` option will result in installation of PHP's Oracle (oci8) extension. You will need to supply a Silver or Gold license files to enable this functionality. If you choose this option you'll be prompted to identify the location of the the Oracle instant client zip files by providing an absolute path. Due to licensing restrictions we are unable to include these files with the installer, however you can download these files from [here](https://www.oracle.com/technetwork/topics/linuxx86-64soft-092277.html). You can pass the option like this:
-
-    $ sudo ./ubuntu.sh --with-oracle
-    $ su -c "./debian.sh --with-oracle"
+Selecting option 1 at the initial menu prompt will result in installation of PHP's Oracle (oci8) extension. You will need to supply a Silver or Gold license files to enable this functionality. If you choose this option you'll be prompted to identify the location of the the Oracle instant client zip files by providing an absolute path. Due to licensing restrictions we are unable to include these files with the installer, however you can download these files from [here](https://www.oracle.com/technetwork/topics/linuxx86-64soft-092277.html).
 
 After navigating to the Oracle website you'll want to download the basic and sdk instant client files:
 
@@ -64,11 +53,8 @@ The script only supports the Oracle driver version 19.13.
 
 ### Enabling IBM DB2
 
-Passing the `--with-db2` option will result in installation of PHP's IBM DB2 (ibm_db2/pdo_ibm) extension.
-Due to licensing restrictions we are unable to include these files with the installer, however you can download these files from [here](https://www.ibm.com/support/pages/download-initial-version-115-clients-and-drivers). This download requires you to register for a free account with IBM. You can pass the option like this:
-
-    $ sudo ./ubuntu.sh --with-db2
-    $ su -c "./debian.sh --with-db2"
+Selecting option 2 at the initial menu prompt will result in installation of PHP's IBM DB2 (ibm_db2/pdo_ibm) extension.
+Due to licensing restrictions we are unable to include these files with the installer, however you can download these files from [here](https://www.ibm.com/support/pages/download-initial-version-115-clients-and-drivers). This download requires you to register for a free account with IBM.
 
 After navigating to the IBM website you'll want to download the "IBM Data Server Driver Package (Linux AMD64 and Intel EM64T)" file:
 
@@ -78,31 +64,19 @@ You should not unzip these files. Just upload them to your server and write down
 
 ### Enabling Cassandra
 
-Passing the `--with-cassandra` option will result in installation of PHP's Cassandra extension. You can pass the option like this:
-
-    $ sudo ./ubuntu.sh --with-cassandra
-    $ su -c "./debian.sh --with-cassandra"
+Selecting option 3 at the initial menu prompt will result in installation of PHP's Cassandra extension.
 
 ### Installing Apache
 
-Passing the `--with-apache` option will result in the Apache 2 web server being installed instead of the default Nginx web server. You can pass the option like this:
-
-    $ sudo ./ubuntu.sh --with-apache
-    $ su -c "./debian.sh --with-apache"
+Selecting option 4 at the initial menu prompt will result in the Apache 2 web server being installed instead of the default Nginx web server.
 
 ### Installing Specific DreamFactory Version
 
-Passing the `--with-tag=<version tag>` option will install a specific version of DreamFactory. If not specified, the latest available version of DreamFactory will be installed. You can pass the tag like this:
-
-    $ sudo ./ubuntu,sh --with-tag=4.2.0
-    $ su -c "./ubuntu,sh --with-tag=4.2.0"
+Selecting option 6 at the initial menu prompt will install a specific version of DreamFactory. The installer will then ask you which version you would like to install. Please provide the version you wish to install (e.g. `4.9.0`) at the prompt. If this option is not selected, the latest available version of DreamFactory will be installed.
 
 ### Supplying Multiple Options
 
-You can supply multiple options to the installer like so:
-
-    $ sudo ./ubuntu.sh --with-apache --with-oracle --with-mysql --with-cassandra --with-db2
-    $ su -c "./debian.sh --with-apache --with-oracle --with-mysql --with-cassandra --with-db2"
+Supply multiple options at the menu prompt by comma separating the options you wish and press Enter (e.g. `1,4,5`).
 
 ### Installing a Commercial Version
 
@@ -130,7 +104,6 @@ After finishing the installation process you can access to DreamFactory by typin
 ## Troubleshooting
 
 If you get an error at some stage of the installation, fix it and run the script again. The script shows the installation steps to understand at what stage you have a problem.
-For more detailed information about the installation process and errors, you can use a `--debug` key. The script will save all detailed information in a log file. The log file can be found in **tmp** directory. Full path: **/tmp/dreamfactory_installer.log**
+For more detailed information about the installation process and errors, you can run the installer in debug mode using option 7 at the initial menu prompt. The script will save all detailed information in a log file. The log file can be found in **tmp** directory. Full path: **/tmp/dreamfactory_installer.log**
 
-    $ sudo ./ubuntu.sh --debug
-    $ su -c "./debian.sh --debug"
+This installer was created using [Makeself](https://makeself.io/). The scripts within `dfsetup.run` can be seen in this directory's source folder.

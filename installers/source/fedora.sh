@@ -351,12 +351,20 @@ install_python2 () {
   python2 get-pip.py
 }
 
+check_bunch_installation () {
+  pip2 list | grep bunch
+}
+
 install_bunch () {
   pip2 install bunch
 }
 
 install_python3 () {
   dnf install -y python python-pip
+}
+
+check_munch_installation () {
+  pip list | grep munch
 }
 
 install_munch () {
