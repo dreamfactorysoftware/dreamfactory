@@ -397,6 +397,14 @@ install_python2 () {
   fi
 }
 
+check_bunch_installation () {
+  if ((CURRENT_OS == 7)); then
+    pip list | grep bunch
+  else
+    pip2 list | grep bunch
+  fi
+}
+
 install_bunch () {
   if ((CURRENT_OS == 7)); then
     pip install bunch
@@ -407,6 +415,10 @@ install_bunch () {
 
 install_python3 () {
   yum install -y python3 python3-pip
+}
+
+check_munch_installation () {
+  pip3 list --format=legacy | grep munch
 }
 
 install_munch () {

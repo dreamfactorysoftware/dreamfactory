@@ -356,6 +356,14 @@ install_python2 () {
   fi
 }
 
+check_bunch_installation () {
+  if ((CURRENT_OS == 20)); then
+    pip2 list | grep bunch
+  else
+    pip list | grep bunch
+  fi  
+}
+
 install_bunch () {
   if ((CURRENT_OS == 20)); then
     pip2 install bunch
@@ -366,6 +374,10 @@ install_bunch () {
 
 install_python3 () {
   apt install -y python3 python3-pip
+}
+
+check_munch_installation () {
+  python3 -m pip list | grep munch
 }
 
 install_munch () {

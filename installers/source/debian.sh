@@ -343,12 +343,20 @@ install_python2 () {
   apt install -y python python-pip
 }
 
+check_bunch_installation () {
+  pip list | grep bunch
+}
+
 install_bunch () {
   pip install bunch
 }
 
 install_python3 () {
   apt install -y python3 python3-pip
+}
+
+check_munch_installation () {
+  pip3 list | grep munch
 }
 
 install_munch () {
