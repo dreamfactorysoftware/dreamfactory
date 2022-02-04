@@ -86,7 +86,7 @@ print_centered "-" "-"
 print_centered "Welcome to DreamFactory!"
 print_centered "-" "-"
 print_centered "-" "-"
-print_centered "Thank you for choosing DreamFactory. Please select any additional installation options from the menu choices below (you may select more than one), or simply press enter to continue with the default installation (Nginx Webserver, latest version of DreamFactory).\n" 
+print_centered "Thank you for choosing DreamFactory. By default this installer will install the latest version of DreamFactory with a preconfigured Nginx web server. Additional options are available in the menu below:" 
 print_centered "-" "-"
 echo -e ""
 echo -e "[1] Install driver and PHP extensions for Oracle DB" 
@@ -97,10 +97,9 @@ echo -e "[5] Install MariaDB as the default system database for DreamFactory"
 echo -e "[6] Install a specfic version of DreamFactory" 
 echo -e "[7] Run Installation in debug mode (logs will output to /tmp/dreamfactory_installer.log)\n"
 print_centered "-" "-"
-echo -e "E.g input 1,4 and press Enter to additionaly install Oracle Drivers and use Apache2 instead of Nginx" 
+echo_with_color magenta "Please select any additional installation options from the menu choices above by typing the corresponding number (e.g. '1,5' for Oracle and a MySql system database), or leave blank to continue with the default installation, and press Enter to continue"
+read -r -p "Input additional installation options (if any) from the list above, and press Enter to continue: " INSTALLATION_OPTIONS
 print_centered "-" "-"
-echo_with_color magenta "Input additional installation options or leave blank for default installation and press Enter to continue"
-read -r INSTALLATION_OPTIONS
 
 if [[ $INSTALLATION_OPTIONS == *"1"* ]]; then
   ORACLE=TRUE
@@ -129,7 +128,7 @@ fi
 
 if [[ $INSTALLATION_OPTIONS == *"6"* ]]; then 
   echo_with_color magenta "What version of DreamFactory would you like to install? (E.g. 4.9.0)"
-  read -r DREAMFACTORY_VERSION_TAG
+  read -r -p "DreamFactory Version: " DREAMFACTORY_VERSION_TAG
   echo_with_color green "DreamFactory Version ${DREAMFACTORY_VERSION_TAG} selected."
 fi
 
@@ -357,7 +356,7 @@ fi
 php -m | grep -E "^oci8"
 if (($? >= 1)); then
   if [[ $ORACLE == TRUE ]]; then
-    echo_with_color magenta "Enter absolute path to the Oracle drivers, complete with trailing slash: [./] " >&5
+    echo_with_color magenta "Enter absolute path to the Oracle drivers, complete with trailing slash: [/] " >&5
     read -r DRIVERS_PATH
     if [[ -z $DRIVERS_PATH ]]; then
       DRIVERS_PATH="."
@@ -386,7 +385,7 @@ fi
 php -m | grep -E "^pdo_ibm"
 if (($? >= 1)); then
   if [[ $DB2 == TRUE ]]; then
-    echo_with_color magenta "Enter absolute path to the IBM DB2 drivers, complete with trailing slash: [./] " >&5
+    echo_with_color magenta "Enter absolute path to the IBM DB2 drivers, complete with trailing slash: [/] " >&5
     read -r DRIVERS_PATH
     if [[ -z $DRIVERS_PATH ]]; then
       DRIVERS_PATH="."
@@ -568,11 +567,11 @@ if [[ $MYSQL == TRUE ]]; then ### Only with key --with-mysql
       run_process "   Updating System" system_update
     fi
     echo_with_color magenta "Please choose a strong MySQL root user password: " >&5
-    read -r DB_PASS
+    read -r -s DB_PASS
     if [[ -z $DB_PASS ]]; then
       until [[ -n $DB_PASS ]]; do
         echo_with_color red "The password can't be empty!" >&5
-        read -r DB_PASS
+        read -r -s DB_PASS
       done
     fi
     echo_with_color green "\nPassword accepted.\n" >&5
@@ -615,7 +614,7 @@ if [[ $MYSQL == TRUE ]]; then ### Only with key --with-mysql
         until [[ $ACCESS == TRUE ]]; do
           echo_with_color red "\nPassword incorrect!\n " >&5
           echo_with_color magenta "Enter root user password:\n " >&5
-          read -r DB_PASS
+          read -r -s DB_PASS
           mysql -h localhost -u root "-p$DB_PASS" -e"quit"
           if (($? == 0)); then
             ACCESS=TRUE
@@ -662,11 +661,11 @@ if [[ $MYSQL == TRUE ]]; then ### Only with key --with-mysql
       done
     fi
     echo_with_color magenta "\n Please create a secure MySQL DreamFactory system database user password: " >&5
-    read -r DF_SYSTEM_DB_PASSWORD
+    read -r -s DF_SYSTEM_DB_PASSWORD
     if [[ -z $DF_SYSTEM_DB_PASSWORD ]]; then
       until [[ -n $DF_SYSTEM_DB_PASSWORD ]]; do
         echo_with_color red "The password can't be empty!" >&5
-        read -r DF_SYSTEM_DB_PASSWORD
+        read -r -s DF_SYSTEM_DB_PASSWORD
       done
     fi
     # Generate password for user in DB
@@ -711,7 +710,7 @@ fi
 
 if [[ $LICENSE_FILE_EXIST == TRUE ]]; then
   if [[ $LICENSE_FILE_ANSWER =~ ^[Yy]$ ]]; then
-    echo_with_color magenta "\nEnter absolute path to license files, complete with trailing slash: [./]" >&5
+    echo_with_color magenta "\nEnter absolute path to license files, complete with trailing slash: [/]" >&5
     read -r LICENSE_PATH
     if [[ -z $LICENSE_PATH ]]; then
       LICENSE_PATH="."
@@ -735,7 +734,7 @@ else
     LICENSE_FILE_ANSWER=N
   fi
   if [[ $LICENSE_FILE_ANSWER =~ ^[Yy]$ ]]; then
-    echo_with_color magenta "\nEnter absolute path to license files, complete with trailing slash: [./]" >&5
+    echo_with_color magenta "\nEnter absolute path to license files, complete with trailing slash: [/]" >&5
     read -r LICENSE_PATH
     if [[ -z $LICENSE_PATH ]]; then
       LICENSE_PATH="."
@@ -747,7 +746,7 @@ else
     else
       cp $LICENSE_PATH/composer.{json,lock,json-dist} /opt/dreamfactory/
       LICENSE_INSTALLED=TRUE
-      echo_with_color green "\nLicenses file installed. \n" >&5
+      echo_with_color green "\nLicense files installed. \n" >&5
       echo_with_color blue "Installing DreamFactory...\n" >&5
     fi
   else
