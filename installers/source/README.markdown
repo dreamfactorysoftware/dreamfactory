@@ -7,4 +7,4 @@
 * `debian.sh`
 * `fedora.sh`
 
-You can install df using the scripts in this folder instead of `dfsetup.run` if you wish, but note that `setup.sh` will call on the appropriately titled installer, and so that script must be in the same directory as 'setup.sh'.
+You can install df using the scripts in this folder instead of `dfsetup.run` if you wish. To do so simply make `setup.sh` executable with `chmod +x` and then run it with `sudo ./setup.sh` but note that `setup.sh` will call on the appropriately titled installer for your OS, and so that script must be in the same directory.
