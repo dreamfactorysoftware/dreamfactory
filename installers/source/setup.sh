@@ -81,6 +81,39 @@ if ((EUID != 0)); then
   exit 1
 fi
 
+#### Check Current OS is compatible with the installer ####
+case $CURRENT_KERNEL in
+  ubuntu)
+    if ((CURRENT_OS != 18)) && ((CURRENT_OS != 20)); then
+      echo_with_color red "The installer only supports Ubuntu 18 and 20. Exiting...\n"
+      exit 1
+    fi 
+    ;;
+  debian)
+    if ((CURRENT_OS != 9)) && ((CURRENT_OS != 10)); then
+      echo_with_color red "The installer only supports Debian 9 and 10. Exiting...\n"
+      exit 1
+    fi
+    ;;
+  centos | rhel)
+    if ((CURRENT_OS != 7)) && ((CURRENT_OS != 8)); then
+      echo_with_color red "The installer only supports Rhel (Centos) 7 and 8. Exiting...\n"
+      exit 1
+    fi
+    ;;
+  fedora)
+    if ((CURRENT_OS != 32)) && ((CURRENT_OS != 33)) && ((CURRENT_OS != 34)); then
+      echo_with_color red "The installer only supports Fedora 32, 33, and 34. Exiting...\n"
+      exit 1
+    fi
+    ;;
+  *)
+    echo_with_color red "Installer only supported on Ubuntu, Debian, Rhel (Centos) and Fedora. Exiting...\n"
+    exit 1
+    ;;
+
+esac
+
 print_centered "-" "-"
 print_centered "-" "-"
 print_centered "Welcome to DreamFactory!"
@@ -89,6 +122,7 @@ print_centered "-" "-"
 print_centered "Thank you for choosing DreamFactory. By default this installer will install the latest version of DreamFactory with a preconfigured Nginx web server. Additional options are available in the menu below:" 
 print_centered "-" "-"
 echo -e ""
+echo -e "[0] Default Installation (latest version of DreamFactory with Nginx Server)"
 echo -e "[1] Install driver and PHP extensions for Oracle DB" 
 echo -e "[2] Install driver and PHP extensions for IBM DB2" 
 echo -e "[3] Install driver and PHP extensions for Cassandra DB" 
@@ -97,9 +131,10 @@ echo -e "[5] Install MariaDB as the default system database for DreamFactory"
 echo -e "[6] Install a specfic version of DreamFactory" 
 echo -e "[7] Run Installation in debug mode (logs will output to /tmp/dreamfactory_installer.log)\n"
 print_centered "-" "-"
-echo_with_color magenta "Please select any additional installation options from the menu choices above by typing the corresponding number (e.g. '1,5' for Oracle and a MySql system database), or leave blank to continue with the default installation, and press Enter to continue"
-read -r -p "Input additional installation options (if any) from the list above, and press Enter to continue: " INSTALLATION_OPTIONS
+echo_with_color magenta "Input '0' and press Enter to run the default installation. To install additional options, type the corresponding number (e.g. '1,5' for Oracle and a MySql system database) from the menu above and press Enter"
+read -r INSTALLATION_OPTIONS
 print_centered "-" "-"
+
 
 if [[ $INSTALLATION_OPTIONS == *"1"* ]]; then
   ORACLE=TRUE
@@ -145,41 +180,6 @@ else
   exec >/tmp/dreamfactory_installer.log 2>&1
 fi
 
-#### INSTALLER ####
-echo -e "Checking system and user configurations" >&5
-### Check installers will run in current environment.
-case $CURRENT_KERNEL in
-  ubuntu)
-    if ((CURRENT_OS != 18)) && ((CURRENT_OS != 20)); then
-      echo_with_color red "The installer only supports Ubuntu 18 and 20. Exiting...\n" >&5
-      exit 1
-    fi 
-    ;;
-  debian)
-    if ((CURRENT_OS != 9)) && ((CURRENT_OS != 10)); then
-      echo_with_color red "The installer only supports Debian 9 and 10. Exiting...\n" >&5
-      exit 1
-    fi
-    ;;
-  centos | rhel)
-    if ((CURRENT_OS != 7)) && ((CURRENT_OS != 8)); then
-      echo_with_color red "The installer only supports Rhel (Centos) 7 and 8. Exiting...\n" >&5
-      exit 1
-    fi
-    ;;
-  fedora)
-    if ((CURRENT_OS != 32)) && ((CURRENT_OS != 33)) && ((CURRENT_OS != 34)); then
-      echo_with_color red "The installer only supports Fedora 32, 33, and 34. Exiting...\n" >&5
-      exit 1
-    fi
-    ;;
-  *)
-    echo_with_color red "Installer only supported on Ubuntu, Debian, Rhel (Centos) and Fedora. Exiting...\n" >&5
-    exit 1
-    ;;
-
-esac
-
 # Retrieve executing user's username
 CURRENT_USER=$(logname)
 
@@ -212,8 +212,6 @@ if [[ $CURRENT_USER == "root" ]]; then
     echo -e "User: ${CURRENT_USER} selected. Continuing" >&5
   fi
 fi
-
-echo -e "System and User settings OK" >&5
 
 echo -e "${CURRENT_KERNEL^} ${CURRENT_OS} detected. Installing DreamFactory...\n" >&5
 #Go into the individual scripts here
