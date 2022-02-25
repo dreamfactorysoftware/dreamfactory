@@ -395,7 +395,12 @@ install_pcs () {
 install_snowflake () {
   dnf update -y
   dnf install -y gcc cmake php-pdo php-json
-  git clone https://github.com/snowflakedb/pdo_snowflake.git /src/snowflake
+  if ((CURRENT_OS == 34)); then
+    git clone https://github.com/snowflakedb/pdo_snowflake.git /src/snowflake
+  else
+    # Newest version of snowflake driver is bust on older Fedora versions
+    git clone -b v1.1.0 --single-branch https://github.com/snowflakedb/pdo_snowflake.git /src/snowflake
+  fi
   cd /src/snowflake
   export PHP_HOME=/usr
   /src/snowflake/scripts/build_pdo_snowflake.sh

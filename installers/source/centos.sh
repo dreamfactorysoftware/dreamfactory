@@ -449,7 +449,8 @@ install_pcs () {
 install_snowflake () {
   yum update -y
   yum install -y gcc cmake php-pdo php-json php-devel
-  git clone https://github.com/snowflakedb/pdo_snowflake.git /src/snowflake
+  # We need to use a previous version of the snowflake driver as the latest one seems to be bust.
+  git clone -b v1.1.0 --single-branch https://github.com/snowflakedb/pdo_snowflake.git /src/snowflake
   cd /src/snowflake
   export PHP_HOME=/usr
   /src/snowflake/scripts/build_pdo_snowflake.sh
