@@ -112,6 +112,9 @@ install_apache () {
         <LimitExcept GET HEAD PUT DELETE PATCH POST>
             Allow from all
         </LimitExcept>
+        <Files web.config>
+          Require all denied
+        </Files>
     </Directory>
 </VirtualHost>" >/etc/apache2/sites-available/000-default.conf
 }
@@ -174,6 +177,12 @@ server {
     fastcgi_index index.php;
     fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
     include fastcgi_params;
+  }
+  location ~ /\.ht {
+    deny all;
+  }
+  location ~ /web.config {
+    deny all;
   }
 }" >/etc/nginx/sites-available/default
 }
