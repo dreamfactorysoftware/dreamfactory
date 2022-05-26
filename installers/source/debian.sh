@@ -143,6 +143,8 @@ install_nginx () {
 
   # Create nginx site entry
   echo "
+# Default API call rate -> Here is set to 1 per second, and is later defined in the location /api/v2 section
+limit_req_zone \$binary_remote_addr zone=mylimit:10m rate=1r/s;
 server {
 
   listen 80 default_server;
@@ -183,6 +185,18 @@ server {
   }
   location ~ /web.config {
     deny all;
+  }
+  #By default we will limit login calls here using the limit_req_zone set above. The below will allow 1 per second over
+  # 5 seconds (so 5 in 5 seconds)from a single IP  before returning a 429 too many requests. Adjust as needed.
+  location /api/v2/user/session {
+    try_files \$uri \$uri/ /index.php?\$args;
+    limit_req zone=mylimit burst=5 nodelay;
+    limit_req_status 429;
+  }
+  location /api/v2/system/admin/session {
+    try_files \$uri \$uri/ /index.php?\$args;
+    limit_req zone=mylimit burst=5 nodelay;
+    limit_req_status 429;
   }
 }" >/etc/nginx/sites-available/default
 }
@@ -235,12 +249,9 @@ install_sql_server () {
   10)
     curl https://packages.microsoft.com/config/debian/10/prod.list >/etc/apt/sources.list.d/mssql-release.list
     ;;
-
-  # We need to wait for Microsoft to get their act together and update the drivers, but this will be the link once they
-  # sort it out
-  # 11)
-  #   curl https://packages.microsoft.com/config/debian/11/prod.list >/etc/apt/sources.list.d/mssql-release.list
-  #   ;;
+  11)
+    curl https://packages.microsoft.com/config/debian/11/prod.list >/etc/apt/sources.list.d/mssql-release.list
+    ;;
   esac
   apt-get update
   ACCEPT_EULA=Y apt-get install -y msodbcsql17 mssql-tools unixodbc-dev
@@ -349,15 +360,31 @@ install_igbinary () {
 }
 
 install_python2 () {
-  apt install -y python python-pip
+  if ((CURRENT_OS == 11)); then
+    apt install python-is-python2 -y
+    # Pip2 is not supported on ubuntu anymore. We have to get a script from the python package
+    # authority as below
+    wget https://bootstrap.pypa.io/pip/2.7/get-pip.py
+    python2 get-pip.py
+  else 
+    apt install -y python python-pip
+  fi
 }
 
 check_bunch_installation () {
-  pip list | grep bunch
+  if ((CURRENT_OS == 11)); then
+    pip2 list | grep bunch
+  else
+    pip list | grep bunch
+  fi
 }
 
 install_bunch () {
-  pip install bunch
+  if ((CURRENT_OS == 11)); then
+    pip2 install bunch
+  else
+    pip install bunch
+  fi
 }
 
 install_python3 () {
@@ -483,14 +510,13 @@ check_mysql_exists () {
 add_mariadb_repo () {
   if ((CURRENT_OS == 9)); then
     apt-key adv --no-tty --recv-keys --keyserver keyserver.ubuntu.com 0xF1656F24C74CD1D8
-    add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.3/debian stretch main'
+    add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.6/debian stretch main'
   elif ((CURRENT_OS == 10)); then
     apt-key adv --no-tty --recv-keys --keyserver keyserver.ubuntu.com 0xF1656F24C74CD1D8
-    add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.3/debian buster main'
-  # Once Microsoft updates their drivers, this will be the link (its working but not all the necessary packages are there)
-  # elif ((CURRENT_OS == 11)); then
-  #   apt-key adv --no-tty --recv-keys --keyserver keyserver.ubuntu.com 0xF1656F24C74CD1D8
-  #   add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.3/debian bullseye main'
+    add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.6/debian buster main'
+  elif ((CURRENT_OS == 11)); then
+    apt-key adv --no-tty --recv-keys --keyserver keyserver.ubuntu.com 0xF1656F24C74CD1D8
+    add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.6/debian bullseye main'
   fi
 }
 

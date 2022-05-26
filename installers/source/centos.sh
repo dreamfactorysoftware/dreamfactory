@@ -177,6 +177,8 @@ install_nginx () {
   sed -i 's/\;cgi\.fix\_pathinfo\=1/cgi\.fix\_pathinfo\=0/' $(php -i | sed -n '/^Loaded Configuration File => /{s:^.*> ::;p;}')
   # Create nginx site entry
   echo "
+#Default API call rate -> Here is set to 1 per second, and is later defined in the location /api/v2 section
+limit_req_zone \$binary_remote_addr zone=mylimit:10m rate=1r/s;
 server {
 
   listen 80 default_server;
@@ -217,6 +219,18 @@ server {
   }
   location ~ /web.config {
     deny all;
+  }
+  #By default we will limit login calls here using the limit_req_zone set above. The below will allow 1 per second over
+  # 5 seconds (so 5 in 5 seconds)from a single IP  before returning a 429 too many requests. Adjust as needed.
+  location /api/v2/user/session {
+    try_files \$uri \$uri/ /index.php?\$args;
+    limit_req zone=mylimit burst=5 nodelay;
+    limit_req_status 429;
+  }
+  location /api/v2/system/admin/session {
+    try_files \$uri \$uri/ /index.php?\$args;
+    limit_req zone=mylimit burst=5 nodelay;
+    limit_req_status 429;
   }
 }" >/etc/nginx/conf.d/dreamfactory.conf
 
