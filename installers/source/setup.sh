@@ -90,8 +90,8 @@ case $CURRENT_KERNEL in
     fi 
     ;;
   debian)
-    if ((CURRENT_OS != 9)) && ((CURRENT_OS != 10)); then
-      echo_with_color red "The installer only supports Debian 9 and 10. Exiting...\n"
+    if ((CURRENT_OS != 9)) && ((CURRENT_OS != 10)) && ((CURRENT_OS != 11)); then
+      echo_with_color red "The installer only supports Debian 9, 10, and 11. Exiting...\n"
       exit 1
     fi
     ;;
