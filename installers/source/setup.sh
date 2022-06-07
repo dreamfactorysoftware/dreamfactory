@@ -102,8 +102,8 @@ case $CURRENT_KERNEL in
     fi
     ;;
   fedora)
-    if ((CURRENT_OS != 32)) && ((CURRENT_OS != 33)) && ((CURRENT_OS != 34)); then
-      echo_with_color red "The installer only supports Fedora 32, 33, and 34. Exiting...\n"
+    if ((CURRENT_OS != 33)) && ((CURRENT_OS != 34)) && ((CURRENT_OS != 35)) && ((CURRENT_OS != 36)); then
+      echo_with_color red "The installer only supports Fedora 33, 34, 35, 36. Exiting...\n"
       exit 1
     fi
     ;;

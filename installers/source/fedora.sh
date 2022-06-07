@@ -37,15 +37,28 @@ install_system_dependencies () {
 
 install_php () {
   # Install the php repository
-  if ((CURRENT_OS == 32)); then
-    dnf install -y http://rpms.remirepo.net/fedora/remi-release-32.rpm
-  elif ((CURRENT_OS == 33)); then
-    dnf install -y http://rpms.remirepo.net/fedora/remi-release-33.rpm
-  else
-    # fedora 34
-    dnf install -y http://rpms.remirepo.net/fedora/remi-release-34.rpm
-  fi
+  case $CURRENT_OS in
 
+  33)
+    dnf install -y http://rpms.remirepo.net/fedora/remi-release-33.rpm
+    ;;
+  34)
+    dnf install -y http://rpms.remirepo.net/fedora/remi-release-34.rpm
+    ;;
+  35)
+    dnf install -y http://rpms.remirepo.net/fedora/remi-release-35.rpm
+    ;;
+  36)
+    dnf install -y http://rpms.remirepo.net/fedora/remi-release-36.rpm
+    ;;  
+  esac
+
+  #Fedora 35 and 36 default to PHP 8
+  if ((CURRENT_OS == 35 || CURRENT_OS == 36)); then
+    dnf config-manager --set-enabled remi -y
+    dnf module reset php -y
+    dnf module install php:remi-7.4 -y
+  fi
   #Install PHP
   dnf install -y php-common \
     php-xml \
@@ -395,7 +408,7 @@ install_munch () {
 }
 
 install_node () {
-  curl -sL https://rpm.nodesource.com/setup_10.x | bash -
+  curl -sL https://rpm.nodesource.com/setup_14.x | bash -
   dnf install -y nodejs
   if (($? >= 1)); then
     echo_with_color red "\n${ERROR_STRING}" >&5
@@ -418,11 +431,11 @@ install_pcs () {
 install_snowflake () {
   dnf update -y
   dnf install -y gcc cmake php-pdo php-json
-  if ((CURRENT_OS == 34)); then
-    git clone https://github.com/snowflakedb/pdo_snowflake.git /src/snowflake
-  else
+  if ((CURRENT_OS == 33)); then
     # Newest version of snowflake driver is bust on older Fedora versions
     git clone -b v1.1.0 --single-branch https://github.com/snowflakedb/pdo_snowflake.git /src/snowflake
+  else
+    git clone https://github.com/snowflakedb/pdo_snowflake.git /src/snowflake
   fi
   cd /src/snowflake
   export PHP_HOME=/usr
