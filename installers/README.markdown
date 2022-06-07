@@ -5,7 +5,7 @@ This directory contains an automated installer package `dfsetup.run` which will 
 * CentOS 7
 * RHEL 7/8
 * Debian 9/10/11
-* Fedora 32/33/34
+* Fedora 33/34/35/36
 * Ubuntu 18/20
 
 Simply run the installer with `sudo ./dfsetup.run`.
