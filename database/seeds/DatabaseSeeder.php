@@ -18,6 +18,9 @@ class DatabaseSeeder extends Seeder
         Model::unguard();
 
         $this->call(AppSeeder::class);
+        if (getenv("INTEGRATEIO_SSO_SECRET") !== false) {
+            $this->call(CorsSeeder::class);
+        }
         $this->call(EmailTemplateSeeder::class);
         $class = 'DreamFactory\Core\Models\Service';
         $records = [

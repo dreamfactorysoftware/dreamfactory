@@ -9,6 +9,7 @@ class BaseModelSeeder extends Seeder
     protected $modelClass = null;
 
     protected $recordIdentifier = 'name';
+    protected $corsRecordIdentifier = 'path';
 
     protected $allowUpdate = false;
 
@@ -33,12 +34,15 @@ class BaseModelSeeder extends Seeder
             /** @type \Illuminate\Database\Eloquent\Builder $builder */
             $builder = null;
             $name = '';
+            $path = '';
             if (! is_array($this->recordIdentifier)) {
                 $name = Arr::get($record, $this->recordIdentifier);
-                if (empty($name)) {
+                // Cors has a different field as its unique identifier
+                $path = Arr::get($record, $this->corsRecordIdentifier);
+                if (empty($name) && empty($path)) {
                     throw new \Exception("Invalid seeder record. No value for {$this->recordIdentifier}.");
                 }
-                $builder = $modelName::where($this->recordIdentifier, $name);
+                $builder = !empty($name) ? $modelName::where($this->recordIdentifier, $name) : $modelName::where($this->corsRecordIdentifier, $path);
             } else {
                 foreach ($this->recordIdentifier as $identifier) {
                     $id = Arr::get($record, $identifier);
