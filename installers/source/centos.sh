@@ -185,6 +185,8 @@ server {
   listen [::]:80 default_server ipv6only=on;
   root /opt/dreamfactory/public;
   index index.php index.html index.htm;
+  add_header X-Frame-Options \"SAMEORIGIN\";
+  add_header X-XSS-Protection \"1; mode=block\";
   gzip on;
   gzip_disable \"msie6\";
   gzip_vary on;
@@ -321,7 +323,7 @@ install_oracle () {
     kill $!
     exit 1
   fi
-  echo "/usr/lib/oracle/19.13/client64/lib" >/etc/ld.so.conf.d/oracle-instantclient.conf
+  echo "/usr/lib/oracle/19.16/client64/lib" >/etc/ld.so.conf.d/oracle-instantclient.conf
   ldconfig
   export PHP_DTRACE=yes
   printf "\n" | pecl install oci8-2.2.0

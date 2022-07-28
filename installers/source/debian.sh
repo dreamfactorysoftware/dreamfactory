@@ -151,6 +151,8 @@ server {
   listen [::]:80 default_server ipv6only=on;
   root /opt/dreamfactory/public;
   index index.php index.html index.htm;
+  add_header X-Frame-Options \"SAMEORIGIN\";
+  add_header X-XSS-Protection \"1; mode=block\";
   gzip on;
   gzip_disable \"msie6\";
   gzip_vary on;
@@ -242,10 +244,6 @@ install_sql_server () {
   curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
   case $CURRENT_OS in
 
-  9)
-    curl https://packages.microsoft.com/config/debian/9/prod.list >/etc/apt/sources.list.d/mssql-release.list
-    ;;
-
   10)
     curl https://packages.microsoft.com/config/debian/10/prod.list >/etc/apt/sources.list.d/mssql-release.list
     ;;
@@ -279,9 +277,9 @@ install_pdo_sqlsrv () {
 
 install_oracle () {
   apt install -y libaio1
-  echo "/opt/oracle/instantclient_19_13" >/etc/ld.so.conf.d/oracle-instantclient.conf
+  echo "/opt/oracle/instantclient_19_16" >/etc/ld.so.conf.d/oracle-instantclient.conf
   ldconfig
-  printf "instantclient,/opt/oracle/instantclient_19_13\n" | pecl install oci8-2.2.0
+  printf "instantclient,/opt/oracle/instantclient_19_16\n" | pecl install oci8-2.2.0
   if (($? >= 1)); then
     echo_with_color red "\nOracle instant client installation error" >&5
     kill $!
@@ -508,10 +506,7 @@ check_mysql_exists () {
 }
 
 add_mariadb_repo () {
-  if ((CURRENT_OS == 9)); then
-    apt-key adv --no-tty --recv-keys --keyserver keyserver.ubuntu.com 0xF1656F24C74CD1D8
-    add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.6/debian stretch main'
-  elif ((CURRENT_OS == 10)); then
+  if ((CURRENT_OS == 10)); then
     apt-key adv --no-tty --recv-keys --keyserver keyserver.ubuntu.com 0xF1656F24C74CD1D8
     add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.6/debian buster main'
   elif ((CURRENT_OS == 11)); then

@@ -90,8 +90,8 @@ case $CURRENT_KERNEL in
     fi 
     ;;
   debian)
-    if ((CURRENT_OS != 9)) && ((CURRENT_OS != 10)) && ((CURRENT_OS != 11)); then
-      echo_with_color red "The installer only supports Debian 9, 10, and 11. Exiting...\n"
+    if ((CURRENT_OS != 10)) && ((CURRENT_OS != 11)); then
+      echo_with_color red "The installer only supports Debian 10 and 11. Exiting...\n"
       exit 1
     fi
     ;;
@@ -102,8 +102,8 @@ case $CURRENT_KERNEL in
     fi
     ;;
   fedora)
-    if ((CURRENT_OS != 33)) && ((CURRENT_OS != 34)) && ((CURRENT_OS != 35)) && ((CURRENT_OS != 36)); then
-      echo_with_color red "The installer only supports Fedora 33, 34, 35, 36. Exiting...\n"
+    if ((CURRENT_OS != 34)) && ((CURRENT_OS != 35)) && ((CURRENT_OS != 36)); then
+      echo_with_color red "The installer only supports Fedora 34, 35, 36. Exiting...\n"
       exit 1
     fi
     ;;

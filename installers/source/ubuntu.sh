@@ -158,6 +158,8 @@ server {
   listen [::]:80 default_server ipv6only=on;
   root /opt/dreamfactory/public;
   index index.php index.html index.htm;
+  add_header X-Frame-Options \"SAMEORIGIN\";
+  add_header X-XSS-Protection \"1; mode=block\";
   gzip on;
   gzip_disable \"msie6\";
   gzip_vary on;
@@ -282,8 +284,8 @@ install_pdo_sqlsrv () {
 
 install_oracle () {
   apt install -y libaio1
-  echo "/opt/oracle/instantclient_19_13" >/etc/ld.so.conf.d/oracle-instantclient.conf
-  printf "instantclient,/opt/oracle/instantclient_19_13\n" | pecl install oci8-2.2.0
+  echo "/opt/oracle/instantclient_19_16" >/etc/ld.so.conf.d/oracle-instantclient.conf
+  printf "instantclient,/opt/oracle/instantclient_19_16\n" | pecl install oci8-2.2.0
   ldconfig
   if (($? >= 1)); then
     echo_with_color red "\nOracle instant client installation error" >&5
