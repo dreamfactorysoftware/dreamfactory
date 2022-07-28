@@ -39,9 +39,6 @@ install_php () {
   # Install the php repository
   case $CURRENT_OS in
 
-  33)
-    dnf install -y http://rpms.remirepo.net/fedora/remi-release-33.rpm
-    ;;
   34)
     dnf install -y http://rpms.remirepo.net/fedora/remi-release-34.rpm
     ;;
@@ -158,6 +155,8 @@ server {
   listen [::]:80 default_server ipv6only=on;
   root /opt/dreamfactory/public;
   index index.php index.html index.htm;
+  add_header X-Frame-Options \"SAMEORIGIN\";
+  add_header X-XSS-Protection \"1; mode=block\";
   gzip on;
   gzip_disable \"msie6\";
   gzip_vary on;
@@ -297,7 +296,7 @@ install_oracle () {
     kill $!
     exit 1
   fi
-  echo "/usr/lib/oracle/19.13/client64/lib" >/etc/ld.so.conf.d/oracle-instantclient.conf
+  echo "/usr/lib/oracle/19.16/client64/lib" >/etc/ld.so.conf.d/oracle-instantclient.conf
   ldconfig
   export PHP_DTRACE=yes
   printf "\n" | pecl install oci8-2.2.0
@@ -431,12 +430,7 @@ install_pcs () {
 install_snowflake () {
   dnf update -y
   dnf install -y gcc cmake php-pdo php-json
-  if ((CURRENT_OS == 33)); then
-    # Newest version of snowflake driver is bust on older Fedora versions
-    git clone -b v1.1.0 --single-branch https://github.com/snowflakedb/pdo_snowflake.git /src/snowflake
-  else
-    git clone https://github.com/snowflakedb/pdo_snowflake.git /src/snowflake
-  fi
+  git clone https://github.com/snowflakedb/pdo_snowflake.git /src/snowflake
   cd /src/snowflake
   export PHP_HOME=/usr
   /src/snowflake/scripts/build_pdo_snowflake.sh

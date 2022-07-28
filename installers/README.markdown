@@ -4,8 +4,8 @@ This directory contains an automated installer package `dfsetup.run` which will 
 
 * CentOS 7
 * RHEL 7/8
-* Debian 9/10/11
-* Fedora 33/34/35/36
+* Debian 10/11
+* Fedora 34/35/36
 * Ubuntu 18/20
 
 Simply run the installer with `sudo ./dfsetup.run`.
@@ -40,17 +40,17 @@ Selecting option 1 at the initial menu prompt will result in installation of PHP
 
 After navigating to the Oracle website you'll want to download the basic and sdk instant client files:
 
-* instantclient-basic-linux.x64-19.13.0.0.0dbru.zip
-* instantclient-sdk-linux.x64-19.13.0.0.0dbru.zip
+* instantclient-basic-linux.x64-19.16.0.0.0dbru.zip
+* instantclient-sdk-linux.x64-19.16.0.0.0dbru.zip
 
 For RPM based systems you'll want to download next files:
 
-* oracle-instantclient19.13-basic-19.13.0.0.0-1.x86_64.rpm
-* oracle-instantclient19.13-devel-19.13.0.0.0-1.x86_64.rpm
+* oracle-instantclient19.16-basic-19.16.0.0.0-1.x86_64.rpm
+* oracle-instantclient19.16-devel-19.16.0.0.0-1.x86_64.rpm
 
 You should not unzip these files. Just upload them to your server and write down the absolute path to their location as you'll need to supply this path during the installation process.
 
-The script only supports the Oracle driver version 19.13.
+The script only supports the Oracle driver version 19.16.
 
 ### Enabling IBM DB2
 
