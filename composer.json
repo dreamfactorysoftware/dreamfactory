@@ -27,48 +27,46 @@
   "prefer-stable": true,
   "repositories": [],
   "require": {
-    "php": "^7.2|^7.3|^7.4",
-    "dreamfactory/df-admin-app": "~4.14.1",
+    "php": "8.1.*",
+    "dreamfactory/df-admin-app": "~5.0.0",
     "dreamfactory/df-api-docs-ui": "~3.0.2",
-    "dreamfactory/df-apidoc": "~0.7.2",
-    "dreamfactory/df-aws": "~0.17.1",
-    "dreamfactory/df-azure": "~0.16.2",
-    "dreamfactory/df-cache": "~0.12.2",
-    "dreamfactory/df-cassandra": "~0.13.1",
-    "dreamfactory/df-core": "~0.25.3",
-    "dreamfactory/df-couchbase": "~0.11.1",
-    "dreamfactory/df-couchdb": "~0.16.1",
-    "dreamfactory/df-email": "~0.10.2",
-    "dreamfactory/df-exporter-prometheus": "~1.0.5",
-    "dreamfactory/df-file": "~0.7.4",
+    "dreamfactory/df-apidoc": "~0.8.0",
+    "dreamfactory/df-aws": "~0.18.0",
+    "dreamfactory/df-azure": "~0.17.0",
+    "dreamfactory/df-cache": "~0.13.0",
+    "dreamfactory/df-cassandra": "~0.14.0",
+    "dreamfactory/df-core": "~1.0.0",
+    "dreamfactory/df-couchdb": "~0.17.0",
+    "dreamfactory/df-email": "~0.11.0",
+    "dreamfactory/df-exporter-prometheus": "~1.1.0",
+    "dreamfactory/df-file": "~0.8.0",
     "dreamfactory/df-filemanager-app": "~0.3.2",
-    "dreamfactory/df-firebird": "~0.8.1",
-    "dreamfactory/df-git": "~0.6.3",
-    "dreamfactory/df-graphql": "~0.4.0",
-    "dreamfactory/df-mongo-logs": "~1.1.2",
-    "dreamfactory/df-oauth": "~0.16.1",
-    "dreamfactory/df-rackspace": "~0.15.1",
-    "dreamfactory/df-rws": "~0.16.0",
-    "dreamfactory/df-sqldb": "~0.17.5",
-    "dreamfactory/df-system": "~0.5.4",
-    "dreamfactory/df-user": "~0.16.2",
+    "dreamfactory/df-firebird": "~0.9.0",
+    "dreamfactory/df-git": "~0.7.0",
+    "dreamfactory/df-graphql": "~0.5.0",
+    "dreamfactory/df-mongo-logs": "~1.2.0",
+    "dreamfactory/df-oauth": "~0.17.0",
+    "dreamfactory/df-rackspace": "~0.16.0",
+    "dreamfactory/df-rws": "~0.17.0",
+    "dreamfactory/df-sqldb": "~1.0.0",
+    "dreamfactory/df-system": "~0.6.0",
+    "dreamfactory/df-user": "~0.17.0",
     "fideloper/proxy": "^4.0",
-    "laravel/framework": "^6.13",
+    "laravel/framework": "^9.0",
     "laravel/helpers": "^1.1",
-    "laravel/tinker": "^1.0",
+    "laravel/tinker": "^2.7.0",
     "predis/predis": "~1.0",
     "symfony/css-selector": "~5.4"
   },
   "require-dev": {
     "barryvdh/laravel-ide-helper": "~2.1",
-    "fzaninotto/faker": "^1.4",
-    "laracasts/generators": "~1.0",
-    "laracasts/testdummy": "~2.0",
-    "laravel/homestead": "6.6.0",
-    "mockery/mockery": "^1.0",
-    "nunomaduro/collision": "^3.0",
-    "phpunit/phpunit": "~7.0",
-    "facade/ignition": "^1.4"
+    "fakerphp/faker": "^1.9.2",
+    "laracasts/generators": "~2.0.1",
+    "laravel/homestead": "^13.2.0",
+    "mockery/mockery": "^1.4.1",
+    "nunomaduro/collision": "^6.1",
+    "phpunit/phpunit": "^9.3",
+    "spatie/laravel-ignition": "^1.0"
   },
   "autoload": {
     "classmap": [
@@ -105,13 +103,14 @@
   },
   "config": {
     "platform": {
-      "php": "7.4"
+      "php": "8.1"
     },
     "preferred-install": "dist",
     "sort-packages": true,
     "optimize-autoloader": true,
     "allow-plugins": {
-      "dreamfactory/installer": true
+      "dreamfactory/installer": true,
+      "php-http/discovery": true
     }
   }
 }
