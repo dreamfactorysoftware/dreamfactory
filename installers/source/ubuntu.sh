@@ -40,8 +40,8 @@ install_php () {
   CRYPT=0
 
   if [[ $PHP_VERSION =~ ^-?[0-9]+$ ]]; then
-    if ((PHP_VERSION == 71)); then
-      PHP_VERSION=php7.1
+    if ((PHP_VERSION == 81)); then
+      PHP_VERSION=php8.1
       MCRYPT=1
     else
       PHP_VERSION=${DEFAULT_PHP_VERSION}
@@ -62,7 +62,6 @@ install_php () {
     ${PHP_VERSION}-xml \
     ${PHP_VERSION}-cli \
     ${PHP_VERSION}-curl \
-    ${PHP_VERSION}-json \
     ${PHP_VERSION}-mysqlnd \
     ${PHP_VERSION}-sqlite \
     ${PHP_VERSION}-soap \
@@ -253,14 +252,16 @@ install_mongodb () {
 
 install_sql_server () {
   curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
-  if ((CURRENT_OS == 18)); then
-    curl https://packages.microsoft.com/config/ubuntu/18.04/prod.list >/etc/apt/sources.list.d/mssql-release.list
-  else
-    #ubuntu 20
+  if ((CURRENT_OS == 20)); then
     curl https://packages.microsoft.com/config/ubuntu/20.04/prod.list >/etc/apt/sources.list.d/mssql-release.list
+  else
+    #ubuntu 22
+    curl https://packages.microsoft.com/config/ubuntu/22.04/prod.list >/etc/apt/sources.list.d/mssql-release.list
   fi
   apt-get update
-  ACCEPT_EULA=Y apt-get install -y msodbcsql17 mssql-tools unixodbc-dev
+  ACCEPT_EULA=Y apt-get install -y msodbcsql18 mssql-tools \
+  unixodbc-dev=2.3.7 unixodbc=2.3.7 odbcinst1debian2=2.3.7 odbcinst=2.3.7
+
   pecl install sqlsrv
   if (($? >= 1)); then
     echo_with_color red "\nMS SQL Server extension installation error." >&5
@@ -272,7 +273,7 @@ install_sql_server () {
 }
 
 install_pdo_sqlsrv () {
-  pecl install pdo_sqlsrv
+  pecl install pdo_sqlsrv-5.10.1
   if (($? >= 1)); then
     echo_with_color red "\npdo_sqlsrv extension installation error." >&5
     kill $!
@@ -284,8 +285,8 @@ install_pdo_sqlsrv () {
 
 install_oracle () {
   apt install -y libaio1
-  echo "/opt/oracle/instantclient_19_16" >/etc/ld.so.conf.d/oracle-instantclient.conf
-  printf "instantclient,/opt/oracle/instantclient_19_16\n" | pecl install oci8-2.2.0
+  echo "/opt/oracle/instantclient_21_9" >/etc/ld.so.conf.d/oracle-instantclient.conf
+  printf "instantclient,/opt/oracle/instantclient_21_9\n" | pecl install oci8-3.2.1
   ldconfig
   if (($? >= 1)); then
     echo_with_color red "\nOracle instant client installation error" >&5
@@ -301,8 +302,8 @@ install_db2 () {
   chmod +x /opt/dsdriver/installDSDriver
   /usr/bin/ksh /opt/dsdriver/installDSDriver
   ln -s /opt/dsdriver/include /include
-  git clone https://github.com/dreamfactorysoftware/PDO_IBM-1.3.4-patched.git /opt/PDO_IBM-1.3.4-patched
-  cd /opt/PDO_IBM-1.3.4-patched/ || exit 1
+  git clone https://github.com/php/pecl-database-pdo_ibm /opt/PDO_IBM
+  cd /opt/PDO_IBM/ || exit 1
   phpize
   ./configure --with-pdo-ibm=/opt/dsdriver/lib
   make && make install
@@ -327,33 +328,38 @@ install_db2_extension () {
 }
 
 install_cassandra () {
-  if ((CURRENT_OS == 20)); then
-    # multiarch-support is unavailable in ubuntu20, we need to get it from the 18 archive
-    wget http://archive.ubuntu.com/ubuntu/pool/main/g/glibc/multiarch-support_2.27-3ubuntu1_amd64.deb
-    apt install -y ./multiarch-support_2.27-3ubuntu1_amd64.deb
-  fi
-  apt install -y cmake libgmp-dev
-  git clone https://github.com/datastax/php-driver.git /opt/cassandra
-  cd /opt/cassandra/ || exit 1
-  wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/cassandra/v2.10.0/cassandra-cpp-driver-dbg_2.10.0-1_amd64.deb
-  wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/cassandra/v2.10.0/cassandra-cpp-driver-dev_2.10.0-1_amd64.deb
-  wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/cassandra/v2.10.0/cassandra-cpp-driver_2.10.0-1_amd64.deb
-  wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/dependencies/libuv/v1.23.0/libuv1-dbg_1.23.0-1_amd64.deb
-  wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/dependencies/libuv/v1.23.0/libuv1-dev_1.23.0-1_amd64.deb
-  wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/dependencies/libuv/v1.23.0/libuv1_1.23.0-1_amd64.deb
-  dpkg -i *.deb
+  apt-get install -y cmake libgmp-dev libpcre3-dev libssl-dev libuv1-dev libz-dev
+  wget -c -P /opt/DataStax https://github.com/datastax/cpp-driver/archive/refs/tags/2.16.2.tar.gz
+  cd /opt/DataStax
+  tar -xf 2.16.2.tar.gz
+  rm 2.16.2.tar.gz
+  cd cpp-driver-2.16.2
+  mkdir build && cd "$_"
+  cmake ..
+  make && make install
   if (($? >= 1)); then
     echo_with_color red "\ncassandra extension installation error." >&5
     kill $!
     exit 1
   fi
-  pecl install ./ext/package.xml
+
+  # Currently, we are using a specific version of the repository that is still functional, as 
+  # the recent efforts to enhance the installation process do not work properly. 
+  git clone --branch v1.3.x https://github.com/nano-interactive/ext-cassandra.git /opt/DataStax/ext-cassandra
+  cd /opt/DataStax/ext-cassandra
+  git checkout 1cf12c5ce49ed43a2c449bee4b7b23ce02a37bf0
+  cd ./ext
+  phpize
+  cd ..
+  mkdir build && cd "$_"
+  ../ext/configure
+  make && make install
   if (($? >= 1)); then
     echo_with_color red "\ncassandra extension installation error." >&5
     kill $!
     exit 1
   fi
-  echo "extension=cassandra.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/cassandra.ini"
+  echo "extension=cassandra.so" | tee "/etc/php/${PHP_VERSION_INDEX}/mods-available/cassandra.ini" &&\
   phpenmod -s ALL cassandra
 }
 
@@ -370,31 +376,20 @@ install_igbinary () {
 }
 
 install_python2 () {
-  if ((CURRENT_OS == 20)); then
+    add-apt-repository -y universe
     apt install -y python2
     # Pip2 is not supported on ubuntu anymore. We have to get a script from the python package
     # authority as below
-    wget https://bootstrap.pypa.io/pip/2.7/get-pip.py
+    curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py
     python2 get-pip.py
-  else
-    apt install -y python python-pip
-  fi
 }
 
 check_bunch_installation () {
-  if ((CURRENT_OS == 20)); then
     pip2 list | grep bunch
-  else
-    pip list | grep bunch
-  fi  
 }
 
 install_bunch () {
-  if ((CURRENT_OS == 20)); then
     pip2 install bunch
-  else
-    pip install bunch
-  fi
 }
 
 install_python3 () {
@@ -420,20 +415,9 @@ install_node () {
   NODE_PATH=$(whereis node | cut -d" " -f2)
 }
 
-install_pcs () {
-  pecl install pcs-1.3.7
-  if (($? >= 1)); then
-    echo_with_color red "\npcs extension installation error.." >&5
-    kill $!
-    exit 1
-  fi
-  echo "extension=pcs.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/pcs.ini"
-  phpenmod -s ALL pcs
-}
-
 install_snowflake_apache () {
   apt-get update
-  apt-get install -y --no-install-recommends --allow-unauthenticated gcc cmake ${PHP_VERSION}-pdo ${PHP_VERSION}-json ${PHP_VERSION}-dev
+  apt-get install -y --no-install-recommends --allow-unauthenticated gcc cmake ${PHP_VERSION}-pdo ${PHP_VERSION}-dev
   git clone https://github.com/snowflakedb/pdo_snowflake.git /src/snowflake
   cd /src/snowflake
   export PHP_HOME=/usr
@@ -459,7 +443,7 @@ install_snowflake_apache () {
 
 install_snowflake_nginx () {
   apt-get update
-  apt-get install -y --no-install-recommends --allow-unauthenticated gcc cmake ${PHP_VERSION}-pdo ${PHP_VERSION}-json ${PHP_VERSION}-dev
+  apt-get install -y --no-install-recommends --allow-unauthenticated gcc cmake ${PHP_VERSION}-pdo ${PHP_VERSION}-dev
   git clone https://github.com/snowflakedb/pdo_snowflake.git /src/snowflake
   cd /src/snowflake
   export PHP_HOME=/usr
@@ -494,6 +478,20 @@ install_hive_odbc () {
   rm maprhiveodbc_2.6.1.1001-2_amd64.deb
   export HIVE_SERVER_ODBC_DRIVER_PATH=/opt/mapr/hiveodbc/lib/64/libmaprhiveodbc64.so
   HIVE_ODBC_INSTALLED = $(php -m | grep -E "^odbc")
+}
+
+enable_opcache () {
+  {
+    echo 'zend_extension=opcache.so'
+    echo 'opcache.enable=1'
+    echo 'opcache.memory_consumption=192'
+    echo 'opcache.interned_strings_buffer=16'
+    echo 'opcache.max_accelerated_files=16229;'
+    echo 'opcache.max_wasted_percentage=15'
+    echo 'opcache.validate_timestamps=0'
+    echo 'opcache.jit_buffer_size=64M'
+    echo 'opcache.jit=tracing'
+  } > /etc/php/${PHP_VERSION_INDEX}/mods-available/opcache.ini
 }
 
 install_composer () {
@@ -538,13 +536,13 @@ install_mariadb () {
 
 
 add_mariadb_repo () {
-  if ((CURRENT_OS == 18)); then
+  if ((CURRENT_OS == 20)); then
     apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
-    add-apt-repository 'deb [arch=amd64,arm64,ppc64el] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.3/ubuntu bionic main'
+    add-apt-repository -y 'deb [arch=amd64,arm64,ppc64el] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.3/ubuntu focal main'
   else
-    #ubuntu20
+    #ubuntu22
     apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
-    add-apt-repository 'deb [arch=amd64,arm64,ppc64el] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.3/ubuntu focal main'
+    add-apt-repository -y 'deb [arch=amd64,arm64,ppc64el] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.11.1/ubuntu jammy main'
   fi
 }
 
@@ -580,34 +578,3 @@ run_composer_install () {
     fi
   fi
 }
-
-### INSTALL COUCHBASE
-# We are in the process of upgrading this to SDK 3, therefor is currently not working and commented out
-# php -m | grep -E "^couchbase"
-# if (($? >= 1)); then
-#   if ((CURRENT_OS == 16)); then
-#     wget -O - https://packages.couchbase.com/clients/c/repos/deb/couchbase.key | apt-key add -
-#     echo "deb https://packages.couchbase.com/clients/c/repos/deb/ubuntu1604 xenial xenial/main" >/etc/apt/sources.list.d/couchbase.list
-#   elif ((CURRENT_OS == 18)); then
-#     wget -O - https://packages.couchbase.com/clients/c/repos/deb/couchbase.key | apt-key add -
-#     echo "deb https://packages.couchbase.com/clients/c/repos/deb/ubuntu1804 bionic bionic/main" >/etc/apt/sources.list.d/couchbase.list
-#   elif ((CURRENT_OS == 20)); then
-#     wget -O - https://packages.couchbase.com/clients/c/repos/deb/couchbase.key | apt-key add -
-#     echo "deb https://packages.couchbase.com/clients/c/repos/deb/ubuntu2004 focal focal/main" >/etc/apt/sources.list.d/couchbase.list
-#   fi
-
-#   apt-get update
-#   apt install -y libcouchbase3 libcouchbase-dev libcouchbase3-tools libcouchbase-dbg libcouchbase3-libev libcouchbase3-libevent zlib1g-dev
-#   pecl install couchbase
-#   if (($? >= 1)); then
-#     echo_with_color red "\ncouchbase extension installation error." >&5
-#     exit 1
-#   fi
-#   echo "extension=couchbase.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/xcouchbase.ini"
-#   phpenmod -s ALL xcouchbase
-#   php -m | grep couchbase
-#   if (($? >= 1)); then
-#     echo_with_color red "\nCould not install couchbase extension." >&5
-#   fi
-# fi
- 
