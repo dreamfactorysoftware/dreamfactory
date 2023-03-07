@@ -51,14 +51,13 @@ install_php () {
     rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
     rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
 
-    yum-config-manager --enable remi-php74
+    yum-config-manager --enable remi-php81
 
     #Install PHP
-    yum --enablerepo=remi-php74 install -y php-common \
+    yum --enablerepo=remi-php81 install -y php-common \
       php-xml \
       php-cli \
       php-curl \
-      php-json \
       php-mysqlnd \
       php-sqlite3 \
       php-soap \
@@ -67,10 +66,10 @@ install_php () {
       php-devel \
       php-ldap \
       php-pgsql \
-      php-interbase \
       php-pdo-dblib \
       php-gd \
-      php-zip
+      php-zip \
+      php-opcache
   else
     # RHEL 8
     rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
@@ -78,14 +77,13 @@ install_php () {
 
     dnf module list -y
     dnf module reset php -y
-    dnf module enable php:remi-7.4 -y
+    dnf module enable php:remi-8.1 -y
 
     #Install PHP
     dnf install -y php-common \
       php-xml \
       php-cli \
       php-curl \
-      php-json \
       php-mysqlnd \
       php-sqlite3 \
       php-soap \
@@ -97,7 +95,8 @@ install_php () {
       php-pdo-firebird \
       php-pdo-dblib \
       php-gd \
-      php-zip
+      php-zip \
+      php-opcache
   fi
 
   if (($? >= 1)); then
@@ -163,7 +162,7 @@ check_nginx_installation_status() {
 
 install_nginx () {
   if ((CURRENT_OS == 7)); then
-    yum --enablerepo=remi-php74 install -y php-fpm nginx
+    yum --enablerepo=remi-php81 install -y php-fpm nginx
   else
     dnf install -y php-fpm nginx
   fi
@@ -240,6 +239,7 @@ server {
   # fastcgi_pass has been changed from 127.0.0.1 to unix:/var/run/php-fpm/www.sock for RHEL / CENTOS 8 installation.
   if ((CURRENT_OS == 8)); then
   sed -i "s,127.0.0.1:9000;,unix:/var/run/php-fpm/www.sock;," /etc/nginx/conf.d/dreamfactory.conf
+  useradd -r nginx
   fi
 
   #Need to remove default entry in nginx.conf
@@ -257,7 +257,7 @@ restart_nginx () {
 
 install_php_pear () {
   if ((CURRENT_OS == 7)); then
-    yum --enablerepo=remi-php74 install -y php-pear
+    yum --enablerepo=remi-php81 install -y php-pear
   else
     dnf install -y php-pear
   fi
@@ -273,12 +273,12 @@ install_php_pear () {
 
 install_mcrypt () {
   if ((CURRENT_OS == 7)); then
-    yum --enablerepo=remi-php74 install -y libmcrypt-devel
+    yum --enablerepo=remi-php81 install -y libmcrypt-devel
   else
     dnf install -y libmcrypt-devel
   fi
 
-  printf "\n" | pecl install mcrypt-1.0.4
+  printf "\n" | pecl install mcrypt-1.0.5
   if (($? >= 1)); then
     echo_with_color red "\nMcrypt extension installation error." >&5
     kill $!
@@ -299,34 +299,50 @@ install_mongodb () {
 
 install_sql_server () {
   curl https://packages.microsoft.com/config/rhel/7/prod.repo >/etc/yum.repos.d/mssql-release.repo
-  ACCEPT_EULA=Y yum install -y msodbcsql17 mssql-tools unixODBC-devel
+  yum remove unixODBC-utf16 unixODBC-utf16-devel unixODBC-utf17 unixODBC-utf17-devel
+  ACCEPT_EULA=Y yum install -y msodbcsql18 mssql-tools
   if (($? >= 1)); then
     echo_with_color red "\nMS SQL Server extension installation error." >&5
     kill $!
     exit 1
   fi
+
+  if ((CURRENT_OS == 7)); then
+    yum install -y unixODBC-devel-2.3.1
+  else
+    yum install -y unixODBC-devel-2.3.7
+  fi
+
+  pecl install sqlsrv
+  if (($? >= 1)); then
+    echo_with_color red "\nMS SQL Server extension installation error." >&5
+    kill $!
+    exit 1
+  fi
+  echo "extension=sqlsrv.so" >/etc/php.d/20-sqlsrv.ini
 }
 
 install_pdo_sqlsrv () {
-  ACCEPT_EULA=Y yum install -y php-sqlsrv php-pdo_sqlsrv
+  pecl install pdo_sqlsrv-5.10.1
   if (($? >= 1)); then
     echo_with_color red "\nMS SQL Server extension installation error." >&5
     kill $!
     exit 1
   fi
+  echo "extension=pdo_sqlsrv.so" >/etc/php.d/20-pdo_sqlsrv.ini
 }
 
 install_oracle () {
-  yum install -y libaio systemtap-sdt-devel $DRIVERS_PATH/oracle-instantclient19.*.rpm
+  yum install -y libaio systemtap-sdt-devel $DRIVERS_PATH/oracle-instantclient-*-21.*.rpm
   if (($? >= 1)); then
     echo_with_color red "\nOracle instant client installation error" >&5
     kill $!
     exit 1
   fi
-  echo "/usr/lib/oracle/19.16/client64/lib" >/etc/ld.so.conf.d/oracle-instantclient.conf
+  echo "/usr/lib/oracle/21/client64/lib" >/etc/ld.so.conf.d/oracle-instantclient.conf
   ldconfig
   export PHP_DTRACE=yes
-  printf "\n" | pecl install oci8-2.2.0
+  printf "\n" | pecl install oci8-3.2.1
   if (($? >= 1)); then
     echo_with_color red "\nOracle instant client installation error" >&5
     kill $!
@@ -340,16 +356,10 @@ install_db2 () {
   chmod +x /opt/dsdriver/installDSDriver
   /usr/bin/ksh /opt/dsdriver/installDSDriver
   ln -s /opt/dsdriver/include /include
-  git clone https://github.com/dreamfactorysoftware/PDO_IBM-1.3.4-patched.git /opt/PDO_IBM-1.3.4-patched
-  cd /opt/PDO_IBM-1.3.4-patched/ || exit 1
-  sed -i 's/option_str = Z_STRVAL_PP(data);//' ibm_driver.c
-  sed -i '985i\#if PHP_MAJOR_VERSION >= 7\' ibm_driver.c
-  sed -i '986i\option_str = Z_STRVAL_P(data);\' ibm_driver.c
-  sed -i '987i\#else\' ibm_driver.c
-  sed -i '988i\option_str = Z_STRVAL_PP(data);\' ibm_driver.c
-  sed -i '989i\#endif' ibm_driver.c
+  git clone https://github.com/php/pecl-database-pdo_ibm /opt/PDO_IBM
+  cd /opt/PDO_IBM/ || exit 1
   phpize
-  ./configure --with-pdo-ibm=/opt/dsdriver/lib
+  ./configure --with-pdo-ibm=/opt/dsdriver/
   make && make install
   if (($? >= 1)); then
     echo_with_color red "\nCould not make pdo_ibm extension." >&5
@@ -370,32 +380,38 @@ install_db2_extension () {
 }
 
 install_cassandra () {
-  yum install -y gmp-devel openssl-devel #boost cmake
-  git clone https://github.com/datastax/php-driver.git /opt/cassandra
-  cd /opt/cassandra/ || exit 1
-  if ((CURRENT_OS == 7)); then
-    wget http://downloads.datastax.com/cpp-driver/centos/7/cassandra/v2.10.0/cassandra-cpp-driver-2.10.0-1.el7.x86_64.rpm
-    wget http://downloads.datastax.com/cpp-driver/centos/7/cassandra/v2.10.0/cassandra-cpp-driver-debuginfo-2.10.0-1.el7.x86_64.rpm
-    wget http://downloads.datastax.com/cpp-driver/centos/7/cassandra/v2.10.0/cassandra-cpp-driver-devel-2.10.0-1.el7.x86_64.rpm
-    wget http://downloads.datastax.com/cpp-driver/centos/7/dependencies/libuv/v1.23.0/libuv-1.23.0-1.el7.centos.x86_64.rpm
-    wget http://downloads.datastax.com/cpp-driver/centos/7/dependencies/libuv/v1.23.0/libuv-debuginfo-1.23.0-1.el7.centos.x86_64.rpm
-    wget http://downloads.datastax.com/cpp-driver/centos/7/dependencies/libuv/v1.23.0/libuv-devel-1.23.0-1.el7.centos.x86_64.rpm
+  if((CURRENT_OS == 7)); then
+    yum install -y gmp-devel openssl-devel cmake libuv-devel #boost cmake
   else
-    wget https://downloads.datastax.com/cpp-driver/centos/8/cassandra/v2.16.0/cassandra-cpp-driver-2.16.0-1.el8.x86_64.rpm
-    wget https://downloads.datastax.com/cpp-driver/centos/8/cassandra/v2.16.0/cassandra-cpp-driver-debuginfo-2.16.0-1.el8.x86_64.rpm
-    wget https://downloads.datastax.com/cpp-driver/centos/8/cassandra/v2.16.0/cassandra-cpp-driver-devel-2.16.0-1.el8.x86_64.rpm
-    wget https://downloads.datastax.com/cpp-driver/centos/8/dependencies/libuv/v1.35.0/libuv-1.35.0-1.el8.x86_64.rpm
-    wget https://downloads.datastax.com/cpp-driver/centos/8/dependencies/libuv/v1.35.0/libuv-debuginfo-1.35.0-1.el8.x86_64.rpm
-    wget https://downloads.datastax.com/cpp-driver/centos/8/dependencies/libuv/v1.35.0/libuv-devel-1.35.0-1.el8.x86_64.rpm
+    dnf --enablerepo=powertools install -y libuv-devel
+    dnf install -y gmp-devel openssl-devel cmake
   fi
-  yum install -y *.rpm
+  wget -c -P /opt/DataStax https://github.com/datastax/cpp-driver/archive/refs/tags/2.16.2.tar.gz
+  cd /opt/DataStax
+  tar -xf 2.16.2.tar.gz
+  rm 2.16.2.tar.gz
+  cd cpp-driver-2.16.2
+  mkdir build && cd "$_"
+  cmake ..
+  make && make install
   if (($? >= 1)); then
     echo_with_color red "\ncassandra extension installation error." >&5
     kill $!
     exit 1
   fi
-  ln -s /usr/lib64/libnsl.so.1 /usr/lib64/libnsl.so
-  pecl install ./ext/package.xml
+  export PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig
+
+  # Currently, we are using a specific version of the repository that is still functional, as 
+  # the recent efforts to enhance the installation process do not work properly. 
+  git clone --branch v1.3.x https://github.com/nano-interactive/ext-cassandra.git /opt/DataStax/ext-cassandra
+  cd /opt/DataStax/ext-cassandra
+  git checkout 1cf12c5ce49ed43a2c449bee4b7b23ce02a37bf0
+  cd ./ext
+  phpize
+  cd ..
+  mkdir build && cd "$_"
+  ../ext/configure
+  make && make install
   if (($? >= 1)); then
     echo_with_color red "\ncassandra extension installation error." >&5
     kill $!
@@ -461,24 +477,14 @@ install_node () {
   NODE_PATH=$(whereis node | cut -d" " -f2)
 }
 
-install_pcs () {
-  pecl install pcs-1.3.7
-  if (($? >= 1)); then
-    echo_with_color red "\npcs extension installation error.." >&5
-    kill $!
-    exit 1
-  fi
-  echo "extension=pcs.so" >/etc/php.d/20-pcs.ini
-}
-
 install_snowflake () {
   yum update -y
-  yum install -y gcc cmake php-pdo php-json php-devel
+  yum install -y gcc cmake php-pdo php-devel
   # We need to use a previous version of the snowflake driver as the latest one seems to be bust.
-  git clone -b v1.1.0 --single-branch https://github.com/snowflakedb/pdo_snowflake.git /src/snowflake
+  git clone https://github.com/snowflakedb/pdo_snowflake.git /src/snowflake
   cd /src/snowflake
   export PHP_HOME=/usr
-  /src/snowflake/scripts/build_pdo_snowflake.sh
+  source /src/snowflake/scripts/build_pdo_snowflake.sh
   $PHP_HOME/bin/php -dextension=modules/pdo_snowflake.so -m | grep pdo_snowflake
   if (($? == 0)); then
     export PHP_HOME=/usr
@@ -509,6 +515,18 @@ install_hive_odbc () {
   rm MapRHiveODBC-2.6.1.1001-1.x86_64.rpm
   export HIVE_SERVER_ODBC_DRIVER_PATH=/opt/mapr/hiveodbc/lib/64/libmaprhiveodbc64.so
   HIVE_ODBC_INSTALLED = $(php -m | grep -E "^odbc")
+}
+
+enable_opcache () {
+  {
+    echo 'zend_extension=opcache.so'
+    echo 'opcache.enable=1'
+    echo 'opcache.memory_consumption=192'
+    echo 'opcache.interned_strings_buffer=16'
+    echo 'opcache.max_accelerated_files=16229;'
+    echo 'opcache.max_wasted_percentage=15'
+    echo 'opcache.validate_timestamps=0'
+  } > /etc/php.d/10-opcache.ini
 }
 
 install_composer () {
@@ -582,31 +600,3 @@ run_composer_install () {
     fi
   fi
 }
-
-### INSTALL COUCHBASE
-# We are in the process of upgrading this to SDK 3, therefor is currently not working and commented out
-# php -m | grep -E "^couchbase"
-# if (($? >= 1)); then
-#   if ((CURRENT_OS == 7)); then
-#     wget -P /tmp http://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-4-x86_64.rpm
-#     rpm -i /tmp/couchbase-release-1.0-4-x86_64.rpm
-#     yum install -y libcouchbase-devel
-#     pecl install couchbase-3.1.2
-#   else
-#     dnf update -y
-#     wget -P /tmp http://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-x86_64.rpm
-#     rpm -i /tmp/couchbase-release-1.0-x86_64.rpm
-#     dnf install -y libcouchbase-devel
-#     pecl install couchbase 
-#   fi
-
-#   if (($? >= 1)); then
-#     echo_with_color red "\ncouchbase extension installation error." >&5
-#     exit 1
-#   fi
-#   echo "extension=couchbase.so" >/etc/php.d/xcouchbase.ini
-#   php -m | grep couchbase
-#   if (($? >= 1)); then
-#     echo_with_color red "\nCould not install couchbase extension." >&5
-#   fi
-# fi
