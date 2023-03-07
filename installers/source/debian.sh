@@ -52,6 +52,7 @@ install_php () {
     ${PHP_VERSION}-xml \
     ${PHP_VERSION}-cli \
     ${PHP_VERSION}-curl \
+    ${PHP_VERSION}-json \
     ${PHP_VERSION}-mysqlnd \
     ${PHP_VERSION}-sqlite \
     ${PHP_VERSION}-soap \
@@ -218,7 +219,7 @@ install_php_pear () {
 }
 
 install_mcrypt () {
-  printf "\n" | pecl install mcrypt-1.0.5
+  printf "\n" | pecl install mcrypt-1.0.4
   if (($? >= 1)); then
     echo_with_color red "\nMcrypt extension installation error." >&5
     kill $!
@@ -251,8 +252,7 @@ install_sql_server () {
     ;;
   esac
   apt-get update
-  ACCEPT_EULA=Y apt-get install -y msodbcsql18 mssql-tools \
-  unixodbc-dev=2.3.7 unixodbc=2.3.7 odbcinst1debian2=2.3.7 odbcinst=2.3.7
+  ACCEPT_EULA=Y apt-get install -y msodbcsql17 mssql-tools unixodbc-dev
 
   pecl install sqlsrv
   if (($? >= 1)); then
@@ -265,7 +265,7 @@ install_sql_server () {
 }
 
 install_pdo_sqlsrv () {
-  pecl install pdo_sqlsrv-5.10.1
+  pecl install pdo_sqlsrv
   if (($? >= 1)); then
     echo_with_color red "\npdo_sqlsrv extension installation error." >&5
     kill $!
@@ -277,9 +277,9 @@ install_pdo_sqlsrv () {
 
 install_oracle () {
   apt install -y libaio1
-  echo "/opt/oracle/instantclient_21_9" >/etc/ld.so.conf.d/oracle-instantclient.conf
+  echo "/opt/oracle/instantclient_19_16" >/etc/ld.so.conf.d/oracle-instantclient.conf
   ldconfig
-  printf "instantclient,/opt/oracle/instantclient_21_9\n" | pecl install oci8-3.2.1
+  printf "instantclient,/opt/oracle/instantclient_19_16\n" | pecl install oci8-2.2.0
   if (($? >= 1)); then
     echo_with_color red "\nOracle instant client installation error" >&5
     kill $!
@@ -294,10 +294,10 @@ install_db2 () {
   chmod +x /opt/dsdriver/installDSDriver
   /usr/bin/ksh /opt/dsdriver/installDSDriver
   ln -s /opt/dsdriver/include /include
-  git clone https://github.com/php/pecl-database-pdo_ibm.git /opt/pdo_ibm
-  cd /opt/pdo_ibm || exit 1
+  git clone https://github.com/dreamfactorysoftware/PDO_IBM-1.3.4-patched.git /opt/PDO_IBM-1.3.4-patched
+  cd /opt/PDO_IBM-1.3.4-patched/ || exit 1
   phpize
-  ./configure --with-pdo-ibm=/opt/dsdriver
+  ./configure --with-pdo-ibm=/opt/dsdriver/lib
   make && make install
   if (($? >= 1)); then
     echo_with_color red "\nCould not make pdo_ibm extension." >&5
@@ -320,38 +320,28 @@ install_db2_extension () {
 }
 
 install_cassandra () {
-  apt-get install -y cmake libgmp-dev libpcre3-dev libssl-dev libuv1-dev libz-dev
-  wget -c -P /opt/DataStax https://github.com/datastax/cpp-driver/archive/refs/tags/2.16.2.tar.gz
-  cd /opt/DataStax
-  tar -xf 2.16.2.tar.gz
-  rm 2.16.2.tar.gz
-  cd cpp-driver-2.16.2
-  mkdir build && cd "$_"
-  cmake ..
-  make && make install
+  apt install -y cmake libgmp-dev
+  git clone https://github.com/datastax/php-driver.git /opt/cassandra
+  cd /opt/cassandra/ || exit 1
+  wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/cassandra/v2.10.0/cassandra-cpp-driver-dbg_2.10.0-1_amd64.deb
+  wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/cassandra/v2.10.0/cassandra-cpp-driver-dev_2.10.0-1_amd64.deb
+  wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/cassandra/v2.10.0/cassandra-cpp-driver_2.10.0-1_amd64.deb
+  wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/dependencies/libuv/v1.23.0/libuv1-dbg_1.23.0-1_amd64.deb
+  wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/dependencies/libuv/v1.23.0/libuv1-dev_1.23.0-1_amd64.deb
+  wget http://downloads.datastax.com/cpp-driver/ubuntu/18.04/dependencies/libuv/v1.23.0/libuv1_1.23.0-1_amd64.deb
+  dpkg -i *.deb
   if (($? >= 1)); then
     echo_with_color red "\ncassandra extension installation error." >&5
     kill $!
     exit 1
   fi
-  
-  # Currently, we are using a specific version of the repository that is still functional, as 
-  # the recent efforts to enhance the installation process do not work properly. 
-  git clone --branch v1.3.x https://github.com/nano-interactive/ext-cassandra.git /opt/DataStax/ext-cassandra
-  cd /opt/DataStax/ext-cassandra
-  git checkout 1cf12c5ce49ed43a2c449bee4b7b23ce02a37bf0
-  cd ./ext
-  phpize
-  cd ..
-  mkdir build && cd "$_"
-  ../ext/configure
-  make && make install
+  pecl install ./ext/package.xml
   if (($? >= 1)); then
     echo_with_color red "\ncassandra extension installation error." >&5
     kill $!
     exit 1
   fi
-  echo "extension=cassandra.so" | tee "/etc/php/${PHP_VERSION_INDEX}/mods-available/cassandra.ini" &&\
+  echo "extension=cassandra.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/cassandra.ini"
   phpenmod -s ALL cassandra
 }
 
@@ -418,14 +408,24 @@ install_node () {
   NODE_PATH=$(whereis node | cut -d" " -f2)
 }
 
+install_pcs () {
+  pecl install pcs-1.3.7
+  if (($? >= 1)); then
+    echo_with_color red "\npcs extension installation error.." >&5
+    kill $!
+    exit 1
+  fi
+  echo "extension=pcs.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/pcs.ini"
+  phpenmod -s ALL pcs
+}
+
 install_snowflake_apache () {
   apt-get update
   apt-get install -y --no-install-recommends --allow-unauthenticated gcc cmake ${PHP_VERSION}-pdo ${PHP_VERSION}-json ${PHP_VERSION}-dev
   git clone https://github.com/snowflakedb/pdo_snowflake.git /src/snowflake
   cd /src/snowflake
   export PHP_HOME=/usr
-  # Execute script in the current shell, since the script does not see the PHP_HOME variable
-  source /src/snowflake/scripts/build_pdo_snowflake.sh
+  /src/snowflake/scripts/build_pdo_snowflake.sh
   $PHP_HOME/bin/php -dextension=modules/pdo_snowflake.so -m | grep pdo_snowflake
   if (($? == 0)); then
     export PHP_HOME=/usr
@@ -451,8 +451,7 @@ install_snowflake_nginx () {
   git clone https://github.com/snowflakedb/pdo_snowflake.git /src/snowflake
   cd /src/snowflake
   export PHP_HOME=/usr
-  # Execute script in the current shell, since the script does not see the PHP_HOME variable
-  source /src/snowflake/scripts/build_pdo_snowflake.sh
+  /src/snowflake/scripts/build_pdo_snowflake.sh
   $PHP_HOME/bin/php -dextension=modules/pdo_snowflake.so -m | grep pdo_snowflake
   if (($? == 0)); then
     export PHP_HOME=/usr
@@ -483,20 +482,6 @@ install_hive_odbc () {
   rm maprhiveodbc_2.6.1.1001-2_amd64.deb
   export HIVE_SERVER_ODBC_DRIVER_PATH=/opt/mapr/hiveodbc/lib/64/libmaprhiveodbc64.so
   HIVE_ODBC_INSTALLED = $(php -m | grep -E "^odbc")
-}
-
-enable_opcache () {
-  {
-    echo 'zend_extension=opcache.so'
-    echo 'opcache.enable=1'
-    echo 'opcache.memory_consumption=192'
-    echo 'opcache.interned_strings_buffer=16'
-    echo 'opcache.max_accelerated_files=16229;'
-    echo 'opcache.max_wasted_percentage=15'
-    echo 'opcache.validate_timestamps=0'
-    echo 'opcache.jit_buffer_size=64M'
-    echo 'opcache.jit=tracing'
-  } > /etc/php/${PHP_VERSION_INDEX}/mods-available/opcache.ini
 }
 
 install_composer () {
@@ -582,3 +567,32 @@ run_composer_install () {
     fi
   fi
 }
+
+### INSTALL COUCHBASE
+# We are in the process of upgrading this to SDK 3, therefor is currently not working and commented out
+# php -m | grep -E "^couchbase"
+# if (($? >= 1)); then
+#   if ((CURRENT_OS == 8)); then
+#     wget -P /tmp http://packages.couchbase.com/releases/couchbase-release/couchbase-release-1.0-4-amd64.deb
+#     dpkg -i /tmp/couchbase-release-1.0-4-amd64.deb
+
+#   elif ((CURRENT_OS == 9 || CURRENT_OS == 10)); then
+#     wget -O - https://packages.couchbase.com/clients/c/repos/deb/couchbase.key | apt-key add -
+#     echo "deb https://packages.couchbase.com/clients/c/repos/deb/ubuntu1804 bionic bionic/main" >/etc/apt/sources.list.d/couchbase.list
+#   fi
+
+#   apt-get update
+#   apt install -y libcouchbase3 libcouchbase-dev libcouchbase3-tools libcouchbase-dbg libcouchbase3-libev libcouchbase3-libevent zlib1g-dev
+#   pecl install couchbase-3.1.2
+#   if (($? >= 1)); then
+#     echo_with_color red "\ncouchbase extension installation error." >&5
+#     exit 1
+#   fi
+#   echo "extension=couchbase.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/xcouchbase.ini"
+#   phpenmod -s ALL xcouchbase
+#   php -m | grep couchbase
+#   if (($? >= 1)); then
+#     echo_with_color red "\nCould not install couchbase extension." >&5
+#   fi
+#   rm /etc/apt/sources.list.d/couchbase.list
+# fi
