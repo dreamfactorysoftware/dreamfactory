@@ -10,7 +10,7 @@ TERM_COLS="$(tput cols)"
 ERROR_STRING="Installation error. Exiting"
 CURRENT_PATH=$(pwd)
 
-DEFAULT_PHP_VERSION="php8.1"
+DEFAULT_PHP_VERSION="php7.4"
 
 CURRENT_KERNEL=$(grep -w ID /etc/os-release | cut -d "=" -f 2 | tr -d '"')
 CURRENT_OS=$(grep -e VERSION_ID /etc/os-release | cut -d "=" -f 2 | cut -d "." -f 1 | tr -d '"')
@@ -84,8 +84,8 @@ fi
 #### Check Current OS is compatible with the installer ####
 case $CURRENT_KERNEL in
   ubuntu)
-    if ((CURRENT_OS != 20)) && ((CURRENT_OS != 22)); then
-      echo_with_color red "The installer only supports Ubuntu 20 and 22. Exiting...\n"
+    if ((CURRENT_OS != 18)) && ((CURRENT_OS != 20)); then
+      echo_with_color red "The installer only supports Ubuntu 18 and 20. Exiting...\n"
       exit 1
     fi 
     ;;
@@ -102,8 +102,8 @@ case $CURRENT_KERNEL in
     fi
     ;;
   fedora)
-    if ((CURRENT_OS != 36)) && ((CURRENT_OS != 37)); then
-      echo_with_color red "The installer only supports Fedora 36, 37. Exiting...\n"
+    if ((CURRENT_OS != 34)) && ((CURRENT_OS != 35)) && ((CURRENT_OS != 36)); then
+      echo_with_color red "The installer only supports Fedora 34, 35, 36. Exiting...\n"
       exit 1
     fi
     ;;
@@ -362,7 +362,7 @@ if (($? >= 1)); then
     if [[ $CURRENT_KERNEL == "ubuntu" || $CURRENT_KERNEL == "debian" ]]; then
       unzip "$DRIVERS_PATH/instantclient-*.zip" -d /opt/oracle
     else
-      ls -f $DRIVERS_PATH/oracle-instantclient-*-21.*.rpm
+      ls -f $DRIVERS_PATH/oracle-instantclient19.*.rpm
     fi
     if (($? == 0)); then
       run_process "   Drivers Found. Installing Oracle Drivers" install_oracle
@@ -427,6 +427,8 @@ if (($? >= 1)); then
     else
       echo_with_color green "    Cassandra installed\n" >&5
     fi
+    cd "${CURRENT_PATH}" || exit
+    rm -rf /opt/cassandra
   fi
 fi
 
@@ -475,6 +477,18 @@ if (($? >= 1)); then
   echo_with_color green "    node installed\n" >&5
 fi
 
+### INSTALL PCS
+php -m | grep -E "^pcs"
+if (($? >= 1)); then
+  run_process "   Installing pcs" install_pcs
+  php -m | grep pcs
+  if (($? >= 1)); then
+    echo_with_color red "\nCould not install pcs extension." >&5
+  else
+    echo_with_color green "    pcs installed\n" >&5
+  fi
+fi
+
 ### INSTALL Snowlake
 if [[ $CURRENT_KERNEL == "debian" || $CURRENT_KERNEL == "ubuntu" ]]; then
   if [[ $APACHE == TRUE ]]; then ### Only with key --apache
@@ -514,9 +528,6 @@ if (($? >= 1)); then
     echo_with_color green "    hive odbc installed\n" >&5
   fi
 fi
-
-### Configuring PHP OPCache and JIT compilation
-run_process "   Configuring PHP OPCache and JIT compilation" enable_opcache
 
 if [[ $APACHE == TRUE ]]; then
   if [[ $CURRENT_KERNEL == "ubuntu" || $CURRENT_KERNEL == "debian" ]]; then
