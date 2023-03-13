@@ -285,8 +285,10 @@ install_pdo_sqlsrv () {
 
 install_oracle () {
   apt install -y libaio1
-  echo "/opt/oracle/instantclient_21_9" >/etc/ld.so.conf.d/oracle-instantclient.conf
-  printf "instantclient,/opt/oracle/instantclient_21_9\n" | pecl install oci8-3.2.1
+  CLIENT_VERSION=$(ls -f $DRIVERS_PATH/instantclient-basic-linux.x64-[12][19].*.0.0.0dbru.zip | grep -oP '([1-9]+)\.([1-9]+)' | head -n 1)
+  CLIENT_VERSION=$(echo "$CLIENT_VERSION" | tr . _)
+  echo "/opt/oracle/instantclient_$CLIENT_VERSION" >/etc/ld.so.conf.d/oracle-instantclient.conf
+  printf "instantclient,/opt/oracle/instantclient_$CLIENT_VERSION\n" | pecl install oci8-3.2.1
   ldconfig
   if (($? >= 1)); then
     echo_with_color red "\nOracle instant client installation error" >&5
@@ -305,7 +307,7 @@ install_db2 () {
   git clone https://github.com/php/pecl-database-pdo_ibm /opt/PDO_IBM
   cd /opt/PDO_IBM/ || exit 1
   phpize
-  ./configure --with-pdo-ibm=/opt/dsdriver/lib
+  ./configure --with-pdo-ibm=/opt/dsdriver
   make && make install
   if (($? >= 1)); then
     echo_with_color red "\nCould not make pdo_ibm extension." >&5
