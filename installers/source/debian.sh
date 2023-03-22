@@ -277,9 +277,11 @@ install_pdo_sqlsrv () {
 
 install_oracle () {
   apt install -y libaio1
-  echo "/opt/oracle/instantclient_21_9" >/etc/ld.so.conf.d/oracle-instantclient.conf
+  CLIENT_VERSION=$(ls -f $DRIVERS_PATH/instantclient-basic-linux.x64-[12][19].*.0.0.0dbru.zip | grep -oP '([1-9]+)\.([1-9]+)' | head -n 1)
+  CLIENT_VERSION=$(echo "$CLIENT_VERSION" | tr . _)
+  echo "/opt/oracle/instantclient_$CLIENT_VERSION" >/etc/ld.so.conf.d/oracle-instantclient.conf
   ldconfig
-  printf "instantclient,/opt/oracle/instantclient_21_9\n" | pecl install oci8-3.2.1
+  printf "instantclient,/opt/oracle/instantclient_$CLIENT_VERSION\n" | pecl install oci8-3.2.1
   if (($? >= 1)); then
     echo_with_color red "\nOracle instant client installation error" >&5
     kill $!

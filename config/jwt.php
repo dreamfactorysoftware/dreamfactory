@@ -149,7 +149,7 @@ return [
     | claim.
     |
     */
-    'custom_claims' => explode(',', env('DF_JWT_USER_CLAIM')),
+    'custom_claims' => explode(',', env('DF_JWT_USER_CLAIM', '')),
 
     /*
     |--------------------------------------------------------------------------

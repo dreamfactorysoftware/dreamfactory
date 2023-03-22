@@ -287,13 +287,18 @@ install_pdo_sqlsrv () {
 }
 
 install_oracle () {
-  dnf install -y libaio systemtap-sdt-devel $DRIVERS_PATH/oracle-instantclient-*-21.*.rpm
+  CLIENT_VERSION=$(ls -f $DRIVERS_PATH/oracle-instantclient*-*-[12][19].*.0.0.0*.x86_64.rpm | grep -oP '([1-9]+)\.([1-9]+)' | head -n 1)
+  dnf install -y libaio systemtap-sdt-devel $DRIVERS_PATH/oracle-instantclient*$CLIENT_VERSION*x86_64.rpm
   if (($? >= 1)); then
     echo_with_color red "\nOracle instant client installation error" >&5
     kill $!
     exit 1
   fi
-  echo "/usr/lib/oracle/21/client64/lib" >/etc/ld.so.conf.d/oracle-instantclient.conf
+  # For instantclient versions that start with 21.* Oracle will create an index directory without suffix
+  if [[ $CLIENT_VERSION == 21* ]]; then
+    CLIENT_VERSION="21"
+  fi
+  echo "/usr/lib/oracle/$CLIENT_VERSION/client64/lib" >/etc/ld.so.conf.d/oracle-instantclient.conf
   ldconfig
   export PHP_DTRACE=yes
   printf "\n" | pecl install oci8-3.2.1
