@@ -50,7 +50,7 @@ For RPM based systems you'll want to download next files:
 
 You should not unzip these files. Just upload them to your server and write down the absolute path to their location as you'll need to supply this path during the installation process.
 
-The script only supports the Oracle driver version 21.9.
+The script was tested using Oracle driver versions 19.18 and 21.9.
 
 ### Enabling IBM DB2
 
@@ -69,7 +69,7 @@ Selecting option 3 at the initial menu prompt will result in installation of PHP
 
 ### Installing Apache
 
-Selecting option 4 at the initial menu prompt will result in the Apache 2 web server being installed instead of the default Nginx web server.
+Selecting option 4 at the initial menu prompt will result in the Apache 2 web server being installed instead of the default Nginx web server. Please note that if you opt for setting up Apache 2 as your default web server on Fedora, it might already be pre-installed. In such a scenario, the installation process for Apache 2 will be omitted.
 
 ### Installing Specific DreamFactory Version
 
