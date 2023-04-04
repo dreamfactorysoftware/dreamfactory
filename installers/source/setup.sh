@@ -129,7 +129,9 @@ echo -e "[3] Install driver and PHP extensions for Cassandra DB"
 echo -e "[4] Install Apache2 web server for DreamFactory (Instead of Nginx)" 
 echo -e "[5] Install MariaDB as the default system database for DreamFactory" 
 echo -e "[6] Install a specfic version of DreamFactory" 
-echo -e "[7] Run Installation in debug mode (logs will output to /tmp/dreamfactory_installer.log)\n"
+echo -e "[7] Run Installation in debug mode (logs will output to /tmp/dreamfactory_installer.log)"
+echo -e "[8] Skip Installation of SQL Server drivers\n"
+
 print_centered "-" "-"
 echo_with_color magenta "Input '0' and press Enter to run the default installation. To install additional options, type the corresponding number (e.g. '1,5' for Oracle and a MySql system database) from the menu above and press Enter"
 read -r INSTALLATION_OPTIONS
@@ -167,9 +169,29 @@ if [[ $INSTALLATION_OPTIONS == *"6"* ]]; then
   echo_with_color green "DreamFactory Version ${DREAMFACTORY_VERSION_TAG} selected."
 fi
 
+first_digit=${DREAMFACTORY_VERSION_TAG:0:1}
+
+if [ "$first_digit" == "4" ]; then
+    DEFAULT_PHP_VERSION="php7.4"
+    echo "Installing php version:  $DEFAULT_PHP_VERSION"
+elif [ "$first_digit" == "5" ]; then
+    DEFAULT_PHP_VERSION="php8.1"
+    echo "Installing php version:  $DEFAULT_PHP_VERSION"
+else
+    echo "Error: invalid PHP version number: $DREAMFACTORY_VERSION_TAG"
+    
+    exit 1
+fi
+
 if [[ $INSTALLATION_OPTIONS == *"7"* ]]; then 
   DEBUG=TRUE
   echo_with_color green "Running in debug mode. Run this command: tail -f /tmp/dreamfactory_installer.log in a new terminal session to follow logs during installation"
+fi
+
+if [[ $INSTALLATION_OPTIONS == *"8"* ]]; then
+  SKIP_SQL_SRV=TRUE
+  echo_with_color green "Skipping sqlsrver driver installation "
+
 fi
 
 if [[ ! $DEBUG == TRUE ]]; then
@@ -331,21 +353,26 @@ if (($? >= 1)); then
 fi
 
 ### Install MS SQL Drivers
-php -m | grep -E "^sqlsrv"
-if (($? >= 1)); then
-  run_process "   Installing MS SQL Server" install_sql_server
-  run_process "   Installing pdo_sqlsrv" install_pdo_sqlsrv
+if [[ $SKIP_SQL_SRV == TRUE ]]; then
+  echo_with_color red "Skipping sqlsrver driver installation"
+
+else 
   php -m | grep -E "^sqlsrv"
   if (($? >= 1)); then
-    echo_with_color red "\nMS SQL Server extension installation error." >&5
-  else
-    echo_with_color green "    MS SQL Server extension installed\n" >&5
-  fi
-  php -m | grep -E "^pdo_sqlsrv"
-  if (($? >= 1)); then
-    echo_with_color red "\nCould not install pdo_sqlsrv extension" >&5
-  else
-    echo_with_color green "    pdo_sqlsrv installed\n" >&5
+    run_process "   Installing MS SQL Server" install_sql_server
+    run_process "   Installing pdo_sqlsrv" install_pdo_sqlsrv
+    php -m | grep -E "^sqlsrv"
+    if (($? >= 1)); then
+      echo_with_color red "\nMS SQL Server extension installation error." >&5
+    else
+      echo_with_color green "    MS SQL Server extension installed\n" >&5
+    fi
+    php -m | grep -E "^pdo_sqlsrv"
+    if (($? >= 1)); then
+      echo_with_color red "\nCould not install pdo_sqlsrv extension" >&5
+    else
+      echo_with_color green "    pdo_sqlsrv installed\n" >&5
+    fi
   fi
 fi
 
