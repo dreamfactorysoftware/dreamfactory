@@ -62,16 +62,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.272.0",
+            "version": "3.272.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "2448f5c4ffd0125fa86df6aa12d0a41aa2de68da"
+                "reference": "a0accaf4a16565c0b4438109c978602f27dff3a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/2448f5c4ffd0125fa86df6aa12d0a41aa2de68da",
-                "reference": "2448f5c4ffd0125fa86df6aa12d0a41aa2de68da",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/a0accaf4a16565c0b4438109c978602f27dff3a0",
+                "reference": "a0accaf4a16565c0b4438109c978602f27dff3a0",
                 "shasum": ""
             },
             "require": {
@@ -151,9 +151,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.272.0"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.272.1"
             },
-            "time": "2023-06-08T18:21:03+00:00"
+            "time": "2023-06-09T18:21:02+00:00"
         },
         {
             "name": "bitbucket/client",
@@ -1511,12 +1511,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-core.git",
-                "reference": "dbeb05ef5a06291caa9b113efbfa66410b814f55"
+                "reference": "cc74f869ce9762a5daebe918c150b067f453afcc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/dbeb05ef5a06291caa9b113efbfa66410b814f55",
-                "reference": "dbeb05ef5a06291caa9b113efbfa66410b814f55",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-core/zipball/cc74f869ce9762a5daebe918c150b067f453afcc",
+                "reference": "cc74f869ce9762a5daebe918c150b067f453afcc",
                 "shasum": ""
             },
             "require": {
@@ -1581,7 +1581,7 @@
                 "source": "https://github.com/dreamfactorysoftware/df-core",
                 "wiki": "https://wiki.dreamfactory.com"
             },
-            "time": "2023-06-09T01:14:08+00:00"
+            "time": "2023-06-12T01:55:50+00:00"
         },
         {
             "name": "dreamfactory/df-couchdb",
@@ -2533,12 +2533,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-system.git",
-                "reference": "a9966df4314dc081d7a1ed4f26e274ea4bc071d5"
+                "reference": "af4279527778ae96ecadce7c8549668d80f62043"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-system/zipball/a9966df4314dc081d7a1ed4f26e274ea4bc071d5",
-                "reference": "a9966df4314dc081d7a1ed4f26e274ea4bc071d5",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-system/zipball/af4279527778ae96ecadce7c8549668d80f62043",
+                "reference": "af4279527778ae96ecadce7c8549668d80f62043",
                 "shasum": ""
             },
             "require": {
@@ -2590,7 +2590,7 @@
                 "source": "https://github.com/dreamfactorysoftware/df-system",
                 "wiki": "https://wiki.dreamfactory.com"
             },
-            "time": "2023-06-09T01:19:41+00:00"
+            "time": "2023-06-12T00:29:50+00:00"
         },
         {
             "name": "dreamfactory/df-user",
@@ -8334,25 +8334,28 @@
         },
         {
             "name": "sabre/uri",
-            "version": "2.3.2",
+            "version": "2.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sabre-io/uri.git",
-                "reference": "eceb4a1b8b680b45e215574222d6ca00be541970"
+                "reference": "7e0e7dfd0b7e14346a27eabd66e843a6e7f1812b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sabre-io/uri/zipball/eceb4a1b8b680b45e215574222d6ca00be541970",
-                "reference": "eceb4a1b8b680b45e215574222d6ca00be541970",
+                "url": "https://api.github.com/repos/sabre-io/uri/zipball/7e0e7dfd0b7e14346a27eabd66e843a6e7f1812b",
+                "reference": "7e0e7dfd0b7e14346a27eabd66e843a6e7f1812b",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.4 || ^8.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.9",
-                "phpstan/phpstan": "^1.8",
-                "phpunit/phpunit": "^9.0"
+                "friendsofphp/php-cs-fixer": "^3.17",
+                "phpstan/extension-installer": "^1.3",
+                "phpstan/phpstan": "^1.10",
+                "phpstan/phpstan-phpunit": "^1.3",
+                "phpstan/phpstan-strict-rules": "^1.5",
+                "phpunit/phpunit": "^9.6"
             },
             "type": "library",
             "autoload": {
@@ -8387,7 +8390,7 @@
                 "issues": "https://github.com/sabre-io/uri/issues",
                 "source": "https://github.com/fruux/sabre-uri"
             },
-            "time": "2022-09-19T11:58:52+00:00"
+            "time": "2023-06-09T06:54:04+00:00"
         },
         {
             "name": "sabre/vobject",
@@ -13686,16 +13689,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "9.6.8",
+            "version": "9.6.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "17d621b3aff84d0c8b62539e269e87d8d5baa76e"
+                "reference": "a9aceaf20a682aeacf28d582654a1670d8826778"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/17d621b3aff84d0c8b62539e269e87d8d5baa76e",
-                "reference": "17d621b3aff84d0c8b62539e269e87d8d5baa76e",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/a9aceaf20a682aeacf28d582654a1670d8826778",
+                "reference": "a9aceaf20a682aeacf28d582654a1670d8826778",
                 "shasum": ""
             },
             "require": {
@@ -13769,7 +13772,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.6.8"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.6.9"
             },
             "funding": [
                 {
@@ -13785,7 +13788,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-05-11T05:14:45+00:00"
+            "time": "2023-06-11T06:13:56+00:00"
         },
         {
             "name": "sebastian/cli-parser",
