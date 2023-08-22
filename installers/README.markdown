@@ -4,6 +4,7 @@ This directory contains an automated installer package `dfsetup.run` which will 
 
 * CentOS 7
 * RHEL 7/8
+* Oracle Linux 7/8
 * Debian 10/11
 * Fedora 36/37
 * Ubuntu 20/22
