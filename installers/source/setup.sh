@@ -745,6 +745,8 @@ chown -R "$CURRENT_USER" /opt/dreamfactory && cd /opt/dreamfactory || exit 1
 
 run_process "   Installing DreamFactory"  run_composer_install
 
+run process "   Installing DF frontend" run_df_frontend_install
+
 ### Shutdown silent mode because php artisan df:setup and df:env will get troubles with prompts.
 exec 1>&5 5>&-
 

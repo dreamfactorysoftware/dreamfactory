@@ -580,3 +580,30 @@ run_composer_install () {
     fi
   fi
 }
+
+run_df_frontend_install () {
+  # Define variables
+  REPO="anas-srikou/df-admin-interface"  # Replace with the username and repository name
+  DESTINATION_FOLDER="/opt/dreamfactory/public"  # Replace with the desired destination folder
+  RELEASE_FILENAME="release.zip"
+
+  # Get the latest release tag using the GitHub API
+  TAG=$(curl -s "https://api.github.com/repos/$REPO/releases/latest" | jq -r '.tag_name')
+
+  if [ -z "$TAG" ]; then
+    echo "Error: Unable to fetch latest release tag."
+    exit 1
+  fi
+
+  # download the dist release
+  curl -LJO "$URL"
+
+  # Extract the release file into the destination folder
+  unzip -q "$RELEASE_FILENAME" -d "$DESTINATION_FOLDER"
+
+  # update the index blade file with the new JS refs
+  mv "$DESTINATION_FOLDER/index.html" "/opt/dreamfactory/resources/views/index.blade.php"
+
+  # Clean up: remove the downloaded release file
+  rm "$RELEASE_FILENAME"
+}
