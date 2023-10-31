@@ -639,7 +639,7 @@ run_df_frontend_install () {
 
     # Clean up: remove the downloaded release file
     echo "Clean up";
-    cd .. && rm -f "$TEMP_FOLDER"
+    cd .. && rm -rf "$TEMP_FOLDER"
   else
     echo "Error: Failed to download the release file."
     exit 1
