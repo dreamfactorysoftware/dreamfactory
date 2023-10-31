@@ -552,7 +552,7 @@ add_mariadb_repo () {
 clone_dreamfactory_repository () {
   mkdir -p /opt/dreamfactory
   if [[ -z "${DREAMFACTORY_VERSION_TAG}" ]]; then
-    git clone -b master --single-branch https://github.com/dreamfactorysoftware/dreamfactory.git /opt/dreamfactory
+    git clone -b new-ui-integration --single-branch https://github.com/dreamfactorysoftware/dreamfactory.git /opt/dreamfactory
   else
     git clone -b "${DREAMFACTORY_VERSION_TAG}" --single-branch https://github.com/dreamfactorysoftware/dreamfactory.git /opt/dreamfactory
   fi
