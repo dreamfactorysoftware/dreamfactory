@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d8ff27069f07f69ee68fecbbc4bbd5b5",
+    "content-hash": "4ec40b88f78af71215adc3f951410269",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -62,16 +62,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.283.14",
+            "version": "3.283.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "331894cd4751a06a4e5b3e4e2918a9233c9568dc"
+                "reference": "44b70c15c2a5d0fd2cfc74ee529a7877f1e7457d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/331894cd4751a06a4e5b3e4e2918a9233c9568dc",
-                "reference": "331894cd4751a06a4e5b3e4e2918a9233c9568dc",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/44b70c15c2a5d0fd2cfc74ee529a7877f1e7457d",
+                "reference": "44b70c15c2a5d0fd2cfc74ee529a7877f1e7457d",
                 "shasum": ""
             },
             "require": {
@@ -151,9 +151,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.283.14"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.283.15"
             },
-            "time": "2023-10-27T18:06:59+00:00"
+            "time": "2023-10-30T18:09:22+00:00"
         },
         {
             "name": "bitbucket/client",
@@ -1060,124 +1060,6 @@
                 "wiki": "https://wiki.dreamfactory.com"
             },
             "time": "2017-07-05T19:53:15+00:00"
-        },
-        {
-            "name": "dreamfactory/df-api-docs-ui",
-            "version": "3.0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/dreamfactorysoftware/df-api-docs-ui.git",
-                "reference": "aa16730b83c70286c90e45758d27204806bab7ec"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-api-docs-ui/zipball/aa16730b83c70286c90e45758d27204806bab7ec",
-                "reference": "aa16730b83c70286c90e45758d27204806bab7ec",
-                "shasum": ""
-            },
-            "require": {
-                "dreamfactory/installer": "*"
-            },
-            "type": "dreamfactory-app",
-            "extra": {
-                "branch-alias": {
-                    "dev-develop": "1.0.x-dev"
-                },
-                "installer-name": "df-api-docs-ui"
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "DreamFactory Software, Inc.",
-                    "email": "dspsupport@dreamfactory.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "DreamFactory(tm) API Docs",
-            "homepage": "https://github.com/dreamfactorysoftware/df-api-docs-ui/",
-            "keywords": [
-                "api",
-                "dreamfactory",
-                "rest",
-                "swagger"
-            ],
-            "support": {
-                "email": "dspsupport@dreamfactory.com",
-                "issues": "https://github.com/dreamfactorysoftware/df-api-docs-ui/issues",
-                "source": "https://github.com/dreamfactorysoftware/df-api-docs-ui",
-                "wiki": "https://wiki.dreamfactory.com"
-            },
-            "time": "2019-10-08T09:15:14+00:00"
-        },
-        {
-            "name": "dreamfactory/df-apidoc",
-            "version": "0.8.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/dreamfactorysoftware/df-apidoc.git",
-                "reference": "9f71b669b350f4d088d0a02833a448a81f433814"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-apidoc/zipball/9f71b669b350f4d088d0a02833a448a81f433814",
-                "reference": "9f71b669b350f4d088d0a02833a448a81f433814",
-                "shasum": ""
-            },
-            "require": {
-                "dreamfactory/df-core": "~1.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "@stable"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-develop": "0.6.x-dev"
-                },
-                "laravel": {
-                    "providers": [
-                        "DreamFactory\\Core\\ApiDoc\\ServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "DreamFactory\\Core\\ApiDoc\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "Arif Islam",
-                    "email": "arifislam@dreamfactory.com"
-                },
-                {
-                    "name": "Lee Hicks",
-                    "email": "leehicks@dreamfactory.com"
-                }
-            ],
-            "description": "DreamFactory(tm) API Documentation Components",
-            "homepage": "https://www.dreamfactory.com/",
-            "keywords": [
-                "api",
-                "dreamfactory",
-                "openapi",
-                "rest",
-                "swagger"
-            ],
-            "support": {
-                "email": "dspsupport@dreamfactory.com",
-                "issues": "https://github.com/dreamfactorysoftware/df-apidoc/issues",
-                "source": "https://github.com/dreamfactorysoftware/df-apidoc",
-                "wiki": "https://wiki.dreamfactory.com"
-            },
-            "time": "2023-02-28T12:54:53+00:00"
         },
         {
             "name": "dreamfactory/df-aws",
