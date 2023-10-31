@@ -24,7 +24,8 @@ install_system_dependencies () {
       lsof \
       readline-devel \
       libzip-devel \
-      wget
+      wget \
+      jq
   else
     #centos 8
     dnf install -y git \
@@ -406,8 +407,8 @@ install_cassandra () {
   fi
   export PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig
 
-  # Currently, we are using a specific version of the repository that is still functional, as 
-  # the recent efforts to enhance the installation process do not work properly. 
+  # Currently, we are using a specific version of the repository that is still functional, as
+  # the recent efforts to enhance the installation process do not work properly.
   git clone --branch v1.3.x https://github.com/nano-interactive/ext-cassandra.git /opt/DataStax/ext-cassandra
   cd /opt/DataStax/ext-cassandra
   git checkout 1cf12c5ce49ed43a2c449bee4b7b23ce02a37bf0
@@ -605,3 +606,184 @@ run_composer_install () {
     fi
   fi
 }
+
+# Define common constants
+DF_FOLDER="/opt/dreamfactory"
+DESTINATION_FOLDER="$DF_FOLDER/public"
+RELEASE_FILENAME="release.zip"
+FOLDERS_TO_REMOVE=("dreamfactory" "filemanager" "df-api-docs-ui" "assets")
+
+# Function to perform the frontend installation
+run_df_frontend_install() {
+  # Define constants specific to this function
+  REPO_OWNER="anas-srikou/df-admin-interface"
+  REPO_URL="https://github.com/$REPO_OWNER"
+  TEMP_FOLDER="/tmp/df-ui"
+
+  # Create a temporary folder
+  mkdir -p "$TEMP_FOLDER"
+
+  cd "$TEMP_FOLDER" || exit
+
+  # Get the latest release tag using the GitHub API
+  latest_tag=$(curl -s "https://api.github.com/repos/$REPO_OWNER/releases/latest" | jq -r '.tag_name')
+
+  if [ -z "$latest_tag" ]; then
+    echo "Error: Unable to fetch latest release tag."
+    exit 1
+  fi
+
+  echo "Latest tag: $latest_tag"
+
+  # Prepare the download URL using the latest tag
+  release_url="$REPO_URL/releases/download/$latest_tag/$RELEASE_FILENAME"
+
+  # Download and check if the download was successful
+  if curl -LO "$release_url"; then
+    echo "Downloaded release file: $RELEASE_FILENAME"
+
+    # Remove .js and .css files in the destination folder
+    find "$DESTINATION_FOLDER" -type f -name "*.js" -exec rm {} \;
+    find "$DESTINATION_FOLDER" -type f -name "*.css" -exec rm {} \;
+
+    # Remove the old UI folders if they exist
+    for folder in "${FOLDERS_TO_REMOVE[@]}"; do
+      full_path="$DESTINATION_FOLDER/$folder"
+      if [ -d "$full_path" ]; then
+        rm -rf "$full_path"
+        echo "Removed folder: $full_path"
+      fi
+    done
+
+    # Extract the release file into the destination folder
+    echo "Extracting the release file into the destination folder"
+    unzip -qo "$RELEASE_FILENAME" -d "$TEMP_FOLDER"
+
+    # Update the index file
+    mv "$TEMP_FOLDER/dist/index.html" "$DF_FOLDER/resources/views/index.blade.php"
+
+    # Move the rest of the files to the public folder
+    mv "$TEMP_FOLDER/dist/*" "$DESTINATION_FOLDER"
+
+    # Clean up: remove the downloaded release file
+    echo "Clean up"
+    cd ..
+    rm -f "$TEMP_FOLDER"
+  else
+    echo "Error: Failed to download the release file."
+    exit 1
+  fi
+}
+
+run_commercial_upgrade () {
+  echo "\nEnter absolute path to license files, complete with trailing slash: [/]"
+  read -r LICENSE_PATH
+  if [[ -z $LICENSE_PATH ]]; then
+    LICENSE_PATH="."
+  fi
+  ls $LICENSE_PATH/composer.{json,lock,json-dist}
+  if (($? >= 1)); then
+    printf "\nLicenses not found. Exiting!\n"
+    exit 1
+  else
+    cp $LICENSE_PATH/composer.{json,lock,json-dist} /opt/dreamfactory/
+    printf "\nLicense files installed. \n"
+    printf "Upgrading DreamFactory to %s...\n" "$latest_tag"
+  fi
+}
+
+run_open_source_upgrade () {
+  # pull the latest tag from the repo
+  echo "Pulling the latest tag from the repo"
+  git pull origin "$latest_tag"
+}
+
+run_artisan_commands () {
+  bash -c "php artisan migrate --seed"
+  bash -c "php artisan optimize:clear"
+}
+
+# Function to upgrade DreamFactory
+upgrade_dreamfactory () {
+  # Define constants
+  DF_FOLDER="/opt/dreamfactory"  # DF folder
+
+  # Go to the DF folder
+  cd "$DF_FOLDER" || exit
+
+  folder_info=$(ls -ld "$DF_FOLDER")
+
+  # Extract the owner and group using text processing
+  owner=$(echo "$folder_info" | awk '{print $3}')
+  group=$(echo "$folder_info" | awk '{print $4}')
+
+  # Print the owner and group
+  echo "Owner: $owner"
+  echo "Group: $group"
+
+  # Go to the DF folder
+  cd "$DF_FOLDER" || exit
+
+  # Check for the latest tag on the DF git repo
+  latest_tag=$(git ls-remote --tags origin | grep -Eo 'refs/tags/[0-9]+\.[0-9]+\.[0-9]+$' | sort -r | head -n 1 | cut -d "/" -f 3)
+
+  # Get the current version of the installed DF instance
+  # Read the app.php file in the config folder and get the version
+  current_version=$(grep -Eo 'version.*[0-9]+\.[0-9]+\.[0-9]+' config/app.php | cut -d "'" -f 3)
+
+  # Check if the current version is less than 5.0.0
+  if [[ "$current_version" < "5.0.0" ]]; then
+    echo "DreamFactory version is less than 5.0.0. Please upgrade to v5 first or contact DreamFactory support."
+    exit 1
+  fi
+
+  # Compare the current version with the latest tag
+  if [[ "$current_version" == "$latest_tag" ]]; then
+    echo "DreamFactory is already up to date."
+    exit 0
+  fi
+
+  # Check if the current version is greater than the latest tag (this should not happen but we check anyway)
+  if [[ "$current_version" > "$latest_tag" ]]; then
+    echo "Installed DreamFactory version is greater than the published version. Please contact DreamFactory support."
+    exit 1
+  fi
+
+  # Check if there are uncommitted changes
+  if ! git diff --quiet HEAD -- "$DESTINATION_FOLDER"; then
+    echo "There are uncommitted changes in the repository. Please clean the installation folder before upgrading."
+    exit 1
+  fi
+
+  # Ask if the DF instance is commercial or not
+  echo "Is this a commercial DreamFactory instance? [Yy/Nn] "
+  read -r LICENSE_FILE_ANSWER
+  if [[ -z $LICENSE_FILE_ANSWER ]]; then
+    LICENSE_FILE_ANSWER=N
+  fi
+  if [[ $LICENSE_FILE_ANSWER =~ ^[Yy]$ ]]; then
+    echo "  Upgrading commercial version"
+    run_commercial_upgrade
+  else
+    echo "  Upgrading open source version"
+    run_open_source_upgrade
+  fi
+
+  # Install the composer files
+  echo "   Updating DreamFactory"
+  run_composer_install
+
+  # Call artisan commands
+  echo "   Running artisan commands"
+  run_artisan_commands
+
+  # Install the new DF UI
+  echo "   Installing DreamFactory UI"
+  run_df_frontend_install
+
+  # Change ownership to current user
+  chown -R $owner:$group /opt/dreamfactory
+}
+
+
+
