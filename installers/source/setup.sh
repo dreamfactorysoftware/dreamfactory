@@ -87,7 +87,7 @@ case $CURRENT_KERNEL in
     if ((CURRENT_OS != 20)) && ((CURRENT_OS != 22)); then
       echo_with_color red "The installer only supports Ubuntu 20 and 22. Exiting...\n"
       exit 1
-    fi 
+    fi
     ;;
   debian)
     if ((CURRENT_OS != 10)) && ((CURRENT_OS != 11)); then
@@ -119,17 +119,20 @@ print_centered "-" "-"
 print_centered "Welcome to DreamFactory!"
 print_centered "-" "-"
 print_centered "-" "-"
-print_centered "Thank you for choosing DreamFactory. By default this installer will install the latest version of DreamFactory with a preconfigured Nginx web server. Additional options are available in the menu below:" 
+print_centered "Thank you for choosing DreamFactory. By default this installer will install the latest version of DreamFactory with a preconfigured Nginx web server. Additional options are available in the menu below:"
 print_centered "-" "-"
 echo -e ""
 echo -e "[0] Default Installation (latest version of DreamFactory with Nginx Server)"
-echo -e "[1] Install driver and PHP extensions for Oracle DB" 
-echo -e "[2] Install driver and PHP extensions for IBM DB2" 
-echo -e "[3] Install driver and PHP extensions for Cassandra DB" 
-echo -e "[4] Install Apache2 web server for DreamFactory (Instead of Nginx)" 
-echo -e "[5] Install MariaDB as the default system database for DreamFactory" 
-echo -e "[6] Install a specfic version of DreamFactory" 
+echo -e "[1] Install driver and PHP extensions for Oracle DB"
+echo -e "[2] Install driver and PHP extensions for IBM DB2"
+echo -e "[3] Install driver and PHP extensions for Cassandra DB"
+echo -e "[4] Install Apache2 web server for DreamFactory (Instead of Nginx)"
+echo -e "[5] Install MariaDB as the default system database for DreamFactory"
+echo -e "[6] Install a specfic version of DreamFactory"
 echo -e "[7] Run Installation in debug mode (logs will output to /tmp/dreamfactory_installer.log)\n"
+echo -e "[8] Run df frontend install"
+echo -e "[9] Upgrade DreamFactory"
+
 print_centered "-" "-"
 echo_with_color magenta "Input '0' and press Enter to run the default installation. To install additional options, type the corresponding number (e.g. '1,5' for Oracle and a MySql system database) from the menu above and press Enter"
 read -r INSTALLATION_OPTIONS
@@ -156,20 +159,36 @@ if [[ $INSTALLATION_OPTIONS == *"4"* ]]; then
   echo_with_color green "Apache selected."
 fi
 
-if [[ $INSTALLATION_OPTIONS == *"5"* ]]; then  
+if [[ $INSTALLATION_OPTIONS == *"5"* ]]; then
   MYSQL=TRUE
   echo_with_color green "MariaDB System Database selected."
 fi
 
-if [[ $INSTALLATION_OPTIONS == *"6"* ]]; then 
+if [[ $INSTALLATION_OPTIONS == *"6"* ]]; then
   echo_with_color magenta "What version of DreamFactory would you like to install? (E.g. 4.9.0)"
   read -r -p "DreamFactory Version: " DREAMFACTORY_VERSION_TAG
   echo_with_color green "DreamFactory Version ${DREAMFACTORY_VERSION_TAG} selected."
 fi
 
-if [[ $INSTALLATION_OPTIONS == *"7"* ]]; then 
+if [[ $INSTALLATION_OPTIONS == *"7"* ]]; then
   DEBUG=TRUE
   echo_with_color green "Running in debug mode. Run this command: tail -f /tmp/dreamfactory_installer.log in a new terminal session to follow logs during installation"
+fi
+
+if [[ $INSTALLATION_OPTIONS == *"8"* ]]; then
+  echo_with_color green "Install Dreamfactory UI selected."
+  run_process "   Installing DreamFactory UI" run_df_frontend_install
+  echo_with_color green "Finished installing Dreamfactory UI."
+
+  exit 0
+fi
+
+if [[ $INSTALLATION_OPTIONS == *"9"* ]]; then
+  echo_with_color green "Upgrading DreamFactory selected."
+  run_process "   Upgrading DreamFactory" upgrade_dreamfactory
+  echo_with_color green "Finished Upgrading DreamFactory."
+
+  exit 0
 fi
 
 if [[ ! $DEBUG == TRUE ]]; then
@@ -296,7 +315,7 @@ echo_with_color green "    PHP PEAR installed\n" >&5
 if [[ $CURRENT_KERNEL == "fedora" ]]; then
   php -m | grep -E "^zip"
   if (($? >= 1)); then
-    run_process "   Installing zip" install_zip  
+    run_process "   Installing zip" install_zip
     php -m | grep -E "^zip"
     if (($? >= 1)); then
       echo_with_color red "\nExtension Zip has errors..." >&5
@@ -544,7 +563,7 @@ echo_with_color green "Composer installed.\n" >&5
 if [[ $MYSQL == TRUE ]]; then ### Only with key --with-mysql
   echo_with_color blue "Step 6: Installing System Database for DreamFactory...\n" >&5
   run_process "  Checking for existing MySqlDatabase" check_mysql_exists
-  
+
   if ((CHECK_MYSQL_PROCESS == 0)) || ((CHECK_MYSQL_INSTALLATION == 0)) || ((CHECK_MYSQL_PORT == 0)); then
     echo_with_color red "MySQL Database detected in the system. Skipping installation. \n" >&5
     DB_FOUND=TRUE
@@ -576,7 +595,7 @@ if [[ $MYSQL == TRUE ]]; then ### Only with key --with-mysql
   echo_with_color blue "Step 7: Configure DreamFactory system database.\n" >&5
 
   DB_INSTALLED=FALSE
-  
+
   # The MySQL database has already been installed, so let's configure
   # the DreamFactory system database.
   if [[ $DB_FOUND == TRUE ]]; then
@@ -741,11 +760,11 @@ else
   fi
 fi
 
+run_process "   Installing DreamFactory UI" run_df_frontend_install
+
 chown -R "$CURRENT_USER" /opt/dreamfactory && cd /opt/dreamfactory || exit 1
 
 run_process "   Installing DreamFactory"  run_composer_install
-
-run process "   Installing DF frontend" run_df_frontend_install
 
 ### Shutdown silent mode because php artisan df:setup and df:env will get troubles with prompts.
 exec 1>&5 5>&-
