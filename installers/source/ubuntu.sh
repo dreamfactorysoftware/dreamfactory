@@ -565,7 +565,7 @@ clone_dreamfactory_repository () {
 }
 
 run_composer_install () {
-  # If Oracle is not installed, add the --ignore-platform-reqs option
+  # If Oracle is not installed, add the --ignore-platform-req=ext-oci8 option
   # to composer command
   if [[ $ORACLE == TRUE ]]; then
     if [[ $CURRENT_USER == "root" ]]; then
@@ -575,9 +575,9 @@ run_composer_install () {
     fi
   else
     if [[ $CURRENT_USER == "root" ]]; then
-      sudo -u "$CURRENT_USER" COMPOSER_ALLOW_SUPERUSER=1 bash -c "/usr/local/bin/composer install --no-dev --ignore-platform-reqs"
+      sudo -u "$CURRENT_USER" COMPOSER_ALLOW_SUPERUSER=1 bash -c "/usr/local/bin/composer install --no-dev --ignore-platform-req=ext-oci8"
     else
-      sudo -u "$CURRENT_USER" bash -c "/usr/local/bin/composer install --no-dev --ignore-platform-reqs"
+      sudo -u "$CURRENT_USER" bash -c "/usr/local/bin/composer install --no-dev --ignore-platform-req=ext-oci8"
     fi
   fi
 }
@@ -600,7 +600,8 @@ run_df_frontend_install () {
 
   # Check if the request was successful
   if [ $? -ne 0 ]; then
-      echo "Failed to retrieve releases."
+      echo_with_color red "Failed to retrieve releases."
+      kill $!
       exit 1
   fi
 
@@ -611,9 +612,11 @@ run_df_frontend_install () {
   # Check if a pre-release was found
   if [ -n "$latest_pre_release" ]; then
       latest_pre_release=$(echo "$latest_pre_release" | tr -d '"')
-      echo "Latest pre-release: $latest_pre_release"
+      echo_with_color blue "\nLatest pre-release: $latest_pre_release\n" >&5
   else
-      echo "No pre-releases found."
+      echo_with_color red "No pre-releases found." >&5
+      kill $!
+      exit 1
   fi
 
   # Prepare the download URL using the latest tag
@@ -621,10 +624,6 @@ run_df_frontend_install () {
 
   # Download and check if the download was successful
   if curl -LO "$release_url"; then
-    echo "Downloaded release file: $RELEASE_FILENAME"
-
-    # Go to the destination folder
-    echo "Removing .js and .css files in the destination folder";
     # Remove .js and .css files in the destination folder
     find "$DESTINATION_FOLDER" -type f -name "*.js" -exec rm {} \;
     find "$DESTINATION_FOLDER" -type f -name "*.css" -exec rm {} \;
@@ -634,12 +633,9 @@ run_df_frontend_install () {
         full_path="$DESTINATION_FOLDER/$folder"
         if [ -d "$full_path" ]; then
             rm -rf "$full_path"
-            echo "Removed folder: $full_path"
         fi
     done
 
-    # Extract the release file into the destination folder
-    echo "Extracting the release file into the destination folder";
     unzip -qo "$RELEASE_FILENAME" -d "$TEMP_FOLDER"
     # Update the index file
     mv dist/index.html "$DF_FOLDER/resources/views/index.blade.php"
@@ -647,34 +643,37 @@ run_df_frontend_install () {
     mv dist/* "$DESTINATION_FOLDER"
 
     # Clean up: remove the downloaded release file
-    echo "Clean up";
     cd .. && rm -rf "$TEMP_FOLDER"
   else
-    echo "Error: Failed to download the release file."
+    echo_with_color red "\nError: Failed to download the release file. Exiting. " >&5
+    kill $!
     exit 1
   fi
 }
 
 run_commercial_upgrade () {
-  echo "\nEnter absolute path to license files, complete with trailing slash: [/]"
+  echo_with_color magenta "\nEnter absolute path to license files, complete with trailing slash: [/]" >&5
   read -r LICENSE_PATH
+
   if [[ -z $LICENSE_PATH ]]; then
     LICENSE_PATH="."
   fi
+
   ls $LICENSE_PATH/composer.{json,lock,json-dist}
+
   if (($? >= 1)); then
-    printf "\nLicenses not found. Exiting!\n"
+    echo_with_color red "\nLicenses not found. Exiting!\n" >&5
+    kill $!
     exit 1
-  else
-    cp $LICENSE_PATH/composer.{json,lock,json-dist} /opt/dreamfactory/
-    printf "\nLicense files installed. \n"
-    printf "Upgrading DreamFactory to %s...\n" "$latest_tag"
   fi
+
+  cp $LICENSE_PATH/composer.{json,lock,json-dist} /opt/dreamfactory/
+  echo_with_color green "\nLicense files installed. \n" >&5
+  echo_with_color green "Upgrading DreamFactory to %s...\n" "$latest_tag" >&5
 }
 
 run_open_source_upgrade () {
   # pull the latest tag from the repo
-  echo "Pulling the latest tag from the repo"
   git pull origin "$latest_tag"
 }
 
@@ -696,10 +695,6 @@ upgrade_dreamfactory () {
   owner=$(echo "$folder_info" | awk '{print $3}')
   group=$(echo "$folder_info" | awk '{print $4}')
 
-  # Print the owner and group
-  echo "Owner: $owner"
-  echo "Group: $group"
-
   # Go to the DF folder
   cd "$DF_FOLDER" || exit
 
@@ -712,52 +707,58 @@ upgrade_dreamfactory () {
 
   # Check if the current version is less then 5.0.0
   if dpkg --compare-versions "$current_version" lt-nl "5.0.0"; then
-    echo "DreamFactory version is less than 5.0.0. Please upgrade to v5 first or contact DreamFactory support."
+    echo_with_color red "DreamFactory version is less than 5.0.0. Please upgrade to v5 first or contact DreamFactory support." >&5
+    kill $!
     exit 1
   fi
 
   # Compare the current version with the latest tag
   if dpkg --compare-versions "$current_version" eq "$latest_tag"; then
-    echo "DreamFactory is already up to date."
-    exit 0
+    echo_with_color red "DreamFactory is already up to date." >&5
+    kill $!
+    exit 1
   fi
 
   # Check if the current version is greater than the latest tag (this should not happen but we check anyway)
   if dpkg --compare-versions "$current_version" gt "$latest_tag"; then
-    echo "Installed DreamFactory version is greater than the published version. Please contact DreamFactory support."
+    echo_with_color red "Installed DreamFactory version is greater than the published version. Please contact DreamFactory support." >&5
+    kill $!
     exit 1
   fi
 
-  # Check if there are uncommitted changes
+  # Check if there are uncommitted changes and ignore the public folder
   if ! git diff --quiet HEAD -- "$DESTINATION_FOLDER"; then
-      echo "There are uncommitted changes in the repository. Please clean the installation folder before upgrading."
+      echo_with_color red "There are uncommitted changes in the repository. Please clean the installation folder before upgrading." >&5
+      kill $!
       exit 1
   fi
 
   #  Ask if the DF instance is commercial or not
-  echo "Is this a commercial DreamFactory instance? [Yy/Nn] "
+  echo_with_color magenta "Is this a commercial DreamFactory instance? [Yy/Nn]\n" >&5
   read -r LICENSE_FILE_ANSWER
+
   if [[ -z $LICENSE_FILE_ANSWER ]]; then
     LICENSE_FILE_ANSWER=N
   fi
+
   if [[ $LICENSE_FILE_ANSWER =~ ^[Yy]$ ]]; then
-    echo "  Upgrading commercial version"
+    echo_with_color blue "  Upgrading commercial version\n" >&5
     run_commercial_upgrade
   else
-    echo "  Upgrading open source version"
+    echo_with_color blue "  Upgrading open source version\n" >&5
     run_open_source_upgrade
   fi
 
   # install the composer files
-  echo "   Updating DreamFactory"
+  echo_with_color blue "   Updating DreamFactory\n" >&5
   run_composer_install
 
   # Call artisan commands
-  echo "   Running artisan commands"
+  echo_with_color blue "   Running artisan commands\n" >&5
   run_artisan_commands
 
   # Install the new DF UI
-  echo "   Installing DreamFactory UI"
+  echo_with_color blue "   Installing DreamFactory UI\n" >&5
   run_df_frontend_install
 
   # Change ownership to current user
