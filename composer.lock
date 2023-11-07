@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b21378d7b8b3187e9c600b9ee02b8f0a",
+    "content-hash": "e5e9655aa300bbf9a7bef3bf93dd25af",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -1060,6 +1060,73 @@
                 "wiki": "https://wiki.dreamfactory.com"
             },
             "time": "2017-07-05T19:53:15+00:00"
+        },
+        {
+            "name": "dreamfactory/df-apidoc",
+            "version": "0.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dreamfactorysoftware/df-apidoc.git",
+                "reference": "9f71b669b350f4d088d0a02833a448a81f433814"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-apidoc/zipball/9f71b669b350f4d088d0a02833a448a81f433814",
+                "reference": "9f71b669b350f4d088d0a02833a448a81f433814",
+                "shasum": ""
+            },
+            "require": {
+                "dreamfactory/df-core": "~1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "@stable"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-develop": "0.6.x-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "DreamFactory\\Core\\ApiDoc\\ServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "DreamFactory\\Core\\ApiDoc\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Arif Islam",
+                    "email": "arifislam@dreamfactory.com"
+                },
+                {
+                    "name": "Lee Hicks",
+                    "email": "leehicks@dreamfactory.com"
+                }
+            ],
+            "description": "DreamFactory(tm) API Documentation Components",
+            "homepage": "https://www.dreamfactory.com/",
+            "keywords": [
+                "api",
+                "dreamfactory",
+                "openapi",
+                "rest",
+                "swagger"
+            ],
+            "support": {
+                "email": "dspsupport@dreamfactory.com",
+                "issues": "https://github.com/dreamfactorysoftware/df-apidoc/issues",
+                "source": "https://github.com/dreamfactorysoftware/df-apidoc",
+                "wiki": "https://wiki.dreamfactory.com"
+            },
+            "time": "2023-02-28T12:54:53+00:00"
         },
         {
             "name": "dreamfactory/df-aws",
