@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4ec40b88f78af71215adc3f951410269",
+    "content-hash": "b21378d7b8b3187e9c600b9ee02b8f0a",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -62,16 +62,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.283.15",
+            "version": "3.284.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "44b70c15c2a5d0fd2cfc74ee529a7877f1e7457d"
+                "reference": "eb03db9795bfdaed3501ebc7f33b4e6cee0c15b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/44b70c15c2a5d0fd2cfc74ee529a7877f1e7457d",
-                "reference": "44b70c15c2a5d0fd2cfc74ee529a7877f1e7457d",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/eb03db9795bfdaed3501ebc7f33b4e6cee0c15b4",
+                "reference": "eb03db9795bfdaed3501ebc7f33b4e6cee0c15b4",
                 "shasum": ""
             },
             "require": {
@@ -151,9 +151,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.283.15"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.284.1"
             },
-            "time": "2023-10-30T18:09:22+00:00"
+            "time": "2023-11-06T19:08:09+00:00"
         },
         {
             "name": "bitbucket/client",
@@ -1763,57 +1763,6 @@
             "time": "2023-03-01T08:55:36+00:00"
         },
         {
-            "name": "dreamfactory/df-filemanager-app",
-            "version": "0.3.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/dreamfactorysoftware/df-filemanager-app.git",
-                "reference": "0c0e9964bc4119de82e9fb8aaefbcd468b89bd78"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-filemanager-app/zipball/0c0e9964bc4119de82e9fb8aaefbcd468b89bd78",
-                "reference": "0c0e9964bc4119de82e9fb8aaefbcd468b89bd78",
-                "shasum": ""
-            },
-            "require": {
-                "dreamfactory/installer": "*"
-            },
-            "type": "dreamfactory-app",
-            "extra": {
-                "branch-alias": {
-                    "dev-develop": "0.3.x-dev"
-                },
-                "installer-name": "filemanager"
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "DreamFactory Software, Inc.",
-                    "email": "dspsupport@dreamfactory.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "DreamFactory(tm) File Manager",
-            "homepage": "https://github.com/dreamfactorysoftware/df-filemanager-app/",
-            "keywords": [
-                "api",
-                "dreamfactory",
-                "file manager",
-                "rest"
-            ],
-            "support": {
-                "email": "dspsupport@dreamfactory.com",
-                "issues": "https://github.com/dreamfactorysoftware/df-filemanager-app/issues",
-                "source": "https://github.com/dreamfactorysoftware/df-filemanager-app",
-                "wiki": "https://wiki.dreamfactory.com"
-            },
-            "time": "2020-05-15T13:18:06+00:00"
-        },
-        {
             "name": "dreamfactory/df-firebird",
             "version": "0.9.0",
             "source": {
@@ -2480,58 +2429,6 @@
                 "wiki": "https://wiki.dreamfactory.com"
             },
             "time": "2023-02-28T12:13:31+00:00"
-        },
-        {
-            "name": "dreamfactory/installer",
-            "version": "1.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/dreamfactorysoftware/installer.git",
-                "reference": "f2f264aaf117c0d94c448a6fa92bbce8970c49e8"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/installer/zipball/f2f264aaf117c0d94c448a6fa92bbce8970c49e8",
-                "reference": "f2f264aaf117c0d94c448a6fa92bbce8970c49e8",
-                "shasum": ""
-            },
-            "require-dev": {
-                "composer/composer": "1.0.*@dev",
-                "phpunit/phpunit": "@stable"
-            },
-            "type": "composer-installer",
-            "extra": {
-                "class": "DreamFactory\\Tools\\Composer\\Installer\\Installer",
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "DreamFactory\\Tools\\Composer\\Installer\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0"
-            ],
-            "description": "DreamFactory Services Platform(tm) Library Installer",
-            "homepage": "https://www.dreamfactory.com/",
-            "keywords": [
-                "Service Bus",
-                "cloud-computing",
-                "dsp",
-                "dsp-core",
-                "esb",
-                "framework",
-                "remote web services",
-                "rest"
-            ],
-            "support": {
-                "issues": "https://github.com/dreamfactorysoftware/installer/issues",
-                "source": "https://github.com/dreamfactorysoftware/installer/tree/1.0.1"
-            },
-            "time": "2015-01-22T19:58:42+00:00"
         },
         {
             "name": "egulias/email-validator",
@@ -4207,16 +4104,16 @@
         },
         {
             "name": "laravel/socialite",
-            "version": "v5.9.1",
+            "version": "v5.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/socialite.git",
-                "reference": "49ecc4c907ed88c1254bae991c6b2948945645c2"
+                "reference": "f376b6eda9084899e37ac08bafd64a95edf9c6c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/socialite/zipball/49ecc4c907ed88c1254bae991c6b2948945645c2",
-                "reference": "49ecc4c907ed88c1254bae991c6b2948945645c2",
+                "url": "https://api.github.com/repos/laravel/socialite/zipball/f376b6eda9084899e37ac08bafd64a95edf9c6c0",
+                "reference": "f376b6eda9084899e37ac08bafd64a95edf9c6c0",
                 "shasum": ""
             },
             "require": {
@@ -4273,7 +4170,7 @@
                 "issues": "https://github.com/laravel/socialite/issues",
                 "source": "https://github.com/laravel/socialite"
             },
-            "time": "2023-09-07T16:13:53+00:00"
+            "time": "2023-10-30T22:09:58+00:00"
         },
         {
             "name": "laravel/tinker",
@@ -12649,16 +12546,16 @@
         },
         {
             "name": "filp/whoops",
-            "version": "2.15.3",
+            "version": "2.15.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filp/whoops.git",
-                "reference": "c83e88a30524f9360b11f585f71e6b17313b7187"
+                "reference": "a139776fa3f5985a50b509f2a02ff0f709d2a546"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filp/whoops/zipball/c83e88a30524f9360b11f585f71e6b17313b7187",
-                "reference": "c83e88a30524f9360b11f585f71e6b17313b7187",
+                "url": "https://api.github.com/repos/filp/whoops/zipball/a139776fa3f5985a50b509f2a02ff0f709d2a546",
+                "reference": "a139776fa3f5985a50b509f2a02ff0f709d2a546",
                 "shasum": ""
             },
             "require": {
@@ -12708,7 +12605,7 @@
             ],
             "support": {
                 "issues": "https://github.com/filp/whoops/issues",
-                "source": "https://github.com/filp/whoops/tree/2.15.3"
+                "source": "https://github.com/filp/whoops/tree/2.15.4"
             },
             "funding": [
                 {
@@ -12716,7 +12613,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-07-13T12:00:00+00:00"
+            "time": "2023-11-03T12:00:00+00:00"
         },
         {
             "name": "hamcrest/hamcrest-php",
