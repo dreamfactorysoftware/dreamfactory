@@ -584,7 +584,7 @@ run_composer_install () {
 
 run_df_frontend_install () {
   # Define constants
-  REPO_OWNER="anas-srikou/df-admin-interface"  # DF owned repo
+  REPO_OWNER="dreamfactorysoftware/df-admin-interface"  # DF owned repo
   REPO_URL="https://github.com/$REPO_OWNER"
   DF_FOLDER="/opt/dreamfactory"  # DF folder
   DESTINATION_FOLDER="$DF_FOLDER/public"  # Destination folder is the DF public folder
@@ -596,19 +596,28 @@ run_df_frontend_install () {
 
   cd "$TEMP_FOLDER" || exit
 
-  # Get the latest release tag using the GitHub API
-  latest_tag=$(curl -s "https://api.github.com/repos/$REPO_OWNER/releases/latest" | jq -r '.tag_name')
+  response=$(curl -s -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/$REPO_OWNER/releases")
 
-  # Check if there is an error getting the latest tag from the repo
-  if [ -z "$latest_tag" ]; then
-    echo "Error: Unable to fetch latest release tag."
-    exit 1
+  # Check if the request was successful
+  if [ $? -ne 0 ]; then
+      echo "Failed to retrieve releases."
+      exit 1
   fi
 
-  echo "Latest tag: $latest_tag"
+
+  # Find the latest pre-release
+  latest_pre_release=$(echo "$response" | jq '.[] | select(.prerelease == true) | .tag_name' | head -n 1)
+
+  # Check if a pre-release was found
+  if [ -n "$latest_pre_release" ]; then
+      latest_pre_release=$(echo "$latest_pre_release" | tr -d '"')
+      echo "Latest pre-release: $latest_pre_release"
+  else
+      echo "No pre-releases found."
+  fi
 
   # Prepare the download URL using the latest tag
-  release_url="$REPO_URL/releases/download/$latest_tag/release.zip"
+  release_url="$REPO_URL/releases/download/$latest_pre_release/release.zip"
 
   # Download and check if the download was successful
   if curl -LO "$release_url"; then
