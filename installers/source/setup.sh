@@ -129,9 +129,9 @@ echo -e "[3] Install driver and PHP extensions for Cassandra DB"
 echo -e "[4] Install Apache2 web server for DreamFactory (Instead of Nginx)"
 echo -e "[5] Install MariaDB as the default system database for DreamFactory"
 echo -e "[6] Install a specfic version of DreamFactory"
-echo -e "[7] Run Installation in debug mode (logs will output to /tmp/dreamfactory_installer.log)\n"
-echo -e "[8] Run df frontend install"
-echo -e "[9] Upgrade DreamFactory"
+echo -e "[7] Run Installation in debug mode (logs will output to /tmp/dreamfactory_installer.log)"
+echo -e "[8] Run df frontend install (This option can be used as a standalone option. It is already included in the default install)"
+echo -e "[9] Upgrade DreamFactory\n"
 
 print_centered "-" "-"
 echo_with_color magenta "Input '0' and press Enter to run the default installation. To install additional options, type the corresponding number (e.g. '1,5' for Oracle and a MySql system database) from the menu above and press Enter"
@@ -173,22 +173,6 @@ fi
 if [[ $INSTALLATION_OPTIONS == *"7"* ]]; then
   DEBUG=TRUE
   echo_with_color green "Running in debug mode. Run this command: tail -f /tmp/dreamfactory_installer.log in a new terminal session to follow logs during installation"
-fi
-
-if [[ $INSTALLATION_OPTIONS == *"8"* ]]; then
-  echo_with_color green "Install Dreamfactory UI selected."
-  run_process "   Installing DreamFactory UI" run_df_frontend_install
-  echo_with_color green "Finished installing Dreamfactory UI."
-
-  exit 0
-fi
-
-if [[ $INSTALLATION_OPTIONS == *"9"* ]]; then
-  echo_with_color green "Upgrading DreamFactory selected."
-  run_process "   Upgrading DreamFactory" upgrade_dreamfactory
-  echo_with_color green "Finished Upgrading DreamFactory."
-
-  exit 0
 fi
 
 if [[ ! $DEBUG == TRUE ]]; then
@@ -250,6 +234,22 @@ case $CURRENT_KERNEL in
 esac
 
 #### INSTALLER ####
+
+if [[ $INSTALLATION_OPTIONS == *"8"* ]]; then
+  echo_with_color green "Install Dreamfactory UI selected.\n" >&5
+  run_process "   Installing DreamFactory UI" run_df_frontend_install
+  echo_with_color green "\nFinished installing Dreamfactory UI." >&5
+
+  exit 0
+fi
+
+if [[ $INSTALLATION_OPTIONS == *"9"* ]]; then
+  echo_with_color green "Upgrading DreamFactory selected.\n" >&5
+  run_process "   Upgrading DreamFactory" upgrade_dreamfactory
+  echo_with_color green "\nFinished Upgrading DreamFactory." >&5
+
+  exit 0
+fi
 
 ### STEP 1. Install system dependencies
 echo_with_color blue "Step 1: Installing system dependencies...\n" >&5
