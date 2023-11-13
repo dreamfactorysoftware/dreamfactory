@@ -10,7 +10,7 @@ return [
     | This is the version of your application, not the version of the API.
     */
 
-    'version' => '5.3.0',
+    'version' => '5.4.0',
 
     /*
     |--------------------------------------------------------------------------
