@@ -1,5 +1,5 @@
 <h1 align="center">
-    <a href="https://dreamfactory.com/"><img src="https://raw.githubusercontent.com/dreamfactorysoftware/dreamfactory/master/readme/vertical-logo-fullcolor.png" alt="DreamFactory" width="250" /></a>
+    <a href="https://dreamfactory.com/"><img src="https://raw.githubusercontent.com/dreamfactorysoftware/dreamfactory/dev-readme/readme/vertical-logo-fullcolor.png" alt="DreamFactory" width="250" /></a>
 </h1>
 
 <p align="center">
@@ -87,7 +87,7 @@ Additional platform documentation can be found on the [DreamFactory wiki](http:/
 <a name="community"></a>
 ## Community 
 
-| <a href="https://stackoverflow.com/questions/tagged/dreamfactory"><img src="https://raw.githubusercontent.com/dreamfactorysoftware/dreamfactory/master/readme/stackoverflow.png" height="50px"/></a> | <a href="https://community.dreamfactory.com"><img src="https://raw.githubusercontent.com/dreamfactorysoftware/dreamfactory/master/readme/mark-gold.png" height="60px"/></a> | <a href="https://twitter.com/dfsoftwareinc"><img src="https://raw.githubusercontent.com/dreamfactorysoftware/dreamfactory/master/readme/twitter.png" height="40px"/></a> |
+| <a href="https://stackoverflow.com/questions/tagged/dreamfactory"><img src="https://raw.githubusercontent.com/dreamfactorysoftware/dreamfactory/master/readme/stackoverflow.png" height="50px"/></a> | <a href="https://community.dreamfactory.com"><img src="https://raw.githubusercontent.com/dreamfactorysoftware/dreamfactory/dev-readme/readme/mark-gold.png" height="60px"/></a> | <a href="https://twitter.com/dfsoftwareinc"><img src="https://raw.githubusercontent.com/dreamfactorysoftware/dreamfactory/master/readme/twitter.png" height="40px"/></a> |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Ask and answer StackOverflow questions with the [`dreamfactory` tag](https://stackoverflow.com/questions/tagged/dreamfactory)                                                                               | Check out our [community forum](https://community.dreamfactory.com), ask questions, and discuss project direction                                                                                           | Tweet to [`@dfsoftwareinc`](https://twitter.com/dfsoftwareinc) or with the [`#dreamfactory` hashtag](https://twitter.com/search?q=%23dreamfactory&f=live)  
 
