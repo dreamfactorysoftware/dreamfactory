@@ -1,13 +1,13 @@
 <h1 align="center">
-    <a href="https://dreamfactory.com/"><img src="https://raw.githubusercontent.com/dreamfactorysoftware/dreamfactory/master/readme/vertical-logo-fullcolor.png" alt="DreamFactory" width="250" /></a>
+    <a href="https://dreamfactory.com/"><img src="https://raw.githubusercontent.com/dreamfactorysoftware/dreamfactory/dev-readme/readme/vertical-logo-fullcolor.png" alt="DreamFactory" width="250" /></a>
 </h1>
 
 <p align="center">
-    <strong>Instant APIs without code</strong>
+    <strong>DevOps for Private APIs</strong>
 </p>
 
 <p align="center">
-    <a href="https://wiki.dreamfactory.com">Docs</a> ∙ <a href="https://genie.dreamfactory.com">Try Online</a> ∙ <a href="https://github.com/dreamfactorysoftware/dreamfactory/blob/master/CONTRIBUTING.md">Contribute</a> ∙ <a href="http://community.dreamfactory.com/">Community Support</a> ∙ <a href="http://guide.dreamfactory.com/">Get Started Guide</a>
+    <a href="http://guide.dreamfactory.com/">Getting Started Guide</a> ∙ <a href="https://genie.dreamfactory.com">Try Online</a> ∙ <a href="https://github.com/dreamfactorysoftware/dreamfactory/blob/master/CONTRIBUTING.md">Contribute</a> ∙ <a href="http://community.dreamfactory.com/">Community Support</a> ∙ <a href="https://wiki.dreamfactory.com">Docs</a>
 </p>
 
 <p align="center">
@@ -40,10 +40,10 @@
 <a name="overview"></a>
 ## Overview
 
-DreamFactory is an API management solution best known for its ability to automatically generate secure and documented APIs for databases like Microsoft SQL Server, MySQL, Snowflake, PostgreSQL, Oracle, and MongoDB. It is built on top of the [Laravel framework](https://laravel.com/), and includes a convenient web-based administration client. So what can you do with DreamFactory?
+DreamFactory is an API generation solution best known for its ability to automatically generate secure and documented APIs for databases like Microsoft SQL Server, MySQL, Snowflake, PostgreSQL, Oracle, and MongoDB. It is built on top of the [Laravel framework](https://laravel.com/), and includes a convenient web-based administration client. So what can you do with DreamFactory?
 
 * [Generate](http://guide.dreamfactory.com/docs/chapter03.html#generating-a-mysql-backed-api) powerful, reusable, documented APIs for SQL and NoSQL databases, files, email, push notifications and more in seconds.
-* [Use the PHP, Python, and NodeJS scripting languages](http://wiki.dreamfactory.com/DreamFactory/Tutorials/Server_Side_Scripting) to easily customize API behavior at any endpoint, for both API requests and API responses.
+* [Use the PHP, Python, and NodeJS scripting languages](https://guide.dreamfactory.com/docs/integrating-business-logic-into-your-apis/) to easily customize API behavior at any endpoint, for both API requests and API responses.
 * [Secure every API endpoint](http://guide.dreamfactory.com/docs/chapter03.html#creating-a-role) with user management, SSO authentication, role-based access control, OAuth and Active Directory integration.
 
 <p align="center">
@@ -54,7 +54,7 @@ DreamFactory is an API management solution best known for its ability to automat
 ## Installation
 
 * Install DreamFactory and all of the required dependencies in less than 5 minutes using our [installers](https://github.com/dreamfactorysoftware/dreamfactory/tree/master/installers) for CentOS/RHEL, Debian, Fedora, and Ubuntu.
-* [Docker](http://wiki.dreamfactory.com/DreamFactory/Installation#Docker_Image) provides a DockerHub image or you can build your own.
+* [Docker](https://github.com/dreamfactorysoftware/df-docker) provides a Docker compose image or you can build your own.
 * Our [Helm chart](https://github.com/dreamfactorysoftware/df-helm) provides a convenient way to install DreamFactory within your Kubernetes cluster.
 * [Raspberry Pi](http://guide.dreamfactory.com/docs/raspberry-pi.html) allows you to configure DreamFactory on everybody's favorite tiny computer.
 
@@ -71,12 +71,12 @@ Heroku users can easily install DreamFactory by clicking on the below button. Ke
 </a>
 </p>
 
-<a href="#commercial">Contact us</a> for more information if you're interested in a feature complete version (whether hosted in our cloud environment or on-premise). Or just <a href="https://genie.dreamfactory.com/">spin up a hosted instance</a> right now! 
+<a href="#commercial">Contact us</a> for more information if you're interested in a feature complete version (whether hosted in our cloud environment or on-premise). Or just <a href="https://genie.dreamfactory.com/">spin up a playground instance</a> right now! 
 
 <a name="hosted"></a>
-## DreamFactory's Cloud Environment
+## DreamFactory's Cloud Playground
 
-Start a free 14-day hosted trial now by creating a DreamFactory instance at <a href="https://genie.dreamfactory.com/">https://genie.dreamfactory.com/</a>.
+Start testing for free with our cloud playground now by creating a DreamFactory instance at <a href="https://genie.dreamfactory.com/">https://genie.dreamfactory.com/</a>.
 
 <a name="documentation"></a>
 ## Documentation
@@ -87,7 +87,7 @@ Additional platform documentation can be found on the [DreamFactory wiki](http:/
 <a name="community"></a>
 ## Community 
 
-| <a href="https://stackoverflow.com/questions/tagged/dreamfactory"><img src="https://raw.githubusercontent.com/dreamfactorysoftware/dreamfactory/master/readme/stackoverflow.png" height="50px"/></a> | <a href="https://community.dreamfactory.com"><img src="https://raw.githubusercontent.com/dreamfactorysoftware/dreamfactory/master/readme/mark-gold.png" height="60px"/></a> | <a href="https://twitter.com/dfsoftwareinc"><img src="https://raw.githubusercontent.com/dreamfactorysoftware/dreamfactory/master/readme/twitter.png" height="40px"/></a> |
+| <a href="https://stackoverflow.com/questions/tagged/dreamfactory"><img src="https://raw.githubusercontent.com/dreamfactorysoftware/dreamfactory/master/readme/stackoverflow.png" height="50px"/></a> | <a href="https://community.dreamfactory.com"><img src="https://raw.githubusercontent.com/dreamfactorysoftware/dreamfactory/dev-readme/readme/mark-gold.png" height="60px"/></a> | <a href="https://twitter.com/dfsoftwareinc"><img src="https://raw.githubusercontent.com/dreamfactorysoftware/dreamfactory/master/readme/twitter.png" height="40px"/></a> |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Ask and answer StackOverflow questions with the [`dreamfactory` tag](https://stackoverflow.com/questions/tagged/dreamfactory)                                                                               | Check out our [community forum](https://community.dreamfactory.com), ask questions, and discuss project direction                                                                                           | Tweet to [`@dfsoftwareinc`](https://twitter.com/dfsoftwareinc) or with the [`#dreamfactory` hashtag](https://twitter.com/search?q=%23dreamfactory&f=live)  
 
