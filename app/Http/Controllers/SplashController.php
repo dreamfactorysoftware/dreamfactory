@@ -5,6 +5,9 @@ namespace DreamFactory\Http\Controllers;
 use DreamFactory\Core\Enums\Verbs;
 use DreamFactory\Core\Models\User;
 use DreamFactory\Core\Utility\Session;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Arr;
 use Response;
 
@@ -13,17 +16,11 @@ class SplashController extends Controller
     /**
      * Show the application splash screen to the user.
      *
-     * @return Response
+     * @return Factory|View|Application
      */
-    public function index()
+    public function index(): Factory|View|Application
     {
-        $token = \Request::input('session_token');
-        $param = '';
-        if (! empty($token)) {
-            $param = '?session_token='.$token;
-        }
-
-        return redirect(config('df.landing_page', '/test_rest.html').$param);
+        return view("index");
     }
 
     public function createFirstUser()

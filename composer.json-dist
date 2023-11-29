@@ -28,7 +28,6 @@
   "repositories": [],
   "require": {
     "php": "8.1.*",
-    "dreamfactory/df-admin-app": "~5.0.3",
     "dreamfactory/df-api-docs-ui": "~3.0.2",
     "dreamfactory/df-apidoc": "~0.8.0",
     "dreamfactory/df-aws": "~0.18.0",
@@ -86,11 +85,6 @@
     "branch-alias": {
       "dev-develop": "3.0.x-dev"
     },
-    "installer-paths": {
-      "public/{$name}/": [
-        "type:dreamfactory-app"
-      ]
-    },
     "laravel": {
       "dont-discover": []
     }
@@ -109,7 +103,6 @@
     "sort-packages": true,
     "optimize-autoloader": true,
     "allow-plugins": {
-      "dreamfactory/installer": true,
       "php-http/discovery": true
     }
   }

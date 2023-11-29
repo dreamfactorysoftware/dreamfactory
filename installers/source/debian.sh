@@ -27,7 +27,8 @@ install_system_dependencies () {
     libreadline-dev \
     dirmngr \
     wget \
-    sudo
+    sudo \
+    jq
 
   # Check installation status
   if (($? >= 1)); then
@@ -251,8 +252,7 @@ install_sql_server () {
     ;;
   esac
   apt-get update
-  ACCEPT_EULA=Y apt-get install -y msodbcsql18 mssql-tools \
-  unixodbc-dev=2.3.7 unixodbc=2.3.7 odbcinst1debian2=2.3.7 odbcinst=2.3.7
+  ACCEPT_EULA=Y apt-get install -y msodbcsql18 mssql-tools unixodbc-dev=2.3.7 unixodbc=2.3.7 odbcinst1debian2=2.3.7 odbcinst=2.3.7
 
   pecl install sqlsrv
   if (($? >= 1)); then
@@ -336,9 +336,9 @@ install_cassandra () {
     kill $!
     exit 1
   fi
-  
-  # Currently, we are using a specific version of the repository that is still functional, as 
-  # the recent efforts to enhance the installation process do not work properly. 
+
+  # Currently, we are using a specific version of the repository that is still functional, as
+  # the recent efforts to enhance the installation process do not work properly.
   git clone --branch v1.3.x https://github.com/nano-interactive/ext-cassandra.git /opt/DataStax/ext-cassandra
   cd /opt/DataStax/ext-cassandra
   git checkout 1cf12c5ce49ed43a2c449bee4b7b23ce02a37bf0
@@ -376,7 +376,7 @@ install_python2 () {
     # authority as below
     wget https://bootstrap.pypa.io/pip/2.7/get-pip.py
     python2 get-pip.py
-  else 
+  else
     apt install -y python python-pip
   fi
 }
@@ -583,4 +583,187 @@ run_composer_install () {
       sudo -u "$CURRENT_USER" bash -c "/usr/local/bin/composer install --no-dev --ignore-platform-reqs"
     fi
   fi
+}
+
+run_df_frontend_install () {
+  # Define constants
+  REPO_OWNER="dreamfactorysoftware/df-admin-interface"  # DF owned repo
+  REPO_URL="https://github.com/$REPO_OWNER"
+  DF_FOLDER="/opt/dreamfactory"  # DF folder
+  DESTINATION_FOLDER="$DF_FOLDER/public"  # Destination folder is the DF public folder
+  TEMP_FOLDER="/tmp/df-ui" # Temporary folder to download the release file
+  RELEASE_FILENAME="release.zip"
+  FOLDERS_TO_REMOVE=("dreamfactory" "filemanager" "df-api-docs-ui" "assets")
+
+  mkdir -p "$TEMP_FOLDER"
+
+  cd "$TEMP_FOLDER" || exit
+
+  response=$(curl -s -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/$REPO_OWNER/releases")
+
+  # Check if the request was successful
+  if [ $? -ne 0 ]; then
+      echo_with_color red "Failed to retrieve releases."
+      kill $!
+      exit 1
+  fi
+
+
+  # Find the latest release
+  latest_release=$(echo "$response" | jq '.[] | .tag_name' | head -n 1)
+
+  # Check if a release was found
+  if [ -n "$latest_release" ]; then
+      latest_release=$(echo "$latest_release" | tr -d '"')
+      echo_with_color blue "\nLatest release: $latest_release\n" >&5
+  else
+      echo_with_color red "No releases found." >&5
+      kill $!
+      exit 1
+  fi
+
+  # Prepare the download URL using the latest tag
+  release_url="$REPO_URL/releases/download/$latest_release/release.zip"
+
+  # Download and check if the download was successful
+  if curl -LO "$release_url"; then
+    # Remove .js and .css files in the destination folder
+    find "$DESTINATION_FOLDER" -type f -name "*.js" -exec rm {} \;
+    find "$DESTINATION_FOLDER" -type f -name "*.css" -exec rm {} \;
+
+    # Remove the old UI folders if they exist
+    for folder in "${FOLDERS_TO_REMOVE[@]}"; do
+        full_path="$DESTINATION_FOLDER/$folder"
+        if [ -d "$full_path" ]; then
+            rm -rf "$full_path"
+        fi
+    done
+
+    unzip -qo "$RELEASE_FILENAME" -d "$TEMP_FOLDER"
+    # Update the index file
+    mv dist/index.html "$DF_FOLDER/resources/views/index.blade.php"
+    # Move the rest of the files to the public folder
+    mv dist/* "$DESTINATION_FOLDER"
+
+    # Clean up: remove the downloaded release file
+    cd .. && rm -rf "$TEMP_FOLDER"
+  else
+    echo_with_color red "\nError: Failed to download the release file. Exiting. " >&5
+    kill $!
+    exit 1
+  fi
+}
+
+run_commercial_upgrade () {
+  echo_with_color magenta "\nEnter absolute path to license files, complete with trailing slash: [/]" >&5
+  read -r LICENSE_PATH
+
+  if [[ -z $LICENSE_PATH ]]; then
+    LICENSE_PATH="."
+  fi
+
+  ls $LICENSE_PATH/composer.{json,lock,json-dist}
+
+  if (($? >= 1)); then
+    echo_with_color red "\nLicenses not found. Exiting!\n" >&5
+    kill $!
+    exit 1
+  fi
+
+  cp $LICENSE_PATH/composer.{json,lock,json-dist} /opt/dreamfactory/
+  echo_with_color green "\nLicense files installed. \n" >&5
+  echo_with_color green "Upgrading DreamFactory to %s...\n" "$latest_tag" >&5
+}
+
+run_open_source_upgrade () {
+  # pull the latest tag from the repo
+  git pull origin "$latest_tag"
+}
+
+run_artisan_commands () {
+  bash -c "php artisan migrate --seed"
+  bash -c "php artisan optimize:clear"
+}
+
+upgrade_dreamfactory () {
+  # Define constants
+  DF_FOLDER="/opt/dreamfactory"  # DF folder
+
+  # Go to the DF folder
+  cd "$DF_FOLDER" || exit
+
+  folder_info=$(ls -ld "$DF_FOLDER")
+
+  # Extract the owner and group using text processing
+  owner=$(echo "$folder_info" | awk '{print $3}')
+  group=$(echo "$folder_info" | awk '{print $4}')
+
+  # Go to the DF folder
+  cd "$DF_FOLDER" || exit
+
+  # Check for the latest tag on the DF git repo
+  latest_tag=$(git ls-remote --tags origin | grep -Eo 'refs/tags/[0-9]+\.[0-9]+\.[0-9]+$' | sort -r | head -n 1 | cut -d "/" -f 3)
+
+  # Get the current version of the installed DF instance
+  # read the app.php file in the config folder and get the version
+  current_version=$(grep -Eo 'version.*[0-9]+\.[0-9]+\.[0-9]+' config/app.php | cut -d "'" -f 3)
+
+  # Check if the current version is less then 5.0.0
+  if dpkg --compare-versions "$current_version" lt-nl "5.0.0"; then
+    echo_with_color red "DreamFactory version is less than 5.0.0. Please upgrade to v5 first or contact DreamFactory support." >&5
+    kill $!
+    exit 1
+  fi
+
+  # Compare the current version with the latest tag
+  if dpkg --compare-versions "$current_version" eq "$latest_tag"; then
+    echo_with_color red "DreamFactory is already up to date." >&5
+    kill $!
+    exit 1
+  fi
+
+  # Check if the current version is greater than the latest tag (this should not happen but we check anyway)
+  if dpkg --compare-versions "$current_version" gt "$latest_tag"; then
+    echo_with_color red "Installed DreamFactory version is greater than the published version. Please contact DreamFactory support." >&5
+    kill $!
+    exit 1
+  fi
+
+  # Check if there are uncommitted changes and ignore the public folder
+  if ! git diff --quiet HEAD -- "$DESTINATION_FOLDER"; then
+      echo_with_color red "There are uncommitted changes in the repository. Please clean the installation folder before upgrading." >&5
+      kill $!
+      exit 1
+  fi
+
+  #  Ask if the DF instance is commercial or not
+  echo_with_color magenta "Is this a commercial DreamFactory instance? [Yy/Nn]\n" >&5
+  read -r LICENSE_FILE_ANSWER
+
+  if [[ -z $LICENSE_FILE_ANSWER ]]; then
+    LICENSE_FILE_ANSWER=N
+  fi
+
+  if [[ $LICENSE_FILE_ANSWER =~ ^[Yy]$ ]]; then
+    echo_with_color blue "  Upgrading commercial version\n" >&5
+    run_commercial_upgrade
+  else
+    echo_with_color blue "  Upgrading open source version\n" >&5
+    run_open_source_upgrade
+  fi
+
+  # install the composer files
+  echo_with_color blue "   Updating DreamFactory\n" >&5
+  run_composer_install
+
+  # Call artisan commands
+  echo_with_color blue "   Running artisan commands\n" >&5
+  run_artisan_commands
+
+  # Install the new DF UI
+  echo_with_color blue "   Installing DreamFactory UI\n" >&5
+  run_df_frontend_install
+
+  # Change ownership to current user
+  chown -R $owner:$group /opt/dreamfactory
 }

@@ -28,8 +28,6 @@
   "repositories": [],
   "require": {
     "php": "8.1.*",
-    "dreamfactory/df-admin-app": "~5.0.3",
-    "dreamfactory/df-api-docs-ui": "~3.0.2",
     "dreamfactory/df-apidoc": "~0.8.0",
     "dreamfactory/df-aws": "~0.18.0",
     "dreamfactory/df-azure": "~0.17.0",
@@ -40,7 +38,6 @@
     "dreamfactory/df-email": "~0.11.0",
     "dreamfactory/df-exporter-prometheus": "~1.1.0",
     "dreamfactory/df-file": "~0.8.0",
-    "dreamfactory/df-filemanager-app": "~0.3.2",
     "dreamfactory/df-firebird": "~0.9.0",
     "dreamfactory/df-git": "~0.7.0",
     "dreamfactory/df-graphql": "~0.5.0",
@@ -86,11 +83,6 @@
     "branch-alias": {
       "dev-develop": "3.0.x-dev"
     },
-    "installer-paths": {
-      "public/{$name}/": [
-        "type:dreamfactory-app"
-      ]
-    },
     "laravel": {
       "dont-discover": []
     }
@@ -109,7 +101,6 @@
     "sort-packages": true,
     "optimize-autoloader": true,
     "allow-plugins": {
-      "dreamfactory/installer": true,
       "php-http/discovery": true
     }
   }
