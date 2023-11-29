@@ -555,7 +555,7 @@ install_mariadb () {
 clone_dreamfactory_repository () {
   mkdir -p /opt/dreamfactory
   if [[ -z "${DREAMFACTORY_VERSION_TAG}" ]]; then
-    git clone -b new-ui-integration --single-branch https://github.com/dreamfactorysoftware/dreamfactory.git /opt/dreamfactory
+    git clone -b master --single-branch https://github.com/dreamfactorysoftware/dreamfactory.git /opt/dreamfactory
   else
     git clone -b "${DREAMFACTORY_VERSION_TAG}" --single-branch https://github.com/dreamfactorysoftware/dreamfactory.git /opt/dreamfactory
   fi
@@ -609,21 +609,21 @@ run_df_frontend_install () {
   fi
 
 
-  # Find the latest pre-release
-  latest_pre_release=$(echo "$response" | jq '.[] | select(.prerelease == true) | .tag_name' | head -n 1)
+  # Find the latest release
+  latest_release=$(echo "$response" | jq '.[] | .tag_name' | head -n 1)
 
-  # Check if a pre-release was found
-  if [ -n "$latest_pre_release" ]; then
-      latest_pre_release=$(echo "$latest_pre_release" | tr -d '"')
-      echo_with_color blue "\nLatest pre-release: $latest_pre_release\n" >&5
+  # Check if a release was found
+  if [ -n "$latest_release" ]; then
+      latest_release=$(echo "$latest_release" | tr -d '"')
+      echo_with_color blue "\nLatest release: $latest_release\n" >&5
   else
-      echo_with_color red "No pre-releases found." >&5
+      echo_with_color red "No releases found." >&5
       kill $!
       exit 1
   fi
 
   # Prepare the download URL using the latest tag
-  release_url="$REPO_URL/releases/download/$latest_pre_release/release.zip"
+  release_url="$REPO_URL/releases/download/$latest_release/release.zip"
 
   # Download and check if the download was successful
   if curl -LO "$release_url"; then
