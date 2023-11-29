@@ -1,5 +1,5 @@
 <h1 align="center">
-    <a href="https://dreamfactory.com/"><img src="https://raw.githubusercontent.com/dreamfactorysoftware/dreamfactory/dev-readme/readme/vertical-logo-fullcolor.png" alt="DreamFactory" width="250" /></a>
+    <a href="https://dreamfactory.com/"><img src="https://raw.githubusercontent.com/dreamfactorysoftware/dreamfactory/master/readme/vertical-logo-fullcolor.png" alt="DreamFactory" width="250" /></a>
 </h1>
 
 <p align="center">
