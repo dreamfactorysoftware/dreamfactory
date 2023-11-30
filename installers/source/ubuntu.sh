@@ -241,7 +241,7 @@ install_mcrypt () {
 }
 
 install_mongodb () {
-  pecl install mongodb
+  pecl install mongodb <<<'no'
   if (($? >= 1)); then
     echo_with_color red "\nMongo DB extension installation error." >&5
     kill $!
