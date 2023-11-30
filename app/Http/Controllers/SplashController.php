@@ -58,20 +58,10 @@ class SplashController extends Controller
                 if (! $user) {
                     return view('firstUser', $data);
                 }
-
-                $jwt = null;
-                if (true === $login = Session::setUserInfoWithJWT($user)) {
-                    $sessionInfo = Session::getPublicInfo();
-                    $jwt = Arr::get($sessionInfo, 'session_token');
-                }
             }
         }
 
-        if (! empty($jwt)) {
-            return redirect()->to('/?session_token='.$jwt);
-        } else {
-            return redirect()->to('/');
-        }
+        return redirect()->to('/');
     }
 
     /**
