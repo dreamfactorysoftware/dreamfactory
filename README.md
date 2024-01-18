@@ -46,10 +46,6 @@ DreamFactory is an API generation solution best known for its ability to automat
 * [Use the PHP, Python, and NodeJS scripting languages](https://guide.dreamfactory.com/docs/integrating-business-logic-into-your-apis/) to easily customize API behavior at any endpoint, for both API requests and API responses.
 * [Secure every API endpoint](http://guide.dreamfactory.com/docs/chapter03.html#creating-a-role) with user management, SSO authentication, role-based access control, OAuth and Active Directory integration.
 
-<p align="center">
-    <img alt="GitHub stars" src="https://raw.githubusercontent.com/dreamfactorysoftware/dreamfactory/master/readme/ScreenRecording20190524at1.gif">
-</p>
-
 <a name="installation"></a>
 ## Installation
 
