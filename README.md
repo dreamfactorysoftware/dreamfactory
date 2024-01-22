@@ -47,7 +47,9 @@ DreamFactory is an API generation solution best known for its ability to automat
 * [Secure every API endpoint](http://guide.dreamfactory.com/docs/chapter03.html#creating-a-role) with user management, SSO authentication, role-based access control, OAuth and Active Directory integration.
 
 <p align="center">
-https://github.com/dreamfactorysoftware/dreamfactory/assets/36458555/7db4413a-107a-41a1-926b-f619c4e63740
+
+https://github.com/dreamfactorysoftware/dreamfactory/assets/36458555/6d1569a8-07bd-4e24-a8bb-637ecc98bdff
+
 </p>
 
 <a name="installation"></a>
