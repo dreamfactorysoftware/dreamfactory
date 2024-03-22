@@ -97,8 +97,13 @@ case $CURRENT_KERNEL in
     ;;
   centos | rhel)
     if ((CURRENT_OS != 7)) && ((CURRENT_OS != 8)); then
-      echo_with_color red "The installer only supports Rhel (Centos) 7 and 8. Exiting...\n"
-      exit 1
+            
+      if ((CURRENT_OS == 9)); then
+        echo_with_color yellow "RHEL 9 support is currently in beta. Proceed with caution.\n"
+      else
+        echo_with_color red "The installer only supports Rhel (Centos) 7, 8, and 9. Exiting...\n"
+        exit 1
+      fi
     fi
     ;;
   fedora)

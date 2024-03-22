@@ -9,7 +9,7 @@ system_update () {
   if ((CURRENT_OS == 7)); then
     yum update -y
   else
-    # centos 8
+    # centos 8 or 9
     dnf update -y
   fi
 }
@@ -27,7 +27,8 @@ install_system_dependencies () {
       wget \
       jq
   else
-    #centos 8
+    #centos 8 or 9
+    echo_with_color blue "Installing system dependencies" >&5
     dnf install -y git \
       curl \
       zip \
@@ -35,8 +36,8 @@ install_system_dependencies () {
       ca-certificates \
       lsof \
       readline-devel \
-      libzip-devel \
-      wget
+      wget \
+      jq
   fi
   # Check installation status
   if (($? >= 1)); then
@@ -71,12 +72,38 @@ install_php () {
       php-gd \
       php-zip \
       php-opcache
-  else
+  elif ((CURRENT_OS == 8)); then
     # RHEL 8
     rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
     rpm -Uvh http://rpms.remirepo.net/enterprise/remi-release-8.rpm
 
     dnf module list -y
+    dnf module reset php -y
+    dnf module enable php:remi-8.1 -y
+
+    #Install PHP
+    dnf install -y php-common \
+      php-xml \
+      php-cli \
+      php-curl \
+      php-mysqlnd \
+      php-sqlite3 \
+      php-soap \
+      php-mbstring \
+      php-bcmath \
+      php-devel \
+      php-ldap \
+      php-pgsql \
+      php-pdo-firebird \
+      php-pdo-dblib \
+      php-gd \
+      php-zip \
+      php-opcache
+
+  elif ((CURRENT_OS == 9)); then
+    # RHEL 9
+    rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
+    rpm -Uvh http://rpms.remirepo.net/enterprise/remi-release-9.rpm
     dnf module reset php -y
     dnf module enable php:remi-8.1 -y
 
@@ -165,6 +192,7 @@ install_nginx () {
   if ((CURRENT_OS == 7)); then
     yum --enablerepo=remi-php81 install -y php-fpm nginx
   else
+  # RHEL 8 or 9
     dnf install -y php-fpm nginx
   fi
 
@@ -238,7 +266,7 @@ server {
 
   # RHEL8 php-fpm seems to default to a unix socket, rather than an ip (in RHEL7). As a result
   # fastcgi_pass has been changed from 127.0.0.1 to unix:/var/run/php-fpm/www.sock for RHEL / CENTOS 8 installation.
-  if ((CURRENT_OS == 8)); then
+  if ((CURRENT_OS == 8 || CURRENT_OS == 9)); then
   sed -i "s,127.0.0.1:9000;,unix:/var/run/php-fpm/www.sock;," /etc/nginx/conf.d/dreamfactory.conf
   useradd -r nginx
   fi
@@ -511,16 +539,18 @@ install_snowflake () {
 }
 
 install_hive_odbc () {
-  yum update -y
-  yum install -y php-odbc
-  mkdir /opt/hive
-  cd /opt/hive
-  wget http://archive.mapr.com/tools/MapR-ODBC/MapR_Hive/MapRHive_odbc_2.6.1.1001/MapRHiveODBC-2.6.1.1001-1.x86_64.rpm
-  rpm -ivh MapRHiveODBC-2.6.1.1001-1.x86_64.rpm
-  test -f /opt/mapr/hiveodbc/lib/64/libmaprhiveodbc64.so
-  rm MapRHiveODBC-2.6.1.1001-1.x86_64.rpm
-  export HIVE_SERVER_ODBC_DRIVER_PATH=/opt/mapr/hiveodbc/lib/64/libmaprhiveodbc64.so
-  HIVE_ODBC_INSTALLED=$(php -m | grep -E "^odbc")
+  # yum update -y
+  # yum install -y php-odbc
+  # mkdir /opt/hive
+  # cd /opt/hive
+  # wget http://archive.mapr.com/tools/MapR-ODBC/MapR_Hive/MapRHive_odbc_2.6.1.1001/MapRHiveODBC-2.6.1.1001-1.x86_64.rpm
+  # rpm -ivh MapRHiveODBC-2.6.1.1001-1.x86_64.rpm
+  # test -f /opt/mapr/hiveodbc/lib/64/libmaprhiveodbc64.so
+  # rm MapRHiveODBC-2.6.1.1001-1.x86_64.rpm
+  # export HIVE_SERVER_ODBC_DRIVER_PATH=/opt/mapr/hiveodbc/lib/64/libmaprhiveodbc64.so
+  # HIVE_ODBC_INSTALLED=$(php -m | grep -E "^odbc")
+  echo_with_color red "\nHive ODBC installation is not supported on CentOS." >&5
+
 }
 
 enable_opcache () {
@@ -622,6 +652,8 @@ run_df_frontend_install() {
 
   # Create a temporary folder
   mkdir -p "$TEMP_FOLDER"
+  temp_contents=$(ls -la $TEMP_FOLDER)
+  echo_with_color red "Temp contents: $temp_contents"
 
   cd "$TEMP_FOLDER" || exit
 
@@ -664,7 +696,7 @@ run_df_frontend_install() {
         rm -rf "$full_path"
       fi
     done
-
+    echo_with_color blue ls $TEMP_FOLDER
     # Extract the release file into the destination folder
     unzip -qo "$RELEASE_FILENAME" -d "$TEMP_FOLDER"
 
@@ -672,11 +704,15 @@ run_df_frontend_install() {
     mv "$TEMP_FOLDER/dist/index.html" "$DF_FOLDER/resources/views/index.blade.php"
 
     # Move the rest of the files to the public folder
+    echo_with_color blue "Moving files to $DESTINATION_FOLDER" >&5
     mv "$TEMP_FOLDER/dist/*" "$DESTINATION_FOLDER"
-
+    temp_contents=$(ls -la "$TEMP_FOLDER")
+    echo_with_color red "Temp contents: $temp_contents"
+    dir_contents=$(ls -la "$DESTINATION_FOLDER")
+    echo_with_color red "Contents: $dir_contents"
     # Clean up: remove the downloaded release file
     cd ..
-    rm -rf "$TEMP_FOLDER"
+    ##rm -rf "$TEMP_FOLDER"
   else
     echo_with_color red "Error: Failed to download the release file."
     kill $!
