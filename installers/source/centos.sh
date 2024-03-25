@@ -282,6 +282,7 @@ restart_nginx () {
   service php-fpm restart && service nginx restart
   systemctl enable nginx.service && systemctl enable php-fpm.service
   firewall-cmd --add-service=http
+  firewall-cmd --reload
 }
 
 install_php_pear () {
@@ -512,30 +513,33 @@ install_node () {
 }
 
 install_snowflake () {
-  yum update -y
-  yum install -y gcc cmake php-pdo php-devel
-  # We need to use a previous version of the snowflake driver as the latest one seems to be bust.
-  git clone https://github.com/snowflakedb/pdo_snowflake.git /src/snowflake
-  cd /src/snowflake
-  export PHP_HOME=/usr
-  source /src/snowflake/scripts/build_pdo_snowflake.sh
-  $PHP_HOME/bin/php -dextension=modules/pdo_snowflake.so -m | grep pdo_snowflake
-  if (($? == 0)); then
-    export PHP_HOME=/usr
-    PHP_EXTENSION_DIR=$($PHP_HOME/bin/php -i | grep '^extension_dir' | sed 's/.*=>\(.*\).*/\1/')
-    cp /src/snowflake/modules/pdo_snowflake.so $PHP_EXTENSION_DIR
-    cp /src/snowflake/libsnowflakeclient/cacert.pem /etc/php.d
-    if (($? >= 1)); then
-      echo_with_color red "\npdo_snowflake driver installation error." >&5
-      kill $!
-      exit 1
-    fi
-    echo -e "extension=pdo_snowflake.so\n\npdo_snowflake.cacert=/etc/php.d/cacert.pem" >/etc/php.d/20-pdo_snowflake.ini
-  else
-    echo_with_color red "\nCould not build pdo_snowflake driver." >&5
-    kill $!
-    exit 1
-  fi
+  # yum update -y
+  # yum install -y gcc cmake php-pdo php-devel
+  # # We need to use a previous version of the snowflake driver as the latest one seems to be bust.
+  # git clone https://github.com/snowflakedb/pdo_snowflake.git /src/snowflake
+  # cd /src/snowflake
+  # export PHP_HOME=/usr
+  # source /src/snowflake/scripts/build_pdo_snowflake.sh
+  # $PHP_HOME/bin/php -dextension=modules/pdo_snowflake.so -m | grep pdo_snowflake
+  # if (($? == 0)); then
+  #   export PHP_HOME=/usr
+  #   PHP_EXTENSION_DIR=$($PHP_HOME/bin/php -i | grep '^extension_dir' | sed 's/.*=>\(.*\).*/\1/')
+  #   cp /src/snowflake/modules/pdo_snowflake.so $PHP_EXTENSION_DIR
+  #   cp /src/snowflake/libsnowflakeclient/cacert.pem /etc/php.d
+  #   if (($? >= 1)); then
+  #     echo_with_color red "\npdo_snowflake driver installation error." >&5
+  #     kill $!
+  #     exit 1
+  #   fi
+  #   echo -e "extension=pdo_snowflake.so\n\npdo_snowflake.cacert=/etc/php.d/cacert.pem" >/etc/php.d/20-pdo_snowflake.ini
+  # else
+  #   echo_with_color red "\nCould not build pdo_snowflake driver." >&5
+  #   kill $!
+  #   exit 1
+  # fi
+    echo_with_color red "\nSnowflake installation is not supported on CentOS." >&5
+
+
 }
 
 install_hive_odbc () {
@@ -703,9 +707,12 @@ run_df_frontend_install() {
     # Update the index file
     mv "$TEMP_FOLDER/dist/index.html" "$DF_FOLDER/resources/views/index.blade.php"
 
+    # Allow group write on public dir
+    chmod -R g+w "$DESTINATION_FOLDER" 
+
     # Move the rest of the files to the public folder
     echo_with_color blue "Moving files to $DESTINATION_FOLDER" >&5
-    mv "$TEMP_FOLDER/dist/*" "$DESTINATION_FOLDER"
+    cp -R "$TEMP_FOLDER/dist/*" "$DESTINATION_FOLDER"
     temp_contents=$(ls -la "$TEMP_FOLDER")
     echo_with_color red "Temp contents: $temp_contents"
     dir_contents=$(ls -la "$DESTINATION_FOLDER")
