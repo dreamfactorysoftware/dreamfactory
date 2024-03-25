@@ -706,17 +706,18 @@ run_df_frontend_install() {
 
     # Update the index file
     mv "$TEMP_FOLDER/dist/index.html" "$DF_FOLDER/resources/views/index.blade.php"
-
+    chown dreamfactory:dreamfactory "$DF_FOLDER/resources/views/index.blade.php"
     # Allow group write on public dir
     chmod -R g+w "$DESTINATION_FOLDER" 
 
     # Move the rest of the files to the public folder
     echo_with_color blue "Moving files to $DESTINATION_FOLDER" >&5
-    cp -R "$TEMP_FOLDER/dist/*" "$DESTINATION_FOLDER"
+    cp -R $TEMP_FOLDER/dist/* $DESTINATION_FOLDER
     temp_contents=$(ls -la "$TEMP_FOLDER")
     echo_with_color red "Temp contents: $temp_contents"
     dir_contents=$(ls -la "$DESTINATION_FOLDER")
-    echo_with_color red "Contents: $dir_contents"
+    echo_with_color blue "\n\nContents: $dir_contents"
+    chown -R dreamfactory:dreamfactory /opt/dreamfactory/public/
     # Clean up: remove the downloaded release file
     cd ..
     ##rm -rf "$TEMP_FOLDER"
