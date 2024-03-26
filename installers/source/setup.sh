@@ -889,6 +889,7 @@ sudo -u "$CURRENT_USER" bash -c "php artisan cache:clear -q"
 if [[ $CURRENT_KERNEL == "centos" || $CURRENT_KERNEL == "rhel" || $CURRENT_KERNEL == "fedora" ]]; then
   sestatus | grep SELinux | grep enabled >/dev/null
   if (($? == 0)); then
+    echo_with_color blue "SELinux detected...\n"
     setsebool -P httpd_can_network_connect_db 1
     chcon -t httpd_sys_content_t storage -R
     chcon -t httpd_sys_content_t bootstrap/cache/ -R

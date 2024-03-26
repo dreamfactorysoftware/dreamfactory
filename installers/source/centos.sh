@@ -626,6 +626,7 @@ clone_dreamfactory_repository () {
 run_composer_install () {
   # If Oracle is not installed, add the --ignore-platform-reqs option
   # to composer command
+  echo_with_color purple $CURRENT_USER
   if [[ $ORACLE == TRUE ]]; then
     if [[ $CURRENT_USER == "root" ]]; then
       sudo -u "$CURRENT_USER" COMPOSER_ALLOW_SUPERUSER=1 bash -c "/usr/local/bin/composer install --no-dev"
