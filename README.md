@@ -33,6 +33,7 @@
 
 * <a href="#overview">Platform Overview</a>
 * <a href="#installation">Installation Options</a>
+* <a href="#features">Features</a>
 * <a href="#hosted">DreamFactory's Cloud Playground</a>
 * <a href="#documentation">Documentation</a>
 * <a href="#support">Support Options</a>
@@ -60,6 +61,17 @@ https://github.com/dreamfactorysoftware/dreamfactory/assets/36458555/6d1569a8-07
 * Install DreamFactory and all of the required dependencies in less than 5 minutes using our [installers](https://github.com/dreamfactorysoftware/dreamfactory/tree/master/installers) for CentOS/RHEL, Debian, Fedora, and Ubuntu.
 * [Docker](https://github.com/dreamfactorysoftware/df-docker) provides a Docker compose image or you can build your own.
 * [Raspberry Pi](http://guide.dreamfactory.com/docs/raspberry-pi.html) allows you to configure DreamFactory on everybody's favorite tiny computer.
+
+<a name="features"></a>
+## Features
+
+DreamFactory is an open-core on-prem API Generation platform that automates the process of building, securing, documenting, and maintaining REST API integrations.
+
+Top features include:
+* Instant API Generation for over 20 different databases including big data services like Snowflake and file storage systems.
+* Standardized documenation with every API having an OpenAPI spec.
+* Secure access to all your sources with role-based-access-control, API Key management, and advanced security options with OAuth, SAML 2.0, Active Directory, and more.
+* Customize your APIs with support for Python, PHP, and NodeJS to obfuscate endpoints, automate workflows, schedule notifications updates and more with any number of pre- or post-process scripts.
 
 <a name="hosted"></a>
 ## DreamFactory's Cloud Playground
