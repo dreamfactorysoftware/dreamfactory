@@ -3,11 +3,20 @@
 </h1>
 
 <p align="center">
-    <strong>DevOps for Private APIs</strong>
+    <strong>Instant API Generation</strong>
 </p>
 
 <p align="center">
-    <a href="http://guide.dreamfactory.com/">Getting Started Guide</a> ∙ <a href="https://genie.dreamfactory.com">Try Online</a> ∙ <a href="https://github.com/dreamfactorysoftware/dreamfactory/blob/master/CONTRIBUTING.md">Contribute</a> ∙ <a href="http://community.dreamfactory.com/">Community Support</a> ∙ <a href="https://wiki.dreamfactory.com">Docs</a>
+    <a href="http://guide.dreamfactory.com/">Getting Started Guide</a> ∙ <a href="https://genie.dreamfactory.com">Try Online</a> ∙ <a href="http://community.dreamfactory.com/">Community Support</a> ∙ <a href="https://wiki.dreamfactory.com">Docs</a>
+</p>
+
+<p align="center" style="display: flex; justify-content: center; align-items: center;">
+    <a href="https://heroku.com/deploy?template=https://github.com/dreamfactorysoftware/dreamfactory" style="margin-right: 10px;">
+        <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy" style="height:60px; width:202px; border: 2px solid #4A90E2;">
+    </a>
+    <a href="https://marketplace.digitalocean.com/apps/dreamfactory?refcode=e62ab9df59c2">
+        <img src="https://www.deploytodo.com/do-btn-blue-ghost.svg" alt="DeployDO" style="height:60px; width:202px; border: 2px solid #4A90E2;">
+    </a>
 </p>
 
 <p align="center">
@@ -20,20 +29,13 @@
     <a href="https://twitter.com/dfsoftwareinc?lang=en"><img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/dfsoftwareinc.svg?style=social"></a>
 </p>
 
-<p align="center">
-<a href="https://heroku.com/deploy?template=https://github.com/dreamfactorysoftware/dreamfactory">
-  <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy">
-</a>
-</p>
-
 ## Table of Contents
 
 * <a href="#overview">Platform Overview</a>
 * <a href="#installation">Installation Options</a>
-* <a href="#heroku">Installing on Heroku</a>
-* <a href="#hosted">DreamFactory's Cloud Environment</a>
+* <a href="#hosted">DreamFactory's Cloud Playground</a>
 * <a href="#documentation">Documentation</a>
-* <a href="#community">Support Options</a>
+* <a href="#support">Support Options</a>
 * <a href="#commercial">Commercial Licenses</a>
 * <a href="#feedback">Feedback</a>
 
@@ -57,28 +59,12 @@ https://github.com/dreamfactorysoftware/dreamfactory/assets/36458555/6d1569a8-07
 
 * Install DreamFactory and all of the required dependencies in less than 5 minutes using our [installers](https://github.com/dreamfactorysoftware/dreamfactory/tree/master/installers) for CentOS/RHEL, Debian, Fedora, and Ubuntu.
 * [Docker](https://github.com/dreamfactorysoftware/df-docker) provides a Docker compose image or you can build your own.
-* Our [Helm chart](https://github.com/dreamfactorysoftware/df-helm) provides a convenient way to install DreamFactory within your Kubernetes cluster.
 * [Raspberry Pi](http://guide.dreamfactory.com/docs/raspberry-pi.html) allows you to configure DreamFactory on everybody's favorite tiny computer.
-
-
-<a name="heroku"></a>
-
-## Installing on Heroku
-
-Heroku users can easily install DreamFactory by clicking on the below button. Keep in mind like many Heroku add-ons DreamFactory comes with some limitations such as the inability to deploy a local file system-based REST API due to Heroku's file system write limitations. Additionally, DreamFactory lacks support for multiple dynos. Regardless of these limitations, it's a breeze to get started using DreamFactory on Heroku so give it a whirl!
-
-<p align="center">
-<a href="https://heroku.com/deploy?template=https://github.com/dreamfactorysoftware/dreamfactory">
-  <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy">
-</a>
-</p>
-
-<a href="#commercial">Contact us</a> for more information if you're interested in a feature complete version (whether hosted in our cloud environment or on-premise). Or just <a href="https://genie.dreamfactory.com/">spin up a playground instance</a> right now! 
 
 <a name="hosted"></a>
 ## DreamFactory's Cloud Playground
 
-Start testing for free with our cloud playground now by creating a DreamFactory instance at <a href="https://genie.dreamfactory.com/">https://genie.dreamfactory.com/</a>.
+Start testing for free with our cloud playground now by creating a DreamFactory instance <a href="https://genie.dreamfactory.com/">here</a>.
 
 <a name="documentation"></a>
 ## Documentation
@@ -86,12 +72,12 @@ Start testing for free with our cloud playground now by creating a DreamFactory 
 Learn more about DreamFactory's many features by reading our [Getting Started Guide](http://guide.dreamfactory.com/).
 Additional platform documentation can be found on the [DreamFactory wiki](http://wiki.dreamfactory.com).
 
-<a name="community"></a>
-## Community 
+<a name="support"></a>
+## Support
 
-| <a href="https://stackoverflow.com/questions/tagged/dreamfactory"><img src="https://raw.githubusercontent.com/dreamfactorysoftware/dreamfactory/master/readme/stackoverflow.png" height="50px"/></a> | <a href="https://community.dreamfactory.com"><img src="https://raw.githubusercontent.com/dreamfactorysoftware/dreamfactory/dev-readme/readme/mark-gold.png" height="60px"/></a> | <a href="https://twitter.com/dfsoftwareinc"><img src="https://raw.githubusercontent.com/dreamfactorysoftware/dreamfactory/master/readme/twitter.png" height="40px"/></a> |
+| <a href="https://stackoverflow.com/questions/tagged/dreamfactory"><img src="https://static-00.iconduck.com/assets.00/stack-overflow-icon-2048x2048-7ohycn5z.png" height="50px"/></a> | <a href="https://community.dreamfactory.com"><img src="https://raw.githubusercontent.com/dreamfactorysoftware/dreamfactory/master/readme/vertical-logo-fullcolor.png" height="60px"/></a> | <a href="https://twitter.com/dfsoftwareinc"><img src="https://t4.ftcdn.net/jpg/01/58/21/69/360_F_158216984_zSFxdd273rSrPmwnsK1mwukR5c2N0zWq.jpg" height="40px"/></a> |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Ask and answer StackOverflow questions with the [`dreamfactory` tag](https://stackoverflow.com/questions/tagged/dreamfactory)                                                                               | Check out our [community forum](https://community.dreamfactory.com), ask questions, and discuss project direction                                                                                           | Tweet to [`@dfsoftwareinc`](https://twitter.com/dfsoftwareinc) or with the [`#dreamfactory` hashtag](https://twitter.com/search?q=%23dreamfactory&f=live)  
+| Ask and answer StackOverflow questions with the [`dreamfactory` tag](https://stackoverflow.com/questions/tagged/dreamfactory)                                                                               | Check out our [Wiki](https://wiki.dreamfactory.com) and [Guide](https://guide.dreamfactory.com) for various examples and tutorials                                                                                          | We offer various support engagements for custom hours and annual engagements. Schedule some time [with the team](https://www.dreamfactory.com/demo/) to learn more.  
 
 <a name="commercial"></a>
 ## Commercial Licenses
