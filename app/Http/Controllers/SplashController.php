@@ -16,11 +16,17 @@ class SplashController extends Controller
     /**
      * Show the application splash screen to the user.
      *
-     * @return Factory|View|Application
+     * @return Response
      */
-    public function index(): Factory|View|Application
+    public function index()
     {
-        return view("index");
+        $token = \Request::input('session_token');
+        $param = '';
+        if (! empty($token)) {
+            $param = '?session_token='.$token;
+        }
+
+        return redirect(config('df.landing_page', '/test_rest.html').$param);
     }
 
     public function createFirstUser()
