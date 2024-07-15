@@ -183,9 +183,9 @@ return [
          * Application Service Providers...
          */
         DreamFactory\Providers\AppServiceProvider::class,
-//        DreamFactory\Providers\AuthServiceProvider::class, // laravel 5.3
-//        DreamFactory\Providers\BroadcastServiceProvider::class,
-//        DreamFactory\Providers\EventServiceProvider::class,
+        //        DreamFactory\Providers\AuthServiceProvider::class, // laravel 5.3
+        //        DreamFactory\Providers\BroadcastServiceProvider::class,
+        //        DreamFactory\Providers\EventServiceProvider::class,
         DreamFactory\Providers\RouteServiceProvider::class,
 
     ],

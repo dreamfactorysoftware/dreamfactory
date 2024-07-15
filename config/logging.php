@@ -15,8 +15,8 @@ return [
     |
     */
 
-    'default'   => env('LOG_CHANNEL', env('APP_LOG', 'stack')),
-    'log'       => env('LOG_CHANNEL', env('APP_LOG', 'stack')),
+    'default' => env('LOG_CHANNEL', env('APP_LOG', 'stack')),
+    'log' => env('LOG_CHANNEL', env('APP_LOG', 'stack')),
     'log_level' => env('APP_LOG_LEVEL', 'warning'),
 
     /*
@@ -76,7 +76,7 @@ return [
                 'dateFormat' => null,
                 'allowInlineLineBreaks' => true,
                 'ignoreEmptyContextAndExtra' => true,
-            ]
+            ],
         ],
 
         'slack' => [

@@ -22,70 +22,70 @@ class DatabaseSeeder extends Seeder
         $class = 'DreamFactory\Core\Models\Service';
         $records = [
             [
-                'name'        => 'system',
-                'label'       => 'System Management',
+                'name' => 'system',
+                'label' => 'System Management',
                 'description' => 'Service for managing system resources.',
-                'is_active'   => true,
-                'type'        => 'system',
-                'mutable'     => false,
-                'deletable'   => false,
+                'is_active' => true,
+                'type' => 'system',
+                'mutable' => false,
+                'deletable' => false,
             ],
         ];
 
         if (class_exists('DreamFactory\Core\ApiDoc\ServiceProvider')) {
             $records[] = [
-                'name'        => 'api_docs',
-                'label'       => 'Live API Docs',
+                'name' => 'api_docs',
+                'label' => 'Live API Docs',
                 'description' => 'API documenting and testing service.',
-                'is_active'   => true,
-                'type'        => 'swagger',
-                'mutable'     => false,
-                'deletable'   => false,
+                'is_active' => true,
+                'type' => 'swagger',
+                'mutable' => false,
+                'deletable' => false,
             ];
         }
         if (class_exists('DreamFactory\Core\File\ServiceProvider')) {
             $records[] = [
-                'name'        => 'files',
-                'label'       => 'Local File Storage',
+                'name' => 'files',
+                'label' => 'Local File Storage',
                 'description' => 'Service for accessing local file storage.',
-                'is_active'   => true,
-                'type'        => 'local_file',
-                'mutable'     => true,
-                'deletable'   => true,
-                'config'      => ['container' => 'app'],
+                'is_active' => true,
+                'type' => 'local_file',
+                'mutable' => true,
+                'deletable' => true,
+                'config' => ['container' => 'app'],
             ];
             $records[] = [
-                'name'        => 'logs',
-                'label'       => 'Local Log Storage',
+                'name' => 'logs',
+                'label' => 'Local Log Storage',
                 'description' => 'Service for accessing local log storage.',
-                'is_active'   => true,
-                'type'        => 'local_file',
-                'mutable'     => true,
-                'deletable'   => true,
-                'config'      => ['container' => 'logs'],
+                'is_active' => true,
+                'type' => 'local_file',
+                'mutable' => true,
+                'deletable' => true,
+                'config' => ['container' => 'logs'],
             ];
         }
         if (class_exists('DreamFactory\Core\SqlDb\ServiceProvider')) {
             $records[] = [
-                'name'        => 'db',
-                'label'       => 'Local SQL Database',
+                'name' => 'db',
+                'label' => 'Local SQL Database',
                 'description' => 'Service for accessing local SQLite database.',
-                'is_active'   => true,
-                'type'        => 'sqlite',
-                'mutable'     => true,
-                'deletable'   => true,
-                'config'      => ['database' => 'db.sqlite'],
+                'is_active' => true,
+                'type' => 'sqlite',
+                'mutable' => true,
+                'deletable' => true,
+                'config' => ['database' => 'db.sqlite'],
             ];
         }
         if (class_exists('DreamFactory\Core\Email\ServiceProvider')) {
             $records[] = [
-                'name'        => 'email',
-                'label'       => 'Local Email Service',
+                'name' => 'email',
+                'label' => 'Local Email Service',
                 'description' => 'Email service used for sending user invites and/or password reset confirmation.',
-                'is_active'   => true,
-                'type'        => 'local_email',
-                'mutable'     => true,
-                'deletable'   => true,
+                'is_active' => true,
+                'type' => 'local_email',
+                'mutable' => true,
+                'deletable' => true,
             ];
         }
         $this->seedModel($class, $records);
@@ -99,12 +99,12 @@ class DatabaseSeeder extends Seeder
         $emailTemplateOpenReg = EmailTemplate::whereName('User Registration Default')->first();
         $emailTemplateOpenRegId = (! empty($emailTemplateOpenReg)) ? $emailTemplateOpenReg->id : null;
         if ($system = Service::whereName('system')->first()) {
-            if (null == Arr::get($system->config, 'invite_email_service_id')) {
+            if (Arr::get($system->config, 'invite_email_service_id') == null) {
                 $record = [
                     'config' => [
-                        'invite_email_service_id'    => $emailServiceId,
-                        'invite_email_template_id'   => $emailTemplateInviteId,
-                        'password_email_service_id'  => $emailServiceId,
+                        'invite_email_service_id' => $emailServiceId,
+                        'invite_email_template_id' => $emailTemplateInviteId,
+                        'password_email_service_id' => $emailServiceId,
                         'password_email_template_id' => $emailTemplatePasswordId,
                     ],
                 ];
@@ -115,20 +115,20 @@ class DatabaseSeeder extends Seeder
         if (class_exists('DreamFactory\Core\User\ServiceProvider')) {
             $records = [
                 [
-                    'name'        => 'user',
-                    'label'       => 'User Management',
+                    'name' => 'user',
+                    'label' => 'User Management',
                     'description' => 'Service for managing system users.',
-                    'is_active'   => true,
-                    'type'        => 'user',
-                    'mutable'     => true,
-                    'deletable'   => false,
-                    'config'      => [
-                        'allow_open_registration'    => false,
-                        'open_reg_email_service_id'  => $emailServiceId,
+                    'is_active' => true,
+                    'type' => 'user',
+                    'mutable' => true,
+                    'deletable' => false,
+                    'config' => [
+                        'allow_open_registration' => false,
+                        'open_reg_email_service_id' => $emailServiceId,
                         'open_reg_email_template_id' => $emailTemplateOpenRegId,
-                        'invite_email_service_id'    => $emailServiceId,
-                        'invite_email_template_id'   => $emailTemplateInviteId,
-                        'password_email_service_id'  => $emailServiceId,
+                        'invite_email_service_id' => $emailServiceId,
+                        'invite_email_template_id' => $emailTemplateInviteId,
+                        'password_email_service_id' => $emailServiceId,
                         'password_email_template_id' => $emailTemplatePasswordId,
                     ],
                 ],
@@ -140,10 +140,10 @@ class DatabaseSeeder extends Seeder
     /**
      * Run the database seeds.
      *
-     * @param string $class_name
-     * @param array  $records
-     * @param string $identifier
-     * @param bool   $allow_update
+     * @param  string  $class_name
+     * @param  string  $identifier
+     * @param  bool  $allow_update
+     *
      * @throws Exception
      */
     public function seedModel($class_name, array $records, $identifier = 'name', $allow_update = false)

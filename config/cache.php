@@ -51,7 +51,7 @@ return [
             'path' => env('CACHE_PATH', env('DF_CACHE_PATH', storage_path('framework/cache/data'))),
         ],
 
-        'memcached'  => [
+        'memcached' => [
             'driver' => 'memcached',
             'persistent_id' => env('CACHE_PERSISTENT_ID', env('MEMCACHED_PERSISTENT_ID')),
             'sasl' => [
