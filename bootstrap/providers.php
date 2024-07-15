@@ -1,5 +1,6 @@
 <?php
 
 return [
-    App\Providers\AppServiceProvider::class,
+    DreamFactory\Providers\AppServiceProvider::class,
+    DreamFactory\Providers\RouteServiceProvider::class,
 ];
