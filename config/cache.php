@@ -2,6 +2,8 @@
 
 return [
 
+    'default' => env('CACHE_DRIVER', 'file'),
+
     'stores' => [
         'file' => [
             'driver' => 'file',
@@ -26,7 +28,15 @@ return [
                 ],
             ],
         ],
+
+        'database' => [
+            'driver' => 'database',
+            'table' => 'cache',
+            'connection' => null,
+        ],
     ],
+
+    'prefix' => env('CACHE_PREFIX', 'laravel'),
 
     'default_ttl' => env('CACHE_DEFAULT_TTL', env('DF_CACHE_TTL', 18000)), // old env for upgrades
 
