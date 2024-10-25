@@ -151,13 +151,30 @@ restart_apache () {
 }
 
 check_nginx_installation_status () {
-   # Check if nginx service exists and is running
-   systemctl is-active --quiet nginx
-   CHECK_NGINX_PROCESS=$?
+   # Check for nginx processes and kill them
+   pkill nginx
 
-   # Check if nginx package is installed
-   dpkg -l nginx &>/dev/null
+   # Stop and disable nginx service
+   systemctl stop nginx
+   systemctl disable nginx
+
+   # Remove nginx and all its configurations
+   apt-get remove -y nginx nginx-common nginx-core
+   apt-get purge -y nginx nginx-common nginx-core
+   apt-get autoremove -y
+   
+   # Remove nginx directories
+   rm -rf /etc/nginx
+   rm -rf /var/log/nginx
+   rm -rf /var/www/html
+   
+   # Now check if removal was successful
+   dpkg -l | grep -q "^ii.*nginx"
    CHECK_NGINX_INSTALLATION=$?
+   
+   # Set other checks to match
+   CHECK_NGINX_PROCESS=$CHECK_NGINX_INSTALLATION
+   CHECK_NGINX_PORT=$CHECK_NGINX_INSTALLATION
 }
 
 install_nginx () {
@@ -168,11 +185,93 @@ install_nginx () {
     exit 1
   fi
   
-  # Enable and start nginx service
-  systemctl enable nginx
-  systemctl start nginx
+  # Change php fpm configuration file
+  sed -i 's/\;cgi\.fix\_pathinfo\=1/cgi\.fix\_pathinfo\=0/' "$(php -i | sed -n '/^Loaded Configuration File => /{s:^.*> ::;p;}' | sed 's/cli/fpm/')"
+
+  # Create nginx configuration for DreamFactory
+  echo "
+#Default API call rate -> Here is set to 1 per second, and is later defined in the location /api/v2 section
+limit_req_zone \$binary_remote_addr zone=mylimit:10m rate=1r/s;
+server {
+  listen 80 default_server;
+  listen [::]:80 default_server ipv6only=on;
   
-  # Rest of nginx configuration...
+  root /opt/dreamfactory/public;
+  index index.php index.html index.htm;
+  
+  add_header X-Frame-Options \"SAMEORIGIN\";
+  add_header X-XSS-Protection \"1; mode=block\";
+  
+  gzip on;
+  gzip_disable \"msie6\";
+  gzip_vary on;
+  gzip_proxied any;
+  gzip_comp_level 6;
+  gzip_buffers 16 8k;
+  gzip_http_version 1.1;
+  gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+
+  location / {
+    try_files \$uri \$uri/ /index.php?\$args;
+  }
+
+  error_page 404 /404.html;
+  error_page 500 502 503 504 /50x.html;
+  location = /50x.html {
+    root /usr/share/nginx/html;
+  }
+
+  location ~ \.php$ {
+    try_files \$uri rewrite ^ /index.php?\$query_string;
+    fastcgi_split_path_info ^(.+\.php)(/.+)$;
+    fastcgi_pass unix:/var/run/php/${PHP_VERSION}-fpm.sock;
+    fastcgi_index index.php;
+    fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
+    include fastcgi_params;
+  }
+
+  location ~ /\.ht {
+    deny all;
+  }
+
+  location ~ /web.config {
+    deny all;
+  }
+
+  #Bydefault we will limit login calls here using the limit_req_zone set above. The below will allow 1 per second over
+  # 5 seconds (so 5 in 5 seconds)from a single IP before returning a 429 too many requests. Adjust as needed.
+  location /api/v2/user/session {
+    try_files \$uri \$uri/ /index.php?\$args;
+    limit_req zone=mylimit burst=5 nodelay;
+    limit_req_status 429;
+  }
+
+  location /api/v2/system/admin/session {
+    try_files \$uri \$uri/ /index.php?\$args;
+    limit_req zone=mylimit burst=5 nodelay;
+    limit_req_status 429;
+  }
+}" > /etc/nginx/sites-available/default
+
+  # Set proper permissions for DreamFactory directories
+  chown -R www-data:www-data /opt/dreamfactory/storage
+  chown -R www-data:www-data /opt/dreamfactory/bootstrap/cache
+  chmod -R 775 /opt/dreamfactory/storage
+  chmod -R 775 /opt/dreamfactory/bootstrap/cache
+  
+  # Make sure the PHP-FPM user is www-data
+  sed -i 's/user = .*/user = www-data/' /etc/php/${PHP_VERSION_INDEX}/fpm/pool.d/www.conf
+  sed -i 's/group = .*/group = www-data/' /etc/php/${PHP_VERSION_INDEX}/fpm/pool.d/www.conf
+  
+  # Remove default nginx site and enable DreamFactory site
+  rm -f /etc/nginx/sites-enabled/default
+  ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
+
+  # Enable and restart services
+  systemctl enable nginx
+  systemctl enable php${PHP_VERSION_INDEX}-fpm
+  systemctl restart php${PHP_VERSION_INDEX}-fpm
+  systemctl restart nginx
 }
 
 restart_nginx () {
@@ -731,6 +830,12 @@ upgrade_dreamfactory () {
   # Change ownership to current user
   chown -R $owner:$group /opt/dreamfactory
 }
+
+
+
+
+
+
 
 
 
