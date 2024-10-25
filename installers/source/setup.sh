@@ -84,8 +84,8 @@ fi
 #### Check Current OS is compatible with the installer ####
 case $CURRENT_KERNEL in
   ubuntu)
-    if ((CURRENT_OS != 20)) && ((CURRENT_OS != 22)); then
-      echo_with_color red "The installer only supports Ubuntu 20 and 22. Exiting...\n"
+    if ((CURRENT_OS != 20)) && ((CURRENT_OS != 22)) && ((CURRENT_OS != 24)); then
+      echo_with_color red "The installer only supports Ubuntu 20, 22 and 24. Exiting...\n"
       exit 1
     fi
     ;;
@@ -966,3 +966,4 @@ if [[ $MYSQL_INSTALLED == TRUE ]]; then
 fi
 
 exit 0
+

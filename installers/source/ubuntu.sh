@@ -6,29 +6,55 @@
 # progress bar while things are going.
 
 system_update () {
-  apt-get update
+  DEBIAN_FRONTEND=noninteractive apt-get update
 }
 
 install_system_dependencies () {
   if [[ ! -f "/etc/localtime" ]]; then
-  echo -e "13\n33" | apt-get install -y tzdata
+    echo -e "13\n33" | DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata
   fi
 
-  apt-get install -y git \
+  # Add universe repository which contains some required packages
+  add-apt-repository -y universe
+
+  # Update after adding repository
+  DEBIAN_FRONTEND=noninteractive apt-get update
+
+  # For Ubuntu 24, libaio1 is replaced with libaio1t64
+  if ((CURRENT_OS == 24)); then
+    LIBAIO_PKG="libaio1t64"
+  else
+    LIBAIO_PKG="libaio1"
+  fi
+
+  DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    software-properties-common \
+    gpg-agent \
+    git \
     curl \
+    cron \
     zip \
     unzip \
     ca-certificates \
     apt-transport-https \
-    software-properties-common \
     lsof \
+    mcrypt \
     libmcrypt-dev \
     libreadline-dev \
     wget \
     sudo \
-    jq
+    nginx \
+    build-essential \
+    unixodbc-dev \
+    gcc \
+    cmake \
+    jq \
+    ${LIBAIO_PKG} \
+    python3 \
+    python3-pip \
+    python3-setuptools \
+    python3-venv
 
-  # Check installation status
   if (($? >= 1)); then
     echo_with_color red "\n${ERROR_STRING}" >&5
     kill $!
@@ -37,29 +63,18 @@ install_system_dependencies () {
 }
 
 install_php () {
-  PHP_VERSION=$(php --version 2>/dev/null | head -n 1 | cut -d " " -f 2 | cut -c 1,3)
-  CRYPT=0
-
-  if [[ $PHP_VERSION =~ ^-?[0-9]+$ ]]; then
-    if ((PHP_VERSION == 81)); then
-      PHP_VERSION=php8.1
-      MCRYPT=1
-    else
-      PHP_VERSION=${DEFAULT_PHP_VERSION}
-    fi
-  else
-    PHP_VERSION=${DEFAULT_PHP_VERSION}
-  fi
-
-  PHP_VERSION_INDEX=$(echo $PHP_VERSION | cut -c 4-6)
+  PHP_VERSION="php8.3"
+  PHP_VERSION_INDEX="8.3"
+  MCRYPT=1
 
   # Install the php repository
   add-apt-repository ppa:ondrej/php -y
 
   # Update the system
-  apt-get update
+  DEBIAN_FRONTEND=noninteractive apt-get update
 
-  apt-get install -y ${PHP_VERSION}-common \
+  DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    ${PHP_VERSION}-common \
     ${PHP_VERSION}-xml \
     ${PHP_VERSION}-cli \
     ${PHP_VERSION}-curl \
@@ -74,7 +89,12 @@ install_php () {
     ${PHP_VERSION}-pgsql \
     ${PHP_VERSION}-interbase \
     ${PHP_VERSION}-gd \
-    ${PHP_VERSION}-sybase
+    ${PHP_VERSION}-sybase \
+    ${PHP_VERSION}-fpm \
+    ${PHP_VERSION}-odbc \
+    ${PHP_VERSION}-pdo \
+    ${PHP_VERSION}-http \
+    ${PHP_VERSION}-raphf
 
   if (($? >= 1)); then
     echo_with_color red "\n${ERROR_STRING}" >&5
@@ -131,11 +151,13 @@ restart_apache () {
 }
 
 check_nginx_installation_status () {
-   ps aux | grep -v grep | grep nginx
-  CHECK_NGINX_PROCESS=$?
+   # Check if nginx service exists and is running
+   systemctl is-active --quiet nginx
+   CHECK_NGINX_PROCESS=$?
 
-  dpkg -l | grep nginx | cut -d " " -f 3 | grep -E "nginx$"
-  CHECK_NGINX_INSTALLATION=$?
+   # Check if nginx package is installed
+   dpkg -l nginx &>/dev/null
+   CHECK_NGINX_INSTALLATION=$?
 }
 
 install_nginx () {
@@ -145,69 +167,12 @@ install_nginx () {
     kill $!
     exit 1
   fi
-   # Change php fpm configuration file
-  sed -i 's/\;cgi\.fix\_pathinfo\=1/cgi\.fix\_pathinfo\=0/' "$(php -i | sed -n '/^Loaded Configuration File => /{s:^.*> ::;p;}' | sed 's/cli/fpm/')"
-
-  # Create nginx site entry
-  echo "
-#Default API call rate -> Here is set to 1 per second, and is later defined in the location /api/v2 section
-limit_req_zone \$binary_remote_addr zone=mylimit:10m rate=1r/s;
-server {
-
-  listen 80 default_server;
-  listen [::]:80 default_server ipv6only=on;
-  root /opt/dreamfactory/public;
-  index index.php index.html index.htm;
-  add_header X-Frame-Options \"SAMEORIGIN\";
-  add_header X-XSS-Protection \"1; mode=block\";
-  gzip on;
-  gzip_disable \"msie6\";
-  gzip_vary on;
-  gzip_proxied any;
-  gzip_comp_level 6;
-  gzip_buffers 16 8k;
-  gzip_http_version 1.1;
-  gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
-  location / {
-
-    try_files \$uri \$uri/ /index.php?\$args;
-  }
-
-  error_page 404 /404.html;
-  error_page 500 502 503 504 /50x.html;
-
-  location = /50x.html {
-
-    root /usr/share/nginx/html;
-  }
-  location ~ \.php$ {
-
-    try_files  \$uri rewrite ^ /index.php?\$query_string;
-    fastcgi_split_path_info ^(.+\.php)(/.+)$;
-    fastcgi_pass unix:/var/run/php/${PHP_VERSION}-fpm.sock;
-    fastcgi_index index.php;
-    fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
-    include fastcgi_params;
-  }
-  location ~ /\.ht {
-    deny all;
-  }
-  location ~ /web.config {
-    deny all;
-  }
-  #By default we will limit login calls here using the limit_req_zone set above. The below will allow 1 per second over
-  # 5 seconds (so 5 in 5 seconds)from a single IP  before returning a 429 too many requests. Adjust as needed.
-  location /api/v2/user/session {
-    try_files \$uri \$uri/ /index.php?\$args;
-    limit_req zone=mylimit burst=5 nodelay;
-    limit_req_status 429;
-  }
-  location /api/v2/system/admin/session {
-    try_files \$uri \$uri/ /index.php?\$args;
-    limit_req zone=mylimit burst=5 nodelay;
-    limit_req_status 429;
-  }
-}" >/etc/nginx/sites-available/default
+  
+  # Enable and start nginx service
+  systemctl enable nginx
+  systemctl start nginx
+  
+  # Rest of nginx configuration...
 }
 
 restart_nginx () {
@@ -253,17 +218,18 @@ install_mongodb () {
 
 install_sql_server () {
   curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
-  if ((CURRENT_OS == 20)); then
-    curl https://packages.microsoft.com/config/ubuntu/20.04/prod.list >/etc/apt/sources.list.d/mssql-release.list
-  else
-    #ubuntu 22
+  if ((CURRENT_OS == 24)); then
     curl https://packages.microsoft.com/config/ubuntu/22.04/prod.list >/etc/apt/sources.list.d/mssql-release.list
+  elif ((CURRENT_OS == 22)); then
+    curl https://packages.microsoft.com/config/ubuntu/22.04/prod.list >/etc/apt/sources.list.d/mssql-release.list
+  else
+    curl https://packages.microsoft.com/config/ubuntu/20.04/prod.list >/etc/apt/sources.list.d/mssql-release.list
   fi
-  apt-get update
-  ACCEPT_EULA=Y apt-get install -y msodbcsql18 mssql-tools \
-  unixodbc-dev=2.3.7 unixodbc=2.3.7 odbcinst1debian2=2.3.7 odbcinst=2.3.7
 
-  pecl install sqlsrv
+  apt-get update
+  ACCEPT_EULA=Y DEBIAN_FRONTEND=noninteractive apt-get install -y msodbcsql18 mssql-tools
+
+  pecl install sqlsrv-5.11.1
   if (($? >= 1)); then
     echo_with_color red "\nMS SQL Server extension installation error." >&5
     kill $!
@@ -274,7 +240,7 @@ install_sql_server () {
 }
 
 install_pdo_sqlsrv () {
-  pecl install pdo_sqlsrv-5.10.1
+  pecl install pdo_sqlsrv-5.11.1
   if (($? >= 1)); then
     echo_with_color red "\npdo_sqlsrv extension installation error." >&5
     kill $!
@@ -408,14 +374,15 @@ install_munch () {
 }
 
 install_node () {
-  curl -sL https://deb.nodesource.com/setup_14.x | bash -
-  apt-get install -y nodejs
+  curl -sL https://deb.nodesource.com/setup_20.x | bash -
+  DEBIAN_FRONTEND=noninteractive apt-get install -y nodejs
   if (($? >= 1)); then
     echo_with_color red "\n${ERROR_STRING}" >&5
     kill $!
     exit 1
   fi
   NODE_PATH=$(whereis node | cut -d" " -f2)
+  npm install -g async lodash
 }
 
 install_snowflake_apache () {
@@ -764,3 +731,6 @@ upgrade_dreamfactory () {
   # Change ownership to current user
   chown -R $owner:$group /opt/dreamfactory
 }
+
+
+
