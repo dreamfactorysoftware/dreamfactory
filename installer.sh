@@ -121,6 +121,7 @@ declare -A settings=(
 ["DF_PYTHON_PATH"]="/usr/local/bin/python"
 ["DF_PYTHON3_PATH"]="/usr/local/bin/python3"
 # API
+["API_KEY"]=""
 ["DF_API_ROUTE_PREFIX"]="api"
 ["DF_STATUS_ROUTE_PREFIX"]=""
 ["DF_STORAGE_ROUTE_PREFIX"]=""

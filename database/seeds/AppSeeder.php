@@ -13,7 +13,8 @@ class AppSeeder extends BaseModelSeeder
         return [
             [
                 'name'        => 'admin',
-                'api_key'     => '6498a8ad1beb9d84d63035c5d1120c007fad6de706734db9689f8996707e0f7d',
+                'api_key'     => '1234567890123456789012345678901234567890123456789012345678901234',
+//                'api_key'     => '1234567890123456789012345678901234567890123456789012345678901234',
                 'description' => 'An application for administering this instance.',
                 'is_active'   => true,
                 'type'        => 3,
