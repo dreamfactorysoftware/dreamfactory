@@ -27,6 +27,9 @@
     <link rel="stylesheet" href="/css/df-create-first-user.css">
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Add this meta tag right after other meta tags -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
 
@@ -75,6 +78,11 @@
 <!-- Scripts -->
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
 
     setTimeout(function(){
         $.ajax({
@@ -85,9 +93,7 @@
             contentType: 'application/json',
             cache: false,
             processData: false,
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            },
+            data: JSON.stringify({}),  // Add empty data object
             beforeSend: function (xhr) {
                 $('#loadingMsg').slideDown();
             },
