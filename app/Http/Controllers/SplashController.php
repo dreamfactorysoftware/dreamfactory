@@ -70,9 +70,6 @@ class SplashController extends Controller
             $request = \Request::instance();
             $method = $request->method();
 
-            \Log::debug('CSRF Token received: ' . $request->header('X-CSRF-TOKEN'));
-            \Log::debug('Session Token: ' . csrf_token());
-
             if ($method === Verbs::GET) {
                 return view('setup', [
                     'version' => config('app.version'),
