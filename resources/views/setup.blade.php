@@ -85,7 +85,9 @@
             contentType: 'application/json',
             cache: false,
             processData: false,
-            //data: JSON.stringify(data),
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
             beforeSend: function (xhr) {
                 $('#loadingMsg').slideDown();
             },
