@@ -47,6 +47,7 @@
 
       <div class="box-wrapper">
         <form role="form" method="POST" action="{{ url('/setup') }}">
+          @csrf
           <div id="formbox" class="form-light boxed drop-shadow lifted">
             <h2 class="inset">Create a System Administrator</h2>
 

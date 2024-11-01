@@ -47,10 +47,21 @@ class SplashController extends Controller
 
                 return view('firstUser', $data);
             } elseif ($method === Verbs::POST) {
-                $data = array_merge($request->all(), $data);
-                $user = User::createFirstAdmin($data);
+                try {
+                    $data = array_merge($request->all(), $data);
+                    $user = User::createFirstAdmin($data);
 
-                if (! $user) {
+                    if (!$user) {
+                        return view('firstUser', $data);
+                    }
+
+                    // Regenerate session after successful user creation
+                    $request->session()->regenerate();
+                    
+                    return redirect()->to('/');
+                } catch (\Exception $e) {
+                    \Log::error('Error creating first admin: ' . $e->getMessage());
+                    $data['errors'] = [$e->getMessage()];
                     return view('firstUser', $data);
                 }
             }

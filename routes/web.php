@@ -14,16 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
-
-Route::get('/', [SplashController::class, 'index']);
-
-Route::get('/setup', [SplashController::class, 'createFirstUser']);
-
-Route::post('/setup', [SplashController::class, 'createFirstUser']);
-
-Route::get('/setup_db', [SplashController::class, 'setupDb']);
-
-Route::post('/setup_db', [SplashController::class, 'setupDb']);
+Route::middleware(['web'])->group(function () {
+    Route::get('/', [SplashController::class, 'index']);
+    Route::get('/setup', [SplashController::class, 'createFirstUser']);
+    Route::post('/setup', [SplashController::class, 'createFirstUser']);
+    Route::get('/setup_db', [SplashController::class, 'setupDb']);
+    Route::post('/setup_db', [SplashController::class, 'setupDb']);
+});
