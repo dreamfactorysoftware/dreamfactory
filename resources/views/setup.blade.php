@@ -38,7 +38,7 @@
             <div id="loadingFrame" class="box-wrapper">
                 <h3>Hello and Welcome to DreamFactory v{{$version}}!</h3>
                 <div id="loadingMsg" style="display: none;">
-                    You will be up and ready in just few seconds.
+                    You will be up and running in just few seconds.
                     Please wait while we setup and configure your DreamFactory instance.
                     <br>
                     <br>
