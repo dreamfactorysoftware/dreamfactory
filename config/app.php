@@ -14,4 +14,10 @@ return [
         'Redis' => Illuminate\Support\Facades\Redis::class,
     ])->toArray(),
 
+    'providers' => [
+        // ...
+        DreamFactory\Providers\AuthServiceProvider::class,
+        // ...
+    ],
+
 ];
