@@ -34,6 +34,13 @@ class DatabaseSeeder extends Seeder
         // Then run the rest of the seeders
         $this->call(AppSeeder::class);
         $this->call(EmailTemplateSeeder::class);
+        
+        // Ensure File ServiceProvider is registered and booted
+        if (!app()->bound('df.file')) {
+            app()->register(\DreamFactory\Core\File\ServiceProvider::class);
+        }
+        
+        // Now create services
         $class = 'DreamFactory\Core\Models\Service';
         $records = [
             [
