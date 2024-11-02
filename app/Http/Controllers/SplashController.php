@@ -55,8 +55,10 @@ class SplashController extends Controller
                         return view('firstUser', $data);
                     }
 
-                    // Regenerate session after successful user creation
-                    $request->session()->regenerate();
+                    // Clear all caches
+                    \Cache::flush();
+                    \Artisan::call('config:clear');
+                    \Artisan::call('route:clear');
                     
                     return redirect()->to('/');
                 } catch (\Exception $e) {

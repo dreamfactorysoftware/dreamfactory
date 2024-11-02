@@ -17,6 +17,21 @@ class DatabaseSeeder extends Seeder
     {
         Model::unguard();
 
+        // Run this first to ensure system service exists
+        $systemService = [
+            'name'        => 'system',
+            'label'       => 'System Management',
+            'description' => 'Service for managing system resources.',
+            'is_active'   => true,
+            'type'        => 'system',
+            'mutable'     => false,
+            'deletable'   => false,
+            'config'      => []
+        ];
+
+        $this->seedModel('DreamFactory\Core\Models\Service', [$systemService]);
+
+        // Then run the rest of the seeders
         $this->call(AppSeeder::class);
         $this->call(EmailTemplateSeeder::class);
         $class = 'DreamFactory\Core\Models\Service';
@@ -211,4 +226,9 @@ class DatabaseSeeder extends Seeder
     {
         return preg_replace('/([a-z])([A-Z])/', '\\1 \\2', $string);
     }
+
+    protected $seeders = [
+        // ... other seeders ...
+        SystemServiceSeeder::class,
+    ];
 }
