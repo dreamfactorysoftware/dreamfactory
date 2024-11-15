@@ -17,6 +17,14 @@ class DatabaseSeeder extends Seeder
     {
         Model::unguard();
 
+        // First, ensure all migrations are run
+        try {
+            \Artisan::call('migrate', ['--force' => true]);
+        } catch (\Exception $e) {
+            \Log::error('Migration failed: ' . $e->getMessage());
+            throw $e;
+        }
+
         // Run this first to ensure system service exists
         $systemService = [
             'name'        => 'system',
