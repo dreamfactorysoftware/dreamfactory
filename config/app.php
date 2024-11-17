@@ -42,6 +42,9 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
+        // Add MongoDB Provider
+        Jenssegers\Mongodb\MongodbServiceProvider::class,
+
         // Other DreamFactory Providers
         DreamFactory\Providers\AuthServiceProvider::class,
     ],
