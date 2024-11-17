@@ -42,8 +42,8 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
-        // Add MongoDB Provider
-        Jenssegers\Mongodb\MongoDBServiceProvider::class,
+        // Add MongoDB Provider (with correct namespace)
+        MongoDB\Laravel\MongoDBServiceProvider::class,
 
         // Other DreamFactory Providers
         DreamFactory\Providers\AuthServiceProvider::class,
