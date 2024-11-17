@@ -43,7 +43,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 
         // Add MongoDB Provider
-        Jenssegers\Mongodb\MongodbServiceProvider::class,
+        Jenssegers\Mongodb\MongoDBServiceProvider::class,
 
         // Other DreamFactory Providers
         DreamFactory\Providers\AuthServiceProvider::class,
