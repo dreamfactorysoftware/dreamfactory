@@ -80,6 +80,11 @@
         "branch-alias": {
             "dev-develop": "3.0.x-dev"
         },
+        "installer-paths": {
+          "public/{$name}/": [
+            "type:dreamfactory-app"
+            ]
+        },
         "laravel": {
             "dont-discover": []
         }
