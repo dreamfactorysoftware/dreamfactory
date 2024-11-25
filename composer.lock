@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a7e67055613814c7c493ec7be2876cf3",
+    "content-hash": "4f5d9a7944351b0e3101feea76a4973a",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -1201,16 +1201,16 @@
         },
         {
             "name": "dreamfactory/df-amqp",
-            "version": "0.3.0",
+            "version": "dev-laravel-11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-amqp.git",
-                "reference": "4072aaee1f054e872f26d684b97f326ebc449f8f"
+                "reference": "c0719f57666164168ebe113ef1aacb7a54dced55"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-amqp/zipball/4072aaee1f054e872f26d684b97f326ebc449f8f",
-                "reference": "4072aaee1f054e872f26d684b97f326ebc449f8f",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-amqp/zipball/c0719f57666164168ebe113ef1aacb7a54dced55",
+                "reference": "c0719f57666164168ebe113ef1aacb7a54dced55",
                 "shasum": ""
             },
             "require": {
@@ -1258,7 +1258,7 @@
                 "issues": "https://github.com/dreamfactorysoftware/df-amqp/issues",
                 "wiki": "https://wiki.dreamfactory.com"
             },
-            "time": "2023-02-27T14:23:50+00:00"
+            "time": "2024-11-25T22:11:58+00:00"
         },
         {
             "name": "dreamfactory/df-apidoc",
@@ -2235,16 +2235,16 @@
         },
         {
             "name": "dreamfactory/df-mqtt",
-            "version": "0.6.0",
+            "version": "dev-laravel-11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-mqtt.git",
-                "reference": "d7d9974c50b4972428a4e040e3b7a06af28ddcab"
+                "reference": "d9728618478c4b1ff7b7df4cbb0abe0d850fbb4d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-mqtt/zipball/d7d9974c50b4972428a4e040e3b7a06af28ddcab",
-                "reference": "d7d9974c50b4972428a4e040e3b7a06af28ddcab",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-mqtt/zipball/d9728618478c4b1ff7b7df4cbb0abe0d850fbb4d",
+                "reference": "d9728618478c4b1ff7b7df4cbb0abe0d850fbb4d",
                 "shasum": ""
             },
             "require": {
@@ -2293,7 +2293,7 @@
                 "issues": "https://github.com/dreamfactorysoftware/df-mqtt/issues",
                 "wiki": "https://wiki.dreamfactory.com"
             },
-            "time": "2023-02-27T14:45:35+00:00"
+            "time": "2024-11-25T22:11:24+00:00"
         },
         {
             "name": "dreamfactory/df-oauth",
@@ -14794,6 +14794,12 @@
     ],
     "aliases": [
         {
+            "package": "dreamfactory/df-amqp",
+            "version": "dev-laravel-11",
+            "alias": "0.3.0",
+            "alias_normalized": "0.3.0.0"
+        },
+        {
             "package": "dreamfactory/df-aws",
             "version": "dev-laravel-11",
             "alias": "0.18.0",
@@ -14848,6 +14854,12 @@
             "alias_normalized": "1.2.0.0"
         },
         {
+            "package": "dreamfactory/df-mqtt",
+            "version": "dev-laravel-11",
+            "alias": "0.6.0",
+            "alias_normalized": "0.6.0.0"
+        },
+        {
             "package": "dreamfactory/df-sqldb",
             "version": "dev-laravel-11",
             "alias": "1.1.0",
@@ -14857,6 +14869,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "dreamfactory/df-admin-interface": 20,
+        "dreamfactory/df-amqp": 20,
         "dreamfactory/df-aws": 20,
         "dreamfactory/df-azure": 20,
         "dreamfactory/df-cassandra": 20,
@@ -14866,6 +14879,7 @@
         "dreamfactory/df-firebird": 20,
         "dreamfactory/df-git": 20,
         "dreamfactory/df-mongo-logs": 20,
+        "dreamfactory/df-mqtt": 20,
         "dreamfactory/df-sqldb": 20
     },
     "prefer-stable": true,
