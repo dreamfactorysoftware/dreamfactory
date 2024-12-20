@@ -3,11 +3,11 @@
 </h1>
 
 <p align="center">
-    <strong>DevOps for Private APIs</strong>
+    <strong>Code Automation for Generating APIs</strong>
 </p>
 
 <p align="center">
-    <a href="http://guide.dreamfactory.com/">Getting Started Guide</a> ∙ <a href="https://genie.dreamfactory.com">Try Online</a> ∙ <a href="https://github.com/dreamfactorysoftware/dreamfactory/blob/master/CONTRIBUTING.md">Contribute</a> ∙ <a href="http://community.dreamfactory.com/">Community Support</a> ∙ <a href="https://wiki.dreamfactory.com">Docs</a>
+    <a href="http://guide.dreamfactory.com/">Getting Started Guide</a> ∙ <a href="https://dreamfactory.appsembler.com/embed/c75cd5dd-6354-453d-a03e-f3a5bbc05cfa/">Try Online</a> ∙ <a href="https://github.com/dreamfactorysoftware/dreamfactory/blob/master/CONTRIBUTING.md">Contribute</a> ∙ <a href="http://community.dreamfactory.com/">Community Support</a> ∙ <a href="https://docs.dreamfactory.com">Docs</a>
 </p>
 
 <p align="center">
@@ -21,8 +21,22 @@
 </p>
 
 <p align="center">
-<a href="https://heroku.com/deploy?template=https://github.com/dreamfactorysoftware/dreamfactory">
-  <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy">
+<a href="https://app.snowflake.com/marketplace/listing/GZTYZRSG47I/dreamfactory-software-dreamfactory-rest-api-generation">
+  <img src="/Users/punchcode/docker-base-test/testing/dreamfactory-development-packages/dreamfactory/readme/deploy-to-snowflake.svg" alt="Deploy to Snowflake">
+</a>
+&nbsp;&nbsp;
+<a href="https://marketplace.digitalocean.com/apps/dreamfactory?refcode=e62ab9df59c2&action=deploy">
+  <img src="https://www.deploytodo.com/do-btn-blue.svg" alt="Deploy to DO">
+</a>
+</p>
+
+<p align="center">
+<a href="https://github.com/dreamfactorysoftware/df-helm">
+  <img src="/Users/punchcode/docker-base-test/testing/dreamfactory-development-packages/dreamfactory/readme/deploy-with-helm.svg" alt="Deploy with Helm">
+</a>
+&nbsp;&nbsp;
+<a href="https://github.com/dreamfactorysoftware/df-docker">
+  <img src="/Users/punchcode/docker-base-test/testing/dreamfactory-development-packages/dreamfactory/readme/deploy-with-docker.svg" alt="Deploy with Docker">
 </a>
 </p>
 
@@ -30,8 +44,7 @@
 
 * <a href="#overview">Platform Overview</a>
 * <a href="#installation">Installation Options</a>
-* <a href="#heroku">Installing on Heroku</a>
-* <a href="#hosted">DreamFactory's Cloud Environment</a>
+* <a href="#hosted">DreamFactory's Cloud Playground</a>
 * <a href="#documentation">Documentation</a>
 * <a href="#community">Support Options</a>
 * <a href="#commercial">Commercial Licenses</a>
@@ -60,25 +73,12 @@ https://github.com/dreamfactorysoftware/dreamfactory/assets/36458555/6d1569a8-07
 * Our [Helm chart](https://github.com/dreamfactorysoftware/df-helm) provides a convenient way to install DreamFactory within your Kubernetes cluster.
 * [Raspberry Pi](http://guide.dreamfactory.com/docs/raspberry-pi.html) allows you to configure DreamFactory on everybody's favorite tiny computer.
 
-
-<a name="heroku"></a>
-
-## Installing on Heroku
-
-Heroku users can easily install DreamFactory by clicking on the below button. Keep in mind like many Heroku add-ons DreamFactory comes with some limitations such as the inability to deploy a local file system-based REST API due to Heroku's file system write limitations. Additionally, DreamFactory lacks support for multiple dynos. Regardless of these limitations, it's a breeze to get started using DreamFactory on Heroku so give it a whirl!
-
-<p align="center">
-<a href="https://heroku.com/deploy?template=https://github.com/dreamfactorysoftware/dreamfactory">
-  <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy">
-</a>
-</p>
-
-<a href="#commercial">Contact us</a> for more information if you're interested in a feature complete version (whether hosted in our cloud environment or on-premise). Or just <a href="https://genie.dreamfactory.com/">spin up a playground instance</a> right now! 
+<a href="#commercial">Contact us</a> for more information if you're interested in a feature complete version (whether hosted in our cloud environment or on-premise). Or just <a href="https://dreamfactory.appsembler.com/embed/c75cd5dd-6354-453d-a03e-f3a5bbc05cfa/">spin up a playground instance</a> right now! 
 
 <a name="hosted"></a>
 ## DreamFactory's Cloud Playground
 
-Start testing for free with our cloud playground now by creating a DreamFactory instance at <a href="https://genie.dreamfactory.com/">https://genie.dreamfactory.com/</a>.
+Start testing for free with our cloud playground now by creating a DreamFactory instance <a href="https://genie.dreamfactory.com/">here</a>.
 
 <a name="documentation"></a>
 ## Documentation
@@ -89,15 +89,14 @@ Additional platform documentation can be found on the [DreamFactory wiki](http:/
 <a name="community"></a>
 ## Community 
 
-| <a href="https://stackoverflow.com/questions/tagged/dreamfactory"><img src="https://raw.githubusercontent.com/dreamfactorysoftware/dreamfactory/master/readme/stackoverflow.png" height="50px"/></a> | <a href="https://community.dreamfactory.com"><img src="https://raw.githubusercontent.com/dreamfactorysoftware/dreamfactory/dev-readme/readme/mark-gold.png" height="60px"/></a> | <a href="https://twitter.com/dfsoftwareinc"><img src="https://raw.githubusercontent.com/dreamfactorysoftware/dreamfactory/master/readme/twitter.png" height="40px"/></a> |
+| <a href="https://stackoverflow.com/questions/tagged/dreamfactory"><img src="https://static-00.iconduck.com/assets.00/stack-overflow-icon-2048x2048-7ohycn5z.png" height="50px"/></a> | <a href="https://community.dreamfactory.com"><img src="https://raw.githubusercontent.com/dreamfactorysoftware/dreamfactory/master/readme/vertical-logo-fullcolor.png" height="60px"/></a> | <a href="https://twitter.com/dfsoftwareinc"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/X_logo.jpg/768px-X_logo.jpg" height="40px"/></a> |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Ask and answer StackOverflow questions with the [`dreamfactory` tag](https://stackoverflow.com/questions/tagged/dreamfactory)                                                                               | Check out our [community forum](https://community.dreamfactory.com), ask questions, and discuss project direction                                                                                           | Tweet to [`@dfsoftwareinc`](https://twitter.com/dfsoftwareinc) or with the [`#dreamfactory` hashtag](https://twitter.com/search?q=%23dreamfactory&f=live)  
+| Ask and answer StackOverflow questions with the [`dreamfactory` tag](https://stackoverflow.com/questions/tagged/dreamfactory)                                                                               | Check out our [Docs](https://docs.dreamfactory.com), [Wiki](https://wiki.dreamfactory.com), and [Guide](https://guide.dreamfactory.com) for various examples and tutorials                                                                                           | Tweet to [`@dfsoftwareinc`](https://twitter.com/dfsoftwareinc) or with the [`#dreamfactory` hashtag](https://twitter.com/search?q=%23dreamfactory&f=live)  
 
 <a name="commercial"></a>
 ## Commercial Licenses
 
-In need of official technical support? Desire access to REST API generators for SQL Server, Oracle, SOAP, or mobile
-push notifications? Require API limiting and/or auditing? Schedule a demo [with our team](https://www.dreamfactory.com/demo/)!
+In need of official technical support? Desire access to REST API wrappers for SQL Server, Oracle, SOAP, or Snowflake? Require API limiting and/or auditing? Looking to extend the capabilites of your existing APIs? Schedule a demo [with our team](https://www.dreamfactory.com/demo/)!
 
 <a name="feedback"></a>
 ## Feedback and Contributions
