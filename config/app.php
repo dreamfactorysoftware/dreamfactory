@@ -46,7 +46,7 @@ return [
         MongoDB\Laravel\MongoDBServiceProvider::class,
 
         // Other DreamFactory Providers
-        DreamFactory\System\Providers\AuthServiceProvider::class,
+        DreamFactory\Providers\AuthServiceProvider::class,
     ],
 
 ];
