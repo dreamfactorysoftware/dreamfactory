@@ -22,7 +22,7 @@
 
 <p align="center">
 <a href="https://app.snowflake.com/marketplace/listing/GZTYZRSG47I/dreamfactory-software-dreamfactory-rest-api-generation">
-  <img src="/Users/punchcode/docker-base-test/testing/dreamfactory-development-packages/dreamfactory/readme/deploy-to-snowflake.svg" alt="Deploy to Snowflake">
+  <img src="https://github.com/dreamfactorysoftware/dreamfactory/blob/shift-124321/readme/deploy-to-snowflake.svg" alt="Deploy to Snowflake">
 </a>
 &nbsp;&nbsp;
 <a href="https://marketplace.digitalocean.com/apps/dreamfactory?refcode=e62ab9df59c2&action=deploy">
@@ -32,11 +32,11 @@
 
 <p align="center">
 <a href="https://github.com/dreamfactorysoftware/df-helm">
-  <img src="/Users/punchcode/docker-base-test/testing/dreamfactory-development-packages/dreamfactory/readme/deploy-with-helm.svg" alt="Deploy with Helm">
+  <img src="https://github.com/dreamfactorysoftware/dreamfactory/blob/shift-124321/readme/deploy-with-helm.svg" alt="Deploy with Helm">
 </a>
 &nbsp;&nbsp;
 <a href="https://github.com/dreamfactorysoftware/df-docker">
-  <img src="/Users/punchcode/docker-base-test/testing/dreamfactory-development-packages/dreamfactory/readme/deploy-with-docker.svg" alt="Deploy with Docker">
+  <img src="https://github.com/dreamfactorysoftware/dreamfactory/blob/shift-124321/readme/deploy-with-docker.svg" alt="Deploy with Docker">
 </a>
 </p>
 
