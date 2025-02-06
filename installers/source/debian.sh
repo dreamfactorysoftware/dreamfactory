@@ -487,6 +487,39 @@ install_hive_odbc () {
   HIVE_ODBC_INSTALLED = $(php -m | grep -E "^odbc")
 }
 
+install_dremio_odbc () {
+  apt-get update
+  apt-get install -y --no-install-recommends --allow-unauthenticated ${PHP_VERSION}-odbc alien
+  mkdir /opt/dremio
+  cd /opt/dremio
+  curl --fail -O https://download.dremio.com/arrow-flight-sql-odbc-driver/arrow-flight-sql-odbc-driver-LATEST.x86_64.rpm
+  RPM_FILE=$(ls arrow-flight-sql-odbc-driver-*.rpm)
+  alien --to-deb "$RPM_FILE"
+  DEB_FILE=$(ls arrow-flight-sql-odbc-driver*.deb)
+  dpkg -i "$DEB_FILE"
+  rm -f "$RPM_FILE"
+  rm -f "$DEB_FILE"
+  test -f /opt/arrow-flight-sql-odbc-driver/lib64/libarrow-odbc.so.0.9.1.168
+  export DREMIO_SERVER_ODBC_DRIVER_PATH=/opt/arrow-flight-sql-odbc-driver/lib64//libarrow-odbc.so.0.9.1.168
+  DREMIO_ODBC_INSTALLED=$(php -m | grep -E "^odbc")
+}
+
+install_databricks_odbc () {
+  apt-get update
+  apt-get install -y --no-install-recommends --allow-unauthenticated ${PHP_VERSION}-odbc
+  mkdir /opt/databricks
+  cd /opt/databricks
+  curl --fail -O https://databricks-bi-artifacts.s3.us-east-2.amazonaws.com/simbaspark-drivers/odbc/2.8.2/SimbaSparkODBC-2.8.2.1013-Debian-64bit.zip
+  unzip -q SimbaSparkODBC-2.8.2.1013-Debian-64bit.zip
+  rm -f SimbaSparkODBC-2.8.2.1013-Debian-64bit.zip
+  rm -rf docs/
+  dpkg -i simbaspark_2.8.2.1013-2_amd64.deb
+  test -f /opt/simba/spark/lib/64/libsparkodbc_sb64.so
+  rm simbaspark_2.8.2.1013-2_amd64.deb
+  export DATABRICKS_SERVER_ODBC_DRIVER_PATH=/opt/simba/spark/lib/64/libsparkodbc_sb64.so
+  DATABRICKS_ODBC_INSTALLED = $(php -m | grep -E "^odbc")
+}
+
 enable_opcache () {
   {
     echo 'zend_extension=opcache.so'

@@ -52,10 +52,10 @@ install_php () {
     rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
     rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
 
-    yum-config-manager --enable remi-php81
+    yum-config-manager --enable remi-php83
 
     #Install PHP
-    yum --enablerepo=remi-php81 install -y php-common \
+    yum --enablerepo=remi-php83 install -y php-common \
       php-xml \
       php-cli \
       php-curl \
@@ -78,7 +78,7 @@ install_php () {
 
     dnf module list -y
     dnf module reset php -y
-    dnf module enable php:remi-8.1 -y
+    dnf module enable php:remi-8.3 -y
 
     #Install PHP
     dnf install -y php-common \
@@ -163,7 +163,7 @@ check_nginx_installation_status() {
 
 install_nginx () {
   if ((CURRENT_OS == 7)); then
-    yum --enablerepo=remi-php81 install -y php-fpm nginx
+    yum --enablerepo=remi-php83 install -y php-fpm nginx
   else
     dnf install -y php-fpm nginx
   fi
@@ -258,7 +258,7 @@ restart_nginx () {
 
 install_php_pear () {
   if ((CURRENT_OS == 7)); then
-    yum --enablerepo=remi-php81 install -y php-pear
+    yum --enablerepo=remi-php83 install -y php-pear
   else
     dnf install -y php-pear
   fi
@@ -274,7 +274,7 @@ install_php_pear () {
 
 install_mcrypt () {
   if ((CURRENT_OS == 7)); then
-    yum --enablerepo=remi-php81 install -y libmcrypt-devel
+    yum --enablerepo=remi-php83 install -y libmcrypt-devel
   else
     dnf install -y libmcrypt-devel
   fi
@@ -521,6 +521,36 @@ install_hive_odbc () {
   rm MapRHiveODBC-2.6.1.1001-1.x86_64.rpm
   export HIVE_SERVER_ODBC_DRIVER_PATH=/opt/mapr/hiveodbc/lib/64/libmaprhiveodbc64.so
   HIVE_ODBC_INSTALLED=$(php -m | grep -E "^odbc")
+}
+
+install_dremio_odbc () {
+  yum update -y
+  yum install -y php-odbc
+  mkdir /opt/dremio
+  cd /opt/dremio
+  wget https://download.dremio.com/arrow-flight-sql-odbc-driver/arrow-flight-sql-odbc-driver-LATEST.x86_64.rpm
+  RPM_FILE=$(ls arrow-flight-sql-odbc-driver-*.rpm)
+  rpm -ivh "$RPM_FILE"
+  rm -f "$RPM_FILE"
+  test -f /opt/arrow-flight-sql-odbc-driver/lib64/libarrow-odbc.so.0.9.1.168
+  export DREMIO_SERVER_ODBC_DRIVER_PATH=/opt/arrow-flight-sql-odbc-driver/lib64//libarrow-odbc.so.0.9.1.168
+  DREMIO_ODBC_INSTALLED=$(php -m | grep -E "^odbc")
+}
+
+install_databricks_odbc () {
+  yum update -y
+  yum install -y php-odbc
+  mkdir /opt/databricks
+  cd /opt/databricks
+  wget https://databricks-bi-artifacts.s3.us-east-2.amazonaws.com/simbaspark-drivers/odbc/2.8.2/SimbaSparkODBC-2.8.2.1013-LinuxRPM-64bit.zip
+  unzip -q SimbaSparkODBC-2.8.2.1013-LinuxRPM-64bit.zip
+  rm -f SimbaSparkODBC-2.8.2.1013-LinuxRPM-64bit.zip
+  rm -rf docs/
+  rpm -ivh simbaspark-2.8.2.1013-1.x86_64.rpm
+  test -f /opt/simba/spark/lib/64/libsparkodbc_sb64.so
+  rm simbaspark-2.8.2.1013-1.x86_64.rpm
+  export DATABRICKS_SERVER_ODBC_DRIVER_PATH=/opt/simba/spark/lib/64/libsparkodbc_sb64.so
+  DATABRICKS_ODBC_INSTALLED = $(php -m | grep -E "^odbc")
 }
 
 enable_opcache () {

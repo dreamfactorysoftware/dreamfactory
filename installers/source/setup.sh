@@ -10,7 +10,7 @@ TERM_COLS="$(tput cols)"
 ERROR_STRING="Installation error. Exiting"
 CURRENT_PATH=$(pwd)
 
-DEFAULT_PHP_VERSION="php8.1"
+DEFAULT_PHP_VERSION="php8.3"
 
 CURRENT_KERNEL=$(grep -w ID /etc/os-release | cut -d "=" -f 2 | tr -d '"')
 CURRENT_OS=$(grep -e VERSION_ID /etc/os-release | cut -d "=" -f 2 | cut -d "." -f 1 | tr -d '"')
@@ -84,8 +84,8 @@ fi
 #### Check Current OS is compatible with the installer ####
 case $CURRENT_KERNEL in
   ubuntu)
-    if ((CURRENT_OS != 20)) && ((CURRENT_OS != 22)); then
-      echo_with_color red "The installer only supports Ubuntu 20 and 22. Exiting...\n"
+    if ((CURRENT_OS != 22)) && ((CURRENT_OS != 24)); then
+      echo_with_color red "The installer only supports Ubuntu 22 and 24. Exiting...\n"
       exit 1
     fi
     ;;
@@ -531,6 +531,28 @@ if (($? >= 1)); then
     echo_with_color red "\nCould not build hive odbc driver." >&5
   else
     echo_with_color green "    hive odbc installed\n" >&5
+  fi
+fi
+
+### INSTALL Dremio ODBC Driver
+php -m | grep -E "^odbc"
+if (($? >= 1)); then
+  run_process "   Installing dremio odbc" install_dremio_odbc
+  if ((DREMIO_ODBC_INSTALLED != "odbc")); then
+    echo_with_color red "\nCould not build dremio odbc driver." >&5
+  else
+    echo_with_color green "    dremio odbc installed\n" >&5
+  fi
+fi
+
+### INSTALL Databricks ODBC Driver
+php -m | grep -E "^odbc"
+if (($? >= 1)); then
+  run_process "   Installing databricks odbc" install_databricks_odbc
+  if ((DATABRICKS_ODBC_INSTALLED != "odbc")); then
+    echo_with_color red "\nCould not build databricks odbc driver." >&5
+  else
+    echo_with_color green "    databricks odbc installed\n" >&5
   fi
 fi
 

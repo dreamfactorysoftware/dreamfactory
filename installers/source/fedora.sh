@@ -50,7 +50,7 @@ install_php () {
   if ((CURRENT_OS == 36 || CURRENT_OS == 37)); then
     dnf config-manager --set-enabled remi -y
     dnf module reset php -y
-    dnf module install php:remi-8.1 -y
+    dnf module install php:remi-8.3 -y
   fi
   #Install PHP
   dnf install -y php-common \
@@ -459,6 +459,36 @@ install_hive_odbc () {
   rm MapRHiveODBC-2.6.1.1001-1.x86_64.rpm
   export HIVE_SERVER_ODBC_DRIVER_PATH=/opt/mapr/hiveodbc/lib/64/libmaprhiveodbc64.so
   HIVE_ODBC_INSTALLED = $(php -m | grep -E "^odbc")
+}
+
+install_dremio_odbc () {
+  dnf update -y
+  dnf install -y php-odbc
+  mkdir /opt/dremio
+  cd /opt/dremio
+  wget https://download.dremio.com/arrow-flight-sql-odbc-driver/arrow-flight-sql-odbc-driver-LATEST.x86_64.rpm
+  RPM_FILE=$(ls arrow-flight-sql-odbc-driver-*.rpm)
+  rpm -ivh "$RPM_FILE"
+  rm -f "$RPM_FILE"
+  test -f /opt/arrow-flight-sql-odbc-driver/lib64/libarrow-odbc.so.0.9.1.168
+  export DREMIO_SERVER_ODBC_DRIVER_PATH=/opt/arrow-flight-sql-odbc-driver/lib64//libarrow-odbc.so.0.9.1.168
+  DREMIO_ODBC_INSTALLED=$(php -m | grep -E "^odbc")
+}
+
+install_databricks_odbc () {
+  dnf update -y
+  dnf install -y php-odbc
+  mkdir /opt/databricks
+  cd /opt/databricks
+  wget https://databricks-bi-artifacts.s3.us-east-2.amazonaws.com/simbaspark-drivers/odbc/2.8.2/SimbaSparkODBC-2.8.2.1013-LinuxRPM-64bit.zip
+  unzip -q SimbaSparkODBC-2.8.2.1013-LinuxRPM-64bit.zip
+  rm -f SimbaSparkODBC-2.8.2.1013-LinuxRPM-64bit.zip
+  rm -rf docs/
+  rpm -ivh simbaspark-2.8.2.1013-1.x86_64.rpm
+  test -f /opt/simba/spark/lib/64/libsparkodbc_sb64.so
+  rm simbaspark-2.8.2.1013-1.x86_64.rpm
+  export DATABRICKS_SERVER_ODBC_DRIVER_PATH=/opt/simba/spark/lib/64/libsparkodbc_sb64.so
+  DATABRICKS_ODBC_INSTALLED = $(php -m | grep -E "^odbc")
 }
 
 enable_opcache () {
