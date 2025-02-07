@@ -613,75 +613,6 @@ run_composer_install () {
   fi
 }
 
-run_df_frontend_install () {
-  # Define constants
-  REPO_OWNER="dreamfactorysoftware/df-admin-interface"  # DF owned repo
-  REPO_URL="https://github.com/$REPO_OWNER"
-  DF_FOLDER="/opt/dreamfactory"  # DF folder
-  DESTINATION_FOLDER="$DF_FOLDER/public"  # Destination folder is the DF public folder
-  TEMP_FOLDER="/tmp/df-ui" # Temporary folder to download the release file
-  RELEASE_FILENAME="release.zip"
-  FOLDERS_TO_REMOVE=("dreamfactory" "filemanager" "df-api-docs-ui" "assets")
-
-  mkdir -p "$TEMP_FOLDER"
-
-  cd "$TEMP_FOLDER" || exit
-
-  response=$(curl -s -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/$REPO_OWNER/releases")
-
-  # Check if the request was successful
-  if [ $? -ne 0 ]; then
-      echo_with_color red "Failed to retrieve releases."
-      kill $!
-      exit 1
-  fi
-
-
-  # Find the latest release
-  latest_release=$(echo "$response" | jq '.[] | .tag_name' | head -n 1)
-
-  # Check if a release was found
-  if [ -n "$latest_release" ]; then
-      latest_release=$(echo "$latest_release" | tr -d '"')
-      echo_with_color blue "\nLatest release: $latest_release\n" >&5
-  else
-      echo_with_color red "No releases found." >&5
-      kill $!
-      exit 1
-  fi
-
-  # Prepare the download URL using the latest tag
-  release_url="$REPO_URL/releases/download/$latest_release/release.zip"
-
-  # Download and check if the download was successful
-  if curl -LO "$release_url"; then
-    # Remove .js and .css files in the destination folder
-    find "$DESTINATION_FOLDER" -type f -name "*.js" -exec rm {} \;
-    find "$DESTINATION_FOLDER" -type f -name "*.css" -exec rm {} \;
-
-    # Remove the old UI folders if they exist
-    for folder in "${FOLDERS_TO_REMOVE[@]}"; do
-        full_path="$DESTINATION_FOLDER/$folder"
-        if [ -d "$full_path" ]; then
-            rm -rf "$full_path"
-        fi
-    done
-
-    unzip -qo "$RELEASE_FILENAME" -d "$TEMP_FOLDER"
-    # Update the index file
-    mv dist/index.html "$DF_FOLDER/resources/views/index.blade.php"
-    # Move the rest of the files to the public folder
-    mv dist/* "$DESTINATION_FOLDER"
-
-    # Clean up: remove the downloaded release file
-    cd .. && rm -rf "$TEMP_FOLDER"
-  else
-    echo_with_color red "\nError: Failed to download the release file. Exiting. " >&5
-    kill $!
-    exit 1
-  fi
-}
-
 run_commercial_upgrade () {
   echo_with_color magenta "\nEnter absolute path to license files, complete with trailing slash: [/]" >&5
   read -r LICENSE_PATH
@@ -787,10 +718,6 @@ upgrade_dreamfactory () {
   # Call artisan commands
   echo_with_color blue "   Running artisan commands\n" >&5
   run_artisan_commands
-
-  # Install the new DF UI
-  echo_with_color blue "   Installing DreamFactory UI\n" >&5
-  run_df_frontend_install
 
   # Change ownership to current user
   chown -R $owner:$group /opt/dreamfactory

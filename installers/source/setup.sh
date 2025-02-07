@@ -130,8 +130,7 @@ echo -e "[4] Install Apache2 web server for DreamFactory (Instead of Nginx)"
 echo -e "[5] Install MariaDB as the default system database for DreamFactory"
 echo -e "[6] Install a specfic version of DreamFactory"
 echo -e "[7] Run Installation in debug mode (logs will output to /tmp/dreamfactory_installer.log)"
-echo -e "[8] Run df frontend install (This option can be used as a standalone option. It is already included in the default install)"
-echo -e "[9] Upgrade DreamFactory\n"
+echo -e "[8] Upgrade DreamFactory\n"
 
 print_centered "-" "-"
 echo_with_color magenta "Input '0' and press Enter to run the default installation. To install additional options, type the corresponding number (e.g. '1,5' for Oracle and a MySql system database) from the menu above and press Enter"
@@ -236,14 +235,6 @@ esac
 #### INSTALLER ####
 
 if [[ $INSTALLATION_OPTIONS == *"8"* ]]; then
-  echo_with_color green "Install Dreamfactory UI selected.\n" >&5
-  run_process "   Installing DreamFactory UI" run_df_frontend_install
-  echo_with_color green "\nFinished installing Dreamfactory UI." >&5
-
-  exit 0
-fi
-
-if [[ $INSTALLATION_OPTIONS == *"9"* ]]; then
   echo_with_color green "Upgrading DreamFactory selected.\n" >&5
   run_process "   Upgrading DreamFactory" upgrade_dreamfactory
   echo_with_color green "\nFinished Upgrading DreamFactory." >&5
@@ -781,8 +772,6 @@ else
     echo_with_color red "\nInstalling DreamFactory OSS version.\n" >&5
   fi
 fi
-
-run_process "   Installing DreamFactory UI" run_df_frontend_install
 
 chown -R "$CURRENT_USER" /opt/dreamfactory && cd /opt/dreamfactory || exit 1
 
