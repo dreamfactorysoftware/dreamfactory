@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Facade;
 
 return [
 
-    'version' => '6.3.0',
+    'version' => '7.0.0',
 
     'license_key' => env('DF_LICENSE_KEY', false),
 
