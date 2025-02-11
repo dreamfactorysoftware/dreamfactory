@@ -41,8 +41,8 @@ install_php () {
   CRYPT=0
 
   if [[ $PHP_VERSION =~ ^-?[0-9]+$ ]]; then
-    if ((PHP_VERSION == 81)); then
-      PHP_VERSION=php8.1
+    if ((PHP_VERSION == 83)); then
+      PHP_VERSION=php8.3
       MCRYPT=1
     else
       PHP_VERSION=${DEFAULT_PHP_VERSION}
@@ -253,11 +253,10 @@ install_mongodb () {
 
 install_sql_server () {
   curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
-  if ((CURRENT_OS == 20)); then
-    curl https://packages.microsoft.com/config/ubuntu/20.04/prod.list >/etc/apt/sources.list.d/mssql-release.list
-  else
-    #ubuntu 22
+  if ((CURRENT_OS == 22)); then
     curl https://packages.microsoft.com/config/ubuntu/22.04/prod.list >/etc/apt/sources.list.d/mssql-release.list
+  else
+    curl https://packages.microsoft.com/config/ubuntu/24.04/prod.list >/etc/apt/sources.list.d/mssql-release.list
   fi
   apt-get update
   ACCEPT_EULA=Y apt-get install -y msodbcsql18 mssql-tools \
@@ -483,6 +482,39 @@ install_hive_odbc () {
   HIVE_ODBC_INSTALLED = $(php -m | grep -E "^odbc")
 }
 
+install_dremio_odbc () {
+  apt-get update
+  apt-get install -y --no-install-recommends --allow-unauthenticated ${PHP_VERSION}-odbc alien
+  mkdir /opt/dremio
+  cd /opt/dremio
+  curl --fail -O https://download.dremio.com/arrow-flight-sql-odbc-driver/arrow-flight-sql-odbc-driver-LATEST.x86_64.rpm
+  RPM_FILE=$(ls arrow-flight-sql-odbc-driver-*.rpm)
+  alien --to-deb "$RPM_FILE"
+  DEB_FILE=$(ls arrow-flight-sql-odbc-driver*.deb)
+  dpkg -i "$DEB_FILE"
+  rm -f "$RPM_FILE"
+  rm -f "$DEB_FILE"
+  test -f /opt/arrow-flight-sql-odbc-driver/lib64/libarrow-odbc.so.0.9.1.168
+  export DREMIO_SERVER_ODBC_DRIVER_PATH=/opt/arrow-flight-sql-odbc-driver/lib64//libarrow-odbc.so.0.9.1.168
+  DREMIO_ODBC_INSTALLED=$(php -m | grep -E "^odbc")
+}
+
+install_databricks_odbc () {
+  apt-get update
+  apt-get install -y --no-install-recommends --allow-unauthenticated ${PHP_VERSION}-odbc
+  mkdir /opt/databricks
+  cd /opt/databricks
+  curl --fail -O https://databricks-bi-artifacts.s3.us-east-2.amazonaws.com/simbaspark-drivers/odbc/2.8.2/SimbaSparkODBC-2.8.2.1013-Debian-64bit.zip
+  unzip -q SimbaSparkODBC-2.8.2.1013-Debian-64bit.zip
+  rm -f SimbaSparkODBC-2.8.2.1013-Debian-64bit.zip
+  rm -rf docs/
+  dpkg -i simbaspark_2.8.2.1013-2_amd64.deb
+  test -f /opt/simba/spark/lib/64/libsparkodbc_sb64.so
+  rm simbaspark_2.8.2.1013-2_amd64.deb
+  export DATABRICKS_SERVER_ODBC_DRIVER_PATH=/opt/simba/spark/lib/64/libsparkodbc_sb64.so
+  DATABRICKS_ODBC_INSTALLED = $(php -m | grep -E "^odbc")
+}
+
 enable_opcache () {
   {
     echo 'zend_extension=opcache.so'
@@ -539,13 +571,12 @@ install_mariadb () {
 
 
 add_mariadb_repo () {
-  if ((CURRENT_OS == 20)); then
-    apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
-    add-apt-repository -y 'deb [arch=amd64,arm64,ppc64el] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.3/ubuntu focal main'
-  else
-    #ubuntu22
-    apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
+  apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
+  if ((CURRENT_OS == 22)); then
     add-apt-repository -y 'deb [arch=amd64,arm64,ppc64el] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.11.1/ubuntu jammy main'
+  else
+    # Ubuntu 24
+    add-apt-repository -y 'deb [signed-by=/etc/apt/keyrings/mariadb-keyring.pgp] https://mirrors.ptisp.pt/mariadb/repo/10.11/ubuntu noble main'
   fi
 }
 
@@ -579,75 +610,6 @@ run_composer_install () {
     else
       sudo -u "$CURRENT_USER" bash -c "/usr/local/bin/composer install --no-dev --ignore-platform-req=ext-oci8"
     fi
-  fi
-}
-
-run_df_frontend_install () {
-  # Define constants
-  REPO_OWNER="dreamfactorysoftware/df-admin-interface"  # DF owned repo
-  REPO_URL="https://github.com/$REPO_OWNER"
-  DF_FOLDER="/opt/dreamfactory"  # DF folder
-  DESTINATION_FOLDER="$DF_FOLDER/public"  # Destination folder is the DF public folder
-  TEMP_FOLDER="/tmp/df-ui" # Temporary folder to download the release file
-  RELEASE_FILENAME="release.zip"
-  FOLDERS_TO_REMOVE=("dreamfactory" "filemanager" "df-api-docs-ui" "assets")
-
-  mkdir -p "$TEMP_FOLDER"
-
-  cd "$TEMP_FOLDER" || exit
-
-  response=$(curl -s -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/$REPO_OWNER/releases")
-
-  # Check if the request was successful
-  if [ $? -ne 0 ]; then
-      echo_with_color red "Failed to retrieve releases."
-      kill $!
-      exit 1
-  fi
-
-
-  # Find the latest release
-  latest_release=$(echo "$response" | jq '.[] | .tag_name' | head -n 1)
-
-  # Check if a release was found
-  if [ -n "$latest_release" ]; then
-      latest_release=$(echo "$latest_release" | tr -d '"')
-      echo_with_color blue "\nLatest release: $latest_release\n" >&5
-  else
-      echo_with_color red "No releases found." >&5
-      kill $!
-      exit 1
-  fi
-
-  # Prepare the download URL using the latest tag
-  release_url="$REPO_URL/releases/download/$latest_release/release.zip"
-
-  # Download and check if the download was successful
-  if curl -LO "$release_url"; then
-    # Remove .js and .css files in the destination folder
-    find "$DESTINATION_FOLDER" -type f -name "*.js" -exec rm {} \;
-    find "$DESTINATION_FOLDER" -type f -name "*.css" -exec rm {} \;
-
-    # Remove the old UI folders if they exist
-    for folder in "${FOLDERS_TO_REMOVE[@]}"; do
-        full_path="$DESTINATION_FOLDER/$folder"
-        if [ -d "$full_path" ]; then
-            rm -rf "$full_path"
-        fi
-    done
-
-    unzip -qo "$RELEASE_FILENAME" -d "$TEMP_FOLDER"
-    # Update the index file
-    mv dist/index.html "$DF_FOLDER/resources/views/index.blade.php"
-    # Move the rest of the files to the public folder
-    mv dist/* "$DESTINATION_FOLDER"
-
-    # Clean up: remove the downloaded release file
-    cd .. && rm -rf "$TEMP_FOLDER"
-  else
-    echo_with_color red "\nError: Failed to download the release file. Exiting. " >&5
-    kill $!
-    exit 1
   fi
 }
 
@@ -756,10 +718,6 @@ upgrade_dreamfactory () {
   # Call artisan commands
   echo_with_color blue "   Running artisan commands\n" >&5
   run_artisan_commands
-
-  # Install the new DF UI
-  echo_with_color blue "   Installing DreamFactory UI\n" >&5
-  run_df_frontend_install
 
   # Change ownership to current user
   chown -R $owner:$group /opt/dreamfactory
