@@ -57,14 +57,14 @@ declare -A settings=(
 # File Storage
 ["DF_FILE_CHUNK_SIZE"]="10000000"
 # Cache
-["CACHE_DRIVER"]="file"
+["CACHE_STORE"]="file"
 ["CACHE_PREFIX"]="dreamfactory"
 ["CACHE_DEFAULT_TTL"]="300"
-# if CACHE_DRIVER=file
+# if CACHE_STORE=file
 ["CACHE_PATH"]="storage/framework/cache/data"
-# if CACHE_DRIVER=database
+# if CACHE_STORE=database
 ["CACHE_TABLE"]="cache"
-# if CACHE_DRIVER=memcached or redis
+# if CACHE_STORE=memcached or redis
 ["REDIS_CLIENT"]="predis"
 ["CACHE_HOST"]="127.0.0.1"
 ["CACHE_PORT"]="6379"
@@ -78,7 +78,7 @@ declare -A settings=(
 ["LIMIT_CACHE_PREFIX"]="dreamfactory"
 # if LIMIT_CACHE_DRIVER=file
 ["LIMIT_CACHE_PATH"]="storage/framework/limit_cache"
-# if CACHE_DRIVER=database
+# if CACHE_STORE=database
 ["LIMIT_CACHE_TABLE"]="limit_cache"
 # if LIMIT_CACHE_DRIVER=memcached or redis
 ["LIMIT_CACHE_HOST"]="127.0.0.1"
@@ -106,11 +106,11 @@ declare -A settings=(
 ["AWS_DEFAULT_REGION"]="us-east-1"
 ["SQS_PREFIX"]="https://sqs.us-east-1.amazonaws.com/your-account-id"
 # Event Broadcasting
-["BROADCAST_DRIVER"]="null"
+["BROADCAST_CONNECTION"]="null"
 ["PUSHER_APP_ID"]=
 ["PUSHER_APP_KEY"]=
 ["PUSHER_APP_SECRET"]=
-# if BROADCAST_DRIVER=redis
+# if BROADCAST_CONNECTION=redis
 ["BROADCAST_HOST"]="127.0.0.1"
 ["BROADCAST_PORT"]="6379"
 ["BROADCAST_DATABASE"]="1"
@@ -173,7 +173,7 @@ declare -A settings_msg=(
 ["DF_FREETDS_DUMP"]="Enabling and location of dump file, defaults to disabled or default freetds.conf setting"
 ["DF_FREETDS_DUMPCONFIG"]="Location of connection dump file, defaults to disabled"
 # Cache
-["CACHE_DRIVER"]="What type of driver or connection to use for cache storage."
+["CACHE_STORE"]="What type of driver or connection to use for cache storage."
 ["CACHE_DEFAULT_TTL"]="Default cache time-to-live, defaults to 300."
 ["CACHE_PREFIX"]="A prefix used for all cache written out from this installation."
 ["CACHE_PATH"]="The path to a folder where the system cache information will be stored."
@@ -212,7 +212,7 @@ declare -A settings_msg=(
 ["AWS_DEFAULT_REGION"]="AWS storage region."
 ["SQS_PREFIX"]="AWS SQS specific prefix for queued jobs."
 # Event Broadcasting
-["BROADCAST_DRIVER"]="What type of driver or connection to use for broadcasting events from the server."
+["BROADCAST_CONNECTION"]="What type of driver or connection to use for broadcasting events from the server."
 ["PUSHER_APP_ID"]=
 ["PUSHER_APP_KEY"]=
 ["PUSHER_APP_SECRET"]=
@@ -263,7 +263,7 @@ declare -A settings_options=(
 # Database
 ["DB_CONNECTION"]="sqlite, mysql, pgsql, sqlsrv"
 # Cache
-["CACHE_DRIVER"]="apc, array, database, file, memcached, redis"
+["CACHE_STORE"]="apc, array, database, file, memcached, redis"
 ["REDIS_CLIENT"]="predis, phpredis"
 # Limits
 #["LIMIT_CACHE_DRIVER"]="apc, array, database, file, memcached, redis"
@@ -271,7 +271,7 @@ declare -A settings_options=(
 # Queuing
 ["QUEUE_CONNECTION"]="sync, database, beanstalkd, sqs, redis, null"
 # Event Broadcasting
-["BROADCAST_DRIVER"]="pusher, redis, log, null"
+["BROADCAST_CONNECTION"]="pusher, redis, log, null"
 # DreamFactory
 ["DF_LOGIN_ATTRIBUTE"]="email, username"
 ["DF_ALLOW_FOREVER_SESSIONS"]="true, false"
@@ -892,18 +892,18 @@ case $action in
                     settings_menu_handle "Database Settings"
                     ;;
 
-                3 ) case "${settings["CACHE_DRIVER"]}" in
-                        "file" ) menu_items=("CACHE_DRIVER" "CACHE_DEFAULT_TTL" "CACHE_PATH")
+                3 ) case "${settings["CACHE_STORE"]}" in
+                        "file" ) menu_items=("CACHE_STORE" "CACHE_DEFAULT_TTL" "CACHE_PATH")
                             [[ -z "${settings[CACHE_PATH]}" ]] && settings["CACHE_PATH"]="storage/framework/cache/data"
                             ;;
-                        "database" ) menu_items=("CACHE_DRIVER" "CACHE_DEFAULT_TTL" "CACHE_TABLE")
+                        "database" ) menu_items=("CACHE_STORE" "CACHE_DEFAULT_TTL" "CACHE_TABLE")
                             [[ -z "${settings[CACHE_TABLE]}" ]] && settings["CACHE_TABLE"]="cache"
                             ;;
-                        "memcached" ) menu_items=("CACHE_DRIVER" "CACHE_DEFAULT_TTL" "CACHE_HOST" "CACHE_PORT" "CACHE_USERNAME" "CACHE_PASSWORD" "CACHE_PERSISTENT_ID" "CACHE_WEIGHT") ;;
-                        "redis" ) menu_items=("CACHE_DRIVER" "REDIS_CLIENT" "CACHE_DEFAULT_TTL" "CACHE_HOST" "CACHE_PORT" "CACHE_DATABASE" "CACHE_PASSWORD") ;;
-                        "apc" ) menu_items=("CACHE_DRIVER" "CACHE_DEFAULT_TTL") ;;
-                        "array" ) menu_items=("CACHE_DRIVER") ;;
-                        * ) menu_items=("CACHE_DRIVER" "CACHE_DEFAULT_TTL" "CACHE_PATH")
+                        "memcached" ) menu_items=("CACHE_STORE" "CACHE_DEFAULT_TTL" "CACHE_HOST" "CACHE_PORT" "CACHE_USERNAME" "CACHE_PASSWORD" "CACHE_PERSISTENT_ID" "CACHE_WEIGHT") ;;
+                        "redis" ) menu_items=("CACHE_STORE" "REDIS_CLIENT" "CACHE_DEFAULT_TTL" "CACHE_HOST" "CACHE_PORT" "CACHE_DATABASE" "CACHE_PASSWORD") ;;
+                        "apc" ) menu_items=("CACHE_STORE" "CACHE_DEFAULT_TTL") ;;
+                        "array" ) menu_items=("CACHE_STORE") ;;
+                        * ) menu_items=("CACHE_STORE" "CACHE_DEFAULT_TTL" "CACHE_PATH")
                             [[ -z "${settings[CACHE_PATH]}" ]] && settings["CACHE_PATH"]="storage/framework/cache/data"
                             ;;
                     esac
@@ -923,24 +923,24 @@ case $action in
                             if [[ 0 -eq $num ]] ; then
                                 case "${choice}" in
                                     "file" )
-                                        menu_items=("CACHE_DRIVER" "CACHE_DEFAULT_TTL" "CACHE_PATH")
+                                        menu_items=("CACHE_STORE" "CACHE_DEFAULT_TTL" "CACHE_PATH")
                                         [[ -z "${settings[CACHE_PATH]}" ]] && settings["CACHE_PATH"]="storage/framework/cache/data"
                                         ;;
                                     "database" )
-                                        menu_items=("CACHE_DRIVER" "CACHE_DEFAULT_TTL" "CACHE_TABLE")
+                                        menu_items=("CACHE_STORE" "CACHE_DEFAULT_TTL" "CACHE_TABLE")
                                         [[ -z "${settings[CACHE_TABLE]}" ]] && settings["CACHE_TABLE"]="cache"
                                         ;;
                                     "memcached" ) chosen_features["memcached"]="+"
-                                        menu_items=("CACHE_DRIVER" "CACHE_DEFAULT_TTL" "CACHE_HOST" "CACHE_PORT" "CACHE_USERNAME" "CACHE_PASSWORD" "CACHE_PERSISTENT_ID" "CACHE_WEIGHT")
+                                        menu_items=("CACHE_STORE" "CACHE_DEFAULT_TTL" "CACHE_HOST" "CACHE_PORT" "CACHE_USERNAME" "CACHE_PASSWORD" "CACHE_PERSISTENT_ID" "CACHE_WEIGHT")
                                         ;;
                                     "redis" ) chosen_features["redis"]="+"
-                                        menu_items=("CACHE_DRIVER" "REDIS_CLIENT" "CACHE_DEFAULT_TTL" "CACHE_HOST" "CACHE_PORT" "CACHE_DATABASE" "CACHE_PASSWORD")
+                                        menu_items=("CACHE_STORE" "REDIS_CLIENT" "CACHE_DEFAULT_TTL" "CACHE_HOST" "CACHE_PORT" "CACHE_DATABASE" "CACHE_PASSWORD")
                                         ;;
                                     "apc" ) chosen_features["apc"]="+"
-                                        menu_items=("CACHE_DRIVER" "CACHE_DEFAULT_TTL")
+                                        menu_items=("CACHE_STORE" "CACHE_DEFAULT_TTL")
                                         ;;
                                     "array" )
-                                        menu_items=("CACHE_DRIVER")
+                                        menu_items=("CACHE_STORE")
                                         ;;
                                 esac
                             fi
@@ -1084,11 +1084,11 @@ case $action in
                     settings_menu_handle "Server-side Scripting Settings"
                     ;;
 
-#                7 ) case "${settings["BROADCAST_DRIVER"]}" in
-#                        "pusher" ) menu_items=("BROADCAST_DRIVER" "PUSHER_APP_ID" "PUSHER_APP_KEY" "PUSHER_APP_SECRET") ;;
-#                        "redis" ) menu_items=("BROADCAST_DRIVER" "BROADCAST_HOST" "BROADCAST_PORT" "BROADCAST_DATABASE" "BROADCAST_PASSWORD") ;;
-#                        "log" ) menu_items=("BROADCAST_DRIVER") ;;
-#                        "null" ) menu_items=("BROADCAST_DRIVER") ;;
+#                7 ) case "${settings["BROADCAST_CONNECTION"]}" in
+#                        "pusher" ) menu_items=("BROADCAST_CONNECTION" "PUSHER_APP_ID" "PUSHER_APP_KEY" "PUSHER_APP_SECRET") ;;
+#                        "redis" ) menu_items=("BROADCAST_CONNECTION" "BROADCAST_HOST" "BROADCAST_PORT" "BROADCAST_DATABASE" "BROADCAST_PASSWORD") ;;
+#                        "log" ) menu_items=("BROADCAST_CONNECTION") ;;
+#                        "null" ) menu_items=("BROADCAST_CONNECTION") ;;
 #                    esac
 #                    menu_msg="Current event broadcast settings:"
 #                    settings_error=""
@@ -1106,16 +1106,16 @@ case $action in
 #                            if [[ 0 -eq $num ]] ; then
 #                                case "${choice}" in
 #                                    "pusher" ) chosen_features["pusher"]="+"
-#                                        menu_items=("BROADCAST_DRIVER" "PUSHER_APP_ID" "PUSHER_APP_KEY" "PUSHER_APP_SECRET")
+#                                        menu_items=("BROADCAST_CONNECTION" "PUSHER_APP_ID" "PUSHER_APP_KEY" "PUSHER_APP_SECRET")
 #                                        ;;
 #                                    "redis" ) chosen_features["redis"]="+"
-#                                        menu_items=("BROADCAST_DRIVER" "BROADCAST_HOST" "BROADCAST_PORT" "BROADCAST_DATABASE" "BROADCAST_PASSWORD")
+#                                        menu_items=("BROADCAST_CONNECTION" "BROADCAST_HOST" "BROADCAST_PORT" "BROADCAST_DATABASE" "BROADCAST_PASSWORD")
 #                                        ;;
 #                                    "log" )
-#                                        menu_items=("BROADCAST_DRIVER")
+#                                        menu_items=("BROADCAST_CONNECTION")
 #                                        ;;
 #                                    "null" )
-#                                        menu_items=("BROADCAST_DRIVER")
+#                                        menu_items=("BROADCAST_CONNECTION")
 #                                        ;;
 #                                esac
 #                            fi

@@ -27,6 +27,9 @@
     <link rel="stylesheet" href="/css/df-create-first-user.css">
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Add this meta tag right after other meta tags -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
 
@@ -38,7 +41,7 @@
             <div id="loadingFrame" class="box-wrapper">
                 <h3>Hello and Welcome to DreamFactory v{{$version}}!</h3>
                 <div id="loadingMsg" style="display: none;">
-                    You will be up and ready in just few seconds.
+                    You will be up and running in just few seconds.
                     Please wait while we setup and configure your DreamFactory instance.
                     <br>
                     <br>
@@ -75,6 +78,11 @@
 <!-- Scripts -->
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
 
     setTimeout(function(){
         $.ajax({
@@ -85,7 +93,7 @@
             contentType: 'application/json',
             cache: false,
             processData: false,
-            //data: JSON.stringify(data),
+            data: JSON.stringify({}),  // Add empty data object
             beforeSend: function (xhr) {
                 $('#loadingMsg').slideDown();
             },

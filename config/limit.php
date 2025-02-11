@@ -39,40 +39,40 @@ return [
         ],
 
         'database' => [
-            'driver'     => 'database',
-            'table'      => env('LIMIT_CACHE_TABLE', 'limit'),
+            'driver' => 'database',
+            'table' => env('LIMIT_CACHE_TABLE', 'limit'),
             'connection' => env('DB_CONNECTION', 'sqlite'),
         ],
 
         'file' => [
             'driver' => 'file',
-            'path'   => env('LIMIT_CACHE_PATH', storage_path('framework/limit_cache')),
+            'path' => env('LIMIT_CACHE_PATH', storage_path('framework/limit_cache')),
         ],
 
         'memcached' => [
-            'driver'        => 'memcached',
+            'driver' => 'memcached',
             'persistent_id' => env('LIMIT_CACHE_PERSISTENT_ID', env('MEMCACHED_PERSISTENT_ID')),
-            'sasl'          => [
+            'sasl' => [
                 env('LIMIT_CACHE_USERNAME', env('MEMCACHED_USERNAME')),
                 env('LIMIT_CACHE_PASSWORD', env('MEMCACHED_PASSWORD')),
             ],
-            'options'       => [
+            'options' => [
                 // Memcached::OPT_CONNECT_TIMEOUT  => 2000,
             ],
-            'servers'       => [
+            'servers' => [
                 [
-                    'host'   => env('LIMIT_CACHE_HOST', env('MEMCACHED_HOST', '127.0.0.1')),
-                    'port'   => env('LIMIT_CACHE_PORT', env('MEMCACHED_PORT', 11211)),
+                    'host' => env('LIMIT_CACHE_HOST', env('MEMCACHED_HOST', '127.0.0.1')),
+                    'port' => env('LIMIT_CACHE_PORT', env('MEMCACHED_PORT', 11211)),
                     'weight' => env('LIMIT_CACHE_WEIGHT', env('MEMCACHED_WEIGHT', 100)),
                 ],
             ],
         ],
 
-        'redis'                                    => [
-            'driver'   => 'redis',
-            'client'   => env('REDIS_CLIENT', 'predis'),
-            'host'     => env('LIMIT_CACHE_HOST', env('LIMIT_CACHE_REDIS_HOST', env('REDIS_HOST'))),
-            'port'     => env('LIMIT_CACHE_PORT', env('LIMIT_CACHE_REDIS_PORT', env('REDIS_PORT'))),
+        'redis' => [
+            'driver' => 'redis',
+            'client' => env('REDIS_CLIENT', 'predis'),
+            'host' => env('LIMIT_CACHE_HOST', env('LIMIT_CACHE_REDIS_HOST', env('REDIS_HOST'))),
+            'port' => env('LIMIT_CACHE_PORT', env('LIMIT_CACHE_REDIS_PORT', env('REDIS_PORT'))),
             'database' => env('LIMIT_CACHE_DATABASE', env('LIMIT_CACHE_REDIS_DATABASE', 9)),
             'password' => env('LIMIT_CACHE_PASSWORD', env('LIMIT_CACHE_REDIS_PASSWORD', env('REDIS_PASSWORD'))),
         ],
@@ -80,7 +80,7 @@ return [
         /* Managed instance limits cache */
         env('DF_LIMITS_CACHE_STORE', 'dfe-limits') => [
             'driver' => 'file',
-            'path'   => env('DF_LIMITS_CACHE_PATH', storage_path('framework/cache')),
+            'path' => env('DF_LIMITS_CACHE_PATH', storage_path('framework/cache')),
         ],
     ],
 
