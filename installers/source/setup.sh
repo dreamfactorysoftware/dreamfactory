@@ -787,14 +787,15 @@ if [[ $DB_INSTALLED == FALSE ]]; then
                 --db_port=3306 \
                 --db_database=${DF_SYSTEM_DB} \
                 --db_username=${DF_SYSTEM_DB_USER} \
-                --db_password=${DF_SYSTEM_DB_PASSWORD//\'/}"
+                --db_password=${DF_SYSTEM_DB_PASSWORD//\'/} \
+                --db_install=Linux"
   sed -i 's/\#DB\_CHARSET\=/DB\_CHARSET\=utf8/g' .env
   sed -i 's/\#DB\_COLLATION\=/DB\_COLLATION\=utf8\_unicode\_ci/g' .env
   echo -e "\n"
   MYSQL_INSTALLED=TRUE
 
 elif [[ ! $MYSQL == TRUE && $DF_CLEAN_INSTALLATION == TRUE ]] || [[ $DB_INSTALLED == TRUE ]]; then
-  sudo -u "$CURRENT_USER" bash -c "php artisan df:env"
+  sudo -u "$CURRENT_USER" bash -c "php artisan df:env --df_install=Linux"
   if [[ $DB_INSTALLED == TRUE ]]; then
     sed -i 's/\#DB\_CHARSET\=/DB\_CHARSET\=utf8/g' .env
     sed -i 's/\#DB\_COLLATION\=/DB\_COLLATION\=utf8\_unicode\_ci/g' .env
