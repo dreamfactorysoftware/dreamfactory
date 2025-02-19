@@ -52,10 +52,10 @@ install_php () {
     rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
     rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
 
-    yum-config-manager --enable remi-php81
+    yum-config-manager --enable remi-php83
 
     #Install PHP
-    yum --enablerepo=remi-php81 install -y php-common \
+    yum --enablerepo=remi-php83 install -y php-common \
       php-xml \
       php-cli \
       php-curl \
@@ -78,7 +78,7 @@ install_php () {
 
     dnf module list -y
     dnf module reset php -y
-    dnf module enable php:remi-8.1 -y
+    dnf module enable php:remi-8.3 -y
 
     #Install PHP
     dnf install -y php-common \
@@ -163,7 +163,7 @@ check_nginx_installation_status() {
 
 install_nginx () {
   if ((CURRENT_OS == 7)); then
-    yum --enablerepo=remi-php81 install -y php-fpm nginx
+    yum --enablerepo=remi-php83 install -y php-fpm nginx
   else
     dnf install -y php-fpm nginx
   fi
@@ -258,7 +258,7 @@ restart_nginx () {
 
 install_php_pear () {
   if ((CURRENT_OS == 7)); then
-    yum --enablerepo=remi-php81 install -y php-pear
+    yum --enablerepo=remi-php83 install -y php-pear
   else
     dnf install -y php-pear
   fi
@@ -274,7 +274,7 @@ install_php_pear () {
 
 install_mcrypt () {
   if ((CURRENT_OS == 7)); then
-    yum --enablerepo=remi-php81 install -y libmcrypt-devel
+    yum --enablerepo=remi-php83 install -y libmcrypt-devel
   else
     dnf install -y libmcrypt-devel
   fi
@@ -523,6 +523,36 @@ install_hive_odbc () {
   HIVE_ODBC_INSTALLED=$(php -m | grep -E "^odbc")
 }
 
+install_dremio_odbc () {
+  yum update -y
+  yum install -y php-odbc
+  mkdir /opt/dremio
+  cd /opt/dremio
+  wget https://download.dremio.com/arrow-flight-sql-odbc-driver/arrow-flight-sql-odbc-driver-LATEST.x86_64.rpm
+  RPM_FILE=$(ls arrow-flight-sql-odbc-driver-*.rpm)
+  rpm -ivh "$RPM_FILE"
+  rm -f "$RPM_FILE"
+  test -f /opt/arrow-flight-sql-odbc-driver/lib64/libarrow-odbc.so.0.9.1.168
+  export DREMIO_SERVER_ODBC_DRIVER_PATH=/opt/arrow-flight-sql-odbc-driver/lib64//libarrow-odbc.so.0.9.1.168
+  DREMIO_ODBC_INSTALLED=$(php -m | grep -E "^odbc")
+}
+
+install_databricks_odbc () {
+  yum update -y
+  yum install -y php-odbc
+  mkdir /opt/databricks
+  cd /opt/databricks
+  wget https://databricks-bi-artifacts.s3.us-east-2.amazonaws.com/simbaspark-drivers/odbc/2.8.2/SimbaSparkODBC-2.8.2.1013-LinuxRPM-64bit.zip
+  unzip -q SimbaSparkODBC-2.8.2.1013-LinuxRPM-64bit.zip
+  rm -f SimbaSparkODBC-2.8.2.1013-LinuxRPM-64bit.zip
+  rm -rf docs/
+  rpm -ivh simbaspark-2.8.2.1013-1.x86_64.rpm
+  test -f /opt/simba/spark/lib/64/libsparkodbc_sb64.so
+  rm simbaspark-2.8.2.1013-1.x86_64.rpm
+  export DATABRICKS_SERVER_ODBC_DRIVER_PATH=/opt/simba/spark/lib/64/libsparkodbc_sb64.so
+  DATABRICKS_ODBC_INSTALLED = $(php -m | grep -E "^odbc")
+}
+
 enable_opcache () {
   {
     echo 'zend_extension=opcache.so'
@@ -610,79 +640,6 @@ run_composer_install () {
 # Define common constants
 DF_FOLDER="/opt/dreamfactory"
 DESTINATION_FOLDER="$DF_FOLDER/public"
-RELEASE_FILENAME="release.zip"
-FOLDERS_TO_REMOVE=("dreamfactory" "filemanager" "df-api-docs-ui" "assets")
-
-# Function to perform the frontend installation
-run_df_frontend_install() {
-  # Define constants specific to this function
-  REPO_OWNER="dreamfactorysoftware/df-admin-interface"
-  REPO_URL="https://github.com/$REPO_OWNER"
-  TEMP_FOLDER="/tmp/df-ui"
-
-  # Create a temporary folder
-  mkdir -p "$TEMP_FOLDER"
-
-  cd "$TEMP_FOLDER" || exit
-
-  response=$(curl -s -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/$REPO_OWNER/releases")
-
-  # Check if the request was successful
-  if [ $? -ne 0 ]; then
-      echo_with_color red "Failed to retrieve releases."
-      kill $!
-      exit 1
-  fi
-
-
-  # Find the latest release
-  latest_release=$(echo "$response" | jq '.[] | .tag_name' | head -n 1)
-
-  # Check if a release was found
-  if [ -n "$latest_release" ]; then
-      latest_release=$(echo "$latest_release" | tr -d '"')
-      echo_with_color blue "\nLatest release: $latest_release\n" >&5
-  else
-      echo_with_color red "No releases found." >&5
-      kill $!
-      exit 1
-  fi
-
-  # Prepare the download URL using the latest tag
-  release_url="$REPO_URL/releases/download/$latest_release/release.zip"
-
-  # Download and check if the download was successful
-  if curl -LO "$release_url"; then
-    # Remove .js and .css files in the destination folder
-    find "$DESTINATION_FOLDER" -type f -name "*.js" -exec rm {} \;
-    find "$DESTINATION_FOLDER" -type f -name "*.css" -exec rm {} \;
-
-    # Remove the old UI folders if they exist
-    for folder in "${FOLDERS_TO_REMOVE[@]}"; do
-      full_path="$DESTINATION_FOLDER/$folder"
-      if [ -d "$full_path" ]; then
-        rm -rf "$full_path"
-      fi
-    done
-
-    # Extract the release file into the destination folder
-    unzip -qo "$RELEASE_FILENAME" -d "$TEMP_FOLDER"
-
-    # Update the index file
-    mv "$TEMP_FOLDER/dist/index.html" "$DF_FOLDER/resources/views/index.blade.php"
-
-    # Move the rest of the files to the public folder
-    mv "$TEMP_FOLDER/dist/*" "$DESTINATION_FOLDER"
-
-    # Clean up: remove the downloaded release file
-    cd ..
-    rm -rf "$TEMP_FOLDER"
-  else
-    echo_with_color red "Error: Failed to download the release file."
-    kill $!
-    exit 1
-  fi
-}
 
 run_commercial_upgrade () {
   echo_with_color magenta "\nEnter absolute path to license files, complete with trailing slash: [/]" >&5
@@ -790,10 +747,6 @@ upgrade_dreamfactory () {
   # Call artisan commands
   echo -e "   Running artisan commands\n" >&5
   run_artisan_commands
-
-  # Install the new DF UI
-  echo -e "   Installing DreamFactory UI\n" >&5
-  run_df_frontend_install
 
   # Change ownership to current user
   chown -R $owner:$group /opt/dreamfactory

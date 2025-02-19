@@ -10,7 +10,7 @@ TERM_COLS="$(tput cols)"
 ERROR_STRING="Installation error. Exiting"
 CURRENT_PATH=$(pwd)
 
-DEFAULT_PHP_VERSION="php8.1"
+DEFAULT_PHP_VERSION="php8.3"
 
 CURRENT_KERNEL=$(grep -w ID /etc/os-release | cut -d "=" -f 2 | tr -d '"')
 CURRENT_OS=$(grep -e VERSION_ID /etc/os-release | cut -d "=" -f 2 | cut -d "." -f 1 | tr -d '"')
@@ -84,8 +84,8 @@ fi
 #### Check Current OS is compatible with the installer ####
 case $CURRENT_KERNEL in
   ubuntu)
-    if ((CURRENT_OS != 20)) && ((CURRENT_OS != 22)); then
-      echo_with_color red "The installer only supports Ubuntu 20 and 22. Exiting...\n"
+    if ((CURRENT_OS != 22)) && ((CURRENT_OS != 24)); then
+      echo_with_color red "The installer only supports Ubuntu 22 and 24. Exiting...\n"
       exit 1
     fi
     ;;
@@ -130,8 +130,7 @@ echo -e "[4] Install Apache2 web server for DreamFactory (Instead of Nginx)"
 echo -e "[5] Install MariaDB as the default system database for DreamFactory"
 echo -e "[6] Install a specfic version of DreamFactory"
 echo -e "[7] Run Installation in debug mode (logs will output to /tmp/dreamfactory_installer.log)"
-echo -e "[8] Run df frontend install (This option can be used as a standalone option. It is already included in the default install)"
-echo -e "[9] Upgrade DreamFactory\n"
+echo -e "[8] Upgrade DreamFactory\n"
 
 print_centered "-" "-"
 echo_with_color magenta "Input '0' and press Enter to run the default installation. To install additional options, type the corresponding number (e.g. '1,5' for Oracle and a MySql system database) from the menu above and press Enter"
@@ -236,14 +235,6 @@ esac
 #### INSTALLER ####
 
 if [[ $INSTALLATION_OPTIONS == *"8"* ]]; then
-  echo_with_color green "Install Dreamfactory UI selected.\n" >&5
-  run_process "   Installing DreamFactory UI" run_df_frontend_install
-  echo_with_color green "\nFinished installing Dreamfactory UI." >&5
-
-  exit 0
-fi
-
-if [[ $INSTALLATION_OPTIONS == *"9"* ]]; then
   echo_with_color green "Upgrading DreamFactory selected.\n" >&5
   run_process "   Upgrading DreamFactory" upgrade_dreamfactory
   echo_with_color green "\nFinished Upgrading DreamFactory." >&5
@@ -534,6 +525,28 @@ if (($? >= 1)); then
   fi
 fi
 
+### INSTALL Dremio ODBC Driver
+php -m | grep -E "^odbc"
+if (($? >= 1)); then
+  run_process "   Installing dremio odbc" install_dremio_odbc
+  if ((DREMIO_ODBC_INSTALLED != "odbc")); then
+    echo_with_color red "\nCould not build dremio odbc driver." >&5
+  else
+    echo_with_color green "    dremio odbc installed\n" >&5
+  fi
+fi
+
+### INSTALL Databricks ODBC Driver
+php -m | grep -E "^odbc"
+if (($? >= 1)); then
+  run_process "   Installing databricks odbc" install_databricks_odbc
+  if ((DATABRICKS_ODBC_INSTALLED != "odbc")); then
+    echo_with_color red "\nCould not build databricks odbc driver." >&5
+  else
+    echo_with_color green "    databricks odbc installed\n" >&5
+  fi
+fi
+
 ### Configuring PHP OPCache and JIT compilation
 run_process "   Configuring PHP OPCache and JIT compilation" enable_opcache
 
@@ -760,8 +773,6 @@ else
   fi
 fi
 
-run_process "   Installing DreamFactory UI" run_df_frontend_install
-
 chown -R "$CURRENT_USER" /opt/dreamfactory && cd /opt/dreamfactory || exit 1
 
 run_process "   Installing DreamFactory"  run_composer_install
@@ -776,14 +787,15 @@ if [[ $DB_INSTALLED == FALSE ]]; then
                 --db_port=3306 \
                 --db_database=${DF_SYSTEM_DB} \
                 --db_username=${DF_SYSTEM_DB_USER} \
-                --db_password=${DF_SYSTEM_DB_PASSWORD//\'/}"
+                --db_password=${DF_SYSTEM_DB_PASSWORD//\'/} \
+                --db_install=Linux"
   sed -i 's/\#DB\_CHARSET\=/DB\_CHARSET\=utf8/g' .env
   sed -i 's/\#DB\_COLLATION\=/DB\_COLLATION\=utf8\_unicode\_ci/g' .env
   echo -e "\n"
   MYSQL_INSTALLED=TRUE
 
 elif [[ ! $MYSQL == TRUE && $DF_CLEAN_INSTALLATION == TRUE ]] || [[ $DB_INSTALLED == TRUE ]]; then
-  sudo -u "$CURRENT_USER" bash -c "php artisan df:env"
+  sudo -u "$CURRENT_USER" bash -c "php artisan df:env --df_install=Linux"
   if [[ $DB_INSTALLED == TRUE ]]; then
     sed -i 's/\#DB\_CHARSET\=/DB\_CHARSET\=utf8/g' .env
     sed -i 's/\#DB\_COLLATION\=/DB\_COLLATION\=utf8\_unicode\_ci/g' .env

@@ -1,5 +1,8 @@
 <?php
 
+use DreamFactory\Http\Controllers\SplashController;
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,16 +14,10 @@
 |
 */
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
-
-Route::get('/', 'SplashController@index');
-
-Route::get('/setup', 'SplashController@createFirstUser');
-
-Route::post('/setup', 'SplashController@createFirstUser');
-
-Route::get('/setup_db', 'SplashController@setupDb');
-
-Route::post('/setup_db', 'SplashController@setupDb');
+Route::middleware(['web'])->group(function () {
+    Route::get('/', [SplashController::class, 'index']);
+    Route::get('/setup', [SplashController::class, 'createFirstUser']);
+    Route::post('/setup', [SplashController::class, 'createFirstUser']);
+    Route::get('/setup_db', [SplashController::class, 'setupDb']);
+    Route::post('/setup_db', [SplashController::class, 'setupDb']);
+});

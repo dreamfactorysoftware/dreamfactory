@@ -11,8 +11,8 @@ return [
     |
     */
 
-    'filename'  => '_ide_helper',
-    'format'    => 'php',
+    'filename' => '_ide_helper',
+    'format' => 'php',
 
     /*
     |--------------------------------------------------------------------------
@@ -60,13 +60,13 @@ return [
 
     'magic' => [
         'Log' => [
-            'debug'     => 'Monolog\Logger::addDebug',
-            'info'      => 'Monolog\Logger::addInfo',
-            'notice'    => 'Monolog\Logger::addNotice',
-            'warning'   => 'Monolog\Logger::addWarning',
-            'error'     => 'Monolog\Logger::addError',
-            'critical'  => 'Monolog\Logger::addCritical',
-            'alert'     => 'Monolog\Logger::addAlert',
+            'debug' => 'Monolog\Logger::addDebug',
+            'info' => 'Monolog\Logger::addInfo',
+            'notice' => 'Monolog\Logger::addNotice',
+            'warning' => 'Monolog\Logger::addWarning',
+            'error' => 'Monolog\Logger::addError',
+            'critical' => 'Monolog\Logger::addCritical',
+            'alert' => 'Monolog\Logger::addAlert',
             'emergency' => 'Monolog\Logger::addEmergency',
         ],
     ],

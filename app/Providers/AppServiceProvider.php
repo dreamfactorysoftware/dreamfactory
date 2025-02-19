@@ -7,21 +7,26 @@ use Illuminate\Support\ServiceProvider;
 class AppServiceProvider extends ServiceProvider
 {
     /**
-     * Bootstrap any application services.
+     * The path to your application's "home" route.
      *
-     * @return void
+     * Typically, users are redirected here after authentication.
+     *
+     * @var string
      */
-    public function boot()
+    public const HOME = '/home';
+
+    /**
+     * Bootstrap any application services.
+     */
+    public function boot(): void
     {
         //
     }
 
     /**
      * Register any application services.
-     *
-     * @return void
      */
-    public function register()
+    public function register(): void
     {
         //
     }
