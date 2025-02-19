@@ -252,24 +252,27 @@ install_mongodb () {
 }
 
 install_sql_server () {
-  curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
+  curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /usr/share/keyrings/microsoft-archive-keyring.gpg
+
   if ((CURRENT_OS == 22)); then
-    curl https://packages.microsoft.com/config/ubuntu/22.04/prod.list >/etc/apt/sources.list.d/mssql-release.list
+    echo "deb [arch=amd64,arm64] https://packages.microsoft.com/ubuntu/22.04/prod focal main" | sudo tee /etc/apt/sources.list.d/mssql-release.list
   else
-    curl https://packages.microsoft.com/config/ubuntu/24.04/prod.list >/etc/apt/sources.list.d/mssql-release.list
+    echo "deb [arch=amd64,arm64] https://packages.microsoft.com/ubuntu/24.04/prod jammy main" | sudo tee /etc/apt/sources.list.d/mssql-release.list
+    sudo apt-get update
+    ACCEPT_EULA=Y DEBIAN_FRONTEND=noninteractive sudo apt-get install -y --no-install-recommends unixodbc-dev
+    echo "extension=sqlsrv.so" | sudo tee /etc/php/8.3/mods-available/sqlsrv.ini
+    echo "extension=pdo_sqlsrv.so" | sudo tee /etc/php/8.3/mods-available/pdo_sqlsrv.ini
+    sudo phpenmod -s ALL sqlsrv pdo_sqlsrv
   fi
-  apt-get update
-  ACCEPT_EULA=Y apt-get install -y msodbcsql18 mssql-tools \
-  unixodbc-dev=2.3.7 unixodbc=2.3.7 odbcinst1debian2=2.3.7 odbcinst=2.3.7
+
+  sudo apt-get update
+  ACCEPT_EULA=Y sudo apt-get install -y mssql-server msodbcsql18 mssql-tools unixodbc odbcinst php8.3-odbc
 
   pecl install sqlsrv
   if (($? >= 1)); then
     echo_with_color red "\nMS SQL Server extension installation error." >&5
-    kill $!
     exit 1
   fi
-  echo "extension=sqlsrv.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/sqlsrv.ini"
-  phpenmod -s ALL sqlsrv
 }
 
 install_pdo_sqlsrv () {
