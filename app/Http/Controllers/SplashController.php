@@ -7,6 +7,7 @@ use DreamFactory\Core\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\Request;
 
 class SplashController extends Controller
 {
@@ -23,14 +24,15 @@ class SplashController extends Controller
         return redirect(config('df.landing_page', '/test_rest.html').$param);
     }
 
-    public function createFirstUser()
+    public function createFirstUser(Request $request)
     {
-        if (! User::adminExists()) {
-            $request = \Request::instance();
+        if (!User::adminExists()) {
             $method = $request->method();
+            $version = config('app.version');
             $data = [
                 'username_placeholder' => 'Username (Optional, defaults to email address)',
                 'email_placeholder' => 'Email Address (Required for login)',
+                'version' => $version,
             ];
             $loginAttribute = strtolower(config('df.login_attribute', 'email'));
             if ($loginAttribute === 'username') {
@@ -40,7 +42,6 @@ class SplashController extends Controller
 
             if ($method === Verbs::GET) {
                 $data = array_merge([
-                    'version' => \Config::get('app.version'),
                     'email' => '',
                     'name' => '',
                     'first_name' => '',
