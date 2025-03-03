@@ -253,20 +253,16 @@ install_mongodb () {
 
 install_sql_server () {
   curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /usr/share/keyrings/microsoft-archive-keyring.gpg
+  echo "deb [arch=amd64,arm64,armhf signed-by=/usr/share/keyrings/microsoft-archive-keyring.gpg] https://packages.microsoft.com/ubuntu/24.04/prod noble main" | tee /etc/apt/sources.list.d/mssql-release.list
+  apt-get update
+  ACCEPT_EULA=Y DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends unixodbc-dev msodbcsql18
+  echo "extension=sqlsrv.so" > /etc/php/8.3/mods-available/sqlsrv.ini
+  phpenmod -s ALL sqlsrv
+  echo "extension=pdo_sqlsrv.so" > /etc/php/8.3/mods-available/pdo_sqlsrv.ini
+  phpenmod -s ALL pdo_sqlsrv
 
-  if ((CURRENT_OS == 22)); then
-    echo "deb [arch=amd64,arm64] https://packages.microsoft.com/ubuntu/22.04/prod focal main" | sudo tee /etc/apt/sources.list.d/mssql-release.list
-  else
-    echo "deb [arch=amd64,arm64] https://packages.microsoft.com/ubuntu/24.04/prod jammy main" | sudo tee /etc/apt/sources.list.d/mssql-release.list
-    sudo apt-get update
-    ACCEPT_EULA=Y DEBIAN_FRONTEND=noninteractive sudo apt-get install -y --no-install-recommends unixodbc-dev
-    echo "extension=sqlsrv.so" | sudo tee /etc/php/8.3/mods-available/sqlsrv.ini
-    echo "extension=pdo_sqlsrv.so" | sudo tee /etc/php/8.3/mods-available/pdo_sqlsrv.ini
-    sudo phpenmod -s ALL sqlsrv pdo_sqlsrv
-  fi
-
-  sudo apt-get update
-  ACCEPT_EULA=Y sudo apt-get install -y mssql-server msodbcsql18 mssql-tools unixodbc odbcinst php8.3-odbc
+  sudo apt update
+  ACCEPT_EULA=Y sudo apt install -y msodbcsql18 php8.3-odbc
 
   pecl install sqlsrv
   if (($? >= 1)); then
@@ -276,7 +272,7 @@ install_sql_server () {
 }
 
 install_pdo_sqlsrv () {
-  pecl install pdo_sqlsrv-5.10.1
+  pecl install pdo_sqlsrv
   if (($? >= 1)); then
     echo_with_color red "\npdo_sqlsrv extension installation error." >&5
     kill $!
@@ -381,20 +377,21 @@ install_igbinary () {
 }
 
 install_python2 () {
-    add-apt-repository -y universe
-    apt install -y python2
-    # Pip2 is not supported on ubuntu anymore. We have to get a script from the python package
-    # authority as below
+    sudo add-apt-repository -y ppa:deadsnakes/ppa
+    sudo apt update
+    sudo apt install -y python2.7
+
     curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py
-    python2 get-pip.py
+    python2.7 get-pip.py
+    rm -f get-pip.py
 }
 
 check_bunch_installation () {
-    pip2 list | grep bunch
+    python2.7 -m pip list | grep bunch || echo "Bunch not installed"
 }
 
 install_bunch () {
-    pip2 install bunch
+    python2.7 -m pip install bunch
 }
 
 install_python3 () {
@@ -406,7 +403,7 @@ check_munch_installation () {
 }
 
 install_munch () {
-  python3 -m pip install munch
+  apt install python3-munch
 }
 
 install_node () {
