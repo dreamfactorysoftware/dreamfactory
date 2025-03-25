@@ -1,0 +1,16 @@
+# Sample project.toml for deploying DreamFactory on Heroku Fir
+# Copy this file to project.toml in your application root directory
+
+[_]
+schema-version = "0.2"
+
+[stack]
+id = "heroku/heroku-24"
+
+[[io.buildpacks.group]]
+id = "heroku/php"
+version = "1.0.0"
+
+[[io.buildpacks.group]]
+id = "dreamfactory/cloud-native-buildpack"
+uri = "https://github.com/dreamfactorysoftware/df-cloud-native-buildpack.git" 

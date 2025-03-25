@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# Exit if composer.json is not present
+if [ ! -f "$1/composer.json" ]; then
+  exit 1
+fi
+
+# Check if it's a DreamFactory application by looking for keywords in composer.json
+if grep -q "dreamfactory" "$1/composer.json"; then
+  echo "DreamFactory"
+  exit 0
+else
+  exit 1
+fi

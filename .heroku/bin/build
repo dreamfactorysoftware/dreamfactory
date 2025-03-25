@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+set -e
+
+BUILD_DIR=$1
+CACHE_DIR=$2
+LAYERS_DIR=$3
+PLATFORM_DIR=$4
+
+# Create dreamfactory layer
+DREAMFACTORY_LAYER="$LAYERS_DIR/dreamfactory"
+mkdir -p "$DREAMFACTORY_LAYER"
+mkdir -p "$DREAMFACTORY_LAYER/env.build.d"
+mkdir -p "$DREAMFACTORY_LAYER/env.launch.d"
+
+# Setup layer metadata
+cat > "$DREAMFACTORY_LAYER.toml" << EOF
+[types]
+launch = true
+build = true
+cache = true
+
+[metadata]
+version = "1.0"
+EOF
+
+# Install dependencies
+echo "-----> Installing DreamFactory dependencies"
+cd "$BUILD_DIR"
+COMPOSER_MEMORY_LIMIT=-1 composer install --no-dev --ignore-platform-reqs
+
+# Setup environment
+echo "-----> Configuring DreamFactory environment"
+php artisan df:env --db_connection=sqlite --df_install=Buildpack
+
+# Prepare .profile.d script for runtime
+mkdir -p "$BUILD_DIR/.profile.d"
+cat > "$BUILD_DIR/.profile.d/dreamfactory.sh" << 'EOF'
+#!/usr/bin/env bash
+
+# Run migrations at startup
+php "$HOME/artisan" migrate --seed --force
+
+# Generate app key if not set
+if [ -z "$APP_KEY" ]; then
+  export APP_KEY=$(php "$HOME/artisan" --no-ansi key:generate --show)
+fi
+EOF
+chmod +x "$BUILD_DIR/.profile.d/dreamfactory.sh"
+
+# Add NGINX config for serving traffic
+cp "$BUILD_DIR/nginx_app.conf" "$BUILD_DIR/nginx_app.conf.bak" 2>/dev/null || true
+cat > "$BUILD_DIR/nginx_app.conf" << 'EOF'
+# Dreamfactory NGINX configuration
+client_max_body_size 20M;
+
+location / {
+    # try to serve file directly, fallback to rewrite
+    try_files $uri @rewriteapp;
+}
+
+location @rewriteapp {
+    # rewrite all to app.php
+    rewrite ^(.*)$ /index.php/$1 last;
+}
+
+location ~ ^/(app|app_dev|config)\.php(/|$) {
+    try_files @heroku-fcgi @heroku-fcgi;
+    internal;
+}
+
+location ~* \.(jpg|jpeg|gif|png|css|js|ico|xml)$ {
+    expires 5d;
+}
+
+# Deny access to . files
+location ~ /\. {
+    deny all;
+}
+EOF
+
+echo "-----> DreamFactory buildpack installation completed"

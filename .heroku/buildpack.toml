@@ -1,0 +1,17 @@
+[buildpack]
+id = "dreamfactory/cloud-native-buildpack"
+version = "1.0.0"
+name = "DreamFactory Cloud Native Buildpack"
+
+[metadata]
+description = "A Cloud Native Buildpack for DreamFactory applications"
+keywords = ["dreamfactory", "php", "laravel"]
+
+[[stacks]]
+id = "heroku-24"
+
+[[stacks]]
+id = "heroku-22"
+
+[[stacks]]
+id = "heroku-20"
