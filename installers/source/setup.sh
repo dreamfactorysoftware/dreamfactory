@@ -485,7 +485,7 @@ if (($? >= 1)); then
   echo_with_color green "    node installed\n" >&5
 fi
 
-### INSTALL Snowlake
+### INSTALL Snowflake
 if [[ $CURRENT_KERNEL == "debian" || $CURRENT_KERNEL == "ubuntu" ]]; then
   if [[ $APACHE == TRUE ]]; then ### Only with key --apache
     ls /etc/php/${PHP_VERSION_INDEX}/apache2/conf.d | grep "snowflake"
@@ -963,6 +963,13 @@ fi
 
 ### Summary table
 if [[ $MYSQL_INSTALLED == TRUE ]]; then
+  sed -i "s/\#DB\_CONNECTION\=sqlite/DB\_CONNECTION\=mysql/g" .env
+  sed -i "s/\#DB\_HOST\=/DB\_HOST\=127.0.0.1/g" .env
+  sed -i "s/\#DB\_PORT\=/DB\_PORT\=3306/g" .env
+  sed -i "s/\#DB\_DATABASE\=/DB\_DATABASE\=$DF_SYSTEM_DB/g" .env
+  sed -i "s/\#DB\_USERNAME\=/DB\_USERNAME\=$DF_SYSTEM_DB_USER/g" .env
+  sed -i "s/\#DB\_PASSWORD\=/DB\_PASSWORD\=$DF_SYSTEM_DB_PASSWORD/g" .env
+
   echo -e "\n "
   echo_with_color magenta "******************************"
   echo -e " DB for system table: mysql "
