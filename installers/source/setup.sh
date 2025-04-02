@@ -65,12 +65,19 @@ print_centered() {
 ## Used for each of the individual components to be installed
 run_process () {
   while true; do echo -n . >&5; sleep 1; done &
-  trap 'kill $BGPID; exit' INT
   BGPID=$!
+  # Ensure background process is killed on exit or error
+  trap 'kill $BGPID 2>/dev/null || true; exit' INT TERM EXIT
   echo -n "$1" >&5
   $2
+  RESULT=$?
+  # Explicitly kill the background dot-printing process
+  kill $BGPID 2>/dev/null || true
   echo done >&5
-  kill $!
+  # Clear the trap
+  trap - INT TERM EXIT
+  # Return the original exit code
+  return $RESULT
 }
 
 clear

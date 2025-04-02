@@ -565,8 +565,7 @@ install_snowflake () {
   git clone --progress https://github.com/snowflakedb/pdo_snowflake.git /src/snowflake 2>&1 | tee -a /tmp/dreamfactory_installer.log >&5
   if (($? >= 1)); then
     echo_with_color red "\nFailed to clone Snowflake repository." >&5
-    kill $!
-    exit 1
+    return 1
   fi
   cd /src/snowflake
   export PHP_HOME=/usr
@@ -580,14 +579,13 @@ install_snowflake () {
     cp /src/snowflake/libsnowflakeclient/cacert.pem /etc/php.d
     if (($? >= 1)); then
       echo_with_color red "\npdo_snowflake driver installation error." >&5
-      kill $!
-      exit 1
+      return 1
     fi
     echo -e "extension=pdo_snowflake.so\n\npdo_snowflake.cacert=/etc/php.d/cacert.pem" >/etc/php.d/20-pdo_snowflake.ini
+    return 0
   else
     echo_with_color red "\nCould not build pdo_snowflake driver." >&5
-    kill $!
-    exit 1
+    return 1
   fi
 }
 
