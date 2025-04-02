@@ -372,7 +372,7 @@ if (($? >= 1)); then
     if [[ $CURRENT_KERNEL == "ubuntu" || $CURRENT_KERNEL == "debian" ]]; then
       unzip "$DRIVERS_PATH/instantclient-*.zip" -d /opt/oracle
     else
-      ls -f $DRIVERS_PATH/oracle-instantclient*-*-[12][19].*.0.0.0*.x86_64.rpm
+      ls -f $DRIVERS_PATH/oracle-instantclient*-*-*.el*.x86_64.rpm
     fi
     if (($? == 0)); then
       run_process "   Drivers Found. Installing Oracle Drivers" install_oracle

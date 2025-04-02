@@ -89,6 +89,7 @@ install_php () {
       php-pdo-dblib \
       php-gd \
       php-zip \
+      php-sodium \
       php-opcache
   else
     # CentOS/RHEL 9
@@ -116,6 +117,7 @@ install_php () {
       php-pdo-dblib \
       php-gd \
       php-zip \
+      php-sodium \
       php-opcache
   fi
 
@@ -403,16 +405,17 @@ install_pdo_sqlsrv () {
 }
 
 install_oracle () {
-  CLIENT_VERSION=$(ls -f $DRIVERS_PATH/oracle-instantclient*-*-[12][19].*.0.0.0*.x86_64.rpm | grep -oP '([1-9]+)\.([1-9]+)' | head -n 1)
+  # Modified to recognize Oracle version 23.7
+  CLIENT_VERSION=$(ls -f $DRIVERS_PATH/oracle-instantclient*-*-*.el*.x86_64.rpm | grep -oP '([1-9]+)\.([1-9]+)' | head -n 1)
   dnf install -y libaio systemtap-sdt-devel $DRIVERS_PATH/oracle-instantclient*$CLIENT_VERSION*.x86_64.rpm
   if (($? >= 1)); then
     echo_with_color red "\nOracle instant client installation error" >&5
     kill $!
     exit 1
   fi
-  # For instantclient versions that start with 21.* Oracle will create an index directory without suffix
-  if [[ $CLIENT_VERSION == 21* ]]; then
-    CLIENT_VERSION="21"
+  # For instantclient versions that start with 21.* or 23.* Oracle will create an index directory without suffix
+  if [[ $CLIENT_VERSION == 21* || $CLIENT_VERSION == 23* ]]; then
+    CLIENT_VERSION="${CLIENT_VERSION%%.*}"
   fi
   echo "/usr/lib/oracle/$CLIENT_VERSION/client64/lib" >/etc/ld.so.conf.d/oracle-instantclient.conf
   ldconfig
@@ -557,9 +560,17 @@ install_snowflake () {
   dnf update -y
   dnf install -y gcc cmake php-pdo php-devel
   # We need to use a previous version of the snowflake driver as the latest one seems to be bust.
-  git clone https://github.com/snowflakedb/pdo_snowflake.git /src/snowflake
+  echo_with_color yellow "\nCloning Snowflake repository (this may take several minutes)..." >&5
+  # Clone with progress output visible both to the console and to the log
+  git clone --progress https://github.com/snowflakedb/pdo_snowflake.git /src/snowflake 2>&1 | tee -a /tmp/dreamfactory_installer.log >&5
+  if (($? >= 1)); then
+    echo_with_color red "\nFailed to clone Snowflake repository." >&5
+    kill $!
+    exit 1
+  fi
   cd /src/snowflake
   export PHP_HOME=/usr
+  echo_with_color yellow "\nBuilding Snowflake driver..." >&5
   source /src/snowflake/scripts/build_pdo_snowflake.sh
   $PHP_HOME/bin/php -dextension=modules/pdo_snowflake.so -m | grep pdo_snowflake
   if (($? == 0)); then
