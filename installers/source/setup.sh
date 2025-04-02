@@ -96,8 +96,8 @@ case $CURRENT_KERNEL in
     fi
     ;;
   centos | rhel)
-    if ((CURRENT_OS != 7)) && ((CURRENT_OS != 8)); then
-      echo_with_color red "The installer only supports Rhel (Centos) 7 and 8. Exiting...\n"
+    if ((CURRENT_OS != 8)) && ((CURRENT_OS != 9)); then
+      echo_with_color red "The installer only supports Rhel (Centos) 8 and 9. Exiting...\n"
       exit 1
     fi
     ;;
@@ -504,13 +504,8 @@ else
   #fedora / centos
   ls /etc/php.d | grep "snowflake"
   if (($? >= 1)); then
-    if ((CURRENT_OS == 7)); then
-      # pdo_snowflake requires gcc 5.2 to install, centos7 only has 4.8 available
-      echo_with_color red "Snowflake only supported on CentOS / RHEL 8. Skipping...\n" >&5
-    else
-      run_process "   Installing Snowflake" install_snowflake
-      echo_with_color green "    snowflake installed\n" >&5
-    fi
+    run_process "   Installing Snowflake" install_snowflake
+    echo_with_color green "    snowflake installed\n" >&5
   fi
 fi
 
@@ -781,14 +776,36 @@ run_process "   Installing DreamFactory"  run_composer_install
 exec 1>&5 5>&-
 
 if [[ $DB_INSTALLED == FALSE ]]; then
-  sudo -u "$CURRENT_USER" bash -c "php artisan df:env -q \
-                --db_connection=mysql \
-                --db_host=127.0.0.1 \
-                --db_port=3306 \
-                --db_database=${DF_SYSTEM_DB} \
-                --db_username=${DF_SYSTEM_DB_USER} \
-                --db_password=${DF_SYSTEM_DB_PASSWORD//\'/} \
-                --db_install=Linux"
+  # Create .env file first
+  cp "${DF_FOLDER}/.env-dist" "${DF_FOLDER}/.env" 2>/dev/null || touch "${DF_FOLDER}/.env"
+  
+  # Use different syntax based on the current OS
+  if [[ $CURRENT_KERNEL == 'centos' || $CURRENT_KERNEL == 'rhel' || $CURRENT_KERNEL == 'rocky' || $CURRENT_KERNEL == 'almalinux' || $CURRENT_KERNEL == 'oracle' ]]; then
+    sudo -u "$CURRENT_USER" bash -c "cd ${DF_FOLDER} && php artisan df:env -q \
+                  --db_connection=mysql \
+                  --db_host=127.0.0.1 \
+                  --db_port=3306 \
+                  --db_database=${DF_SYSTEM_DB} \
+                  --db_username=${DF_SYSTEM_DB_USER} \
+                  --db_password=${DF_SYSTEM_DB_PASSWORD//\'/}"
+                  
+    # Run migrations explicitly instead of the db_install parameter
+    sudo -u "$CURRENT_USER" bash -c "cd ${DF_FOLDER} && php artisan migrate --seed --force"
+    
+    # Fix permissions after database setup
+    fix_dreamfactory_permissions
+  else
+    # Use original command for other OSes
+    sudo -u "$CURRENT_USER" bash -c "php artisan df:env -q \
+                  --db_connection=mysql \
+                  --db_host=127.0.0.1 \
+                  --db_port=3306 \
+                  --db_database=${DF_SYSTEM_DB} \
+                  --db_username=${DF_SYSTEM_DB_USER} \
+                  --db_password=${DF_SYSTEM_DB_PASSWORD//\'/} \
+                  --db_install=Linux"
+  fi
+  
   sed -i 's/\#DB\_CHARSET\=/DB\_CHARSET\=utf8/g' .env
   sed -i 's/\#DB\_COLLATION\=/DB\_COLLATION\=utf8\_unicode\_ci/g' .env
   echo -e "\n"
