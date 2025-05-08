@@ -547,6 +547,17 @@ if (($? >= 1)); then
   fi
 fi
 
+### INSTALL SAP HANA ODBC Driver
+php -m | grep -E "^odbc"
+if (($? >= 1)); then
+  run_process "   Installing SAP HANA odbc" install_hana_odbc
+  if ((HANA_ODBC_INSTALLED != "odbc")); then
+    echo_with_color red "\nCould not build SAP HANA odbc driver." >&5
+  else
+    echo_with_color green "    SAP HANA odbc installed\n" >&5
+  fi
+fi
+
 ### Configuring PHP OPCache and JIT compilation
 run_process "   Configuring PHP OPCache and JIT compilation" enable_opcache
 
