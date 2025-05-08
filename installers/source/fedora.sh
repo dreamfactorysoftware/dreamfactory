@@ -491,6 +491,13 @@ install_databricks_odbc () {
   DATABRICKS_ODBC_INSTALLED = $(php -m | grep -E "^odbc")
 }
 
+install_hana_odbc () {
+  # TODO: Implement SAP HANA ODBC driver installation for Fedora
+  echo_with_color red "\nSAP HANA ODBC driver installation is not yet implemented for Fedora." >&5
+  kill $!
+  exit 1
+}
+
 enable_opcache () {
   {
     echo 'zend_extension=opcache.so'
