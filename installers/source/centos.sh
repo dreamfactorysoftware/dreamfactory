@@ -553,6 +553,13 @@ install_databricks_odbc () {
   DATABRICKS_ODBC_INSTALLED = $(php -m | grep -E "^odbc")
 }
 
+install_hana_odbc () {
+  # TODO: Implement SAP HANA ODBC driver installation for CentOS/RHEL
+  echo_with_color red "\nSAP HANA ODBC driver installation is not yet implemented for CentOS/RHEL." >&5
+  kill $!
+  exit 1
+}
+
 enable_opcache () {
   {
     echo 'zend_extension=opcache.so'

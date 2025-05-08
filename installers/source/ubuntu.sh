@@ -485,34 +485,66 @@ install_hive_odbc () {
 install_dremio_odbc () {
   apt-get update
   apt-get install -y --no-install-recommends --allow-unauthenticated ${PHP_VERSION}-odbc alien
-  mkdir /opt/dremio
-  cd /opt/dremio
-  curl --fail -O https://download.dremio.com/arrow-flight-sql-odbc-driver/arrow-flight-sql-odbc-driver-LATEST.x86_64.rpm
-  RPM_FILE=$(ls arrow-flight-sql-odbc-driver-*.rpm)
-  alien --to-deb "$RPM_FILE"
-  DEB_FILE=$(ls arrow-flight-sql-odbc-driver*.deb)
-  dpkg -i "$DEB_FILE"
-  rm -f "$RPM_FILE"
-  rm -f "$DEB_FILE"
-  test -f /opt/arrow-flight-sql-odbc-driver/lib64/libarrow-odbc.so.0.9.1.168
-  export DREMIO_SERVER_ODBC_DRIVER_PATH=/opt/arrow-flight-sql-odbc-driver/lib64//libarrow-odbc.so.0.9.1.168
+  cd /opt
+  echo_with_color blue "Downloading Dremio driver..." >&5
+  curl -v -L --fail -O https://download.dremio.com/arrow-flight-sql-odbc-driver/arrow-flight-sql-odbc-driver-LATEST.x86_64.rpm
+  alien --to-deb arrow-flight-sql-odbc-driver-LATEST.x86_64.rpm
+  dpkg -i arrow-flight-sql-odbc-driver_*.deb
+  rm -rf arrow-flight-sql-odbc-driver-LATEST.x86_64.rpm arrow-flight-sql-odbc-driver_*.deb
+  echo_with_color blue "Verifying installation..." >&5
+  test -f /opt/arrow-flight-sql-odbc-driver/lib64/libarrow-odbc.so.0.9.5.470
+  if (($? >= 1)); then
+    echo_with_color red "\nDremio ODBC driver installation error." >&5
+    kill $!
+    exit 1
+  fi
+  export DREMIO_SERVER_ODBC_DRIVER_PATH=/opt/arrow-flight-sql-odbc-driver/lib64/libarrow-odbc.so.0.9.5.470
   DREMIO_ODBC_INSTALLED=$(php -m | grep -E "^odbc")
 }
 
 install_databricks_odbc () {
   apt-get update
   apt-get install -y --no-install-recommends --allow-unauthenticated ${PHP_VERSION}-odbc
-  mkdir /opt/databricks
-  cd /opt/databricks
+  cd /opt
   curl --fail -O https://databricks-bi-artifacts.s3.us-east-2.amazonaws.com/simbaspark-drivers/odbc/2.8.2/SimbaSparkODBC-2.8.2.1013-Debian-64bit.zip
   unzip -q SimbaSparkODBC-2.8.2.1013-Debian-64bit.zip
-  rm -f SimbaSparkODBC-2.8.2.1013-Debian-64bit.zip
-  rm -rf docs/
+  echo_with_color blue "Installing Databricks driver..." >&5
   dpkg -i simbaspark_2.8.2.1013-2_amd64.deb
+  rm -rf SimbaSparkODBC-2.8.2.1013-Debian-64bit.zip docs/ simbaspark_2.8.2.1013-2_amd64.deb
+  echo_with_color blue "Verifying installation..." >&5
   test -f /opt/simba/spark/lib/64/libsparkodbc_sb64.so
-  rm simbaspark_2.8.2.1013-2_amd64.deb
+  if (($? >= 1)); then
+    echo_with_color red "\nDatabricks ODBC driver installation error." >&5
+    kill $!
+    exit 1
+  fi
   export DATABRICKS_SERVER_ODBC_DRIVER_PATH=/opt/simba/spark/lib/64/libsparkodbc_sb64.so
-  DATABRICKS_ODBC_INSTALLED = $(php -m | grep -E "^odbc")
+  DATABRICKS_ODBC_INSTALLED=$(php -m | grep -E "^odbc")
+}
+
+install_hana_odbc () {
+  apt-get update
+  apt-get install -y --no-install-recommends --allow-unauthenticated ${PHP_VERSION}-odbc
+  mkdir -p /opt/hana/lib
+  cd /opt/hana/lib
+  echo_with_color blue "Downloading SAP HANA client library..." >&5
+  curl -L "https://odbc-drivers.s3.us-east-1.amazonaws.com/sap-hana/libodbcHDB.so" -o libodbcHDB.so
+  if (($? >= 1)); then
+    echo_with_color red "\nFailed to download SAP HANA client library." >&5
+    kill $!
+    exit 1
+  fi
+  echo "/opt/hana/lib" > /etc/ld.so.conf.d/sap.conf
+  ldconfig
+  echo_with_color blue "Verifying installation..." >&5
+  test -f /opt/hana/lib/libodbcHDB.so
+  if (($? >= 1)); then
+    echo_with_color red "\nSAP HANA ODBC driver installation error." >&5
+    kill $!
+    exit 1
+  fi
+  export HANA_SERVER_ODBC_DRIVER_PATH=/opt/hana/lib/libodbcHDB.so
+  HANA_ODBC_INSTALLED=$(php -m | grep -E "^odbc")
 }
 
 enable_opcache () {
