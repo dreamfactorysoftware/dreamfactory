@@ -1,0 +1,419 @@
+repo_name: dreamfactorysoftware/dreamfactory
+report_id: ceafcc0002bd70aceb0f2463205b47a2
+repo_type: Public
+timestamp: '2023-12-06T22:43:05+00:00'
+requested_by: anas-srikou
+provider: github
+branch: master
+detected_tools_count: 33
+tools:
+- name: JavaScript
+  description: Lightweight, interpreted, object-oriented language with first-class
+    functions
+  website_url: https://developer.mozilla.org/en-US/docs/Web/JavaScript
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/1209/javascript.jpeg
+  detection_source: Repo Metadata
+- name: PHP
+  description: A popular general-purpose scripting language that is especially suited
+    to web development
+  website_url: http://www.php.net/
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/991/hwUcGZ41_400x400.jpg
+  detection_source: Repo Metadata
+- name: Bootstrap
+  description: Simple and flexible HTML, CSS, and JS for popular UI components and
+    interactions
+  website_url: http://getbootstrap.com/
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Front-End Frameworks
+  image_url: https://img.stackshare.io/service/1101/C9QJ7V3X.png
+  detection_source: package.json
+  last_updated_by: Volodymyr Polishchuk
+  last_updated_on: 2020-05-22 17:03:37.000000000 Z
+- name: Laravel
+  description: A PHP Framework For Web Artisans
+  website_url: http://laravel.com/
+  version: 9.52.16
+  open_source: false
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Frameworks (Full Stack)
+  image_url: https://img.stackshare.io/service/992/AcA2LnWL_400x400.jpg
+  detection_source_url: github.com/dreamfactorysoftware/dreamfactory/blob/master/composer.lock
+  detection_source: composer.json
+  last_updated_by: Danil Lytvyn
+  last_updated_on: 2023-02-23 16:15:43.000000000 Z
+- name: Vue.js
+  description: A progressive framework for building user interfaces
+  website_url: http://vuejs.org/
+  version: 2.6.12
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Javascript MVC Frameworks
+  image_url: https://img.stackshare.io/service/3837/paeckCWC.png
+  detection_source_url: github.com/dreamfactorysoftware/dreamfactory/blob/master/package-lock.json
+  detection_source: package.json
+  last_updated_by: Arif Islam
+  last_updated_on: 2015-04-30 13:56:32.000000000 Z
+- name: jQuery
+  description: The Write Less, Do More, JavaScript Library.
+  website_url: http://jquery.com/
+  version: 3.6.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Javascript UI Libraries
+  image_url: https://img.stackshare.io/service/1021/lxEKmMnB_400x400.jpg
+  detection_source_url: github.com/dreamfactorysoftware/dreamfactory/blob/master/package-lock.json
+  detection_source: package.json
+  last_updated_by: Yaroslav Mokhurenko
+  last_updated_on: 2021-05-13 15:54:09.000000000 Z
+- name: Redis
+  description: Open source (BSD licensed), in-memory data structure store
+  website_url: http://redis.io/
+  license: BSD-3-Clause
+  open_source: true
+  hosted_saas: false
+  category: Data Stores
+  sub_category: In-Memory Databases
+  image_url: https://img.stackshare.io/service/1031/default_cbce472cd134adc6688572f999e9122b9657d4ba.png
+  detection_source: composer.json
+  last_updated_by: Tomo Norman
+  last_updated_on: 2022-01-19 10:58:52.000000000 Z
+- name: Git
+  description: Fast, scalable, distributed revision control system
+  website_url: http://git-scm.com/
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Version Control System
+  image_url: https://img.stackshare.io/service/1046/git.png
+  detection_source: Repo Metadata
+- name: NGINX
+  description: A high performance free open source web server powering busiest sites
+    on the Internet.
+  website_url: http://nginx.org
+  open_source: false
+  hosted_saas: false
+  category: Application Hosting
+  sub_category: Web Servers
+  image_url: https://img.stackshare.io/service/1052/YMxUfyWf.png
+  detection_source: server/config/nginx/etc/nginx/nginx.conf
+  last_updated_by: David Weiner
+  last_updated_on: 2015-07-27 17:16:36.000000000 Z
+- name: PHPUnit
+  description: Testing framework for PHP
+  website_url: https://phpunit.de/
+  version: 9.6.13
+  license: BSD-3-Clause
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Testing Frameworks
+  image_url: https://img.stackshare.io/service/1616/1_WsEnddd5Y4EgEHsT054kUQ.jpeg
+  detection_source_url: github.com/dreamfactorysoftware/dreamfactory/blob/master/composer.lock
+  detection_source: composer.json
+  last_updated_by: Arif Islam
+  last_updated_on: 2015-04-30 13:56:32.000000000 Z
+- name: Vagrant
+  description: A tool for building and distributing development environments
+  website_url: http://www.vagrantup.com/
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Virtual Machine Management
+  image_url: https://img.stackshare.io/service/768/150px-Vagrant.png
+  detection_source: Vagrantfile
+  last_updated_by: Arif Islam
+  last_updated_on: 2017-10-20 19:34:20.000000000 Z
+- name: npm
+  description: The package manager for JavaScript.
+  website_url: https://www.npmjs.com/
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Front End Package Manager
+  image_url: https://img.stackshare.io/service/1120/lejvzrnlpb308aftn31u.png
+  detection_source: package.json
+  last_updated_by: Arif Islam
+  last_updated_on: 2015-04-30 13:56:32.000000000 Z
+- name: Heroku
+  description: Build, deliver, monitor and scale web apps and APIs with a trail blazing
+    developer experience.
+  website_url: https://www.heroku.com
+  open_source: false
+  hosted_saas: true
+  category: Application Hosting
+  sub_category: Platform as a Service
+  image_url: https://img.stackshare.io/service/133/3wgIDj3j.png
+  detection_source: Procfile
+  last_updated_by: Jason Gilmore
+  last_updated_on: 2019-11-19 20:46:34.000000000 Z
+- name: HTML
+  description: Hypertext Markup Language for creating web pages.
+  website_url: http://
+  open_source: false
+  hosted_saas: false
+  image_url: https://img.stackshare.io/service/2270/no-img-open-source.png
+  detection_source: public/login.html
+  last_updated_by: Arif Islam
+  last_updated_on: 2015-04-30 13:56:32.000000000 Z
+- name: Lodash
+  description: A JavaScript utility library
+  website_url: https://lodash.com
+  version: 4.17.21
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Javascript Utilities & Libraries
+  image_url: https://img.stackshare.io/service/2438/lodash.png
+  detection_source_url: github.com/dreamfactorysoftware/dreamfactory/blob/master/package-lock.json
+  detection_source: package.json
+  last_updated_by: Lee Hicks
+  last_updated_on: 2017-11-08 18:34:47.000000000 Z
+- name: Shell
+  description: A shell is a text-based terminal, used for manipulating programs and
+    files. Shell scripts typically manage program execution.
+  website_url: https://en.wikipedia.org/wiki/Shell_script
+  open_source: false
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/4631/default_c2062d40130562bdc836c13dbca02d318205a962.png
+  detection_source: Repo Metadata
+- name: axios
+  description: Promise based HTTP client for the browser and node.js
+  website_url: https://github.com/mzabriskie/axios
+  version: 0.21.1
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Javascript Utilities & Libraries
+  image_url: https://img.stackshare.io/no-img-open-source.png
+  detection_source_url: github.com/dreamfactorysoftware/dreamfactory/blob/master/package-lock.json
+  detection_source: package.json
+  last_updated_by: Yaroslav Mokhurenko
+  last_updated_on: 2021-05-13 15:54:09.000000000 Z
+- name: laravel-mix
+  description: A framework for web artisans.
+  website_url: https://laravel.com/docs/5.5/mix
+  open_source: false
+  hosted_saas: false
+  image_url: https://img.stackshare.io/service/7945/h7umz7fz_normal.jpg
+  detection_source: package.json
+  last_updated_by: Lee Hicks
+  last_updated_on: 2017-11-08 18:34:47.000000000 Z
+- name: barryvdh/laravel-ide-helper
+  description: Laravel IDE Helper
+  package_url: https://packagist.org/barryvdh/laravel-ide-helper
+  version: 2.13.0
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: github.com/dreamfactorysoftware/dreamfactory/blob/master/composer.lock
+  detection_source: composer.json
+  last_updated_by: Danil Lytvyn
+  last_updated_on: 2023-02-23 16:15:43.000000000 Z
+- name: fideloper/proxy
+  description: Set trusted proxies for Laravel
+  package_url: https://packagist.org/fideloper/proxy
+  version: 4.4.2
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: github.com/dreamfactorysoftware/dreamfactory/blob/master/composer.lock
+  detection_source: composer.json
+  last_updated_by: Volodymyr Polishchuk
+  last_updated_on: 2020-04-01 13:47:48.000000000 Z
+- name: laracasts/generators
+  description: Advanced Laravel generators
+  package_url: https://packagist.org/laracasts/generators
+  version: 2.0.2
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: github.com/dreamfactorysoftware/dreamfactory/blob/master/composer.lock
+  detection_source: composer.json
+  last_updated_by: Danil Lytvyn
+  last_updated_on: 2023-02-23 16:15:43.000000000 Z
+- name: laravel/framework
+  description: The Laravel Framework
+  package_url: https://packagist.org/laravel/framework
+  version: 9.52.16
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: github.com/dreamfactorysoftware/dreamfactory/blob/master/composer.lock
+  detection_source: composer.json
+  last_updated_by: Danil Lytvyn
+  last_updated_on: 2023-02-23 16:15:43.000000000 Z
+- name: laravel/helpers
+  description: Provides backwards compatibility for helpers in the latest Laravel
+    release
+  package_url: https://packagist.org/laravel/helpers
+  version: 1.6.0
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: github.com/dreamfactorysoftware/dreamfactory/blob/master/composer.lock
+  detection_source: composer.json
+  last_updated_by: Danil Lytvyn
+  last_updated_on: 2023-02-23 16:15:43.000000000 Z
+- name: laravel/homestead
+  description: A virtual machine for web artisans
+  package_url: https://packagist.org/laravel/homestead
+  version: 13.3.2
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: github.com/dreamfactorysoftware/dreamfactory/blob/master/composer.lock
+  detection_source: composer.json
+  last_updated_by: Danil Lytvyn
+  last_updated_on: 2023-02-23 16:15:43.000000000 Z
+- name: laravel/tinker
+  description: Powerful REPL for the Laravel framework
+  package_url: https://packagist.org/laravel/tinker
+  version: 2.8.2
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: github.com/dreamfactorysoftware/dreamfactory/blob/master/composer.lock
+  detection_source: composer.json
+  last_updated_by: Danil Lytvyn
+  last_updated_on: 2023-02-23 16:15:43.000000000 Z
+- name: mockery/mockery
+  description: Mockery is a simple yet flexible PHP mock object framework
+  package_url: https://packagist.org/mockery/mockery
+  version: 1.6.6
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: github.com/dreamfactorysoftware/dreamfactory/blob/master/composer.lock
+  detection_source: composer.json
+  last_updated_by: Danil Lytvyn
+  last_updated_on: 2023-02-23 16:15:43.000000000 Z
+- name: nunomaduro/collision
+  description: Cli error handling for console/command-line PHP applications
+  package_url: https://packagist.org/nunomaduro/collision
+  version: 6.4.0
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: github.com/dreamfactorysoftware/dreamfactory/blob/master/composer.lock
+  detection_source: composer.json
+  last_updated_by: Danil Lytvyn
+  last_updated_on: 2023-02-23 16:15:43.000000000 Z
+- name: phpunit/phpunit
+  description: The PHP Unit Testing framework
+  package_url: https://packagist.org/phpunit/phpunit
+  version: 9.6.13
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: github.com/dreamfactorysoftware/dreamfactory/blob/master/composer.lock
+  detection_source: composer.json
+  last_updated_by: Danil Lytvyn
+  last_updated_on: 2023-02-23 16:15:43.000000000 Z
+- name: predis/predis
+  description: A flexible and feature-complete Redis client for PHP
+  package_url: https://packagist.org/predis/predis
+  version: 1.1.10
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: github.com/dreamfactorysoftware/dreamfactory/blob/master/composer.lock
+  detection_source: composer.json
+  last_updated_by: Tomo Norman
+  last_updated_on: 2022-01-19 10:58:52.000000000 Z
+- name: symfony/css-selector
+  description: Converts CSS selectors to XPath expressions
+  package_url: https://packagist.org/symfony/css-selector
+  version: 5.4.26
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: github.com/dreamfactorysoftware/dreamfactory/blob/master/composer.lock
+  detection_source: composer.json
+  last_updated_by: anas-srikou
+  last_updated_on: 2023-11-07 05:25:46.000000000 Z
+- name: bootstrap-sass
+  description: Bootstrap-sass is a Sass-powered version of Bootstrap 3
+  package_url: https://www.npmjs.com/bootstrap-sass
+  version: 3.4.1
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/16915/default_e65289f03a07faa8d49ce16c483f18c4f8a98db9.png
+  detection_source_url: github.com/dreamfactorysoftware/dreamfactory/blob/master/package-lock.json
+  detection_source: package.json
+  last_updated_by: Volodymyr Polishchuk
+  last_updated_on: 2020-05-22 17:03:37.000000000 Z
+- name: cross-env
+  description: Run scripts that set and use environment variables across platforms
+  package_url: https://www.npmjs.com/cross-env
+  version: 5.2.1
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/15828/default_14fd11531839d935f920b6d55bd6f3528c890ad7.png
+  detection_source_url: github.com/dreamfactorysoftware/dreamfactory/blob/master/package-lock.json
+  detection_source: package.json
+  last_updated_by: Lee Hicks
+  last_updated_on: 2017-11-08 18:34:47.000000000 Z
+- name: vue
+  description: Vue
+  package_url: https://www.npmjs.com/vue
+  version: 2.6.12
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: npm Packages
+  image_url: https://img.stackshare.io/package/15844/default_b71c906aeda030a5e2f1fe40bf12a93be52404ab.png
+  detection_source_url: github.com/dreamfactorysoftware/dreamfactory/blob/master/package-lock.json
+  detection_source: package.json
+  last_updated_by: Arif Islam
+  last_updated_on: 2015-04-30 13:56:32.000000000 Z
