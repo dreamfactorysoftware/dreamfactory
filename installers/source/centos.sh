@@ -649,6 +649,14 @@ install_databricks_odbc () {
   DATABRICKS_ODBC_INSTALLED=$(php -m | grep -E "^odbc")
 }
 
+install_hana_odbc () {
+  mkdir -p /opt/hana/lib
+  cd /opt/hana/lib
+  curl -L "https://odbc-drivers.s3.us-east-1.amazonaws.com/sap-hana/libodbcHDB.so" -o libodbcHDB.so
+  echo "/opt/hana/lib" > /etc/ld.so.conf.d/sap.conf
+  ldconfig
+}
+
 enable_opcache () {
   {
     echo 'zend_extension=opcache.so'
