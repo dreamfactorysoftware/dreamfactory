@@ -1,0 +1,72 @@
+{
+  "name": "DreamFactory",
+  "description": "Code Automation for Generating APIs - DreamFactory is an API generation solution that automatically generates secure and documented APIs for databases",
+  "keywords": [
+    "api",
+    "rest",
+    "database",
+    "php",
+    "laravel",
+    "dreamfactory"
+  ],
+  "website": "https://dreamfactory.com/",
+  "repository": "https://github.com/dreamfactorysoftware/dreamfactory",
+  "logo": "https://raw.githubusercontent.com/dreamfactorysoftware/dreamfactory/master/readme/vertical-logo-fullcolor.png",
+  "success_url": "/",
+  "stack": "heroku-22",
+  "scripts": {
+    "postdeploy": ""
+  },
+  "env": {
+    "APP_DEBUG": {
+      "description": "Enable Laravel debug mode for development",
+      "value": "false",
+      "required": false
+    },
+    "APP_KEY": {
+      "description": "Laravel application encryption key",
+      "generator": "secret",
+      "required": true
+    },
+    "DB_CONNECTION": {
+      "description": "Database connection type",
+      "value": "pgsql",
+      "required": true
+    },
+    "DB_DATABASE": {
+      "description": "Database name",
+      "required": true
+    },
+    "DB_HOST": {
+      "description": "Database host",
+      "required": true
+    },
+    "DB_PASSWORD": {
+      "description": "Database password",
+      "required": true
+    },
+    "DB_PORT": {
+      "description": "Database port",
+      "value": "5432",
+      "required": false
+    },
+    "DB_USERNAME": {
+      "description": "Database username",
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "size": "Standard-1X",
+      "quantity": 1
+    }
+  },
+  "addons": [
+    "heroku-postgresql:essential-0"
+  ],
+  "buildpacks": [
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-php"
+    }
+  ]
+} 
