@@ -15,7 +15,7 @@
   "success_url": "/",
   "stack": "heroku-22",
   "scripts": {
-    "postdeploy": ""
+    "postdeploy": "php artisan config:clear && php artisan migrate --force"
   },
   "env": {
     "APP_DEBUG": {
@@ -34,16 +34,16 @@
       "required": true
     },
     "DB_DATABASE": {
-      "description": "Database name",
-      "required": true
+      "description": "Database name (will be automatically set from PostgreSQL addon)",
+      "required": false
     },
     "DB_HOST": {
-      "description": "Database host",
-      "required": true
+      "description": "Database host (will be automatically set from PostgreSQL addon)",
+      "required": false
     },
     "DB_PASSWORD": {
-      "description": "Database password",
-      "required": true
+      "description": "Database password (will be automatically set from PostgreSQL addon)",
+      "required": false
     },
     "DB_PORT": {
       "description": "Database port",
@@ -51,8 +51,8 @@
       "required": false
     },
     "DB_USERNAME": {
-      "description": "Database username",
-      "required": true
+      "description": "Database username (will be automatically set from PostgreSQL addon)",
+      "required": false
     }
   },
   "formation": {
