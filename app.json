@@ -15,7 +15,7 @@
   "success_url": "/",
   "stack": "heroku-22",
   "scripts": {
-    "postdeploy": "php artisan config:clear && php artisan migrate --force"
+    "postdeploy": "export DB_URL=$DATABASE_URL && php artisan config:clear && php artisan migrate --force"
   },
   "env": {
     "APP_DEBUG": {
@@ -52,6 +52,10 @@
     },
     "DB_USERNAME": {
       "description": "Database username (will be automatically set from PostgreSQL addon)",
+      "required": false
+    },
+    "DB_URL": {
+      "description": "Complete database URL (automatically set from DATABASE_URL)",
       "required": false
     }
   },
