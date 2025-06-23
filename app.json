@@ -15,7 +15,7 @@
   "success_url": "/",
   "stack": "heroku-22",
   "scripts": {
-    "postdeploy": "if [ -n \"$DATABASE_URL\" ]; then eval $(echo $DATABASE_URL | sed 's/postgres:\\/\\/\\([^:]*\\):\\([^@]*\\)@\\([^:]*\\):\\([0-9]*\\)\\/\\(.*\\)/export DB_USERNAME=\\1 DB_PASSWORD=\\2 DB_HOST=\\3 DB_PORT=\\4 DB_DATABASE=\\5/'); echo \"Database config parsed from DATABASE_URL\"; fi && php artisan config:clear && php artisan migrate --force"
+    "postdeploy": "echo \"DATABASE_URL: $DATABASE_URL\" && if [ -n \"$DATABASE_URL\" ]; then DB_USER=$(echo $DATABASE_URL | sed 's|postgres://\\([^:]*\\):.*|\\1|'); DB_PASS=$(echo $DATABASE_URL | sed 's|postgres://[^:]*:\\([^@]*\\)@.*|\\1|'); DB_HOST=$(echo $DATABASE_URL | sed 's|postgres://[^@]*@\\([^:]*\\):.*|\\1|'); DB_PORT=$(echo $DATABASE_URL | sed 's|.*:\\([0-9]*\\)/.*|\\1|'); DB_NAME=$(echo $DATABASE_URL | sed 's|.*/\\([^?]*\\).*|\\1|'); export DB_HOST=$DB_HOST DB_PORT=$DB_PORT DB_DATABASE=$DB_NAME DB_USERNAME=$DB_USER DB_PASSWORD=$DB_PASS; echo \"Parsed: HOST=$DB_HOST PORT=$DB_PORT DB=$DB_NAME USER=$DB_USER\"; else echo \"No DATABASE_URL found\"; fi && php artisan config:clear && php artisan migrate --force"
   },
   "env": {
     "APP_DEBUG": {
