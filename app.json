@@ -15,7 +15,7 @@
   "success_url": "/",
   "stack": "heroku-22",
   "scripts": {
-    "postdeploy": "export DB_URL=$DATABASE_URL && php artisan config:clear && php artisan migrate --force"
+    "postdeploy": "if [ -n \"$DATABASE_URL\" ]; then eval $(echo $DATABASE_URL | sed 's/postgres:\\/\\/\\([^:]*\\):\\([^@]*\\)@\\([^:]*\\):\\([0-9]*\\)\\/\\(.*\\)/export DB_USERNAME=\\1 DB_PASSWORD=\\2 DB_HOST=\\3 DB_PORT=\\4 DB_DATABASE=\\5/'); echo \"Database config parsed from DATABASE_URL\"; fi && php artisan config:clear && php artisan migrate --force"
   },
   "env": {
     "APP_DEBUG": {
@@ -52,10 +52,6 @@
     },
     "DB_USERNAME": {
       "description": "Database username (will be automatically set from PostgreSQL addon)",
-      "required": false
-    },
-    "DB_URL": {
-      "description": "Complete database URL (automatically set from DATABASE_URL)",
       "required": false
     }
   },
