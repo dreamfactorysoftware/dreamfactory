@@ -129,8 +129,9 @@ echo -e "[3] Install driver and PHP extensions for Cassandra DB"
 echo -e "[4] Install Apache2 web server for DreamFactory (Instead of Nginx)"
 echo -e "[5] Install MariaDB as the default system database for DreamFactory"
 echo -e "[6] Install a specfic version of DreamFactory"
-echo -e "[7] Run Installation in debug mode (logs will output to /tmp/dreamfactory_installer.log)"
-echo -e "[8] Upgrade DreamFactory\n"
+echo -e "[7] Install driver for Trino"
+echo -e "[8] Run Installation in debug mode (logs will output to /tmp/dreamfactory_installer.log)"
+echo -e "[9] Upgrade DreamFactory\n"
 
 print_centered "-" "-"
 echo_with_color magenta "Input '0' and press Enter to run the default installation. To install additional options, type the corresponding number (e.g. '1,5' for Oracle and a MySql system database) from the menu above and press Enter"
@@ -170,6 +171,11 @@ if [[ $INSTALLATION_OPTIONS == *"6"* ]]; then
 fi
 
 if [[ $INSTALLATION_OPTIONS == *"7"* ]]; then
+  SIMBA_TRINO_ODBC=TRUE
+  echo_with_color green "Simba Trino ODBC selected."
+fi
+
+if [[ $INSTALLATION_OPTIONS == *"8"* ]]; then
   DEBUG=TRUE
   echo_with_color green "Running in debug mode. Run this command: tail -f /tmp/dreamfactory_installer.log in a new terminal session to follow logs during installation"
 fi
@@ -234,7 +240,7 @@ esac
 
 #### INSTALLER ####
 
-if [[ $INSTALLATION_OPTIONS == *"8"* ]]; then
+if [[ $INSTALLATION_OPTIONS == *"9"* ]]; then
   echo_with_color green "Upgrading DreamFactory selected.\n" >&5
   run_process "   Upgrading DreamFactory" upgrade_dreamfactory
   echo_with_color green "\nFinished Upgrading DreamFactory." >&5
@@ -386,6 +392,17 @@ if (($? >= 1)); then
       echo_with_color red "Drivers not found. Skipping...\n" >&5
     fi
     unset DRIVERS_PATH
+  fi
+fi
+
+### DRIVERS FOR SIMBA TRINO ODBC (ONLY WITH KEY --with-simba-trino-odbc)
+if [[ $SIMBA_TRINO_ODBC == TRUE ]]; then
+  echo_with_color magenta "Enter absolute path to the Simba Trino ODBC driver package (.deb or .rpm), complete with filename: " >&5
+  read -r SIMBA_TRINO_DRIVER_PATH
+  if [[ -z $SIMBA_TRINO_DRIVER_PATH || ! -f $SIMBA_TRINO_DRIVER_PATH ]]; then
+    echo_with_color red "Simba Trino ODBC driver file not found. Skipping installation." >&5
+  else
+    run_process "   Installing Simba Trino ODBC driver" install_simba_trino_odbc "$SIMBA_TRINO_DRIVER_PATH"
   fi
 fi
 
