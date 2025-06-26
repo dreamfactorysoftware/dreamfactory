@@ -121,7 +121,7 @@ You will need:
 3. When prompted during installation, enter the absolute path to the driver package file (e.g., `/tmp/SimbaTrinoODBC-2.0.0.1000-Debian-64bit.deb`).
 4. When prompted, enter the absolute path to the `SimbaTrinoODBCDriver.lic` file (e.g., `/tmp/SimbaTrinoODBCDriver.lic`).
 
-The installer will install the driver and move the license file to `/opt/simba/trino/lib64/` automatically.
+The installer will install the driver and move the license file to `/opt/simba/trinoodbc/lib/64/` automatically.
 
 **Note:**
 - The installer does not download the driver for you. You must obtain it from your vendor.
