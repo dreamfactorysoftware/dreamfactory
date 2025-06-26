@@ -399,8 +399,15 @@ fi
 if [[ $SIMBA_TRINO_ODBC == TRUE ]]; then
   echo_with_color magenta "Enter absolute path to the Simba Trino ODBC driver package (.deb or .rpm), complete with filename: " >&5
   read -r SIMBA_TRINO_DRIVER_PATH
+
+  # Prompt for SimbaTrinoODBCDriver.lic license file
+  echo_with_color magenta "Enter absolute path to the SimbaTrinoODBCDriver.lic license file: " >&5
+  read -r SIMBA_TRINO_LICENSE_PATH
+
   if [[ -z $SIMBA_TRINO_DRIVER_PATH || ! -f $SIMBA_TRINO_DRIVER_PATH ]]; then
     echo_with_color red "Simba Trino ODBC driver file not found. Skipping installation." >&5
+  elif [[ -z $SIMBA_TRINO_LICENSE_PATH || ! -f $SIMBA_TRINO_LICENSE_PATH ]]; then
+    echo_with_color red "Simba Trino ODBC licence file not found. Skipping installation." >&5
   else
     run_process "   Installing Simba Trino ODBC driver" install_simba_trino_odbc "$SIMBA_TRINO_DRIVER_PATH"
   fi

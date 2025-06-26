@@ -784,15 +784,10 @@ install_simba_trino_odbc () {
     echo_with_color red "Unsupported file type for Simba Trino ODBC driver." >&5
     exit 1
   fi
-  # Prompt for license file
-  echo_with_color magenta "Enter absolute path to SimbaTrinoODBCDriver.lic license file: " >&5
-  read -r LICENSE_FILE
-  if [[ -z "$LICENSE_FILE" || ! -f "$LICENSE_FILE" ]]; then
-    echo_with_color red "License file not found. Skipping license install." >&5
-  else
-    mkdir -p /opt/simba/trinoodbc/lib/64/
-    cp "$LICENSE_FILE" /opt/simba/trinoodbc/lib/64/ || echo_with_color red "Failed to copy license file." >&5
-  fi
+
+  mkdir -p /opt/simba/trinoodbc/lib/64/
+  cp "$SIMBA_TRINO_LICENSE_PATH" /opt/simba/trinoodbc/lib/64/ || echo_with_color red "Failed to copy license file." >&5
+  
   echo_with_color green "Simba Trino ODBC driver installation complete." >&5
 }
 

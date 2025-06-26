@@ -329,18 +329,11 @@ install_simba_trino_odbc () {
   fi
   export SIMBA_TRINO_ODBC_DRIVER_PATH=/opt/simba/trinoodbc/lib/64/libtrinoodbc_sb64.so
 
-  # Prompt for SimbaTrinoODBCDriver.lic license file
-  echo_with_color magenta "Enter absolute path to the SimbaTrinoODBCDriver.lic license file: " >&5
-  read -r SIMBA_TRINO_LICENSE_PATH
-  if [[ -z $SIMBA_TRINO_LICENSE_PATH || ! -f $SIMBA_TRINO_LICENSE_PATH ]]; then
-    echo_with_color red "SimbaTrinoODBCDriver.lic file not found. Please copy your license file to /opt/simba/trinoodbc/lib/64/ manually." >&5
-  else
-    cp "$SIMBA_TRINO_LICENSE_PATH" /opt/simba/trinoodbc/lib/64/ || {
-      echo_with_color red "Failed to copy SimbaTrinoODBCDriver.lic to /opt/simba/trinoodbc/lib/64/." >&5
-      exit 1
-    }
-    echo_with_color green "SimbaTrinoODBCDriver.lic successfully copied to /opt/simba/trinoodbc/lib/64/." >&5
-  fi
+  cp "$SIMBA_TRINO_LICENSE_PATH" /opt/simba/trinoodbc/lib/64/ || {
+    echo_with_color red "Failed to copy SimbaTrinoODBCDriver.lic to /opt/simba/trinoodbc/lib/64/." >&5
+    exit 1
+  }
+  echo_with_color green "SimbaTrinoODBCDriver.lic successfully copied to /opt/simba/trinoodbc/lib/64/." >&5
 }
 
 install_db2 () {
