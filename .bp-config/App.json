@@ -1,0 +1,108 @@
+{
+  "name": "df-buildpack",
+  "description": "",
+  "keywords": [
+    "build",
+    "build.io"
+  ],
+  "website": "https://small-sharp-tool.com/",
+  "repository": "git@github.com:dreamfactorysoftware/dreamfactory.git",
+  "logo": "",
+  "success_url": "/",
+  "stack": "heroku-22",
+  "scripts": {
+    "postdeploy": ""
+  },
+  "env": {
+    "APP_DEBUG": {
+      "description": "A description of this variable",
+      "generator": "secret|none",
+      "required": "true|false",
+      "value": "the initial value of the variable"
+    },
+    "APP_KEY": {
+      "description": "A description of this variable",
+      "generator": "secret|none",
+      "required": "true|false",
+      "value": "the initial value of the variable"
+    },
+    "DB_CONNECTION": {
+      "description": "A description of this variable",
+      "generator": "secret|none",
+      "required": "true|false",
+      "value": "the initial value of the variable"
+    },
+    "DB_DATABASE": {
+      "description": "A description of this variable",
+      "generator": "secret|none",
+      "required": "true|false",
+      "value": "the initial value of the variable"
+    },
+    "DB_HOST": {
+      "description": "A description of this variable",
+      "generator": "secret|none",
+      "required": "true|false",
+      "value": "the initial value of the variable"
+    },
+    "DB_PASSWORD": {
+      "description": "A description of this variable",
+      "generator": "secret|none",
+      "required": "true|false",
+      "value": "the initial value of the variable"
+    },
+    "DB_PORT": {
+      "description": "A description of this variable",
+      "generator": "secret|none",
+      "required": "true|false",
+      "value": "the initial value of the variable"
+    },
+    "DB_USERNAME": {
+      "description": "A description of this variable",
+      "generator": "secret|none",
+      "required": "true|false",
+      "value": "the initial value of the variable"
+    },
+    "SCHEMA_TO_GO_URL": {
+      "description": "A description of this variable",
+      "generator": "secret|none",
+      "required": "true|false",
+      "value": "the initial value of the variable"
+    }
+  },
+  "formation": {
+    "web": {
+      "size": "Standard-1X",
+      "display": "bash -c vendor/bin/heroku-php-nginx -C nginx_app.conf /public",
+      "quantity": 1
+    }
+  },
+  "image": "deprecated--see formation->type->image",
+  "addons": [
+    "schema-to-go:basic"
+  ],
+  "buildpacks": [
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-php"
+    }
+  ],
+  "hosts": [],
+  "policy": {
+    "allow_websockets": true,
+    "response_timeout": 30,
+    "max_connections": 1024,
+    "temporary_self_signed": true,
+    "share_process_namespace": true,
+    "erosion_resistance_seconds": 0,
+    "waf": false,
+    "tls_passthrough": false,
+    "build_cache": null
+  },
+  "environments": {
+    "test": {
+      "scripts": {
+        "test": "echo 'Testing...'",
+        "test-setup": "echo 'Setting up test environment...'"
+      }
+    }
+  }
+}

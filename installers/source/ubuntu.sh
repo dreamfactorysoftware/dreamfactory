@@ -298,6 +298,44 @@ install_oracle () {
   phpenmod -s ALL oci8
 }
 
+install_simba_trino_odbc () {
+  if [[ -z "$SIMBA_TRINO_DRIVER_PATH" || ! -f "$SIMBA_TRINO_DRIVER_PATH" ]]; then
+    echo_with_color red "Simba Trino ODBC driver file not found." >&5
+    exit 1
+  fi
+  if [[ "$SIMBA_TRINO_DRIVER_PATH" == *.deb ]]; then
+    dpkg -i "$SIMBA_TRINO_DRIVER_PATH"
+  elif [[ "$SIMBA_TRINO_DRIVER_PATH" == *.rpm ]]; then
+    apt-get install -y alien
+    alien --to-deb "$SIMBA_TRINO_DRIVER_PATH"
+    DEB_FILE=$(ls simbatrinoodbc*.deb | head -n 1)
+    echo_with_color yellow $DEB_FILE
+    if [[ -f "$DEB_FILE" ]]; then
+      dpkg -i "$DEB_FILE"
+    else
+      echo_with_color red "Failed to convert RPM to DEB." >&5
+      exit 1
+    fi
+  else
+    echo_with_color red "Unsupported file type for Simba Trino ODBC driver." >&5
+    exit 1
+  fi
+  # Optionally verify installation (adjust path as needed)
+  echo_with_color blue "Verifying Simba Trino ODBC driver installation..." >&5
+  test -f /opt/simba/trinoodbc/lib/64/libtrinoodbc_sb64.so
+  if (($? >= 1)); then
+    echo_with_color red "Simba Trino ODBC driver installation error." >&5
+    exit 1
+  fi
+  export SIMBA_TRINO_ODBC_DRIVER_PATH=/opt/simba/trinoodbc/lib/64/libtrinoodbc_sb64.so
+
+  cp "$SIMBA_TRINO_LICENSE_PATH" /opt/simba/trinoodbc/lib/64/ || {
+    echo_with_color red "Failed to copy SimbaTrinoODBCDriver.lic to /opt/simba/trinoodbc/lib/64/." >&5
+    exit 1
+  }
+  echo_with_color green "SimbaTrinoODBCDriver.lic successfully copied to /opt/simba/trinoodbc/lib/64/." >&5
+}
+
 install_db2 () {
   apt install -y ksh
   chmod +x /opt/dsdriver/installDSDriver

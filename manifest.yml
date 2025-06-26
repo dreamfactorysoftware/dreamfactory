@@ -1,9 +1,0 @@
----
-applications:
-- name: [app_name]
-  memory: 200M
-  buildpack: https://github.com/cloudfoundry/php-buildpack#v4.3.42
-  env:
-    APP_DEBUG: false
-    CF_STAGING_TIMEOUT: 15
-    CF_STARTUP_TIMEOUT: 15

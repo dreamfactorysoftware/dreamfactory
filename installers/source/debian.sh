@@ -734,3 +734,31 @@ upgrade_dreamfactory () {
   # Change ownership to current user
   chown -R $owner:$group /opt/dreamfactory
 }
+
+install_simba_trino_odbc () {
+  if [[ -z "$SIMBA_TRINO_DRIVER_PATH" || ! -f "$SIMBA_TRINO_DRIVER_PATH" ]]; then
+    echo_with_color red "Simba Trino ODBC driver file not found." >&5
+    exit 1
+  fi
+  if [[ "$SIMBA_TRINO_DRIVER_PATH" == *.deb ]]; then
+    dpkg -i "$SIMBA_TRINO_DRIVER_PATH"
+  elif [[ "$SIMBA_TRINO_DRIVER_PATH" == *.rpm ]]; then
+    apt-get install -y alien
+    alien --to-deb "$SIMBA_TRINO_DRIVER_PATH"
+    DEB_FILE=$(ls simbatrinoodbc*.deb | head -n 1)
+    if [[ -f "$DEB_FILE" ]]; then
+      dpkg -i "$DEB_FILE"
+    else
+      echo_with_color red "Failed to convert RPM to DEB." >&5
+      exit 1
+    fi
+  else
+    echo_with_color red "Unsupported file type for Simba Trino ODBC driver." >&5
+    exit 1
+  fi
+
+  mkdir -p /opt/simba/trinoodbc/lib/64/
+  cp "$SIMBA_TRINO_LICENSE_PATH" /opt/simba/trinoodbc/lib/64/ || echo_with_color red "Failed to copy license file." >&5
+
+  echo_with_color green "Simba Trino ODBC driver installation complete." >&5
+}
