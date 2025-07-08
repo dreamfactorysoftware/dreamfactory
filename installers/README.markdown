@@ -103,9 +103,34 @@ Neglecting to provide this key will cause the upgrade process to fail, so please
 
 After finishing the installation process you can access to DreamFactory by typing your IP address or localhost in the browser. You should be directed to the login page of the admin application.
 
+### Enabling Simba Trino ODBC
+
+Selecting the Simba Trino ODBC option (when prompted during installation) will result in the installation of the Simba Trino ODBC driver. Due to licensing restrictions, we are unable to include these files with the installer. You must obtain the Simba Trino ODBC driver and license file from your vendor (e.g., [insightsoftware](https://insightsoftware.com/drivers/trino-odbc-jdbc/)).
+
+After obtaining the files, upload them to your server and note the absolute path to their location. You will need to supply this path during the installation process when prompted.
+
+You will need:
+
+* Simba Trino ODBC driver package for your OS (e.g. `SimbaTrinoODBC-<version>.deb` or `SimbaTrinoODBC-<version>.rpm`)
+* SimbaTrinoODBCDriver.lic license file
+
+**Example steps:**
+
+1. Download the Simba Trino ODBC driver and license file from your vendor portal.
+2. Upload the `.deb` or `.rpm` file and the `SimbaTrinoODBCDriver.lic` file to your server (e.g., `/tmp`).
+3. When prompted during installation, enter the absolute path to the driver package file (e.g., `/tmp/SimbaTrinoODBC-2.0.0.1000-Debian-64bit.deb`).
+4. When prompted, enter the absolute path to the `SimbaTrinoODBCDriver.lic` file (e.g., `/tmp/SimbaTrinoODBCDriver.lic`).
+
+The installer will install the driver and move the license file to `/opt/simba/trinoodbc/lib/64/` automatically.
+
+**Note:**
+- The installer does not download the driver for you. You must obtain it from your vendor.
+- The script was tested with Simba Trino ODBC driver version 2.0.0.1000 and later.
+- If you encounter issues, ensure the driver and license file paths are correct and accessible.
+
 ## Troubleshooting
 
 If you get an error at some stage of the installation, fix it and run the script again. The script shows the installation steps to understand at what stage you have a problem.
-For more detailed information about the installation process and errors, you can run the installer in debug mode using option 7 at the initial menu prompt. The script will save all detailed information in a log file. The log file can be found in **tmp** directory. Full path: **/tmp/dreamfactory_installer.log**
+For more detailed information about the installation process and errors, you can run the installer in debug mode using option 8 at the initial menu prompt. The script will save all detailed information in a log file. The log file can be found in **tmp** directory. Full path: **/tmp/dreamfactory_installer.log**
 
 This installer was created using [Makeself](https://makeself.io/). The scripts within `dfsetup.run` can be seen in this directory's source folder.

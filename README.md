@@ -21,10 +21,12 @@
 </p>
 
 <p align="center">
+<!---
 <a href="https://www.heroku.com/deploy?template=https://github.com/dreamfactorysoftware/dreamfactory">
   <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy to Heroku">
 </a>
 &nbsp;&nbsp;
+-->
 <a href="https://app.snowflake.com/marketplace/listing/GZTYZRSG47I/dreamfactory-software-dreamfactory-rest-api-generation">
   <img src="https://github.com/dreamfactorysoftware/dreamfactory/blob/shift-124321/readme/deploy-to-snowflake.svg" alt="Deploy to Snowflake">
 </a>
