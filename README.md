@@ -76,6 +76,7 @@ https://github.com/dreamfactorysoftware/dreamfactory/assets/36458555/6d1569a8-07
 
 * Install DreamFactory and all of the required dependencies in less than 5 minutes using our [installers](https://github.com/dreamfactorysoftware/dreamfactory/tree/master/installers) for CentOS/RHEL, Debian, Fedora, and Ubuntu.
 * [Docker](https://github.com/dreamfactorysoftware/df-docker) provides a Docker compose image or you can build your own.
+* [NPX Installer](https://www.npmjs.com/package/@dreamfactory/create-df-mcp): Our Node NPX installer can have you up and running in minutes, and even includes optional installation of our MCP server and a PostgreSQL test database filled with realistic data.
 * Our [Helm chart](https://github.com/dreamfactorysoftware/df-helm) provides a convenient way to install DreamFactory within your Kubernetes cluster.
 * [Raspberry Pi](http://guide.dreamfactory.com/docs/raspberry-pi.html) allows you to configure DreamFactory on everybody's favorite tiny computer.
 
