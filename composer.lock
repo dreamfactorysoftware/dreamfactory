@@ -62,16 +62,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.356.22",
+            "version": "3.356.23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "5b3f65a158a0e822586d110192ee78c6565b4f06"
+                "reference": "e9253cf6073f06080a7458af54e18fc474f0c864"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/5b3f65a158a0e822586d110192ee78c6565b4f06",
-                "reference": "5b3f65a158a0e822586d110192ee78c6565b4f06",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/e9253cf6073f06080a7458af54e18fc474f0c864",
+                "reference": "e9253cf6073f06080a7458af54e18fc474f0c864",
                 "shasum": ""
             },
             "require": {
@@ -153,9 +153,9 @@
             "support": {
                 "forum": "https://github.com/aws/aws-sdk-php/discussions",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.356.22"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.356.23"
             },
-            "time": "2025-09-19T18:25:30+00:00"
+            "time": "2025-09-22T18:10:31+00:00"
         },
         {
             "name": "bitbucket/client",
@@ -1057,16 +1057,16 @@
         },
         {
             "name": "dreamfactory/df-admin-interface",
-            "version": "1.5.3",
+            "version": "1.5.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-admin-interface.git",
-                "reference": "af8fdd2ecad7f00eb630a2117f0b7039f9ffd70b"
+                "reference": "e13040be5b45f52712f3c21809e6d50dfb8c0cfe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-admin-interface/zipball/af8fdd2ecad7f00eb630a2117f0b7039f9ffd70b",
-                "reference": "af8fdd2ecad7f00eb630a2117f0b7039f9ffd70b",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-admin-interface/zipball/e13040be5b45f52712f3c21809e6d50dfb8c0cfe",
+                "reference": "e13040be5b45f52712f3c21809e6d50dfb8c0cfe",
                 "shasum": ""
             },
             "require": {
@@ -1104,7 +1104,7 @@
                 "email": "dspsupport@dreamfactory.com",
                 "wiki": "https://wiki.dreamfactory.com"
             },
-            "time": "2025-09-22T09:07:26+00:00"
+            "time": "2025-09-22T22:53:52+00:00"
         },
         {
             "name": "dreamfactory/df-amqp",
@@ -6519,24 +6519,26 @@
         },
         {
             "name": "paragonie/constant_time_encoding",
-            "version": "v3.0.0",
+            "version": "v3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/constant_time_encoding.git",
-                "reference": "df1e7fde177501eee2037dd159cf04f5f301a512"
+                "reference": "5e9b582660b997de205a84c02a3aac7c060900c9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/constant_time_encoding/zipball/df1e7fde177501eee2037dd159cf04f5f301a512",
-                "reference": "df1e7fde177501eee2037dd159cf04f5f301a512",
+                "url": "https://api.github.com/repos/paragonie/constant_time_encoding/zipball/5e9b582660b997de205a84c02a3aac7c060900c9",
+                "reference": "5e9b582660b997de205a84c02a3aac7c060900c9",
                 "shasum": ""
             },
             "require": {
                 "php": "^8"
             },
             "require-dev": {
-                "phpunit/phpunit": "^9",
-                "vimeo/psalm": "^4|^5"
+                "infection/infection": "^0",
+                "nikic/php-fuzzer": "^0",
+                "phpunit/phpunit": "^9|^10|^11",
+                "vimeo/psalm": "^4|^5|^6"
             },
             "type": "library",
             "autoload": {
@@ -6582,7 +6584,7 @@
                 "issues": "https://github.com/paragonie/constant_time_encoding/issues",
                 "source": "https://github.com/paragonie/constant_time_encoding"
             },
-            "time": "2024-05-08T12:36:18+00:00"
+            "time": "2025-09-22T21:00:33+00:00"
         },
         {
             "name": "paragonie/random_compat",
