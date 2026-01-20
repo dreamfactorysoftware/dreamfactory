@@ -410,7 +410,7 @@ install_munch () {
 }
 
 install_node () {
-  curl -sL https://deb.nodesource.com/setup_14.x | bash -
+  curl -sL https://deb.nodesource.com/setup_18.x | bash -
   apt-get install -y nodejs
   if (($? >= 1)); then
     echo_with_color red "\n${ERROR_STRING}" >&5

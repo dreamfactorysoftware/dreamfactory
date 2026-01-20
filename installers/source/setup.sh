@@ -65,12 +65,16 @@ print_centered() {
 ## Used for each of the individual components to be installed
 run_process () {
   while true; do echo -n . >&5; sleep 1; done &
-  trap 'kill $BGPID; exit' INT
+  trap 'kill $BGPID 2>/dev/null; exit' INT
   BGPID=$!
   echo -n "$1" >&5
   $2
+  local exit_code=$?
+  # Always kill the background progress indicator, regardless of success/failure
+  kill $BGPID 2>/dev/null
+  wait $BGPID 2>/dev/null
   echo done >&5
-  kill $!
+  return $exit_code
 }
 
 clear
@@ -139,49 +143,56 @@ echo_with_color magenta "Input '0' and press Enter to run the default installati
 read -r INSTALLATION_OPTIONS
 print_centered "-" "-"
 
+# Helper function to check if a specific option number was selected
+# Avoids false positives like "10" matching "1"
+option_selected() {
+  local option=$1
+  # Add commas around input to handle edge cases, then check for option surrounded by commas or at edges
+  echo ",$INSTALLATION_OPTIONS," | grep -qE "(^|,)${option}(,|$)"
+}
 
-if [[ $INSTALLATION_OPTIONS == *"1"* ]]; then
+if option_selected "1"; then
   ORACLE=TRUE
   echo_with_color green "Oracle selected."
 fi
 
-if [[ $INSTALLATION_OPTIONS == *"2"* ]]; then
+if option_selected "2"; then
   DB2=TRUE
   echo_with_color green "DB2 selected."
 fi
 
-if [[ $INSTALLATION_OPTIONS == *"3"* ]]; then
+if option_selected "3"; then
   CASSANDRA=TRUE
   echo_with_color green "Cassandra selected."
 fi
 
-if [[ $INSTALLATION_OPTIONS == *"4"* ]]; then
+if option_selected "4"; then
   APACHE=TRUE
   echo_with_color green "Apache selected."
 fi
 
-if [[ $INSTALLATION_OPTIONS == *"5"* ]]; then
+if option_selected "5"; then
   MYSQL=TRUE
   echo_with_color green "MariaDB System Database selected."
 fi
 
-if [[ $INSTALLATION_OPTIONS == *"6"* ]]; then
+if option_selected "6"; then
   echo_with_color magenta "What version of DreamFactory would you like to install? (E.g. 4.9.0)"
   read -r -p "DreamFactory Version: " DREAMFACTORY_VERSION_TAG
   echo_with_color green "DreamFactory Version ${DREAMFACTORY_VERSION_TAG} selected."
 fi
 
-if [[ $INSTALLATION_OPTIONS == *"7"* ]]; then
+if option_selected "7"; then
   SIMBA_TRINO_ODBC=TRUE
   echo_with_color green "Simba Trino ODBC selected."
 fi
 
-if [[ $INSTALLATION_OPTIONS == *"8"* ]]; then
+if option_selected "8"; then
   DEBUG=TRUE
   echo_with_color green "Running in debug mode. Run this command: tail -f /tmp/dreamfactory_installer.log in a new terminal session to follow logs during installation"
 fi
 
-if [[ $INSTALLATION_OPTIONS == *"10"* ]]; then
+if option_selected "10"; then
   ENABLE_MCP_DAEMON=TRUE
   echo_with_color green "MCP Daemon selected."
 fi
@@ -190,8 +201,8 @@ if [[ ! $DEBUG == TRUE ]]; then
   exec 5>&1            # Save a copy of STDOUT
   exec >/dev/null 2>&1 # Redirect STDOUT to Null
 else
-  exec 5>&1 # Save a copy of STDOUT. Used because all echo redirects output to 5.
-  exec >/tmp/dreamfactory_installer.log 2>&1
+  exec 5>&1 # Save a copy of STDOUT to fd 5 (for user-facing messages)
+  exec > >(tee -a /tmp/dreamfactory_installer.log) 2>&1  # Send stdout/stderr to both log and terminal
 fi
 
 # Retrieve executing user's username
@@ -246,7 +257,7 @@ esac
 
 #### INSTALLER ####
 
-if [[ $INSTALLATION_OPTIONS == *"9"* ]]; then
+if option_selected "9"; then
   echo_with_color green "Upgrading DreamFactory selected.\n" >&5
   run_process "   Upgrading DreamFactory" upgrade_dreamfactory
   echo_with_color green "\nFinished Upgrading DreamFactory." >&5

@@ -412,7 +412,7 @@ install_munch () {
 }
 
 install_node () {
-  curl -sL https://rpm.nodesource.com/setup_14.x | bash -
+  curl -sL https://rpm.nodesource.com/setup_18.x | bash -
   dnf install -y nodejs
   if (($? >= 1)); then
     echo_with_color red "\n${ERROR_STRING}" >&5

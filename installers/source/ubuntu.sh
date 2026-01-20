@@ -241,18 +241,27 @@ install_mcrypt () {
 }
 
 install_mongodb () {
+  # Uninstall first if already registered to avoid conflicts
+  pecl uninstall mongodb 2>/dev/null || true
   pecl install mongodb <<<'no'
   if (($? >= 1)); then
     echo_with_color red "\nMongo DB extension installation error." >&5
     kill $!
     exit 1
   fi
+  # Fix permissions on the extension file so PHP can load it
+  chmod 644 /usr/lib/php/*/mongodb.so
   echo "extension=mongodb.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/mongodb.ini"
+  chmod 644 "/etc/php/${PHP_VERSION_INDEX}/mods-available/mongodb.ini"
   phpenmod -s ALL mongodb
 }
 
 install_sql_server () {
+  # Remove old keyring if it exists to avoid interactive prompt
+  rm -f /usr/share/keyrings/microsoft-archive-keyring.gpg
   curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /usr/share/keyrings/microsoft-archive-keyring.gpg
+  # Set proper permissions so apt's _apt user can read the keyring
+  chmod 644 /usr/share/keyrings/microsoft-archive-keyring.gpg
   echo "deb [arch=amd64,arm64,armhf signed-by=/usr/share/keyrings/microsoft-archive-keyring.gpg] https://packages.microsoft.com/ubuntu/24.04/prod noble main" | tee /etc/apt/sources.list.d/mssql-release.list
   apt-get update
   ACCEPT_EULA=Y DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends unixodbc-dev msodbcsql18
@@ -264,21 +273,31 @@ install_sql_server () {
   sudo apt update
   ACCEPT_EULA=Y sudo apt install -y msodbcsql18 php8.3-odbc
 
+  # Uninstall first if already registered to avoid conflicts
+  pecl uninstall sqlsrv 2>/dev/null || true
   pecl install sqlsrv
   if (($? >= 1)); then
     echo_with_color red "\nMS SQL Server extension installation error." >&5
     exit 1
   fi
+  # Fix permissions on the extension files so PHP can load them
+  chmod 644 /usr/lib/php/*/sqlsrv.so 2>/dev/null || true
+  chmod 644 /usr/lib/php/*/pdo_sqlsrv.so 2>/dev/null || true
 }
 
 install_pdo_sqlsrv () {
+  # Uninstall first if already registered to avoid conflicts
+  pecl uninstall pdo_sqlsrv 2>/dev/null || true
   pecl install pdo_sqlsrv
   if (($? >= 1)); then
     echo_with_color red "\npdo_sqlsrv extension installation error." >&5
     kill $!
     exit 1
   fi
+  # Fix permissions on the extension file so PHP can load it
+  chmod 644 /usr/lib/php/*/pdo_sqlsrv.so
   echo "extension=pdo_sqlsrv.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/pdo_sqlsrv.ini"
+  chmod 644 "/etc/php/${PHP_VERSION_INDEX}/mods-available/pdo_sqlsrv.ini"
   phpenmod -s ALL pdo_sqlsrv
 }
 
@@ -445,7 +464,7 @@ install_munch () {
 }
 
 install_node () {
-  curl -sL https://deb.nodesource.com/setup_14.x | bash -
+  curl -sL https://deb.nodesource.com/setup_18.x | bash -
   apt-get install -y nodejs
   if (($? >= 1)); then
     echo_with_color red "\n${ERROR_STRING}" >&5
