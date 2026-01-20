@@ -42,18 +42,22 @@
     {
       "type": "vcs",
       "url": "https://github.com/dreamfactorysoftware/df-pubsub"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/dreamfactorysoftware/df-mcp-server"
     }
   ],
   "require": {
     "php": "^8.3",
-    "dreamfactory/df-admin-interface": "~1.5.0",
+    "dreamfactory/df-admin-interface": "~1.6.0",
     "dreamfactory/df-amqp": "~0.3.0",
-    "dreamfactory/df-apidoc": "~0.8.0",
-    "dreamfactory/df-aws": "~0.19.0",
+    "dreamfactory/df-apidoc": "~0.8.3",
+    "dreamfactory/df-aws": "~0.20.0",
     "dreamfactory/df-azure": "~0.18.0",
     "dreamfactory/df-cache": "~0.13.0",
     "dreamfactory/df-cassandra": "~0.15.0",
-    "dreamfactory/df-core": "~1.0.9",
+    "dreamfactory/df-core": "~1.0.12",
     "dreamfactory/df-couchdb": "~0.18.0",
     "dreamfactory/df-email": "~0.13.0",
     "dreamfactory/df-exporter-prometheus": "~1.1.0",
@@ -62,11 +66,12 @@
     "dreamfactory/df-git": "~0.8.0",
     "dreamfactory/df-mongo-logs": "~1.3.0",
     "dreamfactory/df-mqtt": "~0.6.0",
-    "dreamfactory/df-oauth": "~0.18.0",
+    "dreamfactory/df-mcp-server": "~1.0.0",
+    "dreamfactory/df-oauth": "~0.19.0",
     "dreamfactory/df-rackspace": "~0.16.0",
-    "dreamfactory/df-rws": "~0.18.1",
+    "dreamfactory/df-rws": "~0.18.2",
     "dreamfactory/df-sqldb": "~1.2.0",
-    "dreamfactory/df-system": "~0.6.2",
+    "dreamfactory/df-system": "~0.6.3",
     "dreamfactory/df-user": "~0.17.0",
     "laravel/framework": "^11.15",
     "laravel/helpers": "^1.7",

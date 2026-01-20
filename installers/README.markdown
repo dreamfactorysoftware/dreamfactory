@@ -133,4 +133,12 @@ The installer will install the driver and move the license file to `/opt/simba/t
 If you get an error at some stage of the installation, fix it and run the script again. The script shows the installation steps to understand at what stage you have a problem.
 For more detailed information about the installation process and errors, you can run the installer in debug mode using option 8 at the initial menu prompt. The script will save all detailed information in a log file. The log file can be found in **tmp** directory. Full path: **/tmp/dreamfactory_installer.log**
 
-This installer was created using [Makeself](https://makeself.io/). The scripts within `dfsetup.run` can be seen in this directory's source folder.
+## Building the Installer
+
+This installer was created using [Makeself](https://makeself.io/). The scripts within `dfsetup.run` can be found in the `source/` directory. To rebuild `dfsetup.run` after making changes to the source scripts, run:
+
+```bash
+./update-installers.sh
+```
+
+This script uses the included `makeself.run` to package the contents of `source/` into a new self-extracting `dfsetup.run` archive.
