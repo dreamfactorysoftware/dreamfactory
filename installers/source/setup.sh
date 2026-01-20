@@ -131,7 +131,8 @@ echo -e "[5] Install MariaDB as the default system database for DreamFactory"
 echo -e "[6] Install a specfic version of DreamFactory"
 echo -e "[7] Install driver for Trino"
 echo -e "[8] Run Installation in debug mode (logs will output to /tmp/dreamfactory_installer.log)"
-echo -e "[9] Upgrade DreamFactory\n"
+echo -e "[9] Upgrade DreamFactory"
+echo -e "[10] Enable MCP Daemon (Model Context Protocol server)\n"
 
 print_centered "-" "-"
 echo_with_color magenta "Input '0' and press Enter to run the default installation. To install additional options, type the corresponding number (e.g. '1,5' for Oracle and a MySql system database) from the menu above and press Enter"
@@ -178,6 +179,11 @@ fi
 if [[ $INSTALLATION_OPTIONS == *"8"* ]]; then
   DEBUG=TRUE
   echo_with_color green "Running in debug mode. Run this command: tail -f /tmp/dreamfactory_installer.log in a new terminal session to follow logs during installation"
+fi
+
+if [[ $INSTALLATION_OPTIONS == *"10"* ]]; then
+  ENABLE_MCP_DAEMON=TRUE
+  echo_with_color green "MCP Daemon selected."
 fi
 
 if [[ ! $DEBUG == TRUE ]]; then
@@ -988,6 +994,14 @@ if [[ ! $APACHE == TRUE ]]; then
   else
     echo_with_color red "Unable to update php-fpm www.conf file. Please check the file location of www.conf"
   fi
+fi
+
+### Start MCP Daemon if enabled
+if [[ $ENABLE_MCP_DAEMON == TRUE ]]; then
+  echo_with_color blue "Starting MCP daemon...\n"
+  /opt/dreamfactory/vendor/dreamfactory/df-mcp-server/scripts/start-daemon.sh &
+  MCP_DAEMON_PID=$!
+  echo_with_color green "MCP daemon started with PID: $MCP_DAEMON_PID\n"
 fi
 
 echo_with_color green "Installation finished! DreamFactory has been installed in /opt/dreamfactory "
