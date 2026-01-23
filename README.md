@@ -3,7 +3,7 @@
 </h1>
 
 <p align="center">
-    <strong>Code Automation for Generating APIs</strong>
+    <strong>DreamFactory is a self-hosted platform providing governed API access to any data source for enterprise apps and local LLMs.</strong>
 </p>
 
 <p align="center">
@@ -59,7 +59,9 @@
 <a name="overview"></a>
 ## Overview
 
-DreamFactory is an API generation solution best known for its ability to automatically generate secure and documented APIs for databases like Microsoft SQL Server, MySQL, Snowflake, PostgreSQL, Oracle, and MongoDB. It is built on top of the [Laravel framework](https://laravel.com/), and includes a convenient web-based administration client. So what can you do with DreamFactory?
+DreamFactory is a secure, self-hosted enterprise data access platform that provides governed API access to any data source, connecting enterprise applications and on-prem LLMs with role-based access and identity passthrough.
+
+DreamFactory is built on top of the [Laravel framework](https://laravel.com/), and includes a convenient web-based administration client. So what can you do with DreamFactory?
 
 * [Generate](http://guide.dreamfactory.com/docs/chapter03.html#generating-a-mysql-backed-api) powerful, reusable, documented APIs for SQL and NoSQL databases, files, email, push notifications and more in seconds.
 * [Use the PHP, Python, and NodeJS scripting languages](https://guide.dreamfactory.com/docs/integrating-business-logic-into-your-apis/) to easily customize API behavior at any endpoint, for both API requests and API responses.
