@@ -1,15 +1,39 @@
-<svg width="170" height="40" xmlns="http://www.w3.org/2000/svg">
-  <rect width="170" height="40" rx="4" fill="#0F1689"/>
-  
-  <!-- Helm Official Logo -->
-  <g transform="translate(24,12)">
-    <path d="M16 8c0 4.4-3.6 8-8 8s-8-3.6-8-8 3.6-8 8-8 8 3.6 8 8zM8 2c-3.3 0-6 2.7-6 6s2.7 6 6 6 6-2.7 6-6-2.7-6-6-6z" fill="white"/>
-    <path d="M8 0C3.6 0 0 3.6 0 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 14c-3.3 0-6-2.7-6-6s2.7-6 6-6 6 2.7 6 6-2.7 6-6 6z" fill="white" fill-opacity="0.5"/>
-    <path d="M8 3c2.8 0 5 2.2 5 5s-2.2 5-5 5-5-2.2-5-5 2.2-5 5-5zm0 8c1.7 0 3-1.3 3-3s-1.3-3-3-3-3 1.3-3 3 1.3 3 3 3z" fill="white"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="44" viewBox="0 0 220 44">
+  <defs>
+    <linearGradient id="hlmbg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0F1689"/>
+      <stop offset="100%" style="stop-color:#091060"/>
+    </linearGradient>
+  </defs>
+  <rect rx="6" width="220" height="44" fill="url(#hlmbg)"/>
+  <rect rx="6" width="220" height="44" fill="none" stroke="#4a4fbf" stroke-width="1" opacity="0.3"/>
+  <!-- Helm Ship's Wheel Logo -->
+  <g transform="translate(20, 22)" fill="none" stroke="#ffffff" stroke-width="1.5">
+    <!-- Outer ring -->
+    <circle cx="0" cy="0" r="10" fill="none"/>
+    <!-- Inner ring -->
+    <circle cx="0" cy="0" r="4" fill="none"/>
+    <!-- Hub -->
+    <circle cx="0" cy="0" r="1.5" fill="#ffffff" stroke="none"/>
+    <!-- Spokes (8 directions) -->
+    <line x1="0" y1="-4" x2="0" y2="-10"/>
+    <line x1="2.83" y1="-2.83" x2="7.07" y2="-7.07"/>
+    <line x1="4" y1="0" x2="10" y2="0"/>
+    <line x1="2.83" y1="2.83" x2="7.07" y2="7.07"/>
+    <line x1="0" y1="4" x2="0" y2="10"/>
+    <line x1="-2.83" y1="2.83" x2="-7.07" y2="7.07"/>
+    <line x1="-4" y1="0" x2="-10" y2="0"/>
+    <line x1="-2.83" y1="-2.83" x2="-7.07" y2="-7.07"/>
+    <!-- Handle pegs (at the end of each spoke) -->
+    <circle cx="0" cy="-11.5" r="1.5" fill="#ffffff" stroke="none"/>
+    <circle cx="8.13" cy="-8.13" r="1.5" fill="#ffffff" stroke="none"/>
+    <circle cx="11.5" cy="0" r="1.5" fill="#ffffff" stroke="none"/>
+    <circle cx="8.13" cy="8.13" r="1.5" fill="#ffffff" stroke="none"/>
+    <circle cx="0" cy="11.5" r="1.5" fill="#ffffff" stroke="none"/>
+    <circle cx="-8.13" cy="8.13" r="1.5" fill="#ffffff" stroke="none"/>
+    <circle cx="-11.5" cy="0" r="1.5" fill="#ffffff" stroke="none"/>
+    <circle cx="-8.13" cy="-8.13" r="1.5" fill="#ffffff" stroke="none"/>
   </g>
-  
   <!-- Text -->
-  <text x="100" y="25" text-anchor="middle" font-family="Arial, sans-serif" font-weight="500" font-size="14" fill="white">
-    Deploy with Helm
-  </text>
-</svg> 
+  <text x="132" y="27" fill="#ffffff" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif" font-size="14" font-weight="600" text-anchor="middle">Deploy with Helm</text>
+</svg>
