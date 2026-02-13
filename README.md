@@ -20,21 +20,21 @@
 
 <p align="center">
 <a href="https://docs.dreamfactory.com/getting-started/installing-dreamfactory/windows-installation">
-  <img src="https://github.com/dreamfactorysoftware/dreamfactory/blob/master/readme/install-on-windows.svg" alt="Install on Windows">
+  <img src="https://github.com/dreamfactorysoftware/dreamfactory/blob/develop/readme/install-on-windows.svg" alt="Install on Windows">
 </a>
 &nbsp;&nbsp;
 <a href="https://github.com/dreamfactorysoftware/dreamfactory/tree/master/installers">
-  <img src="https://github.com/dreamfactorysoftware/dreamfactory/blob/master/readme/install-on-linux.svg" alt="Install on Linux">
+  <img src="https://github.com/dreamfactorysoftware/dreamfactory/blob/develop/readme/install-on-linux.svg" alt="Install on Linux">
 </a>
 </p>
 
 <p align="center">
 <a href="https://github.com/dreamfactorysoftware/df-helm">
-  <img src="https://github.com/dreamfactorysoftware/dreamfactory/blob/master/readme/deploy-with-helm.svg" alt="Deploy with Helm">
+  <img src="https://github.com/dreamfactorysoftware/dreamfactory/blob/develop/readme/deploy-with-helm.svg" alt="Deploy with Helm">
 </a>
 &nbsp;&nbsp;
 <a href="https://github.com/dreamfactorysoftware/df-docker">
-  <img src="https://github.com/dreamfactorysoftware/dreamfactory/blob/master/readme/deploy-with-docker.svg" alt="Deploy with Docker">
+  <img src="https://github.com/dreamfactorysoftware/dreamfactory/blob/develop/readme/deploy-with-docker.svg" alt="Deploy with Docker">
 </a>
 </p>
 
@@ -78,7 +78,7 @@ DreamFactory is built on the [Laravel framework](https://laravel.com/) and serve
 DreamFactory connects to your database, introspects the schema, and generates a complete REST API with full CRUD operations, relationship handling, stored procedure access, and OpenAPI/Swagger documentation — all in minutes.
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/dreamfactorysoftware/dreamfactory/master/readme/mcp-data-flow.gif" alt="DreamFactory MCP Data Flow" width="800" />
+    <img src="https://raw.githubusercontent.com/dreamfactorysoftware/dreamfactory/develop/readme/mcp-data-flow.gif" alt="DreamFactory MCP Data Flow" width="800" />
 </p>
 
 <p align="center"><em>See how DreamFactory connects AI models, applications, databases, and file storage services through governed MCP and REST API endpoints.</em></p>
@@ -266,7 +266,7 @@ See the [NPX installer on npm](https://www.npmjs.com/package/@dreamfactory/creat
 
 ## Community and Support
 
-| <a href="https://stackoverflow.com/questions/tagged/dreamfactory"><img src="https://static-00.iconduck.com/assets.00/stack-overflow-icon-2048x2048-7ohycn5z.png" height="50px" alt="Stack Overflow"/></a> | <a href="https://community.dreamfactory.com"><img src="https://raw.githubusercontent.com/dreamfactorysoftware/dreamfactory/master/readme/vertical-logo-fullcolor.png" height="60px" alt="DreamFactory Community"/></a> | <a href="https://twitter.com/dfsoftwareinc"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/X_logo.jpg/768px-X_logo.jpg" height="40px" alt="X (Twitter)"/></a> |
+| <a href="https://stackoverflow.com/questions/tagged/dreamfactory"><img src="https://cdn.freebiesupply.com/logos/thumbs/2x/stackoverflow-com-logo.png" height="50px" alt="Stack Overflow"/></a> | <a href="https://community.dreamfactory.com"><img src="https://raw.githubusercontent.com/dreamfactorysoftware/dreamfactory/master/readme/vertical-logo-fullcolor.png" height="60px" alt="DreamFactory Community"/></a> | <a href="https://twitter.com/dfsoftwareinc"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/X_icon.svg/960px-X_icon.svg.png" height="40px" alt="X (Twitter)"/></a> |
 | --- | --- | --- |
 | Ask and answer questions with the [`dreamfactory` tag](https://stackoverflow.com/questions/tagged/dreamfactory) on Stack Overflow | Visit [Docs](https://docs.dreamfactory.com), [Wiki](https://wiki.dreamfactory.com), and [Guide](https://guide.dreamfactory.com) for tutorials and examples | Follow [`@dfsoftwareinc`](https://twitter.com/dfsoftwareinc) for updates |
 
@@ -315,7 +315,3 @@ Yes. DreamFactory acts as a centralized AI data gateway that unifies access to m
 Feedback is welcome on our [community forum](http://community.dreamfactory.com/) or in the form of pull requests and/or issues. Contributions should follow the strategy outlined in ["Contributing to a project"](http://help.github.com/articles/fork-a-repo#contributing-to-a-project).
 
 ---
-
-<p align="center">
-    <sub>Built with Laravel. Secured by design. Governed for enterprise.</sub>
-</p>
