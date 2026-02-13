@@ -2,7 +2,9 @@
     <a href="https://dreamfactory.com/"><img src="https://raw.githubusercontent.com/dreamfactorysoftware/dreamfactory/master/readme/vertical-logo-fullcolor.png" alt="DreamFactory" width="250" /></a>
 </h1>
 
-<h2 align="center">DreamFactory is a self-hosted platform providing governed API access to any data source for enterprise apps and local LLMs.</h2>
+<p align="center">
+    <strong>DreamFactory is a self-hosted platform providing governed API access to any data source for enterprise apps and local LLMs.</strong>
+</p>
 
 <p align="center">
     <a href="https://docs.dreamfactory.com">Documentation</a> ∙ <a href="https://guide.dreamfactory.com/">Getting Started Guide</a> ∙ <a href="https://github.com/dreamfactorysoftware/dreamfactory/blob/master/CONTRIBUTING.md">Contribute</a> ∙ <a href="http://community.dreamfactory.com/">Community Support</a>
@@ -60,7 +62,7 @@
 
 DreamFactory is a secure, self-hosted enterprise data access platform that provides governed API access to any data source, connecting enterprise applications and on-prem LLMs with role-based access and identity passthrough.
 
-DreamFactory is built on the [Laravel framework](https://laravel.com/) and serves as a governed AI data access layer between your applications and data sources. Whether you're building internal tools, mobile apps, or connecting AI models to enterprise data, DreamFactory provides a single, secure API gateway.
+DreamFactory is built on the [Laravel framework](https://laravel.com/) and serves as a governed AI data access layer between your applications and data sources. Whether you're building internal tools, mobile apps, or connecting AI models to enterprise data, DreamFactory provides a single, secure AI data gateway.
 
 ### Use Cases
 
