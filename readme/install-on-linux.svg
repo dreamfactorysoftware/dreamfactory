@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="44" viewBox="0 0 220 44">
+  <defs>
+    <linearGradient id="linbg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#333333"/>
+      <stop offset="100%" style="stop-color:#1a1a1a"/>
+    </linearGradient>
+  </defs>
+  <rect rx="6" width="220" height="44" fill="url(#linbg)"/>
+  <rect rx="6" width="220" height="44" fill="none" stroke="#666666" stroke-width="1" opacity="0.3"/>
+  <!-- Tux Penguin (simplified) -->
+  <g transform="translate(20, 6)" fill="#ffffff">
+    <!-- Head -->
+    <ellipse cx="10" cy="6" rx="5.5" ry="5" fill="#ffffff"/>
+    <!-- Eyes -->
+    <circle cx="8" cy="5" r="1.2" fill="#333333"/>
+    <circle cx="12" cy="5" r="1.2" fill="#333333"/>
+    <circle cx="8.3" cy="4.7" r="0.4" fill="#ffffff"/>
+    <circle cx="12.3" cy="4.7" r="0.4" fill="#ffffff"/>
+    <!-- Beak -->
+    <ellipse cx="10" cy="7.5" rx="1.8" ry="1" fill="#E8941A"/>
+    <!-- Body -->
+    <ellipse cx="10" cy="18" rx="7.5" ry="11" fill="#ffffff"/>
+    <!-- Belly -->
+    <ellipse cx="10" cy="19" rx="5" ry="9" fill="#F5C518"/>
+    <!-- Feet -->
+    <ellipse cx="5.5" cy="29" rx="3" ry="1.2" fill="#E8941A"/>
+    <ellipse cx="14.5" cy="29" rx="3" ry="1.2" fill="#E8941A"/>
+    <!-- Wings -->
+    <path d="M2.5,12 Q0,18 2,25 L4,24 Q3,18 3.5,13Z" fill="#ffffff"/>
+    <path d="M17.5,12 Q20,18 18,25 L16,24 Q17,18 16.5,13Z" fill="#ffffff"/>
+  </g>
+  <!-- Text -->
+  <text x="132" y="27" fill="#ffffff" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif" font-size="14" font-weight="600" text-anchor="middle">Install on Linux</text>
+</svg>
