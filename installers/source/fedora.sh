@@ -21,6 +21,7 @@ install_system_dependencies () {
   libzip-devel \
   make \
   wget \
+  which \
   sudo \
   procps \
   firewalld \
@@ -40,14 +41,22 @@ install_php () {
   case $CURRENT_OS in
   36)
     dnf install -y http://rpms.remirepo.net/fedora/remi-release-36.rpm
-    ;;  
+    ;;
   37)
     dnf install -y http://rpms.remirepo.net/fedora/remi-release-37.rpm
-    ;;  
+    ;;
+  41)
+    dnf install -y http://rpms.remirepo.net/fedora/remi-release-41.rpm
+    ;;
   esac
 
-  #Fedora 36 and 37 default to PHP 8
-  if ((CURRENT_OS == 36 || CURRENT_OS == 37)); then
+  #Fedora 36+ default to PHP 8, use Remi for 8.3
+  if ((CURRENT_OS >= 41)); then
+    # Fedora 41+ uses DNF5 with different syntax
+    dnf config-manager setopt remi.enabled=1
+    dnf module reset php -y
+    dnf module enable php:remi-8.3 -y
+  elif ((CURRENT_OS == 36 || CURRENT_OS == 37)); then
     dnf config-manager --set-enabled remi -y
     dnf module reset php -y
     dnf module install php:remi-8.3 -y
@@ -237,7 +246,7 @@ install_zip () {
 }
 
 install_mcrypt () {
-  printf "\n" | pecl install mcrypt-1.0.5
+  printf "\n" | pecl install mcrypt
   if (($? >= 1)); then
     echo_with_color red "\nMcrypt extension installation error." >&5
     kill $!
@@ -247,7 +256,7 @@ install_mcrypt () {
 }
 
 install_mongodb () {
-  pecl install mongodb
+  pecl install mongodb <<<'no'
   if (($? >= 1)); then
     echo_with_color red "\nMongo DB extension installation error." >&5
     kill $!
@@ -257,10 +266,20 @@ install_mongodb () {
 }
 
 install_sql_server () {
-  curl https://packages.microsoft.com/config/rhel/8/prod.repo >/etc/yum.repos.d/mssql-release.repo
+  if ((CURRENT_OS >= 41)); then
+    # Fedora 41+ is based on RHEL 9
+    curl https://packages.microsoft.com/config/rhel/9/prod.repo >/etc/yum.repos.d/mssql-release.repo
+  else
+    curl https://packages.microsoft.com/config/rhel/8/prod.repo >/etc/yum.repos.d/mssql-release.repo
+  fi
   yum remove unixODBC-utf16 unixODBC-utf16-devel
-  ACCEPT_EULA=Y yum install -y msodbcsql18 mssql-tools \
-  unixODBC-devel-2.3.7 unixODBC-2.3.7
+  if ((CURRENT_OS >= 41)); then
+    ACCEPT_EULA=Y yum install -y msodbcsql18 mssql-tools18 \
+    unixODBC-devel
+  else
+    ACCEPT_EULA=Y yum install -y msodbcsql18 mssql-tools \
+    unixODBC-devel-2.3.7 unixODBC-2.3.7
+  fi
   if (($? >= 1)); then
     echo_with_color red "\nMS SQL Server extension installation error." >&5
     kill $!
@@ -386,17 +405,31 @@ install_igbinary () {
 }
 
 install_python2 () {
-  dnf install -y python2
-  wget https://bootstrap.pypa.io/pip/2.7/get-pip.py
-  python2 get-pip.py
+  if ((CURRENT_OS >= 41)); then
+    # Fedora 41+: Python 2 is not available, skip
+    echo "Python 2 not available on Fedora ${CURRENT_OS}, skipping..."
+  else
+    dnf install -y python2
+    wget https://bootstrap.pypa.io/pip/2.7/get-pip.py
+    python2 get-pip.py
+  fi
 }
 
 check_bunch_installation () {
+  if ((CURRENT_OS >= 41)); then
+    # Fedora 41+: Python 2 / bunch not available, always return success
+    return 0
+  fi
   pip2 list | grep bunch
 }
 
 install_bunch () {
-  pip2 install bunch
+  if ((CURRENT_OS >= 41)); then
+    # Fedora 41+: Python 2 / bunch not available, skip
+    echo "bunch not available on Fedora ${CURRENT_OS}, skipping..."
+  else
+    pip2 install bunch
+  fi
 }
 
 install_python3 () {
@@ -412,7 +445,7 @@ install_munch () {
 }
 
 install_node () {
-  curl -sL https://rpm.nodesource.com/setup_14.x | bash -
+  curl -sL https://rpm.nodesource.com/setup_20.x | bash -
   dnf install -y nodejs
   if (($? >= 1)); then
     echo_with_color red "\n${ERROR_STRING}" >&5
@@ -458,7 +491,7 @@ install_hive_odbc () {
   test -f /opt/mapr/hiveodbc/lib/64/libmaprhiveodbc64.so
   rm MapRHiveODBC-2.6.1.1001-1.x86_64.rpm
   export HIVE_SERVER_ODBC_DRIVER_PATH=/opt/mapr/hiveodbc/lib/64/libmaprhiveodbc64.so
-  HIVE_ODBC_INSTALLED = $(php -m | grep -E "^odbc")
+  HIVE_ODBC_INSTALLED=$(php -m | grep -E "^odbc")
 }
 
 install_dremio_odbc () {
@@ -488,7 +521,7 @@ install_databricks_odbc () {
   test -f /opt/simba/spark/lib/64/libsparkodbc_sb64.so
   rm simbaspark-2.8.2.1013-1.x86_64.rpm
   export DATABRICKS_SERVER_ODBC_DRIVER_PATH=/opt/simba/spark/lib/64/libsparkodbc_sb64.so
-  DATABRICKS_ODBC_INSTALLED = $(php -m | grep -E "^odbc")
+  DATABRICKS_ODBC_INSTALLED=$(php -m | grep -E "^odbc")
 }
 
 install_hana_odbc () {

@@ -96,14 +96,14 @@ case $CURRENT_KERNEL in
     fi
     ;;
   centos | rhel)
-    if ((CURRENT_OS != 7)) && ((CURRENT_OS != 8)); then
-      echo_with_color red "The installer only supports Rhel (Centos) 7 and 8. Exiting...\n"
+    if ((CURRENT_OS != 7)) && ((CURRENT_OS != 8)) && ((CURRENT_OS != 9)); then
+      echo_with_color red "The installer only supports Rhel (Centos) 7, 8, and 9. Exiting...\n"
       exit 1
     fi
     ;;
   fedora)
-    if ((CURRENT_OS != 36)) && ((CURRENT_OS != 37)); then
-      echo_with_color red "The installer only supports Fedora 36, 37. Exiting...\n"
+    if ((CURRENT_OS != 36)) && ((CURRENT_OS != 37)) && ((CURRENT_OS != 41)); then
+      echo_with_color red "The installer only supports Fedora 36, 37, 41. Exiting...\n"
       exit 1
     fi
     ;;
@@ -140,48 +140,85 @@ read -r INSTALLATION_OPTIONS
 print_centered "-" "-"
 
 
-if [[ $INSTALLATION_OPTIONS == *"1"* ]]; then
+# Parse menu options into an array for exact matching.
+# Supports both comma-separated ("0,5,8") and concatenated ("058") input.
+# Option "10" is handled as a single token so it doesn't match "1" or "0".
+SELECTED_OPTIONS=()
+if [[ "$INSTALLATION_OPTIONS" == *","* ]]; then
+  # Comma-separated: split on commas
+  IFS=',' read -ra SELECTED_OPTIONS <<< "$INSTALLATION_OPTIONS"
+else
+  # Concatenated digits: extract "10" first, then split remaining into single digits
+  remaining="$INSTALLATION_OPTIONS"
+  if [[ "$remaining" == *"10"* ]]; then
+    SELECTED_OPTIONS+=("10")
+    remaining="${remaining/10/}"
+  fi
+  for (( i=0; i<${#remaining}; i++ )); do
+    char="${remaining:$i:1}"
+    if [[ "$char" =~ [0-9] ]]; then
+      SELECTED_OPTIONS+=("$char")
+    fi
+  done
+fi
+
+has_option() {
+  local target="$1"
+  for opt in "${SELECTED_OPTIONS[@]}"; do
+    opt=$(echo "$opt" | xargs)
+    if [[ "$opt" == "$target" ]]; then
+      return 0
+    fi
+  done
+  return 1
+}
+
+if has_option "1"; then
   ORACLE=TRUE
   echo_with_color green "Oracle selected."
 fi
 
-if [[ $INSTALLATION_OPTIONS == *"2"* ]]; then
+if has_option "2"; then
   DB2=TRUE
   echo_with_color green "DB2 selected."
 fi
 
-if [[ $INSTALLATION_OPTIONS == *"3"* ]]; then
+if has_option "3"; then
   CASSANDRA=TRUE
   echo_with_color green "Cassandra selected."
 fi
 
-if [[ $INSTALLATION_OPTIONS == *"4"* ]]; then
+if has_option "4"; then
   APACHE=TRUE
   echo_with_color green "Apache selected."
 fi
 
-if [[ $INSTALLATION_OPTIONS == *"5"* ]]; then
+if has_option "5"; then
   MYSQL=TRUE
   echo_with_color green "MariaDB System Database selected."
 fi
 
-if [[ $INSTALLATION_OPTIONS == *"6"* ]]; then
+if has_option "6"; then
   echo_with_color magenta "What version of DreamFactory would you like to install? (E.g. 4.9.0)"
   read -r -p "DreamFactory Version: " DREAMFACTORY_VERSION_TAG
   echo_with_color green "DreamFactory Version ${DREAMFACTORY_VERSION_TAG} selected."
 fi
 
-if [[ $INSTALLATION_OPTIONS == *"7"* ]]; then
+if has_option "7"; then
   SIMBA_TRINO_ODBC=TRUE
   echo_with_color green "Simba Trino ODBC selected."
 fi
 
-if [[ $INSTALLATION_OPTIONS == *"8"* ]]; then
+if has_option "8"; then
   DEBUG=TRUE
   echo_with_color green "Running in debug mode. Run this command: tail -f /tmp/dreamfactory_installer.log in a new terminal session to follow logs during installation"
 fi
 
-if [[ $INSTALLATION_OPTIONS == *"10"* ]]; then
+if has_option "9"; then
+  UPGRADE=TRUE
+fi
+
+if has_option "10"; then
   ENABLE_MCP_DAEMON=TRUE
   echo_with_color green "MCP Daemon selected."
 fi
@@ -246,7 +283,7 @@ esac
 
 #### INSTALLER ####
 
-if [[ $INSTALLATION_OPTIONS == *"9"* ]]; then
+if [[ $UPGRADE == TRUE ]]; then
   echo_with_color green "Upgrading DreamFactory selected.\n" >&5
   run_process "   Upgrading DreamFactory" upgrade_dreamfactory
   echo_with_color green "\nFinished Upgrading DreamFactory." >&5
@@ -707,7 +744,7 @@ if [[ $MYSQL == TRUE ]]; then ### Only with key --with-mysql
       done
     fi
 
-    echo "CREATE DATABASE ${DF_SYSTEM_DB};" | mysql -u root "-p${DB_PASS}" 2>&5
+    echo "CREATE DATABASE IF NOT EXISTS ${DF_SYSTEM_DB};" | mysql -u root "-p${DB_PASS}" 2>&5
     if (($? >= 1)); then
       echo_with_color red "\nCreating database error. Exit" >&5
       exit 1
@@ -728,10 +765,15 @@ if [[ $MYSQL == TRUE ]]; then ### Only with key --with-mysql
         read -r -s DF_SYSTEM_DB_PASSWORD
       done
     fi
-    # Generate password for user in DB
-    echo "GRANT ALL PRIVILEGES ON ${DF_SYSTEM_DB}.* to \"${DF_SYSTEM_DB_USER}\"@\"localhost\" IDENTIFIED BY \"${DF_SYSTEM_DB_PASSWORD}\";" | mysql -u root "-p${DB_PASS}" 2>&5
+    # Create user and grant privileges (split for MySQL 8.0+ compatibility)
+    echo "CREATE USER IF NOT EXISTS \"${DF_SYSTEM_DB_USER}\"@\"localhost\" IDENTIFIED BY \"${DF_SYSTEM_DB_PASSWORD}\";" | mysql -u root "-p${DB_PASS}" 2>&5
     if (($? >= 1)); then
       echo_with_color red "\nCreating new user error. Exit" >&5
+      exit 1
+    fi
+    echo "GRANT ALL PRIVILEGES ON ${DF_SYSTEM_DB}.* TO \"${DF_SYSTEM_DB_USER}\"@\"localhost\";" | mysql -u root "-p${DB_PASS}" 2>&5
+    if (($? >= 1)); then
+      echo_with_color red "\nGranting privileges error. Exit" >&5
       exit 1
     fi
     echo "FLUSH PRIVILEGES;" | mysql -u root "-p${DB_PASS}"
@@ -829,14 +871,22 @@ if [[ $DB_INSTALLED == FALSE ]]; then
                 --db_database=${DF_SYSTEM_DB} \
                 --db_username=${DF_SYSTEM_DB_USER} \
                 --db_password=${DF_SYSTEM_DB_PASSWORD//\'/} \
-                --db_install=Linux"
+                --df_install=Linux"
   sed -i 's/\#DB\_CHARSET\=/DB\_CHARSET\=utf8/g' .env
   sed -i 's/\#DB\_COLLATION\=/DB\_COLLATION\=utf8\_unicode\_ci/g' .env
   echo -e "\n"
   MYSQL_INSTALLED=TRUE
 
 elif [[ ! $MYSQL == TRUE && $DF_CLEAN_INSTALLATION == TRUE ]] || [[ $DB_INSTALLED == TRUE ]]; then
-  sudo -u "$CURRENT_USER" bash -c "php artisan df:env --df_install=Linux"
+  # Support non-interactive mode via environment variables (useful for automated/CI installs)
+  if [[ -n "$DF_DB_CONNECTION" ]]; then
+    sudo -u "$CURRENT_USER" bash -c "php artisan df:env \
+                  --db_connection=${DF_DB_CONNECTION} \
+                  --db_database=${DF_DB_DATABASE:-database} \
+                  --df_install=Linux"
+  else
+    sudo -u "$CURRENT_USER" bash -c "php artisan df:env --df_install=Linux"
+  fi
   if [[ $DB_INSTALLED == TRUE ]]; then
     sed -i 's/\#DB\_CHARSET\=/DB\_CHARSET\=utf8/g' .env
     sed -i 's/\#DB\_COLLATION\=/DB\_COLLATION\=utf8\_unicode\_ci/g' .env
@@ -844,7 +894,17 @@ elif [[ ! $MYSQL == TRUE && $DF_CLEAN_INSTALLATION == TRUE ]] || [[ $DB_INSTALLE
 fi
 
 if [[ $DF_CLEAN_INSTALLATION == TRUE ]]; then
-  sudo -u "$CURRENT_USER" bash -c "php artisan df:setup"
+  # Support non-interactive mode via environment variables (useful for automated/CI installs)
+  if [[ -n "$DF_ADMIN_EMAIL" && -n "$DF_ADMIN_PASSWORD" ]]; then
+    sudo -u "$CURRENT_USER" bash -c "php artisan df:setup --force \
+                  --admin_first_name='${DF_ADMIN_FIRST_NAME:-Admin}' \
+                  --admin_last_name='${DF_ADMIN_LAST_NAME:-User}' \
+                  --admin_email='${DF_ADMIN_EMAIL}' \
+                  --admin_password='${DF_ADMIN_PASSWORD}' \
+                  --admin_phone='${DF_ADMIN_PHONE:-0000000000}'"
+  else
+    sudo -u "$CURRENT_USER" bash -c "php artisan df:setup --force"
+  fi
 fi
 
 if [[ $LICENSE_INSTALLED == TRUE || $DF_CLEAN_INSTALLATION == FALSE ]]; then
@@ -928,7 +988,11 @@ fi
 
 ### Ubuntu 20, centos8 and fedora uses the python2 command instead of python. So we need to update our .env
 if [[ ! $CURRENT_KERNEL == "debian" ]]; then
-  sed -i "s,\#DF_PYTHON_PATH=/usr/local/bin/python,DF_PYTHON_PATH=$(which python2)," .env
+  if which python2 &>/dev/null; then
+    sed -i "s,\#DF_PYTHON_PATH=/usr/local/bin/python,DF_PYTHON_PATH=$(which python2)," .env
+  elif which python3 &>/dev/null; then
+    sed -i "s,\#DF_PYTHON_PATH=/usr/local/bin/python,DF_PYTHON_PATH=$(which python3)," .env
+  fi
 fi
 
 sudo -u "$CURRENT_USER" bash -c "php artisan cache:clear -q"

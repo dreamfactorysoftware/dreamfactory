@@ -219,14 +219,17 @@ install_php_pear () {
 }
 
 install_mcrypt () {
-  printf "\n" | pecl install mcrypt-1.0.5
+  apt-get install -y ${PHP_VERSION}-mcrypt
   if (($? >= 1)); then
-    echo_with_color red "\nMcrypt extension installation error." >&5
-    kill $!
-    exit 1
+    printf "\n" | pecl install mcrypt
+    if (($? >= 1)); then
+      echo_with_color red "\nMcrypt extension installation error." >&5
+      kill $!
+      exit 1
+    fi
+    echo "extension=mcrypt.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/mcrypt.ini"
+    phpenmod -s ALL mcrypt
   fi
-  echo "extension=mcrypt.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/mcrypt.ini"
-  phpenmod -s ALL mcrypt
 }
 
 install_mongodb () {
@@ -410,7 +413,7 @@ install_munch () {
 }
 
 install_node () {
-  curl -sL https://deb.nodesource.com/setup_14.x | bash -
+  curl -sL https://deb.nodesource.com/setup_20.x | bash -
   apt-get install -y nodejs
   if (($? >= 1)); then
     echo_with_color red "\n${ERROR_STRING}" >&5
@@ -422,7 +425,7 @@ install_node () {
 
 install_snowflake_apache () {
   apt-get update
-  apt-get install -y --no-install-recommends --allow-unauthenticated gcc cmake ${PHP_VERSION}-pdo ${PHP_VERSION}-json ${PHP_VERSION}-dev
+  apt-get install -y --no-install-recommends --allow-unauthenticated gcc cmake ${PHP_VERSION}-pdo ${PHP_VERSION}-dev
   git clone https://github.com/snowflakedb/pdo_snowflake.git /src/snowflake
   cd /src/snowflake
   export PHP_HOME=/usr
@@ -449,7 +452,7 @@ install_snowflake_apache () {
 
 install_snowflake_nginx () {
   apt-get update
-  apt-get install -y --no-install-recommends --allow-unauthenticated gcc cmake ${PHP_VERSION}-pdo ${PHP_VERSION}-json ${PHP_VERSION}-dev
+  apt-get install -y --no-install-recommends --allow-unauthenticated gcc cmake ${PHP_VERSION}-pdo ${PHP_VERSION}-dev
   git clone https://github.com/snowflakedb/pdo_snowflake.git /src/snowflake
   cd /src/snowflake
   export PHP_HOME=/usr
@@ -484,7 +487,7 @@ install_hive_odbc () {
   test -f /opt/mapr/hiveodbc/lib/64/libmaprhiveodbc64.so
   rm maprhiveodbc_2.6.1.1001-2_amd64.deb
   export HIVE_SERVER_ODBC_DRIVER_PATH=/opt/mapr/hiveodbc/lib/64/libmaprhiveodbc64.so
-  HIVE_ODBC_INSTALLED = $(php -m | grep -E "^odbc")
+  HIVE_ODBC_INSTALLED=$(php -m | grep -E "^odbc")
 }
 
 install_dremio_odbc () {
@@ -517,7 +520,7 @@ install_databricks_odbc () {
   test -f /opt/simba/spark/lib/64/libsparkodbc_sb64.so
   rm simbaspark_2.8.2.1013-2_amd64.deb
   export DATABRICKS_SERVER_ODBC_DRIVER_PATH=/opt/simba/spark/lib/64/libsparkodbc_sb64.so
-  DATABRICKS_ODBC_INSTALLED = $(php -m | grep -E "^odbc")
+  DATABRICKS_ODBC_INSTALLED=$(php -m | grep -E "^odbc")
 }
 
 install_hana_odbc () {

@@ -38,7 +38,7 @@ install_system_dependencies () {
 
 install_php () {
   PHP_VERSION=$(php --version 2>/dev/null | head -n 1 | cut -d " " -f 2 | cut -c 1,3)
-  CRYPT=0
+  MCRYPT=0
 
   if [[ $PHP_VERSION =~ ^-?[0-9]+$ ]]; then
     if ((PHP_VERSION == 83)); then
@@ -226,8 +226,11 @@ install_php_pear () {
 }
 
 install_mcrypt () {
-  if [[ $MCRYPT == 0 ]]; then
-    printf "\n" | pecl install mcrypt-1.0.4
+  # Try apt package first (available via ondrej PPA for PHP 8.x)
+  apt-get install -y ${PHP_VERSION}-mcrypt
+  if (($? >= 1)); then
+    # Fallback to PECL if apt package not available
+    printf "\n" | pecl install mcrypt
     if (($? >= 1)); then
       echo_with_color red "\nMcrypt extension installation error." >&5
       kill $!
@@ -235,8 +238,6 @@ install_mcrypt () {
     fi
     echo "extension=mcrypt.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/mcrypt.ini"
     phpenmod -s ALL mcrypt
-  else
-    apt-get install ${PHP_VERSION}-mcrypt
   fi
 }
 
@@ -253,16 +254,19 @@ install_mongodb () {
 
 install_sql_server () {
   curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /usr/share/keyrings/microsoft-archive-keyring.gpg
-  echo "deb [arch=amd64,arm64,armhf signed-by=/usr/share/keyrings/microsoft-archive-keyring.gpg] https://packages.microsoft.com/ubuntu/24.04/prod noble main" | tee /etc/apt/sources.list.d/mssql-release.list
-  apt-get update
-  ACCEPT_EULA=Y DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends unixodbc-dev msodbcsql18
-  echo "extension=sqlsrv.so" > /etc/php/8.3/mods-available/sqlsrv.ini
-  phpenmod -s ALL sqlsrv
-  echo "extension=pdo_sqlsrv.so" > /etc/php/8.3/mods-available/pdo_sqlsrv.ini
-  phpenmod -s ALL pdo_sqlsrv
 
-  sudo apt update
-  ACCEPT_EULA=Y sudo apt install -y msodbcsql18 php8.3-odbc
+  # Detect Ubuntu version for correct Microsoft repo
+  local UBUNTU_VERSION=$(grep VERSION_ID /etc/os-release | cut -d'"' -f2)
+  local UBUNTU_CODENAME=$(grep VERSION_CODENAME /etc/os-release | cut -d'=' -f2)
+  echo "deb [arch=amd64,arm64,armhf signed-by=/usr/share/keyrings/microsoft-archive-keyring.gpg] https://packages.microsoft.com/ubuntu/${UBUNTU_VERSION}/prod ${UBUNTU_CODENAME} main" | tee /etc/apt/sources.list.d/mssql-release.list
+
+  apt-get update
+  ACCEPT_EULA=Y DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends unixodbc-dev msodbcsql18 ${PHP_VERSION}-odbc
+
+  echo "extension=sqlsrv.so" > "/etc/php/${PHP_VERSION_INDEX}/mods-available/sqlsrv.ini"
+  phpenmod -s ALL sqlsrv
+  echo "extension=pdo_sqlsrv.so" > "/etc/php/${PHP_VERSION_INDEX}/mods-available/pdo_sqlsrv.ini"
+  phpenmod -s ALL pdo_sqlsrv
 
   pecl install sqlsrv
   if (($? >= 1)); then
@@ -415,9 +419,13 @@ install_igbinary () {
 }
 
 install_python2 () {
-    sudo add-apt-repository -y ppa:deadsnakes/ppa
-    sudo apt update
-    sudo apt install -y python2.7
+    if ((CURRENT_OS >= 24)); then
+      echo_with_color red "Python 2.7 is not supported on Ubuntu 24+. Skipping." >&5
+      return 0
+    fi
+    add-apt-repository -y ppa:deadsnakes/ppa
+    apt-get update
+    apt-get install -y python2.7
 
     curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py
     python2.7 get-pip.py
@@ -425,10 +433,16 @@ install_python2 () {
 }
 
 check_bunch_installation () {
+    if ((CURRENT_OS >= 24)); then
+      return 0
+    fi
     python2.7 -m pip list | grep bunch || echo "Bunch not installed"
 }
 
 install_bunch () {
+    if ((CURRENT_OS >= 24)); then
+      return 0
+    fi
     python2.7 -m pip install bunch
 }
 
@@ -441,11 +455,11 @@ check_munch_installation () {
 }
 
 install_munch () {
-  apt install python3-munch
+  apt install -y python3-munch
 }
 
 install_node () {
-  curl -sL https://deb.nodesource.com/setup_14.x | bash -
+  curl -sL https://deb.nodesource.com/setup_20.x | bash -
   apt-get install -y nodejs
   if (($? >= 1)); then
     echo_with_color red "\n${ERROR_STRING}" >&5
@@ -517,7 +531,7 @@ install_hive_odbc () {
   test -f /opt/mapr/hiveodbc/lib/64/libmaprhiveodbc64.so
   rm maprhiveodbc_2.6.1.1001-2_amd64.deb
   export HIVE_SERVER_ODBC_DRIVER_PATH=/opt/mapr/hiveodbc/lib/64/libmaprhiveodbc64.so
-  HIVE_ODBC_INSTALLED = $(php -m | grep -E "^odbc")
+  HIVE_ODBC_INSTALLED=$(php -m | grep -E "^odbc")
 }
 
 install_dremio_odbc () {
@@ -641,11 +655,14 @@ install_mariadb () {
 
 
 add_mariadb_repo () {
-  apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
   if ((CURRENT_OS == 22)); then
+    apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
     add-apt-repository -y 'deb [arch=amd64,arm64,ppc64el] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.11.1/ubuntu jammy main'
   else
-    # Ubuntu 24
+    # Ubuntu 24 - use modern signed-by approach
+    mkdir -p /etc/apt/keyrings
+    curl -fsSL 'https://mariadb.org/mariadb_release_signing_key.pgp' -o /etc/apt/keyrings/mariadb-keyring.pgp
+    chmod 644 /etc/apt/keyrings/mariadb-keyring.pgp
     add-apt-repository -y 'deb [signed-by=/etc/apt/keyrings/mariadb-keyring.pgp] https://mirrors.ptisp.pt/mariadb/repo/10.11/ubuntu noble main'
   fi
 }

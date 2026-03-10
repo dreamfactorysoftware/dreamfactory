@@ -27,8 +27,12 @@ install_system_dependencies () {
       wget \
       jq
   else
-    #centos 8
-    dnf install -y git \
+    # CentOS/RHEL 9+: libzip-devel is in the CRB repo
+    if ((CURRENT_OS >= 9)); then
+      dnf install -y 'dnf-command(config-manager)'
+      dnf config-manager --set-enabled crb
+    fi
+    dnf install -y --allowerasing git \
       curl \
       zip \
       unzip \
@@ -36,7 +40,9 @@ install_system_dependencies () {
       lsof \
       readline-devel \
       libzip-devel \
-      wget
+      wget \
+      which \
+      sudo
   fi
   # Check installation status
   if (($? >= 1)); then
@@ -71,10 +77,36 @@ install_php () {
       php-gd \
       php-zip \
       php-opcache
-  else
-    # RHEL 8
+  elif ((CURRENT_OS == 8)); then
     rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
     rpm -Uvh http://rpms.remirepo.net/enterprise/remi-release-8.rpm
+
+    dnf module list -y
+    dnf module reset php -y
+    dnf module enable php:remi-8.3 -y
+
+    #Install PHP
+    dnf install -y php-common \
+      php-xml \
+      php-cli \
+      php-curl \
+      php-mysqlnd \
+      php-sqlite3 \
+      php-soap \
+      php-mbstring \
+      php-bcmath \
+      php-devel \
+      php-ldap \
+      php-pgsql \
+      php-pdo-firebird \
+      php-pdo-dblib \
+      php-gd \
+      php-zip \
+      php-opcache
+  else
+    # RHEL/CentOS 9+
+    rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
+    rpm -Uvh http://rpms.remirepo.net/enterprise/remi-release-9.rpm
 
     dnf module list -y
     dnf module reset php -y
@@ -236,9 +268,9 @@ server {
   }
 }" >/etc/nginx/conf.d/dreamfactory.conf
 
-  # RHEL8 php-fpm seems to default to a unix socket, rather than an ip (in RHEL7). As a result
-  # fastcgi_pass has been changed from 127.0.0.1 to unix:/var/run/php-fpm/www.sock for RHEL / CENTOS 8 installation.
-  if ((CURRENT_OS == 8)); then
+  # RHEL8+ php-fpm defaults to a unix socket, rather than an ip (in RHEL7). As a result
+  # fastcgi_pass has been changed from 127.0.0.1 to unix:/var/run/php-fpm/www.sock for RHEL / CENTOS 8+ installation.
+  if ((CURRENT_OS >= 8)); then
   sed -i "s,127.0.0.1:9000;,unix:/var/run/php-fpm/www.sock;," /etc/nginx/conf.d/dreamfactory.conf
   useradd -r nginx
   fi
@@ -279,7 +311,7 @@ install_mcrypt () {
     dnf install -y libmcrypt-devel
   fi
 
-  printf "\n" | pecl install mcrypt-1.0.5
+  printf "\n" | pecl install mcrypt
   if (($? >= 1)); then
     echo_with_color red "\nMcrypt extension installation error." >&5
     kill $!
@@ -299,9 +331,13 @@ install_mongodb () {
 }
 
 install_sql_server () {
-  curl https://packages.microsoft.com/config/rhel/7/prod.repo >/etc/yum.repos.d/mssql-release.repo
+  curl https://packages.microsoft.com/config/rhel/${CURRENT_OS}/prod.repo >/etc/yum.repos.d/mssql-release.repo
   yum remove unixODBC-utf16 unixODBC-utf16-devel unixODBC-utf17 unixODBC-utf17-devel
-  ACCEPT_EULA=Y yum install -y msodbcsql18 mssql-tools
+  if ((CURRENT_OS >= 9)); then
+    ACCEPT_EULA=Y yum install -y msodbcsql18 mssql-tools18
+  else
+    ACCEPT_EULA=Y yum install -y msodbcsql18 mssql-tools
+  fi
   if (($? >= 1)); then
     echo_with_color red "\nMS SQL Server extension installation error." >&5
     kill $!
@@ -311,7 +347,7 @@ install_sql_server () {
   if ((CURRENT_OS == 7)); then
     yum install -y unixODBC-devel-2.3.1
   else
-    yum install -y unixODBC-devel-2.3.7
+    yum install -y unixODBC-devel
   fi
 
   pecl install sqlsrv
@@ -388,8 +424,12 @@ install_db2_extension () {
 install_cassandra () {
   if((CURRENT_OS == 7)); then
     yum install -y gmp-devel openssl-devel cmake libuv-devel #boost cmake
-  else
+  elif ((CURRENT_OS == 8)); then
     dnf --enablerepo=powertools install -y libuv-devel
+    dnf install -y gmp-devel openssl-devel cmake
+  else
+    # RHEL/CentOS 9+: powertools was renamed to crb
+    dnf --enablerepo=crb install -y libuv-devel
     dnf install -y gmp-devel openssl-devel cmake
   fi
   wget -c -P /opt/DataStax https://github.com/datastax/cpp-driver/archive/refs/tags/2.16.2.tar.gz
@@ -439,24 +479,33 @@ install_igbinary () {
 install_python2 () {
   if ((CURRENT_OS == 7)); then
     yum install -y python python-pip
-  else
+  elif ((CURRENT_OS == 8)); then
     yum install -y python2 python2-pip
+  else
+    # CentOS/RHEL 9+: Python 2 is not available, skip
+    echo "Python 2 not available on RHEL/CentOS ${CURRENT_OS}, skipping..."
   fi
 }
 
 check_bunch_installation () {
   if ((CURRENT_OS == 7)); then
     pip list | grep bunch
-  else
+  elif ((CURRENT_OS == 8)); then
     pip2 list | grep bunch
+  else
+    # CentOS/RHEL 9+: Python 2 / bunch not available, always return success
+    return 0
   fi
 }
 
 install_bunch () {
   if ((CURRENT_OS == 7)); then
     pip install bunch
-  else
+  elif ((CURRENT_OS == 8)); then
     pip2 install bunch
+  else
+    # CentOS/RHEL 9+: Python 2 / bunch not available, skip
+    echo "bunch not available on RHEL/CentOS ${CURRENT_OS}, skipping..."
   fi
 }
 
@@ -465,7 +514,7 @@ install_python3 () {
 }
 
 check_munch_installation () {
-  pip3 list --format=legacy | grep munch
+  pip3 list 2>/dev/null | grep munch
 }
 
 install_munch () {
@@ -473,7 +522,7 @@ install_munch () {
 }
 
 install_node () {
-  curl -sL https://rpm.nodesource.com/setup_14.x | bash -
+  curl -sL https://rpm.nodesource.com/setup_20.x | bash -
   yum install -y nodejs
   if (($? >= 1)); then
     echo_with_color red "\n${ERROR_STRING}" >&5
@@ -550,7 +599,7 @@ install_databricks_odbc () {
   test -f /opt/simba/spark/lib/64/libsparkodbc_sb64.so
   rm simbaspark-2.8.2.1013-1.x86_64.rpm
   export DATABRICKS_SERVER_ODBC_DRIVER_PATH=/opt/simba/spark/lib/64/libsparkodbc_sb64.so
-  DATABRICKS_ODBC_INSTALLED = $(php -m | grep -E "^odbc")
+  DATABRICKS_ODBC_INSTALLED=$(php -m | grep -E "^odbc")
 }
 
 install_hana_odbc () {
