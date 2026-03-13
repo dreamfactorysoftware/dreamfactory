@@ -62,16 +62,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.372.1",
+            "version": "3.373.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "a48ff951eaad7f038eca3e0e89f168048b99082b"
+                "reference": "f4c615488707167871699401cf153f23b75ad3f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/a48ff951eaad7f038eca3e0e89f168048b99082b",
-                "reference": "a48ff951eaad7f038eca3e0e89f168048b99082b",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/f4c615488707167871699401cf153f23b75ad3f4",
+                "reference": "f4c615488707167871699401cf153f23b75ad3f4",
                 "shasum": ""
             },
             "require": {
@@ -92,12 +92,12 @@
                 "aws/aws-php-sns-message-validator": "~1.0",
                 "behat/behat": "~3.0",
                 "composer/composer": "^2.7.8",
-                "dms/phpunit-arraysubset-asserts": "^0.4.0",
+                "dms/phpunit-arraysubset-asserts": "^v0.5.0",
                 "doctrine/cache": "~1.4",
                 "ext-dom": "*",
                 "ext-openssl": "*",
                 "ext-sockets": "*",
-                "phpunit/phpunit": "^9.6",
+                "phpunit/phpunit": "^10.0",
                 "psr/cache": "^2.0 || ^3.0",
                 "psr/simple-cache": "^2.0 || ^3.0",
                 "sebastian/comparator": "^1.2.3 || ^4.0 || ^5.0",
@@ -153,9 +153,9 @@
             "support": {
                 "forum": "https://github.com/aws/aws-sdk-php/discussions",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.372.1"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.373.1"
             },
-            "time": "2026-03-06T21:27:21+00:00"
+            "time": "2026-03-12T18:21:41+00:00"
         },
         {
             "name": "bitbucket/client",
@@ -1056,16 +1056,16 @@
         },
         {
             "name": "dreamfactory/df-admin-interface",
-            "version": "1.7.1",
+            "version": "1.7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-admin-interface.git",
-                "reference": "1497a191413f8a48cf4412d1ed3885d4613fa06c"
+                "reference": "d1afa753b3337d7b108e0d1d45e92a38dedd5f0a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-admin-interface/zipball/1497a191413f8a48cf4412d1ed3885d4613fa06c",
-                "reference": "1497a191413f8a48cf4412d1ed3885d4613fa06c",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-admin-interface/zipball/d1afa753b3337d7b108e0d1d45e92a38dedd5f0a",
+                "reference": "d1afa753b3337d7b108e0d1d45e92a38dedd5f0a",
                 "shasum": ""
             },
             "require": {
@@ -1103,7 +1103,7 @@
                 "email": "dspsupport@dreamfactory.com",
                 "wiki": "https://wiki.dreamfactory.com"
             },
-            "time": "2026-03-07T00:23:58+00:00"
+            "time": "2026-03-13T00:05:32+00:00"
         },
         {
             "name": "dreamfactory/df-amqp",
@@ -2073,16 +2073,16 @@
         },
         {
             "name": "dreamfactory/df-mcp-server",
-            "version": "1.2.0",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-mcp-server.git",
-                "reference": "1d9f11408c40fdf0fa7c39e3b5d51d0e18691891"
+                "reference": "eb5811b17484c60e0b156dc37c4d7af8f19552d7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-mcp-server/zipball/1d9f11408c40fdf0fa7c39e3b5d51d0e18691891",
-                "reference": "1d9f11408c40fdf0fa7c39e3b5d51d0e18691891",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-mcp-server/zipball/eb5811b17484c60e0b156dc37c4d7af8f19552d7",
+                "reference": "eb5811b17484c60e0b156dc37c4d7af8f19552d7",
                 "shasum": ""
             },
             "require": {
@@ -2113,10 +2113,10 @@
             ],
             "description": "DreamFactory MCP server package built on the MCP PHP SDK.",
             "support": {
-                "source": "https://github.com/dreamfactorysoftware/df-mcp-server/tree/1.2.0",
+                "source": "https://github.com/dreamfactorysoftware/df-mcp-server/tree/1.2.1",
                 "issues": "https://github.com/dreamfactorysoftware/df-mcp-server/issues"
             },
-            "time": "2026-02-23T10:46:06+00:00"
+            "time": "2026-03-13T00:09:50+00:00"
         },
         {
             "name": "dreamfactory/df-mongo-logs",
@@ -2251,16 +2251,16 @@
         },
         {
             "name": "dreamfactory/df-oauth",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dreamfactorysoftware/df-oauth.git",
-                "reference": "8b4d2228e68eda63ec499096e97e7a8a8c645367"
+                "reference": "0e786ca844845210d2494821447c9529865980aa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dreamfactorysoftware/df-oauth/zipball/8b4d2228e68eda63ec499096e97e7a8a8c645367",
-                "reference": "8b4d2228e68eda63ec499096e97e7a8a8c645367",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-oauth/zipball/0e786ca844845210d2494821447c9529865980aa",
+                "reference": "0e786ca844845210d2494821447c9529865980aa",
                 "shasum": ""
             },
             "require": {
@@ -2314,7 +2314,7 @@
                 "source": "https://github.com/dreamfactorysoftware/df-oauth",
                 "wiki": "https://wiki.dreamfactory.com"
             },
-            "time": "2026-02-09T15:43:13+00:00"
+            "time": "2026-03-12T13:37:59+00:00"
         },
         {
             "name": "dreamfactory/df-pubsub",
@@ -3624,16 +3624,16 @@
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "2.8.0",
+            "version": "2.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "21dc724a0583619cd1652f673303492272778051"
+                "reference": "7d0ed42f28e42d61352a7a79de682e5e67fec884"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/21dc724a0583619cd1652f673303492272778051",
-                "reference": "21dc724a0583619cd1652f673303492272778051",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/7d0ed42f28e42d61352a7a79de682e5e67fec884",
+                "reference": "7d0ed42f28e42d61352a7a79de682e5e67fec884",
                 "shasum": ""
             },
             "require": {
@@ -3649,6 +3649,7 @@
             "require-dev": {
                 "bamarni/composer-bin-plugin": "^1.8.2",
                 "http-interop/http-factory-tests": "0.9.0",
+                "jshttp/mime-db": "1.54.0.1",
                 "phpunit/phpunit": "^8.5.44 || ^9.6.25"
             },
             "suggest": {
@@ -3720,7 +3721,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/psr7/issues",
-                "source": "https://github.com/guzzle/psr7/tree/2.8.0"
+                "source": "https://github.com/guzzle/psr7/tree/2.9.0"
             },
             "funding": [
                 {
@@ -3736,7 +3737,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-08-23T21:21:41+00:00"
+            "time": "2026-03-10T16:41:02+00:00"
         },
         {
             "name": "guzzlehttp/uri-template",
@@ -4363,16 +4364,16 @@
         },
         {
             "name": "laravel/prompts",
-            "version": "v0.3.13",
+            "version": "v0.3.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/prompts.git",
-                "reference": "ed8c466571b37e977532fb2fd3c272c784d7050d"
+                "reference": "9f0e371244eedfe2ebeaa72c79c54bb5df6e0176"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/prompts/zipball/ed8c466571b37e977532fb2fd3c272c784d7050d",
-                "reference": "ed8c466571b37e977532fb2fd3c272c784d7050d",
+                "url": "https://api.github.com/repos/laravel/prompts/zipball/9f0e371244eedfe2ebeaa72c79c54bb5df6e0176",
+                "reference": "9f0e371244eedfe2ebeaa72c79c54bb5df6e0176",
                 "shasum": ""
             },
             "require": {
@@ -4416,9 +4417,9 @@
             "description": "Add beautiful and user-friendly forms to your command-line applications.",
             "support": {
                 "issues": "https://github.com/laravel/prompts/issues",
-                "source": "https://github.com/laravel/prompts/tree/v0.3.13"
+                "source": "https://github.com/laravel/prompts/tree/v0.3.14"
             },
-            "time": "2026-02-06T12:17:10+00:00"
+            "time": "2026-03-01T09:02:38+00:00"
         },
         {
             "name": "laravel/serializable-closure",
@@ -4483,16 +4484,16 @@
         },
         {
             "name": "laravel/socialite",
-            "version": "v5.24.3",
+            "version": "v5.25.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/socialite.git",
-                "reference": "0feb62267e7b8abc68593ca37639ad302728c129"
+                "reference": "231f572e1a37c9ca1fb8085e9fb8608285beafb3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/socialite/zipball/0feb62267e7b8abc68593ca37639ad302728c129",
-                "reference": "0feb62267e7b8abc68593ca37639ad302728c129",
+                "url": "https://api.github.com/repos/laravel/socialite/zipball/231f572e1a37c9ca1fb8085e9fb8608285beafb3",
+                "reference": "231f572e1a37c9ca1fb8085e9fb8608285beafb3",
                 "shasum": ""
             },
             "require": {
@@ -4551,7 +4552,7 @@
                 "issues": "https://github.com/laravel/socialite/issues",
                 "source": "https://github.com/laravel/socialite"
             },
-            "time": "2026-02-21T13:32:50+00:00"
+            "time": "2026-02-27T13:56:35+00:00"
         },
         {
             "name": "laravel/tinker",
@@ -6107,16 +6108,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "3.11.1",
+            "version": "3.11.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/CarbonPHP/carbon.git",
-                "reference": "f438fcc98f92babee98381d399c65336f3a3827f"
+                "reference": "6a7e652845bb018c668220c2a545aded8594fbbf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/CarbonPHP/carbon/zipball/f438fcc98f92babee98381d399c65336f3a3827f",
-                "reference": "f438fcc98f92babee98381d399c65336f3a3827f",
+                "url": "https://api.github.com/repos/CarbonPHP/carbon/zipball/6a7e652845bb018c668220c2a545aded8594fbbf",
+                "reference": "6a7e652845bb018c668220c2a545aded8594fbbf",
                 "shasum": ""
             },
             "require": {
@@ -6208,7 +6209,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-01-29T09:26:29+00:00"
+            "time": "2026-03-11T17:23:39+00:00"
         },
         {
             "name": "nette/schema",
@@ -7335,16 +7336,16 @@
         },
         {
             "name": "php-opencloud/openstack",
-            "version": "v3.15.0",
+            "version": "v3.16.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-opencloud/openstack.git",
-                "reference": "7e12e565367e32fcf416f742a535c106a3e4794c"
+                "reference": "a88b4e4a188d441727faad4b03293c380e85cfbe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-opencloud/openstack/zipball/7e12e565367e32fcf416f742a535c106a3e4794c",
-                "reference": "7e12e565367e32fcf416f742a535c106a3e4794c",
+                "url": "https://api.github.com/repos/php-opencloud/openstack/zipball/a88b4e4a188d441727faad4b03293c380e85cfbe",
+                "reference": "a88b4e4a188d441727faad4b03293c380e85cfbe",
                 "shasum": ""
             },
             "require": {
@@ -7406,9 +7407,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-opencloud/openstack/issues",
-                "source": "https://github.com/php-opencloud/openstack/tree/v3.15.0"
+                "source": "https://github.com/php-opencloud/openstack/tree/v3.16.1"
             },
-            "time": "2025-11-16T19:16:35+00:00"
+            "time": "2026-03-08T18:13:08+00:00"
         },
         {
             "name": "phpoption/phpoption",
