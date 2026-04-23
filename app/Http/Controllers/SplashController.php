@@ -54,7 +54,10 @@ class SplashController extends Controller
                 return view('firstUser', $data);
             } elseif ($method === Verbs::POST) {
                 try {
-                    $data = array_merge($request->all(), $data);
+                    $data = array_merge($request->only([
+                        'email', 'name', 'first_name', 'last_name',
+                        'username', 'phone', 'password', 'password_confirmation',
+                    ]), $data);
                     $user = User::createFirstAdmin($data);
 
                     if (!$user) {

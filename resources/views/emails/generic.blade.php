@@ -17,6 +17,8 @@
         </p>
 
         <div>
+            {{-- Unescaped: email_body comes from admin-configured templates (system/email_template). --}}
+            {{-- Only system admins can create/edit templates, so this is trusted content. --}}
             {!! $email_body !!}
         </div>
 
