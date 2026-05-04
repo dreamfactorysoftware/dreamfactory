@@ -13,6 +13,6 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         'setup_db',
-        'setup'
+        'setup',
     ];
-} 
+}

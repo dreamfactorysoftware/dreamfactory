@@ -8,16 +8,16 @@ class SystemServiceSeeder extends Seeder
     public function run()
     {
         $system = [
-            'name'        => 'system',
-            'label'       => 'System Management',
+            'name' => 'system',
+            'label' => 'System Management',
             'description' => 'Service for managing system resources.',
-            'is_active'   => true,
-            'type'        => 'system',
-            'config'      => [],
+            'is_active' => true,
+            'type' => 'system',
+            'config' => [],
         ];
 
-        if (!Service::whereName('system')->exists()) {
+        if (! Service::whereName('system')->exists()) {
             Service::create($system);
         }
     }
-} 
+}
