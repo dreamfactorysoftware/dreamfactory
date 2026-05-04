@@ -15,4 +15,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['api'])->group(function () {
     // Remove the route we added
-}); 
+});

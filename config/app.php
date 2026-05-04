@@ -18,7 +18,7 @@ return [
         // DreamFactory Providers FIRST
         DreamFactory\Core\File\ServiceProvider::class,    // This needs to be before SessionServiceProvider
         DreamFactory\Core\LaravelServiceProvider::class,
-        
+
         // Laravel Framework Service Providers...
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
