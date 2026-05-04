@@ -7,6 +7,12 @@ return [
             'driver' => 'sqlite',
             'database' => env('DB_DATABASE', database_path('database.sqlite')),
             'prefix' => env('DB_PREFIX', ''),
+            'url' => env('DB_URL'),
+            'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
+            'busy_timeout' => null,
+            'journal_mode' => null,
+            'synchronous' => null,
+            'transaction_mode' => 'DEFERRED',
         ],
 
         'mysql' => [
@@ -27,6 +33,12 @@ return [
             'prefix' => env('DB_PREFIX', ''),
             'strict' => true,
             'engine' => null,
+            'url' => env('DB_URL'),
+            'unix_socket' => env('DB_SOCKET', ''),
+            'prefix_indexes' => true,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                (PHP_VERSION_ID >= 80500 ? Mysql::ATTR_SSL_CA : PDO::MYSQL_ATTR_SSL_CA) => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
         ],
 
         'pgsql' => [
@@ -41,6 +53,8 @@ return [
             'prefix' => env('DB_PREFIX', ''),
             'schema' => 'public',
             'sslmode' => 'prefer',
+            'prefix_indexes' => true,
+            'search_path' => 'public',
         ],
 
         'sqlsrv' => [
@@ -51,6 +65,9 @@ return [
             'username' => env('DB_USERNAME', ''),
             'password' => env('DB_PASSWORD', ''),
             'prefix' => env('DB_PREFIX', ''),
+            'url' => env('DB_URL'),
+            'charset' => env('DB_CHARSET', 'utf8'),
+            'prefix_indexes' => true,
         ],
     ],
 
@@ -68,6 +85,12 @@ return [
             'port' => env('REDIS_PORT', 6379),
             'database' => env('REDIS_DATABASE', 0),
             'password' => env('REDIS_PASSWORD', null), // Needed by Redis Cloud and other similar services
+            'url' => env('REDIS_URL'),
+            'username' => env('REDIS_USERNAME'),
+            'max_retries' => env('REDIS_MAX_RETRIES', 3),
+            'backoff_algorithm' => env('REDIS_BACKOFF_ALGORITHM', 'decorrelated_jitter'),
+            'backoff_base' => env('REDIS_BACKOFF_BASE', 100),
+            'backoff_cap' => env('REDIS_BACKOFF_CAP', 1000),
         ],
 
         'broadcast' => [
@@ -82,6 +105,12 @@ return [
             'port' => env('CACHE_PORT', env('REDIS_PORT')),
             'database' => env('CACHE_DATABASE', 2),
             'password' => env('CACHE_PASSWORD', env('REDIS_PASSWORD')),
+            'url' => env('REDIS_URL'),
+            'username' => env('REDIS_USERNAME'),
+            'max_retries' => env('REDIS_MAX_RETRIES', 3),
+            'backoff_algorithm' => env('REDIS_BACKOFF_ALGORITHM', 'decorrelated_jitter'),
+            'backoff_base' => env('REDIS_BACKOFF_BASE', 100),
+            'backoff_cap' => env('REDIS_BACKOFF_CAP', 1000),
         ],
 
         'queue' => [
