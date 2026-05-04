@@ -80,7 +80,7 @@ return [
                 'ignoreEmptyContextAndExtra' => true,
             ],
             'level' => env('LOG_LEVEL', 'debug'),
-                'stream' => 'php://stderr',
+            'stream' => 'php://stderr',
             'processors' => [PsrLogMessageProcessor::class],
         ],
 

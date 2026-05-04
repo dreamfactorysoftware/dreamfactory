@@ -2,10 +2,9 @@
 
 namespace DreamFactory\Http\Controllers\Auth;
 
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Routing\Controllers\Middleware;
 use DreamFactory\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
 class ForgotPasswordController extends Controller implements HasMiddleware
 {
