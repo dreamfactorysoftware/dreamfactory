@@ -24,7 +24,7 @@
         "wiki": "https://wiki.dreamfactory.com",
         "guide": "https://guide.dreamfactory.com"
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true,
     "repositories": [
         {
@@ -93,19 +93,19 @@
         "dreamfactory/df-sqldb": "~1.4.2",
         "dreamfactory/df-system": "~0.6.4",
         "dreamfactory/df-user": "~0.17.1",
-        "laravel/framework": "^11.15",
+        "laravel/framework": "^12.58",
         "laravel/helpers": "^1.7",
-        "laravel/tinker": "^2.9",
+        "laravel/tinker": "^2.10.1",
         "predis/predis": "~1.0",
-        "symfony/css-selector": "^7.0"
+        "symfony/css-selector": "^7.2"
     },
     "require-dev": {
-        "barryvdh/laravel-ide-helper": "^3.0",
+        "barryvdh/laravel-ide-helper": "^3.5",
         "fakerphp/faker": "^1.23",
         "laravel/homestead": "^15.0.3",
         "mockery/mockery": "^1.6",
-        "nunomaduro/collision": "^8.0",
-        "phpunit/phpunit": "^10.5",
+        "nunomaduro/collision": "^8.6",
+        "phpunit/phpunit": "^11.5.3",
         "laravel/pail": "^1.2.2"
     },
     "autoload": {
