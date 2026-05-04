@@ -2,12 +2,12 @@
 
 namespace DreamFactory\Http\Controllers\Auth;
 
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Routing\Controllers\Middleware;
 use DreamFactory\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 
-class ForgotPasswordController extends Controller implements HasMiddleware
+#[Middleware('guest')]
+class ForgotPasswordController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
@@ -22,10 +22,4 @@ class ForgotPasswordController extends Controller implements HasMiddleware
 
     use SendsPasswordResetEmails;
 
-    public static function middleware(): array
-    {
-        return [
-            'guest',
-        ];
-    }
 }

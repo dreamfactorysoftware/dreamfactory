@@ -2,12 +2,12 @@
 
 namespace DreamFactory\Http\Controllers\Auth;
 
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Routing\Controllers\Middleware;
 use DreamFactory\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 
-class ResetPasswordController extends Controller implements HasMiddleware
+#[Middleware('guest')]
+class ResetPasswordController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
@@ -29,10 +29,4 @@ class ResetPasswordController extends Controller implements HasMiddleware
      */
     protected $redirectTo = '/home';
 
-    public static function middleware(): array
-    {
-        return [
-            'guest',
-        ];
-    }
 }
