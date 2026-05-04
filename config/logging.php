@@ -82,6 +82,7 @@ return [
             'level' => env('LOG_LEVEL', 'debug'),
             'stream' => 'php://stderr',
             'processors' => [PsrLogMessageProcessor::class],
+                'stream' => 'php://stderr',
         ],
 
         'syslog' => [
