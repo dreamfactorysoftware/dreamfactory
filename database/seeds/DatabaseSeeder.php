@@ -21,20 +21,20 @@ class DatabaseSeeder extends Seeder
         try {
             \Artisan::call('migrate', ['--force' => true]);
         } catch (\Exception $e) {
-            \Log::error('Migration failed: ' . $e->getMessage());
+            \Log::error('Migration failed: '.$e->getMessage());
             throw $e;
         }
 
         // Run this first to ensure system service exists
         $systemService = [
-            'name'        => 'system',
-            'label'       => 'System Management',
+            'name' => 'system',
+            'label' => 'System Management',
             'description' => 'Service for managing system resources.',
-            'is_active'   => true,
-            'type'        => 'system',
-            'mutable'     => false,
-            'deletable'   => false,
-            'config'      => []
+            'is_active' => true,
+            'type' => 'system',
+            'mutable' => false,
+            'deletable' => false,
+            'config' => [],
         ];
 
         $this->seedModel('DreamFactory\Core\Models\Service', [$systemService]);
@@ -42,12 +42,12 @@ class DatabaseSeeder extends Seeder
         // Then run the rest of the seeders
         $this->call(AppSeeder::class);
         $this->call(EmailTemplateSeeder::class);
-        
+
         // Ensure File ServiceProvider is registered and booted
-        if (!app()->bound('df.file')) {
+        if (! app()->bound('df.file')) {
             app()->register(\DreamFactory\Core\File\ServiceProvider::class);
         }
-        
+
         // Now create services
         $class = 'DreamFactory\Core\Models\Service';
         $records = [

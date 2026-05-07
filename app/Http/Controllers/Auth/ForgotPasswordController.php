@@ -4,8 +4,9 @@ namespace DreamFactory\Http\Controllers\Auth;
 
 use DreamFactory\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class ForgotPasswordController extends Controller
+class ForgotPasswordController extends Controller implements HasMiddleware
 {
     /*
     |--------------------------------------------------------------------------
@@ -20,13 +21,10 @@ class ForgotPasswordController extends Controller
 
     use SendsPasswordResetEmails;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public static function middleware(): array
     {
-        $this->middleware('guest');
+        return [
+            'guest',
+        ];
     }
 }

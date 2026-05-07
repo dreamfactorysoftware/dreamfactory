@@ -4,7 +4,6 @@ namespace DreamFactory\Providers;
 
 use DreamFactory\Core\Models\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -27,4 +26,4 @@ class AuthServiceProvider extends ServiceProvider
         // Make sure the User model is properly configured
         config(['auth.providers.users.model' => User::class]);
     }
-} 
+}

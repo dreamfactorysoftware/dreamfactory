@@ -8,7 +8,7 @@ return [
 
     'port' => env('MAIL_PORT', 587),
 
-    'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+    'encryption' => env('MAIL_SCHEME', 'tls'),
 
     'username' => env('MAIL_USERNAME'),
 
