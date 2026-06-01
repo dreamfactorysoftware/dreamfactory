@@ -1011,6 +1011,14 @@ elif [[ ! $MYSQL == TRUE && $DF_CLEAN_INSTALLATION == TRUE ]] || [[ $DB_INSTALLE
   fi
 fi
 
+# Guardrail: on non-interactive sqlite installs, DB_DATABASE can remain blank.
+# Force the standard sqlite path so migrate/seed does not fail with SQLSTATE[HY000] [14].
+if grep -q '^DB_CONNECTION=sqlite$' .env && grep -q '^DB_DATABASE=$' .env; then
+  sed -i 's|^DB_DATABASE=$|DB_DATABASE=/opt/dreamfactory/storage/databases/database.sqlite|' .env
+  touch /opt/dreamfactory/storage/databases/database.sqlite
+  chown "$CURRENT_USER":"$CURRENT_USER" /opt/dreamfactory/storage/databases/database.sqlite
+fi
+
 mark_phase_done "PHASE_DF_CONFIG"
 
 if [[ $DF_CLEAN_INSTALLATION == TRUE ]]; then
