@@ -17,6 +17,107 @@ CURRENT_OS=$(grep -e VERSION_ID /etc/os-release | cut -d "=" -f 2 | cut -d "." -
 
 ERROR_STRING="Installation error. Exiting"
 
+STATE_DIR="/var/lib/dreamfactory-installer"
+STATE_FILE="$STATE_DIR/state.env"
+ANSWERS_FILE="$STATE_DIR/answers.env"
+LOCK_FILE="$STATE_DIR/install.lock"
+
+init_state_files() {
+  mkdir -p "$STATE_DIR"
+  touch "$STATE_FILE" "$ANSWERS_FILE"
+}
+
+load_state() {
+  if [[ -f "$STATE_FILE" ]]; then
+    # shellcheck disable=SC1090
+    source "$STATE_FILE"
+  fi
+  if [[ -f "$ANSWERS_FILE" ]]; then
+    # shellcheck disable=SC1090
+    source "$ANSWERS_FILE"
+  fi
+}
+
+save_state_value() {
+  local key="$1"
+  local value="$2"
+
+  if grep -qE "^${key}=" "$STATE_FILE"; then
+    sed -i "s|^${key}=.*|${key}=\"${value}\"|" "$STATE_FILE"
+  else
+    echo "${key}=\"${value}\"" >> "$STATE_FILE"
+  fi
+}
+
+save_answer_value() {
+  local key="$1"
+  local value="$2"
+
+  if grep -qE "^${key}=" "$ANSWERS_FILE"; then
+    sed -i "s|^${key}=.*|${key}=\"${value}\"|" "$ANSWERS_FILE"
+  else
+    echo "${key}=\"${value}\"" >> "$ANSWERS_FILE"
+  fi
+}
+
+acquire_lock() {
+  if [[ -f "$LOCK_FILE" ]]; then
+    LOCK_PID=$(cat "$LOCK_FILE" 2>/dev/null)
+    if [[ -n "$LOCK_PID" ]] && kill -0 "$LOCK_PID" 2>/dev/null; then
+      echo_with_color red "Another DreamFactory installer process is running (PID: $LOCK_PID). Exiting."
+      exit 1
+    fi
+    echo_with_color magenta "Found stale installer lock file. Removing and continuing."
+    rm -f "$LOCK_FILE"
+  fi
+
+  echo $$ > "$LOCK_FILE"
+}
+
+release_lock() {
+  rm -f "$LOCK_FILE"
+}
+
+mark_phase_done() {
+  local phase_name="$1"
+  save_state_value "$phase_name" "done"
+}
+
+is_phase_done() {
+  local phase_name="$1"
+  local phase_value
+  phase_value=$(eval "echo \${$phase_name}")
+  [[ "$phase_value" == "done" ]]
+}
+
+resume_prompt() {
+  if grep -qE '^PHASE_' "$STATE_FILE"; then
+    echo_with_color magenta "Previous installer state detected. Choose mode:"
+    echo -e "[1] Resume from last incomplete phase"
+    echo -e "[2] Repair existing install (continue but keep current state)"
+    echo -e "[3] Start over (clear installer state files only)"
+    read -r RESUME_MODE
+
+    case "$RESUME_MODE" in
+      3)
+        : > "$STATE_FILE"
+        : > "$ANSWERS_FILE"
+        echo_with_color green "Installer state cleared. Starting fresh run."
+        ;;
+      2)
+        save_state_value "INSTALL_MODE" "repair"
+        echo_with_color green "Running in repair mode."
+        ;;
+      *)
+        save_state_value "INSTALL_MODE" "resume"
+        echo_with_color green "Resuming previous installation state."
+        ;;
+    esac
+
+    load_state
+  fi
+}
+
 echo_with_color() {
   case $1 in
   Red | RED | red)
@@ -81,6 +182,12 @@ if ((EUID != 0)); then
   exit 1
 fi
 
+init_state_files
+load_state
+acquire_lock
+trap release_lock EXIT
+resume_prompt
+
 #### Check Current OS is compatible with the installer ####
 case $CURRENT_KERNEL in
   ubuntu)
@@ -132,11 +239,13 @@ echo -e "[6] Install a specfic version of DreamFactory"
 echo -e "[7] Install driver for Trino"
 echo -e "[8] Run Installation in debug mode (logs will output to /tmp/dreamfactory_installer.log)"
 echo -e "[9] Upgrade DreamFactory"
-echo -e "[10] Enable MCP Daemon (Model Context Protocol server)\n"
+echo -e "[10] Enable MCP Daemon (Model Context Protocol server)"
+echo -e "[11] Install advanced analytics connectors (Snowflake + ODBC packs)\n"
 
 print_centered "-" "-"
 echo_with_color magenta "Input '0' and press Enter to run the default installation. To install additional options, type the corresponding number (e.g. '1,5' for Oracle and a MySql system database) from the menu above and press Enter"
 read -r INSTALLATION_OPTIONS
+save_answer_value "INSTALLATION_OPTIONS" "$INSTALLATION_OPTIONS"
 print_centered "-" "-"
 
 
@@ -184,6 +293,11 @@ fi
 if [[ $INSTALLATION_OPTIONS == *"10"* ]]; then
   ENABLE_MCP_DAEMON=TRUE
   echo_with_color green "MCP Daemon selected."
+fi
+
+if [[ $INSTALLATION_OPTIONS == *"11"* ]]; then
+  ADVANCED_CONNECTORS=TRUE
+  echo_with_color green "Advanced analytics connectors selected."
 fi
 
 if [[ ! $DEBUG == TRUE ]]; then
@@ -256,13 +370,23 @@ fi
 
 ### STEP 1. Install system dependencies
 echo_with_color blue "Step 1: Installing system dependencies...\n" >&5
-run_process "   Updating System" system_update
-run_process "   Installing System Dependencies" install_system_dependencies
+if ! is_phase_done "PHASE_SYSTEM_DEPS"; then
+  run_process "   Updating System" system_update
+  run_process "   Installing System Dependencies" install_system_dependencies
+  mark_phase_done "PHASE_SYSTEM_DEPS"
+else
+  echo_with_color green "   Phase already complete. Skipping system dependencies.\n" >&5
+fi
 echo_with_color green "\nThe system dependencies have been successfully installed.\n" >&5
 
 ### Step 2. Install PHP
 echo_with_color blue "Step 2: Installing PHP...\n" >&5
-run_process "   Installing PHP" install_php
+if ! is_phase_done "PHASE_PHP"; then
+  run_process "   Installing PHP" install_php
+  mark_phase_done "PHASE_PHP"
+else
+  echo_with_color green "   Phase already complete. Skipping PHP installation.\n" >&5
+fi
 echo_with_color green "\nPHP installed.\n" >&5
 
 ### Step 3. Install Apache
@@ -306,6 +430,7 @@ else
     fi
   fi
 fi
+mark_phase_done "PHASE_WEBSTACK"
 
 ### Step 4. Configure PHP development tools
 echo_with_color blue "Step 4: Configuring PHP Extensions...\n" >&5
@@ -515,77 +640,81 @@ if (($? >= 1)); then
   echo_with_color green "    node installed\n" >&5
 fi
 
-### INSTALL Snowflake
-if [[ $CURRENT_KERNEL == "debian" || $CURRENT_KERNEL == "ubuntu" ]]; then
-  if [[ $APACHE == TRUE ]]; then ### Only with key --apache
-    ls /etc/php/${PHP_VERSION_INDEX}/apache2/conf.d | grep "snowflake"
-    if (($? >= 1)); then
-      run_process "   Installing snowflake" install_snowflake_apache
-      echo_with_color green "    Snowflake installed\n" >&5
+### INSTALL Snowflake / Advanced ODBC Connector Packs
+if [[ $ADVANCED_CONNECTORS == TRUE ]]; then
+  if [[ $CURRENT_KERNEL == "debian" || $CURRENT_KERNEL == "ubuntu" ]]; then
+    if [[ $APACHE == TRUE ]]; then ### Only with key --apache
+      ls /etc/php/${PHP_VERSION_INDEX}/apache2/conf.d | grep "snowflake"
+      if (($? >= 1)); then
+        run_process "   Installing snowflake" install_snowflake_apache
+        echo_with_color green "    Snowflake installed\n" >&5
+      fi
+    else
+      ls /etc/php/${PHP_VERSION_INDEX}/fpm/conf.d | grep "snowflake"
+      if (($? >= 1)); then
+        run_process "   Installing snowflake" install_snowflake_nginx
+        echo_with_color green "    Snowflake installed\n" >&5
+      fi
     fi
   else
-    ls /etc/php/${PHP_VERSION_INDEX}/fpm/conf.d | grep "snowflake"
+    #fedora / centos
+    ls /etc/php.d | grep "snowflake"
     if (($? >= 1)); then
-      run_process "   Installing snowflake" install_snowflake_nginx
-      echo_with_color green "    Snowflake installed\n" >&5
+      if ((CURRENT_OS == 7)); then
+        # pdo_snowflake requires gcc 5.2 to install, centos7 only has 4.8 available
+        echo_with_color red "Snowflake only supported on CentOS / RHEL 8. Skipping...\n" >&5
+      else
+        run_process "   Installing Snowflake" install_snowflake
+        echo_with_color green "    snowflake installed\n" >&5
+      fi
+    fi
+  fi
+
+  ### INSTALL Hive ODBC Driver
+  php -m | grep -E "^odbc"
+  if (($? >= 1)); then
+    run_process "   Installing hive odbc" install_hive_odbc
+    if ((HIVE_ODBC_INSTALLED != "odbc")); then
+      echo_with_color red "\nCould not build hive odbc driver." >&5
+    else
+      echo_with_color green "    hive odbc installed\n" >&5
+    fi
+  fi
+
+  ### INSTALL Dremio ODBC Driver
+  php -m | grep -E "^odbc"
+  if (($? >= 1)); then
+    run_process "   Installing dremio odbc" install_dremio_odbc
+    if ((DREMIO_ODBC_INSTALLED != "odbc")); then
+      echo_with_color red "\nCould not build dremio odbc driver." >&5
+    else
+      echo_with_color green "    dremio odbc installed\n" >&5
+    fi
+  fi
+
+  ### INSTALL Databricks ODBC Driver
+  php -m | grep -E "^odbc"
+  if (($? >= 1)); then
+    run_process "   Installing databricks odbc" install_databricks_odbc
+    if ((DATABRICKS_ODBC_INSTALLED != "odbc")); then
+      echo_with_color red "\nCould not build databricks odbc driver." >&5
+    else
+      echo_with_color green "    databricks odbc installed\n" >&5
+    fi
+  fi
+
+  ### INSTALL SAP HANA ODBC Driver
+  php -m | grep -E "^odbc"
+  if (($? >= 1)); then
+    run_process "   Installing SAP HANA odbc" install_hana_odbc
+    if ((HANA_ODBC_INSTALLED != "odbc")); then
+      echo_with_color red "\nCould not build SAP HANA odbc driver." >&5
+    else
+      echo_with_color green "    SAP HANA odbc installed\n" >&5
     fi
   fi
 else
-  #fedora / centos
-  ls /etc/php.d | grep "snowflake"
-  if (($? >= 1)); then
-    if ((CURRENT_OS == 7)); then
-      # pdo_snowflake requires gcc 5.2 to install, centos7 only has 4.8 available
-      echo_with_color red "Snowflake only supported on CentOS / RHEL 8. Skipping...\n" >&5
-    else
-      run_process "   Installing Snowflake" install_snowflake
-      echo_with_color green "    snowflake installed\n" >&5
-    fi
-  fi
-fi
-
-### INSTALL Hive ODBC Driver
-php -m | grep -E "^odbc"
-if (($? >= 1)); then
-  run_process "   Installing hive odbc" install_hive_odbc
-  if ((HIVE_ODBC_INSTALLED != "odbc")); then
-    echo_with_color red "\nCould not build hive odbc driver." >&5
-  else
-    echo_with_color green "    hive odbc installed\n" >&5
-  fi
-fi
-
-### INSTALL Dremio ODBC Driver
-php -m | grep -E "^odbc"
-if (($? >= 1)); then
-  run_process "   Installing dremio odbc" install_dremio_odbc
-  if ((DREMIO_ODBC_INSTALLED != "odbc")); then
-    echo_with_color red "\nCould not build dremio odbc driver." >&5
-  else
-    echo_with_color green "    dremio odbc installed\n" >&5
-  fi
-fi
-
-### INSTALL Databricks ODBC Driver
-php -m | grep -E "^odbc"
-if (($? >= 1)); then
-  run_process "   Installing databricks odbc" install_databricks_odbc
-  if ((DATABRICKS_ODBC_INSTALLED != "odbc")); then
-    echo_with_color red "\nCould not build databricks odbc driver." >&5
-  else
-    echo_with_color green "    databricks odbc installed\n" >&5
-  fi
-fi
-
-### INSTALL SAP HANA ODBC Driver
-php -m | grep -E "^odbc"
-if (($? >= 1)); then
-  run_process "   Installing SAP HANA odbc" install_hana_odbc
-  if ((HANA_ODBC_INSTALLED != "odbc")); then
-    echo_with_color red "\nCould not build SAP HANA odbc driver." >&5
-  else
-    echo_with_color green "    SAP HANA odbc installed\n" >&5
-  fi
+  echo_with_color green "Skipping advanced analytics connectors (Snowflake + ODBC packs).\n" >&5
 fi
 
 ### Configuring PHP OPCache and JIT compilation
@@ -816,7 +945,12 @@ fi
 
 chown -R "$CURRENT_USER" /opt/dreamfactory && cd /opt/dreamfactory || exit 1
 
-run_process "   Installing DreamFactory"  run_composer_install
+if ! is_phase_done "PHASE_DF_CODE"; then
+  run_process "   Installing DreamFactory"  run_composer_install
+  mark_phase_done "PHASE_DF_CODE"
+else
+  echo_with_color green "   Phase already complete. Skipping composer install." >&5
+fi
 
 ### Shutdown silent mode because php artisan df:setup and df:env will get troubles with prompts.
 exec 1>&5 5>&-
@@ -843,9 +977,12 @@ elif [[ ! $MYSQL == TRUE && $DF_CLEAN_INSTALLATION == TRUE ]] || [[ $DB_INSTALLE
   fi
 fi
 
+mark_phase_done "PHASE_DF_CONFIG"
+
 if [[ $DF_CLEAN_INSTALLATION == TRUE ]]; then
   sudo -u "$CURRENT_USER" bash -c "php artisan df:setup"
 fi
+mark_phase_done "PHASE_DF_BOOTSTRAP"
 
 if [[ $LICENSE_INSTALLED == TRUE || $DF_CLEAN_INSTALLATION == FALSE ]]; then
   php artisan migrate --seed
@@ -1032,5 +1169,7 @@ if [[ $MYSQL_INSTALLED == TRUE ]]; then
   echo -e " DB password: $DF_SYSTEM_DB_PASSWORD"
   echo -e "******************************\n"
 fi
+
+mark_phase_done "PHASE_FINAL_VERIFY"
 
 exit 0
