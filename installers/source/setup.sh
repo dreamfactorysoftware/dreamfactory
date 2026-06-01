@@ -6,6 +6,10 @@ GN='\033[0;32m' # Green
 MG='\033[0;95m' # Magenta
 NC='\033[0m'    # No Color
 
+if [[ -z "${TERM:-}" || "${TERM}" == "unknown" ]]; then
+  export TERM=xterm
+fi
+
 get_term_cols() {
   local cols
   if cols=$(tput cols 2>/dev/null) && [[ "$cols" =~ ^[0-9]+$ ]] && (( cols > 0 )); then
