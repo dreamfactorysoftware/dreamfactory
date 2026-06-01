@@ -194,12 +194,12 @@ print_centered() {
 ## Used for each of the individual components to be installed
 run_process () {
   while true; do echo -n . >&5; sleep 1; done &
-  trap 'kill $BGPID; exit' INT
   BGPID=$!
+  trap 'kill "$BGPID" 2>/dev/null || true; exit' INT
   echo -n "$1" >&5
-  $2
+  "$2"
   echo done >&5
-  kill $!
+  kill "$BGPID" 2>/dev/null || true
 }
 
 clear
