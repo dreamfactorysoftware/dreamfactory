@@ -230,8 +230,7 @@ install_mcrypt () {
     printf "\n" | pecl install mcrypt-1.0.4
     if (($? >= 1)); then
       echo_with_color red "\nMcrypt extension installation error." >&5
-      kill $!
-      exit 1
+      return 1
     fi
     echo "extension=mcrypt.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/mcrypt.ini"
     phpenmod -s ALL mcrypt
@@ -244,8 +243,7 @@ install_mongodb () {
   pecl install mongodb <<<'no'
   if (($? >= 1)); then
     echo_with_color red "\nMongo DB extension installation error." >&5
-    kill $!
-    exit 1
+    return 1
   fi
   echo "extension=mongodb.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/mongodb.ini"
   phpenmod -s ALL mongodb

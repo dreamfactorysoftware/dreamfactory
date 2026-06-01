@@ -131,6 +131,21 @@ resume_prompt() {
   fi
 }
 
+ensure_pkg_manager_healthy() {
+  if [[ "$CURRENT_KERNEL" == "ubuntu" || "$CURRENT_KERNEL" == "debian" ]]; then
+    export DEBIAN_FRONTEND=noninteractive
+
+    local dpkg_audit_output
+    dpkg_audit_output="$(dpkg --audit 2>&1 || true)"
+
+    if [[ -n "$dpkg_audit_output" ]]; then
+      echo_with_color magenta "Detected interrupted dpkg state. Attempting recovery..." >&5
+      dpkg --configure -a || true
+      apt-get -f install -y || true
+    fi
+  fi
+}
+
 echo_with_color() {
   case $1 in
   Red | RED | red)
@@ -370,6 +385,8 @@ case $CURRENT_KERNEL in
     source ./fedora.sh
     ;;
 esac
+
+ensure_pkg_manager_healthy
 
 #### INSTALLER ####
 
