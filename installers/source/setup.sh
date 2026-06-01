@@ -467,11 +467,12 @@ else
 fi
 
 ### Step 4. Configure PHP development tools
-echo_with_color blue "Step 4: Configuring PHP Extensions...\n" >&5
+if ! is_phase_done "PHASE_PHP_EXTENSIONS"; then
+  echo_with_color blue "Step 4: Configuring PHP Extensions...\n" >&5
 
-## Install PHP PEAR
-run_process "   Installing PHP PEAR" install_php_pear
-echo_with_color green "    PHP PEAR installed\n" >&5
+  ## Install PHP PEAR
+  run_process "   Installing PHP PEAR" install_php_pear
+  echo_with_color green "    PHP PEAR installed\n" >&5
 
 ### Install ZIP
 if [[ $CURRENT_KERNEL == "fedora" ]]; then
@@ -753,6 +754,10 @@ fi
 
 ### Configuring PHP OPCache and JIT compilation
 run_process "   Configuring PHP OPCache and JIT compilation" enable_opcache
+mark_phase_done "PHASE_PHP_EXTENSIONS"
+else
+  echo_with_color green "   Phase already complete. Skipping PHP extensions configuration.\n" >&5
+fi
 
 if [[ $APACHE == TRUE ]]; then
   if [[ $CURRENT_KERNEL == "ubuntu" || $CURRENT_KERNEL == "debian" ]]; then
