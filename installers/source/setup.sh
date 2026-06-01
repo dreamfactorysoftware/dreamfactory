@@ -6,7 +6,16 @@ GN='\033[0;32m' # Green
 MG='\033[0;95m' # Magenta
 NC='\033[0m'    # No Color
 
-TERM_COLS="$(tput cols)"
+get_term_cols() {
+  local cols
+  if cols=$(tput cols 2>/dev/null) && [[ "$cols" =~ ^[0-9]+$ ]] && (( cols > 0 )); then
+    echo "$cols"
+  else
+    echo 80
+  fi
+}
+
+TERM_COLS="$(get_term_cols)"
 ERROR_STRING="Installation error. Exiting"
 CURRENT_PATH=$(pwd)
 
@@ -142,7 +151,7 @@ echo_with_color() {
 print_centered() {
   [[ $# == 0 ]] && return 1
 
-  declare -i TERM_COLS="$(tput cols)"
+  declare -i TERM_COLS="$(get_term_cols)"
   declare -i str_len="${#1}"
   [[ $str_len -ge $TERM_COLS ]] && {
       echo "$1";
