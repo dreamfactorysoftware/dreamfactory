@@ -210,20 +210,20 @@ case $CURRENT_KERNEL in
     fi
     ;;
   debian)
-    if ((CURRENT_OS != 10)) && ((CURRENT_OS != 11)); then
-      echo_with_color red "The installer only supports Debian 10 and 11. Exiting...\n"
+    if ((CURRENT_OS != 12)) && ((CURRENT_OS != 13)); then
+      echo_with_color red "The installer only supports Debian 12 and 13. Exiting...\n"
       exit 1
     fi
     ;;
   centos | rhel)
-    if ((CURRENT_OS != 7)) && ((CURRENT_OS != 8)); then
-      echo_with_color red "The installer only supports Rhel (Centos) 7 and 8. Exiting...\n"
+    if ((CURRENT_OS != 8)) && ((CURRENT_OS != 9)); then
+      echo_with_color red "The installer only supports Rhel/CentOS 8 and 9. Exiting...\n"
       exit 1
     fi
     ;;
   fedora)
-    if ((CURRENT_OS != 36)) && ((CURRENT_OS != 37)); then
-      echo_with_color red "The installer only supports Fedora 36, 37. Exiting...\n"
+    if ((CURRENT_OS < 39)); then
+      echo_with_color red "The installer only supports Fedora 39 and newer. Exiting...\n"
       exit 1
     fi
     ;;
@@ -402,48 +402,52 @@ else
 fi
 echo_with_color green "\nPHP installed.\n" >&5
 
-### Step 3. Install Apache
-if [[ $APACHE == TRUE ]]; then ### Only with key --apache
-  echo_with_color blue "Step 3: Installing Apache...\n" >&5
-  # Check Apache installation status
-  check_apache_installation_status
-  if ((CHECK_APACHE_PROCESS == 0)) || ((CHECK_APACHE_INSTALLATION == 0)); then
-    echo_with_color red "Apache2 detected. Skipping installation. Configure Apache2 manually.\n" >&5
-  else
-    # Install Apache
-    # Check if running web server on port 80
-    lsof -i :80 | grep LISTEN
-    if (($? == 0)); then
-      echo_with_color red "Port 80 taken.\n " >&5
-      echo_with_color red "Skipping installation Apache2. Install Apache2 manually.\n " >&5
+### Step 3. Install web stack
+if ! is_phase_done "PHASE_WEBSTACK"; then
+  if [[ $APACHE == TRUE ]]; then ### Only with key --apache
+    echo_with_color blue "Step 3: Installing Apache...\n" >&5
+    # Check Apache installation status
+    check_apache_installation_status
+    if ((CHECK_APACHE_PROCESS == 0)) || ((CHECK_APACHE_INSTALLATION == 0)); then
+      echo_with_color red "Apache2 detected. Skipping installation. Configure Apache2 manually.\n" >&5
     else
-      run_process "   Installing Apache" install_apache
-      run_process "   Restarting Apache" restart_apache
-      echo_with_color green "\nApache2 installed.\n" >&5
+      # Install Apache
+      # Check if running web server on port 80
+      lsof -i :80 | grep LISTEN
+      if (($? == 0)); then
+        echo_with_color red "Port 80 taken.\n " >&5
+        echo_with_color red "Skipping installation Apache2. Install Apache2 manually.\n " >&5
+      else
+        run_process "   Installing Apache" install_apache
+        run_process "   Restarting Apache" restart_apache
+        echo_with_color green "\nApache2 installed.\n" >&5
+      fi
     fi
-  fi
 
-else
-  echo_with_color blue "Step 3: Installing Nginx...\n" >&5 ### Default choice
-  # Check nginx installation in the system
-  check_nginx_installation_status
-  if ((CHECK_NGINX_PROCESS == 0)) || ((CHECK_NGINX_INSTALLATION == 0)); then
-    echo_with_color red "Nginx detected. Skipping installation. Configure Nginx manually.\n" >&5
   else
-    # Install nginx
-    # Checking running web server
-    lsof -i :80 | grep LISTEN
-    if (($? == 0)); then
-      echo_with_color red "Port 80 taken.\n " >&5
-      echo_with_color red "Skipping Nginx installation. Install Nginx manually.\n " >&5
+    echo_with_color blue "Step 3: Installing Nginx...\n" >&5 ### Default choice
+    # Check nginx installation in the system
+    check_nginx_installation_status
+    if ((CHECK_NGINX_PROCESS == 0)) || ((CHECK_NGINX_INSTALLATION == 0)); then
+      echo_with_color red "Nginx detected. Skipping installation. Configure Nginx manually.\n" >&5
     else
-      run_process "   Installing Nginx" install_nginx
-      run_process "   Restarting Nginx" restart_nginx
-      echo_with_color green "\nNginx installed.\n" >&5
+      # Install nginx
+      # Checking running web server
+      lsof -i :80 | grep LISTEN
+      if (($? == 0)); then
+        echo_with_color red "Port 80 taken.\n " >&5
+        echo_with_color red "Skipping Nginx installation. Install Nginx manually.\n " >&5
+      else
+        run_process "   Installing Nginx" install_nginx
+        run_process "   Restarting Nginx" restart_nginx
+        echo_with_color green "\nNginx installed.\n" >&5
+      fi
     fi
   fi
+  mark_phase_done "PHASE_WEBSTACK"
+else
+  echo_with_color green "   Phase already complete. Skipping web stack installation.\n" >&5
 fi
-mark_phase_done "PHASE_WEBSTACK"
 
 ### Step 4. Configure PHP development tools
 echo_with_color blue "Step 4: Configuring PHP Extensions...\n" >&5
