@@ -104,6 +104,14 @@ is_phase_done() {
   [[ "$phase_value" == "done" ]]
 }
 
+clear_loaded_state() {
+  local state_var
+  while read -r state_var; do
+    unset "$state_var"
+  done < <(compgen -v | grep '^PHASE_' || true)
+  unset INSTALL_MODE
+}
+
 resume_prompt() {
   if grep -qE '^PHASE_' "$STATE_FILE"; then
     echo_with_color magenta "Previous installer state detected. Choose mode:"
@@ -116,6 +124,7 @@ resume_prompt() {
       3)
         : > "$STATE_FILE"
         : > "$ANSWERS_FILE"
+        clear_loaded_state
         echo_with_color green "Installer state cleared. Starting fresh run."
         ;;
       2)
@@ -1027,67 +1036,99 @@ fi
 ### Shutdown silent mode because php artisan df:setup and df:env will get troubles with prompts.
 exec 1>&5 5>&-
 
-if [[ $DB_INSTALLED == FALSE ]]; then
-  sudo -u "$CURRENT_USER" bash -c "php artisan df:env -q \
-                --db_connection=mysql \
-                --db_host=127.0.0.1 \
-                --db_port=3306 \
-                --db_database=${DF_SYSTEM_DB} \
-                --db_username=${DF_SYSTEM_DB_USER} \
-                --db_password=${DF_SYSTEM_DB_PASSWORD//\'/} \
-                --db_install=Linux"
-  sed -i 's/\#DB\_CHARSET\=/DB\_CHARSET\=utf8/g' .env
-  sed -i 's/\#DB\_COLLATION\=/DB\_COLLATION\=utf8\_unicode\_ci/g' .env
-  echo -e "\n"
-  MYSQL_INSTALLED=TRUE
-
-elif [[ ! $MYSQL == TRUE && $DF_CLEAN_INSTALLATION == TRUE ]] || [[ $DB_INSTALLED == TRUE ]]; then
-  sudo -u "$CURRENT_USER" bash -c "php artisan df:env --df_install=Linux"
-  if [[ $DB_INSTALLED == TRUE ]]; then
+if ! is_phase_done "PHASE_DF_CONFIG"; then
+  if [[ $DB_INSTALLED == FALSE ]]; then
+    sudo -u "$CURRENT_USER" bash -c "php artisan df:env -q \
+                  --db_connection=mysql \
+                  --db_host=127.0.0.1 \
+                  --db_port=3306 \
+                  --db_database=${DF_SYSTEM_DB} \
+                  --db_username=${DF_SYSTEM_DB_USER} \
+                  --db_password=${DF_SYSTEM_DB_PASSWORD//\'/} \
+                  --db_install=Linux"
     sed -i 's/\#DB\_CHARSET\=/DB\_CHARSET\=utf8/g' .env
     sed -i 's/\#DB\_COLLATION\=/DB\_COLLATION\=utf8\_unicode\_ci/g' .env
-  fi
-fi
+    echo -e "\n"
+    MYSQL_INSTALLED=TRUE
 
-# Guardrail: on non-interactive sqlite installs, DB_DATABASE can remain blank.
-# Force the standard sqlite path so migrate/seed does not fail with SQLSTATE[HY000] [14].
-if grep -q '^DB_CONNECTION=sqlite$' .env && grep -q '^DB_DATABASE=$' .env; then
-  sed -i 's|^DB_DATABASE=$|DB_DATABASE=/opt/dreamfactory/storage/databases/database.sqlite|' .env
-  touch /opt/dreamfactory/storage/databases/database.sqlite
-  chown "$CURRENT_USER":"$CURRENT_USER" /opt/dreamfactory/storage/databases/database.sqlite
-fi
-
-mark_phase_done "PHASE_DF_CONFIG"
-
-if [[ $DF_CLEAN_INSTALLATION == TRUE ]]; then
-  sudo -u "$CURRENT_USER" bash -c "php artisan df:setup"
-fi
-mark_phase_done "PHASE_DF_BOOTSTRAP"
-
-if [[ $LICENSE_INSTALLED == TRUE || $DF_CLEAN_INSTALLATION == FALSE ]]; then
-  php artisan migrate --seed
-  sudo -u "$CURRENT_USER" bash -c "php artisan config:clear -q"
-
-  if [[ $LICENSE_INSTALLED == TRUE ]]; then
-    grep DF_LICENSE_KEY .env >/dev/null 2>&1 # Check for existing key.
-    if (($? == 0)); then
-      echo_with_color red "\nThe license key is already installed. Do you want to install a new key? [Yy/Nn]"
-      read -r KEY_ANSWER
-      if [[ -z $KEY_ANSWER ]]; then
-        KEY_ANSWER=N
-      fi
-      NEW_KEY=TRUE
+  elif [[ ! $MYSQL == TRUE && $DF_CLEAN_INSTALLATION == TRUE ]] || [[ $DB_INSTALLED == TRUE ]]; then
+    sudo -u "$CURRENT_USER" bash -c "php artisan df:env --df_install=Linux"
+    if [[ $DB_INSTALLED == TRUE ]]; then
+      sed -i 's/\#DB\_CHARSET\=/DB\_CHARSET\=utf8/g' .env
+      sed -i 's/\#DB\_COLLATION\=/DB\_COLLATION\=utf8\_unicode\_ci/g' .env
     fi
+  fi
 
-    if [[ $NEW_KEY == TRUE ]]; then
-      if [[ $KEY_ANSWER =~ ^[Yy]$ ]]; then #Install new key
-        CURRENT_KEY=$(grep DF_LICENSE_KEY .env)
-        echo_with_color magenta "\nPlease provide your new license key:"
+  # Guardrail: on non-interactive sqlite installs, DB_DATABASE can remain blank.
+  # Force the standard sqlite path so migrate/seed does not fail with SQLSTATE[HY000] [14].
+  if grep -q '^DB_CONNECTION=sqlite$' .env && grep -q '^DB_DATABASE=$' .env; then
+    sed -i 's|^DB_DATABASE=$|DB_DATABASE=/opt/dreamfactory/storage/databases/database.sqlite|' .env
+    touch /opt/dreamfactory/storage/databases/database.sqlite
+    chown "$CURRENT_USER":"$CURRENT_USER" /opt/dreamfactory/storage/databases/database.sqlite
+  fi
+
+  mark_phase_done "PHASE_DF_CONFIG"
+else
+  echo_with_color green "   Phase already complete. Skipping DreamFactory env configuration." 
+fi
+
+if ! is_phase_done "PHASE_DF_BOOTSTRAP"; then
+  if [[ $DF_CLEAN_INSTALLATION == TRUE ]]; then
+    sudo -u "$CURRENT_USER" bash -c "php artisan df:setup"
+  fi
+  mark_phase_done "PHASE_DF_BOOTSTRAP"
+else
+  echo_with_color green "   Phase already complete. Skipping DreamFactory bootstrap." 
+fi
+
+if ! is_phase_done "PHASE_FINAL_VERIFY"; then
+  if [[ $LICENSE_INSTALLED == TRUE || $DF_CLEAN_INSTALLATION == FALSE ]]; then
+    php artisan migrate --seed
+    sudo -u "$CURRENT_USER" bash -c "php artisan config:clear -q"
+
+    if [[ $LICENSE_INSTALLED == TRUE ]]; then
+      grep DF_LICENSE_KEY .env >/dev/null 2>&1 # Check for existing key.
+      if (($? == 0)); then
+        echo_with_color red "\nThe license key is already installed. Do you want to install a new key? [Yy/Nn]"
+        read -r KEY_ANSWER
+        if [[ -z $KEY_ANSWER ]]; then
+          KEY_ANSWER=N
+        fi
+        NEW_KEY=TRUE
+      fi
+
+      if [[ $NEW_KEY == TRUE ]]; then
+        if [[ $KEY_ANSWER =~ ^[Yy]$ ]]; then #Install new key
+          CURRENT_KEY=$(grep DF_LICENSE_KEY .env)
+          echo_with_color magenta "\nPlease provide your new license key:"
+          read -r LICENSE_KEY
+          size=${#LICENSE_KEY}
+          if [[ -z $LICENSE_KEY ]]; then
+            until [[ -n $LICENSE_KEY ]]; do
+              echo_with_color red "\nThe field can't be empty!"
+              read -r LICENSE_KEY
+              size=${#LICENSE_KEY}
+            done
+          elif ((size != 32)); then
+            until ((size == 32)); do
+              echo_with_color red "\nInvalid License Key provided"
+              echo_with_color magenta "\nPlease provide your license key:"
+              read -r LICENSE_KEY
+              size=${#LICENSE_KEY}
+            done
+          fi
+          ###Change license key in .env file
+          sed -i "s/$CURRENT_KEY/DF_LICENSE_KEY=$LICENSE_KEY/" .env
+        else
+          echo_with_color red "\nSkipping..." #Skip if key found in .env file and no need to update
+        fi
+      else
+        echo_with_color magenta "\nPlease provide your license key:" #Install key if not found existing key.
         read -r LICENSE_KEY
         size=${#LICENSE_KEY}
         if [[ -z $LICENSE_KEY ]]; then
           until [[ -n $LICENSE_KEY ]]; do
-            echo_with_color red "\nThe field can't be empty!"
+            echo_with_color red "The field can't be empty!"
             read -r LICENSE_KEY
             size=${#LICENSE_KEY}
           done
@@ -1099,157 +1140,142 @@ if [[ $LICENSE_INSTALLED == TRUE || $DF_CLEAN_INSTALLATION == FALSE ]]; then
             size=${#LICENSE_KEY}
           done
         fi
-        ###Change license key in .env file
-        sed -i "s/$CURRENT_KEY/DF_LICENSE_KEY=$LICENSE_KEY/" .env
-      else
-        echo_with_color red "\nSkipping..." #Skip if key found in .env file and no need to update
+        ###Add license key to .env file
+        echo -e "\nDF_LICENSE_KEY=${LICENSE_KEY}" >>.env
       fi
-    else
-      echo_with_color magenta "\nPlease provide your license key:" #Install key if not found existing key.
-      read -r LICENSE_KEY
-      size=${#LICENSE_KEY}
-      if [[ -z $LICENSE_KEY ]]; then
-        until [[ -n $LICENSE_KEY ]]; do
-          echo_with_color red "The field can't be empty!"
-          read -r LICENSE_KEY
-          size=${#LICENSE_KEY}
-        done
-      elif ((size != 32)); then
-        until ((size == 32)); do
-          echo_with_color red "\nInvalid License Key provided"
-          echo_with_color magenta "\nPlease provide your license key:"
-          read -r LICENSE_KEY
-          size=${#LICENSE_KEY}
-        done
-      fi
-      ###Add license key to .env file
-      echo -e "\nDF_LICENSE_KEY=${LICENSE_KEY}" >>.env
     fi
   fi
-fi
 
-if [[ $APACHE == TRUE ]]; then
-  chmod -R 2775 /opt/dreamfactory/
-  if [[ $CURRENT_KERNEL == "debian" || $CURRENT_KERNEL == "ubuntu" ]]; then
-    chown -R "www-data:$CURRENT_USER" /opt/dreamfactory/
-  else
-    chown -R "apache:$CURRENT_USER" /opt/dreamfactory/
+  if [[ $APACHE == TRUE ]]; then
+    chmod -R 2775 /opt/dreamfactory/
+    if [[ $CURRENT_KERNEL == "debian" || $CURRENT_KERNEL == "ubuntu" ]]; then
+      chown -R "www-data:$CURRENT_USER" /opt/dreamfactory/
+    else
+      chown -R "apache:$CURRENT_USER" /opt/dreamfactory/
+    fi
   fi
-fi
 
-### Uncomment nodejs in .env file
-grep -E "^#DF_NODEJS_PATH" .env >/dev/null
-if (($? == 0)); then
-  sed -i "s,\#DF_NODEJS_PATH=/usr/local/bin/node,DF_NODEJS_PATH=$NODE_PATH," .env
-fi
-
-### Ubuntu 20, centos8 and fedora uses the python2 command instead of python. So we need to update our .env
-if [[ ! $CURRENT_KERNEL == "debian" ]]; then
-  sed -i "s,\#DF_PYTHON_PATH=/usr/local/bin/python,DF_PYTHON_PATH=$(which python2)," .env
-fi
-
-sudo -u "$CURRENT_USER" bash -c "php artisan cache:clear -q"
-
-#Add rules if SELinux enabled, redhat systems only
-if [[ $CURRENT_KERNEL == "centos" || $CURRENT_KERNEL == "rhel" || $CURRENT_KERNEL == "fedora" ]]; then
-  sestatus | grep SELinux | grep enabled >/dev/null
-  if (($? == 0)); then
-    setsebool -P httpd_can_network_connect_db 1
-    chcon -t httpd_sys_content_t storage -R
-    chcon -t httpd_sys_content_t bootstrap/cache/ -R
-    chcon -t httpd_sys_rw_content_t storage -R
-    chcon -t httpd_sys_rw_content_t bootstrap/cache/ -R
+  NODE_PATH="${NODE_PATH:-$(command -v node 2>/dev/null || true)}"
+  if [[ -n "$NODE_PATH" ]]; then
+    sed -i "s|^#DF_NODEJS_PATH=.*|DF_NODEJS_PATH=$NODE_PATH|" .env
+    sed -i "s|^DF_NODEJS_PATH=$|DF_NODEJS_PATH=$NODE_PATH|" .env
   fi
-fi
 
-### Add Permissions and Ownerships
-if [[ ! $APACHE == TRUE ]]; then
-  echo_with_color blue "Adding Permissions and Ownerships...\n"
-  echo_with_color blue "    Creating user 'dreamfactory'"
-  useradd dreamfactory
-  if [[ $CURRENT_KERNEL == "ubuntu" || $CURRENT_KERNEL == "debian" ]]; then
-    PHP_VERSION_NUMBER=$(php --version 2>/dev/null | head -n 1 | cut -d " " -f 2 | cut -c 1,2,3)
+  PYTHON_BIN_PATH="$(command -v python2 2>/dev/null || command -v python3 2>/dev/null || true)"
+  if [[ -n "$PYTHON_BIN_PATH" ]]; then
+    sed -i "s|^#DF_PYTHON_PATH=.*|DF_PYTHON_PATH=$PYTHON_BIN_PATH|" .env
+    sed -i "s|^DF_PYTHON_PATH=$|DF_PYTHON_PATH=$PYTHON_BIN_PATH|" .env
   fi
-  echo_with_color blue "    Updating php-fpm user, group, and owner"
-  if [[ $CURRENT_KERNEL == "ubuntu" || $CURRENT_KERNEL == "debian" ]]; then
-    sed -i "s,www-data,dreamfactory," /etc/php/$PHP_VERSION_NUMBER/fpm/pool.d/www.conf
-  else
-    # centos, fedora
-    sed -i "s,;listen.owner = nobody,listen.owner = dreamfactory," /etc/php-fpm.d/www.conf
-    sed -i "s,;listen.group = nobody,listen.group = dreamfactory," /etc/php-fpm.d/www.conf
-    sed -i "s,;listen.mode = 0660,listen.mode = 0660\nuser = dreamfactory\ngroup = dreamfactory," /etc/php-fpm.d/www.conf
-    sed -i "s,listen.acl_users,;listen.acl_users," /etc/php-fpm.d/www.conf
+
+  sudo -u "$CURRENT_USER" bash -c "php artisan cache:clear -q"
+
+  #Add rules if SELinux enabled, redhat systems only
+  if [[ $CURRENT_KERNEL == "centos" || $CURRENT_KERNEL == "rhel" || $CURRENT_KERNEL == "fedora" ]]; then
+    sestatus | grep SELinux | grep enabled >/dev/null
+    if (($? == 0)); then
+      setsebool -P httpd_can_network_connect_db 1
+      chcon -t httpd_sys_content_t storage -R
+      chcon -t httpd_sys_content_t bootstrap/cache/ -R
+      chcon -t httpd_sys_rw_content_t storage -R
+      chcon -t httpd_sys_rw_content_t bootstrap/cache/ -R
+    fi
   fi
-  if (($? == 0)); then
+
+  ### Add Permissions and Ownerships
+  if [[ ! $APACHE == TRUE ]]; then
+    echo_with_color blue "Adding Permissions and Ownerships...\n"
+    if id dreamfactory >/dev/null 2>&1; then
+      echo_with_color blue "    User 'dreamfactory' already exists"
+    else
+      echo_with_color blue "    Creating user 'dreamfactory'"
+      useradd dreamfactory
+    fi
     if [[ $CURRENT_KERNEL == "ubuntu" || $CURRENT_KERNEL == "debian" ]]; then
-      usermod -a -G dreamfactory www-data
+      PHP_VERSION_NUMBER=$(php --version 2>/dev/null | head -n 1 | cut -d " " -f 2 | cut -c 1,2,3)
+    fi
+    echo_with_color blue "    Updating php-fpm user, group, and owner"
+    if [[ $CURRENT_KERNEL == "ubuntu" || $CURRENT_KERNEL == "debian" ]]; then
+      sed -i "s,www-data,dreamfactory," /etc/php/$PHP_VERSION_NUMBER/fpm/pool.d/www.conf
     else
       # centos, fedora
-      usermod -a -G dreamfactory nginx
+      sed -i "s,;listen.owner = nobody,listen.owner = dreamfactory," /etc/php-fpm.d/www.conf
+      sed -i "s,;listen.group = nobody,listen.group = dreamfactory," /etc/php-fpm.d/www.conf
+      sed -i "s,;listen.mode = 0660,listen.mode = 0660\nuser = dreamfactory\ngroup = dreamfactory," /etc/php-fpm.d/www.conf
+      sed -i "s,listen.acl_users,;listen.acl_users," /etc/php-fpm.d/www.conf
     fi
-    echo_with_color blue "    Changing ownership and permission of /opt/dreamfactory to 'dreamfactory' user"
-    chown -R dreamfactory:dreamfactory /opt/dreamfactory
-    chmod -R u=rwX,g=rX,o= /opt/dreamfactory
-    echo_with_color blue "    Restarting nginx and php-fpm"
-    service nginx restart
-    if (($? >= 1)); then
-      echo_with_color red "nginx failed to restart\n"
-      exit 1
-    else
+    if (($? == 0)); then
       if [[ $CURRENT_KERNEL == "ubuntu" || $CURRENT_KERNEL == "debian" ]]; then
-        service php$PHP_VERSION_NUMBER-fpm restart
+        usermod -a -G dreamfactory www-data
       else
         # centos, fedora
-        service php-fpm restart
+        usermod -a -G dreamfactory nginx
       fi
+      echo_with_color blue "    Changing ownership and permission of /opt/dreamfactory to 'dreamfactory' user"
+      chown -R dreamfactory:dreamfactory /opt/dreamfactory
+      chmod -R u=rwX,g=rX,o= /opt/dreamfactory
+      echo_with_color blue "    Restarting nginx and php-fpm"
+      service nginx restart
       if (($? >= 1)); then
-        echo_with_color red "php-fpm failed to restart\n"
+        echo_with_color red "nginx failed to restart\n"
         exit 1
+      else
+        if [[ $CURRENT_KERNEL == "ubuntu" || $CURRENT_KERNEL == "debian" ]]; then
+          service php$PHP_VERSION_NUMBER-fpm restart
+        else
+          # centos, fedora
+          service php-fpm restart
+        fi
+        if (($? >= 1)); then
+          echo_with_color red "php-fpm failed to restart\n"
+          exit 1
+        fi
+        echo_with_color green "Done! Ownership and Permissions changed to user 'dreamfactory'\n"
       fi
-      echo_with_color green "Done! Ownership and Permissions changed to user 'dreamfactory'\n"
+    else
+      echo_with_color red "Unable to update php-fpm www.conf file. Please check the file location of www.conf"
     fi
-  else
-    echo_with_color red "Unable to update php-fpm www.conf file. Please check the file location of www.conf"
   fi
-fi
 
-### Start MCP Daemon if enabled
-if [[ $ENABLE_MCP_DAEMON == TRUE ]]; then
-  echo_with_color blue "Starting MCP daemon...\n"
-  /opt/dreamfactory/vendor/dreamfactory/df-mcp-server/scripts/start-daemon.sh &
-  MCP_DAEMON_PID=$!
-  echo_with_color green "MCP daemon started with PID: $MCP_DAEMON_PID\n"
-fi
-
-echo_with_color green "Installation finished! DreamFactory has been installed in /opt/dreamfactory "
-
-if [[ $DEBUG == TRUE ]]; then
-  echo_with_color red "\nThe log file saved in: /tmp/dreamfactory_installer.log "
-fi
-
-### Summary table
-if [[ $MYSQL_INSTALLED == TRUE ]]; then
-  sed -i "s/\#DB\_CONNECTION\=sqlite/DB\_CONNECTION\=mysql/g" .env
-  sed -i "s/\#DB\_HOST\=/DB\_HOST\=127.0.0.1/g" .env
-  sed -i "s/\#DB\_PORT\=/DB\_PORT\=3306/g" .env
-  sed -i "s/\#DB\_DATABASE\=/DB\_DATABASE\=$DF_SYSTEM_DB/g" .env
-  sed -i "s/\#DB\_USERNAME\=/DB\_USERNAME\=$DF_SYSTEM_DB_USER/g" .env
-  sed -i "s/\#DB\_PASSWORD\=/DB\_PASSWORD\=$DF_SYSTEM_DB_PASSWORD/g" .env
-
-  echo -e "\n "
-  echo_with_color magenta "******************************"
-  echo -e " DB for system table: mysql "
-  echo -e " DB host: 127.0.0.1         "
-  echo -e " DB port: 3306              "
-  if [[ ! $DB_FOUND == TRUE ]]; then
-    echo -e " DB root password: $DB_PASS"
+  ### Start MCP Daemon if enabled
+  if [[ $ENABLE_MCP_DAEMON == TRUE ]]; then
+    echo_with_color blue "Starting MCP daemon...\n"
+    /opt/dreamfactory/vendor/dreamfactory/df-mcp-server/scripts/start-daemon.sh &
+    MCP_DAEMON_PID=$!
+    echo_with_color green "MCP daemon started with PID: $MCP_DAEMON_PID\n"
   fi
-  echo -e " DB name: $DF_SYSTEM_DB"
-  echo -e " DB user: $DF_SYSTEM_DB_USER"
-  echo -e " DB password: $DF_SYSTEM_DB_PASSWORD"
-  echo -e "******************************\n"
-fi
 
-mark_phase_done "PHASE_FINAL_VERIFY"
+  echo_with_color green "Installation finished! DreamFactory has been installed in /opt/dreamfactory "
+
+  if [[ $DEBUG == TRUE ]]; then
+    echo_with_color red "\nThe log file saved in: /tmp/dreamfactory_installer.log "
+  fi
+
+  ### Summary table
+  if [[ $MYSQL_INSTALLED == TRUE ]]; then
+    sed -i "s/\#DB\_CONNECTION\=sqlite/DB\_CONNECTION\=mysql/g" .env
+    sed -i "s/\#DB\_HOST\=/DB\_HOST\=127.0.0.1/g" .env
+    sed -i "s/\#DB\_PORT\=/DB\_PORT\=3306/g" .env
+    sed -i "s/\#DB\_DATABASE\=/DB\_DATABASE\=$DF_SYSTEM_DB/g" .env
+    sed -i "s/\#DB\_USERNAME\=/DB\_USERNAME\=$DF_SYSTEM_DB_USER/g" .env
+    sed -i "s/\#DB\_PASSWORD\=/DB\_PASSWORD\=$DF_SYSTEM_DB_PASSWORD/g" .env
+
+    echo -e "\n "
+    echo_with_color magenta "******************************"
+    echo -e " DB for system table: mysql "
+    echo -e " DB host: 127.0.0.1         "
+    echo -e " DB port: 3306              "
+    if [[ ! $DB_FOUND == TRUE ]]; then
+      echo -e " DB root password: $DB_PASS"
+    fi
+    echo -e " DB name: $DF_SYSTEM_DB"
+    echo -e " DB user: $DF_SYSTEM_DB_USER"
+    echo -e " DB password: $DF_SYSTEM_DB_PASSWORD"
+    echo -e "******************************\n"
+  fi
+
+  mark_phase_done "PHASE_FINAL_VERIFY"
+else
+  echo_with_color green "   Phase already complete. Skipping final verification and ownership updates." 
+fi
 
 exit 0
