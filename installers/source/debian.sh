@@ -219,57 +219,74 @@ install_php_pear () {
 }
 
 install_mcrypt () {
-  printf "\n" | pecl install mcrypt-1.0.5
-  if (($? >= 1)); then
-    echo_with_color red "\nMcrypt extension installation error." >&5
-    kill $!
-    exit 1
+  if apt-cache show "${PHP_VERSION}-mcrypt" >/dev/null 2>&1; then
+    apt-get install -y "${PHP_VERSION}-mcrypt"
+  else
+    printf "\n" | pecl install mcrypt-1.0.5
+    if (($? >= 1)); then
+      echo_with_color red "\nMcrypt extension installation error." >&5
+      kill $!
+      exit 1
+    fi
+    echo "extension=mcrypt.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/mcrypt.ini"
+    phpenmod -s ALL mcrypt
   fi
-  echo "extension=mcrypt.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/mcrypt.ini"
-  phpenmod -s ALL mcrypt
 }
 
 install_mongodb () {
-  pecl install mongodb <<<'no'
-  if (($? >= 1)); then
-    echo_with_color red "\nMongo DB extension installation error." >&5
-    kill $!
-    exit 1
+  if apt-cache show "${PHP_VERSION}-mongodb" >/dev/null 2>&1; then
+    apt-get install -y "${PHP_VERSION}-mongodb"
+  else
+    if ! pecl list | awk 'NR > 3 {print $1}' | grep -Fxq mongodb; then
+      pecl install mongodb <<<'no'
+      if (($? >= 1)); then
+        echo_with_color red "\nMongo DB extension installation error." >&5
+        kill $!
+        exit 1
+      fi
+    fi
+    echo "extension=mongodb.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/mongodb.ini"
+    phpenmod -s ALL mongodb
   fi
-  echo "extension=mongodb.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/mongodb.ini"
-  phpenmod -s ALL mongodb
 }
 
 install_sql_server () {
-  curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
+  curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /usr/share/keyrings/microsoft-prod.gpg
   case $CURRENT_OS in
 
   10)
-    curl https://packages.microsoft.com/config/debian/10/prod.list >/etc/apt/sources.list.d/mssql-release.list
+    echo "deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft-prod.gpg] https://packages.microsoft.com/debian/10/prod buster main" >/etc/apt/sources.list.d/mssql-release.list
     ;;
   11)
-    curl https://packages.microsoft.com/config/debian/11/prod.list >/etc/apt/sources.list.d/mssql-release.list
+    echo "deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft-prod.gpg] https://packages.microsoft.com/debian/11/prod bullseye main" >/etc/apt/sources.list.d/mssql-release.list
+    ;;
+  12)
+    echo "deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft-prod.gpg] https://packages.microsoft.com/debian/12/prod bookworm main" >/etc/apt/sources.list.d/mssql-release.list
     ;;
   esac
   apt-get update
-  ACCEPT_EULA=Y apt-get install -y msodbcsql18 mssql-tools unixodbc-dev=2.3.7 unixodbc=2.3.7 odbcinst1debian2=2.3.7 odbcinst=2.3.7
+  ACCEPT_EULA=Y DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends unixodbc-dev msodbcsql18 mssql-tools18
 
-  pecl install sqlsrv
-  if (($? >= 1)); then
-    echo_with_color red "\nMS SQL Server extension installation error." >&5
-    kill $!
-    exit 1
+  if ! pecl list | awk 'NR > 3 {print $1}' | grep -Fxq sqlsrv; then
+    pecl install sqlsrv
+    if (($? >= 1)); then
+      echo_with_color red "\nMS SQL Server extension installation error." >&5
+      kill $!
+      exit 1
+    fi
   fi
   echo "extension=sqlsrv.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/sqlsrv.ini"
   phpenmod -s ALL sqlsrv
 }
 
 install_pdo_sqlsrv () {
-  pecl install pdo_sqlsrv-5.10.1
-  if (($? >= 1)); then
-    echo_with_color red "\npdo_sqlsrv extension installation error." >&5
-    kill $!
-    exit 1
+  if ! pecl list | awk 'NR > 3 {print $1}' | grep -Fxq pdo_sqlsrv; then
+    pecl install pdo_sqlsrv
+    if (($? >= 1)); then
+      echo_with_color red "\npdo_sqlsrv extension installation error." >&5
+      kill $!
+      exit 1
+    fi
   fi
   echo "extension=pdo_sqlsrv.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/pdo_sqlsrv.ini"
   phpenmod -s ALL pdo_sqlsrv
