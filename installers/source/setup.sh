@@ -34,6 +34,7 @@ STATE_DIR="/var/lib/dreamfactory-installer"
 STATE_FILE="$STATE_DIR/state.env"
 ANSWERS_FILE="$STATE_DIR/answers.env"
 LOCK_FILE="$STATE_DIR/install.lock"
+MIN_ROOT_FREE_GB="${MIN_ROOT_FREE_GB:-8}"
 
 init_state_files() {
   mkdir -p "$STATE_DIR"
@@ -144,6 +145,29 @@ ensure_pkg_manager_healthy() {
       apt-get -f install -y || true
     fi
   fi
+}
+
+check_root_free_space() {
+  local available_kb
+  local required_kb
+  local available_gb
+
+  available_kb=$(df --output=avail / 2>/dev/null | tail -n 1 | tr -d ' ')
+
+  if [[ -z "$available_kb" || ! "$available_kb" =~ ^[0-9]+$ ]]; then
+    echo_with_color red "Could not determine root filesystem free space. Exiting..." >&5
+    exit 1
+  fi
+
+  required_kb=$((MIN_ROOT_FREE_GB * 1024 * 1024))
+  available_gb=$((available_kb / 1024 / 1024))
+
+  if ((available_kb < required_kb)); then
+    echo_with_color red "Root filesystem has ${available_gb} GB free. DreamFactory installer requires at least ${MIN_ROOT_FREE_GB} GB free before starting. Expand disk or clean up space, then rerun. Exiting..." >&5
+    exit 1
+  fi
+
+  echo_with_color green "Root filesystem free space check passed (${available_gb} GB available)." >&5
 }
 
 echo_with_color() {
@@ -387,6 +411,7 @@ case $CURRENT_KERNEL in
 esac
 
 ensure_pkg_manager_healthy
+check_root_free_space
 
 #### INSTALLER ####
 
@@ -643,16 +668,20 @@ if (($? >= 1)); then
 fi
 
 ### INSTALL PYTHON BUNCH
-run_process "   Installing python2" install_python2
-check_bunch_installation
-if (($? >= 1)); then
-  run_process "   Installing bunch" install_bunch
+if [[ $ADVANCED_CONNECTORS == TRUE ]]; then
+  run_process "   Installing python2" install_python2
   check_bunch_installation
   if (($? >= 1)); then
-    echo_with_color red "\nCould not install python bunch extension." >&5
-  else
-    echo_with_color green "    python2 installed\n" >&5
+    run_process "   Installing bunch" install_bunch
+    check_bunch_installation
+    if (($? >= 1)); then
+      echo_with_color red "\nCould not install python bunch extension." >&5
+    else
+      echo_with_color green "    python2 installed\n" >&5
+    fi
   fi
+else
+  echo_with_color green "Skipping legacy python2/bunch baseline install.\n" >&5
 fi
 
 ### INSTALL PYTHON3 MUNCH
@@ -669,10 +698,14 @@ if (($? >= 1)); then
 fi
 
 ### Install Node.js
-node -v
-if (($? >= 1)); then
-  run_process "   Installing node" install_node
-  echo_with_color green "    node installed\n" >&5
+if [[ $ADVANCED_CONNECTORS == TRUE ]]; then
+  node -v
+  if (($? >= 1)); then
+    run_process "   Installing node" install_node
+    echo_with_color green "    node installed\n" >&5
+  fi
+else
+  echo_with_color green "Skipping legacy Node.js baseline install.\n" >&5
 fi
 
 ### INSTALL Snowflake / Advanced ODBC Connector Packs
