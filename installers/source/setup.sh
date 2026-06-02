@@ -179,6 +179,33 @@ check_root_free_space() {
   echo_with_color green "Root filesystem free space check passed (${available_gb} GB available)." >&5
 }
 
+wait_for_package_manager_locks() {
+  if [[ "$CURRENT_KERNEL" != "ubuntu" && "$CURRENT_KERNEL" != "debian" ]]; then
+    return 0
+  fi
+
+  local timeout_seconds=300
+  local waited=0
+  local lock_pids
+
+  while (( waited < timeout_seconds )); do
+    lock_pids="$(fuser /var/lib/dpkg/lock-frontend /var/lib/apt/lists/lock /var/cache/apt/archives/lock 2>/dev/null | xargs echo 2>/dev/null || true)"
+    if [[ -z "$lock_pids" ]] && ! pgrep -x apt >/dev/null 2>&1 && ! pgrep -x apt-get >/dev/null 2>&1 && ! pgrep -x dpkg >/dev/null 2>&1; then
+      return 0
+    fi
+
+    if (( waited == 0 )); then
+      echo_with_color magenta "Detected active apt/dpkg work on first boot. Waiting for package manager locks to clear..." >&5
+    fi
+
+    sleep 5
+    waited=$((waited + 5))
+  done
+
+  echo_with_color red "Timed out waiting for apt/dpkg locks to clear. Exiting..." >&5
+  exit 1
+}
+
 echo_with_color() {
   case $1 in
   Red | RED | red)
@@ -421,6 +448,7 @@ esac
 
 ensure_pkg_manager_healthy
 check_root_free_space
+wait_for_package_manager_locks
 
 #### INSTALLER ####
 
@@ -1074,7 +1102,21 @@ fi
 
 if ! is_phase_done "PHASE_DF_BOOTSTRAP"; then
   if [[ $DF_CLEAN_INSTALLATION == TRUE ]]; then
-    sudo -u "$CURRENT_USER" bash -c "php artisan df:setup"
+    if [[ -t 0 ]]; then
+      sudo -u "$CURRENT_USER" bash -c "php artisan df:setup"
+    else
+      DF_ADMIN_FIRST_NAME="${DF_ADMIN_FIRST_NAME:-DreamFactory}"
+      DF_ADMIN_LAST_NAME="${DF_ADMIN_LAST_NAME:-Admin}"
+      DF_ADMIN_EMAIL="${DF_ADMIN_EMAIL:-admin@example.com}"
+      DF_ADMIN_PASSWORD="${DF_ADMIN_PASSWORD:-DreamFactory123!}"
+      DF_ADMIN_PHONE="${DF_ADMIN_PHONE:-555-0100}"
+      sudo -u "$CURRENT_USER" bash -c "php artisan df:setup --no-interaction \
+        --admin_first_name='${DF_ADMIN_FIRST_NAME}' \
+        --admin_last_name='${DF_ADMIN_LAST_NAME}' \
+        --admin_email='${DF_ADMIN_EMAIL}' \
+        --admin_password='${DF_ADMIN_PASSWORD}' \
+        --admin_phone='${DF_ADMIN_PHONE}'"
+    fi
   fi
   mark_phase_done "PHASE_DF_BOOTSTRAP"
 else
