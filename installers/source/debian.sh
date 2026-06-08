@@ -222,7 +222,7 @@ install_mcrypt () {
   if apt-cache show "${PHP_VERSION}-mcrypt" >/dev/null 2>&1; then
     apt-get install -y "${PHP_VERSION}-mcrypt"
   else
-    printf "\n" | pecl install mcrypt-1.0.5
+    printf "\n" | pecl install mcrypt-1.0.9
     if (($? >= 1)); then
       echo_with_color red "\nMcrypt extension installation error." >&5
       kill $!
@@ -231,6 +231,7 @@ install_mcrypt () {
     echo "extension=mcrypt.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/mcrypt.ini"
     phpenmod -s ALL mcrypt
   fi
+  fix_php_extension_permissions mcrypt
 }
 
 install_mongodb () {
@@ -238,7 +239,7 @@ install_mongodb () {
     apt-get install -y "${PHP_VERSION}-mongodb"
   else
     if ! pecl list | awk 'NR > 3 {print $1}' | grep -Fxq mongodb; then
-      pecl install mongodb <<<'no'
+      printf "\n\n\n\n\n\n\n\n\n\n\n" | pecl install mongodb
       if (($? >= 1)); then
         echo_with_color red "\nMongo DB extension installation error." >&5
         kill $!
@@ -247,23 +248,15 @@ install_mongodb () {
     fi
     echo "extension=mongodb.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/mongodb.ini"
     phpenmod -s ALL mongodb
+    fix_php_extension_permissions mongodb
   fi
 }
 
 install_sql_server () {
-  curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /usr/share/keyrings/microsoft-prod.gpg
-  case $CURRENT_OS in
-
-  10)
-    echo "deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft-prod.gpg] https://packages.microsoft.com/debian/10/prod buster main" >/etc/apt/sources.list.d/mssql-release.list
-    ;;
-  11)
-    echo "deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft-prod.gpg] https://packages.microsoft.com/debian/11/prod bullseye main" >/etc/apt/sources.list.d/mssql-release.list
-    ;;
-  12)
-    echo "deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft-prod.gpg] https://packages.microsoft.com/debian/12/prod bookworm main" >/etc/apt/sources.list.d/mssql-release.list
-    ;;
-  esac
+  local microsoft_repo_deb="/tmp/packages-microsoft-prod.deb"
+  rm -f /etc/apt/sources.list.d/mssql-release.list /usr/share/keyrings/microsoft-prod.gpg "$microsoft_repo_deb"
+  curl -fsSL "https://packages.microsoft.com/config/debian/${CURRENT_OS}/packages-microsoft-prod.deb" -o "$microsoft_repo_deb"
+  dpkg -i "$microsoft_repo_deb"
   apt-get update
   ACCEPT_EULA=Y DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends unixodbc-dev msodbcsql18 mssql-tools18
 
@@ -277,6 +270,7 @@ install_sql_server () {
   fi
   echo "extension=sqlsrv.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/sqlsrv.ini"
   phpenmod -s ALL sqlsrv
+  fix_php_extension_permissions sqlsrv
 }
 
 install_pdo_sqlsrv () {
@@ -290,6 +284,7 @@ install_pdo_sqlsrv () {
   fi
   echo "extension=pdo_sqlsrv.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/pdo_sqlsrv.ini"
   phpenmod -s ALL pdo_sqlsrv
+  fix_php_extension_permissions pdo_sqlsrv
 }
 
 install_oracle () {
@@ -384,6 +379,7 @@ install_igbinary () {
 
   echo "extension=igbinary.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/igbinary.ini"
   phpenmod -s ALL igbinary
+  fix_php_extension_permissions igbinary
 }
 
 install_python2 () {
@@ -419,11 +415,11 @@ install_python3 () {
 }
 
 check_munch_installation () {
-  pip3 list | grep munch
+  python3 -c 'import munch' >/dev/null 2>&1
 }
 
 install_munch () {
-  pip3 install munch
+  apt install -y python3-munch || python3 -m pip install --break-system-packages munch
 }
 
 install_node () {
@@ -501,7 +497,7 @@ install_hive_odbc () {
   test -f /opt/mapr/hiveodbc/lib/64/libmaprhiveodbc64.so
   rm maprhiveodbc_2.6.1.1001-2_amd64.deb
   export HIVE_SERVER_ODBC_DRIVER_PATH=/opt/mapr/hiveodbc/lib/64/libmaprhiveodbc64.so
-  HIVE_ODBC_INSTALLED = $(php -m | grep -E "^odbc")
+  HIVE_ODBC_INSTALLED=$(php -m | grep -E "^odbc" || true)
 }
 
 install_dremio_odbc () {
@@ -518,7 +514,7 @@ install_dremio_odbc () {
   rm -f "$DEB_FILE"
   test -f /opt/arrow-flight-sql-odbc-driver/lib64/libarrow-odbc.so.0.9.1.168
   export DREMIO_SERVER_ODBC_DRIVER_PATH=/opt/arrow-flight-sql-odbc-driver/lib64//libarrow-odbc.so.0.9.1.168
-  DREMIO_ODBC_INSTALLED=$(php -m | grep -E "^odbc")
+  DREMIO_ODBC_INSTALLED=$(php -m | grep -E "^odbc" || true)
 }
 
 install_databricks_odbc () {
@@ -534,7 +530,7 @@ install_databricks_odbc () {
   test -f /opt/simba/spark/lib/64/libsparkodbc_sb64.so
   rm simbaspark_2.8.2.1013-2_amd64.deb
   export DATABRICKS_SERVER_ODBC_DRIVER_PATH=/opt/simba/spark/lib/64/libsparkodbc_sb64.so
-  DATABRICKS_ODBC_INSTALLED = $(php -m | grep -E "^odbc")
+  DATABRICKS_ODBC_INSTALLED=$(php -m | grep -E "^odbc" || true)
 }
 
 install_hana_odbc () {

@@ -37,17 +37,10 @@ install_system_dependencies () {
 
 install_php () {
   # Install the php repository
-  case $CURRENT_OS in
-  36)
-    dnf install -y http://rpms.remirepo.net/fedora/remi-release-36.rpm
-    ;;  
-  37)
-    dnf install -y http://rpms.remirepo.net/fedora/remi-release-37.rpm
-    ;;  
-  esac
+  dnf install -y "http://rpms.remirepo.net/fedora/remi-release-${CURRENT_OS}.rpm"
 
-  #Fedora 36 and 37 default to PHP 8
-  if ((CURRENT_OS == 36 || CURRENT_OS == 37)); then
+  # Fedora 39+ is in the supported matrix; keep php repo setup version-driven.
+  if ((CURRENT_OS >= 39)); then
     dnf config-manager --set-enabled remi -y
     dnf module reset php -y
     dnf module install php:remi-8.3 -y
@@ -118,9 +111,11 @@ install_apache () {
 }
 
 restart_apache () {
-  service httpd restart
+  systemctl restart httpd.service
   systemctl enable httpd.service
-  firewall-cmd --add-service=http
+  if command -v firewall-cmd >/dev/null 2>&1 && firewall-cmd --state >/dev/null 2>&1; then
+    firewall-cmd --add-service=http
+  fi
 }
 
 check_nginx_installation_status () {
@@ -210,9 +205,11 @@ server {
 }
 
 restart_nginx () {
-  service php-fpm restart && service nginx restart
+  systemctl restart php-fpm.service nginx.service
   systemctl enable nginx.service && systemctl enable php-fpm.service
-  firewall-cmd --add-service=http
+  if command -v firewall-cmd >/dev/null 2>&1 && firewall-cmd --state >/dev/null 2>&1; then
+    firewall-cmd --add-service=http
+  fi
 }
 
 install_php_pear () {
@@ -237,53 +234,62 @@ install_zip () {
 }
 
 install_mcrypt () {
-  printf "\n" | pecl install mcrypt-1.0.5
+  printf "\n" | pecl install mcrypt-1.0.9
   if (($? >= 1)); then
     echo_with_color red "\nMcrypt extension installation error." >&5
     kill $!
     exit 1
   fi
   echo "extension=mcrypt.so" >/etc/php.d/20-mcrypt.ini
+  fix_php_extension_permissions mcrypt
 }
 
 install_mongodb () {
-  pecl install mongodb
-  if (($? >= 1)); then
-    echo_with_color red "\nMongo DB extension installation error." >&5
-    kill $!
-    exit 1
+  if ! pecl list | awk 'NR > 3 {print $1}' | grep -Fxq mongodb; then
+    printf "\n\n\n\n\n\n\n\n\n\n\n" | pecl install mongodb
+    if (($? >= 1)); then
+      echo_with_color red "\nMongo DB extension installation error." >&5
+      kill $!
+      exit 1
+    fi
   fi
   echo "extension=mongodb.so" >/etc/php.d/20-mongodb.ini
+  fix_php_extension_permissions mongodb
 }
 
 install_sql_server () {
   curl https://packages.microsoft.com/config/rhel/8/prod.repo >/etc/yum.repos.d/mssql-release.repo
-  yum remove unixODBC-utf16 unixODBC-utf16-devel
-  ACCEPT_EULA=Y yum install -y msodbcsql18 mssql-tools \
-  unixODBC-devel-2.3.7 unixODBC-2.3.7
+  dnf remove -y unixODBC-utf16 unixODBC-utf16-devel unixODBC-utf17 unixODBC-utf17-devel
+  ACCEPT_EULA=Y dnf install -y msodbcsql18 mssql-tools18 unixODBC-devel
   if (($? >= 1)); then
     echo_with_color red "\nMS SQL Server extension installation error." >&5
     kill $!
     exit 1
   fi
 
-  pecl install sqlsrv
-  if (($? >= 1)); then
-    echo_with_color red "\nMS SQL Server extension installation error." >&5
-    kill $!
-    exit 1
+  if ! pecl list | awk 'NR > 3 {print $1}' | grep -Fxq sqlsrv; then
+    pecl install sqlsrv
+    if (($? >= 1)); then
+      echo_with_color red "\nMS SQL Server extension installation error." >&5
+      kill $!
+      exit 1
+    fi
   fi
   echo "extension=sqlsrv.so" >/etc/php.d/20-sqlsrv.ini
+  fix_php_extension_permissions sqlsrv
 }
 
 install_pdo_sqlsrv () {
-  pecl install pdo_sqlsrv-5.10.1
-  if (($? >= 1)); then
-    echo_with_color red "\npdo_sqlsrv extension installation error." >&5
-    kill $!
-    exit 1
+  if ! pecl list | awk 'NR > 3 {print $1}' | grep -Fxq pdo_sqlsrv; then
+    pecl install pdo_sqlsrv
+    if (($? >= 1)); then
+      echo_with_color red "\npdo_sqlsrv extension installation error." >&5
+      kill $!
+      exit 1
+    fi
   fi
   echo "extension=pdo_sqlsrv.so" >/etc/php.d/20-pdo_sqlsrv.ini
+  fix_php_extension_permissions pdo_sqlsrv
 }
 
 install_oracle () {
@@ -383,6 +389,7 @@ install_igbinary () {
   fi
 
   echo "extension=igbinary.so" >/etc/php.d/20-igbinary.ini
+  fix_php_extension_permissions igbinary
 }
 
 install_python2 () {
@@ -404,11 +411,11 @@ install_python3 () {
 }
 
 check_munch_installation () {
-  pip list | grep munch
+  python3 -c 'import munch' >/dev/null 2>&1
 }
 
 install_munch () {
-  pip install munch
+  dnf install -y python3-munch || python3 -m pip install --break-system-packages munch || python3 -m pip install munch
 }
 
 install_node () {
@@ -458,7 +465,7 @@ install_hive_odbc () {
   test -f /opt/mapr/hiveodbc/lib/64/libmaprhiveodbc64.so
   rm MapRHiveODBC-2.6.1.1001-1.x86_64.rpm
   export HIVE_SERVER_ODBC_DRIVER_PATH=/opt/mapr/hiveodbc/lib/64/libmaprhiveodbc64.so
-  HIVE_ODBC_INSTALLED = $(php -m | grep -E "^odbc")
+  HIVE_ODBC_INSTALLED=$(php -m | grep -E "^odbc" || true)
 }
 
 install_dremio_odbc () {
@@ -472,7 +479,7 @@ install_dremio_odbc () {
   rm -f "$RPM_FILE"
   test -f /opt/arrow-flight-sql-odbc-driver/lib64/libarrow-odbc.so.0.9.1.168
   export DREMIO_SERVER_ODBC_DRIVER_PATH=/opt/arrow-flight-sql-odbc-driver/lib64//libarrow-odbc.so.0.9.1.168
-  DREMIO_ODBC_INSTALLED=$(php -m | grep -E "^odbc")
+  DREMIO_ODBC_INSTALLED=$(php -m | grep -E "^odbc" || true)
 }
 
 install_databricks_odbc () {
@@ -488,7 +495,7 @@ install_databricks_odbc () {
   test -f /opt/simba/spark/lib/64/libsparkodbc_sb64.so
   rm simbaspark-2.8.2.1013-1.x86_64.rpm
   export DATABRICKS_SERVER_ODBC_DRIVER_PATH=/opt/simba/spark/lib/64/libsparkodbc_sb64.so
-  DATABRICKS_ODBC_INSTALLED = $(php -m | grep -E "^odbc")
+  DATABRICKS_ODBC_INSTALLED=$(php -m | grep -E "^odbc" || true)
 }
 
 install_hana_odbc () {
@@ -499,8 +506,12 @@ install_hana_odbc () {
 }
 
 enable_opcache () {
+  local opcache_module_dir
+  opcache_module_dir=$(php-config --extension-dir 2>/dev/null || true)
   {
-    echo 'zend_extension=opcache.so'
+    if [[ -f "${opcache_module_dir}/opcache.so" || -f /usr/lib64/php/modules/opcache.so ]]; then
+      echo 'zend_extension=opcache.so'
+    fi
     echo 'opcache.enable=1'
     echo 'opcache.memory_consumption=192'
     echo 'opcache.interned_strings_buffer=16'

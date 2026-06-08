@@ -253,13 +253,35 @@ print_centered() {
 
 ## Used for each of the individual components to be installed
 run_process () {
+  local process_name="$1"
+  shift
+
   while true; do echo -n . >&5; sleep 1; done &
   BGPID=$!
   trap 'kill "$BGPID" 2>/dev/null || true; exit' INT
-  echo -n "$1" >&5
-  "$2"
-  echo done >&5
+  echo -n "$process_name" >&5
+  "$@"
+  PROCESS_STATUS=$?
   kill "$BGPID" 2>/dev/null || true
+  if ((PROCESS_STATUS >= 1)); then
+    echo failed >&5
+    echo_with_color red "\n${process_name} failed. Check /tmp/dreamfactory_installer.log when running in debug mode." >&5
+    exit "$PROCESS_STATUS"
+  fi
+  echo done >&5
+}
+
+fix_php_extension_permissions() {
+  local ext
+  local extension_dir
+
+  extension_dir="$(php-config --extension-dir 2>/dev/null || true)"
+  for ext in "$@"; do
+    if [[ -n "$extension_dir" && -f "$extension_dir/${ext}.so" ]]; then
+      chmod 0644 "$extension_dir/${ext}.so"
+    fi
+    find /etc/php /etc/php.d -name "*${ext}.ini" -exec chmod 0644 {} + 2>/dev/null || true
+  done
 }
 
 clear
@@ -290,7 +312,7 @@ case $CURRENT_KERNEL in
       exit 1
     fi
     ;;
-  centos | rhel)
+  centos | rhel | almalinux | rocky)
     if ((CURRENT_OS != 8)) && ((CURRENT_OS != 9)); then
       echo_with_color red "The installer only supports Rhel/CentOS 8 and 9. Exiting...\n"
       exit 1
@@ -333,57 +355,63 @@ echo -e "[11] Install advanced analytics connectors (Snowflake + ODBC packs)\n"
 print_centered "-" "-"
 echo_with_color magenta "Input '0' and press Enter to run the default installation. To install additional options, type the corresponding number (e.g. '1,5' for Oracle and a MySql system database) from the menu above and press Enter"
 read -r INSTALLATION_OPTIONS
+INSTALLATION_OPTIONS="${INSTALLATION_OPTIONS:-0}"
+INSTALLATION_OPTIONS_NORMALIZED="${INSTALLATION_OPTIONS//[[:space:]]/}"
 save_answer_value "INSTALLATION_OPTIONS" "$INSTALLATION_OPTIONS"
 print_centered "-" "-"
 
+selected_option() {
+  local option="$1"
+  [[ ",${INSTALLATION_OPTIONS_NORMALIZED}," == *",${option},"* ]]
+}
 
-if [[ $INSTALLATION_OPTIONS == *"1"* ]]; then
+if selected_option 1; then
   ORACLE=TRUE
   echo_with_color green "Oracle selected."
 fi
 
-if [[ $INSTALLATION_OPTIONS == *"2"* ]]; then
+if selected_option 2; then
   DB2=TRUE
   echo_with_color green "DB2 selected."
 fi
 
-if [[ $INSTALLATION_OPTIONS == *"3"* ]]; then
+if selected_option 3; then
   CASSANDRA=TRUE
   echo_with_color green "Cassandra selected."
 fi
 
-if [[ $INSTALLATION_OPTIONS == *"4"* ]]; then
+if selected_option 4; then
   APACHE=TRUE
   echo_with_color green "Apache selected."
 fi
 
-if [[ $INSTALLATION_OPTIONS == *"5"* ]]; then
+if selected_option 5; then
   MYSQL=TRUE
   echo_with_color green "MariaDB System Database selected."
 fi
 
-if [[ $INSTALLATION_OPTIONS == *"6"* ]]; then
+if selected_option 6; then
   echo_with_color magenta "What version of DreamFactory would you like to install? (E.g. 4.9.0)"
   read -r -p "DreamFactory Version: " DREAMFACTORY_VERSION_TAG
   echo_with_color green "DreamFactory Version ${DREAMFACTORY_VERSION_TAG} selected."
 fi
 
-if [[ $INSTALLATION_OPTIONS == *"7"* ]]; then
+if selected_option 7; then
   SIMBA_TRINO_ODBC=TRUE
   echo_with_color green "Simba Trino ODBC selected."
 fi
 
-if [[ $INSTALLATION_OPTIONS == *"8"* ]]; then
+if selected_option 8; then
   DEBUG=TRUE
   echo_with_color green "Running in debug mode. Run this command: tail -f /tmp/dreamfactory_installer.log in a new terminal session to follow logs during installation"
 fi
 
-if [[ $INSTALLATION_OPTIONS == *"10"* ]]; then
+if selected_option 10; then
   ENABLE_MCP_DAEMON=TRUE
   echo_with_color green "MCP Daemon selected."
 fi
 
-if [[ $INSTALLATION_OPTIONS == *"11"* ]]; then
+if selected_option 11; then
   ADVANCED_CONNECTORS=TRUE
   echo_with_color green "Advanced analytics connectors selected."
 fi
@@ -438,7 +466,7 @@ case $CURRENT_KERNEL in
   debian)
     source ./debian.sh
     ;;
-  centos | rhel)
+  centos | rhel | almalinux | rocky)
     source ./centos.sh
     ;;
   fedora)
@@ -452,7 +480,7 @@ wait_for_package_manager_locks
 
 #### INSTALLER ####
 
-if [[ $INSTALLATION_OPTIONS == *"9"* ]]; then
+if selected_option 9; then
   echo_with_color green "Upgrading DreamFactory selected.\n" >&5
   run_process "   Upgrading DreamFactory" upgrade_dreamfactory
   echo_with_color green "\nFinished Upgrading DreamFactory." >&5
@@ -779,7 +807,7 @@ if [[ $ADVANCED_CONNECTORS == TRUE ]]; then
   php -m | grep -E "^odbc"
   if (($? >= 1)); then
     run_process "   Installing hive odbc" install_hive_odbc
-    if ((HIVE_ODBC_INSTALLED != "odbc")); then
+    if [[ "${HIVE_ODBC_INSTALLED:-}" != "odbc" ]]; then
       echo_with_color red "\nCould not build hive odbc driver." >&5
     else
       echo_with_color green "    hive odbc installed\n" >&5
@@ -790,7 +818,7 @@ if [[ $ADVANCED_CONNECTORS == TRUE ]]; then
   php -m | grep -E "^odbc"
   if (($? >= 1)); then
     run_process "   Installing dremio odbc" install_dremio_odbc
-    if ((DREMIO_ODBC_INSTALLED != "odbc")); then
+    if [[ "${DREMIO_ODBC_INSTALLED:-}" != "odbc" ]]; then
       echo_with_color red "\nCould not build dremio odbc driver." >&5
     else
       echo_with_color green "    dremio odbc installed\n" >&5
@@ -801,7 +829,7 @@ if [[ $ADVANCED_CONNECTORS == TRUE ]]; then
   php -m | grep -E "^odbc"
   if (($? >= 1)); then
     run_process "   Installing databricks odbc" install_databricks_odbc
-    if ((DATABRICKS_ODBC_INSTALLED != "odbc")); then
+    if [[ "${DATABRICKS_ODBC_INSTALLED:-}" != "odbc" ]]; then
       echo_with_color red "\nCould not build databricks odbc driver." >&5
     else
       echo_with_color green "    databricks odbc installed\n" >&5
@@ -812,7 +840,7 @@ if [[ $ADVANCED_CONNECTORS == TRUE ]]; then
   php -m | grep -E "^odbc"
   if (($? >= 1)); then
     run_process "   Installing SAP HANA odbc" install_hana_odbc
-    if ((HANA_ODBC_INSTALLED != "odbc")); then
+    if [[ "${HANA_ODBC_INSTALLED:-}" != "odbc" ]]; then
       echo_with_color red "\nCould not build SAP HANA odbc driver." >&5
     else
       echo_with_color green "    SAP HANA odbc installed\n" >&5
@@ -834,14 +862,14 @@ if [[ $APACHE == TRUE ]]; then
     service apache2 reload
   else
     #fedora / centos
-    service httpd restart
+    systemctl restart httpd.service
   fi
 else
   if [[ $CURRENT_KERNEL == "ubuntu" || $CURRENT_KERNEL == "debian" ]]; then
     service ${PHP_VERSION}-fpm reload
   else
     #fedora / centos
-    service php-fpm restart
+    systemctl restart php-fpm.service
   fi
 fi
 echo_with_color green "PHP Extensions configured.\n" >&5
@@ -1107,7 +1135,7 @@ if ! is_phase_done "PHASE_DF_BOOTSTRAP"; then
     else
       DF_ADMIN_FIRST_NAME="${DF_ADMIN_FIRST_NAME:-DreamFactory}"
       DF_ADMIN_LAST_NAME="${DF_ADMIN_LAST_NAME:-Admin}"
-      DF_ADMIN_EMAIL="${DF_ADMIN_EMAIL:-admin@example.com}"
+      DF_ADMIN_EMAIL="${DF_ADMIN_EMAIL:-admin@dreamfactory.com}"
       DF_ADMIN_PASSWORD="${DF_ADMIN_PASSWORD:-DreamFactory123!}"
       DF_ADMIN_PHONE="${DF_ADMIN_PHONE:-555-0100}"
       sudo -u "$CURRENT_USER" bash -c "php artisan df:setup --no-interaction \
@@ -1212,7 +1240,7 @@ if ! is_phase_done "PHASE_FINAL_VERIFY"; then
   sudo -u "$CURRENT_USER" bash -c "php artisan cache:clear -q"
 
   #Add rules if SELinux enabled, redhat systems only
-  if [[ $CURRENT_KERNEL == "centos" || $CURRENT_KERNEL == "rhel" || $CURRENT_KERNEL == "fedora" ]]; then
+  if [[ $CURRENT_KERNEL == "centos" || $CURRENT_KERNEL == "rhel" || $CURRENT_KERNEL == "almalinux" || $CURRENT_KERNEL == "rocky" || $CURRENT_KERNEL == "fedora" ]]; then
     sestatus | grep SELinux | grep enabled >/dev/null
     if (($? == 0)); then
       setsebool -P httpd_can_network_connect_db 1
@@ -1256,7 +1284,11 @@ if ! is_phase_done "PHASE_FINAL_VERIFY"; then
       chown -R dreamfactory:dreamfactory /opt/dreamfactory
       chmod -R u=rwX,g=rX,o= /opt/dreamfactory
       echo_with_color blue "    Restarting nginx and php-fpm"
-      service nginx restart
+      if [[ $CURRENT_KERNEL == "ubuntu" || $CURRENT_KERNEL == "debian" ]]; then
+        service nginx restart
+      else
+        systemctl restart nginx.service
+      fi
       if (($? >= 1)); then
         echo_with_color red "nginx failed to restart\n"
         exit 1
@@ -1265,7 +1297,7 @@ if ! is_phase_done "PHASE_FINAL_VERIFY"; then
           service php$PHP_VERSION_NUMBER-fpm restart
         else
           # centos, fedora
-          service php-fpm restart
+          systemctl restart php-fpm.service
         fi
         if (($? >= 1)); then
           echo_with_color red "php-fpm failed to restart\n"

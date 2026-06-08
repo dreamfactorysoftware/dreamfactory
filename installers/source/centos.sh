@@ -27,6 +27,10 @@ install_system_dependencies () {
       wget \
       jq
   else
+    dnf install -y dnf-plugins-core
+    if ((CURRENT_OS >= 9)); then
+      dnf config-manager --set-enabled crb || dnf config-manager --set-enabled "codeready-builder-for-rhel-${CURRENT_OS}-$(arch)-rpms" || true
+    fi
     #centos 8
     dnf install -y git \
       curl \
@@ -36,7 +40,8 @@ install_system_dependencies () {
       lsof \
       readline-devel \
       libzip-devel \
-      wget
+      wget \
+      jq
   fi
   # Check installation status
   if (($? >= 1)); then
@@ -71,7 +76,7 @@ install_php () {
       php-gd \
       php-zip \
       php-opcache
-  else
+  elif ((CURRENT_OS == 8)); then
     # RHEL 8
     rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
     rpm -Uvh http://rpms.remirepo.net/enterprise/remi-release-8.rpm
@@ -81,6 +86,31 @@ install_php () {
     dnf module enable php:remi-8.3 -y
 
     #Install PHP
+    dnf install -y php-common \
+      php-xml \
+      php-cli \
+      php-curl \
+      php-mysqlnd \
+      php-sqlite3 \
+      php-soap \
+      php-mbstring \
+      php-bcmath \
+      php-devel \
+      php-ldap \
+      php-pgsql \
+      php-pdo-firebird \
+      php-pdo-dblib \
+      php-gd \
+      php-zip \
+      php-opcache
+  else
+    # RHEL 9 / CentOS Stream 9
+    dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
+    dnf install -y http://rpms.remirepo.net/enterprise/remi-release-9.rpm
+
+    dnf module reset php -y
+    dnf module enable php:remi-8.3 -y
+
     dnf install -y php-common \
       php-xml \
       php-cli \
@@ -148,9 +178,11 @@ install_apache () {
 }
 
 restart_apache () {
-  service httpd restart
+  systemctl restart httpd.service
   systemctl enable httpd.service
-  firewall-cmd --add-service=http
+  if command -v firewall-cmd >/dev/null 2>&1 && firewall-cmd --state >/dev/null 2>&1; then
+    firewall-cmd --add-service=http
+  fi
 }
 
 check_nginx_installation_status() {
@@ -236,11 +268,10 @@ server {
   }
 }" >/etc/nginx/conf.d/dreamfactory.conf
 
-  # RHEL8 php-fpm seems to default to a unix socket, rather than an ip (in RHEL7). As a result
-  # fastcgi_pass has been changed from 127.0.0.1 to unix:/var/run/php-fpm/www.sock for RHEL / CENTOS 8 installation.
-  if ((CURRENT_OS == 8)); then
+  # RHEL 8/9 and CentOS Stream 8/9 default php-fpm to a unix socket rather than 127.0.0.1.
+  if ((CURRENT_OS == 8 || CURRENT_OS == 9)); then
   sed -i "s,127.0.0.1:9000;,unix:/var/run/php-fpm/www.sock;," /etc/nginx/conf.d/dreamfactory.conf
-  useradd -r nginx
+  id -u nginx >/dev/null 2>&1 || useradd -r nginx
   fi
 
   #Need to remove default entry in nginx.conf
@@ -251,9 +282,11 @@ server {
 }
 
 restart_nginx () {
-  service php-fpm restart && service nginx restart
+  systemctl restart php-fpm.service nginx.service
   systemctl enable nginx.service && systemctl enable php-fpm.service
-  firewall-cmd --add-service=http
+  if command -v firewall-cmd >/dev/null 2>&1 && firewall-cmd --state >/dev/null 2>&1; then
+    firewall-cmd --add-service=http
+  fi
 }
 
 install_php_pear () {
@@ -279,29 +312,43 @@ install_mcrypt () {
     dnf install -y libmcrypt-devel
   fi
 
-  printf "\n" | pecl install mcrypt-1.0.5
+  printf "\n" | pecl install mcrypt-1.0.9
   if (($? >= 1)); then
     echo_with_color red "\nMcrypt extension installation error." >&5
     kill $!
     exit 1
   fi
   echo "extension=mcrypt.so" >/etc/php.d/20-mcrypt.ini
+  fix_php_extension_permissions mcrypt
 }
 
 install_mongodb () {
-  pecl install mongodb <<<'no'
-  if (($? >= 1)); then
-    echo_with_color red "\nMongo DB extension installation error." >&5
-    kill $!
-    exit 1
+  if ! pecl list | awk 'NR > 3 {print $1}' | grep -Fxq mongodb; then
+    printf "\n\n\n\n\n\n\n\n\n\n\n" | pecl install mongodb
+    if (($? >= 1)); then
+      echo_with_color red "\nMongo DB extension installation error." >&5
+      kill $!
+      exit 1
+    fi
   fi
   echo "extension=mongodb.so" >/etc/php.d/20-mongodb.ini
+  fix_php_extension_permissions mongodb
 }
 
 install_sql_server () {
-  curl https://packages.microsoft.com/config/rhel/7/prod.repo >/etc/yum.repos.d/mssql-release.repo
-  yum remove unixODBC-utf16 unixODBC-utf16-devel unixODBC-utf17 unixODBC-utf17-devel
-  ACCEPT_EULA=Y yum install -y msodbcsql18 mssql-tools
+  if ((CURRENT_OS == 7)); then
+    curl https://packages.microsoft.com/config/rhel/7/prod.repo >/etc/yum.repos.d/mssql-release.repo
+    yum remove -y unixODBC-utf16 unixODBC-utf16-devel unixODBC-utf17 unixODBC-utf17-devel
+    ACCEPT_EULA=Y yum install -y msodbcsql18 mssql-tools
+  elif ((CURRENT_OS == 8)); then
+    curl https://packages.microsoft.com/config/rhel/8/prod.repo >/etc/yum.repos.d/mssql-release.repo
+    dnf remove -y unixODBC-utf16 unixODBC-utf16-devel unixODBC-utf17 unixODBC-utf17-devel
+    ACCEPT_EULA=Y dnf install -y msodbcsql18 mssql-tools18 unixODBC-devel
+  else
+    curl https://packages.microsoft.com/config/rhel/9/prod.repo >/etc/yum.repos.d/mssql-release.repo
+    dnf remove -y unixODBC-utf16 unixODBC-utf16-devel unixODBC-utf17 unixODBC-utf17-devel
+    ACCEPT_EULA=Y dnf install -y msodbcsql18 mssql-tools18 unixODBC-devel
+  fi
   if (($? >= 1)); then
     echo_with_color red "\nMS SQL Server extension installation error." >&5
     kill $!
@@ -310,27 +357,35 @@ install_sql_server () {
 
   if ((CURRENT_OS == 7)); then
     yum install -y unixODBC-devel-2.3.1
+  elif ((CURRENT_OS == 8)); then
+    dnf install -y unixODBC-devel-2.3.7
   else
-    yum install -y unixODBC-devel-2.3.7
+    dnf install -y unixODBC-devel
   fi
 
-  pecl install sqlsrv
-  if (($? >= 1)); then
-    echo_with_color red "\nMS SQL Server extension installation error." >&5
-    kill $!
-    exit 1
+  if ! pecl list | awk 'NR > 3 {print $1}' | grep -Fxq sqlsrv; then
+    pecl install sqlsrv
+    if (($? >= 1)); then
+      echo_with_color red "\nMS SQL Server extension installation error." >&5
+      kill $!
+      exit 1
+    fi
   fi
   echo "extension=sqlsrv.so" >/etc/php.d/20-sqlsrv.ini
+  fix_php_extension_permissions sqlsrv
 }
 
 install_pdo_sqlsrv () {
-  pecl install pdo_sqlsrv-5.10.1
-  if (($? >= 1)); then
-    echo_with_color red "\nMS SQL Server extension installation error." >&5
-    kill $!
-    exit 1
+  if ! pecl list | awk 'NR > 3 {print $1}' | grep -Fxq pdo_sqlsrv; then
+    pecl install pdo_sqlsrv
+    if (($? >= 1)); then
+      echo_with_color red "\nMS SQL Server extension installation error." >&5
+      kill $!
+      exit 1
+    fi
   fi
   echo "extension=pdo_sqlsrv.so" >/etc/php.d/20-pdo_sqlsrv.ini
+  fix_php_extension_permissions pdo_sqlsrv
 }
 
 install_oracle () {
@@ -434,6 +489,7 @@ install_igbinary () {
     exit 1
   fi
   echo "extension=igbinary.so" >/etc/php.d/20-igbinary.ini
+  fix_php_extension_permissions igbinary
 }
 
 install_python2 () {
@@ -465,11 +521,11 @@ install_python3 () {
 }
 
 check_munch_installation () {
-  pip3 list --format=legacy | grep munch
+  python3 -c 'import munch' >/dev/null 2>&1
 }
 
 install_munch () {
-  pip3 install munch
+  yum install -y python3-munch || python3 -m pip install --break-system-packages munch || python3 -m pip install munch
 }
 
 install_node () {
@@ -520,7 +576,7 @@ install_hive_odbc () {
   test -f /opt/mapr/hiveodbc/lib/64/libmaprhiveodbc64.so
   rm MapRHiveODBC-2.6.1.1001-1.x86_64.rpm
   export HIVE_SERVER_ODBC_DRIVER_PATH=/opt/mapr/hiveodbc/lib/64/libmaprhiveodbc64.so
-  HIVE_ODBC_INSTALLED=$(php -m | grep -E "^odbc")
+  HIVE_ODBC_INSTALLED=$(php -m | grep -E "^odbc" || true)
 }
 
 install_dremio_odbc () {
@@ -534,7 +590,7 @@ install_dremio_odbc () {
   rm -f "$RPM_FILE"
   test -f /opt/arrow-flight-sql-odbc-driver/lib64/libarrow-odbc.so.0.9.1.168
   export DREMIO_SERVER_ODBC_DRIVER_PATH=/opt/arrow-flight-sql-odbc-driver/lib64//libarrow-odbc.so.0.9.1.168
-  DREMIO_ODBC_INSTALLED=$(php -m | grep -E "^odbc")
+  DREMIO_ODBC_INSTALLED=$(php -m | grep -E "^odbc" || true)
 }
 
 install_databricks_odbc () {
@@ -550,7 +606,7 @@ install_databricks_odbc () {
   test -f /opt/simba/spark/lib/64/libsparkodbc_sb64.so
   rm simbaspark-2.8.2.1013-1.x86_64.rpm
   export DATABRICKS_SERVER_ODBC_DRIVER_PATH=/opt/simba/spark/lib/64/libsparkodbc_sb64.so
-  DATABRICKS_ODBC_INSTALLED = $(php -m | grep -E "^odbc")
+  DATABRICKS_ODBC_INSTALLED=$(php -m | grep -E "^odbc" || true)
 }
 
 install_hana_odbc () {
@@ -561,8 +617,12 @@ install_hana_odbc () {
 }
 
 enable_opcache () {
+  local opcache_module_dir
+  opcache_module_dir=$(php-config --extension-dir 2>/dev/null || true)
   {
-    echo 'zend_extension=opcache.so'
+    if [[ -f "${opcache_module_dir}/opcache.so" || -f /usr/lib64/php/modules/opcache.so ]]; then
+      echo 'zend_extension=opcache.so'
+    fi
     echo 'opcache.enable=1'
     echo 'opcache.memory_consumption=192'
     echo 'opcache.interned_strings_buffer=16'
@@ -790,6 +850,3 @@ install_simba_trino_odbc () {
   
   echo_with_color green "Simba Trino ODBC driver installation complete." >&5
 }
-
-
-
