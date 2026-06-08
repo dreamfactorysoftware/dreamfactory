@@ -227,57 +227,65 @@ install_php_pear () {
 
 install_mcrypt () {
   if [[ $MCRYPT == 0 ]]; then
-    printf "\n" | pecl install mcrypt-1.0.4
+    printf "\n" | pecl install mcrypt-1.0.9
     if (($? >= 1)); then
       echo_with_color red "\nMcrypt extension installation error." >&5
       return 1
     fi
     echo "extension=mcrypt.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/mcrypt.ini"
     phpenmod -s ALL mcrypt
+    fix_php_extension_permissions mcrypt
   else
     apt-get install ${PHP_VERSION}-mcrypt
+    fix_php_extension_permissions mcrypt
   fi
 }
 
 install_mongodb () {
-  pecl install mongodb <<<'no'
-  if (($? >= 1)); then
-    echo_with_color red "\nMongo DB extension installation error." >&5
-    return 1
+  if ! pecl list | awk 'NR > 3 {print $1}' | grep -Fxq mongodb; then
+    printf "\n\n\n\n\n\n\n\n\n\n\n" | pecl install mongodb
+    if (($? >= 1)); then
+      echo_with_color red "\nMongo DB extension installation error." >&5
+      return 1
+    fi
   fi
   echo "extension=mongodb.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/mongodb.ini"
   phpenmod -s ALL mongodb
+  fix_php_extension_permissions mongodb
 }
 
 install_sql_server () {
-  curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /usr/share/keyrings/microsoft-archive-keyring.gpg
-  echo "deb [arch=amd64,arm64,armhf signed-by=/usr/share/keyrings/microsoft-archive-keyring.gpg] https://packages.microsoft.com/ubuntu/24.04/prod noble main" | tee /etc/apt/sources.list.d/mssql-release.list
+  local microsoft_repo_deb="/tmp/packages-microsoft-prod.deb"
+  rm -f /etc/apt/sources.list.d/mssql-release.list /usr/share/keyrings/microsoft-archive-keyring.gpg "$microsoft_repo_deb"
+  curl -fsSL "https://packages.microsoft.com/config/ubuntu/${CURRENT_OS}.04/packages-microsoft-prod.deb" -o "$microsoft_repo_deb"
+  dpkg -i "$microsoft_repo_deb"
   apt-get update
-  ACCEPT_EULA=Y DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends unixodbc-dev msodbcsql18
-  echo "extension=sqlsrv.so" > /etc/php/8.3/mods-available/sqlsrv.ini
-  phpenmod -s ALL sqlsrv
-  echo "extension=pdo_sqlsrv.so" > /etc/php/8.3/mods-available/pdo_sqlsrv.ini
-  phpenmod -s ALL pdo_sqlsrv
+  ACCEPT_EULA=Y DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends unixodbc-dev msodbcsql18 mssql-tools18
 
-  sudo apt update
-  ACCEPT_EULA=Y sudo apt install -y msodbcsql18 php8.3-odbc
-
-  pecl install sqlsrv
-  if (($? >= 1)); then
-    echo_with_color red "\nMS SQL Server extension installation error." >&5
-    exit 1
+  if ! pecl list | awk 'NR > 3 {print $1}' | grep -Fxq sqlsrv; then
+    pecl install sqlsrv
+    if (($? >= 1)); then
+      echo_with_color red "\nMS SQL Server extension installation error." >&5
+      exit 1
+    fi
   fi
+  echo "extension=sqlsrv.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/sqlsrv.ini"
+  phpenmod -s ALL sqlsrv
+  fix_php_extension_permissions sqlsrv
 }
 
 install_pdo_sqlsrv () {
-  pecl install pdo_sqlsrv
-  if (($? >= 1)); then
-    echo_with_color red "\npdo_sqlsrv extension installation error." >&5
-    kill $!
-    exit 1
+  if ! pecl list | awk 'NR > 3 {print $1}' | grep -Fxq pdo_sqlsrv; then
+    pecl install pdo_sqlsrv
+    if (($? >= 1)); then
+      echo_with_color red "\npdo_sqlsrv extension installation error." >&5
+      kill $!
+      exit 1
+    fi
   fi
   echo "extension=pdo_sqlsrv.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/pdo_sqlsrv.ini"
   phpenmod -s ALL pdo_sqlsrv
+  fix_php_extension_permissions pdo_sqlsrv
 }
 
 install_oracle () {
@@ -410,6 +418,7 @@ install_igbinary () {
 
   echo "extension=igbinary.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/igbinary.ini"
   phpenmod -s ALL igbinary
+  fix_php_extension_permissions igbinary
 }
 
 install_python2 () {
@@ -435,11 +444,11 @@ install_python3 () {
 }
 
 check_munch_installation () {
-  python3 -m pip list | grep munch
+  python3 -c 'import munch' >/dev/null 2>&1
 }
 
 install_munch () {
-  apt install python3-munch
+  apt install -y python3-munch
 }
 
 install_node () {
@@ -515,7 +524,7 @@ install_hive_odbc () {
   test -f /opt/mapr/hiveodbc/lib/64/libmaprhiveodbc64.so
   rm maprhiveodbc_2.6.1.1001-2_amd64.deb
   export HIVE_SERVER_ODBC_DRIVER_PATH=/opt/mapr/hiveodbc/lib/64/libmaprhiveodbc64.so
-  HIVE_ODBC_INSTALLED = $(php -m | grep -E "^odbc")
+  HIVE_ODBC_INSTALLED=$(php -m | grep -E "^odbc" || true)
 }
 
 install_dremio_odbc () {
@@ -535,7 +544,7 @@ install_dremio_odbc () {
     exit 1
   fi
   export DREMIO_SERVER_ODBC_DRIVER_PATH=/opt/arrow-flight-sql-odbc-driver/lib64/libarrow-odbc.so.0.9.5.470
-  DREMIO_ODBC_INSTALLED=$(php -m | grep -E "^odbc")
+  DREMIO_ODBC_INSTALLED=$(php -m | grep -E "^odbc" || true)
 }
 
 install_databricks_odbc () {
@@ -555,7 +564,7 @@ install_databricks_odbc () {
     exit 1
   fi
   export DATABRICKS_SERVER_ODBC_DRIVER_PATH=/opt/simba/spark/lib/64/libsparkodbc_sb64.so
-  DATABRICKS_ODBC_INSTALLED=$(php -m | grep -E "^odbc")
+  DATABRICKS_ODBC_INSTALLED=$(php -m | grep -E "^odbc" || true)
 }
 
 install_hana_odbc () {
