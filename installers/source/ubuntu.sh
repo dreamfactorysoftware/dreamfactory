@@ -673,8 +673,9 @@ clone_dreamfactory_repository () {
 }
 
 run_composer_install () {
-  # If Oracle is not installed, add the --ignore-platform-req=ext-oci8 option
-  # to composer command
+  # When optional connector extensions (oci8, ibm_db2, cassandra, etc.) are not
+  # installed, add --ignore-platform-reqs so commercial/gold composer sets that
+  # bundle those connectors still install. Matches debian/centos/fedora.
   if [[ $ORACLE == TRUE ]]; then
     if [[ $CURRENT_USER == "root" ]]; then
       sudo -u "$CURRENT_USER" COMPOSER_ALLOW_SUPERUSER=1 bash -c "/usr/local/bin/composer install --no-dev"
@@ -683,9 +684,9 @@ run_composer_install () {
     fi
   else
     if [[ $CURRENT_USER == "root" ]]; then
-      sudo -u "$CURRENT_USER" COMPOSER_ALLOW_SUPERUSER=1 bash -c "/usr/local/bin/composer install --no-dev --ignore-platform-req=ext-oci8"
+      sudo -u "$CURRENT_USER" COMPOSER_ALLOW_SUPERUSER=1 bash -c "/usr/local/bin/composer install --no-dev --ignore-platform-reqs"
     else
-      sudo -u "$CURRENT_USER" bash -c "/usr/local/bin/composer install --no-dev --ignore-platform-req=ext-oci8"
+      sudo -u "$CURRENT_USER" bash -c "/usr/local/bin/composer install --no-dev --ignore-platform-reqs"
     fi
   fi
 }
