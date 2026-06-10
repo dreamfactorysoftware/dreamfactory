@@ -36,6 +36,19 @@ ANSWERS_FILE="$STATE_DIR/answers.env"
 LOCK_FILE="$STATE_DIR/install.lock"
 MIN_ROOT_FREE_GB="${MIN_ROOT_FREE_GB:-8}"
 
+# Generate a strong random admin password for non-interactive installs.
+# Guarantees upper/lower/digit/special so it satisfies DreamFactory's policy.
+generate_admin_password() {
+  local base=""
+  if command -v openssl >/dev/null 2>&1; then
+    base="$(openssl rand -base64 24 2>/dev/null | tr -dc 'A-Za-z0-9' | cut -c1-20)"
+  fi
+  if [[ -z "$base" ]]; then
+    base="$(head -c 32 /dev/urandom | od -An -tx1 | tr -d ' \n' | cut -c1-20)"
+  fi
+  printf '%sAa9!' "$base"
+}
+
 init_state_files() {
   mkdir -p "$STATE_DIR"
   touch "$STATE_FILE" "$ANSWERS_FILE"
@@ -1135,15 +1148,29 @@ if ! is_phase_done "PHASE_DF_BOOTSTRAP"; then
     else
       DF_ADMIN_FIRST_NAME="${DF_ADMIN_FIRST_NAME:-DreamFactory}"
       DF_ADMIN_LAST_NAME="${DF_ADMIN_LAST_NAME:-Admin}"
-      DF_ADMIN_EMAIL="${DF_ADMIN_EMAIL:-admin@dreamfactory.com}"
-      DF_ADMIN_PASSWORD="${DF_ADMIN_PASSWORD:-DreamFactory123!}"
       DF_ADMIN_PHONE="${DF_ADMIN_PHONE:-555-0100}"
+      if [[ -z "${DF_ADMIN_EMAIL:-}" ]]; then
+        echo_with_color red "Non-interactive install requires an admin email. Set DF_ADMIN_EMAIL=you@example.com (and optionally DF_ADMIN_PASSWORD) and rerun. Exiting..." >&5
+        exit 1
+      fi
+      DF_ADMIN_PASSWORD_GENERATED=FALSE
+      if [[ -z "${DF_ADMIN_PASSWORD:-}" ]]; then
+        DF_ADMIN_PASSWORD="$(generate_admin_password)"
+        DF_ADMIN_PASSWORD_GENERATED=TRUE
+      fi
       sudo -u "$CURRENT_USER" bash -c "php artisan df:setup --no-interaction \
         --admin_first_name='${DF_ADMIN_FIRST_NAME}' \
         --admin_last_name='${DF_ADMIN_LAST_NAME}' \
         --admin_email='${DF_ADMIN_EMAIL}' \
         --admin_password='${DF_ADMIN_PASSWORD}' \
         --admin_phone='${DF_ADMIN_PHONE}'"
+      if [[ $DF_ADMIN_PASSWORD_GENERATED == TRUE ]]; then
+        DF_CRED_FILE="/opt/dreamfactory/.admin_credentials"
+        printf 'admin_email=%s\nadmin_password=%s\n' "$DF_ADMIN_EMAIL" "$DF_ADMIN_PASSWORD" > "$DF_CRED_FILE"
+        chown "$CURRENT_USER":"$CURRENT_USER" "$DF_CRED_FILE" 2>/dev/null || true
+        chmod 600 "$DF_CRED_FILE"
+        echo_with_color green "A random admin password was generated and saved to $DF_CRED_FILE (chmod 600). Retrieve it, then change it after first login." >&5
+      fi
     fi
   fi
   mark_phase_done "PHASE_DF_BOOTSTRAP"
