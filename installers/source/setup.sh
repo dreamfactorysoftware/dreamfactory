@@ -1180,10 +1180,23 @@ fi
 
 if ! is_phase_done "PHASE_FINAL_VERIFY"; then
   if [[ $LICENSE_INSTALLED == TRUE || $DF_CLEAN_INSTALLATION == FALSE ]]; then
-    php artisan migrate --seed
+    php artisan migrate --seed --force
     sudo -u "$CURRENT_USER" bash -c "php artisan config:clear -q"
 
     if [[ $LICENSE_INSTALLED == TRUE ]]; then
+      if [[ -n "${DF_LICENSE_KEY:-}" || ! -t 0 ]]; then
+        # Non-interactive install: take the license key from the DF_LICENSE_KEY env var (or skip).
+        if [[ -n "${DF_LICENSE_KEY:-}" ]]; then
+          if grep -q '^DF_LICENSE_KEY=' .env 2>/dev/null; then
+            sed -i "s|^DF_LICENSE_KEY=.*|DF_LICENSE_KEY=${DF_LICENSE_KEY}|" .env
+          else
+            echo -e "\nDF_LICENSE_KEY=${DF_LICENSE_KEY}" >>.env
+          fi
+          echo_with_color green "   License key configured from DF_LICENSE_KEY env." >&5
+        else
+          echo_with_color red "   Non-interactive install with no DF_LICENSE_KEY set; skipping license key." >&5
+        fi
+      else
       grep DF_LICENSE_KEY .env >/dev/null 2>&1 # Check for existing key.
       if (($? == 0)); then
         echo_with_color red "\nThe license key is already installed. Do you want to install a new key? [Yy/Nn]"
@@ -1239,6 +1252,7 @@ if ! is_phase_done "PHASE_FINAL_VERIFY"; then
         fi
         ###Add license key to .env file
         echo -e "\nDF_LICENSE_KEY=${LICENSE_KEY}" >>.env
+      fi
       fi
     fi
   fi
