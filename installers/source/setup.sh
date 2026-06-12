@@ -23,7 +23,7 @@ TERM_COLS="$(get_term_cols)"
 ERROR_STRING="Installation error. Exiting"
 CURRENT_PATH=$(pwd)
 
-DEFAULT_PHP_VERSION="php8.3"
+DEFAULT_PHP_VERSION="php8.5"
 
 CURRENT_KERNEL=$(grep -w ID /etc/os-release | cut -d "=" -f 2 | tr -d '"')
 CURRENT_OS=$(grep -e VERSION_ID /etc/os-release | cut -d "=" -f 2 | cut -d "." -f 1 | tr -d '"')
@@ -35,6 +35,22 @@ STATE_FILE="$STATE_DIR/state.env"
 ANSWERS_FILE="$STATE_DIR/answers.env"
 LOCK_FILE="$STATE_DIR/install.lock"
 MIN_ROOT_FREE_GB="${MIN_ROOT_FREE_GB:-8}"
+INSTALL_MODE="${INSTALL_MODE:-}"
+
+PHASE_ORDER=(
+  PHASE_SYSTEM_DEPS
+  PHASE_PHP
+  PHASE_WEBSTACK
+  PHASE_PHP_EXTENSIONS
+  PHASE_COMPOSER
+  PHASE_DATABASE
+  PHASE_DF_SOURCE
+  PHASE_DF_COMPOSER_FILES
+  PHASE_DF_CODE
+  PHASE_DF_CONFIG
+  PHASE_DF_BOOTSTRAP
+  PHASE_FINAL_VERIFY
+)
 
 # Generate a strong random admin password for non-interactive installs.
 # Guarantees upper/lower/digit/special so it satisfies DreamFactory's policy.
@@ -110,11 +126,70 @@ mark_phase_done() {
   save_state_value "$phase_name" "done"
 }
 
+mark_phase_failed() {
+  local phase_name="$1"
+  save_state_value "$phase_name" "failed"
+}
+
+mark_phase_started() {
+  local phase_name="$1"
+  save_state_value "$phase_name" "started"
+}
+
+phase_status() {
+  local phase_name="$1"
+  local phase_value
+  phase_value=$(eval "echo \${$phase_name}")
+  echo "${phase_value:-pending}"
+}
+
 is_phase_done() {
   local phase_name="$1"
   local phase_value
   phase_value=$(eval "echo \${$phase_name}")
   [[ "$phase_value" == "done" ]]
+}
+
+clear_phase_from() {
+  local phase_name="$1"
+  local clear_now=FALSE
+  local phase
+
+  for phase in "${PHASE_ORDER[@]}"; do
+    if [[ "$phase" == "$phase_name" ]]; then
+      clear_now=TRUE
+    fi
+    if [[ "$clear_now" == TRUE ]]; then
+      save_state_value "$phase" ""
+      unset "$phase"
+    fi
+  done
+}
+
+print_phase_table() {
+  local index=1
+  local phase
+
+  for phase in "${PHASE_ORDER[@]}"; do
+    printf "  [%2d] %-24s %s\n" "$index" "$phase" "$(phase_status "$phase")"
+    index=$((index + 1))
+  done
+}
+
+select_phase_by_number() {
+  local selection="$1"
+  local index=1
+  local phase
+
+  for phase in "${PHASE_ORDER[@]}"; do
+    if [[ "$selection" == "$index" || "$selection" == "$phase" ]]; then
+      echo "$phase"
+      return 0
+    fi
+    index=$((index + 1))
+  done
+
+  return 1
 }
 
 clear_loaded_state() {
@@ -127,18 +202,45 @@ clear_loaded_state() {
 
 resume_prompt() {
   if grep -qE '^PHASE_' "$STATE_FILE"; then
-    echo_with_color magenta "Previous installer state detected. Choose mode:"
-    echo -e "[1] Resume from last incomplete phase"
-    echo -e "[2] Repair existing install (continue but keep current state)"
-    echo -e "[3] Start over (clear installer state files only)"
+    draw_box "Previous Installer State" \
+      "A prior DreamFactory installer run left state in $STATE_FILE." \
+      "Choose how this run should continue."
+    print_phase_table
+    echo -e ""
+    echo -e "  [1] Resume from first incomplete or failed phase"
+    echo -e "  [2] Repair existing install using current state"
+    echo -e "  [3] Pick a phase to resume from"
+    echo -e "  [4] Mark a phase successful"
+    echo -e "  [5] Start over (clear installer state files only)"
     read -r RESUME_MODE
 
     case "$RESUME_MODE" in
-      3)
+      5)
         : > "$STATE_FILE"
         : > "$ANSWERS_FILE"
         clear_loaded_state
         echo_with_color green "Installer state cleared. Starting fresh run."
+        ;;
+      4)
+        echo_with_color magenta "Enter phase number or name to mark done:"
+        read -r PHASE_SELECTION
+        SELECTED_PHASE="$(select_phase_by_number "$PHASE_SELECTION")" || {
+          echo_with_color red "Unknown phase. Exiting."
+          exit 1
+        }
+        mark_phase_done "$SELECTED_PHASE"
+        echo_with_color green "$SELECTED_PHASE marked done."
+        ;;
+      3)
+        echo_with_color magenta "Enter phase number or name to resume from:"
+        read -r PHASE_SELECTION
+        SELECTED_PHASE="$(select_phase_by_number "$PHASE_SELECTION")" || {
+          echo_with_color red "Unknown phase. Exiting."
+          exit 1
+        }
+        clear_phase_from "$SELECTED_PHASE"
+        save_state_value "INSTALL_MODE" "resume"
+        echo_with_color green "State cleared from $SELECTED_PHASE onward."
         ;;
       2)
         save_state_value "INSTALL_MODE" "repair"
@@ -264,19 +366,148 @@ print_centered() {
   return 0
 }
 
+draw_rule() {
+  local width="${1:-72}"
+  printf '+'
+  printf '%*s' "$width" '' | tr ' ' '-'
+  printf '+\n'
+}
+
+draw_box() {
+  local title="$1"
+  shift
+  local width=72
+  local line
+
+  draw_rule "$width"
+  printf '| %-70s |\n' "$title"
+  draw_rule "$width"
+  for line in "$@"; do
+    printf '| %-70s |\n' "$line"
+  done
+  draw_rule "$width"
+}
+
+draw_section() {
+  echo -e ""
+  echo_with_color blue "$1"
+  printf '%s\n' "----------------------------------------------------------------------"
+}
+
+read_with_default() {
+  local prompt="$1"
+  local default_value="$2"
+  local answer
+
+  if [[ -n "$default_value" ]]; then
+    printf "%s [%s]: " "$prompt" "$default_value" >&5
+  else
+    printf "%s: " "$prompt" >&5
+  fi
+  read -r answer
+  echo "${answer:-$default_value}"
+}
+
+path_has_composer_files() {
+  local candidate_path="$1"
+  [[ -f "$candidate_path/composer.json" && -f "$candidate_path/composer.lock" && -f "$candidate_path/composer.json-dist" ]]
+}
+
+default_license_path() {
+  if [[ -n "${DF_LICENSE_PATH:-}" ]]; then
+    echo "$DF_LICENSE_PATH"
+  else
+    echo "/home/${CURRENT_USER}/df-license-files"
+  fi
+}
+
+install_composer_files_if_available() {
+  local default_path="${1:-$(default_license_path)}"
+  local answer="${LICENSE_FILE_ANSWER:-}"
+  local selected_path="${LICENSE_PATH:-}"
+
+  if [[ "$LICENSE_PATH_AUTO" == TRUE && -n "$selected_path" ]]; then
+    answer=Y
+  elif [[ -z "$answer" ]]; then
+    if [[ $DF_CLEAN_INSTALLATION == FALSE && -f /opt/dreamfactory/composer.json && -f /opt/dreamfactory/composer.lock && -f /opt/dreamfactory/composer.json-dist ]]; then
+      echo_with_color magenta "Existing composer files detected. Replace them with commercial composer files? [Yy/Nn] " >&5
+    else
+      echo_with_color magenta "Use commercial DreamFactory composer files? [Yy/Nn] " >&5
+    fi
+    read -r answer
+    answer="${answer:-N}"
+  fi
+
+  save_answer_value "LICENSE_FILE_ANSWER" "$answer"
+
+  if [[ ! $answer =~ ^[Yy]$ ]]; then
+    echo_with_color red "Installing DreamFactory OSS version.\n" >&5
+    return 0
+  fi
+
+  if [[ -z "$selected_path" ]]; then
+    selected_path="$(read_with_default "Enter absolute path to composer/license files" "$default_path")"
+  fi
+  selected_path="${selected_path%/}"
+  save_answer_value "LICENSE_PATH" "$selected_path"
+
+  if ! path_has_composer_files "$selected_path"; then
+    echo_with_color red "Composer files not found in ${selected_path}. Installing DreamFactory OSS version.\n" >&5
+    return 0
+  fi
+
+  cp "$selected_path"/composer.{json,lock,json-dist} /opt/dreamfactory/
+  LICENSE_INSTALLED=TRUE
+  save_state_value "LICENSE_INSTALLED" "TRUE"
+  echo_with_color green "Commercial composer files installed from ${selected_path}.\n" >&5
+}
+
+fix_dreamfactory_runtime_permissions() {
+  if [[ ! -d /opt/dreamfactory ]]; then
+    return 0
+  fi
+
+  if [[ ! $APACHE == TRUE ]]; then
+    if ! id dreamfactory >/dev/null 2>&1; then
+      useradd dreamfactory
+    fi
+    chown -R dreamfactory:dreamfactory /opt/dreamfactory
+    chmod -R u=rwX,g=rX,o= /opt/dreamfactory
+    find /opt/dreamfactory -type d -exec chmod g+s {} \;
+    chmod g+w /opt/dreamfactory/.env 2>/dev/null || true
+    chmod -R g+rwX /opt/dreamfactory/storage /opt/dreamfactory/bootstrap/cache 2>/dev/null || true
+  elif [[ $CURRENT_KERNEL == "debian" || $CURRENT_KERNEL == "ubuntu" ]]; then
+    chown -R "www-data:$CURRENT_USER" /opt/dreamfactory/
+    chmod -R 2775 /opt/dreamfactory/
+  else
+    chown -R "apache:$CURRENT_USER" /opt/dreamfactory/
+    chmod -R 2775 /opt/dreamfactory/
+  fi
+}
+
 ## Used for each of the individual components to be installed
 run_process () {
   local process_name="$1"
   shift
 
-  while true; do echo -n . >&5; sleep 1; done &
+  while true; do
+    { echo -n . >&5; } 2>/dev/null || break
+    sleep 1
+  done &
   BGPID=$!
   trap 'kill "$BGPID" 2>/dev/null || true; exit' INT
   echo -n "$process_name" >&5
+  if [[ -n "${ACTIVE_PHASE:-}" ]]; then
+    mark_phase_started "$ACTIVE_PHASE"
+  fi
   "$@"
   PROCESS_STATUS=$?
   kill "$BGPID" 2>/dev/null || true
+  wait "$BGPID" 2>/dev/null || true
   if ((PROCESS_STATUS >= 1)); then
+    if [[ -n "${ACTIVE_PHASE:-}" ]]; then
+      mark_phase_failed "$ACTIVE_PHASE"
+    fi
     echo failed >&5
     echo_with_color red "\n${process_name} failed. Check /tmp/dreamfactory_installer.log when running in debug mode." >&5
     exit "$PROCESS_STATUS"
@@ -344,39 +575,132 @@ case $CURRENT_KERNEL in
 
 esac
 
-print_centered "-" "-"
-print_centered "-" "-"
-print_centered "Welcome to DreamFactory!"
-print_centered "-" "-"
-print_centered "-" "-"
-print_centered "Thank you for choosing DreamFactory. By default this installer will install the latest version of DreamFactory with a preconfigured Nginx web server. Additional options are available in the menu below:"
-print_centered "-" "-"
-echo -e ""
-echo -e "[0] Default Installation (latest version of DreamFactory with Nginx Server)"
-echo -e "[1] Install driver and PHP extensions for Oracle DB"
-echo -e "[2] Install driver and PHP extensions for IBM DB2"
-echo -e "[3] Install driver and PHP extensions for Cassandra DB"
-echo -e "[4] Install Apache2 web server for DreamFactory (Instead of Nginx)"
-echo -e "[5] Install MariaDB as the default system database for DreamFactory"
-echo -e "[6] Install a specfic version of DreamFactory"
-echo -e "[7] Install driver for Trino"
-echo -e "[8] Run Installation in debug mode (logs will output to /tmp/dreamfactory_installer.log)"
-echo -e "[9] Upgrade DreamFactory"
-echo -e "[10] Enable MCP Daemon (Model Context Protocol server)"
-echo -e "[11] Install advanced analytics connectors (Snowflake + ODBC packs)\n"
+# Retrieve executing user's username before showing install defaults.
+CURRENT_USER=$(logname 2>/dev/null || true)
 
-print_centered "-" "-"
-echo_with_color magenta "Input '0' and press Enter to run the default installation. To install additional options, type the corresponding number (e.g. '1,5' for Oracle and a MySql system database) from the menu above and press Enter"
-read -r INSTALLATION_OPTIONS
-INSTALLATION_OPTIONS="${INSTALLATION_OPTIONS:-0}"
+if [[ -n $SUDO_USER ]]; then
+  CURRENT_USER=${SUDO_USER}
+fi
+
+if [[ -z $SUDO_USER ]] && [[ -z $CURRENT_USER ]]; then
+  echo_with_color red "Enter username for installation DreamFactory:"
+  read -r CURRENT_USER
+  if [[ $CURRENT_KERNEL == "debian" ]]; then
+    su "${CURRENT_USER}" -c "echo 'Checking user availability'"
+    if (($? >= 1)); then
+      echo 'Please provide another user'
+      exit 1
+    fi
+  fi
+fi
+
+if [[ $CURRENT_USER == "root" ]]; then
+  echo -e "WARNING: Although this script must be run with sudo, it is not recommended to install DreamFactory as root (specifically 'composer' commands) Would you like to:\n [1] Continue as root\n [2] Provide username for installing DreamFactory"
+  read -r INSTALL_AS_ROOT
+  if [[ $INSTALL_AS_ROOT == 1 ]]; then
+    echo -e "Continuing installation as root"
+  else
+    echo -e "Enter username for installing DreamFactory"
+    read -r CURRENT_USER
+    echo -e "User: ${CURRENT_USER} selected. Continuing"
+  fi
+fi
+
+DEFAULT_LICENSE_PATH="$(default_license_path)"
+AUTO_LICENSE_FOUND=FALSE
+if path_has_composer_files "$DEFAULT_LICENSE_PATH"; then
+  AUTO_LICENSE_FOUND=TRUE
+fi
+
+draw_box "DreamFactory Linux Installer" \
+  "Detected: ${CURRENT_KERNEL^} ${CURRENT_OS} | Target PHP: ${DEFAULT_PHP_VERSION#php} | User: ${CURRENT_USER}" \
+  "Default commercial composer path: ${DEFAULT_LICENSE_PATH}" \
+  "Commercial composer files found: ${AUTO_LICENSE_FOUND}"
+
+draw_section "Install Mode"
+echo -e "  [0] Recommended install"
+echo -e "      Nginx + MariaDB + base PHP extensions/connectors"
+echo -e "      Uses ${DEFAULT_LICENSE_PATH} automatically when composer files are present"
+echo -e ""
+echo -e "  [1] Custom install"
+echo -e "      Choose web server, database, connector drivers, debug logging, MCP"
+echo -e ""
+echo -e "  [9] Upgrade existing DreamFactory"
+echo -e ""
+echo_with_color magenta "Select install mode. Press Enter for recommended install."
+read -r INSTALLER_TUI_MODE
+INSTALLER_TUI_MODE="${INSTALLER_TUI_MODE:-0}"
+
+case "$INSTALLER_TUI_MODE" in
+  *,*)
+    INSTALLATION_OPTIONS="$INSTALLER_TUI_MODE"
+    INSTALLER_TUI_MODE="custom"
+    ;;
+  1 | custom | Custom | CUSTOM)
+    draw_section "Custom Options"
+    echo -e "  [0] Base DreamFactory + Nginx"
+    echo -e "  [1] Oracle OS driver/PHP extension"
+    echo -e "  [2] IBM DB2 OS driver/PHP extension"
+    echo -e "  [3] Cassandra PHP extension"
+    echo -e "  [4] Apache2 instead of Nginx"
+    echo -e "  [5] MariaDB system database"
+    echo -e "  [6] Specific DreamFactory version"
+    echo -e "  [7] Trino ODBC driver"
+    echo -e "  [8] Debug logging to /tmp/dreamfactory_installer.log"
+    echo -e "  [10] MCP daemon"
+    echo -e "  [11] Advanced analytics connectors (Snowflake + ODBC packs)"
+    echo -e ""
+    echo_with_color magenta "Enter comma-separated options. Example: 0,5,8"
+    read -r INSTALLATION_OPTIONS
+    INSTALLATION_OPTIONS="${INSTALLATION_OPTIONS:-0}"
+    ;;
+  9 | upgrade | Upgrade | UPGRADE)
+    INSTALLATION_OPTIONS="9"
+    ;;
+  *)
+    INSTALLER_TUI_MODE="0"
+    INSTALLATION_OPTIONS="0,5"
+    RECOMMENDED_INSTALL=TRUE
+    AUTO_LICENSE=TRUE
+    ;;
+esac
+
 INSTALLATION_OPTIONS_NORMALIZED="${INSTALLATION_OPTIONS//[[:space:]]/}"
+save_answer_value "INSTALLER_TUI_MODE" "$INSTALLER_TUI_MODE"
 save_answer_value "INSTALLATION_OPTIONS" "$INSTALLATION_OPTIONS"
-print_centered "-" "-"
+save_answer_value "DEFAULT_LICENSE_PATH" "$DEFAULT_LICENSE_PATH"
 
 selected_option() {
   local option="$1"
   [[ ",${INSTALLATION_OPTIONS_NORMALIZED}," == *",${option},"* ]]
 }
+
+if [[ $RECOMMENDED_INSTALL == TRUE ]]; then
+  echo_with_color green "Recommended install selected: Nginx + MariaDB + base connectors."
+  if [[ $AUTO_LICENSE_FOUND == TRUE ]]; then
+    LICENSE_FILE_ANSWER=Y
+    LICENSE_PATH="$DEFAULT_LICENSE_PATH"
+    LICENSE_PATH_AUTO=TRUE
+    save_answer_value "LICENSE_PATH" "$LICENSE_PATH"
+    echo_with_color green "Commercial composer files will be used from ${LICENSE_PATH}."
+  else
+    echo_with_color magenta "No commercial composer files found at ${DEFAULT_LICENSE_PATH}; installer will use OSS composer files."
+  fi
+fi
+
+draw_section "Installation Summary"
+echo -e "  OS:                 ${CURRENT_KERNEL^} ${CURRENT_OS}"
+echo -e "  PHP target:         ${DEFAULT_PHP_VERSION#php}"
+echo -e "  Web server:         $(selected_option 4 && echo Apache || echo Nginx)"
+echo -e "  System database:    $(selected_option 5 && echo MariaDB || echo Existing/manual)"
+echo -e "  Composer files:     $([[ $LICENSE_PATH_AUTO == TRUE ]] && echo "${LICENSE_PATH}" || echo "Prompt or OSS")"
+echo -e "  Debug log:          $(selected_option 8 && echo /tmp/dreamfactory_installer.log || echo Disabled)"
+echo -e "  Optional drivers:   Oracle=$(selected_option 1 && echo yes || echo no), DB2=$(selected_option 2 && echo yes || echo no), Cassandra=$(selected_option 3 && echo yes || echo no), Trino=$(selected_option 7 && echo yes || echo no)"
+echo -e "  Advanced bundle:    $(selected_option 11 && echo yes || echo no)"
+echo -e "  MCP daemon:         $(selected_option 10 && echo yes || echo no)"
+echo -e ""
+echo_with_color magenta "Press Enter to continue, or Ctrl-C to cancel."
+read -r _
 
 if selected_option 1; then
   ORACLE=TRUE
@@ -437,39 +761,6 @@ else
   exec >/tmp/dreamfactory_installer.log 2>&1
 fi
 
-# Retrieve executing user's username
-CURRENT_USER=$(logname)
-
-if [[ -z $SUDO_USER ]] && [[ -z $CURRENT_USER ]]; then
-  echo_with_color red "Enter username for installation DreamFactory:" >&5
-  read -r CURRENT_USER
-  if [[ $CURRENT_KERNEL == "debian" ]]; then
-    su "${CURRENT_USER}" -c "echo 'Checking user availability'" >&5
-    if (($? >= 1)); then
-      echo 'Please provide another user' >&5
-      exit 1
-    fi
-  fi
-fi
-
-if [[ -n $SUDO_USER ]]; then
-  CURRENT_USER=${SUDO_USER}
-fi
-
-# Sudo should be used to run the script, but CURRENT_USER themselves should not be root (i.e should be another user running with sudo),
-# otherwise composer will get annoyed. If the user wishes to continue as root, then an environment variable will be set when 'composer install' is run later on in the script.
-if [[ $CURRENT_USER == "root" ]]; then
-  echo -e "WARNING: Although this script must be run with sudo, it is not recommended to install DreamFactory as root (specifically 'composer' commands) Would you like to:\n [1] Continue as root\n [2] Provide username for installing DreamFactory" >&5
-  read -r INSTALL_AS_ROOT
-  if [[ $INSTALL_AS_ROOT == 1 ]]; then
-    echo -e "Continuing installation as root" >&5
-  else
-    echo -e "Enter username for installing DreamFactory" >&5
-    read -r CURRENT_USER
-    echo -e "User: ${CURRENT_USER} selected. Continuing" >&5
-  fi
-fi
-
 echo -e "${CURRENT_KERNEL^} ${CURRENT_OS} detected. Installing DreamFactory...\n" >&5
 #Go into the individual scripts here
 case $CURRENT_KERNEL in
@@ -504,9 +795,11 @@ fi
 ### STEP 1. Install system dependencies
 echo_with_color blue "Step 1: Installing system dependencies...\n" >&5
 if ! is_phase_done "PHASE_SYSTEM_DEPS"; then
+  ACTIVE_PHASE="PHASE_SYSTEM_DEPS"
   run_process "   Updating System" system_update
   run_process "   Installing System Dependencies" install_system_dependencies
   mark_phase_done "PHASE_SYSTEM_DEPS"
+  unset ACTIVE_PHASE
 else
   echo_with_color green "   Phase already complete. Skipping system dependencies.\n" >&5
 fi
@@ -515,8 +808,10 @@ echo_with_color green "\nThe system dependencies have been successfully installe
 ### Step 2. Install PHP
 echo_with_color blue "Step 2: Installing PHP...\n" >&5
 if ! is_phase_done "PHASE_PHP"; then
+  ACTIVE_PHASE="PHASE_PHP"
   run_process "   Installing PHP" install_php
   mark_phase_done "PHASE_PHP"
+  unset ACTIVE_PHASE
 else
   echo_with_color green "   Phase already complete. Skipping PHP installation.\n" >&5
 fi
@@ -524,6 +819,7 @@ echo_with_color green "\nPHP installed.\n" >&5
 
 ### Step 3. Install web stack
 if ! is_phase_done "PHASE_WEBSTACK"; then
+  ACTIVE_PHASE="PHASE_WEBSTACK"
   if [[ $APACHE == TRUE ]]; then ### Only with key --apache
     echo_with_color blue "Step 3: Installing Apache...\n" >&5
     # Check Apache installation status
@@ -565,12 +861,14 @@ if ! is_phase_done "PHASE_WEBSTACK"; then
     fi
   fi
   mark_phase_done "PHASE_WEBSTACK"
+  unset ACTIVE_PHASE
 else
   echo_with_color green "   Phase already complete. Skipping web stack installation.\n" >&5
 fi
 
 ### Step 4. Configure PHP development tools
 if ! is_phase_done "PHASE_PHP_EXTENSIONS"; then
+  ACTIVE_PHASE="PHASE_PHP_EXTENSIONS"
   echo_with_color blue "Step 4: Configuring PHP Extensions...\n" >&5
 
   ## Install PHP PEAR
@@ -866,6 +1164,7 @@ fi
 ### Configuring PHP OPCache and JIT compilation
 run_process "   Configuring PHP OPCache and JIT compilation" enable_opcache
 mark_phase_done "PHASE_PHP_EXTENSIONS"
+unset ACTIVE_PHASE
 else
   echo_with_color green "   Phase already complete. Skipping PHP extensions configuration.\n" >&5
 fi
@@ -889,10 +1188,19 @@ echo_with_color green "PHP Extensions configured.\n" >&5
 
 ### Step 5. Installing Composer
 echo_with_color blue "Step 5: Installing Composer...\n" >&5
-run_process "   Installing Composer" install_composer
+if ! is_phase_done "PHASE_COMPOSER"; then
+  ACTIVE_PHASE="PHASE_COMPOSER"
+  run_process "   Installing Composer" install_composer
+  mark_phase_done "PHASE_COMPOSER"
+  unset ACTIVE_PHASE
+else
+  echo_with_color green "   Phase already complete. Skipping Composer installation.\n" >&5
+fi
 echo_with_color green "Composer installed.\n" >&5
 
 ### Step 6. Installing MySQL
+if ! is_phase_done "PHASE_DATABASE"; then
+ACTIVE_PHASE="PHASE_DATABASE"
 if [[ $MYSQL == TRUE ]]; then ### Only with key --with-mysql
   echo_with_color blue "Step 6: Installing System Database for DreamFactory...\n" >&5
   run_process "  Checking for existing MySqlDatabase" check_mysql_exists
@@ -905,13 +1213,17 @@ if [[ $MYSQL == TRUE ]]; then ### Only with key --with-mysql
       run_process "   Adding mariadb repo" add_mariadb_repo
       run_process "   Updating System" system_update
     fi
-    echo_with_color magenta "Please choose a strong MySQL root user password: " >&5
-    read -r -s DB_PASS
-    if [[ -z $DB_PASS ]]; then
-      until [[ -n $DB_PASS ]]; do
-        echo_with_color red "The password can't be empty!" >&5
-        read -r -s DB_PASS
-      done
+    if [[ -t 0 ]]; then
+      echo_with_color magenta "Please choose a strong MySQL root user password: " >&5
+      read -r -s DB_PASS
+      if [[ -z $DB_PASS ]]; then
+        until [[ -n $DB_PASS ]]; do
+          echo_with_color red "The password can't be empty!" >&5
+          read -r -s DB_PASS
+        done
+      fi
+    else
+      DB_PASS="${DB_PASS:-${MYSQL_ROOT_PASSWORD:-$(generate_admin_password)}}"
     fi
     echo_with_color green "\nPassword accepted.\n" >&5
     if [[ $CURRENT_KERNEL == "ubuntu" || $CURRENT_KERNEL == "debian" ]]; then
@@ -933,7 +1245,11 @@ if [[ $MYSQL == TRUE ]]; then ### Only with key --with-mysql
   # the DreamFactory system database.
   if [[ $DB_FOUND == TRUE ]]; then
     echo_with_color magenta "Is DreamFactory MySQL system database already configured? [Yy/Nn] " >&5
-    read -r DB_ANSWER
+    if [[ -t 0 ]]; then
+      read -r DB_ANSWER
+    else
+      DB_ANSWER="${DF_SYSTEM_DB_CONFIGURED:-N}"
+    fi
     if [[ -z $DB_ANSWER ]]; then
       DB_ANSWER=Y
     fi
@@ -943,7 +1259,11 @@ if [[ $MYSQL == TRUE ]]; then ### Only with key --with-mysql
     # prompt the user for the root password.
     else
       echo_with_color magenta "\n Enter MySQL root password:  " >&5
-      read -r DB_PASS
+      if [[ -t 0 ]]; then
+        read -r DB_PASS
+      else
+        DB_PASS="${DB_PASS:-${MYSQL_ROOT_PASSWORD:-}}"
+      fi
 
       # Test DB access
       mysql -h localhost -u root "-p$DB_PASS" -e"quit"
@@ -953,7 +1273,12 @@ if [[ $MYSQL == TRUE ]]; then ### Only with key --with-mysql
         until [[ $ACCESS == TRUE ]]; do
           echo_with_color red "\nPassword incorrect!\n " >&5
           echo_with_color magenta "Enter root user password:\n " >&5
-          read -r -s DB_PASS
+          if [[ -t 0 ]]; then
+            read -r -s DB_PASS
+          else
+            echo_with_color red "\nNon-interactive MySQL configuration requires DB_PASS or MYSQL_ROOT_PASSWORD for an existing database. Exit.\n" >&5
+            exit 1
+          fi
           mysql -h localhost -u root "-p$DB_PASS" -e"quit"
           if (($? == 0)); then
             ACCESS=TRUE
@@ -978,12 +1303,16 @@ if [[ $MYSQL == TRUE ]]; then ### Only with key --with-mysql
       exit 1
     fi
     echo_with_color magenta "\n What would you like to name your system database? (e.g. dreamfactory) " >&5
-    read -r DF_SYSTEM_DB
-    if [[ -z $DF_SYSTEM_DB ]]; then
-      until [[ -n $DF_SYSTEM_DB ]]; do
-        echo_with_color red "\nThe name can't be empty!" >&5
-        read -r DF_SYSTEM_DB
-      done
+    if [[ -t 0 ]]; then
+      read -r DF_SYSTEM_DB
+      if [[ -z $DF_SYSTEM_DB ]]; then
+        until [[ -n $DF_SYSTEM_DB ]]; do
+          echo_with_color red "\nThe name can't be empty!" >&5
+          read -r DF_SYSTEM_DB
+        done
+      fi
+    else
+      DF_SYSTEM_DB="${DF_SYSTEM_DB:-dreamfactory}"
     fi
 
     echo "CREATE DATABASE ${DF_SYSTEM_DB};" | mysql -u root "-p${DB_PASS}" 2>&5
@@ -992,20 +1321,28 @@ if [[ $MYSQL == TRUE ]]; then ### Only with key --with-mysql
       exit 1
     fi
     echo_with_color magenta "\n Please create a MySQL DreamFactory system database user name (e.g. dfadmin): " >&5
-    read -r DF_SYSTEM_DB_USER
-    if [[ -z $DF_SYSTEM_DB_USER ]]; then
-      until [[ -n $DF_SYSTEM_DB_USER ]]; do
-        echo_with_color red "The name can't be empty!" >&5
-        read -r DF_SYSTEM_DB_USER
-      done
+    if [[ -t 0 ]]; then
+      read -r DF_SYSTEM_DB_USER
+      if [[ -z $DF_SYSTEM_DB_USER ]]; then
+        until [[ -n $DF_SYSTEM_DB_USER ]]; do
+          echo_with_color red "The name can't be empty!" >&5
+          read -r DF_SYSTEM_DB_USER
+        done
+      fi
+    else
+      DF_SYSTEM_DB_USER="${DF_SYSTEM_DB_USER:-dfadmin}"
     fi
     echo_with_color magenta "\n Please create a secure MySQL DreamFactory system database user password: " >&5
-    read -r -s DF_SYSTEM_DB_PASSWORD
-    if [[ -z $DF_SYSTEM_DB_PASSWORD ]]; then
-      until [[ -n $DF_SYSTEM_DB_PASSWORD ]]; do
-        echo_with_color red "The password can't be empty!" >&5
-        read -r -s DF_SYSTEM_DB_PASSWORD
-      done
+    if [[ -t 0 ]]; then
+      read -r -s DF_SYSTEM_DB_PASSWORD
+      if [[ -z $DF_SYSTEM_DB_PASSWORD ]]; then
+        until [[ -n $DF_SYSTEM_DB_PASSWORD ]]; do
+          echo_with_color red "The password can't be empty!" >&5
+          read -r -s DF_SYSTEM_DB_PASSWORD
+        done
+      fi
+    else
+      DF_SYSTEM_DB_PASSWORD="${DF_SYSTEM_DB_PASSWORD:-$(generate_admin_password)}"
     fi
     # Generate password for user in DB
     echo "GRANT ALL PRIVILEGES ON ${DF_SYSTEM_DB}.* to \"${DF_SYSTEM_DB_USER}\"@\"localhost\" IDENTIFIED BY \"${DF_SYSTEM_DB_PASSWORD}\";" | mysql -u root "-p${DB_PASS}" 2>&5
@@ -1016,6 +1353,13 @@ if [[ $MYSQL == TRUE ]]; then ### Only with key --with-mysql
     echo "FLUSH PRIVILEGES;" | mysql -u root "-p${DB_PASS}"
 
     echo -e "\nDatabase configuration finished.\n" >&5
+    if [[ ! -t 0 ]]; then
+      DB_CRED_FILE="/var/lib/dreamfactory-installer/db_credentials.env"
+      printf 'mysql_root_password=%s\ndb_name=%s\ndb_user=%s\ndb_password=%s\n' \
+        "$DB_PASS" "$DF_SYSTEM_DB" "$DF_SYSTEM_DB_USER" "$DF_SYSTEM_DB_PASSWORD" > "$DB_CRED_FILE"
+      chmod 600 "$DB_CRED_FILE"
+      echo_with_color green "Database credentials saved to $DB_CRED_FILE (chmod 600)." >&5
+    fi
   else
     echo_with_color green "Skipping...\n" >&5
   fi
@@ -1023,81 +1367,45 @@ else
   echo_with_color green "Step 6: Skipping DreamFactory system database installation.\n" >&5
   echo_with_color green "Step 7: Skipping DreamFactory system database configuration.\n" >&5
 fi
+mark_phase_done "PHASE_DATABASE"
+unset ACTIVE_PHASE
+else
+  echo_with_color green "   Phase already complete. Skipping system database installation/configuration.\n" >&5
+fi
 
 ### Step 8. Install DreamFactory
 echo_with_color blue "Step 8: Installing DreamFactory...\n " >&5
 
 ls -d /opt/dreamfactory
 if (($? >= 1)); then
-  run_process "   Cloning DreamFactory repository" clone_dreamfactory_repository
+  if ! is_phase_done "PHASE_DF_SOURCE"; then
+    ACTIVE_PHASE="PHASE_DF_SOURCE"
+    run_process "   Cloning DreamFactory repository" clone_dreamfactory_repository
+    mark_phase_done "PHASE_DF_SOURCE"
+    unset ACTIVE_PHASE
+  else
+    echo_with_color green "   Phase already complete. Skipping DreamFactory source clone." >&5
+  fi
 else
   echo_with_color red "DreamFactory detected.\n" >&5
   DF_CLEAN_INSTALLATION=FALSE
+  mark_phase_done "PHASE_DF_SOURCE"
 fi
 
-if [[ $DF_CLEAN_INSTALLATION == FALSE ]]; then
-  ls /opt/dreamfactory/composer.{json,lock,json-dist}
-  if (($? == 0)); then
-    echo_with_color red "Would you like to upgrade your instance? [Yy/Nn]" >&5
-    read -r LICENSE_FILE_ANSWER
-    if [[ -z $LICENSE_FILE_ANSWER ]]; then
-      LICENSE_FILE_ANSWER=N
-    fi
-    LICENSE_FILE_EXIST=TRUE
-  fi
-fi
-
-if [[ $LICENSE_FILE_EXIST == TRUE ]]; then
-  if [[ $LICENSE_FILE_ANSWER =~ ^[Yy]$ ]]; then
-    echo_with_color magenta "\nEnter absolute path to license files, complete with trailing slash: [/]" >&5
-    read -r LICENSE_PATH
-    if [[ -z $LICENSE_PATH ]]; then
-      LICENSE_PATH="."
-    fi
-    ls $LICENSE_PATH/composer.{json,lock,json-dist}
-    if (($? >= 1)); then
-      echo_with_color red "\nLicenses not found. Skipping.\n" >&5
-    else
-      cp $LICENSE_PATH/composer.{json,lock,json-dist} /opt/dreamfactory/
-      LICENSE_INSTALLED=TRUE
-      echo_with_color green "\nLicenses file installed. \n" >&5
-      echo_with_color blue "Installing DreamFactory...\n" >&5
-    fi
-  else
-    echo_with_color red "\nSkipping...\n" >&5
-  fi
+if ! is_phase_done "PHASE_DF_COMPOSER_FILES"; then
+  install_composer_files_if_available "$DEFAULT_LICENSE_PATH"
+  mark_phase_done "PHASE_DF_COMPOSER_FILES"
 else
-  echo_with_color magenta "Do you have a commercial DreamFactory license? [Yy/Nn] " >&5
-  read -r LICENSE_FILE_ANSWER
-  if [[ -z $LICENSE_FILE_ANSWER ]]; then
-    LICENSE_FILE_ANSWER=N
-  fi
-  if [[ $LICENSE_FILE_ANSWER =~ ^[Yy]$ ]]; then
-    echo_with_color magenta "\nEnter absolute path to license files, complete with trailing slash: [/]" >&5
-    read -r LICENSE_PATH
-    if [[ -z $LICENSE_PATH ]]; then
-      LICENSE_PATH="."
-    fi
-    ls $LICENSE_PATH/composer.{json,lock,json-dist}
-    if (($? >= 1)); then
-      echo_with_color red "\nLicenses not found. Skipping.\n" >&5
-      echo_with_color red "Installing DreamFactory OSS version...\n" >&5
-    else
-      cp $LICENSE_PATH/composer.{json,lock,json-dist} /opt/dreamfactory/
-      LICENSE_INSTALLED=TRUE
-      echo_with_color green "\nLicense files installed. \n" >&5
-      echo_with_color blue "Installing DreamFactory...\n" >&5
-    fi
-  else
-    echo_with_color red "\nInstalling DreamFactory OSS version.\n" >&5
-  fi
+  echo_with_color green "   Phase already complete. Skipping commercial composer file check." >&5
 fi
 
 chown -R "$CURRENT_USER" /opt/dreamfactory && cd /opt/dreamfactory || exit 1
 
 if ! is_phase_done "PHASE_DF_CODE"; then
+  ACTIVE_PHASE="PHASE_DF_CODE"
   run_process "   Installing DreamFactory"  run_composer_install
   mark_phase_done "PHASE_DF_CODE"
+  unset ACTIVE_PHASE
 else
   echo_with_color green "   Phase already complete. Skipping composer install." >&5
 fi
@@ -1114,7 +1422,7 @@ if ! is_phase_done "PHASE_DF_CONFIG"; then
                   --db_database=${DF_SYSTEM_DB} \
                   --db_username=${DF_SYSTEM_DB_USER} \
                   --db_password=${DF_SYSTEM_DB_PASSWORD//\'/} \
-                  --db_install=Linux"
+                  --df_install=Linux"
     sed -i 's/\#DB\_CHARSET\=/DB\_CHARSET\=utf8/g' .env
     sed -i 's/\#DB\_COLLATION\=/DB\_COLLATION\=utf8\_unicode\_ci/g' .env
     echo -e "\n"
@@ -1158,7 +1466,7 @@ if ! is_phase_done "PHASE_DF_BOOTSTRAP"; then
         DF_ADMIN_PASSWORD="$(generate_admin_password)"
         DF_ADMIN_PASSWORD_GENERATED=TRUE
       fi
-      sudo -u "$CURRENT_USER" bash -c "php artisan df:setup --no-interaction \
+      sudo -u "$CURRENT_USER" bash -c "php artisan df:setup --force --no-interaction \
         --admin_first_name='${DF_ADMIN_FIRST_NAME}' \
         --admin_last_name='${DF_ADMIN_LAST_NAME}' \
         --admin_email='${DF_ADMIN_EMAIL}' \
@@ -1180,7 +1488,8 @@ fi
 
 if ! is_phase_done "PHASE_FINAL_VERIFY"; then
   if [[ $LICENSE_INSTALLED == TRUE || $DF_CLEAN_INSTALLATION == FALSE ]]; then
-    php artisan migrate --seed --force
+    fix_dreamfactory_runtime_permissions
+    sudo -u "$CURRENT_USER" bash -c "php artisan migrate --seed --force"
     sudo -u "$CURRENT_USER" bash -c "php artisan config:clear -q"
 
     if [[ $LICENSE_INSTALLED == TRUE ]]; then
@@ -1278,6 +1587,7 @@ if ! is_phase_done "PHASE_FINAL_VERIFY"; then
     sed -i "s|^DF_PYTHON_PATH=$|DF_PYTHON_PATH=$PYTHON_BIN_PATH|" .env
   fi
 
+  fix_dreamfactory_runtime_permissions
   sudo -u "$CURRENT_USER" bash -c "php artisan cache:clear -q"
 
   #Add rules if SELinux enabled, redhat systems only
@@ -1315,6 +1625,7 @@ if ! is_phase_done "PHASE_FINAL_VERIFY"; then
       sed -i "s,listen.acl_users,;listen.acl_users," /etc/php-fpm.d/www.conf
     fi
     if (($? == 0)); then
+      usermod -a -G dreamfactory "$CURRENT_USER"
       if [[ $CURRENT_KERNEL == "ubuntu" || $CURRENT_KERNEL == "debian" ]]; then
         usermod -a -G dreamfactory www-data
       else
@@ -1322,8 +1633,7 @@ if ! is_phase_done "PHASE_FINAL_VERIFY"; then
         usermod -a -G dreamfactory nginx
       fi
       echo_with_color blue "    Changing ownership and permission of /opt/dreamfactory to 'dreamfactory' user"
-      chown -R dreamfactory:dreamfactory /opt/dreamfactory
-      chmod -R u=rwX,g=rX,o= /opt/dreamfactory
+      fix_dreamfactory_runtime_permissions
       echo_with_color blue "    Restarting nginx and php-fpm"
       if [[ $CURRENT_KERNEL == "ubuntu" || $CURRENT_KERNEL == "debian" ]]; then
         service nginx restart

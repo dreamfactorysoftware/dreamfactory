@@ -5,6 +5,8 @@
 # We will use these to run each step of the installer inside run_process which will provide us with a
 # progress bar while things are going.
 
+MONGODB_PECL_VERSION="${MONGODB_PECL_VERSION:-2.3.0}"
+
 system_update () {
   dnf update -y
 }
@@ -43,7 +45,7 @@ install_php () {
   if ((CURRENT_OS >= 39)); then
     dnf config-manager --set-enabled remi -y
     dnf module reset php -y
-    dnf module install php:remi-8.3 -y
+    dnf module install php:remi-8.5 -y
   fi
   #Install PHP
   dnf install -y php-common \
@@ -246,7 +248,7 @@ install_mcrypt () {
 
 install_mongodb () {
   if ! pecl list | awk 'NR > 3 {print $1}' | grep -Fxq mongodb; then
-    printf "\n\n\n\n\n\n\n\n\n\n\n" | pecl install mongodb
+    printf "\n\n\n\n\n\n\n\n\n\n\n" | pecl install "mongodb-${MONGODB_PECL_VERSION}"
     if (($? >= 1)); then
       echo_with_color red "\nMongo DB extension installation error." >&5
       kill $!
@@ -381,11 +383,13 @@ install_cassandra () {
 }
 
 install_igbinary () {
-  pecl install igbinary
-  if (($? >= 1)); then
-    echo_with_color red "\nigbinary extension installation error." >&5
-    kill $!
-    exit 1
+  if ! pecl list | awk 'NR > 3 {print $1}' | grep -Fxq igbinary; then
+    pecl install igbinary
+    if (($? >= 1)); then
+      echo_with_color red "\nigbinary extension installation error." >&5
+      kill $!
+      exit 1
+    fi
   fi
 
   echo "extension=igbinary.so" >/etc/php.d/20-igbinary.ini
