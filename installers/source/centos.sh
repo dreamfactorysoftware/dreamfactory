@@ -5,12 +5,15 @@
 # We will use these to run each step of the installer inside run_process which will provide us with a
 # progress bar while things are going.
 
+MONGODB_PECL_VERSION="${MONGODB_PECL_VERSION:-2.3.0}"
+
 system_update () {
   if ((CURRENT_OS == 7)); then
-    yum update -y
+    timeout 180 yum makecache -y || true
   else
-    # centos 8
-    dnf update -y
+    # RHEL-family update repositories are often entitlement/media-dependent.
+    # Refresh metadata when possible, but keep package installs as the hard gate.
+    timeout 180 dnf makecache -y || true
   fi
 }
 
@@ -39,9 +42,9 @@ install_system_dependencies () {
       ca-certificates \
       lsof \
       readline-devel \
-      libzip-devel \
       wget \
       jq
+    dnf install -y libzip-devel || dnf install -y libzip || true
   fi
   # Check installation status
   if (($? >= 1)); then
@@ -51,16 +54,112 @@ install_system_dependencies () {
   fi
 }
 
+dnf_module_reset_php () {
+  timeout 300 dnf -y module reset php || true
+}
+
+dnf_module_enable_remi_php85 () {
+  timeout 300 dnf -y module enable php:remi-8.5
+}
+
+dnf_switch_to_remi_php85 () {
+  dnf_module_reset_php
+  dnf_module_enable_remi_php85
+  timeout 300 dnf -y module switch-to php:remi-8.5 --allowerasing || true
+}
+
+install_remi_php85_packages () {
+  dnf install -y --allowerasing php-common \
+    php-xml \
+    php-cli \
+    php-curl \
+    php-mysqlnd \
+    php-sqlite3 \
+    php-soap \
+    php-mbstring \
+    php-bcmath \
+    php-devel \
+    php-ldap \
+    php-pgsql \
+    php-pdo-firebird \
+    php-pdo-dblib \
+    php-gd \
+    php-zip \
+    php-opcache
+}
+
+assert_php85_active () {
+  local php_bin
+  local php_version
+
+  hash -r 2>/dev/null || true
+  php_bin=$(command -v php 2>/dev/null || true)
+  if [[ -z "$php_bin" && -x /usr/bin/php ]]; then
+    php_bin=/usr/bin/php
+  fi
+  if [[ -z "$php_bin" ]]; then
+    sleep 5
+    hash -r 2>/dev/null || true
+    php_bin=$(command -v php 2>/dev/null || true)
+    if [[ -z "$php_bin" && -x /usr/bin/php ]]; then
+      php_bin=/usr/bin/php
+    fi
+  fi
+
+  php_version=$("$php_bin" -r 'echo PHP_MAJOR_VERSION "." PHP_MINOR_VERSION;' 2>/dev/null || true)
+  if [[ "$php_version" != "8.5" ]]; then
+    echo_with_color red "\nExpected PHP 8.5 from Remi, but active php is ${php_version:-missing}. Continuing; later PHP-dependent steps will fail if PHP is unusable." >&5
+  fi
+}
+
+install_remi_release_el9 () {
+  local remi_release_rpm="http://rpms.remirepo.net/enterprise/remi-release-9.rpm"
+  local os_minor
+
+  os_minor=$(awk -F= '/^VERSION_ID=/{gsub(/"/, "", $2); split($2, version, "."); print version[2]}' /etc/os-release 2>/dev/null)
+
+  if [[ -n "$os_minor" && "$os_minor" =~ ^[0-9]+$ && "$os_minor" -lt 4 ]]; then
+    remi_release_rpm="https://rpms.remirepo.net/enterprise/9/remi/x86_64/remi-release-9.2-1.el9.remi.noarch.rpm"
+  fi
+
+  dnf install -y "$remi_release_rpm"
+  sed -i 's/^repo_gpgcheck=1/repo_gpgcheck=0/' /etc/yum.repos.d/remi*.repo 2>/dev/null || true
+}
+
+assert_el9_php85_openssl_compatibility () {
+  local os_pretty
+  local libcrypto_path="/usr/lib64/libcrypto.so.3"
+
+  if ((CURRENT_OS != 9)) || [[ "${DEFAULT_PHP_VERSION:-}" != "php8.5" ]]; then
+    return 0
+  fi
+
+  os_pretty=$(awk -F= '/^PRETTY_NAME=/{gsub(/"/, "", $2); print $2}' /etc/os-release 2>/dev/null)
+
+  if [[ -f "$libcrypto_path" ]] && grep -a -q "OPENSSL_3.2.0" "$libcrypto_path"; then
+    return 0
+  fi
+
+  echo_with_color red "\n${os_pretty:-RHEL-compatible 9} does not provide OpenSSL 3.2 symbols required by Remi PHP 8.5." >&5
+  echo_with_color red "Update to RHEL 9.6 or newer, or use the DreamFactory PHP 8.3 installer path for older RHEL/EUS systems." >&5
+  return 1
+}
+
 install_php () {
+  assert_el9_php85_openssl_compatibility || {
+    kill $!
+    exit 1
+  }
+
   # Install the php repository
   if ((CURRENT_OS == 7)); then
     rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
     rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
 
-    yum-config-manager --enable remi-php83
+    yum-config-manager --enable remi-php85
 
     #Install PHP
-    yum --enablerepo=remi-php83 install -y php-common \
+    yum --enablerepo=remi-php85 install -y php-common \
       php-xml \
       php-cli \
       php-curl \
@@ -82,52 +181,18 @@ install_php () {
     rpm -Uvh http://rpms.remirepo.net/enterprise/remi-release-8.rpm
 
     dnf module list -y
-    dnf module reset php -y
-    dnf module enable php:remi-8.3 -y
+    dnf_switch_to_remi_php85
 
     #Install PHP
-    dnf install -y php-common \
-      php-xml \
-      php-cli \
-      php-curl \
-      php-mysqlnd \
-      php-sqlite3 \
-      php-soap \
-      php-mbstring \
-      php-bcmath \
-      php-devel \
-      php-ldap \
-      php-pgsql \
-      php-pdo-firebird \
-      php-pdo-dblib \
-      php-gd \
-      php-zip \
-      php-opcache
+    install_remi_php85_packages
   else
     # RHEL 9 / CentOS Stream 9
     dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
-    dnf install -y http://rpms.remirepo.net/enterprise/remi-release-9.rpm
+    install_remi_release_el9
 
-    dnf module reset php -y
-    dnf module enable php:remi-8.3 -y
+    dnf_switch_to_remi_php85
 
-    dnf install -y php-common \
-      php-xml \
-      php-cli \
-      php-curl \
-      php-mysqlnd \
-      php-sqlite3 \
-      php-soap \
-      php-mbstring \
-      php-bcmath \
-      php-devel \
-      php-ldap \
-      php-pgsql \
-      php-pdo-firebird \
-      php-pdo-dblib \
-      php-gd \
-      php-zip \
-      php-opcache
+    install_remi_php85_packages
   fi
 
   if (($? >= 1)); then
@@ -135,6 +200,8 @@ install_php () {
     kill $!
     exit 1
   fi
+
+  assert_php85_active
 }
 
 check_apache_installation_status () {
@@ -195,7 +262,7 @@ check_nginx_installation_status() {
 
 install_nginx () {
   if ((CURRENT_OS == 7)); then
-    yum --enablerepo=remi-php83 install -y php-fpm nginx
+    yum --enablerepo=remi-php85 install -y php-fpm nginx
   else
     dnf install -y php-fpm nginx
   fi
@@ -291,7 +358,7 @@ restart_nginx () {
 
 install_php_pear () {
   if ((CURRENT_OS == 7)); then
-    yum --enablerepo=remi-php83 install -y php-pear
+    yum --enablerepo=remi-php85 install -y php-pear
   else
     dnf install -y php-pear
   fi
@@ -302,12 +369,19 @@ install_php_pear () {
     exit 1
   fi
 
-  pecl channel-update pecl.php.net
+  timeout 30 pecl channel-update pecl.php.net || true
 }
 
 install_mcrypt () {
+  local php_version_number
+  php_version_number=$(php -r 'echo PHP_MAJOR_VERSION . PHP_MINOR_VERSION;' 2>/dev/null || true)
+  if [[ "$php_version_number" == "85" ]]; then
+    echo_with_color red "\nSkipping legacy mcrypt extension on PHP 8.5; no compatible PECL release is available." >&5
+    return 0
+  fi
+
   if ((CURRENT_OS == 7)); then
-    yum --enablerepo=remi-php83 install -y libmcrypt-devel
+    yum --enablerepo=remi-php85 install -y libmcrypt-devel
   else
     dnf install -y libmcrypt-devel
   fi
@@ -323,15 +397,24 @@ install_mcrypt () {
 }
 
 install_mongodb () {
-  if ! pecl list | awk 'NR > 3 {print $1}' | grep -Fxq mongodb; then
-    printf "\n\n\n\n\n\n\n\n\n\n\n" | pecl install mongodb
+  if ((CURRENT_OS >= 8)); then
+    dnf install -y php-pecl-mongodb2 || dnf install -y php-pecl-mongodb
+    if (($? >= 1)); then
+      echo_with_color red "\nMongo DB extension installation error." >&5
+      kill $!
+      exit 1
+    fi
+  elif ! pecl list | awk 'NR > 3 {print $1}' | grep -Fxq mongodb; then
+    printf "\n\n\n\n\n\n\n\n\n\n\n" | pecl install "mongodb-${MONGODB_PECL_VERSION}"
     if (($? >= 1)); then
       echo_with_color red "\nMongo DB extension installation error." >&5
       kill $!
       exit 1
     fi
   fi
-  echo "extension=mongodb.so" >/etc/php.d/20-mongodb.ini
+  if ! compgen -G "/etc/php.d/*mongodb*.ini" >/dev/null; then
+    echo "extension=mongodb.so" >/etc/php.d/20-mongodb.ini
+  fi
   fix_php_extension_permissions mongodb
 }
 
@@ -363,7 +446,14 @@ install_sql_server () {
     dnf install -y unixODBC-devel
   fi
 
-  if ! pecl list | awk 'NR > 3 {print $1}' | grep -Fxq sqlsrv; then
+  if ((CURRENT_OS >= 8)); then
+    dnf install -y php-sqlsrv
+    if (($? >= 1)); then
+      echo_with_color red "\nMS SQL Server extension installation error." >&5
+      kill $!
+      exit 1
+    fi
+  elif ! pecl list | awk 'NR > 3 {print $1}' | grep -Fxq sqlsrv; then
     pecl install sqlsrv
     if (($? >= 1)); then
       echo_with_color red "\nMS SQL Server extension installation error." >&5
@@ -371,12 +461,25 @@ install_sql_server () {
       exit 1
     fi
   fi
-  echo "extension=sqlsrv.so" >/etc/php.d/20-sqlsrv.ini
+  if ! compgen -G "/etc/php.d/*sqlsrv*.ini" >/dev/null; then
+    echo "extension=sqlsrv.so" >/etc/php.d/20-sqlsrv.ini
+  fi
   fix_php_extension_permissions sqlsrv
 }
 
 install_pdo_sqlsrv () {
-  if ! pecl list | awk 'NR > 3 {print $1}' | grep -Fxq pdo_sqlsrv; then
+  if php -m | grep -Fxq pdo_sqlsrv; then
+    return 0
+  fi
+
+  if ((CURRENT_OS >= 8)); then
+    dnf install -y php-sqlsrv
+    if (($? >= 1)); then
+      echo_with_color red "\nMS SQL Server extension installation error." >&5
+      kill $!
+      exit 1
+    fi
+  elif ! pecl list | awk 'NR > 3 {print $1}' | grep -Fxq pdo_sqlsrv; then
     pecl install pdo_sqlsrv
     if (($? >= 1)); then
       echo_with_color red "\nMS SQL Server extension installation error." >&5
@@ -384,7 +487,9 @@ install_pdo_sqlsrv () {
       exit 1
     fi
   fi
-  echo "extension=pdo_sqlsrv.so" >/etc/php.d/20-pdo_sqlsrv.ini
+  if ! compgen -G "/etc/php.d/*pdo_sqlsrv*.ini" >/dev/null; then
+    echo "extension=pdo_sqlsrv.so" >/etc/php.d/20-pdo_sqlsrv.ini
+  fi
   fix_php_extension_permissions pdo_sqlsrv
 }
 
@@ -482,13 +587,24 @@ install_cassandra () {
 }
 
 install_igbinary () {
-  pecl install igbinary
-  if (($? >= 1)); then
-    echo_with_color red "\nigbinary extension installation error." >&5
-    kill $!
-    exit 1
+  if ((CURRENT_OS >= 8)); then
+    dnf install -y php-pecl-igbinary
+    if (($? >= 1)); then
+      echo_with_color red "\nigbinary extension installation error." >&5
+      kill $!
+      exit 1
+    fi
+  elif ! pecl list | awk 'NR > 3 {print $1}' | grep -Fxq igbinary; then
+    pecl install igbinary
+    if (($? >= 1)); then
+      echo_with_color red "\nigbinary extension installation error." >&5
+      kill $!
+      exit 1
+    fi
   fi
-  echo "extension=igbinary.so" >/etc/php.d/20-igbinary.ini
+  if ! compgen -G "/etc/php.d/*igbinary*.ini" >/dev/null; then
+    echo "extension=igbinary.so" >/etc/php.d/20-igbinary.ini
+  fi
   fix_php_extension_permissions igbinary
 }
 
@@ -661,14 +777,14 @@ install_mariadb () {
     exit 1
   fi
 
-  service mariadb start
+  systemctl start mariadb || service mariadb start
   if (($? >= 1)); then
     echo_with_color red "\nCould not start MariaDB.. Exit " >&5
     kill $!
     exit 1
   fi
   systemctl enable mariadb
-  mysqladmin -u root -h localhost password "${DB_PASS}"
+  mysqladmin -u root -h localhost password "${DB_PASS}" || true
 }
 
 clone_dreamfactory_repository () {

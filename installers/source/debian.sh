@@ -5,6 +5,9 @@
 # We will use these to run each step of the installer inside run_process which will provide us with a
 # progress bar while things are going.
 
+SQLSRV_PECL_VERSION="${SQLSRV_PECL_VERSION:-5.13.1}"
+MONGODB_PECL_VERSION="${MONGODB_PECL_VERSION:-2.3.0}"
+
 system_update () {
   apt-get update
 }
@@ -26,6 +29,7 @@ install_system_dependencies () {
     libmcrypt-dev \
     libreadline-dev \
     dirmngr \
+    gnupg \
     wget \
     sudo \
     jq
@@ -44,7 +48,7 @@ install_php () {
 
   # Install the php repository
   curl -fsSL https://packages.sury.org/php/apt.gpg | apt-key add -
-  add-apt-repository "deb https://packages.sury.org/php/ $(lsb_release -cs) main"
+  add-apt-repository -y "deb https://packages.sury.org/php/ $(lsb_release -cs) main"
 
   # Update the system
   apt-get update
@@ -239,7 +243,7 @@ install_mongodb () {
     apt-get install -y "${PHP_VERSION}-mongodb"
   else
     if ! pecl list | awk 'NR > 3 {print $1}' | grep -Fxq mongodb; then
-      printf "\n\n\n\n\n\n\n\n\n\n\n" | pecl install mongodb
+      printf "\n\n\n\n\n\n\n\n\n\n\n" | pecl install "mongodb-${MONGODB_PECL_VERSION}"
       if (($? >= 1)); then
         echo_with_color red "\nMongo DB extension installation error." >&5
         kill $!
@@ -261,7 +265,7 @@ install_sql_server () {
   ACCEPT_EULA=Y DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends unixodbc-dev msodbcsql18 mssql-tools18
 
   if ! pecl list | awk 'NR > 3 {print $1}' | grep -Fxq sqlsrv; then
-    pecl install sqlsrv
+    pecl install "sqlsrv-${SQLSRV_PECL_VERSION}"
     if (($? >= 1)); then
       echo_with_color red "\nMS SQL Server extension installation error." >&5
       kill $!
@@ -275,7 +279,7 @@ install_sql_server () {
 
 install_pdo_sqlsrv () {
   if ! pecl list | awk 'NR > 3 {print $1}' | grep -Fxq pdo_sqlsrv; then
-    pecl install pdo_sqlsrv
+    pecl install "pdo_sqlsrv-${SQLSRV_PECL_VERSION}"
     if (($? >= 1)); then
       echo_with_color red "\npdo_sqlsrv extension installation error." >&5
       kill $!
@@ -370,11 +374,13 @@ install_cassandra () {
 }
 
 install_igbinary () {
-  pecl install igbinary
-  if (($? >= 1)); then
-    echo_with_color red "\nigbinary extension installation error." >&5
-    kill $!
-    exit 1
+  if ! pecl list | awk 'NR > 3 {print $1}' | grep -Fxq igbinary; then
+    pecl install igbinary
+    if (($? >= 1)); then
+      echo_with_color red "\nigbinary extension installation error." >&5
+      kill $!
+      exit 1
+    fi
   fi
 
   echo "extension=igbinary.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/igbinary.ini"
@@ -578,10 +584,10 @@ check_mysql_exists () {
 add_mariadb_repo () {
   if ((CURRENT_OS == 10)); then
     apt-key adv --no-tty --recv-keys --keyserver keyserver.ubuntu.com 0xF1656F24C74CD1D8
-    add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.6/debian buster main'
+    add-apt-repository -y 'deb [arch=amd64,i386,ppc64el] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.6/debian buster main'
   elif ((CURRENT_OS == 11)); then
     apt-key adv --no-tty --recv-keys --keyserver keyserver.ubuntu.com 0xF1656F24C74CD1D8
-    add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.6/debian bullseye main'
+    add-apt-repository -y 'deb [arch=amd64,i386,ppc64el] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.6/debian bullseye main'
   fi
 }
 

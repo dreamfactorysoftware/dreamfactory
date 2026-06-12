@@ -5,6 +5,9 @@
 # We will use these to run each step of the installer inside run_process which will provide us with a
 # progress bar while things are going.
 
+SQLSRV_PECL_VERSION="${SQLSRV_PECL_VERSION:-5.13.1}"
+MONGODB_PECL_VERSION="${MONGODB_PECL_VERSION:-2.3.0}"
+
 system_update () {
   apt-get update
 }
@@ -41,8 +44,8 @@ install_php () {
   CRYPT=0
 
   if [[ $PHP_VERSION =~ ^-?[0-9]+$ ]]; then
-    if ((PHP_VERSION == 83)); then
-      PHP_VERSION=php8.3
+    if ((PHP_VERSION == 85)); then
+      PHP_VERSION=php8.5
       MCRYPT=1
     else
       PHP_VERSION=${DEFAULT_PHP_VERSION}
@@ -243,7 +246,7 @@ install_mcrypt () {
 
 install_mongodb () {
   if ! pecl list | awk 'NR > 3 {print $1}' | grep -Fxq mongodb; then
-    printf "\n\n\n\n\n\n\n\n\n\n\n" | pecl install mongodb
+    printf "\n\n\n\n\n\n\n\n\n\n\n" | pecl install "mongodb-${MONGODB_PECL_VERSION}"
     if (($? >= 1)); then
       echo_with_color red "\nMongo DB extension installation error." >&5
       return 1
@@ -263,7 +266,7 @@ install_sql_server () {
   ACCEPT_EULA=Y DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends unixodbc-dev msodbcsql18 mssql-tools18
 
   if ! pecl list | awk 'NR > 3 {print $1}' | grep -Fxq sqlsrv; then
-    pecl install sqlsrv
+    pecl install "sqlsrv-${SQLSRV_PECL_VERSION}"
     if (($? >= 1)); then
       echo_with_color red "\nMS SQL Server extension installation error." >&5
       exit 1
@@ -276,7 +279,7 @@ install_sql_server () {
 
 install_pdo_sqlsrv () {
   if ! pecl list | awk 'NR > 3 {print $1}' | grep -Fxq pdo_sqlsrv; then
-    pecl install pdo_sqlsrv
+    pecl install "pdo_sqlsrv-${SQLSRV_PECL_VERSION}"
     if (($? >= 1)); then
       echo_with_color red "\npdo_sqlsrv extension installation error." >&5
       kill $!
@@ -409,11 +412,13 @@ install_cassandra () {
 }
 
 install_igbinary () {
-  pecl install igbinary
-  if (($? >= 1)); then
-    echo_with_color red "\nigbinary extension installation error." >&5
-    kill $!
-    exit 1
+  if ! pecl list | awk 'NR > 3 {print $1}' | grep -Fxq igbinary; then
+    pecl install igbinary
+    if (($? >= 1)); then
+      echo_with_color red "\nigbinary extension installation error." >&5
+      kill $!
+      exit 1
+    fi
   fi
 
   echo "extension=igbinary.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/igbinary.ini"
@@ -648,12 +653,15 @@ install_mariadb () {
 
 
 add_mariadb_repo () {
+  if ((CURRENT_OS >= 24)); then
+    # Ubuntu 24.04 ships MariaDB 10.11 in the distro repositories. Avoid adding
+    # external repo lines that add-apt-repository cannot parse on Noble.
+    return 0
+  fi
+
   apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
   if ((CURRENT_OS == 22)); then
     add-apt-repository -y 'deb [arch=amd64,arm64,ppc64el] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.11.1/ubuntu jammy main'
-  else
-    # Ubuntu 24
-    add-apt-repository -y 'deb [signed-by=/etc/apt/keyrings/mariadb-keyring.pgp] https://mirrors.ptisp.pt/mariadb/repo/10.11/ubuntu noble main'
   fi
 }
 
