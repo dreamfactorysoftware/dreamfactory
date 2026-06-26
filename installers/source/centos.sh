@@ -60,7 +60,10 @@ dnf_module_reset_php () {
 }
 
 dnf_module_enable_remi_php85 () {
-  timeout 300 dnf -y module enable php:remi-8.5
+  # Remi ships PHP 8.5 as NON-modular (the modular streams stop at remi-8.4), so this
+  # module enable is expected to fail on current Remi — tolerate it. The actual 8.5
+  # packages are installed directly by install_remi_php85_packages.
+  timeout 300 dnf -y module enable php:remi-8.5 || true
 }
 
 dnf_switch_to_remi_php85 () {
@@ -90,27 +93,24 @@ install_remi_php85_packages () {
 }
 
 assert_php85_active () {
-  local php_bin
-  local php_version
+  local php_bin php_version i
 
-  hash -r 2>/dev/null || true
-  php_bin=$(command -v php 2>/dev/null || true)
-  if [[ -z "$php_bin" && -x /usr/bin/php ]]; then
-    php_bin=/usr/bin/php
-  fi
-  if [[ -z "$php_bin" ]]; then
-    sleep 5
+  # Retry: right after the Remi package swap the php CLI can take a moment to settle,
+  # so re-resolve a few times before warning. Only warn if it is genuinely not 8.5.
+  for i in 1 2 3 4 5; do
     hash -r 2>/dev/null || true
     php_bin=$(command -v php 2>/dev/null || true)
     if [[ -z "$php_bin" && -x /usr/bin/php ]]; then
       php_bin=/usr/bin/php
     fi
-  fi
+    if [[ -n "$php_bin" ]]; then
+      php_version=$("$php_bin" -r 'echo PHP_MAJOR_VERSION "." PHP_MINOR_VERSION;' 2>/dev/null || true)
+      [[ "$php_version" == "8.5" ]] && return 0
+    fi
+    sleep 3
+  done
 
-  php_version=$("$php_bin" -r 'echo PHP_MAJOR_VERSION "." PHP_MINOR_VERSION;' 2>/dev/null || true)
-  if [[ "$php_version" != "8.5" ]]; then
-    echo_with_color red "\nExpected PHP 8.5 from Remi, but active php is ${php_version:-missing}. Continuing; later PHP-dependent steps will fail if PHP is unusable." >&5
-  fi
+  echo_with_color red "\nExpected PHP 8.5 from Remi, but active php is ${php_version:-missing}. Continuing; later PHP-dependent steps will fail if PHP is unusable." >&5
 }
 
 install_remi_release_el9 () {
@@ -377,7 +377,7 @@ install_mcrypt () {
   local php_version_number
   php_version_number=$(php -r 'echo PHP_MAJOR_VERSION . PHP_MINOR_VERSION;' 2>/dev/null || true)
   if [[ "$php_version_number" == "85" ]]; then
-    echo_with_color red "\nSkipping legacy mcrypt extension on PHP 8.5; no compatible PECL release is available." >&5
+    echo_with_color magenta "\nSkipping mcrypt: not available or required on PHP 8.5 (no compatible PECL release). This is expected." >&5
     return 0
   fi
 

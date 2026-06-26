@@ -975,7 +975,7 @@ if (($? >= 1)); then
   run_process "   Installing Mcrypt" install_mcrypt
   php -m | grep -E "^mcrypt"
   if (($? >= 1)); then
-    echo_with_color red "\nMcrypt installation error." >&5
+    echo_with_color magenta "    Mcrypt not enabled (expected on PHP 8.5; not required by DreamFactory).\n" >&5
   else
     echo_with_color green "    Mcrypt installed\n" >&5
   fi
