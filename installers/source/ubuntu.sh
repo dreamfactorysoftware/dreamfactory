@@ -457,7 +457,8 @@ install_munch () {
 }
 
 install_node () {
-  curl -sL https://deb.nodesource.com/setup_14.x | bash -
+  # Node 20.x LTS — required by the df-mcp daemon (18+); the old 14.x is long EOL.
+  curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
   apt-get install -y nodejs
   if (($? >= 1)); then
     echo_with_color red "\n${ERROR_STRING}" >&5
@@ -686,15 +687,15 @@ run_composer_install () {
   # bundle those connectors still install. Matches debian/centos/fedora.
   if [[ $ORACLE == TRUE ]]; then
     if [[ $CURRENT_USER == "root" ]]; then
-      sudo -u "$CURRENT_USER" COMPOSER_ALLOW_SUPERUSER=1 bash -c "/usr/local/bin/composer install --no-dev"
+      sudo -u "$CURRENT_USER" COMPOSER_ALLOW_SUPERUSER=1 bash -c "composer install --no-dev"
     else
-      sudo -u "$CURRENT_USER" bash -c "/usr/local/bin/composer install --no-dev"
+      sudo -u "$CURRENT_USER" bash -c "composer install --no-dev"
     fi
   else
     if [[ $CURRENT_USER == "root" ]]; then
-      sudo -u "$CURRENT_USER" COMPOSER_ALLOW_SUPERUSER=1 bash -c "/usr/local/bin/composer install --no-dev --ignore-platform-reqs"
+      sudo -u "$CURRENT_USER" COMPOSER_ALLOW_SUPERUSER=1 bash -c "composer install --no-dev --ignore-platform-reqs"
     else
-      sudo -u "$CURRENT_USER" bash -c "/usr/local/bin/composer install --no-dev --ignore-platform-reqs"
+      sudo -u "$CURRENT_USER" bash -c "composer install --no-dev --ignore-platform-reqs"
     fi
   fi
 }

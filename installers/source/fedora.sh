@@ -583,15 +583,15 @@ run_composer_install () {
   # to composer command
   if [[ $ORACLE == TRUE ]]; then
     if [[ $CURRENT_USER == "root" ]]; then
-      sudo -u "$CURRENT_USER" COMPOSER_ALLOW_SUPERUSER=1 bash -c "/usr/local/bin/composer install --no-dev"
+      sudo -u "$CURRENT_USER" COMPOSER_ALLOW_SUPERUSER=1 bash -c "composer install --no-dev"
     else
-      sudo -u "$CURRENT_USER" bash -c "/usr/local/bin/composer install --no-dev"
+      sudo -u "$CURRENT_USER" bash -c "composer install --no-dev"
     fi
   else
     if [[ $CURRENT_USER == "root" ]]; then
-      sudo -u "$CURRENT_USER" COMPOSER_ALLOW_SUPERUSER=1 bash -c "/usr/local/bin/composer install --no-dev --ignore-platform-reqs"
+      sudo -u "$CURRENT_USER" COMPOSER_ALLOW_SUPERUSER=1 bash -c "composer install --no-dev --ignore-platform-reqs"
     else
-      sudo -u "$CURRENT_USER" bash -c "/usr/local/bin/composer install --no-dev --ignore-platform-reqs"
+      sudo -u "$CURRENT_USER" bash -c "composer install --no-dev --ignore-platform-reqs"
     fi
   fi
 }

@@ -32,7 +32,7 @@ install_system_dependencies () {
   else
     dnf install -y dnf-plugins-core
     if ((CURRENT_OS >= 9)); then
-      dnf config-manager --set-enabled crb || dnf config-manager --set-enabled "codeready-builder-for-rhel-${CURRENT_OS}-$(arch)-rpms" || true
+      dnf config-manager --set-enabled crb || dnf config-manager --set-enabled "codeready-builder-for-rhel-${CURRENT_OS}-$(arch)-rpms" || dnf config-manager --set-enabled "ol${CURRENT_OS}_codeready_builder" || true
     fi
     #centos 8
     dnf install -y git \
@@ -43,7 +43,8 @@ install_system_dependencies () {
       lsof \
       readline-devel \
       wget \
-      jq
+      jq \
+      policycoreutils-python-utils
     dnf install -y libzip-devel || dnf install -y libzip || true
   fi
   # Check installation status
@@ -645,8 +646,12 @@ install_munch () {
 }
 
 install_node () {
-  curl -sL https://rpm.nodesource.com/setup_14.x | bash -
-  yum install -y nodejs
+  # The df-mcp daemon needs Node 18+ (we ship 20.x LTS). RHEL/OL appstream tops out at
+  # node 16, and the daemon's bundled dist uses import-attributes that 16 can't parse, so
+  # reset the appstream module and install Node 20.x from NodeSource.
+  dnf module reset -y nodejs 2>/dev/null || true
+  curl -fsSL https://rpm.nodesource.com/setup_20.x | bash -
+  dnf install -y --allowerasing nodejs
   if (($? >= 1)); then
     echo_with_color red "\n${ERROR_STRING}" >&5
     kill $!
@@ -749,11 +754,21 @@ enable_opcache () {
 }
 
 install_composer () {
-  curl -sS https://getcomposer.org/installer -o /tmp/composer-setup.php
+  # RHEL/CentOS/Oracle Linux pull composer in from EPEL as a dependency, so a
+  # working composer is usually already on PATH. Use it rather than re-bootstrapping
+  # from getcomposer.org (the manual bootstrap is fragile under a minimal env).
+  if command -v composer >/dev/null 2>&1; then
+    echo_with_color green "    Composer already present ($(composer --version 2>/dev/null | head -1))\n" >&5
+    return 0
+  fi
+  rm -f /tmp/composer-setup.php
+  if ! curl -sS https://getcomposer.org/installer -o /tmp/composer-setup.php; then
+    echo_with_color red "\n${ERROR_STRING}" >&5
+    exit 1
+  fi
   php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer
   if (($? >= 1)); then
     echo_with_color red "\n${ERROR_STRING}" >&5
-    kill $!
     exit 1
   fi
 }
@@ -807,15 +822,15 @@ run_composer_install () {
   # to composer command
   if [[ $ORACLE == TRUE ]]; then
     if [[ $CURRENT_USER == "root" ]]; then
-      sudo -u "$CURRENT_USER" COMPOSER_ALLOW_SUPERUSER=1 bash -c "/usr/local/bin/composer install --no-dev"
+      sudo -u "$CURRENT_USER" COMPOSER_ALLOW_SUPERUSER=1 bash -c "composer install --no-dev"
     else
-      sudo -u "$CURRENT_USER" bash -c "/usr/local/bin/composer install --no-dev"
+      sudo -u "$CURRENT_USER" bash -c "composer install --no-dev"
     fi
   else
     if [[ $CURRENT_USER == "root" ]]; then
-      sudo -u "$CURRENT_USER" COMPOSER_ALLOW_SUPERUSER=1 bash -c "/usr/local/bin/composer install --no-dev --ignore-platform-reqs"
+      sudo -u "$CURRENT_USER" COMPOSER_ALLOW_SUPERUSER=1 bash -c "composer install --no-dev --ignore-platform-reqs"
     else
-      sudo -u "$CURRENT_USER" bash -c "/usr/local/bin/composer install --no-dev --ignore-platform-reqs"
+      sudo -u "$CURRENT_USER" bash -c "composer install --no-dev --ignore-platform-reqs"
     fi
   fi
 }
