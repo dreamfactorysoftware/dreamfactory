@@ -483,6 +483,81 @@ fix_dreamfactory_runtime_permissions() {
     chown -R "apache:$CURRENT_USER" /opt/dreamfactory/
     chmod -R 2775 /opt/dreamfactory/
   fi
+
+  # RHEL/CentOS/Oracle Linux ship SELinux enforcing. Without these booleans the web
+  # server (php-fpm) is blocked from opening network connections, so DreamFactory
+  # cannot reach its own system database (SQLSTATE 2002 Permission denied) nor any
+  # remote connector database / AI endpoint. Set them when SELinux is present.
+  if command -v setsebool >/dev/null 2>&1 && command -v getenforce >/dev/null 2>&1 && [[ "$(getenforce)" != "Disabled" ]]; then
+    setsebool -P httpd_can_network_connect_db 1 2>/dev/null || true
+    setsebool -P httpd_can_network_connect 1 2>/dev/null || true
+
+    # /opt/dreamfactory inherits the usr_t label (it lives under /opt), which php-fpm
+    # (httpd_t domain) cannot write. Without relabeling storage/ and bootstrap/cache to
+    # httpd_sys_rw_content_t, every request 500s on "Permission denied" opening the log
+    # file -- and SELinux's dontaudit rule HIDES the AVC, so ausearch shows nothing.
+    # semanage ships in policycoreutils-python-utils (installed in system deps).
+    if command -v semanage >/dev/null 2>&1; then
+      for d in /opt/dreamfactory/storage /opt/dreamfactory/bootstrap/cache; do
+        semanage fcontext -a -t httpd_sys_rw_content_t "${d}(/.*)?" 2>/dev/null || \
+          semanage fcontext -m -t httpd_sys_rw_content_t "${d}(/.*)?" 2>/dev/null || true
+      done
+      command -v restorecon >/dev/null 2>&1 && \
+        restorecon -R /opt/dreamfactory/storage /opt/dreamfactory/bootstrap/cache 2>/dev/null || true
+    fi
+  fi
+}
+
+## Build the MCP daemon and install it as a persistent systemd service.
+## The bundled fire-and-forget `start-daemon.sh &` died with the installer shell, left no
+## logs, and never survived a reboot. Node 20 must already be on PATH (install_node).
+setup_mcp_daemon_service () {
+  local mcp_dir="/opt/dreamfactory/vendor/dreamfactory/df-mcp-server"
+  local daemon_dir="${mcp_dir}/daemon"
+  if [[ ! -d "$daemon_dir" ]]; then
+    echo_with_color red "MCP daemon directory not found ($daemon_dir); skipping MCP setup." >&5
+    return 0
+  fi
+  if ! command -v node >/dev/null 2>&1; then
+    echo_with_color red "Node.js not found; cannot set up MCP daemon." >&5
+    return 1
+  fi
+
+  # Run the daemon as the same service account that owns /opt/dreamfactory.
+  local run_user=dreamfactory
+  id "$run_user" >/dev/null 2>&1 || run_user="$CURRENT_USER"
+
+  # Build (npm install incl. devDeps for tsc, then tsc -> dist/server.js) as that user so
+  # node_modules/ and dist/ are owned correctly. HOME/cache point at the owned tree.
+  runuser -u "$run_user" -- env HOME=/opt/dreamfactory npm_config_cache=/opt/dreamfactory/.npm \
+    bash -lc "cd '$daemon_dir' && npm install --include=dev && npm run build" || {
+    echo_with_color red "MCP daemon build failed." >&5
+    return 1
+  }
+
+  cat > /etc/systemd/system/df-mcp.service <<EOF
+[Unit]
+Description=DreamFactory MCP Daemon
+After=network.target
+
+[Service]
+Type=simple
+User=${run_user}
+WorkingDirectory=${daemon_dir}
+Environment=NODE_ENV=production
+Environment=MCP_DAEMON_HOST=127.0.0.1
+Environment=MCP_DAEMON_PORT=8006
+ExecStart=/usr/bin/node dist/server.js
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+  command -v restorecon >/dev/null 2>&1 && restorecon /etc/systemd/system/df-mcp.service 2>/dev/null || true
+  systemctl daemon-reload
+  systemctl enable --now df-mcp.service
 }
 
 ## Used for each of the individual components to be installed
@@ -556,9 +631,9 @@ case $CURRENT_KERNEL in
       exit 1
     fi
     ;;
-  centos | rhel | almalinux | rocky)
+  centos | rhel | almalinux | rocky | ol | oracle)
     if ((CURRENT_OS != 8)) && ((CURRENT_OS != 9)); then
-      echo_with_color red "The installer only supports Rhel/CentOS 8 and 9. Exiting...\n"
+      echo_with_color red "The installer only supports Rhel/CentOS/Oracle Linux 8 and 9. Exiting...\n"
       exit 1
     fi
     ;;
@@ -628,7 +703,12 @@ echo -e ""
 echo -e "  [9] Upgrade existing DreamFactory"
 echo -e ""
 echo_with_color magenta "Select install mode. Press Enter for recommended install."
-read -r INSTALLER_TUI_MODE
+# Honor a pre-set INSTALLER_TUI_MODE (unattended/automated installs set it via env,
+# consistent with DF_ADMIN_EMAIL/DF_LICENSE_KEY/LICENSE_*). Only prompt interactively
+# when it is unset; otherwise a piped/empty stdin would clobber the chosen profile.
+if [[ -z "${INSTALLER_TUI_MODE:-}" ]]; then
+  read -r INSTALLER_TUI_MODE
+fi
 INSTALLER_TUI_MODE="${INSTALLER_TUI_MODE:-0}"
 
 case "$INSTALLER_TUI_MODE" in
@@ -770,7 +850,7 @@ case $CURRENT_KERNEL in
   debian)
     source ./debian.sh
     ;;
-  centos | rhel | almalinux | rocky)
+  centos | rhel | almalinux | rocky | ol | oracle)
     source ./centos.sh
     ;;
   fedora)
@@ -1073,8 +1153,8 @@ if (($? >= 1)); then
   fi
 fi
 
-### Install Node.js
-if [[ $ADVANCED_CONNECTORS == TRUE ]]; then
+### Install Node.js (advanced connectors OR the MCP daemon need it)
+if [[ $ADVANCED_CONNECTORS == TRUE || $ENABLE_MCP_DAEMON == TRUE ]]; then
   node -v
   if (($? >= 1)); then
     run_process "   Installing node" install_node
@@ -1661,12 +1741,14 @@ if ! is_phase_done "PHASE_FINAL_VERIFY"; then
     fi
   fi
 
-  ### Start MCP Daemon if enabled
+  ### Build and install the MCP daemon as a systemd service if enabled
   if [[ $ENABLE_MCP_DAEMON == TRUE ]]; then
-    echo_with_color blue "Starting MCP daemon...\n"
-    /opt/dreamfactory/vendor/dreamfactory/df-mcp-server/scripts/start-daemon.sh &
-    MCP_DAEMON_PID=$!
-    echo_with_color green "MCP daemon started with PID: $MCP_DAEMON_PID\n"
+    echo_with_color blue "Setting up MCP daemon (build + systemd service)...\n" >&5
+    if setup_mcp_daemon_service; then
+      echo_with_color green "MCP daemon installed and started (df-mcp.service on 127.0.0.1:8006).\n" >&5
+    else
+      echo_with_color red "MCP daemon setup failed; DreamFactory is installed but MCP is not running.\n" >&5
+    fi
   fi
 
   echo_with_color green "Installation finished! DreamFactory has been installed in /opt/dreamfactory "
