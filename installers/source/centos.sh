@@ -104,7 +104,11 @@ assert_php85_active () {
       php_bin=/usr/bin/php
     fi
     if [[ -n "$php_bin" ]]; then
-      php_version=$("$php_bin" -r 'echo PHP_MAJOR_VERSION "." PHP_MINOR_VERSION;' 2>/dev/null || true)
+      # Use -n (ignore ini files): mid-install, extension .ini entries can reference
+      # .so files not built until later steps, which makes a normal `php -r` FATAL and
+      # return empty ("missing") even though the 8.5 core is fine. -n reports the real
+      # version reliably; the extensions are validated by the later install steps.
+      php_version=$("$php_bin" -n -r 'echo PHP_MAJOR_VERSION "." PHP_MINOR_VERSION;' 2>/dev/null || true)
       [[ "$php_version" == "8.5" ]] && return 0
     fi
     sleep 3
@@ -375,7 +379,7 @@ install_php_pear () {
 
 install_mcrypt () {
   local php_version_number
-  php_version_number=$(php -r 'echo PHP_MAJOR_VERSION . PHP_MINOR_VERSION;' 2>/dev/null || true)
+  php_version_number=$(php -n -r 'echo PHP_MAJOR_VERSION . PHP_MINOR_VERSION;' 2>/dev/null || true)
   if [[ "$php_version_number" == "85" ]]; then
     echo_with_color magenta "\nSkipping mcrypt: not available or required on PHP 8.5 (no compatible PECL release). This is expected." >&5
     return 0
