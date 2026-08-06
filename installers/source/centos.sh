@@ -108,7 +108,7 @@ assert_php85_active () {
       # .so files not built until later steps, which makes a normal `php -r` FATAL and
       # return empty ("missing") even though the 8.5 core is fine. -n reports the real
       # version reliably; the extensions are validated by the later install steps.
-      php_version=$("$php_bin" -n -r 'echo PHP_MAJOR_VERSION "." PHP_MINOR_VERSION;' 2>/dev/null || true)
+      php_version=$("$php_bin" -n -r 'echo PHP_MAJOR_VERSION, ".", PHP_MINOR_VERSION;' 2>/dev/null || true)
       [[ "$php_version" == "8.5" ]] && return 0
     fi
     sleep 3
