@@ -117,13 +117,14 @@ assert_php85_active () {
   echo_with_color red "\nExpected PHP 8.5 from Remi, but active php is ${php_version:-missing}. Continuing; later PHP-dependent steps will fail if PHP is unusable." >&5
 }
 
-install_remi_release_el9 () {
-  local remi_release_rpm="http://rpms.remirepo.net/enterprise/remi-release-9.rpm"
+install_remi_release () {
+  # EL9 and EL10 both publish remi-release-<major>.rpm at this path.
+  local remi_release_rpm="http://rpms.remirepo.net/enterprise/remi-release-${CURRENT_OS}.rpm"
   local os_minor
 
   os_minor=$(awk -F= '/^VERSION_ID=/{gsub(/"/, "", $2); split($2, version, "."); print version[2]}' /etc/os-release 2>/dev/null)
 
-  if [[ -n "$os_minor" && "$os_minor" =~ ^[0-9]+$ && "$os_minor" -lt 4 ]]; then
+  if ((CURRENT_OS == 9)) && [[ -n "$os_minor" && "$os_minor" =~ ^[0-9]+$ && "$os_minor" -lt 4 ]]; then
     remi_release_rpm="https://rpms.remirepo.net/enterprise/9/remi/x86_64/remi-release-9.2-1.el9.remi.noarch.rpm"
   fi
 
@@ -191,9 +192,9 @@ install_php () {
     #Install PHP
     install_remi_php85_packages
   else
-    # RHEL 9 / CentOS Stream 9
-    dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
-    install_remi_release_el9
+    # RHEL 9/10 and compatibles (Alma, Rocky, OL)
+    dnf install -y "https://dl.fedoraproject.org/pub/epel/epel-release-latest-${CURRENT_OS}.noarch.rpm"
+    install_remi_release
 
     dnf_switch_to_remi_php85
 
@@ -340,8 +341,8 @@ server {
   }
 }" >/etc/nginx/conf.d/dreamfactory.conf
 
-  # RHEL 8/9 and CentOS Stream 8/9 default php-fpm to a unix socket rather than 127.0.0.1.
-  if ((CURRENT_OS == 8 || CURRENT_OS == 9)); then
+  # RHEL 8+ and CentOS Stream 8+ default php-fpm to a unix socket rather than 127.0.0.1.
+  if ((CURRENT_OS >= 8)); then
   sed -i "s,127.0.0.1:9000;,unix:/var/run/php-fpm/www.sock;," /etc/nginx/conf.d/dreamfactory.conf
   id -u nginx >/dev/null 2>&1 || useradd -r nginx
   fi

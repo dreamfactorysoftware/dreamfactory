@@ -632,8 +632,8 @@ case $CURRENT_KERNEL in
     fi
     ;;
   centos | rhel | almalinux | rocky | ol | oracle)
-    if ((CURRENT_OS != 8)) && ((CURRENT_OS != 9)); then
-      echo_with_color red "The installer only supports Rhel/CentOS/Oracle Linux 8 and 9. Exiting...\n"
+    if ((CURRENT_OS != 8)) && ((CURRENT_OS != 9)) && ((CURRENT_OS != 10)); then
+      echo_with_color red "The installer only supports Rhel/CentOS/Oracle Linux 8, 9 and 10. Exiting...\n"
       exit 1
     fi
     ;;
