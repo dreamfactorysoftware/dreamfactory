@@ -122,11 +122,24 @@ return [
     |--------------------------------------------------------------------------
     |
     | This value determines the classes that can be unserialized from cache
-    | storage. By default, no PHP classes will be unserialized from your
-    | cache to prevent gadget chain attacks if your APP_KEY is leaked.
+    | storage. Laravel's own default is false - no PHP classes at all - to
+    | prevent gadget chain attacks if your APP_KEY is leaked.
+    |
+    | DreamFactory caches objects, not just scalars: database schema
+    | (TableSchema, ColumnSchema, RelationSchema) and event scripts
+    | (EventScript) are stored as serialized models. Under `false` every one
+    | of them is restored as __PHP_Incomplete_Class, which fails at the first
+    | property access - e.g. GET /api/v2/{service}/_table returns 200 on a
+    | cache miss and 500 on every request after it. So this must allow
+    | classes for DreamFactory to run.
+    |
+    | Narrowing this to an explicit allowlist is the safer end state, but the
+    | list has to cover every class any service type caches; an incomplete
+    | list fails the same silent way. Left permissive here (the pre-Laravel-13
+    | behaviour) until that set is enumerated.
     |
     */
 
-    'serializable_classes' => false,
+    'serializable_classes' => true,
 
 ];
