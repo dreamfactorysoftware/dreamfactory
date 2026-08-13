@@ -5,8 +5,6 @@ namespace DreamFactory\Http\Controllers;
 use DreamFactory\Core\Enums\Verbs;
 use DreamFactory\Core\Models\User;
 use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
 class SplashController extends Controller
@@ -21,12 +19,13 @@ class SplashController extends Controller
         if (! empty($token)) {
             $param = '?session_token='.$token;
         }
+
         return redirect(config('df.landing_page', '/test_rest.html').$param);
     }
 
     public function createFirstUser(Request $request)
     {
-        if (!User::adminExists()) {
+        if (! User::adminExists()) {
             $method = $request->method();
             $version = config('app.version');
             $data = [
@@ -60,7 +59,7 @@ class SplashController extends Controller
                     ]), $data);
                     $user = User::createFirstAdmin($data);
 
-                    if (!$user) {
+                    if (! $user) {
                         return view('firstUser', $data);
                     }
 
@@ -68,11 +67,12 @@ class SplashController extends Controller
                     \Cache::flush();
                     \Artisan::call('config:clear');
                     \Artisan::call('route:clear');
-                    
+
                     return redirect()->to('/');
                 } catch (\Exception $e) {
-                    \Log::error('Error creating first admin: ' . $e->getMessage());
+                    \Log::error('Error creating first admin: '.$e->getMessage());
                     $data['errors'] = [$e->getMessage()];
+
                     return view('firstUser', $data);
                 }
             }

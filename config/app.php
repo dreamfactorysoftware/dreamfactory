@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Facade;
 
 return [
 
-    'version' => '7.6.0',
+    'version' => '7.7.0',
 
     'license_key' => env('DF_LICENSE_KEY', false),
 
@@ -18,7 +18,7 @@ return [
         // DreamFactory Providers FIRST
         DreamFactory\Core\File\ServiceProvider::class,    // This needs to be before SessionServiceProvider
         DreamFactory\Core\LaravelServiceProvider::class,
-        
+
         // Laravel Framework Service Providers...
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,

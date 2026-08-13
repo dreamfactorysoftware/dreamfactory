@@ -5,9 +5,11 @@ namespace DreamFactory\Http\Controllers\Auth;
 use DreamFactory\Http\Controllers\Controller;
 use DreamFactory\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
+#[Middleware('guest')]
 class RegisterController extends Controller
 {
     /*
@@ -29,16 +31,6 @@ class RegisterController extends Controller
      * @var string
      */
     protected $redirectTo = '/home';
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest');
-    }
 
     /**
      * Get a validator for an incoming registration request.

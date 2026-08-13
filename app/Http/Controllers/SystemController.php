@@ -12,12 +12,12 @@ class SystemController extends Controller
             'platform' => [
                 'version' => config('app.version'),
                 'is_hosted' => false,
-                'license' => []
+                'license' => [],
             ],
             'server' => [
                 'php_version' => PHP_VERSION,
-                'os' => PHP_OS
-            ]
+                'os' => PHP_OS,
+            ],
         ]);
     }
-} 
+}

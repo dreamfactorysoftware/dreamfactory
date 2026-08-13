@@ -20,6 +20,7 @@ return [
                 'allowInlineLineBreaks' => true,
                 'ignoreEmptyContextAndExtra' => true,
             ],
+            'replace_placeholders' => true,
         ],
 
         'daily' => [
@@ -34,6 +35,7 @@ return [
                 'allowInlineLineBreaks' => true,
                 'ignoreEmptyContextAndExtra' => true,
             ],
+            'replace_placeholders' => true,
         ],
 
         'heroku' => [
@@ -61,6 +63,7 @@ return [
                 'allowInlineLineBreaks' => true,
                 'ignoreEmptyContextAndExtra' => true,
             ],
+            'replace_placeholders' => true,
         ],
 
         'stderr' => [
@@ -76,6 +79,10 @@ return [
                 'allowInlineLineBreaks' => true,
                 'ignoreEmptyContextAndExtra' => true,
             ],
+            'level' => env('LOG_LEVEL', 'debug'),
+            'stream' => 'php://stderr',
+            'processors' => [PsrLogMessageProcessor::class],
+            'stream' => 'php://stderr',
         ],
 
         'syslog' => [
@@ -88,6 +95,8 @@ return [
                 'allowInlineLineBreaks' => true,
                 'ignoreEmptyContextAndExtra' => true,
             ],
+            'facility' => env('LOG_SYSLOG_FACILITY', LOG_USER),
+            'replace_placeholders' => true,
         ],
 
         'errorlog' => [
@@ -100,6 +109,7 @@ return [
                 'allowInlineLineBreaks' => true,
                 'ignoreEmptyContextAndExtra' => true,
             ],
+            'replace_placeholders' => true,
         ],
     ],
 

@@ -2,12 +2,10 @@
 
 This directory contains an automated installer package `dfsetup.run` which will run on the following operating systems:
 
-* CentOS 7
-* RHEL 7/8
-* Oracle Linux 7/8
-* Debian 10/11
-* Fedora 36/37
-* Ubuntu 20/22
+* RHEL / CentOS / Oracle Linux / AlmaLinux / Rocky Linux 8, 9 & 10
+* Debian 12/13
+* Fedora 39+
+* Ubuntu 22/24
 
 Simply run the installer with `sudo ./dfsetup.run`.
 
