@@ -1,187 +1,186 @@
 {
-    "name": "dreamfactory/dreamfactory",
-    "description": "The DreamFactory(tm) Platform.",
-    "keywords": [
-        "api",
-        "dreamfactory",
-        "laravel",
-        "rest"
-    ],
-    "homepage": "https://www.dreamfactory.com/",
-    "license": "Apache-2.0",
-    "type": "project",
-    "authors": [
-        {
-            "name": "DreamFactory Team",
-            "email": "code@dreamfactory.com"
-        }
-    ],
-    "support": {
-        "email": "dspsupport@dreamfactory.com",
-        "source": "https://github.com/dreamfactorysoftware/dreamfactory",
-        "docs": "https://docs.dreamfactory.com",
-        "issues": "https://github.com/dreamfactorysoftware/dreamfactory/issues",
-        "wiki": "https://wiki.dreamfactory.com",
-        "guide": "https://guide.dreamfactory.com"
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/broqit/Laravel-Bitbucket"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/Infomaniak/Laravel-GitLab"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/Stichoza/Laravel-GitHub"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/dreamfactorysoftware/df-admin-interface"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/dreamfactorysoftware/df-amqp"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/dreamfactorysoftware/df-mqtt"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/dreamfactorysoftware/df-pubsub"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/dreamfactorysoftware/df-mcp-server"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/dreamfactorysoftware/df-sqldb"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/dreamfactorysoftware/df-system"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/dreamfactorysoftware/df-user"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/dreamfactorysoftware/df-core"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/dreamfactorysoftware/df-oauth"
-        }
-    ],
-    "require": {
-        "php": "^8.3",
-        "dreamfactory/df-admin-interface": "~1.7.4",
-        "dreamfactory/df-amqp": "dev-develop as 0.3.x-dev",
-        "dreamfactory/df-apidoc": "dev-develop as 0.8.x-dev",
-        "dreamfactory/df-aws": "dev-develop as 0.20.x-dev",
-        "dreamfactory/df-azure": "dev-develop as 0.19.x-dev",
-        "dreamfactory/df-cache": "dev-develop as 0.13.x-dev",
-        "dreamfactory/df-cassandra": "dev-develop as 0.16.x-dev",
-        "dreamfactory/df-core": "dev-develop as 1.0.99",
-        "dreamfactory/df-couchdb": "dev-develop as 0.19.x-dev",
-        "dreamfactory/df-email": "dev-develop as 0.13.x-dev",
-        "dreamfactory/df-exporter-prometheus": "dev-develop as 1.1.x-dev",
-        "dreamfactory/df-file": "dev-develop as 0.9.x-dev",
-        "dreamfactory/df-firebird": "dev-develop as 0.10.x-dev",
-        "dreamfactory/df-git": "dev-develop as 0.8.x-dev",
-        "dreamfactory/df-mongo-logs": "dev-develop as 1.4.x-dev",
-        "dreamfactory/df-mqtt": "dev-develop as 0.6.x-dev",
-        "dreamfactory/df-mcp-server": "dev-main as 1.2.x-dev",
-        "dreamfactory/df-oauth": "dev-develop as 1.0.99",
-        "dreamfactory/df-rackspace": "dev-develop as 0.16.x-dev",
-        "dreamfactory/df-rws": "dev-develop as 0.18.x-dev",
-        "dreamfactory/df-sqldb": "dev-develop as 1.4.99",
-        "dreamfactory/df-system": "dev-develop as 0.6.99",
-        "dreamfactory/df-user": "dev-develop as 0.17.99",
-        "laravel/framework": "^13.7",
-        "laravel/helpers": "^1.8",
-        "laravel/tinker": "^3.0",
-        "predis/predis": "~1.0",
-        "symfony/css-selector": "^7.4"
-    },
-    "require-dev": {
-        "barryvdh/laravel-ide-helper": "^3.7",
-        "fakerphp/faker": "^1.23",
-        "laravel/homestead": "^15.0.3",
-        "mockery/mockery": "^1.6",
-        "nunomaduro/collision": "^8.6",
-        "phpunit/phpunit": "^11.5.3",
-        "laravel/pail": "^1.2.5"
-    },
-    "autoload": {
-        "classmap": [
-            "database/seeds",
-            "database/factories"
-        ],
-        "psr-4": {
-            "DreamFactory\\": "app/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Tests\\": "tests/"
-        }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-develop": "3.0.x-dev"
-        },
-        "installer-paths": {
-            "public/{$name}/": [
-                "type:dreamfactory-app"
-            ]
-        },
-        "laravel": {
-            "dont-discover": []
-        }
-    },
-    "scripts": {
-        "post-autoload-dump": [
-            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
-        ],
-        "dev": [
-            "Composer\\Config::disableProcessTimeout",
-            "npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"php artisan pail --timeout=0\" \"npm run dev\" --names=server,queue,logs,vite --kill-others"
-        ],
-        "setup": [
-            "composer install",
-            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
-            "@php artisan key:generate",
-            "@php artisan migrate --force",
-            "npm install",
-            "npm run build"
-        ],
-        "test": [
-            "@php artisan config:clear --ansi",
-            "@php artisan test"
-        ],
-        "pre-package-uninstall": [
-            "Illuminate\\Foundation\\ComposerScripts::prePackageUninstall"
-        ]
-    },
-    "config": {
-        "platform": {
-            "php": "8.3"
-        },
-        "preferred-install": "dist",
-        "sort-packages": true,
-        "optimize-autoloader": true,
-        "allow-plugins": {
-            "php-http/discovery": true,
-            "dreamfactory/installer": true
-        }
+  "name": "dreamfactory/dreamfactory",
+  "description": "The DreamFactory(tm) Platform.",
+  "keywords": [
+    "api",
+    "dreamfactory",
+    "laravel",
+    "rest"
+  ],
+  "homepage": "https://www.dreamfactory.com/",
+  "license": "Apache-2.0",
+  "type": "project",
+  "authors": [
+    {
+      "name": "DreamFactory Team",
+      "email": "code@dreamfactory.com"
     }
+  ],
+  "support": {
+    "email": "dspsupport@dreamfactory.com",
+    "source": "https://github.com/dreamfactorysoftware/dreamfactory",
+    "docs": "https://docs.dreamfactory.com",
+    "issues": "https://github.com/dreamfactorysoftware/dreamfactory/issues",
+    "wiki": "https://wiki.dreamfactory.com",
+    "guide": "https://guide.dreamfactory.com"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/dreamfactorysoftware/df-admin-interface"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/dreamfactorysoftware/df-amqp"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/dreamfactorysoftware/df-api-builder"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/dreamfactorysoftware/df-mqtt"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/dreamfactorysoftware/df-pubsub"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/dreamfactorysoftware/df-mcp-server"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/dreamfactorysoftware/df-sqldb"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/dreamfactorysoftware/df-system"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/dreamfactorysoftware/df-user"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/dreamfactorysoftware/df-core"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/dreamfactorysoftware/df-oauth"
+    }
+  ],
+  "require": {
+    "php": "^8.3",
+    "dreamfactory/df-admin-interface": "~1.7.7",
+    "dreamfactory/df-amqp": "~0.3.0",
+    "dreamfactory/df-api-builder": "~0.1.0",
+    "dreamfactory/df-apidoc": "~0.8.3",
+    "dreamfactory/df-aws": "~0.20.1",
+    "dreamfactory/df-azure": "~0.19.0",
+    "dreamfactory/df-cache": "~0.13.1",
+    "dreamfactory/df-cassandra": "~0.16.0",
+    "dreamfactory/df-core": "~1.0.17",
+    "dreamfactory/df-couchdb": "~0.19.0",
+    "dreamfactory/df-email": "~0.14.1",
+    "dreamfactory/df-exporter-prometheus": "~1.1.0",
+    "dreamfactory/df-file": "~0.9.1",
+    "dreamfactory/df-firebird": "~0.10.0",
+    "dreamfactory/df-git": "~0.9.0",
+    "dreamfactory/df-mongo-logs": "~1.3.1",
+    "dreamfactory/df-mqtt": "~0.6.0",
+    "dreamfactory/df-mcp-server": "~1.3.0",
+    "dreamfactory/df-oauth": "~1.0.3",
+    "dreamfactory/df-rackspace": "~0.16.0",
+    "dreamfactory/df-rws": "~0.18.2",
+    "dreamfactory/df-sqldb": "~1.5.0",
+    "dreamfactory/df-system": "~0.6.5",
+    "dreamfactory/df-user": "~0.17.2",
+    "laravel/framework": "^13.7",
+    "laravel/helpers": "^1.8",
+    "laravel/tinker": "^3.0",
+    "predis/predis": "~1.0",
+    "symfony/css-selector": "^7.4"
+  },
+  "conflict": {
+    "symfony/cache": ">=8.0",
+    "symfony/clock": ">=8.0",
+    "symfony/console": ">=8.0",
+    "symfony/css-selector": ">=8.0",
+    "symfony/error-handler": ">=8.0",
+    "symfony/event-dispatcher": ">=8.0",
+    "symfony/filesystem": ">=8.0",
+    "symfony/finder": ">=8.0",
+    "symfony/http-client": ">=8.0",
+    "symfony/http-foundation": ">=8.0",
+    "symfony/http-kernel": ">=8.0",
+    "symfony/mailer": ">=8.0",
+    "symfony/mailgun-mailer": ">=8.0",
+    "symfony/mime": ">=8.0",
+    "symfony/options-resolver": ">=8.0",
+    "symfony/process": ">=8.0",
+    "symfony/routing": ">=8.0",
+    "symfony/string": ">=8.0",
+    "symfony/translation": ">=8.0",
+    "symfony/uid": ">=8.0",
+    "symfony/var-dumper": ">=8.0",
+    "symfony/var-exporter": ">=8.0",
+    "symfony/yaml": ">=8.0"
+  },
+  "require-dev": {
+    "barryvdh/laravel-ide-helper": "^3.7",
+    "fakerphp/faker": "^1.23",
+    "laravel/homestead": "^15.0.3",
+    "laravel/pail": "^1.2.5",
+    "mockery/mockery": "^1.6",
+    "nunomaduro/collision": "^8.6",
+    "phpunit/phpunit": "^11.5.3"
+  },
+  "autoload": {
+    "classmap": [
+      "database/seeds",
+      "database/factories"
+    ],
+    "psr-4": {
+      "DreamFactory\\": "app/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-develop": "3.0.x-dev"
+    },
+    "installer-paths": {
+      "public/{$name}/": [
+        "type:dreamfactory-app"
+      ]
+    },
+    "laravel": {
+      "dont-discover": []
+    }
+  },
+  "scripts": {
+    "post-autoload-dump": [
+      "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+      "@php artisan package:discover --ansi"
+    ]
+  },
+  "config": {
+    "platform": {
+      "php": "8.3"
+    },
+    "preferred-install": "dist",
+    "sort-packages": true,
+    "optimize-autoloader": true,
+    "allow-plugins": {
+      "php-http/discovery": true,
+      "dreamfactory/installer": true
+    }
+  }
 }
