@@ -5,6 +5,9 @@
 # We will use these to run each step of the installer inside run_process which will provide us with a
 # progress bar while things are going.
 
+SQLSRV_PECL_VERSION="${SQLSRV_PECL_VERSION:-5.13.1}"
+MONGODB_PECL_VERSION="${MONGODB_PECL_VERSION:-2.3.0}"
+
 system_update () {
   apt-get update
 }
@@ -41,8 +44,8 @@ install_php () {
   CRYPT=0
 
   if [[ $PHP_VERSION =~ ^-?[0-9]+$ ]]; then
-    if ((PHP_VERSION == 83)); then
-      PHP_VERSION=php8.3
+    if ((PHP_VERSION == 85)); then
+      PHP_VERSION=php8.5
       MCRYPT=1
     else
       PHP_VERSION=${DEFAULT_PHP_VERSION}
@@ -227,59 +230,65 @@ install_php_pear () {
 
 install_mcrypt () {
   if [[ $MCRYPT == 0 ]]; then
-    printf "\n" | pecl install mcrypt-1.0.4
+    printf "\n" | pecl install mcrypt-1.0.9
     if (($? >= 1)); then
       echo_with_color red "\nMcrypt extension installation error." >&5
-      kill $!
-      exit 1
+      return 1
     fi
     echo "extension=mcrypt.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/mcrypt.ini"
     phpenmod -s ALL mcrypt
+    fix_php_extension_permissions mcrypt
   else
     apt-get install ${PHP_VERSION}-mcrypt
+    fix_php_extension_permissions mcrypt
   fi
 }
 
 install_mongodb () {
-  pecl install mongodb <<<'no'
-  if (($? >= 1)); then
-    echo_with_color red "\nMongo DB extension installation error." >&5
-    kill $!
-    exit 1
+  if ! pecl list | awk 'NR > 3 {print $1}' | grep -Fxq mongodb; then
+    printf "\n\n\n\n\n\n\n\n\n\n\n" | pecl install "mongodb-${MONGODB_PECL_VERSION}"
+    if (($? >= 1)); then
+      echo_with_color red "\nMongo DB extension installation error." >&5
+      return 1
+    fi
   fi
   echo "extension=mongodb.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/mongodb.ini"
   phpenmod -s ALL mongodb
+  fix_php_extension_permissions mongodb
 }
 
 install_sql_server () {
-  curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /usr/share/keyrings/microsoft-archive-keyring.gpg
-  echo "deb [arch=amd64,arm64,armhf signed-by=/usr/share/keyrings/microsoft-archive-keyring.gpg] https://packages.microsoft.com/ubuntu/24.04/prod noble main" | tee /etc/apt/sources.list.d/mssql-release.list
+  local microsoft_repo_deb="/tmp/packages-microsoft-prod.deb"
+  rm -f /etc/apt/sources.list.d/mssql-release.list /usr/share/keyrings/microsoft-archive-keyring.gpg "$microsoft_repo_deb"
+  curl -fsSL "https://packages.microsoft.com/config/ubuntu/${CURRENT_OS}.04/packages-microsoft-prod.deb" -o "$microsoft_repo_deb"
+  dpkg -i "$microsoft_repo_deb"
   apt-get update
-  ACCEPT_EULA=Y DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends unixodbc-dev msodbcsql18
-  echo "extension=sqlsrv.so" > /etc/php/8.3/mods-available/sqlsrv.ini
-  phpenmod -s ALL sqlsrv
-  echo "extension=pdo_sqlsrv.so" > /etc/php/8.3/mods-available/pdo_sqlsrv.ini
-  phpenmod -s ALL pdo_sqlsrv
+  ACCEPT_EULA=Y DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends unixodbc-dev msodbcsql18 mssql-tools18
 
-  sudo apt update
-  ACCEPT_EULA=Y sudo apt install -y msodbcsql18 php8.3-odbc
-
-  pecl install sqlsrv
-  if (($? >= 1)); then
-    echo_with_color red "\nMS SQL Server extension installation error." >&5
-    exit 1
+  if ! pecl list | awk 'NR > 3 {print $1}' | grep -Fxq sqlsrv; then
+    pecl install "sqlsrv-${SQLSRV_PECL_VERSION}"
+    if (($? >= 1)); then
+      echo_with_color red "\nMS SQL Server extension installation error." >&5
+      exit 1
+    fi
   fi
+  echo "extension=sqlsrv.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/sqlsrv.ini"
+  phpenmod -s ALL sqlsrv
+  fix_php_extension_permissions sqlsrv
 }
 
 install_pdo_sqlsrv () {
-  pecl install pdo_sqlsrv
-  if (($? >= 1)); then
-    echo_with_color red "\npdo_sqlsrv extension installation error." >&5
-    kill $!
-    exit 1
+  if ! pecl list | awk 'NR > 3 {print $1}' | grep -Fxq pdo_sqlsrv; then
+    pecl install "pdo_sqlsrv-${SQLSRV_PECL_VERSION}"
+    if (($? >= 1)); then
+      echo_with_color red "\npdo_sqlsrv extension installation error." >&5
+      kill $!
+      exit 1
+    fi
   fi
   echo "extension=pdo_sqlsrv.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/pdo_sqlsrv.ini"
   phpenmod -s ALL pdo_sqlsrv
+  fix_php_extension_permissions pdo_sqlsrv
 }
 
 install_oracle () {
@@ -403,15 +412,18 @@ install_cassandra () {
 }
 
 install_igbinary () {
-  pecl install igbinary
-  if (($? >= 1)); then
-    echo_with_color red "\nigbinary extension installation error." >&5
-    kill $!
-    exit 1
+  if ! pecl list | awk 'NR > 3 {print $1}' | grep -Fxq igbinary; then
+    pecl install igbinary
+    if (($? >= 1)); then
+      echo_with_color red "\nigbinary extension installation error." >&5
+      kill $!
+      exit 1
+    fi
   fi
 
   echo "extension=igbinary.so" >"/etc/php/${PHP_VERSION_INDEX}/mods-available/igbinary.ini"
   phpenmod -s ALL igbinary
+  fix_php_extension_permissions igbinary
 }
 
 install_python2 () {
@@ -437,15 +449,16 @@ install_python3 () {
 }
 
 check_munch_installation () {
-  python3 -m pip list | grep munch
+  python3 -c 'import munch' >/dev/null 2>&1
 }
 
 install_munch () {
-  apt install python3-munch
+  apt install -y python3-munch
 }
 
 install_node () {
-  curl -sL https://deb.nodesource.com/setup_14.x | bash -
+  # Node 20.x LTS — required by the df-mcp daemon (18+); the old 14.x is long EOL.
+  curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
   apt-get install -y nodejs
   if (($? >= 1)); then
     echo_with_color red "\n${ERROR_STRING}" >&5
@@ -517,7 +530,7 @@ install_hive_odbc () {
   test -f /opt/mapr/hiveodbc/lib/64/libmaprhiveodbc64.so
   rm maprhiveodbc_2.6.1.1001-2_amd64.deb
   export HIVE_SERVER_ODBC_DRIVER_PATH=/opt/mapr/hiveodbc/lib/64/libmaprhiveodbc64.so
-  HIVE_ODBC_INSTALLED = $(php -m | grep -E "^odbc")
+  HIVE_ODBC_INSTALLED=$(php -m | grep -E "^odbc" || true)
 }
 
 install_dremio_odbc () {
@@ -537,7 +550,7 @@ install_dremio_odbc () {
     exit 1
   fi
   export DREMIO_SERVER_ODBC_DRIVER_PATH=/opt/arrow-flight-sql-odbc-driver/lib64/libarrow-odbc.so.0.9.5.470
-  DREMIO_ODBC_INSTALLED=$(php -m | grep -E "^odbc")
+  DREMIO_ODBC_INSTALLED=$(php -m | grep -E "^odbc" || true)
 }
 
 install_databricks_odbc () {
@@ -557,7 +570,7 @@ install_databricks_odbc () {
     exit 1
   fi
   export DATABRICKS_SERVER_ODBC_DRIVER_PATH=/opt/simba/spark/lib/64/libsparkodbc_sb64.so
-  DATABRICKS_ODBC_INSTALLED=$(php -m | grep -E "^odbc")
+  DATABRICKS_ODBC_INSTALLED=$(php -m | grep -E "^odbc" || true)
 }
 
 install_hana_odbc () {
@@ -641,12 +654,15 @@ install_mariadb () {
 
 
 add_mariadb_repo () {
+  if ((CURRENT_OS >= 24)); then
+    # Ubuntu 24.04 ships MariaDB 10.11 in the distro repositories. Avoid adding
+    # external repo lines that add-apt-repository cannot parse on Noble.
+    return 0
+  fi
+
   apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
   if ((CURRENT_OS == 22)); then
     add-apt-repository -y 'deb [arch=amd64,arm64,ppc64el] http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.11.1/ubuntu jammy main'
-  else
-    # Ubuntu 24
-    add-apt-repository -y 'deb [signed-by=/etc/apt/keyrings/mariadb-keyring.pgp] https://mirrors.ptisp.pt/mariadb/repo/10.11/ubuntu noble main'
   fi
 }
 
@@ -666,19 +682,20 @@ clone_dreamfactory_repository () {
 }
 
 run_composer_install () {
-  # If Oracle is not installed, add the --ignore-platform-req=ext-oci8 option
-  # to composer command
+  # When optional connector extensions (oci8, ibm_db2, cassandra, etc.) are not
+  # installed, add --ignore-platform-reqs so commercial/gold composer sets that
+  # bundle those connectors still install. Matches debian/centos/fedora.
   if [[ $ORACLE == TRUE ]]; then
     if [[ $CURRENT_USER == "root" ]]; then
-      sudo -u "$CURRENT_USER" COMPOSER_ALLOW_SUPERUSER=1 bash -c "/usr/local/bin/composer install --no-dev"
+      sudo -u "$CURRENT_USER" COMPOSER_ALLOW_SUPERUSER=1 bash -c "composer install --no-dev"
     else
-      sudo -u "$CURRENT_USER" bash -c "/usr/local/bin/composer install --no-dev"
+      sudo -u "$CURRENT_USER" bash -c "composer install --no-dev"
     fi
   else
     if [[ $CURRENT_USER == "root" ]]; then
-      sudo -u "$CURRENT_USER" COMPOSER_ALLOW_SUPERUSER=1 bash -c "/usr/local/bin/composer install --no-dev --ignore-platform-req=ext-oci8"
+      sudo -u "$CURRENT_USER" COMPOSER_ALLOW_SUPERUSER=1 bash -c "composer install --no-dev --ignore-platform-reqs"
     else
-      sudo -u "$CURRENT_USER" bash -c "/usr/local/bin/composer install --no-dev --ignore-platform-req=ext-oci8"
+      sudo -u "$CURRENT_USER" bash -c "composer install --no-dev --ignore-platform-reqs"
     fi
   fi
 }
