@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4e039b7b728148ef455272f7730bad7d",
+    "content-hash": "878c55b6ad46b0710e52f7ef41e392e6",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -2557,6 +2557,42 @@
                 "wiki": "https://wiki.dreamfactory.com"
             },
             "time": "2026-09-24T19:39:25+00:00"
+        },
+        {
+            "name": "dreamfactory/df-system-mcp-server",
+            "version": "0.5.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dreamfactorysoftware/df-system-mcp-server.git",
+                "reference": "307e7e47439ee6fc0345691760bce61567650915"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dreamfactorysoftware/df-system-mcp-server/zipball/307e7e47439ee6fc0345691760bce61567650915",
+                "reference": "307e7e47439ee6fc0345691760bce61567650915",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "0.4.x-dev"
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "DreamFactory",
+                    "role": "Developer"
+                }
+            ],
+            "description": "DreamFactory System API MCP server: the Node.js daemon behind the system_mcp service type of dreamfactory/df-mcp-server.",
+            "support": {
+                "source": "https://github.com/dreamfactorysoftware/df-system-mcp-server/tree/0.5.1",
+                "issues": "https://github.com/dreamfactorysoftware/df-system-mcp-server/issues"
+            },
+            "time": "2026-09-24T21:09:14+00:00"
         },
         {
             "name": "dreamfactory/df-user",

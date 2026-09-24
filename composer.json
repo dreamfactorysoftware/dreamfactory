@@ -70,10 +70,13 @@
     {
       "type": "vcs",
       "url": "https://github.com/dreamfactorysoftware/df-oauth"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/dreamfactorysoftware/df-system-mcp-server"
     }
   ],
   "require": {
-    "php": "^8.3",
     "dreamfactory/df-admin-interface": "~1.8.0",
     "dreamfactory/df-amqp": "~0.4.0",
     "dreamfactory/df-api-builder": "~0.1.2",
@@ -89,18 +92,20 @@
     "dreamfactory/df-file": "~0.9.1",
     "dreamfactory/df-firebird": "~0.10.0",
     "dreamfactory/df-git": "~0.9.0",
+    "dreamfactory/df-mcp-server": "~1.4.0",
     "dreamfactory/df-mongo-logs": "~1.3.1",
     "dreamfactory/df-mqtt": "~0.7.0",
-    "dreamfactory/df-mcp-server": "~1.4.0",
     "dreamfactory/df-oauth": "~1.0.3",
     "dreamfactory/df-rackspace": "~0.16.0",
     "dreamfactory/df-rws": "~0.19.0",
     "dreamfactory/df-sqldb": "~1.5.1",
     "dreamfactory/df-system": "~0.6.6",
+    "dreamfactory/df-system-mcp-server": "~0.5.1",
     "dreamfactory/df-user": "~0.17.2",
     "laravel/framework": "^13.7",
     "laravel/helpers": "^1.8",
     "laravel/tinker": "^3.0",
+    "php": "^8.3",
     "predis/predis": "~1.0",
     "symfony/css-selector": "^7.4"
   },
