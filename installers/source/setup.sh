@@ -1241,8 +1241,33 @@ else
   echo_with_color green "Skipping advanced analytics connectors (Snowflake + ODBC packs).\n" >&5
 fi
 
+# Every MCP tool call holds two php-fpm workers (the /mcp proxy request plus the
+# daemon's REST callback), so distro pool defaults (pm.max_children = 5 on
+# Debian/Ubuntu) deadlock at ~3 concurrent tool calls and take the whole
+# instance with them. Size the pool from RAM (~64MB per worker, 20-100) and only
+# ever raise an existing value.
+size_php_fpm_pool () {
+  local conf mem_mb want have
+  for conf in /etc/php/${PHP_VERSION_INDEX}/fpm/pool.d/www.conf /etc/php-fpm.d/www.conf; do
+    [[ -f "$conf" ]] || continue
+    mem_mb=$(awk '/MemTotal/ {print int($2/1024)}' /proc/meminfo)
+    want=$(( mem_mb / 64 ))
+    (( want < 20 )) && want=20
+    (( want > 100 )) && want=100
+    have=$(sed -n 's/^pm.max_children *= *\([0-9]*\).*/\1/p' "$conf")
+    if [[ -z "$have" || "$have" -lt "$want" ]]; then
+      if grep -q '^pm.max_children' "$conf"; then
+        sed -i "s/^pm.max_children *=.*/pm.max_children = ${want}/" "$conf"
+      else
+        echo "pm.max_children = ${want}" >> "$conf"
+      fi
+    fi
+  done
+}
+
 ### Configuring PHP OPCache and JIT compilation
 run_process "   Configuring PHP OPCache and JIT compilation" enable_opcache
+run_process "   Sizing the php-fpm worker pool" size_php_fpm_pool
 mark_phase_done "PHASE_PHP_EXTENSIONS"
 unset ACTIVE_PHASE
 else
