@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-    <a href="https://docs.dreamfactory.com">Documentation</a> ∙ <a href="https://guide.dreamfactory.com/">Getting Started Guide</a> ∙ <a href="https://github.com/dreamfactorysoftware/dreamfactory/blob/master/CONTRIBUTING.md">Contribute</a> ∙ <a href="http://community.dreamfactory.com/">Community Support</a>
+    <a href="https://docs.dreamfactory.com">Documentation</a> ∙ <a href="https://guide.dreamfactory.com/">Getting Started Guide</a> ∙ <a href="#feedback-and-contributions">Contribute</a> ∙ <a href="http://community.dreamfactory.com/">Community Support</a>
 </p>
 
 <p align="center">
