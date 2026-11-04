@@ -3,6 +3,8 @@
   Unattended DreamFactory 7.x install on Windows Server 2025 (IIS + PHP 8.3 NTS FastCGI).
   Mirrors the "Installing DreamFactory on Windows Server" guide, chapter by chapter, with
   every step verified and idempotent so it can be re-run or run one phase at a time.
+  Phases: Prep, Php, SqlServer (ODBC Driver 17 + 18 and the sqlsrv/pdo_sqlsrv extensions;
+  -SkipSqlServer leaves them out), Composer, DreamFactory, Iis, Verify.
 
 .NOTES
   Run elevated (SSM Run Command runs as SYSTEM, which is fine).
@@ -11,13 +13,17 @@
 #>
 [CmdletBinding()]
 param(
-  [ValidateSet('All','Prep','Php','Composer','DreamFactory','Iis','Verify')]
+  [ValidateSet('All','Prep','Php','SqlServer','Composer','DreamFactory','Iis','Verify')]
   [string]$Phase = 'All',
 
   # PHP (DreamFactory 7.7 requires PHP ^8.3; NTS x64 build, VS16 => VC++ 2015-2022 x64 runtime)
   [string]$PhpVersion = '8.3.36-1',
   [string]$PhpZipUrl  = '',           # override; default built from $PhpVersion
   [string]$PhpDir     = 'C:\PHP_8.3',
+
+  # SQL Server connector: Microsoft ODBC Driver 17 + 18 and the matching msphpsql DLLs (installed by default)
+  [switch]$SkipSqlServer,
+  [string]$SqlsrvVersion = '5.13.3',  # msphpsql release; must ship DLLs for the PHP major.minor in $PhpVersion
 
   # DreamFactory source
   [string]$DfRepo    = 'https://github.com/dreamfactorysoftware/dreamfactory',
@@ -187,6 +193,47 @@ post_max_size = 64M
   MarkDone 'Php'
 }
 
+# ---------------------------------------------------------------- SQL Server
+if ((Want 'SqlServer') -and -not $SkipSqlServer -and -not (Done 'SqlServer')) {
+  Log "== SQL Server: ODBC Driver 17 + 18, sqlsrv/pdo_sqlsrv from msphpsql $SqlsrvVersion"
+  if (-not (Test-Path "$PhpDir\php.exe")) { throw "PHP not found in $PhpDir; run the Php phase first" }
+  foreach ($d in @(@{ v = '17'; link = '2249004' }, @{ v = '18'; link = '2249006' })) {
+    $name = "ODBC Driver $($d.v) for SQL Server"
+    if (Test-Path "HKLM:\SOFTWARE\ODBC\ODBCINST.INI\$name") { Log "$name already installed"; continue }
+    $msi = "$Dl\msodbcsql$($d.v).msi"
+    Fetch "https://go.microsoft.com/fwlink/?linkid=$($d.link)" $msi
+    $p = Start-Process msiexec.exe -ArgumentList "/i `"$msi`" IACCEPTMSODBCSQLLICENSETERMS=YES /qn /norestart /l*v `"$Dl\msodbcsql$($d.v).log`"" -Wait -PassThru
+    if ($p.ExitCode -notin 0,3010) { throw "$name msiexec exit $($p.ExitCode) (see $Dl\msodbcsql$($d.v).log)" }
+    Log "$name installed (msiexec exit $($p.ExitCode))"
+  }
+
+  $tag = (($PhpVersion -split '\.')[0..1]) -join ''        # 8.3.36-1 -> 83
+  $zip = "$Dl\msphpsql-$SqlsrvVersion.zip"
+  Fetch "https://github.com/microsoft/msphpsql/releases/download/v$SqlsrvVersion/Windows_$($SqlsrvVersion)RTW.zip" $zip
+  $x = "$Dl\msphpsql-$SqlsrvVersion"
+  if (-not (Test-Path $x)) { Expand-Archive -Path $zip -DestinationPath $x -Force }
+  foreach ($e in 'sqlsrv','pdo_sqlsrv') {
+    $dll = "php_$($e)_$($tag)_nts_x64.dll"
+    $src = Get-ChildItem $x -Recurse -Filter $dll | Select-Object -First 1
+    if (-not $src) { throw "$dll is not in msphpsql $SqlsrvVersion; pick a release with PHP $tag DLLs via -SqlsrvVersion" }
+    Copy-Item $src.FullName "$PhpDir\ext\php_$e.dll" -Force
+    Log "ext\php_$e.dll <- $($src.Name)"
+  }
+
+  $ini = "$PhpDir\php.ini"
+  $sqlMarker = '; --- SQL Server extensions (managed by install-dreamfactory-win.ps1) ---'
+  if (-not (Select-String -Path $ini -SimpleMatch $sqlMarker -Quiet)) {
+    "`n$sqlMarker`nextension=sqlsrv`nextension=pdo_sqlsrv" | Add-Content -Path $ini -Encoding ASCII
+  }
+  $out = cmd /c "`"$PhpDir\php.exe`" -m 2>&1"
+  $warn = @($out | Where-Object { $_ -match 'Warning|Unable to load' })
+  if ($warn) { throw "PHP startup warnings after enabling sqlsrv: $($warn -join ' | ')" }
+  foreach ($e in 'sqlsrv','pdo_sqlsrv') { if ($out -notcontains $e) { throw "$e did not load (php -m)" } }
+  Log 'sqlsrv + pdo_sqlsrv loaded'
+  if (Done 'Iis') { Run "$env:windir\System32\iisreset.exe" @('/noforce'); Log 'iisreset so FastCGI picks up the new extensions' }
+  MarkDone 'SqlServer'
+}
+
 # ---------------------------------------------------------------- Composer
 if ((Want 'Composer') -and -not (Done 'Composer')) {
   Log '== Composer'
@@ -314,6 +361,8 @@ if (Want 'Verify') {
   Log "composer: $(cmd /c 'composer --version 2>&1' | Select-Object -First 1)"
   $av = cmd /c "cd /d `"$DfDir`" && php artisan --version 2>&1" | Where-Object { $_ -match 'Laravel' } | Select-Object -First 1
   Log "artisan:  $av"
+  $pm = cmd /c 'php -m 2>&1'
+  Log "sqlsrv: $($pm -contains 'sqlsrv') pdo_sqlsrv: $($pm -contains 'pdo_sqlsrv')"
   $base = "http://localhost:$SitePort"
   try { $root = Invoke-WebRequest "$base/" -UseBasicParsing -MaximumRedirection 0 -ErrorAction SilentlyContinue; $rc = $root.StatusCode; $loc = $root.Headers.Location } catch { $rc = $_.Exception.Response.StatusCode.value__; $loc = $_.Exception.Response.Headers['Location'] }
   Log "GET / -> $rc $loc"

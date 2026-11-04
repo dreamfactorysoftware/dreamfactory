@@ -128,7 +128,7 @@ The installer will install the driver and move the license file to `/opt/simba/t
 
 ## Windows Server (IIS)
 
-`install-dreamfactory-win.ps1` is an unattended installer for Windows Server 2019, 2022 and 2025. It follows the [Windows installation guide](https://docs.dreamfactory.com/getting-started/installing-dreamfactory/windows-installation) step by step: IIS role and CGI feature, Git, the Visual C++ runtime, the URL Rewrite module, PHP 8.3 NTS, Composer, the DreamFactory code and dependencies, the IIS site, and a verification pass against the running site. It was verified on Windows Server 2025 with DreamFactory 7.7.1.
+`install-dreamfactory-win.ps1` is an unattended installer for Windows Server 2019, 2022 and 2025. It follows the [Windows installation guide](https://docs.dreamfactory.com/getting-started/installing-dreamfactory/windows-installation) step by step: IIS role and CGI feature, Git, the Visual C++ runtime, the URL Rewrite module, PHP 8.3 NTS, the SQL Server ODBC drivers and `sqlsrv`/`pdo_sqlsrv` extensions, Composer, the DreamFactory code and dependencies, the IIS site, and a verification pass against the running site. It was verified on Windows Server 2025 with DreamFactory 7.7.1.
 
 Run it from an elevated PowerShell prompt, or through a cloud run-command agent such as AWS Systems Manager (it works as `SYSTEM`):
 
@@ -145,7 +145,8 @@ For a commercial install, point it at the folder holding your `composer.json`, `
 
 Notes:
 
-* The script is idempotent. Each phase (`Prep`, `Php`, `Composer`, `DreamFactory`, `Iis`, `Verify`) records a marker in `C:\df-install\state\` and is skipped on re-run; pass `-Phase <name>` to run one phase on its own. The log is `C:\df-install\install.log`.
+* The script is idempotent. Each phase (`Prep`, `Php`, `SqlServer`, `Composer`, `DreamFactory`, `Iis`, `Verify`) records a marker in `C:\df-install\state\` and is skipped on re-run; pass `-Phase <name>` to run one phase on its own. The log is `C:\df-install\install.log`.
+* SQL Server support is installed by default: Microsoft ODBC Driver 17 and 18 and the `sqlsrv`/`pdo_sqlsrv` extensions for the installed PHP version from the msphpsql release given by `-SqlsrvVersion` (default 5.13.3). Pass `-SkipSqlServer` to leave them out. When the phase runs after the site exists it restarts IIS so FastCGI picks up the extensions.
 * It runs the site under the application pool identity rather than a local Administrator account, registers the FastCGI handler with `appcmd` instead of PHP Manager, and defaults to SQLite for the system database. See the guide for the manual procedure and the differences.
 * `AdminPassword` and `LicenseKey` are never echoed or written to the log. A `GithubToken`, if needed for private Composer repositories, is passed to Composer through the environment only.
 * Run `Get-Help .\install-dreamfactory-win.ps1 -Full` for every parameter, including PHP version and directory overrides.
