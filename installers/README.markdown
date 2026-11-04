@@ -126,6 +126,30 @@ The installer will install the driver and move the license file to `/opt/simba/t
 - The script was tested with Simba Trino ODBC driver version 2.0.0.1000 and later.
 - If you encounter issues, ensure the driver and license file paths are correct and accessible.
 
+## Windows Server (IIS)
+
+`install-dreamfactory-win.ps1` is an unattended installer for Windows Server 2019, 2022 and 2025. It follows the [Windows installation guide](https://docs.dreamfactory.com/getting-started/installing-dreamfactory/windows-installation) step by step: IIS role and CGI feature, Git, the Visual C++ runtime, the URL Rewrite module, PHP 8.3 NTS, Composer, the DreamFactory code and dependencies, the IIS site, and a verification pass against the running site. It was verified on Windows Server 2025 with DreamFactory 7.7.1.
+
+Run it from an elevated PowerShell prompt, or through a cloud run-command agent such as AWS Systems Manager (it works as `SYSTEM`):
+
+```powershell
+.\install-dreamfactory-win.ps1 -AdminEmail admin@example.com -AdminPassword 'AtLeast16Characters' -AdminPhone 000-000-0000
+```
+
+For a commercial install, point it at the folder holding your `composer.json`, `composer.json-dist` and `composer.lock` and pass your license key:
+
+```powershell
+.\install-dreamfactory-win.ps1 -AdminEmail admin@example.com -AdminPassword 'AtLeast16Characters' -AdminPhone 000-000-0000 `
+  -DfRef 7.7.1 -ComposerFilesDir C:\df-install\commercial -LicenseKey YOUR_KEY
+```
+
+Notes:
+
+* The script is idempotent. Each phase (`Prep`, `Php`, `Composer`, `DreamFactory`, `Iis`, `Verify`) records a marker in `C:\df-install\state\` and is skipped on re-run; pass `-Phase <name>` to run one phase on its own. The log is `C:\df-install\install.log`.
+* It runs the site under the application pool identity rather than a local Administrator account, registers the FastCGI handler with `appcmd` instead of PHP Manager, and defaults to SQLite for the system database. See the guide for the manual procedure and the differences.
+* `AdminPassword` and `LicenseKey` are never echoed or written to the log. A `GithubToken`, if needed for private Composer repositories, is passed to Composer through the environment only.
+* Run `Get-Help .\install-dreamfactory-win.ps1 -Full` for every parameter, including PHP version and directory overrides.
+
 ## Troubleshooting
 
 If you get an error at some stage of the installation, fix it and run the script again. The script shows the installation steps to understand at what stage you have a problem.
