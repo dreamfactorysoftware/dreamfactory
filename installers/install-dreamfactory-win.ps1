@@ -38,7 +38,7 @@ param(
   [string]$DbConnection = 'sqlite',
   [string]$DbHost = '', [string]$DbPort = '', [string]$DbDatabase = '', [string]$DbUsername = '', [string]$DbPassword = '',
   [string]$AdminFirst = 'DF', [string]$AdminLast = 'Admin',
-  [string]$AdminEmail = 'admin@example.com',
+  [string]$AdminEmail = '',            # required: a real address, install reporting records it
   [string]$AdminPassword = '',
   [string]$AdminPhone = '000-000-0000',   # df:setup on develop rejects an empty phone (and exits 0 doing so)
 
@@ -54,9 +54,10 @@ $ProgressPreference = 'SilentlyContinue'
 
 $Work  = 'C:\df-install'; $Dl = "$Work\downloads"; $State = "$Work\state"
 New-Item -ItemType Directory -Force -Path $Work,$Dl,$State | Out-Null
-Start-Transcript -Path "$Work\install.log" -Append | Out-Null
+# no Start-Transcript: its header records the full command line, secrets included
+$LogFile = "$Work\install.log"
 
-function Log($m){ Write-Host ("[{0}] {1}" -f (Get-Date -Format 'HH:mm:ss'), $m) }
+function Log($m){ $l = "[{0}] {1}" -f (Get-Date -Format 'HH:mm:ss'), $m; Write-Host $l; Add-Content -Path $LogFile -Value $l }
 function Done($p){ Test-Path "$State\$p.done" }
 function MarkDone($p){ New-Item -ItemType File -Force -Path "$State\$p.done" | Out-Null }
 function RefreshPath {
@@ -82,10 +83,17 @@ function Sh($cmdline, [string]$cwd = $PWD, [string]$show = ''){
   if (-not $show) { $show = $cmdline }
   Log "> $show"
   Push-Location $cwd
-  try { cmd /c "$cmdline 2>&1" | ForEach-Object { Write-Host $_ }; if ($LASTEXITCODE -ne 0) { throw "command exited $LASTEXITCODE : $show" } }
+  try { cmd /c "$cmdline 2>&1" | ForEach-Object { Log $_ }; if ($LASTEXITCODE -ne 0) { throw "command exited $LASTEXITCODE : $show" } }
   finally { Pop-Location }
 }
 function Want($p){ $Phase -eq 'All' -or $Phase -eq $p }
+trap { if ($LogFile) { Log "FAILED: $_" }; break }
+
+# fail before the long phases; df:setup needs both and the email goes into install reporting
+if ((Want 'DreamFactory') -and -not (Done 'DreamFactory')) {
+  if (-not $AdminEmail -or $AdminEmail -like '*@example.com') { throw 'AdminEmail is required and must be a real address' }
+  if ($AdminPassword.Length -lt 16) { throw 'AdminPassword is required and must be at least 16 characters' }
+}
 
 Log "OS: $((Get-CimInstance Win32_OperatingSystem).Caption) build $([Environment]::OSVersion.Version.Build)"
 Log "Running as: $([Security.Principal.WindowsIdentity]::GetCurrent().Name)"
@@ -128,7 +136,7 @@ if ((Want 'Prep') -and -not (Done 'Prep')) {
 # ---------------------------------------------------------------- PHP
 if ((Want 'Php') -and -not (Done 'Php')) {
   Log "== PHP $PhpVersion NTS x64 -> $PhpDir"
-  if (-not $PhpZipUrl) { $PhpZipUrl = "https://downloads.php.net/~windows/releases/php-$PhpVersion-nts-Win32-vs16-x64.zip" }
+  if (-not $PhpZipUrl) { $PhpZipUrl = "https://downloads.php.net/~windows/releases/archives/php-$PhpVersion-nts-Win32-vs16-x64.zip" }
   $zip = "$Dl\php-$PhpVersion-nts-x64.zip"
   Fetch $PhpZipUrl $zip
   if (-not (Test-Path "$PhpDir\php.exe")) { Expand-Archive -Path $zip -DestinationPath $PhpDir -Force }
@@ -278,10 +286,11 @@ if ((Want 'DreamFactory') -and -not (Done 'DreamFactory')) {
     }
     Sh "php artisan df:env $envArgs --no-interaction" $DfDir "php artisan df:env --db_connection=$DbConnection ... (credentials redacted)"
   }
+  # df:env ignores --df_install for non-interactive sqlite, so set it here; df:setup reports it
+  (Get-Content "$DfDir\.env") -replace '^DF_INSTALL=.*','DF_INSTALL=Windows' | Set-Content "$DfDir\.env"
   if ($LicenseKey -and -not (Select-String -Path "$DfDir\.env" -Pattern '^DF_LICENSE_KEY=' -Quiet)) {
     Add-Content "$DfDir\.env" "`nDF_LICENSE_KEY=$LicenseKey"; Log 'license key written to .env'
   }
-  if (-not $AdminPassword) { throw 'AdminPassword is required for unattended df:setup' }
   Sh "php artisan df:setup --admin_first_name=$AdminFirst --admin_last_name=$AdminLast --admin_email=$AdminEmail --admin_password=`"$AdminPassword`" --admin_phone=`"$AdminPhone`" --no-interaction" $DfDir "php artisan df:setup --admin_email=$AdminEmail --admin_phone=$AdminPhone --admin_password=***"
   # df:setup swallows validation errors (e.g. missing phone) and exits 0, so prove the admin exists
   if ($DbConnection -eq 'sqlite') {
@@ -385,4 +394,3 @@ if (Want 'Verify') {
   }
   Log 'VERIFY OK'
 }
-Stop-Transcript | Out-Null
