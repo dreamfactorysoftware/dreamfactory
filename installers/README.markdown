@@ -133,13 +133,13 @@ The installer will install the driver and move the license file to `/opt/simba/t
 Run it from an elevated PowerShell prompt, or through a cloud run-command agent such as AWS Systems Manager (it works as `SYSTEM`):
 
 ```powershell
-.\install-dreamfactory-win.ps1 -AdminEmail admin@example.com -AdminPassword 'AtLeast16Characters' -AdminPhone 000-000-0000
+.\install-dreamfactory-win.ps1 -AdminEmail you@yourcompany.com -AdminPassword 'AtLeast16Characters' -AdminPhone 000-000-0000
 ```
 
 For a commercial install, point it at the folder holding your `composer.json`, `composer.json-dist` and `composer.lock` and pass your license key:
 
 ```powershell
-.\install-dreamfactory-win.ps1 -AdminEmail admin@example.com -AdminPassword 'AtLeast16Characters' -AdminPhone 000-000-0000 `
+.\install-dreamfactory-win.ps1 -AdminEmail you@yourcompany.com -AdminPassword 'AtLeast16Characters' -AdminPhone 000-000-0000 `
   -DfRef 7.7.1 -ComposerFilesDir C:\df-install\commercial -LicenseKey YOUR_KEY
 ```
 
@@ -148,6 +148,7 @@ Notes:
 * The script is idempotent. Each phase (`Prep`, `Php`, `SqlServer`, `Composer`, `DreamFactory`, `Iis`, `Verify`) records a marker in `C:\df-install\state\` and is skipped on re-run; pass `-Phase <name>` to run one phase on its own. The log is `C:\df-install\install.log`.
 * SQL Server support is installed by default: Microsoft ODBC Driver 17 and 18 and the `sqlsrv`/`pdo_sqlsrv` extensions for the installed PHP version from the msphpsql release given by `-SqlsrvVersion` (default 5.13.3). Pass `-SkipSqlServer` to leave them out. When the phase runs after the site exists it restarts IIS so FastCGI picks up the extensions.
 * It runs the site under the application pool identity rather than a local Administrator account, registers the FastCGI handler with `appcmd` instead of PHP Manager, and defaults to SQLite for the system database. See the guide for the manual procedure and the differences.
+* `AdminEmail` is required and must be a real address. `AdminPassword` must be at least 16 characters.
 * `AdminPassword` and `LicenseKey` are never echoed or written to the log. A `GithubToken`, if needed for private Composer repositories, is passed to Composer through the environment only.
 * Run `Get-Help .\install-dreamfactory-win.ps1 -Full` for every parameter, including PHP version and directory overrides.
 
