@@ -4,6 +4,19 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [7.8.0] - 2026-11-18
+- DreamFactory 7.8.0. See the [release notes](https://github.com/dreamfactorysoftware/dreamfactory/releases/tag/7.8.0).
+- Data Masking and Compliance baselines (Gold): find sensitive columns in SQL databases, mask them in API responses and track compliance baselines with exportable evidence.
+- AAuth agent authentication (Gold): AI agents call DreamFactory APIs with signed requests and person-approved scopes.
+- AI budgets, model aliases and alert webhooks across every AI path, with an AI > Budgets screen.
+- Server Settings: change the server log level at runtime from Config > Server Settings.
+- Scheduler run history for the last 100 runs of every task.
+- Python scripts receive event and platform data as decoded JSON.
+- Admin interface 1.8.5.
+- Composer files move to the 7.8.0 package set.
+- `.env-dist` documents `DF_OUTBOUND_ALLOWED_HOSTS`.
+- Unattended Windows Server installer; Linux installer resume support and RHEL 10.
+
 ## [3.0.0-beta]
 ### Added
 - Debian and Ubuntu genie installation script
